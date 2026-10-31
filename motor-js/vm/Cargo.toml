@@ -1,0 +1,23 @@
+[package]
+name = "quimera-vm"
+description = "Máquina virtual de QUIMERA: ejecuta el bytecode de registros con cachés en línea, sobre los objetos del GC."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[package.metadata.quimera]
+nivel = 4
+capa = "motor-js"
+no_std = true
+externos = []
+
+[dependencies]
+quimera-valor.workspace = true
+quimera-gc.workspace = true
+quimera-frontend.workspace = true
+quimera-objetos.workspace = true
+
+[lints]
+workspace = true

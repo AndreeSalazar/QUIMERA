@@ -90,3 +90,22 @@ fn lo_que_no_compila_todavia_lo_dice() {
     assert!(compilar("try {} finally {}").unwrap_err().mensaje.contains("finally"));
     assert!(compilar("break").unwrap_err().mensaje.contains("fuera de un bucle"));
 }
+
+#[test]
+fn los_argumentos_quedan_en_registros_seguidos_aunque_sean_complejos() {
+    // Un arreglo y una llamada como argumentos usan temporales propios: no deben separar los argumentos.
+    let s = compilar("f(1, [2, g(3)], 4)").unwrap();
+    let llamada_f = s.funciones[0]
+        .codigo
+        .iter()
+        .rev()
+        .find_map(|i| match i {
+            Instr::Llamar { args, n: 3, .. } => Some(*args),
+            _ => None,
+        })
+        .unwrap();
+    let c = &s.funciones[0].codigo;
+    assert!(c.contains(&Instr::Entero { dst: llamada_f, valor: 1 }), "{s}");
+    assert!(c.iter().any(|i| matches!(i, Instr::CrearArreglo { dst, .. } if *dst == llamada_f + 1)), "{s}");
+    assert!(c.contains(&Instr::Entero { dst: llamada_f + 2, valor: 4 }), "{s}");
+}

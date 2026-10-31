@@ -4,8 +4,11 @@ members = [
     "cimientos/valor",
     "motor-js/gc",
     "motor-js/frontend",
+    "motor-js/objetos",
+    "motor-js/vm",
     "bancos/gc",
     "bancos/frontend",
+    "bancos/vm",
     "herramientas/guardianes",
 ]
 
@@ -20,6 +23,8 @@ authors = ["Eddi Salazar"]
 quimera-valor = { path = "cimientos/valor" }
 quimera-gc = { path = "motor-js/gc" }
 quimera-frontend = { path = "motor-js/frontend" }
+quimera-objetos = { path = "motor-js/objetos" }
+quimera-vm = { path = "motor-js/vm" }
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"

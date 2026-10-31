@@ -121,7 +121,7 @@ pub enum Constante {
 }
 
 /// Una instrucción. `a`, `b`, `obj`... son registros; `nombre` es un átomo; `destino` es una posición del código.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 #[allow(missing_docs)] // los campos (dst, a, b, obj...) se explican en el doc de cada instrucción
 pub enum Instr {
     /// `dst = valor` (entero de 32 bits).

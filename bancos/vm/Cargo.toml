@@ -1,0 +1,23 @@
+[package]
+name = "quimera-banco-vm"
+description = "Mide la máquina virtual de QUIMERA contra boa_engine con los mismos benchmarks."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[package.metadata.quimera]
+nivel = 99
+capa = "bancos"
+no_std = false
+# Solo los bancos de medida pueden usar crates de fuera, para comparar.
+externos = ["boa_engine"]
+
+[dependencies]
+quimera-vm.workspace = true
+boa_engine = "0.22.0"
+
+[lints]
+workspace = true

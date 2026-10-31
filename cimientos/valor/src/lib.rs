@@ -57,6 +57,11 @@ impl Ref {
         if n <= Self::MAXIMA { Some(Ref(n)) } else { None }
     }
 
+    /// Desde un `u32`: siempre cabe en 47 bits, así que no puede fallar.
+    pub const fn desde_u32(n: u32) -> Ref {
+        Ref(n as u64)
+    }
+
     /// El número que guarda.
     pub const fn numero(self) -> u64 {
         self.0
@@ -340,6 +345,7 @@ mod pruebas {
         let max = Ref::nueva(Ref::MAXIMA).unwrap();
         assert_eq!(Valor::referencia(max).como_referencia(), Some(max));
         assert!(Ref::nueva(Ref::MAXIMA + 1).is_none());
+        assert_eq!(Ref::desde_u32(u32::MAX).numero(), u64::from(u32::MAX));
         let otra = Ref::nueva(7).unwrap();
         assert_eq!(Valor::simbolo(max).con_ref(otra), Valor::simbolo(otra), "mover conserva el tipo");
         assert_eq!(Valor::entero(3).con_ref(otra), Valor::entero(3), "un primitivo no cambia");

@@ -98,17 +98,27 @@ impl Compilador<'_> {
     }
 
     fn arreglo(&mut self, v: &[Option<Expr>], dst: Reg) -> Resultado<()> {
-        let desde = self.marca();
-        for x in v {
-            let t = self.temporal()?;
+        let desde = self.consecutivos(v.len())?;
+        for (i, x) in v.iter().enumerate() {
+            let r = desde + i as Reg;
             match x {
-                Some(e) => self.expr(e, t)?,
-                None => _ = self.emitir(Instr::Hueco { dst: t }),
+                Some(e) => self.expr(e, r)?,
+                None => _ = self.emitir(Instr::Hueco { dst: r }),
             }
         }
         let n = u16::try_from(v.len()).or_else(|_| error(Pos::default(), "arreglo literal demasiado largo"))?;
         self.emitir(Instr::CrearArreglo { dst, desde, n });
         Ok(())
+    }
+
+    /// Reserva `n` registros seguidos *antes* de calcular nada: los temporales de cada
+    /// elemento van después, así que los elementos quedan juntos.
+    fn consecutivos(&mut self, n: usize) -> Resultado<Reg> {
+        let desde = self.marca();
+        for _ in 0..n {
+            self.temporal()?;
+        }
+        Ok(desde)
     }
 
     fn objeto(&mut self, props: &[(Clave, Expr)], dst: Reg) -> Resultado<()> {
@@ -190,10 +200,9 @@ impl Compilador<'_> {
 
     /// Argumentos en registros seguidos; devuelve el primero y cuántos son.
     fn argumentos(&mut self, args: &[Expr]) -> Resultado<(Reg, u16)> {
-        let desde = self.marca();
-        for a in args {
-            let t = self.temporal()?;
-            self.expr(a, t)?;
+        let desde = self.consecutivos(args.len())?;
+        for (i, a) in args.iter().enumerate() {
+            self.expr(a, desde + i as Reg)?;
         }
         let n = u16::try_from(args.len()).or_else(|_| error(Pos::default(), "demasiados argumentos"))?;
         Ok((desde, n))

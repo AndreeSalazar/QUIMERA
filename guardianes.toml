@@ -18,3 +18,8 @@ motivo = "missing_docs en los campos de Instr: son unos 70 operandos (dst, a, b,
 regla = "A-UNWRAP"
 archivo = "bancos/frontend/src/main.rs"
 motivo = "Es un programa de medida: si el corpus no se lee o un parser falla, la medida no vale y debe pararse en ese punto con el mensaje del expect."
+
+[[revisado]]
+regla = "A-UNWRAP"
+archivo = "bancos/vm/src/main.rs"
+motivo = "Programa de medida: si un motor no ejecuta el script, la medida no vale y debe pararse con el mensaje del expect."

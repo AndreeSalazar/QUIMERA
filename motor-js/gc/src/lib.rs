@@ -18,7 +18,8 @@
 //!   una asignación tiene que estar en la pila de raíces. Copiar un [`Valor`] no cuesta nada.
 //!
 //! Este prototipo no usa `unsafe`: las referencias son índices, y una referencia que ya no
-//! apunta a nada devuelve `None`.
+//! apunta a nada devuelve `None`. Solo sigue referencias a **objetos**: las cadenas y los
+//! símbolos todavía viven en su propia tabla (`quimera-objetos`), no en este montón.
 #![cfg_attr(not(test), no_std)]
 
 extern crate alloc;
@@ -116,7 +117,7 @@ fn ref_guarderia(i: usize) -> Ref {
 }
 
 fn ref_principal(i: u32) -> Ref {
-    Ref::nueva(u64::from(i)).expect("un u32 cabe en 47 bits")
+    Ref::desde_u32(i)
 }
 
 impl Default for Monton {
@@ -173,6 +174,24 @@ impl Monton {
         self.raices.truncate(marca);
     }
 
+    /// La pila de raíces entera. La máquina virtual guarda aquí sus registros: así, si el GC
+    /// mueve un objeto, los registros que lo apuntan se actualizan solos.
+    pub fn pila(&self) -> &[Valor] {
+        &self.raices
+    }
+
+    /// La pila de raíces, para leer y escribir registros sin pasar por [`Raiz`].
+    pub fn pila_mut(&mut self) -> &mut [Valor] {
+        &mut self.raices
+    }
+
+    /// Añade `n` raíces con `valor` (abre el marco de una llamada) y devuelve dónde empiezan.
+    pub fn abrir_raices(&mut self, n: usize, valor: Valor) -> usize {
+        let base = self.raices.len();
+        self.raices.resize(base + n, valor);
+        base
+    }
+
     // ---------------- objetos ----------------
 
     /// Crea un objeto con una copia de estos campos y devuelve su referencia.
@@ -185,7 +204,7 @@ impl Monton {
             self.est.grandes += 1;
             let destino = self.colocar(Celda { campos: campos.to_vec(), recordada: false });
             // Puede apuntar ya a la guardería: anotarlo como hace la barrera.
-            if campos.iter().any(|v| matches!(v.ref_del_monton().map(sitio), Some(Sitio::Guarderia(_)))) {
+            if campos.iter().any(|v| matches!(v.como_referencia().map(sitio), Some(Sitio::Guarderia(_)))) {
                 self.anotar(destino);
             }
             return Valor::referencia(ref_principal(destino));
@@ -210,7 +229,7 @@ impl Monton {
     }
 
     fn campos(&self, v: Valor) -> Option<&[Valor]> {
-        match sitio(v.ref_del_monton()?) {
+        match sitio(v.como_referencia()?) {
             Sitio::Guarderia(i) => {
                 let &(inicio, largo) = self.objetos.get(i)?;
                 self.arena.get(inicio as usize..(inicio + largo) as usize)
@@ -231,7 +250,7 @@ impl Monton {
 
     /// Escribe un campo, con barrera de escritura. `false` si el objeto o el campo no existen.
     pub fn escribir(&mut self, obj: Valor, campo: usize, v: Valor) -> bool {
-        let Some(r) = obj.ref_del_monton() else {
+        let Some(r) = obj.como_referencia() else {
             return false;
         };
         match sitio(r) {
@@ -254,7 +273,7 @@ impl Monton {
                 };
                 *c = v;
                 // Barrera: lo viejo apunta a lo nuevo; anotarlo una sola vez.
-                if matches!(v.ref_del_monton().map(sitio), Some(Sitio::Guarderia(_))) {
+                if matches!(v.como_referencia().map(sitio), Some(Sitio::Guarderia(_))) {
                     self.anotar(i as u32);
                 }
                 true
@@ -333,7 +352,7 @@ impl Monton {
 
     /// Si `v` apunta a la guardería, copia el objeto (una sola vez) y devuelve la nueva referencia.
     fn evacuar(&mut self, v: Valor) -> Valor {
-        let Some(r) = v.ref_del_monton() else {
+        let Some(r) = v.como_referencia() else {
             return v;
         };
         let Sitio::Guarderia(i) = sitio(r) else {
@@ -374,7 +393,7 @@ impl Monton {
         self.marcas.resize(self.principal.len(), false);
         self.cola.clear();
         for v in &self.raices {
-            if let Some(Sitio::Principal(i)) = v.ref_del_monton().map(sitio)
+            if let Some(Sitio::Principal(i)) = v.como_referencia().map(sitio)
                 && i < self.marcas.len()
                 && !self.marcas[i]
             {
@@ -387,7 +406,7 @@ impl Monton {
                 continue;
             };
             for v in &celda.campos {
-                if let Some(Sitio::Principal(j)) = v.ref_del_monton().map(sitio)
+                if let Some(Sitio::Principal(j)) = v.como_referencia().map(sitio)
                     && j < self.marcas.len()
                     && !self.marcas[j]
                 {
@@ -521,5 +540,34 @@ mod pruebas {
         let o = m.asignar(&[Valor::NULO]);
         assert_eq!(m.leer(o, 5), None);
         assert!(!m.escribir(o, 5, Valor::NULO));
+    }
+
+    #[test]
+    fn la_pila_hace_de_registros_y_el_gc_la_actualiza() {
+        let mut m = pequeno();
+        let base = m.abrir_raices(3, Valor::NULO);
+        let o = m.asignar(&[Valor::entero(9)]);
+        m.pila_mut()[base + 1] = o;
+        m.menor(); // `o` se mueve a la zona principal
+        let movido = m.pila()[base + 1];
+        assert_ne!(movido, o, "la referencia cambió al moverse");
+        assert_eq!(m.leer(movido, 0), Some(Valor::entero(9)));
+        m.soltar_raices(base);
+        assert_eq!(m.pila().len(), 0);
+    }
+
+    #[test]
+    fn una_cadena_no_es_un_objeto_del_monton() {
+        let mut m = pequeno();
+        let o = m.asignar(&[Valor::NULO]);
+        let r = m.raiz(o);
+        m.mayor(); // `o` queda en el hueco 0 de la zona principal
+        // Una cadena con el número 0 no debe mantener vivo ni tocar el objeto 0.
+        m.soltar_raices(r.0);
+        let marca = m.marca_raices();
+        m.raiz(Valor::cadena(Ref::nueva(0).unwrap()));
+        m.mayor();
+        assert_eq!(m.estadisticas().vivos_principal, 0);
+        m.soltar_raices(marca);
     }
 }
