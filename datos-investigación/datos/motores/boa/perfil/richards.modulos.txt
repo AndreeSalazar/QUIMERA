@@ -1,0 +1,28 @@
+ 56.85% boa_engine::vm::opcode
+ 19.52% <boa_engine::context::Context>
+  5.51% <boa_engine::vm::inline_cache
+  4.37% <boa_engine::value::JsValue>
+  3.18% <boa_engine::vm::Stack>
+  2.98% boa_engine::builtins::function
+  2.63% <boa_engine::vm::Vm>
+  1.34% core::ptr::drop_glue
+  1.24% boa_string::vtable::sequence
+  0.75% <core::option::Option<&boa_engine
+  0.45% <boa_engine::object::shape
+  0.25% <core::result::Result<boa_engine
+  0.15% rustls_pki_types::base64::decode_public - -
+  0.15% <boa_engine::object::property_map
+  0.05% boa_engine::object::internal_methods
+  0.05% <boa_parser::parser::expression
+  0.05% <boa_engine::property::PropertyDescriptorBuilder>
+  0.05% <(boa_runtime::extensions::ConsoleExtension<boa
+  0.05% 0x0000000000175f2e - -
+  0.05% 0x000000000002949e - -
+  0.05%  [k] pick_link - -
+  0.05%  [k] lock_vma_under_rcu - -
+  0.05%  [k] kthread_blkcg - -
+  0.05%  [k] clear_highpages_kasan_tagged - -
+  0.05%  [k] _raw_spin_unlock_irqrestore - -
+  0.05%  [k] __raw_callee_save___pv_queued_spin_unlock - -
+  0.05%  [k] __audit_syscall_exit - -
+  0.00% 

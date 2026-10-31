@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":699,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":1611,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":21},\"ruta\":\"services/network/test/test_url_loader_factory.h\"},{\"arrastra\":1171,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":13},\"ruta\":\"content/common/service_worker/service_worker_router_evaluator.h\"},{\"arrastra\":1171,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":20},\"ruta\":\"content/browser/service_worker/service_worker_updated_script_loader.h\"},{\"arrastra\":917,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":23},\"ruta\":\"third_party/blink/public/common/loader/throttling_url_loader.h\"},{\"arrastra\":905,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":31},\"ruta\":\"content/browser/loader/keep_alive_url_loader.h\"},{\"arrastra\":253,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":23},\"ruta\":\"content/public/test/url_loader_interceptor.h\"},{\"arrastra\":123,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":15},\"ruta\":\"content/public/browser/pre_prefetch_service.h\"},{\"arrastra\":121,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":18},\"ruta\":\"chrome/browser/devtools/aida_client.h\"},{\"arrastra\":113,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":18},\"ruta\":\"services/network/web_bundle/web_bundle_url_loader_factory.h\"},{\"arrastra\":112,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":53},\"ruta\":\"services/network/network_service.h\"},{\"arrastra\":112,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":24},\"ruta\":\"services/network/cors/preflight_controller.h\"},{\"arrastra\":110,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":18},\"ruta\":\"services/network/web_bundle/web_bundle_manager.h\"},{\"arrastra\":98,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":13},\"ruta\":\"ios/public/provider/chrome/browser/bwg/gemini_api.h\"},{\"arrastra\":84,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":19},\"ruta\":\"components/omnibox/browser/document_suggestions_service.h\"},{\"arrastra\":77,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":15},\"ruta\":\"content/browser/webid/network_request_manager.h\"},{\"arrastra\":73,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":14},\"ruta\":\"android_webview/browser/request_matcher/aw_request_matcher.h\"},{\"arrastra\":62,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":16},\"ruta\":\"content/browser/preloading/prefetch/pre_prefetch_container.h\"},{\"arrastra\":58,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":30},\"ruta\":\"android_webview/browser/prefetch/aw_prefetch_manager.h\"},{\"arrastra\":56,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":29},\"ruta\":\"content/browser/preloading/prefetch/prefetch_container.h\"},{\"arrastra\":40,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/resource_request.h\\\"\",\"linea\":21},\"ruta\":\"content/renderer/local_resource_url_loader_factory.h\"}],\"recortado\":false,\"ruta\":\"services/network/public/cpp/resource_request.h\",\"se_recompilan\":4185}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 699,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 1611,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 21
+        },
+        "ruta": "services/network/test/test_url_loader_factory.h"
+      },
+      {
+        "arrastra": 1171,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 13
+        },
+        "ruta": "content/common/service_worker/service_worker_router_evaluator.h"
+      },
+      {
+        "arrastra": 1171,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 20
+        },
+        "ruta": "content/browser/service_worker/service_worker_updated_script_loader.h"
+      },
+      {
+        "arrastra": 917,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 23
+        },
+        "ruta": "third_party/blink/public/common/loader/throttling_url_loader.h"
+      },
+      {
+        "arrastra": 905,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 31
+        },
+        "ruta": "content/browser/loader/keep_alive_url_loader.h"
+      },
+      {
+        "arrastra": 253,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 23
+        },
+        "ruta": "content/public/test/url_loader_interceptor.h"
+      },
+      {
+        "arrastra": 123,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 15
+        },
+        "ruta": "content/public/browser/pre_prefetch_service.h"
+      },
+      {
+        "arrastra": 121,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 18
+        },
+        "ruta": "chrome/browser/devtools/aida_client.h"
+      },
+      {
+        "arrastra": 113,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 18
+        },
+        "ruta": "services/network/web_bundle/web_bundle_url_loader_factory.h"
+      },
+      {
+        "arrastra": 112,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 53
+        },
+        "ruta": "services/network/network_service.h"
+      },
+      {
+        "arrastra": 112,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 24
+        },
+        "ruta": "services/network/cors/preflight_controller.h"
+      },
+      {
+        "arrastra": 110,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 18
+        },
+        "ruta": "services/network/web_bundle/web_bundle_manager.h"
+      },
+      {
+        "arrastra": 98,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 13
+        },
+        "ruta": "ios/public/provider/chrome/browser/bwg/gemini_api.h"
+      },
+      {
+        "arrastra": 84,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 19
+        },
+        "ruta": "components/omnibox/browser/document_suggestions_service.h"
+      },
+      {
+        "arrastra": 77,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 15
+        },
+        "ruta": "content/browser/webid/network_request_manager.h"
+      },
+      {
+        "arrastra": 73,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 14
+        },
+        "ruta": "android_webview/browser/request_matcher/aw_request_matcher.h"
+      },
+      {
+        "arrastra": 62,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 16
+        },
+        "ruta": "content/browser/preloading/prefetch/pre_prefetch_container.h"
+      },
+      {
+        "arrastra": 58,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 30
+        },
+        "ruta": "android_webview/browser/prefetch/aw_prefetch_manager.h"
+      },
+      {
+        "arrastra": 56,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 29
+        },
+        "ruta": "content/browser/preloading/prefetch/prefetch_container.h"
+      },
+      {
+        "arrastra": 40,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"services/network/public/cpp/resource_request.h\"",
+          "linea": 21
+        },
+        "ruta": "content/renderer/local_resource_url_loader_factory.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "services/network/public/cpp/resource_request.h",
+    "se_recompilan": 4185
+  }
+}

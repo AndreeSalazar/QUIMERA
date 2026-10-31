@@ -1,0 +1,33 @@
+{
+  "raiz": "/var/tmp/ultra-main-work/motores/mozjs/mozjs-sys/mozjs/js/src",
+  "binario": "/var/tmp/ultra-main-work/cache/carpetas-target-v2/release/ultra-carpetas",
+  "git_head": "6e69c1624194d7d678fb8f85830e9fd242c765a2",
+  "binario_sha256": "bba420334c75dbf9ac5a54880f745cbc0b54b732ca380e51007bb34b21c05af9",
+  "inicio_unix": 1793474552.726286,
+  "areas": [
+    "build",
+    "builtin",
+    "debugger",
+    "devtools",
+    "doc",
+    "ds",
+    "editline",
+    "frontend",
+    "gc",
+    "gdb",
+    "ics",
+    "intgemm",
+    "irregexp",
+    "jit",
+    "jsapi-tests",
+    "proxy",
+    "shell",
+    "threading",
+    "util",
+    "vm",
+    "vtune",
+    "wasm",
+    "xsum",
+    "zydis"
+  ]
+}

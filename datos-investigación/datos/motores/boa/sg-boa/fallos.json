@@ -1,0 +1,69 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos_que_fallan\":5,\"causas\":{\"lista\":[{\"explica\":0,\"lo_usan\":125,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":612,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"core/engine/src/builtins/array_buffer/shared.rs\"},{\"explica\":0,\"lo_usan\":125,\"primera_senal\":{\"ficha\":\"RS-004\",\"linea\":502,\"motivo\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\"},\"ruta\":\"core/engine/src/builtins/dataview/mod.rs\"},{\"explica\":0,\"lo_usan\":5,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":174,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"core/string/src/vtable/sequence.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":314,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"core/string/src/builder.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":106,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"core/string/src/str.rs\"}],\"total\":5},\"recortado\":false,\"regla\":\"Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla.\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos_que_fallan": 5,
+    "causas": {
+      "lista": [
+        {
+          "explica": 0,
+          "lo_usan": 125,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 612,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "core/engine/src/builtins/array_buffer/shared.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 125,
+          "primera_senal": {
+            "ficha": "RS-004",
+            "linea": 502,
+            "motivo": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero"
+          },
+          "ruta": "core/engine/src/builtins/dataview/mod.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 5,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 174,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "core/string/src/vtable/sequence.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 314,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "core/string/src/builder.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 106,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "core/string/src/str.rs"
+        }
+      ],
+      "total": 5
+    },
+    "recortado": false,
+    "regla": "Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla."
+  }
+}

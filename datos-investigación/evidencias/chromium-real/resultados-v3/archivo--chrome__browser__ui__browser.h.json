@@ -1,0 +1,283 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/browser.h\\\"\",\"linea\":5},\"ruta\":\"chrome/browser/ui/browser.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/browser.h\\\"\",\"linea\":14},\"ruta\":\"chrome/browser/ui/browser_window/internal/create_browser_window_non_android.cc\"}],\"total\":2},\"papel\":null,\"ruta\":\"chrome/browser/ui/browser.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":26},\"ruta\":\"build/build_config.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":16},\"ruta\":\"base/functional/callback.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/scoped_refptr.h\\\"\",\"linea\":19},\"ruta\":\"base/memory/scoped_refptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/timer/elapsed_timer.h\\\"\",\"linea\":24},\"ruta\":\"base/timer/elapsed_timer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":43},\"ruta\":\"content/public/browser/web_contents.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/weak_ptr.h\\\"\",\"linea\":20},\"ruta\":\"base/memory/weak_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":18},\"ruta\":\"base/memory/raw_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/time/time.h\\\"\",\"linea\":23},\"ruta\":\"base/time/time.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/origin.h\\\"\",\"linea\":53},\"ruta\":\"url/origin.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/scoped_observation.h\\\"\",\"linea\":21},\"ruta\":\"base/scoped_observation.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/base/page_transition_types.h\\\"\",\"linea\":48},\"ruta\":\"ui/base/page_transition_types.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/gtest_prod_util.h\\\"\",\"linea\":17},\"ruta\":\"base/gtest_prod_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":52},\"ruta\":\"ui/gfx/geometry/rect.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/types/expected.h\\\"\",\"linea\":25},\"ruta\":\"base/types/expected.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/scoped_observation_traits.h\\\"\",\"linea\":22},\"ruta\":\"base/scoped_observation_traits.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/base/ui_base_types.h\\\"\",\"linea\":49},\"ruta\":\"ui/base/ui_base_types.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/browser_window/public/browser_window_interface.h\\\"\",\"linea\":30},\"ruta\":\"chrome/browser/ui/browser_window/public/browser_window_interface.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/browser_window/public/create_browser_window.h\\\"\",\"linea\":31},\"ruta\":\"chrome/browser/ui/browser_window/public/create_browser_window.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/tabs/tab_strip_model.h\\\"\",\"linea\":35},\"ruta\":\"chrome/browser/ui/tabs/tab_strip_model.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/navigator/browser_navigator_params.h\\\"\",\"linea\":33},\"ruta\":\"chrome/browser/ui/navigator/browser_navigator_params.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/sessions/core/session_id.h\\\"\",\"linea\":39},\"ruta\":\"components/sessions/core/session_id.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/base/unowned_user_data/unowned_user_data_host.h\\\"\",\"linea\":50},\"ruta\":\"ui/base/unowned_user_data/unowned_user_data_host.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/tabs/tab_strip_model_observer.h\\\"\",\"linea\":36},\"ruta\":\"chrome/browser/ui/tabs/tab_strip_model_observer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/tab_groups/tab_group_id.h\\\"\",\"linea\":40},\"ruta\":\"components/tab_groups/tab_group_id.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/page_navigator.h\\\"\",\"linea\":42},\"ruta\":\"content/public/browser/page_navigator.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/base/window_open_disposition.h\\\"\",\"linea\":51},\"ruta\":\"ui/base/window_open_disposition.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/tabs/tab_change_type.h\\\"\",\"linea\":34},\"ruta\":\"chrome/browser/ui/tabs/tab_change_type.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/browser_window_deleter.h\\\"\",\"linea\":32},\"ruta\":\"chrome/browser/ui/browser_window_deleter.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/window_feature_controller/window_feature_controller.h\\\"\",\"linea\":37},\"ruta\":\"chrome/browser/ui/window_feature_controller/window_feature_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/fullscreen_types.h\\\"\",\"linea\":41},\"ruta\":\"content/public/browser/fullscreen_types.h\"}],\"total\":33}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/browser.h\"",
+            "linea": 5
+          },
+          "ruta": "chrome/browser/ui/browser.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/browser.h\"",
+            "linea": 14
+          },
+          "ruta": "chrome/browser/ui/browser_window/internal/create_browser_window_non_android.cc"
+        }
+      ],
+      "total": 2
+    },
+    "papel": null,
+    "ruta": "chrome/browser/ui/browser.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 26
+          },
+          "ruta": "build/build_config.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 16
+          },
+          "ruta": "base/functional/callback.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/scoped_refptr.h\"",
+            "linea": 19
+          },
+          "ruta": "base/memory/scoped_refptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/timer/elapsed_timer.h\"",
+            "linea": 24
+          },
+          "ruta": "base/timer/elapsed_timer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/web_contents.h\"",
+            "linea": 43
+          },
+          "ruta": "content/public/browser/web_contents.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/weak_ptr.h\"",
+            "linea": 20
+          },
+          "ruta": "base/memory/weak_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 18
+          },
+          "ruta": "base/memory/raw_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/time/time.h\"",
+            "linea": 23
+          },
+          "ruta": "base/time/time.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/origin.h\"",
+            "linea": 53
+          },
+          "ruta": "url/origin.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/scoped_observation.h\"",
+            "linea": 21
+          },
+          "ruta": "base/scoped_observation.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/base/page_transition_types.h\"",
+            "linea": 48
+          },
+          "ruta": "ui/base/page_transition_types.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/gtest_prod_util.h\"",
+            "linea": 17
+          },
+          "ruta": "base/gtest_prod_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 52
+          },
+          "ruta": "ui/gfx/geometry/rect.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/types/expected.h\"",
+            "linea": 25
+          },
+          "ruta": "base/types/expected.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/scoped_observation_traits.h\"",
+            "linea": 22
+          },
+          "ruta": "base/scoped_observation_traits.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/base/ui_base_types.h\"",
+            "linea": 49
+          },
+          "ruta": "ui/base/ui_base_types.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/browser_window/public/browser_window_interface.h\"",
+            "linea": 30
+          },
+          "ruta": "chrome/browser/ui/browser_window/public/browser_window_interface.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/browser_window/public/create_browser_window.h\"",
+            "linea": 31
+          },
+          "ruta": "chrome/browser/ui/browser_window/public/create_browser_window.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/tabs/tab_strip_model.h\"",
+            "linea": 35
+          },
+          "ruta": "chrome/browser/ui/tabs/tab_strip_model.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/navigator/browser_navigator_params.h\"",
+            "linea": 33
+          },
+          "ruta": "chrome/browser/ui/navigator/browser_navigator_params.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"components/sessions/core/session_id.h\"",
+            "linea": 39
+          },
+          "ruta": "components/sessions/core/session_id.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/base/unowned_user_data/unowned_user_data_host.h\"",
+            "linea": 50
+          },
+          "ruta": "ui/base/unowned_user_data/unowned_user_data_host.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/tabs/tab_strip_model_observer.h\"",
+            "linea": 36
+          },
+          "ruta": "chrome/browser/ui/tabs/tab_strip_model_observer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"components/tab_groups/tab_group_id.h\"",
+            "linea": 40
+          },
+          "ruta": "components/tab_groups/tab_group_id.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/page_navigator.h\"",
+            "linea": 42
+          },
+          "ruta": "content/public/browser/page_navigator.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/base/window_open_disposition.h\"",
+            "linea": 51
+          },
+          "ruta": "ui/base/window_open_disposition.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/tabs/tab_change_type.h\"",
+            "linea": 34
+          },
+          "ruta": "chrome/browser/ui/tabs/tab_change_type.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/browser_window_deleter.h\"",
+            "linea": 32
+          },
+          "ruta": "chrome/browser/ui/browser_window_deleter.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/ui/window_feature_controller/window_feature_controller.h\"",
+            "linea": 37
+          },
+          "ruta": "chrome/browser/ui/window_feature_controller/window_feature_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/fullscreen_types.h\"",
+            "linea": 41
+          },
+          "ruta": "content/public/browser/fullscreen_types.h"
+        }
+      ],
+      "total": 33
+    }
+  }
+}

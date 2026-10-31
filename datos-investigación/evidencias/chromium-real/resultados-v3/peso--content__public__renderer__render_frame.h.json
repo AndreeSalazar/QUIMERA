@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":220,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":37,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":53},\"ruta\":\"content/renderer/render_frame_impl.h\"},{\"arrastra\":14,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":17},\"ruta\":\"content/renderer/accessibility/render_accessibility_impl.h\"},{\"arrastra\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"components/cdm/renderer/key_system_support_update.h\"},{\"arrastra\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":13},\"ruta\":\"content/public/renderer/key_system_support.h\"},{\"arrastra\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"components/dom_distiller/content/renderer/distiller_native_javascript.h\"},{\"arrastra\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"chrome/renderer/webui_browser/webui_browser_renderer_extension.h\"},{\"arrastra\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":9},\"ruta\":\"components/commerce/content/renderer/commerce_web_extractor.h\"},{\"arrastra\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"components/continuous_search/renderer/search_result_extractor_impl.h\"},{\"arrastra\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":9},\"ruta\":\"components/dom_distiller/content/renderer/distiller_js_render_frame_observer.h\"},{\"arrastra\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"chrome/renderer/media/chrome_key_systems.h\"},{\"arrastra\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":9},\"ruta\":\"content/renderer/accessibility/ax_tree_snapshotter_impl.h\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":41},\"ruta\":\"android_webview/renderer/aw_content_renderer_client.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"android_webview/renderer/aw_content_settings_client.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":23},\"ruta\":\"android_webview/renderer/aw_render_frame_ext.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"android_webview/renderer/aw_render_frame_observer.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"android_webview/renderer/aw_render_view_ext.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":143},\"ruta\":\"chrome/renderer/chrome_content_renderer_client.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":\"#if !BUILDFLAG(IS_ANDROID)\",\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":38},\"ruta\":\"chrome/renderer/chrome_content_renderer_client_browsertest.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":17},\"ruta\":\"chrome/renderer/chrome_content_settings_agent_delegate.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"chrome/renderer/chrome_content_settings_agent_delegate_browsertest.cc\"}],\"recortado\":false,\"ruta\":\"content/public/renderer/render_frame.h\",\"se_recompilan\":263}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 220,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 37,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 53
+        },
+        "ruta": "content/renderer/render_frame_impl.h"
+      },
+      {
+        "arrastra": 14,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 17
+        },
+        "ruta": "content/renderer/accessibility/render_accessibility_impl.h"
+      },
+      {
+        "arrastra": 4,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 8
+        },
+        "ruta": "components/cdm/renderer/key_system_support_update.h"
+      },
+      {
+        "arrastra": 4,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 13
+        },
+        "ruta": "content/public/renderer/key_system_support.h"
+      },
+      {
+        "arrastra": 4,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 11
+        },
+        "ruta": "components/dom_distiller/content/renderer/distiller_native_javascript.h"
+      },
+      {
+        "arrastra": 3,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 11
+        },
+        "ruta": "chrome/renderer/webui_browser/webui_browser_renderer_extension.h"
+      },
+      {
+        "arrastra": 3,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 9
+        },
+        "ruta": "components/commerce/content/renderer/commerce_web_extractor.h"
+      },
+      {
+        "arrastra": 3,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 11
+        },
+        "ruta": "components/continuous_search/renderer/search_result_extractor_impl.h"
+      },
+      {
+        "arrastra": 2,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 9
+        },
+        "ruta": "components/dom_distiller/content/renderer/distiller_js_render_frame_observer.h"
+      },
+      {
+        "arrastra": 2,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 8
+        },
+        "ruta": "chrome/renderer/media/chrome_key_systems.h"
+      },
+      {
+        "arrastra": 2,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 9
+        },
+        "ruta": "content/renderer/accessibility/ax_tree_snapshotter_impl.h"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 41
+        },
+        "ruta": "android_webview/renderer/aw_content_renderer_client.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 8
+        },
+        "ruta": "android_webview/renderer/aw_content_settings_client.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 23
+        },
+        "ruta": "android_webview/renderer/aw_render_frame_ext.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 11
+        },
+        "ruta": "android_webview/renderer/aw_render_frame_observer.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 11
+        },
+        "ruta": "android_webview/renderer/aw_render_view_ext.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 143
+        },
+        "ruta": "chrome/renderer/chrome_content_renderer_client.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": "#if !BUILDFLAG(IS_ANDROID)",
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 38
+        },
+        "ruta": "chrome/renderer/chrome_content_renderer_client_browsertest.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 17
+        },
+        "ruta": "chrome/renderer/chrome_content_settings_agent_delegate.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/renderer/render_frame.h\"",
+          "linea": 8
+        },
+        "ruta": "chrome/renderer/chrome_content_settings_agent_delegate_browsertest.cc"
+      }
+    ],
+    "recortado": false,
+    "ruta": "content/public/renderer/render_frame.h",
+    "se_recompilan": 263
+  }
+}

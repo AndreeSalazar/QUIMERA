@@ -1,0 +1,292 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"components/fonts/platform/windows/font.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":449,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/fonts/font.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":130,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/font.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":618,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/fonts/font.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":1202,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/font.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":1237,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/font_context.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":417,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/glyph.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":404,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/glyph.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":436,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":48,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":51,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":106,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":165,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":183,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":199,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":215,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":224,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":368,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":374,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":472,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":476,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":480,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":484,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":485,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":486,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/fonts/platform/freetype/font_list.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":42,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":113,\"total\":138}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "components/fonts/platform/windows/font.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 449,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/fonts/font.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 130,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/font.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 618,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/fonts/font.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 1202,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/font.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 1237,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/font_context.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 417,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/glyph.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 404,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/glyph.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 436,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 48,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 51,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 106,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 165,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 183,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 199,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 215,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 224,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 368,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 374,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 472,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 476,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 480,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 484,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 485,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 486,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/fonts/platform/freetype/font_list.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 42,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 113,
+    "total": 138
+  }
+}

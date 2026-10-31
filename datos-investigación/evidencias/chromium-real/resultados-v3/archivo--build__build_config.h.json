@@ -1,0 +1,275 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":22},\"ruta\":\"base/logging.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":8},\"ruta\":\"agents/skills/multi-agent-engineering-workflow/tests/testdata/mock_app.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":8},\"ruta\":\"content/public/common/url_constants.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":32},\"ruta\":\"base/command_line.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":31},\"ruta\":\"base/feature_list.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":30},\"ruta\":\"base/files/file_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":16},\"ruta\":\"base/functional/bind.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":11},\"ruta\":\"base/path_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":13},\"ruta\":\"base/strings/strcat.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":18},\"ruta\":\"base/strings/string_number_conversions.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":24},\"ruta\":\"base/task/thread_pool.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":16},\"ruta\":\"base/threading/thread_restrictions.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":12},\"ruta\":\"base/timer/elapsed_timer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":11},\"ruta\":\"components/autofill/core/common/autofill_prefs.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":19},\"ruta\":\"components/cdm/browser/media_drm_storage_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":17},\"ruta\":\"components/download/public/common/in_progress_download_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":12},\"ruta\":\"components/origin_matcher/origin_matcher.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":31},\"ruta\":\"components/prefs/pref_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":29},\"ruta\":\"components/visitedlink/browser/visitedlink_writer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":24},\"ruta\":\"content/public/browser/render_process_host.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":15},\"ruta\":\"content/public/browser/storage_partition.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":30},\"ruta\":\"content/public/browser/web_contents.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":8},\"ruta\":\"base/compiler_specific.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":115},\"ruta\":\"base/files/file_path.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":56},\"ruta\":\"base/lazy_instance.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":23},\"ruta\":\"base/run_loop.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":10},\"ruta\":\"content/public/browser/network_service_instance.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":13},\"ruta\":\"content/public/test/browser_task_environment.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":15},\"ruta\":\"mojo/core/embedder/embedder.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":13},\"ruta\":\"base/i18n/rtl.h\"}],\"total\":11269},\"papel\":null,\"ruta\":\"build/build_config.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/buildflag.h\\\"\",\"linea\":60},\"ruta\":\"build/buildflag.h\"}],\"total\":1}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 22
+          },
+          "ruta": "base/logging.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 8
+          },
+          "ruta": "agents/skills/multi-agent-engineering-workflow/tests/testdata/mock_app.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 8
+          },
+          "ruta": "content/public/common/url_constants.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 32
+          },
+          "ruta": "base/command_line.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 31
+          },
+          "ruta": "base/feature_list.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 30
+          },
+          "ruta": "base/files/file_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 16
+          },
+          "ruta": "base/functional/bind.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 11
+          },
+          "ruta": "base/path_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 13
+          },
+          "ruta": "base/strings/strcat.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 18
+          },
+          "ruta": "base/strings/string_number_conversions.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 24
+          },
+          "ruta": "base/task/thread_pool.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 16
+          },
+          "ruta": "base/threading/thread_restrictions.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 12
+          },
+          "ruta": "base/timer/elapsed_timer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 11
+          },
+          "ruta": "components/autofill/core/common/autofill_prefs.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 19
+          },
+          "ruta": "components/cdm/browser/media_drm_storage_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 17
+          },
+          "ruta": "components/download/public/common/in_progress_download_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 12
+          },
+          "ruta": "components/origin_matcher/origin_matcher.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 31
+          },
+          "ruta": "components/prefs/pref_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 29
+          },
+          "ruta": "components/visitedlink/browser/visitedlink_writer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 24
+          },
+          "ruta": "content/public/browser/render_process_host.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 15
+          },
+          "ruta": "content/public/browser/storage_partition.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 30
+          },
+          "ruta": "content/public/browser/web_contents.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 8
+          },
+          "ruta": "base/compiler_specific.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 115
+          },
+          "ruta": "base/files/file_path.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 56
+          },
+          "ruta": "base/lazy_instance.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 23
+          },
+          "ruta": "base/run_loop.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 10
+          },
+          "ruta": "content/public/browser/network_service_instance.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 13
+          },
+          "ruta": "content/public/test/browser_task_environment.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 15
+          },
+          "ruta": "mojo/core/embedder/embedder.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 13
+          },
+          "ruta": "base/i18n/rtl.h"
+        }
+      ],
+      "total": 11269
+    },
+    "papel": null,
+    "ruta": "build/build_config.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/buildflag.h\"",
+            "linea": 60
+          },
+          "ruta": "build/buildflag.h"
+        }
+      ],
+      "total": 1
+    }
+  }
+}

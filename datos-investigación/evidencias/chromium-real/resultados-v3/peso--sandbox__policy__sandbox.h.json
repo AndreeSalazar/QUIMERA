@@ -1,0 +1,153 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":15,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":0,\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_LINUX) || BUILDFLAG(IS_CHROMEOS)\",\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":31},\"ruta\":\"chrome/browser/ui/webui/sandbox/sandbox_internals_ui.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":15},\"ruta\":\"chromeos/ash/components/quick_start/quick_start_message.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":118},\"ruta\":\"content/app/content_main_runner_impl.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":31},\"ruta\":\"content/browser/child_process_launcher_helper_mac.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":29},\"ruta\":\"content/browser/mojo_sandbox_browsertest.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":16},\"ruta\":\"content/renderer/renderer_main_platform_delegate_linux.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":45},\"ruta\":\"content/shell/renderer/shell_content_renderer_client.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":43},\"ruta\":\"content/shell/utility/shell_content_utility_client.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_MAC)\",\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":48},\"ruta\":\"content/utility/services.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":42},\"ruta\":\"content/utility/utility_main.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":52},\"ruta\":\"content/zygote/zygote_linux.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":46},\"ruta\":\"content/zygote/zygote_main_linux.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":5},\"ruta\":\"sandbox/policy/sandbox.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":56},\"ruta\":\"sandbox/policy/linux/sandbox_linux.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/policy/sandbox.h\\\"\",\"linea\":19},\"ruta\":\"services/service_manager/public/cpp/service_executable/service_executable_environment.cc\"}],\"recortado\":false,\"ruta\":\"sandbox/policy/sandbox.h\",\"se_recompilan\":15}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 15,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": "#if BUILDFLAG(IS_LINUX) || BUILDFLAG(IS_CHROMEOS)",
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 31
+        },
+        "ruta": "chrome/browser/ui/webui/sandbox/sandbox_internals_ui.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 15
+        },
+        "ruta": "chromeos/ash/components/quick_start/quick_start_message.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 118
+        },
+        "ruta": "content/app/content_main_runner_impl.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 31
+        },
+        "ruta": "content/browser/child_process_launcher_helper_mac.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 29
+        },
+        "ruta": "content/browser/mojo_sandbox_browsertest.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 16
+        },
+        "ruta": "content/renderer/renderer_main_platform_delegate_linux.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 45
+        },
+        "ruta": "content/shell/renderer/shell_content_renderer_client.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 43
+        },
+        "ruta": "content/shell/utility/shell_content_utility_client.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": "#if BUILDFLAG(IS_MAC)",
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 48
+        },
+        "ruta": "content/utility/services.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 42
+        },
+        "ruta": "content/utility/utility_main.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 52
+        },
+        "ruta": "content/zygote/zygote_linux.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 46
+        },
+        "ruta": "content/zygote/zygote_main_linux.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 5
+        },
+        "ruta": "sandbox/policy/sandbox.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 56
+        },
+        "ruta": "sandbox/policy/linux/sandbox_linux.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"sandbox/policy/sandbox.h\"",
+          "linea": 19
+        },
+        "ruta": "services/service_manager/public/cpp/service_executable/service_executable_environment.cc"
+      }
+    ],
+    "recortado": false,
+    "ruta": "sandbox/policy/sandbox.h",
+    "se_recompilan": 15
+  }
+}

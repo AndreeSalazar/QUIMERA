@@ -1,0 +1,3 @@
+PROGRESS RayTrace
+RESULT RayTrace 392
+SCORE 392

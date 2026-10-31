@@ -1,0 +1,185 @@
+{
+  "content": [
+    {
+      "text": "{\"autores\":1,\"aviso\":\"repositorio superficial (clonado sin toda la historia): el primer commit no es el de verdad; git fetch --unshallow lo trae entero\",\"carpetas_en_orden\":[{\"carpeta\":\"build\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"builtin\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"debugger\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"devtools\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"doc\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"ds\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"editline\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"frontend\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"gc\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"gdb\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"ics\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"intgemm\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"irregexp\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"jit\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}},{\"carpeta\":\"jsapi-tests\",\"nace\":{\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"autor\":\"Sam\",\"commit\":\"6e69c16\",\"fecha\":\"2026-10-29\"}}],\"carpetas_total\":24,\"commits\":1,\"cortada\":false,\"crecimiento\":[{\"archivos\":2149,\"asunto\":\"Bring back compile_to_stencil_offthread (#500)\",\"ciclos\":0,\"codigo\":1896,\"commit\":\"6e69c16\",\"dependencias\":10108,\"fecha\":\"2026-10-29\"}],\"desde\":\"2026-10-29\",\"hasta\":\"2026-10-29\",\"leida_ms\":665,\"nota\":\"git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.\",\"superficial\":true,\"verificacion\":{\"coinciden\":2145,\"dependencias\":{\"coinciden\":10108,\"hoy\":10108,\"nota\":\"solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas\",\"reconstruidas\":10108,\"solo_en_git\":[],\"solo_hoy\":[]},\"hoy\":2145,\"nota\":\"hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio\",\"pct_de_lo_reconstruido\":100.0,\"reconstruidos\":2145,\"solo_en_git\":[]}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "autores": 1,
+    "aviso": "repositorio superficial (clonado sin toda la historia): el primer commit no es el de verdad; git fetch --unshallow lo trae entero",
+    "carpetas_en_orden": [
+      {
+        "carpeta": "build",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "builtin",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "debugger",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "devtools",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "doc",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "ds",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "editline",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "frontend",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "gc",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "gdb",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "ics",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "intgemm",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "irregexp",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "jit",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      },
+      {
+        "carpeta": "jsapi-tests",
+        "nace": {
+          "asunto": "Bring back compile_to_stencil_offthread (#500)",
+          "autor": "Sam",
+          "commit": "6e69c16",
+          "fecha": "2026-10-29"
+        }
+      }
+    ],
+    "carpetas_total": 24,
+    "commits": 1,
+    "cortada": false,
+    "crecimiento": [
+      {
+        "archivos": 2149,
+        "asunto": "Bring back compile_to_stencil_offthread (#500)",
+        "ciclos": 0,
+        "codigo": 1896,
+        "commit": "6e69c16",
+        "dependencias": 10108,
+        "fecha": "2026-10-29"
+      }
+    ],
+    "desde": "2026-10-29",
+    "hasta": "2026-10-29",
+    "leida_ms": 665,
+    "nota": "git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.",
+    "superficial": true,
+    "verificacion": {
+      "coinciden": 2145,
+      "dependencias": {
+        "coinciden": 10108,
+        "hoy": 10108,
+        "nota": "solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas",
+        "reconstruidas": 10108,
+        "solo_en_git": [],
+        "solo_hoy": []
+      },
+      "hoy": 2145,
+      "nota": "hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio",
+      "pct_de_lo_reconstruido": 100.0,
+      "reconstruidos": 2145,
+      "solo_en_git": []
+    }
+  }
+}

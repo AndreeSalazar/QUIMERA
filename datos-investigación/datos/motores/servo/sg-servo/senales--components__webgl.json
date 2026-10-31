@@ -1,0 +1,292 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":1135,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/webgl/webgl_limits.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":229,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_limits.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":232,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_limits.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":245,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/webgl/webgl_limits.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":253,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/webgl/webgl_limits.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":261,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/webgl/webgl_limits.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":269,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/webgl/webgl_mode/inprocess.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":38,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":144,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":153,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":155,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":162,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":164,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":169,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":185,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":316,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":343,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":344,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":349,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":350,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":367,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":385,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":492,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":625,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/webgl/webgl_thread.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":639,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":47,\"total\":72}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 1135,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/webgl/webgl_limits.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 229,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_limits.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 232,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_limits.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 245,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/webgl/webgl_limits.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 253,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/webgl/webgl_limits.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 261,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/webgl/webgl_limits.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 269,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/webgl/webgl_mode/inprocess.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 38,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 144,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 153,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 155,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 162,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 164,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 169,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 185,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 316,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 343,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 344,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 349,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 350,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 367,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 385,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 492,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 625,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/webgl/webgl_thread.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 639,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 47,
+    "total": 72
+  }
+}

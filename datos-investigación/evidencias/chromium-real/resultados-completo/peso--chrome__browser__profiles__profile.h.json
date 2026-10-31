@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":6013,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":2671,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":22},\"ruta\":\"chrome/test/base/testing_profile.h\"},{\"arrastra\":2431,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":14},\"ruta\":\"chrome/test/base/android/android_browser_test.h\"},{\"arrastra\":1615,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":28},\"ruta\":\"chrome/browser/profiles/profile_manager.h\"},{\"arrastra\":439,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":15},\"ruta\":\"chrome/browser/glic/glic_user_status_fetcher.h\"},{\"arrastra\":407,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":24},\"ruta\":\"chrome/browser/ash/drive/drive_integration_service.h\"},{\"arrastra\":281,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":9},\"ruta\":\"chrome/browser/ash/arc/session/adb_sideloading_availability_delegate_impl.h\"},{\"arrastra\":242,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":29},\"ruta\":\"chrome/browser/glic/public/service/glic_instance_coordinator.h\"},{\"arrastra\":231,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":15},\"ruta\":\"chrome/browser/ash/file_system_provider/provider_interface.h\"},{\"arrastra\":199,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":22},\"ruta\":\"chrome/browser/bookmarks/android/bookmark_bridge.h\"},{\"arrastra\":169,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":19},\"ruta\":\"chrome/browser/sync/test/integration/sync_test.h\"},{\"arrastra\":167,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":28},\"ruta\":\"chrome/browser/ash/file_system_provider/service.h\"},{\"arrastra\":164,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":12},\"ruta\":\"chrome/browser/enterprise/connectors/analysis/content_analysis_info.h\"},{\"arrastra\":154,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":25},\"ruta\":\"chrome/browser/ash/accessibility/accessibility_manager.h\"},{\"arrastra\":154,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":14},\"ruta\":\"chrome/browser/ui/webui/top_chrome/webui_contents_wrapper.h\"},{\"arrastra\":153,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":10},\"ruta\":\"chrome/browser/ash/app_list/search/types.h\"},{\"arrastra\":152,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":33},\"ruta\":\"chrome/browser/ash/login/session/user_session_manager.h\"},{\"arrastra\":148,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":10},\"ruta\":\"chrome/browser/ui/omnibox/omnibox_next_features.h\"},{\"arrastra\":146,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":18},\"ruta\":\"chrome/browser/ash/system_web_apps/system_web_app_background_task.h\"},{\"arrastra\":146,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":8},\"ruta\":\"chrome/browser/ash/system_web_apps/system_web_app_icon_checker.h\"},{\"arrastra\":146,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":9},\"ruta\":\"chrome/browser/web_applications/isolated_web_apps/commands/copy_bundle_to_cache_command.h\"}],\"recortado\":false,\"ruta\":\"chrome/browser/profiles/profile.h\",\"se_recompilan\":11451}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 6013,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 2671,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 22
+        },
+        "ruta": "chrome/test/base/testing_profile.h"
+      },
+      {
+        "arrastra": 2431,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 14
+        },
+        "ruta": "chrome/test/base/android/android_browser_test.h"
+      },
+      {
+        "arrastra": 1615,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 28
+        },
+        "ruta": "chrome/browser/profiles/profile_manager.h"
+      },
+      {
+        "arrastra": 439,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 15
+        },
+        "ruta": "chrome/browser/glic/glic_user_status_fetcher.h"
+      },
+      {
+        "arrastra": 407,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 24
+        },
+        "ruta": "chrome/browser/ash/drive/drive_integration_service.h"
+      },
+      {
+        "arrastra": 281,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 9
+        },
+        "ruta": "chrome/browser/ash/arc/session/adb_sideloading_availability_delegate_impl.h"
+      },
+      {
+        "arrastra": 242,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 29
+        },
+        "ruta": "chrome/browser/glic/public/service/glic_instance_coordinator.h"
+      },
+      {
+        "arrastra": 231,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 15
+        },
+        "ruta": "chrome/browser/ash/file_system_provider/provider_interface.h"
+      },
+      {
+        "arrastra": 199,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 22
+        },
+        "ruta": "chrome/browser/bookmarks/android/bookmark_bridge.h"
+      },
+      {
+        "arrastra": 169,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 19
+        },
+        "ruta": "chrome/browser/sync/test/integration/sync_test.h"
+      },
+      {
+        "arrastra": 167,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 28
+        },
+        "ruta": "chrome/browser/ash/file_system_provider/service.h"
+      },
+      {
+        "arrastra": 164,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 12
+        },
+        "ruta": "chrome/browser/enterprise/connectors/analysis/content_analysis_info.h"
+      },
+      {
+        "arrastra": 154,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 25
+        },
+        "ruta": "chrome/browser/ash/accessibility/accessibility_manager.h"
+      },
+      {
+        "arrastra": 154,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 14
+        },
+        "ruta": "chrome/browser/ui/webui/top_chrome/webui_contents_wrapper.h"
+      },
+      {
+        "arrastra": 153,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 10
+        },
+        "ruta": "chrome/browser/ash/app_list/search/types.h"
+      },
+      {
+        "arrastra": 152,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 33
+        },
+        "ruta": "chrome/browser/ash/login/session/user_session_manager.h"
+      },
+      {
+        "arrastra": 148,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 10
+        },
+        "ruta": "chrome/browser/ui/omnibox/omnibox_next_features.h"
+      },
+      {
+        "arrastra": 146,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 18
+        },
+        "ruta": "chrome/browser/ash/system_web_apps/system_web_app_background_task.h"
+      },
+      {
+        "arrastra": 146,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 8
+        },
+        "ruta": "chrome/browser/ash/system_web_apps/system_web_app_icon_checker.h"
+      },
+      {
+        "arrastra": 146,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+          "linea": 9
+        },
+        "ruta": "chrome/browser/web_applications/isolated_web_apps/commands/copy_bundle_to_cache_command.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "chrome/browser/profiles/profile.h",
+    "se_recompilan": 11451
+  }
+}

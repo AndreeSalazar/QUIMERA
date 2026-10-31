@@ -1,0 +1,292 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"components/script/dom/bindings/root.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":82,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script/dom/console.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":700,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script/layout_dom/servo_dangerous_style_document.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":69,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script/layout_dom/servo_dangerous_style_element.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":516,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script/runtime/script_runtime.rs\",\"control_valido\":\"let mut x = MaybeUninit::<T>::uninit(); /* escribir */ let x = unsafe { x.assume_init() };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-004\",\"linea\":1129,\"texto\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\",\"titulo\":\"Memoria sin un valor valido\",\"visto\":\"zeroed(\"},{\"archivo\":\"components/script/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":12,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":13,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":33,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":35,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":45,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":53,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":55,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/css.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":19,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":130,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":134,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":135,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":139,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":148,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":179,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":215,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":273,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":280,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":507,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/script/css/stylesheet_loader.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":647,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script/dom/abort/abortsignal.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":445,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":2429,\"total\":2454}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "components/script/dom/bindings/root.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 82,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script/dom/console.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 700,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script/layout_dom/servo_dangerous_style_document.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 69,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script/layout_dom/servo_dangerous_style_element.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 516,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script/runtime/script_runtime.rs",
+        "control_valido": "let mut x = MaybeUninit::<T>::uninit(); /* escribir */ let x = unsafe { x.assume_init() };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-004",
+        "linea": 1129,
+        "texto": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero",
+        "titulo": "Memoria sin un valor valido",
+        "visto": "zeroed("
+      },
+      {
+        "archivo": "components/script/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 12,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 13,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 33,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 35,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 45,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 53,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 55,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/css.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 19,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 130,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 134,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 135,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 139,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 148,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 179,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 215,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 273,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 280,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 507,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/script/css/stylesheet_loader.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 647,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script/dom/abort/abortsignal.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 445,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 2429,
+    "total": 2454
+  }
+}

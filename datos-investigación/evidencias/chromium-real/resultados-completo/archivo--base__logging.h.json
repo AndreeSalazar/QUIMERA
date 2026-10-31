@@ -1,0 +1,331 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":5},\"ruta\":\"agents/skills/multi-agent-engineering-workflow/tests/testdata/file1.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"net/base/net_errors.h\"},{\"motivo\":{\"condicion\":\"#if defined(UNIT_TEST)\",\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":23},\"ruta\":\"content/public/browser/browser_thread.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":38},\"ruta\":\"android_webview/browser/aw_browser_main_parts.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":19},\"ruta\":\"android_webview/browser/aw_browser_terminator.cc\"},{\"motivo\":{\"condicion\":\"#if CHECK_WILL_STREAM()\",\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"base/check_deref.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":13},\"ruta\":\"services/service_manager/public/cpp/binder_registry.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":27},\"ruta\":\"android_webview/browser/aw_contents_io_thread_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":8},\"ruta\":\"android_webview/browser/aw_crashy_class_utils.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/aw_net_logs_connection.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":22},\"ruta\":\"android_webview/browser/aw_pac_processor.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/aw_pdf_exporter.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":20},\"ruta\":\"android_webview/browser/aw_permission_manager.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":22},\"ruta\":\"android_webview/browser/aw_web_contents_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":31},\"ruta\":\"android_webview/browser/cookie_manager.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/gfx/aw_draw_fn_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":39},\"ruta\":\"ui/gl/gl_bindings.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":9},\"ruta\":\"android_webview/browser/gfx/aw_picture.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":20},\"ruta\":\"android_webview/browser/gfx/aw_vulkan_context_provider.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":8},\"ruta\":\"android_webview/browser/gfx/gpu_service_webview.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":31},\"ruta\":\"android_webview/browser/gfx/hardware_renderer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":12},\"ruta\":\"android_webview/browser/gfx/java_browser_view_renderer_helper.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":20},\"ruta\":\"android_webview/browser/gfx/output_surface_provider_webview.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"android_webview/browser/gfx/scoped_app_gl_state_restore_impl_angle.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":12},\"ruta\":\"android_webview/browser/gfx/skia_output_surface_dependency_webview.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":12},\"ruta\":\"android_webview/browser/gfx/test/fake_hwui_gl_context.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":12},\"ruta\":\"android_webview/browser/gfx/test/fake_hwui_gl_context.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":8},\"ruta\":\"android_webview/browser/metrics/android_metrics_log_uploader.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"android_webview/browser/metrics/android_metrics_provider.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":14},\"ruta\":\"android_webview/browser/permission/permission_request_handler.cc\"}],\"total\":7117},\"papel\":null,\"ruta\":\"base/logging.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":22},\"ruta\":\"build/build_config.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/compiler_specific.h\\\"\",\"linea\":17},\"ruta\":\"base/compiler_specific.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback_forward.h\\\"\",\"linea\":19},\"ruta\":\"base/functional/callback_forward.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/dcheck_is_on.h\\\"\",\"linea\":18},\"ruta\":\"base/dcheck_is_on.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/base_export.h\\\"\",\"linea\":16},\"ruta\":\"base/base_export.h\"},{\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_WIN)\",\"escrito\":\"#include \\\"base/win/windows_types.h\\\"\",\"linea\":29},\"ruta\":\"base/win/windows_types.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging/log_severity.h\\\"\",\"linea\":20},\"ruta\":\"base/logging/log_severity.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/strings/utf_ostream_operators.h\\\"\",\"linea\":21},\"ruta\":\"base/strings/utf_ostream_operators.h\"}],\"total\":8}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 5
+          },
+          "ruta": "agents/skills/multi-agent-engineering-workflow/tests/testdata/file1.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 11
+          },
+          "ruta": "net/base/net_errors.h"
+        },
+        {
+          "motivo": {
+            "condicion": "#if defined(UNIT_TEST)",
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 23
+          },
+          "ruta": "content/public/browser/browser_thread.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 38
+          },
+          "ruta": "android_webview/browser/aw_browser_main_parts.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 19
+          },
+          "ruta": "android_webview/browser/aw_browser_terminator.cc"
+        },
+        {
+          "motivo": {
+            "condicion": "#if CHECK_WILL_STREAM()",
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 11
+          },
+          "ruta": "base/check_deref.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 13
+          },
+          "ruta": "services/service_manager/public/cpp/binder_registry.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 27
+          },
+          "ruta": "android_webview/browser/aw_contents_io_thread_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 8
+          },
+          "ruta": "android_webview/browser/aw_crashy_class_utils.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/aw_net_logs_connection.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 22
+          },
+          "ruta": "android_webview/browser/aw_pac_processor.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/aw_pdf_exporter.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 20
+          },
+          "ruta": "android_webview/browser/aw_permission_manager.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 22
+          },
+          "ruta": "android_webview/browser/aw_web_contents_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 31
+          },
+          "ruta": "android_webview/browser/cookie_manager.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/gfx/aw_draw_fn_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 39
+          },
+          "ruta": "ui/gl/gl_bindings.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 9
+          },
+          "ruta": "android_webview/browser/gfx/aw_picture.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 20
+          },
+          "ruta": "android_webview/browser/gfx/aw_vulkan_context_provider.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 8
+          },
+          "ruta": "android_webview/browser/gfx/gpu_service_webview.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 31
+          },
+          "ruta": "android_webview/browser/gfx/hardware_renderer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 12
+          },
+          "ruta": "android_webview/browser/gfx/java_browser_view_renderer_helper.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 20
+          },
+          "ruta": "android_webview/browser/gfx/output_surface_provider_webview.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 11
+          },
+          "ruta": "android_webview/browser/gfx/scoped_app_gl_state_restore_impl_angle.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 12
+          },
+          "ruta": "android_webview/browser/gfx/skia_output_surface_dependency_webview.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 12
+          },
+          "ruta": "android_webview/browser/gfx/test/fake_hwui_gl_context.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 12
+          },
+          "ruta": "android_webview/browser/gfx/test/fake_hwui_gl_context.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 8
+          },
+          "ruta": "android_webview/browser/metrics/android_metrics_log_uploader.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 11
+          },
+          "ruta": "android_webview/browser/metrics/android_metrics_provider.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 14
+          },
+          "ruta": "android_webview/browser/permission/permission_request_handler.cc"
+        }
+      ],
+      "total": 7117
+    },
+    "papel": null,
+    "ruta": "base/logging.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 22
+          },
+          "ruta": "build/build_config.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/compiler_specific.h\"",
+            "linea": 17
+          },
+          "ruta": "base/compiler_specific.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback_forward.h\"",
+            "linea": 19
+          },
+          "ruta": "base/functional/callback_forward.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/dcheck_is_on.h\"",
+            "linea": 18
+          },
+          "ruta": "base/dcheck_is_on.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/base_export.h\"",
+            "linea": 16
+          },
+          "ruta": "base/base_export.h"
+        },
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(IS_WIN)",
+            "escrito": "#include \"base/win/windows_types.h\"",
+            "linea": 29
+          },
+          "ruta": "base/win/windows_types.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging/log_severity.h\"",
+            "linea": 20
+          },
+          "ruta": "base/logging/log_severity.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/strings/utf_ostream_operators.h\"",
+            "linea": 21
+          },
+          "ruta": "base/strings/utf_ostream_operators.h"
+        }
+      ],
+      "total": 8
+    }
+  }
+}

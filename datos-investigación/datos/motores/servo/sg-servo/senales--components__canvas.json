@@ -1,0 +1,171 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"components/canvas/canvas_data.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":362,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/canvas_data.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":508,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/canvas_paint_thread.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":46,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/canvas_paint_thread.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":99,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/canvas/canvas_paint_thread.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":326,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/canvas/peniko_conversions.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":223,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/vello_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":222,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/vello_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":235,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/vello_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":632,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/vello_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":703,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/vello_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":748,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/vello_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":750,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/canvas/vello_cpu_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":264,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/canvas/vello_cpu_backend.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":613,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":0,\"total\":14}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "components/canvas/canvas_data.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 362,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/canvas_data.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 508,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/canvas_paint_thread.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 46,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/canvas_paint_thread.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 99,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/canvas/canvas_paint_thread.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 326,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/canvas/peniko_conversions.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 223,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/vello_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 222,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/vello_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 235,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/vello_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 632,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/vello_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 703,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/vello_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 748,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/vello_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 750,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/canvas/vello_cpu_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 264,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/canvas/vello_cpu_backend.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 613,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 0,
+    "total": 14
+  }
+}

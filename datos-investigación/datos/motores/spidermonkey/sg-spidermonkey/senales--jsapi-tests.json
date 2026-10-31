@@ -1,0 +1,292 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"jsapi-tests/testAvlTree.cpp\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":207,\"texto\":\"s se copia entero en cada llamada: const std::set& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::set<T>s\"},{\"archivo\":\"jsapi-tests/testAssemblerBuffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":109,\"texto\":\"la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAssemblerBuffer_BranchDeadlineSet){\"},{\"archivo\":\"jsapi-tests/testAssemblerBuffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":494,\"texto\":\"la funcion ocupa 130 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAssemblerBuffer_AssemblerBufferWithConstantPools){\"},{\"archivo\":\"jsapi-tests/testAssemblerBuffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":703,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAssemblerBuffer_AssemblerBufferWithConstantPools_ShortBranchVeneerExpire…\"},{\"archivo\":\"jsapi-tests/testAssemblerBuffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1032,\"texto\":\"la funcion ocupa 196 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAssemblerBuffer_ARM64_ShortBranchVeneerExpiresTooFast){\"},{\"archivo\":\"jsapi-tests/testAssemblerBuffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1230,\"texto\":\"la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAssemblerBuffer_ARM64_ShortBranchSecondaryVeneer){\"},{\"archivo\":\"jsapi-tests/testAssemblerBuffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1432,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAssemblerBuffer_ARM64_BoundLabelBranchDeadline){\"},{\"archivo\":\"jsapi-tests/testAssemblerCodeGen.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":31,\"texto\":\"la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAssemblerCodeGen_x64_cmp8){\"},{\"archivo\":\"jsapi-tests/testAtomizeUtf8NonAsciiLatin1CodePoint.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":34,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"char16_t(j))){\"},{\"archivo\":\"jsapi-tests/testAvlTree.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":211,\"texto\":\"la funcion ocupa 172 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testAvlTree_main){\"},{\"archivo\":\"jsapi-tests/testAvlTree.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":317,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"switch(j%10){\"},{\"archivo\":\"jsapi-tests/testChromeBuffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":41,\"texto\":\"la funcion ocupa 229 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testChromeBuffer){\"},{\"archivo\":\"jsapi-tests/testCompileUtf8.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":28,\"texto\":\"la funcion ocupa 105 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testUtf8BadBytes){\"},{\"archivo\":\"jsapi-tests/testDeduplication.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":32,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testDeduplication_ASSC){\"},{\"archivo\":\"jsapi-tests/testDeflateStringToUTF8Buffer.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":9,\"texto\":\"la funcion ocupa 153 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(test_DeflateStringToUTF8Buffer){\"},{\"archivo\":\"jsapi-tests/testErrorInterceptor.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":34,\"texto\":\"la funcion ocupa 110 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testErrorInterceptor){\"},{\"archivo\":\"jsapi-tests/testFractionToDouble.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":74,\"texto\":\"la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testFraction_complex_int128){\"},{\"archivo\":\"jsapi-tests/testFrontendJSON.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":16,\"texto\":\"la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_FRONTEND_TEST(testIsValidJSONLatin1){\"},{\"archivo\":\"jsapi-tests/testFrontendJSON.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":204,\"texto\":\"la funcion ocupa 294 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_FRONTEND_TEST(testParseJSONWithHandler){\"},{\"archivo\":\"jsapi-tests/testGCExactRooting.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":995,\"texto\":\"la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testRootedTuple){\"},{\"archivo\":\"jsapi-tests/testGCFinalizeCallback.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":15,\"texto\":\"la funcion ocupa 129 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testGCFinalizeCallback){\"},{\"archivo\":\"jsapi-tests/testGCMarking.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":286,\"texto\":\"la funcion ocupa 162 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testIncrementalRoots){\"},{\"archivo\":\"jsapi-tests/testGCUniqueId.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":21,\"texto\":\"la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BEGIN_TEST(testGCUID){\"},{\"archivo\":\"jsapi-tests/testGCWeakCache.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":374,\"texto\":\"la funcion ocupa 128 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"bool TestSet(){\"},{\"archivo\":\"jsapi-tests/testGCWeakCache.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":503,\"texto\":\"la funcion ocupa 130 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"bool TestMap(){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":27,\"total\":52}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "jsapi-tests/testAvlTree.cpp",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 207,
+        "texto": "s se copia entero en cada llamada: const std::set& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::set<T>s"
+      },
+      {
+        "archivo": "jsapi-tests/testAssemblerBuffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 109,
+        "texto": "la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAssemblerBuffer_BranchDeadlineSet){"
+      },
+      {
+        "archivo": "jsapi-tests/testAssemblerBuffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 494,
+        "texto": "la funcion ocupa 130 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAssemblerBuffer_AssemblerBufferWithConstantPools){"
+      },
+      {
+        "archivo": "jsapi-tests/testAssemblerBuffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 703,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAssemblerBuffer_AssemblerBufferWithConstantPools_ShortBranchVeneerExpire…"
+      },
+      {
+        "archivo": "jsapi-tests/testAssemblerBuffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1032,
+        "texto": "la funcion ocupa 196 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAssemblerBuffer_ARM64_ShortBranchVeneerExpiresTooFast){"
+      },
+      {
+        "archivo": "jsapi-tests/testAssemblerBuffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1230,
+        "texto": "la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAssemblerBuffer_ARM64_ShortBranchSecondaryVeneer){"
+      },
+      {
+        "archivo": "jsapi-tests/testAssemblerBuffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1432,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAssemblerBuffer_ARM64_BoundLabelBranchDeadline){"
+      },
+      {
+        "archivo": "jsapi-tests/testAssemblerCodeGen.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 31,
+        "texto": "la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAssemblerCodeGen_x64_cmp8){"
+      },
+      {
+        "archivo": "jsapi-tests/testAtomizeUtf8NonAsciiLatin1CodePoint.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 34,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "char16_t(j))){"
+      },
+      {
+        "archivo": "jsapi-tests/testAvlTree.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 211,
+        "texto": "la funcion ocupa 172 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testAvlTree_main){"
+      },
+      {
+        "archivo": "jsapi-tests/testAvlTree.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 317,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "switch(j%10){"
+      },
+      {
+        "archivo": "jsapi-tests/testChromeBuffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 41,
+        "texto": "la funcion ocupa 229 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testChromeBuffer){"
+      },
+      {
+        "archivo": "jsapi-tests/testCompileUtf8.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 28,
+        "texto": "la funcion ocupa 105 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testUtf8BadBytes){"
+      },
+      {
+        "archivo": "jsapi-tests/testDeduplication.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 32,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testDeduplication_ASSC){"
+      },
+      {
+        "archivo": "jsapi-tests/testDeflateStringToUTF8Buffer.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 9,
+        "texto": "la funcion ocupa 153 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(test_DeflateStringToUTF8Buffer){"
+      },
+      {
+        "archivo": "jsapi-tests/testErrorInterceptor.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 34,
+        "texto": "la funcion ocupa 110 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testErrorInterceptor){"
+      },
+      {
+        "archivo": "jsapi-tests/testFractionToDouble.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 74,
+        "texto": "la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testFraction_complex_int128){"
+      },
+      {
+        "archivo": "jsapi-tests/testFrontendJSON.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 16,
+        "texto": "la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_FRONTEND_TEST(testIsValidJSONLatin1){"
+      },
+      {
+        "archivo": "jsapi-tests/testFrontendJSON.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 204,
+        "texto": "la funcion ocupa 294 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_FRONTEND_TEST(testParseJSONWithHandler){"
+      },
+      {
+        "archivo": "jsapi-tests/testGCExactRooting.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 995,
+        "texto": "la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testRootedTuple){"
+      },
+      {
+        "archivo": "jsapi-tests/testGCFinalizeCallback.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 15,
+        "texto": "la funcion ocupa 129 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testGCFinalizeCallback){"
+      },
+      {
+        "archivo": "jsapi-tests/testGCMarking.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 286,
+        "texto": "la funcion ocupa 162 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testIncrementalRoots){"
+      },
+      {
+        "archivo": "jsapi-tests/testGCUniqueId.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 21,
+        "texto": "la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BEGIN_TEST(testGCUID){"
+      },
+      {
+        "archivo": "jsapi-tests/testGCWeakCache.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 374,
+        "texto": "la funcion ocupa 128 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "bool TestSet(){"
+      },
+      {
+        "archivo": "jsapi-tests/testGCWeakCache.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 503,
+        "texto": "la funcion ocupa 130 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "bool TestMap(){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 27,
+    "total": 52
+  }
+}

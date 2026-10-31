@@ -1,0 +1,507 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":49},\"ruta\":\"third_party/blink/renderer/core/frame/local_dom_window.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":77},\"ruta\":\"third_party/blink/renderer/core/frame/web_local_frame_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":42},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/binding_security.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":39},\"ruta\":\"third_party/blink/renderer/core/probe/core_probes.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":18},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/js_event_listener_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":53},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/local_window_proxy.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":35},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/local_window_proxy.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":16},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/module_record_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":52},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_controller.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":20},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_promise_property_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":18},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_promise_resolver_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":13},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_promise_resolver_with_tracker_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":43},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_streamer_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":52},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_binding_for_core.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_binding_for_testing.cc\"},{\"motivo\":{\"condicion\":\"#if BUILDFLAG(PRODUCE_V8_COMPILE_HINTS)\",\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":16},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_compile_hints_producer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":19},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_local_compile_hints_producer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":19},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_metrics.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_page_popup_controller_binding.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":54},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_script_runner.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":27},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_wasm_response_extensions.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":15},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/serialization/post_message_helper.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":19},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/serialization/serialized_script_value_fuzzer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":52},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_serializer_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":47},\"ruta\":\"third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":62},\"ruta\":\"third_party/blink/renderer/controller/blink_initializer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":36},\"ruta\":\"third_party/blink/renderer/controller/dev_tools_frontend_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":19},\"ruta\":\"third_party/blink/renderer/controller/blink_leak_detector.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":41},\"ruta\":\"third_party/blink/renderer/controller/dev_tools_frontend_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/frame/local_frame.h\\\"\",\"linea\":13},\"ruta\":\"third_party/blink/renderer/controller/highest_pmf_reporter.cc\"}],\"total\":972},\"papel\":\"arrastra\",\"ruta\":\"third_party/blink/renderer/core/frame/local_frame.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":40},\"ruta\":\"build/build_config.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":37},\"ruta\":\"base/memory/raw_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_receiver.h\\\"\",\"linea\":42},\"ruta\":\"mojo/public/cpp/bindings/pending_receiver.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/time/time.h\\\"\",\"linea\":38},\"ruta\":\"base/time/time.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/metrics/public/cpp/ukm_source_id.h\\\"\",\"linea\":44},\"ruta\":\"services/metrics/public/cpp/ukm_source_id.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/image/image_skia.h\\\"\",\"linea\":105},\"ruta\":\"ui/gfx/image/image_skia.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/unguessable_token.h\\\"\",\"linea\":39},\"ruta\":\"base/unguessable_token.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/storage_access_api/status.h\\\"\",\"linea\":43},\"ruta\":\"net/storage_access_api/status.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/tokens/tokens.h\\\"\",\"linea\":49},\"ruta\":\"third_party/blink/public/common/tokens/tokens.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/gtest_prod_util.h\\\"\",\"linea\":36},\"ruta\":\"base/gtest_prod_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":103},\"ruta\":\"ui/gfx/geometry/rect.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/transform.h\\\"\",\"linea\":104},\"ruta\":\"ui/gfx/geometry/transform.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/platform/web_content_settings_client.h\\\"\",\"linea\":73},\"ruta\":\"third_party/blink/public/platform/web_content_settings_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/callback_list.h\\\"\",\"linea\":35},\"ruta\":\"base/callback_list.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/perfetto/include/perfetto/tracing/traced_value_forward.h\\\"\",\"linea\":102},\"ruta\":\"third_party/perfetto/include/perfetto/tracing/traced_value_forward.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/metrics/begin_main_frame_metrics.h\\\"\",\"linea\":41},\"ruta\":\"cc/metrics/begin_main_frame_metrics.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/platform/task_type.h\\\"\",\"linea\":71},\"ruta\":\"third_party/blink/public/platform/task_type.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/frame/frame_owner_element_type.h\\\"\",\"linea\":47},\"ruta\":\"third_party/blink/public/common/frame/frame_owner_element_type.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/web/web_print_params.h\\\"\",\"linea\":74},\"ruta\":\"third_party/blink/public/web/web_print_params.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/frame/frame_ad_evidence.h\\\"\",\"linea\":46},\"ruta\":\"third_party/blink/public/common/frame/frame_ad_evidence.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/frame/history_user_activation_state.h\\\"\",\"linea\":48},\"ruta\":\"third_party/blink/public/common/frame/history_user_activation_state.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/platform/web_background_resource_fetch_assets.h\\\"\",\"linea\":72},\"ruta\":\"third_party/blink/public/platform/web_background_resource_fetch_assets.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/web/web_script_execution_callback.h\\\"\",\"linea\":75},\"ruta\":\"third_party/blink/public/web/web_script_execution_callback.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/core_export.h\\\"\",\"linea\":78},\"ruta\":\"third_party/blink/renderer/core/core_export.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/editing/forward.h\\\"\",\"linea\":80},\"ruta\":\"third_party/blink/renderer/core/editing/forward.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":92},\"ruta\":\"third_party/blink/renderer/platform/heap/garbage_collected.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/loader/frame_loader.h\\\"\",\"linea\":88},\"ruta\":\"third_party/blink/renderer/core/loader/frame_loader.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/scheduler/public/event_loop.h\\\"\",\"linea\":99},\"ruta\":\"third_party/blink/renderer/platform/scheduler/public/event_loop.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/supplementable.h\\\"\",\"linea\":101},\"ruta\":\"third_party/blink/renderer/platform/supplementable.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/collection_support/heap_hash_map.h\\\"\",\"linea\":90},\"ruta\":\"third_party/blink/renderer/platform/heap/collection_support/heap_hash_map.h\"}],\"total\":49}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 49
+          },
+          "ruta": "third_party/blink/renderer/core/frame/local_dom_window.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 77
+          },
+          "ruta": "third_party/blink/renderer/core/frame/web_local_frame_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 42
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/binding_security.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 39
+          },
+          "ruta": "third_party/blink/renderer/core/probe/core_probes.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 18
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/js_event_listener_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 53
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/local_window_proxy.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 35
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/local_window_proxy.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 16
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/module_record_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 52
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_controller.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 20
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_promise_property_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 18
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_promise_resolver_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 13
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_promise_resolver_with_tracker_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 43
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_streamer_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 52
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_binding_for_core.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 10
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_binding_for_testing.cc"
+        },
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(PRODUCE_V8_COMPILE_HINTS)",
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 16
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_compile_hints_producer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 19
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_local_compile_hints_producer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 19
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_metrics.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 11
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_page_popup_controller_binding.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 54
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_script_runner.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 27
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/v8_wasm_response_extensions.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 15
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/serialization/post_message_helper.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 19
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/serialization/serialized_script_value_fuzzer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 52
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_serializer_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 47
+          },
+          "ruta": "third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 62
+          },
+          "ruta": "third_party/blink/renderer/controller/blink_initializer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 36
+          },
+          "ruta": "third_party/blink/renderer/controller/dev_tools_frontend_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 19
+          },
+          "ruta": "third_party/blink/renderer/controller/blink_leak_detector.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 41
+          },
+          "ruta": "third_party/blink/renderer/controller/dev_tools_frontend_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/frame/local_frame.h\"",
+            "linea": 13
+          },
+          "ruta": "third_party/blink/renderer/controller/highest_pmf_reporter.cc"
+        }
+      ],
+      "total": 972
+    },
+    "papel": "arrastra",
+    "ruta": "third_party/blink/renderer/core/frame/local_frame.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 40
+          },
+          "ruta": "build/build_config.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 37
+          },
+          "ruta": "base/memory/raw_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/pending_receiver.h\"",
+            "linea": 42
+          },
+          "ruta": "mojo/public/cpp/bindings/pending_receiver.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/time/time.h\"",
+            "linea": 38
+          },
+          "ruta": "base/time/time.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"services/metrics/public/cpp/ukm_source_id.h\"",
+            "linea": 44
+          },
+          "ruta": "services/metrics/public/cpp/ukm_source_id.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/image/image_skia.h\"",
+            "linea": 105
+          },
+          "ruta": "ui/gfx/image/image_skia.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/unguessable_token.h\"",
+            "linea": 39
+          },
+          "ruta": "base/unguessable_token.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/storage_access_api/status.h\"",
+            "linea": 43
+          },
+          "ruta": "net/storage_access_api/status.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/tokens/tokens.h\"",
+            "linea": 49
+          },
+          "ruta": "third_party/blink/public/common/tokens/tokens.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/gtest_prod_util.h\"",
+            "linea": 36
+          },
+          "ruta": "base/gtest_prod_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 103
+          },
+          "ruta": "ui/gfx/geometry/rect.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/transform.h\"",
+            "linea": 104
+          },
+          "ruta": "ui/gfx/geometry/transform.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/platform/web_content_settings_client.h\"",
+            "linea": 73
+          },
+          "ruta": "third_party/blink/public/platform/web_content_settings_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/callback_list.h\"",
+            "linea": 35
+          },
+          "ruta": "base/callback_list.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/perfetto/include/perfetto/tracing/traced_value_forward.h\"",
+            "linea": 102
+          },
+          "ruta": "third_party/perfetto/include/perfetto/tracing/traced_value_forward.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"cc/metrics/begin_main_frame_metrics.h\"",
+            "linea": 41
+          },
+          "ruta": "cc/metrics/begin_main_frame_metrics.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/platform/task_type.h\"",
+            "linea": 71
+          },
+          "ruta": "third_party/blink/public/platform/task_type.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/frame/frame_owner_element_type.h\"",
+            "linea": 47
+          },
+          "ruta": "third_party/blink/public/common/frame/frame_owner_element_type.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/web/web_print_params.h\"",
+            "linea": 74
+          },
+          "ruta": "third_party/blink/public/web/web_print_params.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/frame/frame_ad_evidence.h\"",
+            "linea": 46
+          },
+          "ruta": "third_party/blink/public/common/frame/frame_ad_evidence.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/frame/history_user_activation_state.h\"",
+            "linea": 48
+          },
+          "ruta": "third_party/blink/public/common/frame/history_user_activation_state.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/platform/web_background_resource_fetch_assets.h\"",
+            "linea": 72
+          },
+          "ruta": "third_party/blink/public/platform/web_background_resource_fetch_assets.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/web/web_script_execution_callback.h\"",
+            "linea": 75
+          },
+          "ruta": "third_party/blink/public/web/web_script_execution_callback.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/core_export.h\"",
+            "linea": 78
+          },
+          "ruta": "third_party/blink/renderer/core/core_export.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/editing/forward.h\"",
+            "linea": 80
+          },
+          "ruta": "third_party/blink/renderer/core/editing/forward.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 92
+          },
+          "ruta": "third_party/blink/renderer/platform/heap/garbage_collected.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/core/loader/frame_loader.h\"",
+            "linea": 88
+          },
+          "ruta": "third_party/blink/renderer/core/loader/frame_loader.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/scheduler/public/event_loop.h\"",
+            "linea": 99
+          },
+          "ruta": "third_party/blink/renderer/platform/scheduler/public/event_loop.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/supplementable.h\"",
+            "linea": 101
+          },
+          "ruta": "third_party/blink/renderer/platform/supplementable.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/collection_support/heap_hash_map.h\"",
+            "linea": 90
+          },
+          "ruta": "third_party/blink/renderer/platform/heap/collection_support/heap_hash_map.h"
+        }
+      ],
+      "total": 49
+    }
+  }
+}

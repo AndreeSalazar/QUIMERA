@@ -1,0 +1,237 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"tools/crates/gnrt/build/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":38,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/build/build.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":217,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":44,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":52,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":57,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":60,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":63,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":66,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":68,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":69,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":71,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":135,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":142,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":148,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":201,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":290,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/gen.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":322,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/lib/condition.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":110,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/lib/condition.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":352,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"tools/crates/gnrt/lib/crates.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":123,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":46,\"total\":66}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "tools/crates/gnrt/build/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 38,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/build/build.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 217,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 44,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 52,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 57,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 60,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 63,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 66,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 68,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 69,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 71,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 135,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 142,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 148,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 201,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 290,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/gen.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 322,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/lib/condition.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 110,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/lib/condition.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 352,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "tools/crates/gnrt/lib/crates.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 123,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 46,
+    "total": 66
+  }
+}

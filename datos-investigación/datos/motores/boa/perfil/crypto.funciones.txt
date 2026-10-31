@@ -1,0 +1,40 @@
+    13.03%  [.] <boa_engine::context::Context>::run                                                                                                                                                                -      -            
+                       0x7faf17627781
+    11.97%  [.] boa_engine::vm::opcode::handle_move                                                                                                                                                                -      -            
+                       0x7faf17627781
+     7.96%  [.] boa_engine::vm::opcode::handle_get_property_by_value                                                                                                                                               -      -            
+                                  0x7faf17627781
+     4.75%  [.] boa_engine::object::internal_methods::ordinary_get_own_property                                                                                                                                    -      -            
+                                  0x7faf17627781
+     4.35%  [.] boa_engine::object::internal_methods::ordinary_set                                                                                                                                                 -      -            
+                                  0x7faf17627781
+     3.94%  [.] boa_engine::vm::opcode::handle_set_property_by_value                                                                                                                                               -      -            
+     3.75%  [.] boa_engine::vm::opcode::handle_add                                                                                                                                                                 -      -            
+                                  0x7faf17627781
+     3.24%  [.] boa_engine::vm::opcode::handle_mul                                                                                                                                                                 -      -            
+     3.19%  [.] <boa_engine::object::property_map::IndexedProperties>::get                                                                                                                                         -      -            
+     3.04%  [.] boa_engine::builtins::array::array_exotic_define_own_property                                                                                                                                      -      -            
+                                  0x7faf17627781
+     2.86%  [.] boa_engine::vm::opcode::handle_store_int8                                                                                                                                                          -      -            
+                       0x7faf17627781
+     2.12%  [.] boa_engine::vm::opcode::handle_inc                                                                                                                                                                 -      -            
+     2.10%  [.] <hashbrown::map::HashMap<boa_engine::property::PropertyKey, (u32, boa_engine::object::shape::slot::Slot), rustc_hash::FxBuildHasher>>::get::<boa_engine::property::PropertyKey>                    -      -            
+     2.08%  [.] boa_engine::vm::opcode::handle_bit_and                                                                                                                                                             -      -            
+     1.98%  [.] boa_engine::object::internal_methods::ordinary_define_own_property                                                                                                                                 -      -            
+     1.90%  [.] boa_engine::vm::opcode::handle_shift_right                                                                                                                                                         -      -            
+     1.81%  [.] boa_engine::object::internal_methods::ordinary_get                                                                                                                                                 -      -            
+                                             0x7faf17627781
+     1.79%  [.] boa_engine::vm::opcode::handle_dec                                                                                                                                                                 -      -            
+     1.50%  [.] <boa_engine::object::property_map::PropertyMap>::insert_with_slot                                                                                                                                  -      -            
+                                  0x7faf17627781
+     1.38%  [.] boa_engine::vm::opcode::handle_store_int16                                                                                                                                                         -      -            
+     1.36%  [.] boa_engine::vm::opcode::get::property::get_by_name::<false>                                                                                                                                        -      -            
+     1.31%  [.] <boa_engine::property::PropertyDescriptorBuilder>::value::<boa_engine::value::JsValue>                                                                                                             -      -            
+                                  0x7faf17627781
+     1.13%  [.] <boa_engine::value::JsValue>::base_class                                                                                                                                                           -      -            
+     1.11%  [.] boa_engine::vm::opcode::handle_get_property_by_name                                                                                                                                                -      -            
+     1.08%  [.] <boa_engine::value::JsValue>::to_property_key                                                                                                                                                      -      -            
+     0.89%  [.] ryu_js::pretty::format64                                                                                                                                                                           -      -            
+     0.78%  [.] boa_engine::vm::opcode::handle_jump_if_not_greater_than_or_equal                                                                                                                                   -      -            
+     0.76%  [.] <boa_engine::property::PropertyKey as core::cmp::PartialEq>::eq                                                                                                                                    -      -            
+     0.74%  [.] boa_engine::vm::opcode::handle_push_from_register                                                                                                                                                  -      -            

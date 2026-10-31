@@ -1,0 +1,63 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":5,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":14},\"ruta\":\"mojo/public/cpp/bindings/lib/native_struct_serialization.h\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":5},\"ruta\":\"ipc/ipc_message.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":5},\"ruta\":\"ipc/ipc_message_unittest.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":26},\"ruta\":\"ipc/param_traits_utils.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":20},\"ruta\":\"ipc/param_traits_utils_unittest.cc\"}],\"recortado\":false,\"ruta\":\"ipc/ipc_message.h\",\"se_recompilan\":6}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 5,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 1,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ipc/ipc_message.h\"",
+          "linea": 14
+        },
+        "ruta": "mojo/public/cpp/bindings/lib/native_struct_serialization.h"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ipc/ipc_message.h\"",
+          "linea": 5
+        },
+        "ruta": "ipc/ipc_message.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ipc/ipc_message.h\"",
+          "linea": 5
+        },
+        "ruta": "ipc/ipc_message_unittest.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ipc/ipc_message.h\"",
+          "linea": 26
+        },
+        "ruta": "ipc/param_traits_utils.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ipc/ipc_message.h\"",
+          "linea": 20
+        },
+        "ruta": "ipc/param_traits_utils_unittest.cc"
+      }
+    ],
+    "recortado": false,
+    "ruta": "ipc/ipc_message.h",
+    "se_recompilan": 6
+  }
+}

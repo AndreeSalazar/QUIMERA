@@ -1,0 +1,200 @@
+4778c674a43511dbb5cd166f1e8859182bddc4a4	b951dcb26460eca592494c05cb5fe3dffa2b73b4	2026-10-27T11:56:51-05:00	Eddi Andree Salazar Matos	Steam: renovar bibliotecas con varias generaciones conservadas
+b951dcb26460eca592494c05cb5fe3dffa2b73b4	35ed5e156db170b24ba6a83318c71b1b2d92987b	2026-10-26T12:24:50-05:00	Eddi Andree Salazar Matos	MangoHud: restaurar preferencia al iniciar Steam desde Heronite
+35ed5e156db170b24ba6a83318c71b1b2d92987b	115203c2ea50f8446724f0fea103f3498aea6803	2026-10-26T07:32:54-05:00	Eddi Andree Salazar Matos	SUPER: accesos con iconos y capturas verificadas
+115203c2ea50f8446724f0fea103f3498aea6803	bbf601505c410994ea81d70bf08d5e42ee81a497	2026-10-26T02:48:02-05:00	Eddi Andree Salazar Matos	VIGILANTE: informes acotados por juego sin ajustes automaticos
+bbf601505c410994ea81d70bf08d5e42ee81a497	ad616e81d4b0be31ea2d7f46e61ce9ed54a7516a	2026-10-26T00:20:37-05:00	Eddi Andree Salazar Matos	SUPER GRAFO: estados y vigencia por dependencias reales
+ad616e81d4b0be31ea2d7f46e61ce9ed54a7516a	78cc5933e38628b92f06cd7fd520984b6438b418	2026-10-25T23:08:05-05:00	Eddi Andree Salazar Matos	ULTRA: revision de fuentes reales y entrega PC verificada
+78cc5933e38628b92f06cd7fd520984b6438b418	3a6e796b182d6763effdeb27bc1eb9e32bfb2bc1	2026-10-25T22:09:49-05:00	Eddi Andree Salazar Matos	SUPER GRAFO: banco LLVM C y C++ aislado y cobertura explicita
+3a6e796b182d6763effdeb27bc1eb9e32bfb2bc1	ae9a17067c94fd878a0193e9576142b2200ed204	2026-10-25T21:47:30-05:00	Eddi Andree Salazar Matos	CASM: modulos freestanding x86-64 y pruebas adversas
+ae9a17067c94fd878a0193e9576142b2200ed204	728e07360939c602573bd391bf816d6ed1c7f2a9	2026-10-25T16:56:02-05:00	Eddi Andree Salazar Matos	CASM Native: autocompilacion x86-64 y verificacion de HEX
+728e07360939c602573bd391bf816d6ed1c7f2a9	a435366b244e80cdaf0c930e51b19d838ec2d302	2026-10-25T15:44:25-05:00	Eddi Andree Salazar Matos	CASM: contrastar semillas y emitir ELF Linux con bancos UB C/C++
+a435366b244e80cdaf0c930e51b19d838ec2d302	0ef82d90397a1f879a643c2d432971470bdf1e45	2026-10-25T15:09:10-05:00	Eddi Andree Salazar Matos	Integrar SUPER GRAFO actual y evitar entregas obsoletas
+0ef82d90397a1f879a643c2d432971470bdf1e45	0e042eb66cf6123c27ccc3ad04eec9e9663e22c2 6829f9cb3f0ab8a63a9e8046c214ebf08e76b357	2026-10-25T14:28:58-05:00	Eddi Andree Salazar Matos	Merge pull request #3 from AndreeSalazar/claude/modest-edison-f660pp
+6829f9cb3f0ab8a63a9e8046c214ebf08e76b357	51a62df220508ebd134e210474907092f10ca876	2026-10-25T19:19:45Z	Claude	SUPER GRAFO: la ciudad fantasma, ver como se construyo desde el primer commit
+51a62df220508ebd134e210474907092f10ca876	092741d28709fa431011cddc6ef8957588384d49	2026-10-25T19:06:26Z	Claude	SUPER GRAFO: la cronologia, como se construyo el proyecto desde el primer commit
+092741d28709fa431011cddc6ef8957588384d49	036c74439a458972397f46191e9470d860bb3104	2026-10-25T17:26:26Z	Claude	SUPER GRAFO: Clang junto a GCC, y el camino del fallo entre archivos
+036c74439a458972397f46191e9470d860bb3104	64081727cea22c0c82bc078f665de58918698ba0	2026-10-25T16:50:56Z	Claude	SUPER GRAFO a escala de Chromium: limites subidos y cuatro cuellos arreglados
+64081727cea22c0c82bc078f665de58918698ba0	a4fb6b07354520df83e1a31811dd1df5e8ed125a	2026-10-25T15:31:05Z	Claude	SUPER GRAFO: medido en proyectos grandes; cabeceras exportadas y gcc_deps honesto
+a4fb6b07354520df83e1a31811dd1df5e8ed125a	d8cedbec6b4dcf12c36470427f24a839a1f529f3	2026-10-25T14:54:50Z	Claude	SUPER GRAFO: modo guardia (todo el C por turnos) y dos fallos arreglados
+0e042eb66cf6123c27ccc3ad04eec9e9663e22c2	7e0b8297a125700defaea8b76b74ebc56c89e6c9	2026-10-25T09:37:17-05:00	Eddi Andree Salazar Matos	Restaurar HUD nativo, rescatar cursor RED y limpiar compilaciones
+d8cedbec6b4dcf12c36470427f24a839a1f529f3	029d348a462a2d64a89f8fde9db37c3fb63c194f	2026-10-25T14:24:13Z	Claude	SUPER GRAFO: si cambia una cabecera, el guardian revisa a quien la usa
+029d348a462a2d64a89f8fde9db37c3fb63c194f	020259988a065e6daa14ffa4d502d521f865542e	2026-10-25T14:19:07Z	Claude	SUPER GRAFO: vigia al instante (inotify), guardianes persistentes y puente privado
+020259988a065e6daa14ffa4d502d521f865542e	6200eccae935d7a2677557367a8980eeaf008027	2026-10-25T14:01:45Z	Claude	SUPER GRAFO: MCP en vivo (vigia, recursos con suscripcion, cambios y puente con la ventana)
+6200eccae935d7a2677557367a8980eeaf008027	ffc30ece9c853e04cad2a2ae667483670c45d2b4	2026-10-25T13:43:51Z	Claude	SUPER GRAFO: compile_commands.json e indice incremental en disco
+ffc30ece9c853e04cad2a2ae667483670c45d2b4	85db241fc19dce0f3d1f8cfe5fddb5198c2f3ce3	2026-10-25T13:19:43Z	Claude	SUPER GRAFO sin ventana: consultas en JSON, servidor MCP y GCC en SARIF
+7e0b8297a125700defaea8b76b74ebc56c89e6c9	c585d880512a3ae7bfcbea3ba86b305752bba0e5	2026-10-25T04:10:42-05:00	Eddi Andree Salazar Matos	Reemplazar Heroic por Heronite y unificar acceso Steam y GOG
+85db241fc19dce0f3d1f8cfe5fddb5198c2f3ce3	997f38c67f989fb8791a5d4117b543eb35f296da	2026-10-25T09:09:33Z	Claude	SUPER GRAFO: aislar el grupo entero, y la geometria de la GPU ya no queda vieja
+997f38c67f989fb8791a5d4117b543eb35f296da	39fb8608348dcbcd66f005edf815387e5e72ceb6	2026-10-25T08:48:11Z	Claude	SUPER GRAFO: del grupo a los nodos y al editor (lo que senalan y por donde llega)
+39fb8608348dcbcd66f005edf815387e5e72ceb6	d882de9370ae785e0e01a588abc9180afe57ca22	2026-10-25T08:31:07Z	Claude	SUPER GRAFO: ciclos de cabeceras (E-003) y lectura de los #if
+c585d880512a3ae7bfcbea3ba86b305752bba0e5	db05d7e513e496d92732ddb25365e7404e8143eb	2026-10-25T03:26:15-05:00	Eddi Andree Salazar Matos	Agregar perfil Ahorro e investigar Heronite sin migrar juegos
+d882de9370ae785e0e01a588abc9180afe57ca22	779c52be9c1ea7a5665b9ffd9f4a5a856f9cf425	2026-10-25T08:00:40Z	Claude	SUPER GRAFO: anotar el siguiente paso, los ciclos
+779c52be9c1ea7a5665b9ffd9f4a5a856f9cf425	93723d95e2c757c335252ec243939948054b16af	2026-10-25T07:49:06Z	Claude	SUPER GRAFO: el camino entre dos elegidos, con motivos, onda y donde cortar
+db05d7e513e496d92732ddb25365e7404e8143eb	d10fcbbf0d5ffdc0be7621d162dc9739c7b1355d	2026-10-25T02:39:23-05:00	Eddi Andree Salazar Matos	Aplicar perfiles CPU reversibles y separar temperatura y energia
+93723d95e2c757c335252ec243939948054b16af	458cecb22907169b126de9e45c5776dbbca9f5f1	2026-10-25T07:02:11Z	Claude	SUPER GRAFO: Combinar, la seleccion grupal en vivo
+458cecb22907169b126de9e45c5776dbbca9f5f1	5377588a1c4f75e7ff416d7bef42c14ae30e9122	2026-10-25T06:42:14Z	Claude	SUPER GRAFO: triangulo Seguridad / Rendimiento / Elegancia
+d10fcbbf0d5ffdc0be7621d162dc9739c7b1355d	921ef6c04225af22fe914a8f6b1f962d50bc1e8f	2026-10-25T01:26:27-05:00	Eddi Andree Salazar Matos	Priorizar temperatura CPU y aclarar lectura de 91 grados
+5377588a1c4f75e7ff416d7bef42c14ae30e9122	9e986cd4899fd00b80c68f9679800f6855c2ed4a	2026-10-25T06:25:42Z	Claude	docs(casm): traspaso de CASM 0.3 (rdtsc y trampas) como parche
+921ef6c04225af22fe914a8f6b1f962d50bc1e8f	215b3cdecd7378542f2c7f080404abe9c848c45c	2026-10-25T01:21:39-05:00	Eddi Andree Salazar Matos	Investigar energia CPU y entrada de REDlauncher con informes fisicos
+9e986cd4899fd00b80c68f9679800f6855c2ed4a	be166bb84e95c1b01ddac258c69bf1a152abbb05	2026-10-25T06:05:41Z	Claude	feat(casm): CASM 0.2, enteros exactos con aritmetica comprobada
+215b3cdecd7378542f2c7f080404abe9c848c45c	b5476929427d5d9c94acaf7d4a1cd519443c014c	2026-10-25T00:46:04-05:00	Eddi Andree Salazar Matos	Integrar escritorio de main con Carpetas y eww verificados
+be166bb84e95c1b01ddac258c69bf1a152abbb05	a5e472ed496005adeb6967c1b4935a67a451c3ca	2026-10-25T05:40:24Z	Claude	test(casm): un caso aislado por katana, 48 de 48
+a5e472ed496005adeb6967c1b4935a67a451c3ca	ab73ed35f641859833fc6936a2e0f4470aa1e747	2026-10-25T05:29:03Z	Claude	feat(casm): Taller CASM en el SUPER GRAFO, katanas y bytes por linea
+ab73ed35f641859833fc6936a2e0f4470aa1e747	4196e070d8aa5aba85005436ae7da7587f04fbaf	2026-10-25T05:16:57Z	Claude	feat(carpetas): el nucleo entiende CASM (mapa .casm -> .hex, iconos)
+4196e070d8aa5aba85005436ae7da7587f04fbaf	e91961de6e9427a9eccce587c4a6ca7c04e5175b	2026-10-25T05:14:45Z	Claude	feat(casm): CASM aislado en ULTRA LinuX, construido solo con GCC
+e91961de6e9427a9eccce587c4a6ca7c04e5175b	d2147c35ce64b3f178dda6199232fabd1c6058f2	2026-10-25T04:55:45Z	Claude	docs(super-grafo): triangulo, alcance GCC x86-64 y camino
+b5476929427d5d9c94acaf7d4a1cd519443c014c	36ba99abf0ce141e0cbe3114228ec30e84ad29bf	2026-10-24T23:22:33-05:00	Eddi Andree Salazar Matos	Evitar espera del registro Steam y capturar arranque de Warframe
+36ba99abf0ce141e0cbe3114228ec30e84ad29bf	f14d12d6edcb443c30a5c0ac153d039124aa6fb3 ba55affff6f6c179e2e2806be2857aeb3f666265	2026-10-24T23:01:34-05:00	Eddi Andree Salazar Matos	Merge branch 'main' of https://github.com/AndreeSalazar/ULTRA-LinuX
+ba55affff6f6c179e2e2806be2857aeb3f666265	416212e38fe83bd2eaba21c3dd0b2952e212c713 d2147c35ce64b3f178dda6199232fabd1c6058f2	2026-10-24T23:01:47-05:00	Eddi Andree Salazar Matos	Merge pull request #2 from AndreeSalazar/claude/modest-edison-f660pp
+f14d12d6edcb443c30a5c0ac153d039124aa6fb3	8e9a245fb869db3dbcc762cb7aab545dde13f011	2026-10-24T20:19:58-05:00	Eddi Andree Salazar Matos	Conservar cursor compatible NVIDIA y centrar REDlauncher
+d2147c35ce64b3f178dda6199232fabd1c6058f2	85d8c2d0584046ec3031c39d6f2aebd98672621b	2026-10-25T01:05:48Z	Claude	feat(carpetas): SUPER GRAFO, fallo conectado en rojo neon y blanco y aislar
+85d8c2d0584046ec3031c39d6f2aebd98672621b	2a7049a8827749f241298c02e5990cb201ee0157	2026-10-25T00:48:20Z	Claude	feat(carpetas): museo en el codigo y dependencias (base del SUPER GRAFO)
+8e9a245fb869db3dbcc762cb7aab545dde13f011	416212e38fe83bd2eaba21c3dd0b2952e212c713	2026-10-24T17:35:57-05:00	Eddi Andree Salazar Matos	Documentar y verificar recuperacion de Cyberpunk tras desinstalacion incompleta
+416212e38fe83bd2eaba21c3dd0b2952e212c713	a8b4361116d4c476f88c98273375581952b53f2f	2026-10-24T17:15:14-05:00	Eddi Andree Salazar Matos	Conservar prefijos y runtimes Linux al renovar bibliotecas Steam
+2a7049a8827749f241298c02e5990cb201ee0157	f9074ce797c42bd00cc8b504602d19c4116b396c	2026-10-24T21:38:18Z	Claude	feat(carpetas): historia de git y puntos calientes en la vista Ciudad
+f9074ce797c42bd00cc8b504602d19c4116b396c	4a107499450d235bcd261b23b241b5eef87d32ef	2026-10-24T21:29:12Z	Claude	feat(carpetas): vista Ciudad en 3D (como CodeCity) y organizacion medida sobre Chromium
+4a107499450d235bcd261b23b241b5eef87d32ef	cb0cccf2f981ddaba37d8990ab33ef501d806284	2026-10-24T21:04:38Z	Claude	feat(carpetas): buscar en todo el proyecto, Ctrl+P, enfocar carpetas y organizador estilo Chromium
+a8b4361116d4c476f88c98273375581952b53f2f	c19515f1a3a9b9b85f47fbc3a8d02c8622701b52	2026-10-24T16:01:19-05:00	Eddi Andree Salazar Matos	Abrir Heroic antes de Cyberpunk y conservar REDlauncher
+c19515f1a3a9b9b85f47fbc3a8d02c8622701b52	7d1a194e6459047805aebf333ad698531af6a174	2026-10-24T15:36:35-05:00	Eddi Andree Salazar Matos	Auditar cadena PE y documentar recuperacion de dependencias FSR
+cb0cccf2f981ddaba37d8990ab33ef501d806284	5bdb2a1bdb8f313dac0f28212aaab78b1e14af9e	2026-10-24T20:22:04Z	Claude	feat(carpetas): pestanas, buscar y reemplazar, y logos de lenguaje reconocibles
+7d1a194e6459047805aebf333ad698531af6a174	748629ce2a54e77a144fa9be733f221c18cfde96	2026-10-24T15:19:28-05:00	Eddi Andree Salazar Matos	Documentar reparacion reversible de DLL ocultas de Cyberpunk
+5bdb2a1bdb8f313dac0f28212aaab78b1e14af9e	0124708ba87f65da0ad37dd08a7f531d61f8a581	2026-10-24T20:07:59Z	Claude	feat(carpetas): procesos en vivo, errores atrapados en los nodos y editor con clic derecho
+748629ce2a54e77a144fa9be733f221c18cfde96	9dc4669d57a79f93d7546a211461fb25794522f0	2026-10-24T15:02:49-05:00	Eddi Andree Salazar Matos	Unificar Cyberpunk con el prefijo de Heroic y conservar diagnostico UMU
+0124708ba87f65da0ad37dd08a7f531d61f8a581	182120c843b4eb1bbfae45c1b7fc2ba51ba53bb3	2026-10-24T17:40:32Z	Claude	feat: grafo retenido en la GPU, botones de play y terminal como VS Code
+182120c843b4eb1bbfae45c1b7fc2ba51ba53bb3	fae7fcd7aa37a3a2cb85e941aa514f9bcf3236d8	2026-10-24T17:22:17Z	Claude	feat: ULTRA Carpetas con grafo de nodos (Blender/Houdini), explorador, iconos SVG y carriles con semaforo
+9dc4669d57a79f93d7546a211461fb25794522f0	58b2421903fa2cb1f27c7b1377b12ed6e50c9d78	2026-10-24T12:06:47-05:00	Eddi Andree Salazar Matos	Trasladar Cyberpunk a ext4 nativo conservando cambios y verificar origen
+fae7fcd7aa37a3a2cb85e941aa514f9bcf3236d8	931b3de75a3505d4fe7dd07a119c399131768903	2026-10-24T16:56:09Z	Claude	feat: temas y ajustes para ULTRA Carpetas, como datos no_std reutilizables en TITAN
+931b3de75a3505d4fe7dd07a119c399131768903	a0e2af24bb1c07e870e82f7ed611f59e93531812	2026-10-24T16:40:42Z	Claude	feat: ULTRA Carpetas como React + Redux con nucleo no_std para BMO-X
+a0e2af24bb1c07e870e82f7ed611f59e93531812	a983493f470667c4b74a13d88c3136e3577cfe6d	2026-10-24T16:31:04Z	Claude	feat: ULTRA Carpetas, gestor de carpetas en Rust con Vulkan (wgpu)
+58b2421903fa2cb1f27c7b1377b12ed6e50c9d78	c5be8a0291e9c37cd915e1c185f781c954ea569d	2026-10-24T10:50:02-05:00	Eddi Andree Salazar Matos	Migrar almacenamiento personal a particion ext4 nativa y verificar arranque PC
+a983493f470667c4b74a13d88c3136e3577cfe6d	16f0fd159c1ad5412b7c48b7ace06740d5180bbf	2026-10-24T15:48:12Z	Claude	feat: esfera del autor en 3D con todos los detalles
+16f0fd159c1ad5412b7c48b7ace06740d5180bbf	9ba1c93605d86867c1e18b187142e6e201484569	2026-10-24T15:38:06Z	Claude	feat: fondo ciudad 3D con perspectiva real y perfil Ciudad 3D
+9ba1c93605d86867c1e18b187142e6e201484569	3fd2ba706e6bbe9fb7edf6719c211b6282851969	2026-10-24T15:14:44Z	Claude	feat: tarjetas de equipo con eww y fondo vivo con tu propia imagen
+3fd2ba706e6bbe9fb7edf6719c211b6282851969	95923229ab3936cd0cedcb5e453dfa51a293a3fb	2026-10-24T14:54:41Z	Claude	feat: fondo vivo, un sonido propio por elemento y barra con vida
+95923229ab3936cd0cedcb5e453dfa51a293a3fb	fe147d0e073aaac30f37359557b180e590a11e18	2026-10-24T14:40:04Z	Claude	feat: controles en CPU y RAM de la barra para cerrar o frenar procesos
+c5be8a0291e9c37cd915e1c185f781c954ea569d	0f330f1b7c38e2056ee0b5f97912f0ba88e453c8	2026-10-24T03:45:06-05:00	Eddi Andree Salazar Matos	Reconstruir main PC, verificar FAT32 y limpiar taller de compilacion
+0f330f1b7c38e2056ee0b5f97912f0ba88e453c8	ca67062c8839efc571e5a54e339df722291364bc fe147d0e073aaac30f37359557b180e590a11e18	2026-10-24T02:49:46-05:00	Eddi Andree Salazar Matos	Merge pull request #1 from AndreeSalazar/claude/modest-edison-f660pp
+fe147d0e073aaac30f37359557b180e590a11e18	83307014bc7d349ed58dcad63b232c4f4b2aa5b1	2026-10-24T07:46:44Z	Claude	feat: modo juego automatico, portapapeles, sonidos propios y fondo segun la hora
+83307014bc7d349ed58dcad63b232c4f4b2aa5b1	6147515a4b90a5e5fd85967ee3f0c2b604a94e8b	2026-10-24T07:35:35Z	Claude	fix: guardar el fondo Demonio como binario
+6147515a4b90a5e5fd85967ee3f0c2b604a94e8b	394a034200e1ae7e1d39b81ccc1897ae3e5cd4d9	2026-10-24T07:35:20Z	Claude	feat: perfiles de un toque, fondo Demonio y capturas de pantalla
+394a034200e1ae7e1d39b81ccc1897ae3e5cd4d9	0c2bc90599b850dd682bff94e9b360b450247ffe	2026-10-24T07:26:16Z	Claude	feat: guardar incidentes y ampliar la personalizacion del escritorio
+0c2bc90599b850dd682bff94e9b360b450247ffe	da66c96c3c306de659687593e83fe918a7254653	2026-10-24T07:17:50Z	Claude	feat: intro de arranque con el Tux del autor en el framebuffer
+da66c96c3c306de659687593e83fe918a7254653	4ac50be2b920247d527f75fc3a74e207c43f301d	2026-10-24T07:04:47Z	Claude	feat: personalizar el escritorio y anadir Rust a ULTRA
+4ac50be2b920247d527f75fc3a74e207c43f301d	7764746855e99fd9aa34a5f916b297253677bc1e ca67062c8839efc571e5a54e339df722291364bc	2026-10-24T06:57:26Z	Claude	Merge remote-tracking branch 'origin/main' into claude/modest-edison-f660pp
+7764746855e99fd9aa34a5f916b297253677bc1e	65da8ffc8dee96f984b8edc800c3234ea1f89d5c	2026-10-24T06:56:50Z	Claude	feat: medir pausas del kernel y tirones relativos en el diagnostico de juegos
+ca67062c8839efc571e5a54e339df722291364bc	ad87ea25817b1029aa6fcfb4c32d0a20f83a00f8	2026-10-24T01:39:58-05:00	Eddi Andree Salazar Matos	Recover archived game layer and add bounded application resource controls
+65da8ffc8dee96f984b8edc800c3234ea1f89d5c	3b8ab9d971ace2b82e881e2c7861a4bd10adc5a0	2026-10-24T06:24:57Z	Claude	feat: aplicar el tema Neon con acento hielo al escritorio
+3b8ab9d971ace2b82e881e2c7861a4bd10adc5a0	d85c7c84367d256680f9e4b4d4265dc26fa828ea	2026-10-24T06:11:27Z	Claude	docs: animar el escritorio Neon y anadir el perfil del autor
+d85c7c84367d256680f9e4b4d4265dc26fa828ea	af2dbc0e760535ca0d9039f99b17cebda86636c9	2026-10-24T05:55:07Z	Claude	docs: anadir estilo Neon cyberpunk con nueve maquetas
+af2dbc0e760535ca0d9039f99b17cebda86636c9	ad87ea25817b1029aa6fcfb4c32d0a20f83a00f8	2026-10-24T05:39:47Z	Claude	docs: proponer escritorio Nucleo 2 con maquetas
+ad87ea25817b1029aa6fcfb4c32d0a20f83a00f8	ca48a5629be1cb2a66e231b333f38568c4437505	2026-10-23T23:22:14-05:00	Eddi Andree Salazar Matos	Add Nucleo desktop theme, cursor assets and live equipment panel
+ca48a5629be1cb2a66e231b333f38568c4437505	f798a3da5277f2119c0375b8b95a17787dd090dd	2026-10-23T22:28:25-05:00	Eddi Andree Salazar Matos	Add bounded live Warframe resource diagnostics and frame capture
+f798a3da5277f2119c0375b8b95a17787dd090dd	aecfcb072253f056ff69679472570f20a4b9bf77	2026-10-23T19:47:08-05:00	Eddi Andree Salazar Matos	docs: investigar microtiron de Warframe con diagnostico privado acotado
+aecfcb072253f056ff69679472570f20a4b9bf77	bd5bbf47595c7d70fa314820d63e73d87d1c306e	2026-10-23T19:37:10-05:00	Eddi Andree Salazar Matos	fix: reconocer Cyberpunk de Personal en Heroic GOG
+bd5bbf47595c7d70fa314820d63e73d87d1c306e	82b32b478d50c9e986987637f989172365a2eeae	2026-10-23T19:10:02-05:00	Eddi Andree Salazar Matos	docs: diagnosticar cargas GPU espacio y red del PC
+82b32b478d50c9e986987637f989172365a2eeae	63814c5267bf7e38b2f0ec9d11dea509503ff85a	2026-10-23T12:31:51-05:00	Eddi Andree Salazar Matos	fix: recuperar espacio ext4 y documentar limpieza respaldada
+63814c5267bf7e38b2f0ec9d11dea509503ff85a	62460fe32a2d505a524410dd0dc9aae4a6637ca2	2026-10-23T11:36:44-05:00	Eddi Andree Salazar Matos	feat: mostrar FPS y recursos con catalogo continuo Steam y GOG
+62460fe32a2d505a524410dd0dc9aae4a6637ca2	ea8657296e0704ebe14557b4bab1a9c2b4e34e98	2026-10-23T09:50:50-05:00	Eddi Andree Salazar Matos	fix: recuperar bibliotecas Steam y ampliar audio maestro a 500%
+ea8657296e0704ebe14557b4bab1a9c2b4e34e98	9dd71f341a58c8c99ebff70ac0302fb541885dfd	2026-10-23T08:22:24-05:00	Eddi Andree Salazar Matos	feat: habilitar PSI y analizar intervalos de recursos con evidencia HEX
+9dd71f341a58c8c99ebff70ac0302fb541885dfd	684052686ebdfcb934471fe34ccdfd7784fb1c4f	2026-10-23T05:33:40-05:00	Eddi Andree Salazar Matos	perf: integrar lector RAM con Custodia y verificar HEX de produccion
+684052686ebdfcb934471fe34ccdfd7784fb1c4f	cf52e2fb793aa1b195a0bfcfa3ead66019ff5f7a	2026-10-23T04:48:26-05:00	Eddi Andree Salazar Matos	perf: evitar heap por ticket y medir Custodia antes y despues
+cf52e2fb793aa1b195a0bfcfa3ead66019ff5f7a	b7cd419adf308745b491c9ac6ba842ae1bb94e71	2026-10-23T04:24:50-05:00	Eddi Andree Salazar Matos	docs: registrar reglas y pendientes para demostrar rendimiento
+b7cd419adf308745b491c9ac6ba842ae1bb94e71	ea59c11f2ea026f79e30db10640197cac9bcdf34	2026-10-23T04:20:19-05:00	Eddi Andree Salazar Matos	test: estresar Custodia con secuencias fronteras y mutantes
+ea59c11f2ea026f79e30db10640197cac9bcdf34	88f8bc899fabed8574083084389ad165ea0caaaf	2026-10-23T04:04:34-05:00	Eddi Andree Salazar Matos	feat: construir modelo C de Custodia con cuotas retirada y HEX
+88f8bc899fabed8574083084389ad165ea0caaaf	b1818379a081d1fcd55ad038114f61cc5b8e0481	2026-10-23T03:52:33-05:00	Eddi Andree Salazar Matos	docs: definir Custodia como guardian de recursos y prestamos
+b1818379a081d1fcd55ad038114f61cc5b8e0481	a92d686d3d7557141ea96f99b7aedad89b661b03	2026-10-23T03:47:58-05:00	Eddi Andree Salazar Matos	docs: investigar rutas rapidas de E/S con recursos autorizados
+a92d686d3d7557141ea96f99b7aedad89b661b03	0ffc2f605bb4446e7a40071bff322bd2742771c3	2026-10-23T03:41:53-05:00	Eddi Andree Salazar Matos	feat: detectar recursos del equipo en sesiones del perfil generico
+0ffc2f605bb4446e7a40071bff322bd2742771c3	bf990dde2e6e1011237afa0c00b43f49bc875200	2026-10-23T03:36:01-05:00	Eddi Andree Salazar Matos	feat: observar presion CPU RAM y E/S sin cambiar politicas
+bf990dde2e6e1011237afa0c00b43f49bc875200	bec661d2c4cc48eb043ea3fbc96577590dccc974	2026-10-23T03:25:01-05:00	Eddi Andree Salazar Matos	docs: disenar guardian de fallos CPU y eventos del kernel
+bec661d2c4cc48eb043ea3fbc96577590dccc974	6176ee0d59543b4af5b61fa85bd4e797f4fd82e6	2026-10-23T03:21:01-05:00	Eddi Andree Salazar Matos	docs: definir guardianes de escritura caza UB y fluidez
+6176ee0d59543b4af5b61fa85bd4e797f4fd82e6	fcdec45abc9902fea774816bc65bfa943cfce5af	2026-10-23T03:15:41-05:00	Eddi Andree Salazar Matos	fix: rechazar handles de pools ajenos sin reciclar identidades
+fcdec45abc9902fea774816bc65bfa943cfce5af	7d876d13d904ce3b249925a80278af98e4d9eb69	2026-10-23T03:06:03-05:00	Eddi Andree Salazar Matos	feat: acotar buffers externos y documentar limites de punteros
+7d876d13d904ce3b249925a80278af98e4d9eb69	129e0bce4ef7499151bc16cb99e2410aa90580b8	2026-10-23T02:42:26-05:00	Eddi Andree Salazar Matos	feat: categorias del centro con colores y navegacion recordada
+129e0bce4ef7499151bc16cb99e2410aa90580b8	587216056dd4eb6ed8868acc1805b96bf1ecd13c	2026-10-23T02:12:41-05:00	Eddi Andree Salazar Matos	feat: panel de discos con estado y revision automatica
+587216056dd4eb6ed8868acc1805b96bf1ecd13c	8813b9586f7786a29bc3ad9a974f991defd081bd	2026-10-22T19:23:46-05:00	Eddi Andree Salazar Matos	feat: controlar resolucion por pantalla con recuperacion y entrega verificada
+8813b9586f7786a29bc3ad9a974f991defd081bd	12bbb883d46970e96588bfa4b7f41b8a16919c47	2026-10-22T18:36:10-05:00	Eddi Andree Salazar Matos	Integrate normal Vulkan demo shutdown and verify full GLES texture images
+12bbb883d46970e96588bfa4b7f41b8a16919c47	b723ab3e217ddf46363ce4387f1218db9d69c0fb	2026-10-22T18:21:29-05:00	Eddi Andree Salazar Matos	Separate portable graphics integration from optional RTX validation
+b723ab3e217ddf46363ce4387f1218db9d69c0fb	f0979a9a030190e42d1cea578795430ef1300fe3	2026-10-22T18:05:40-05:00	Eddi Andree Salazar Matos	Track graphics work in CSV and test EGL recreation and Vulkan copy hazards
+f0979a9a030190e42d1cea578795430ef1300fe3	2c35c2f487ffd6e1caaa51da4cd9965a6b15d8de	2026-10-22T17:54:14-05:00	Eddi Andree Salazar Matos	Measure GLES and Vulkan resource reuse with isolated repeated benchmarks
+2c35c2f487ffd6e1caaa51da4cd9965a6b15d8de	ec35e64d2def1e1c0ce42d85609a0e06d271d580	2026-10-22T17:43:51-05:00	Eddi Andree Salazar Matos	Reuse GLES texture storage and validate fenced Vulkan transfers
+ec35e64d2def1e1c0ce42d85609a0e06d271d580	942e2c2473a329da3a5f64289b0d6ac1d2363667	2026-10-22T17:18:47-05:00	Eddi Andree Salazar Matos	Expand GLES lifetime checks and enforce final Vulkan validation verdict
+942e2c2473a329da3a5f64289b0d6ac1d2363667	527c682a5b299ea1e60a165179e58e1c6e71c93a	2026-10-22T14:35:13-05:00	Eddi Andree Salazar Matos	Set Peru regional time and bounded authenticated clock synchronization
+527c682a5b299ea1e60a165179e58e1c6e71c93a	eb928a01245d6287fb39b4bbb0151455959c7832	2026-10-22T13:56:36-05:00	Eddi Andree Salazar Matos	Normalize serial evidence bytes for portable hash verification
+eb928a01245d6287fb39b4bbb0151455959c7832	5bd51fbd24de8e93cbf904da5795d32cb3695c37	2026-10-22T13:55:34-05:00	Eddi Andree Salazar Matos	Enforce production ELF contracts and deploy verified generic and PC builds
+5bd51fbd24de8e93cbf904da5795d32cb3695c37	3e86d9f2187c0716a9e9831972b69e66fee78c64	2026-10-22T13:15:39-05:00	Eddi Andree Salazar Matos	Inspect ASM bytes with bounded HEX contracts inspired by TALK CPU
+3e86d9f2187c0716a9e9831972b69e66fee78c64	eec3d356fb977150b446d62398a468972de86d5c	2026-10-22T13:08:35-05:00	Eddi Andree Salazar Matos	Preserve original sanitizer whitespace in round 11 evidence
+eec3d356fb977150b446d62398a468972de86d5c	ff357ef79df1f52e68129d5f2904c8074b1fbeab	2026-10-22T13:08:14-05:00	Eddi Andree Salazar Matos	Add scoped lifetime handles and isolated C ASM ABI checks
+ff357ef79df1f52e68129d5f2904c8074b1fbeab	2a39a30ff4f17b9f4ae39c9b3888b862cadad159	2026-10-22T12:56:26-05:00	Eddi Andree Salazar Matos	Bound string operations and stop after incomplete guardian installation
+2a39a30ff4f17b9f4ae39c9b3888b862cadad159	9f6c39534a43c093fde0174f7ce068740efabb9b	2026-10-22T12:20:58-05:00	Eddi Andree Salazar Matos	Plan staged C ASM graphics and gaming improvements with completion criteria
+9f6c39534a43c093fde0174f7ce068740efabb9b	10134615f967fe063f02bf805e06dc91798473b6	2026-10-22T11:52:41-05:00	Eddi Andree Salazar Matos	Organize C C++ and ASM museum with classified research cards
+10134615f967fe063f02bf805e06dc91798473b6	99c8fa212fcc1c0ae0d2c25ec592c81361916aa7	2026-10-22T09:54:00-05:00	Eddi Andree Salazar Matos	Move persistent storage to C and guard browser and games against low space
+99c8fa212fcc1c0ae0d2c25ec592c81361916aa7	0b6b33b95ed137f8cbbce0d3a18961d8fa65f5fa	2026-10-22T08:23:04-05:00	Eddi Andree Salazar Matos	Reuse active DHCP supervisors and validate both deployed profiles
+0b6b33b95ed137f8cbbce0d3a18961d8fa65f5fa	d244d2b25170a46e5956a15283f3216b4f18cd85	2026-10-22T07:41:29-05:00	Eddi Andree Salazar Matos	Auditar enlace Ethernet y comparar colas de red aisladas
+d244d2b25170a46e5956a15283f3216b4f18cd85	428c1f5697f81758ac11b93c3eae04f1148308ea	2026-10-22T07:08:00-05:00	Eddi Andree Salazar Matos	Medir almacenamiento y verificacion de Warframe en sesion real
+428c1f5697f81758ac11b93c3eae04f1148308ea	d9f62790d40168e8308071c35eccb768bc1815de	2026-10-22T00:58:49-05:00	Eddi Andree Salazar Matos	Conservar perfil de Brave con un llavero persistente en ULTRA
+d9f62790d40168e8308071c35eccb768bc1815de	ce2b86a38150becc12f7c4507ce167b82aa36379	2026-10-22T00:24:29-05:00	Eddi Andree Salazar Matos	Registrar automaticamente bibliotecas Steam preparadas
+ce2b86a38150becc12f7c4507ce167b82aa36379	be786117625f651ad251b80b4fa4e7063c0bb6af	2026-10-21T22:48:07-05:00	Eddi Andree Salazar Matos	Generalizar bibliotecas de juegos y seleccion de carpetas por disco
+be786117625f651ad251b80b4fa4e7063c0bb6af	a7080f6289c8e81662a75c3ea1a8565358aa9ba3	2026-10-21T21:14:46-05:00	Eddi Andree Salazar Matos	Integrar Warframe de Windows y ampliar diagnostico de juegos
+a7080f6289c8e81662a75c3ea1a8565358aa9ba3	7727934c87ec8b3c261394954373b0b38cc7ac3b	2026-10-21T19:51:47-05:00	Eddi Andree Salazar Matos	Integrar diagnostico Vulkan OpenGL y acceso NVMe Windows de solo lectura
+7727934c87ec8b3c261394954373b0b38cc7ac3b	9d9ca8c96a98d2b3cf5e1e818c95027c36342de5	2026-10-21T17:27:45-05:00	Eddi Andree Salazar Matos	Registrar reinstalacion verificada de ULTRA en A
+9d9ca8c96a98d2b3cf5e1e818c95027c36342de5	e055cc4e44818e1b6b935cbf71035be08c235435	2026-10-21T16:56:29-05:00	Eddi Andree Salazar Matos	Reconstruir ULTRA y documentar escritorio y distribucion experimental
+e055cc4e44818e1b6b935cbf71035be08c235435	27fafba1ea733b67ced86f375427c189121b7b97	2026-10-20T09:21:44-05:00	Eddi Andree Salazar Matos	cambios en privado
+27fafba1ea733b67ced86f375427c189121b7b97	4dbfd10b8a05363d21a135994dd3399691f6c0b3	2026-10-20T06:57:18-05:00	Eddi Andree Salazar Matos	Añadir audio USB maestro y juegos persistentes con Steam y GOG
+4dbfd10b8a05363d21a135994dd3399691f6c0b3	ad10c764bba17bbb9042e1a15b4bd5133518b075	2026-10-19T23:04:31-05:00	Eddi Andree Salazar Matos	Crear escritorio BMO-X neon con iconos y controles de ambiente
+ad10c764bba17bbb9042e1a15b4bd5133518b075	566b43ea4069a27558f7fe511d95e29d189a0fc5	2026-10-19T22:29:23-05:00	Eddi Andree Salazar Matos	Corregir DHCP tardio y verificar instalacion con datos preservados
+566b43ea4069a27558f7fe511d95e29d189a0fc5	08b5d70b6e86c640620614d27633691ad0faadd5	2026-10-19T18:38:36-05:00	Eddi Andree Salazar Matos	Corregir firmware Realtek y medir Ethernet con guardianes y fallos aislados
+08b5d70b6e86c640620614d27633691ad0faadd5	e167bed173a213594b9ae453558ff1360acf5778	2026-10-19T18:10:26-05:00	Eddi Andree Salazar Matos	Integrar Brave en Wayland con sandbox, red y pruebas por perfil
+e167bed173a213594b9ae453558ff1360acf5778	f9024a79d73a8523bef2cceb7afd3e995dc246c9	2026-10-19T17:15:50-05:00	Eddi Andree Salazar Matos	Medir RAM y GPU por sesion y conservar evidencia fisica de Hyprland
+f9024a79d73a8523bef2cceb7afd3e995dc246c9	3628d8fdf25be4040e7ff62f2758f98e5c5db0e4	2026-10-19T12:38:24-05:00	Eddi Andree Salazar Matos	Corregir control NVIDIA, exportar informes GPU y aplicar tema neon
+3628d8fdf25be4040e7ff62f2758f98e5c5db0e4	9ebb85d97ce21df3c6270740c1b9d09b8c327958	2026-10-19T12:08:04-05:00	Eddi Andree Salazar Matos	Integrar Hyprland con apps y corregir preparacion NVIDIA
+9ebb85d97ce21df3c6270740c1b9d09b8c327958	96b3fd8ff2b0698cb4e29f7cdfc80227e03ab355	2026-10-19T11:20:16-05:00	Eddi Andree Salazar Matos	Agregar menu de escritorio con teclado y comando corto e
+96b3fd8ff2b0698cb4e29f7cdfc80227e03ab355	b482aa79a23dae613465d6fbed8efb80edd74add	2026-10-19T11:05:08-05:00	Eddi Andree Salazar Matos	Preparar Wayland GLES NVIDIA con sesion sin root y recuperacion software
+b482aa79a23dae613465d6fbed8efb80edd74add	dd089fcf65ed9e0bf546ecec8fba82db02b2413b	2026-10-19T10:34:13-05:00	Eddi Andree Salazar Matos	Registrar RTX 3060 real y distinguir driver activo de escritorio acelerado
+dd089fcf65ed9e0bf546ecec8fba82db02b2413b	e17a6b3b5907583eea387611cd04f1ed2442a343	2026-10-19T10:20:06-05:00	Eddi Andree Salazar Matos	Aplicar contratos CPU y guardian GLES con reemplazo de programas y limites de memoria
+e17a6b3b5907583eea387611cd04f1ed2442a343	c1aa0fcb628d00c2ff180d90d88b0ce94536794e	2026-10-19T10:09:06-05:00	Eddi Andree Salazar Matos	Probar contenedor GPUS con carga estatica y reconstruccion dinamica GLES
+c1aa0fcb628d00c2ff180d90d88b0ce94536794e	291f69b5f3ed9c5d8c73038e2621d00df1a3d362	2026-10-19T10:02:26-05:00	Eddi Andree Salazar Matos	Instalar banco EGL GLES software y comprobar errores con perfiles C++
+291f69b5f3ed9c5d8c73038e2621d00df1a3d362	7c22432b3e6800f88a4ebd4a1da1058fb0240eed	2026-10-19T09:58:30-05:00	Eddi Andree Salazar Matos	Separar banco C++26 y validar G++ con perfiles endurecido y diagnostico
+7c22432b3e6800f88a4ebd4a1da1058fb0240eed	ab7da24dc72ba38fc7cd21bb01d6ef00ba01ed2a	2026-10-19T09:53:56-05:00	Eddi Andree Salazar Matos	Organizar laboratorio grafico Hyprland y medicion por capas
+ab7da24dc72ba38fc7cd21bb01d6ef00ba01ed2a	3ca545762f32f266095a9c4e8e073cd47295311d	2026-10-19T09:51:39-05:00	Eddi Andree Salazar Matos	Completar W3a NVIDIA y corregir resultados del cargador de modulos
+3ca545762f32f266095a9c4e8e073cd47295311d	30b513a1710467269534dca090c39da6918edf09	2026-10-19T09:34:05-05:00	Eddi Andree Salazar Matos	Anotar autoridad personal y separar root de privilegio de CPU
+30b513a1710467269534dca090c39da6918edf09	708ab05a8f5539983fe9db4c8b051a96988e04a4	2026-10-19T09:30:59-05:00	Eddi Andree Salazar Matos	Revisar seguridad W3a y reproducir defectos del cargador sin cargar modulos
+708ab05a8f5539983fe9db4c8b051a96988e04a4	ddea22a8679864c6094efed9de9c87158e5a530f	2026-10-19T09:00:27-05:00	Eddi Andree Salazar Matos	Wayland W2: la primera ventana, foot en cage sobre simpledrm
+ddea22a8679864c6094efed9de9c87158e5a530f	1257c4412823b4b6038a3bc54018c8c22918b5b0	2026-10-19T08:40:07-05:00	Eddi Andree Salazar Matos	Nombre ultra, recomendacion de ultra-entrar y prompt propio dentro de Arch
+1257c4412823b4b6038a3bc54018c8c22918b5b0	af0b40803ded0db30b1185870824d4710b3db693	2026-10-19T08:26:46-05:00	Eddi Andree Salazar Matos	Wayland W1: el sistema base de Arch dentro de ULTRA, en /arch
+af0b40803ded0db30b1185870824d4710b3db693	fcd2f8dd1b9f5c8cdc7020041ca0b94ede52c6ae	2026-10-19T08:15:33-05:00	Eddi Andree Salazar Matos	El generico salta solo a la version propia; README con el logo de portada
+fcd2f8dd1b9f5c8cdc7020041ca0b94ede52c6ae	2053f570eb93761cf8a3a1f002de06f222155e51	2026-10-19T08:14:29-05:00	Eddi Andree Salazar Matos	Separar guardianes de produccion y banco C con ejecuciones independientes
+2053f570eb93761cf8a3a1f002de06f222155e51	75783398d8f2f3466a3614cfa304f961296df3f6	2026-10-19T07:51:26-05:00	Eddi Andree Salazar Matos	ultra-logo.bin como binario: el commit anterior lo guardo corrupto
+75783398d8f2f3466a3614cfa304f961296df3f6	46a1e332904635ff27ac61e1e512efde86ada390	2026-10-19T07:50:58-05:00	Eddi Andree Salazar Matos	Logo de ULTRA en la pantalla, dibujado por el init
+46a1e332904635ff27ac61e1e512efde86ada390	29892c1a4aecaf0b16774690d2c0c3a12412d660	2026-10-19T07:42:53-05:00	Eddi Andree Salazar Matos	PERFIL DE PC COMPLETO: recuadro al completarse y fila Perfil en la tarjeta
+29892c1a4aecaf0b16774690d2c0c3a12412d660	e7289e81138b953ae6a49e76f4e8097a8d030186	2026-10-19T07:28:11-05:00	Eddi Andree Salazar Matos	El generico prepara la version propia del PC, con vuelta atras
+e7289e81138b953ae6a49e76f4e8097a8d030186	f65cf4f5be89e2833e99d0579a40562e890654e6	2026-10-19T07:09:46-05:00	Eddi Andree Salazar Matos	ULTRA en el metal: de 2009 ms a 920 ms, con fotos en el README
+f65cf4f5be89e2833e99d0579a40562e890654e6	4cc27aaa4b7fde7d1e53cf74e05bc058474a0dd2	2026-10-19T07:05:15-05:00	Eddi Andree Salazar Matos	Anti3M aplicado a Linux: el kernel medido por categorias
+4cc27aaa4b7fde7d1e53cf74e05bc058474a0dd2	241c007b5edbf1a89b71f9aa4daec22aa3e81dd7	2026-10-19T06:35:05-05:00	Eddi Andree Salazar Matos	Tarjeta de arranque, titulo en degradado y modulos cargados en paralelo
+241c007b5edbf1a89b71f9aa4daec22aa3e81dd7	994362d867d1fcd32ce7a4974247f5e63e023fea	2026-10-19T06:23:28-05:00	Eddi Andree Salazar Matos	SATA en paralelo de verdad: libahci.ignore_sss=1
+994362d867d1fcd32ce7a4974247f5e63e023fea	75a6ce10aa4cf61fef3dc4e59c1427cce1dc49bb	2026-10-18T23:04:23-05:00	Eddi Andree Salazar Matos	Pantalla con colores, cabecera BMO-X y medida frente al arranque anterior
+75a6ce10aa4cf61fef3dc4e59c1427cce1dc49bb	121743b46e904277bbc2ffd40cb4b364228feb0b	2026-10-18T22:57:32-05:00	Eddi Andree Salazar Matos	Arranque: SATA en paralelo (ahci.ignore_sss=1) y linea de comandos cerrada
+121743b46e904277bbc2ffd40cb4b364228feb0b	95bfef98cda80c782b7aeacd973b93f238e5fe2b	2026-10-18T22:30:52-05:00	Eddi Andree Salazar Matos	Informe en A:\ULTRA\informe con dmesg automatico, LEEME y limpieza
+95bfef98cda80c782b7aeacd973b93f238e5fe2b	b51cb9a0fef594c18f1c6f231b2b4490237bc1c4	2026-10-18T22:04:14-05:00	Eddi Andree Salazar Matos	Plan: compatible con los ecosistemas, sin copiarlos, y Wayland como meta
+b51cb9a0fef594c18f1c6f231b2b4490237bc1c4	505435b5dd0a117cd2a3be44a5410fb81e60a170	2026-10-18T21:58:02-05:00	Eddi Andree Salazar Matos	Perfil pc: kernel nativo Zen 3 e init con -O3 -march=znver3 -flto
+505435b5dd0a117cd2a3be44a5410fb81e60a170	702b50ce7e71bbf43ace989178ca662c3de731dd	2026-10-18T21:47:26-05:00	Eddi Andree Salazar Matos	Documentar historia de C y priorizar pendientes de UB y aislamiento
+702b50ce7e71bbf43ace989178ca662c3de731dd	6dbf9e8fdd320c3da1375d1c7df5f29e75880b19	2026-10-18T21:39:45-05:00	Eddi Andree Salazar Matos	Verificar retirada de privilegios y dominios ctype con evidencia ronda 7
+6dbf9e8fdd320c3da1375d1c7df5f29e75880b19	79e984ed8c42871aeae4174193faa0332987dc0e	2026-10-18T21:39:07-05:00	Eddi Andree Salazar Matos	Pantalla en el PC real: consola de framebuffer y mensajes del init en tty1
+79e984ed8c42871aeae4174193faa0332987dc0e	0f6a479a4c26433c64aac86aee39adb2652f27a8	2026-10-18T21:05:18-05:00	Eddi Andree Salazar Matos	ULTRA en archivos dentro de A:\ (FAT32 BMO) con entrada propia en F11
+0f6a479a4c26433c64aac86aee39adb2652f27a8	f7c1df8baaa98382c371a88c59c825802cbc6fc6	2026-10-18T21:03:51-05:00	Eddi Andree Salazar Matos	Crear museo viviente de UB con fuentes y evidencia verificable
+f7c1df8baaa98382c371a88c59c825802cbc6fc6	526a7486b86720adfa800248f6eebeccc1f0d0c2	2026-10-18T20:48:36-05:00	Eddi Andree Salazar Matos	Endurecer guardianes C y caja con pruebas UB y seccomp
+526a7486b86720adfa800248f6eebeccc1f0d0c2	d8ffd34b838c7a89a7aa53978d395cbb9a9cd8b6	2026-10-18T20:43:59-05:00	Eddi Andree Salazar Matos	Disco persistente y deteccion de hardware con memoria
+d8ffd34b838c7a89a7aa53978d395cbb9a9cd8b6	9c1393b641d25ba332dfd691dd5bbd17ef715490	2026-10-18T19:55:33-05:00	Eddi Andree Salazar Matos	Campo de minas ronda 4: hilos, aislamiento de minas y cruces actualizados
+9c1393b641d25ba332dfd691dd5bbd17ef715490	3f0ca754ae3a446f48d1a07ae2f77b99d38bcfb6	2026-10-18T19:55:33-05:00	Eddi Andree Salazar Matos	Arranque sin GRUB: ESP FAT32 con el kernel como BOOTX64.EFI
+3f0ca754ae3a446f48d1a07ae2f77b99d38bcfb6	db95a820e3269dbce48ef96a3b7eec6838075626	2026-10-18T19:46:04-05:00	Eddi Andree Salazar Matos	Campo de minas ronda 3: evaluador estricto, controles y cruces de optimizacion
+db95a820e3269dbce48ef96a3b7eec6838075626	1fc69d13c36154583382f0a73845eeadb283ff58	2026-10-18T19:46:04-05:00	Eddi Andree Salazar Matos	Fase 2: perfil de kernel generico x86-64 con modulos
+1fc69d13c36154583382f0a73845eeadb283ff58	553446df5e0945612963077e961b206f776c7eda	2026-10-18T19:18:12-05:00	Eddi Andree Salazar Matos	Perfil ULTRA-vigia: el kernel informa sus propios fallos
+553446df5e0945612963077e961b206f776c7eda	c99e2b61d1f721f4e972ff34fb4b68c0347e06cb	2026-10-18T19:02:31-05:00	Eddi Andree Salazar Matos	Campo de minas ronda 2: 75 minas, modo crudo y memcpy vigilado
+c99e2b61d1f721f4e972ff34fb4b68c0347e06cb	16f1c3349f1a497b12eab0d22e5f05369bb74452	2026-10-18T18:47:56-05:00	Eddi Andree Salazar Matos	ULTRA LinuX fase 1.5: blindaje de C con tres guardianes
+16f1c3349f1a497b12eab0d22e5f05369bb74452	7adf537c7da1ff9a9216007e84a30c5b2c80928a	2026-10-18T14:33:15-05:00	Eddi Andree Salazar Matos	ULTRA LinuX fase 1: init C con guardianes y shell BusyBox
+7adf537c7da1ff9a9216007e84a30c5b2c80928a	f2e0082c7332b60f6a87345c6569a880c1a5db23	2026-10-18T14:15:58-05:00	Eddi Andree Salazar Matos	Compilar y arrancar kernel tiny64 con GCC sobre WHPX
+f2e0082c7332b60f6a87345c6569a880c1a5db23	36dd8624d5fa3a13ea00530cd54a1c211615e41f	2026-10-18T13:46:47-05:00	Eddi Andree Salazar Matos	Explicar requisitos WHPX y evitar SSH cuando el taller esta apagado
+36dd8624d5fa3a13ea00530cd54a1c211615e41f	7516b22e51926a7f19671b7f2d4c35e1cb63dc60	2026-10-18T13:43:17-05:00	Eddi Andree Salazar Matos	Preparar kernel minimo con init C y reanudacion acelerada WHPX
+7516b22e51926a7f19671b7f2d4c35e1cb63dc60	c4cb7fdad23f60df3c3375208d84641e6e424f5f	2026-10-18T13:22:59-05:00	Eddi Andree Salazar Matos	Instalar CMake y verificar taller GCC con fuentes recuperadas
+c4cb7fdad23f60df3c3375208d84641e6e424f5f	acae6a222a802faf73d396a1d9fa713829d1a85a	2026-10-18T13:01:53-05:00	Eddi Andree Salazar Matos	Preparar taller Arch en QEMU y verificar GCC con programa C
+acae6a222a802faf73d396a1d9fa713829d1a85a	dbe72c5446b01c5a1b6977685c9143427e3bde5e	2026-10-18T12:26:53-05:00	Eddi Andree Salazar Matos	Instalar WSL y preparar taller GCC para ecosistema Linux
+dbe72c5446b01c5a1b6977685c9143427e3bde5e	507cb34f2282b0490c894087a6234a253d4b6069	2026-10-18T12:20:00-05:00	Eddi Andree Salazar Matos	Documentar version candidata y preservar finales LF de scripts
+507cb34f2282b0490c894087a6234a253d4b6069		2026-10-18T12:19:39-05:00	Eddi Andree Salazar Matos	Crear laboratorio Linux con origen oficial fijado y plan de reconstruccion

@@ -1,0 +1,14 @@
+{
+ "archivos": 987266,
+ "carpetas": 82910,
+ "componentes": 1291,
+ "build_gn": 8924,
+ "objetivos_gn": 35682,
+ "dependencias_gn": 278731,
+ "dependencias_gclient": 450,
+ "piezas": 589,
+ "ciclos": 2,
+ "mayor_ciclo": 702,
+ "niveles": 6,
+ "segundos": 32.0
+}

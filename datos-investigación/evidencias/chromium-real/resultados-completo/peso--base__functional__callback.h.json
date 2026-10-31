@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":9021,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"base/task/thread_pool.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":24},\"ruta\":\"components/prefs/pref_service.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"content/public/browser/browser_thread.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":11},\"ruta\":\"base/task/sequenced_task_runner.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"base/run_loop.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":22},\"ruta\":\"base/functional/callback_helpers.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"base/synchronization/waitable_event.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":73},\"ruta\":\"base/timer/timer.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"components/prefs/pref_change_registrar.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"base/task/thread_pool/thread_pool_instance.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"content/public/browser/navigation_handle.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":10},\"ruta\":\"content/public/browser/navigation_throttle.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"storage/browser/quota/quota_settings.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":10},\"ruta\":\"content/public/browser/login_delegate.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":11},\"ruta\":\"net/base/completion_once_callback.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":16},\"ruta\":\"base/threading/thread.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":12},\"ruta\":\"components/keyed_service/content/browser_context_keyed_service_factory.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":18},\"ruta\":\"mojo/public/cpp/bindings/receiver_set.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"base/task/bind_post_task.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":9},\"ruta\":\"mojo/public/cpp/system/simple_watcher.h\"}],\"recortado\":false,\"ruta\":\"base/functional/callback.h\",\"se_recompilan\":83344}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 9021,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 14
+        },
+        "ruta": "base/task/thread_pool.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 24
+        },
+        "ruta": "components/prefs/pref_service.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 13
+        },
+        "ruta": "content/public/browser/browser_thread.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 11
+        },
+        "ruta": "base/task/sequenced_task_runner.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 14
+        },
+        "ruta": "base/run_loop.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 22
+        },
+        "ruta": "base/functional/callback_helpers.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 14
+        },
+        "ruta": "base/synchronization/waitable_event.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 73
+        },
+        "ruta": "base/timer/timer.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 13
+        },
+        "ruta": "components/prefs/pref_change_registrar.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 13
+        },
+        "ruta": "base/task/thread_pool/thread_pool_instance.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 14
+        },
+        "ruta": "content/public/browser/navigation_handle.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 10
+        },
+        "ruta": "content/public/browser/navigation_throttle.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 14
+        },
+        "ruta": "storage/browser/quota/quota_settings.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 10
+        },
+        "ruta": "content/public/browser/login_delegate.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 11
+        },
+        "ruta": "net/base/completion_once_callback.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 16
+        },
+        "ruta": "base/threading/thread.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 12
+        },
+        "ruta": "components/keyed_service/content/browser_context_keyed_service_factory.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 18
+        },
+        "ruta": "mojo/public/cpp/bindings/receiver_set.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 13
+        },
+        "ruta": "base/task/bind_post_task.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/functional/callback.h\"",
+          "linea": 9
+        },
+        "ruta": "mojo/public/cpp/system/simple_watcher.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "base/functional/callback.h",
+    "se_recompilan": 83344
+  }
+}

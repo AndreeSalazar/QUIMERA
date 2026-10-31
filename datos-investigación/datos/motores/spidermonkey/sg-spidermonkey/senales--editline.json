@@ -1,0 +1,138 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":339,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isalnum(*p)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":343,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isalnum(*p)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":371,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"islower(*p)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":372,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"toupper(*p)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":374,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isupper(*p)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":375,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"tolower(*p)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":1168,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isalnum(p[ - 1])\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":1171,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isalnum(p[ - 1])\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":1203,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isspace(*c)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":1209,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isspace(*c)\"},{\"archivo\":\"editline/editline.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1212,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"ac + 1 == i){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":0,\"total\":11}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 339,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isalnum(*p)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 343,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isalnum(*p)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 371,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "islower(*p)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 372,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "toupper(*p)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 374,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isupper(*p)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 375,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "tolower(*p)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 1168,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isalnum(p[ - 1])"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 1171,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isalnum(p[ - 1])"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 1203,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isspace(*c)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 1209,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isspace(*c)"
+      },
+      {
+        "archivo": "editline/editline.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1212,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "ac + 1 == i){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 0,
+    "total": 11
+  }
+}

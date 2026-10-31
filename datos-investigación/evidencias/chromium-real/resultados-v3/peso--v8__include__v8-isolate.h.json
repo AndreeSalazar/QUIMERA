@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":188,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":18},\"ruta\":\"gin/public/isolate_holder.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":36},\"ruta\":\"v8/include/v8.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":13},\"ruta\":\"v8/include/v8-initialization.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":9},\"ruta\":\"v8/include/v8-snapshot.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":49},\"ruta\":\"third_party/blink/renderer/platform/bindings/v8_per_isolate_data.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":47},\"ruta\":\"third_party/blink/renderer/platform/bindings/v8_binding.h\"},{\"arrastra\":4934,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":10},\"ruta\":\"v8/include/v8-external-memory-accounter.h\"},{\"arrastra\":4864,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":17},\"ruta\":\"v8/include/v8-inspector.h\"},{\"arrastra\":2688,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/platform/bindings/v8_external_memory_accounter.h\"},{\"arrastra\":2586,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":32},\"ruta\":\"third_party/blink/renderer/platform/bindings/v8_throw_exception.h\"},{\"arrastra\":2323,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":15},\"ruta\":\"v8/include/v8-metrics.h\"},{\"arrastra\":2280,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/v8-isolate.h\\\"\",\"linea\":21},\"ruta\":\"v8/src/heap/heap.h\"},{\"arrastra\":2251,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/v8-isolate.h\\\"\",\"linea\":12},\"ruta\":\"v8/src/debug/interface-types.h\"},{\"arrastra\":2203,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/v8-isolate.h\\\"\",\"linea\":23},\"ruta\":\"v8/src/execution/isolate.h\"},{\"arrastra\":1962,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":19},\"ruta\":\"third_party/blink/renderer/platform/scheduler/public/event_loop.h\"},{\"arrastra\":1888,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/v8-isolate.h\\\"\",\"linea\":16},\"ruta\":\"v8/src/heap/local-heap.h\"},{\"arrastra\":1393,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/v8-isolate.h\\\"\",\"linea\":20},\"ruta\":\"v8/src/debug/debug-interface.h\"},{\"arrastra\":1346,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/v8-isolate.h\\\"\",\"linea\":13},\"ruta\":\"v8/src/objects/managed-inl.h\"},{\"arrastra\":1344,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/v8-isolate.h\\\"\",\"linea\":12},\"ruta\":\"v8/src/objects/embedder-data-slot-inl.h\"},{\"arrastra\":310,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":24},\"ruta\":\"gin/converter.h\"}],\"recortado\":false,\"ruta\":\"v8/include/v8-isolate.h\",\"se_recompilan\":11594}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 188,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8-isolate.h\"",
+          "linea": 18
+        },
+        "ruta": "gin/public/isolate_holder.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8-isolate.h\"",
+          "linea": 36
+        },
+        "ruta": "v8/include/v8.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8-isolate.h\"",
+          "linea": 13
+        },
+        "ruta": "v8/include/v8-initialization.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8-isolate.h\"",
+          "linea": 9
+        },
+        "ruta": "v8/include/v8-snapshot.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8-isolate.h\"",
+          "linea": 49
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/v8_per_isolate_data.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8-isolate.h\"",
+          "linea": 47
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/v8_binding.h"
+      },
+      {
+        "arrastra": 4934,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8-isolate.h\"",
+          "linea": 10
+        },
+        "ruta": "v8/include/v8-external-memory-accounter.h"
+      },
+      {
+        "arrastra": 4864,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8-isolate.h\"",
+          "linea": 17
+        },
+        "ruta": "v8/include/v8-inspector.h"
+      },
+      {
+        "arrastra": 2688,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8-isolate.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/v8_external_memory_accounter.h"
+      },
+      {
+        "arrastra": 2586,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8-isolate.h\"",
+          "linea": 32
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/v8_throw_exception.h"
+      },
+      {
+        "arrastra": 2323,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8-isolate.h\"",
+          "linea": 15
+        },
+        "ruta": "v8/include/v8-metrics.h"
+      },
+      {
+        "arrastra": 2280,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/v8-isolate.h\"",
+          "linea": 21
+        },
+        "ruta": "v8/src/heap/heap.h"
+      },
+      {
+        "arrastra": 2251,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/v8-isolate.h\"",
+          "linea": 12
+        },
+        "ruta": "v8/src/debug/interface-types.h"
+      },
+      {
+        "arrastra": 2203,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/v8-isolate.h\"",
+          "linea": 23
+        },
+        "ruta": "v8/src/execution/isolate.h"
+      },
+      {
+        "arrastra": 1962,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8-isolate.h\"",
+          "linea": 19
+        },
+        "ruta": "third_party/blink/renderer/platform/scheduler/public/event_loop.h"
+      },
+      {
+        "arrastra": 1888,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/v8-isolate.h\"",
+          "linea": 16
+        },
+        "ruta": "v8/src/heap/local-heap.h"
+      },
+      {
+        "arrastra": 1393,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/v8-isolate.h\"",
+          "linea": 20
+        },
+        "ruta": "v8/src/debug/debug-interface.h"
+      },
+      {
+        "arrastra": 1346,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/v8-isolate.h\"",
+          "linea": 13
+        },
+        "ruta": "v8/src/objects/managed-inl.h"
+      },
+      {
+        "arrastra": 1344,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/v8-isolate.h\"",
+          "linea": 12
+        },
+        "ruta": "v8/src/objects/embedder-data-slot-inl.h"
+      },
+      {
+        "arrastra": 310,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8-isolate.h\"",
+          "linea": 24
+        },
+        "ruta": "gin/converter.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "v8/include/v8-isolate.h",
+    "se_recompilan": 11594
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"build/rust/tests/test_rust_api_from_cpp/std/std_types.h\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":42,\"texto\":\"v se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<int>v\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":0,\"total\":1}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "build/rust/tests/test_rust_api_from_cpp/std/std_types.h",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 42,
+        "texto": "v se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<int>v"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 0,
+    "total": 1
+  }
+}

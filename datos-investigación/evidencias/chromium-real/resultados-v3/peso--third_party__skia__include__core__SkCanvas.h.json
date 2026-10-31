@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":1205,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":14},\"ruta\":\"cc/paint/draw_looper.h\"},{\"arrastra\":4365,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":20},\"ruta\":\"cc/paint/paint_canvas.h\"},{\"arrastra\":2873,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":12},\"ruta\":\"cc/resources/ui_resource_bitmap.h\"},{\"arrastra\":940,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":25},\"ruta\":\"cc/paint/discardable_image_map.h\"},{\"arrastra\":657,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/include/core/SkCanvasVirtualEnforcer.h\"},{\"arrastra\":641,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/include/utils/SkNoDrawCanvas.h\"},{\"arrastra\":322,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":12},\"ruta\":\"third_party/skia/src/core/SkDevice.h\"},{\"arrastra\":271,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/src/gpu/ganesh/Device.h\"},{\"arrastra\":148,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/core/testing/sim/sim_canvas.h\"},{\"arrastra\":73,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":10},\"ruta\":\"third_party/skia/src/gpu/ganesh/SurfaceDrawContext.h\"},{\"arrastra\":52,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/src/core/SkCanvasPriv.h\"},{\"arrastra\":48,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/src/image/SkSurface_Base.h\"},{\"arrastra\":42,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":21},\"ruta\":\"skia/ext/platform_canvas.h\"},{\"arrastra\":32,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/src/core/SkDraw.h\"},{\"arrastra\":23,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":12},\"ruta\":\"third_party/skia/src/core/SkRecords.h\"},{\"arrastra\":21,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/include/core/SkTiledImageUtils.h\"},{\"arrastra\":18,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/tools/GpuToolUtils.h\"},{\"arrastra\":17,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":18},\"ruta\":\"components/exo/wayland/clients/client_base.h\"},{\"arrastra\":15,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":28},\"ruta\":\"components/viz/service/display/skia_renderer.h\"},{\"arrastra\":15,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/include/core/SkOverdrawCanvas.h\"}],\"recortado\":false,\"ruta\":\"third_party/skia/include/core/SkCanvas.h\",\"se_recompilan\":12926}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 1205,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 14
+        },
+        "ruta": "cc/paint/draw_looper.h"
+      },
+      {
+        "arrastra": 4365,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 20
+        },
+        "ruta": "cc/paint/paint_canvas.h"
+      },
+      {
+        "arrastra": 2873,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 12
+        },
+        "ruta": "cc/resources/ui_resource_bitmap.h"
+      },
+      {
+        "arrastra": 940,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 25
+        },
+        "ruta": "cc/paint/discardable_image_map.h"
+      },
+      {
+        "arrastra": 657,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/include/core/SkCanvasVirtualEnforcer.h"
+      },
+      {
+        "arrastra": 641,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/include/utils/SkNoDrawCanvas.h"
+      },
+      {
+        "arrastra": 322,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/skia/src/core/SkDevice.h"
+      },
+      {
+        "arrastra": 271,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/src/gpu/ganesh/Device.h"
+      },
+      {
+        "arrastra": 148,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/blink/renderer/core/testing/sim/sim_canvas.h"
+      },
+      {
+        "arrastra": 73,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/skia/src/gpu/ganesh/SurfaceDrawContext.h"
+      },
+      {
+        "arrastra": 52,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/src/core/SkCanvasPriv.h"
+      },
+      {
+        "arrastra": 48,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/src/image/SkSurface_Base.h"
+      },
+      {
+        "arrastra": 42,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 21
+        },
+        "ruta": "skia/ext/platform_canvas.h"
+      },
+      {
+        "arrastra": 32,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/src/core/SkDraw.h"
+      },
+      {
+        "arrastra": 23,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/skia/src/core/SkRecords.h"
+      },
+      {
+        "arrastra": 21,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/include/core/SkTiledImageUtils.h"
+      },
+      {
+        "arrastra": 18,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/tools/GpuToolUtils.h"
+      },
+      {
+        "arrastra": 17,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 18
+        },
+        "ruta": "components/exo/wayland/clients/client_base.h"
+      },
+      {
+        "arrastra": 15,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 28
+        },
+        "ruta": "components/viz/service/display/skia_renderer.h"
+      },
+      {
+        "arrastra": 15,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"include/core/SkCanvas.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/skia/include/core/SkOverdrawCanvas.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "third_party/skia/include/core/SkCanvas.h",
+    "se_recompilan": 12926
+  }
+}

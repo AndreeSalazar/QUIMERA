@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"v8/src/compiler/compilation-dependencies.cc\",\"control_valido\":\"Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-002\",\"linea\":1466,\"texto\":\"dependencies_.clear() dentro de un for que recorre dependencies_: puede realocar y dejar el recorrido colgando\",\"titulo\":\"Referencia invalidada por crecimiento de vector\",\"visto\":\"dependencies_.clear(\"},{\"archivo\":\"v8/src/compiler/compilation-dependencies.cc\",\"control_valido\":\"Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-002\",\"linea\":1504,\"texto\":\"dependencies_.clear() dentro de un for que recorre dependencies_: puede realocar y dejar el recorrido colgando\",\"titulo\":\"Referencia invalidada por crecimiento de vector\",\"visto\":\"dependencies_.clear(\"},{\"archivo\":\"v8/src/compiler/loop-peeling.cc\",\"control_valido\":\"Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-002\",\"linea\":171,\"texto\":\"inputs.push_back() dentro de un for que recorre inputs: puede realocar y dejar el recorrido colgando\",\"titulo\":\"Referencia invalidada por crecimiento de vector\",\"visto\":\"inputs.push_back(\"},{\"archivo\":\"v8/src/compiler/turboshaft/late-load-elimination-reducer.cc\",\"control_valido\":\"Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-002\",\"linea\":110,\"texto\":\"it apunta dentro de int32_truncated_loads_, que cambio en la linea 106: puede haber realocado\",\"titulo\":\"Referencia invalidada por crecimiento de vector\",\"visto\":\"it\"},{\"archivo\":\"v8/src/compiler/code-assembler.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":684,\"texto\":\"str se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string str\"},{\"archivo\":\"v8/src/compiler/code-assembler.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":2048,\"texto\":\"inputs se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<Node*>inputs\"},{\"archivo\":\"v8/src/compiler/code-assembler.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":2076,\"texto\":\"representations se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<MachineRepresentation>representations\"},{\"archivo\":\"v8/src/compiler/js-create-lowering.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":577,\"texto\":\"values se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<Node*>values\"},{\"archivo\":\"v8/src/compiler/pipeline-statistics.h\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":73,\"texto\":\"function_name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string function_name\"},{\"archivo\":\"v8/src/compiler/turboshaft/graph.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":36,\"texto\":\"tree_symbols se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<const char*>tree_symbols\"},{\"archivo\":\"v8/src/compiler/turboshaft/load-store-verification-reducer.h\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":61,\"texto\":\"load_or_store se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string load_or_store\"},{\"archivo\":\"v8/src/compiler/turboshaft/turbolev-frontend-pipeline.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":60,\"texto\":\"str se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string str\"},{\"archivo\":\"v8/src/compiler/turboshaft/typer.h\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":425,\"texto\":\"elements se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<float_t>elements\"},{\"archivo\":\"v8/src/compiler/access-builder.h\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":25,\"texto\":\"la funcion ocupa 403 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"NON_EXPORTED_BASE(AllStatic){\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":348,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\": case AccessMode::kLoad : {\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":521,\"texto\":\"la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"AccessMode access_mode)const{\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":564,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"handler_map.is_stable()){\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":678,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"AccessMode access_mode)const{\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":794,\"texto\":\"la funcion ocupa 121 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", AccessorsObjectGetter get_accessors){\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1052,\"texto\":\"la funcion ocupa 246 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"OptionalObjectRef handler)const{\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1118,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"holder.has_value()){\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1482,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\") == Builtin::kTypedArrayPrototypeLength){\"},{\"archivo\":\"v8/src/compiler/access-info.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1503,\"texto\":\"la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"PropertyAttributes attrs)const{\"},{\"archivo\":\"v8/src/compiler/all-nodes.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":46,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"graph->NodeCount()){\"},{\"archivo\":\"v8/src/compiler/backend/arm/code-generator-arm.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":732,\"texto\":\"la funcion ocupa 3085 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"Instruction*instr){\"},{\"archivo\":\"v8/src/compiler/backend/arm/code-generator-arm.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":838,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"constant, &function)){\"},{\"archivo\":\"v8/src/compiler/backend/arm/code-generator-arm.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":3930,\"texto\":\"la funcion ocupa 726 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::AssembleConstructFrame(){\"},{\"archivo\":\"v8/src/compiler/backend/arm/code-generator-arm.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":4012,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(stack_space>0){\"},{\"archivo\":\"v8/src/compiler/backend/arm/instruction-scheduler-arm.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":31,\"texto\":\"la funcion ocupa 372 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"*instr)const{\"},{\"archivo\":\"v8/src/compiler/backend/arm/instruction-selector-arm.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":760,\"texto\":\"la funcion ocupa 121 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"AtomicMemoryOrder>atomic_order){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":644,\"total\":674}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "v8/src/compiler/compilation-dependencies.cc",
+        "control_valido": "Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-002",
+        "linea": 1466,
+        "texto": "dependencies_.clear() dentro de un for que recorre dependencies_: puede realocar y dejar el recorrido colgando",
+        "titulo": "Referencia invalidada por crecimiento de vector",
+        "visto": "dependencies_.clear("
+      },
+      {
+        "archivo": "v8/src/compiler/compilation-dependencies.cc",
+        "control_valido": "Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-002",
+        "linea": 1504,
+        "texto": "dependencies_.clear() dentro de un for que recorre dependencies_: puede realocar y dejar el recorrido colgando",
+        "titulo": "Referencia invalidada por crecimiento de vector",
+        "visto": "dependencies_.clear("
+      },
+      {
+        "archivo": "v8/src/compiler/loop-peeling.cc",
+        "control_valido": "Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-002",
+        "linea": 171,
+        "texto": "inputs.push_back() dentro de un for que recorre inputs: puede realocar y dejar el recorrido colgando",
+        "titulo": "Referencia invalidada por crecimiento de vector",
+        "visto": "inputs.push_back("
+      },
+      {
+        "archivo": "v8/src/compiler/turboshaft/late-load-elimination-reducer.cc",
+        "control_valido": "Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-002",
+        "linea": 110,
+        "texto": "it apunta dentro de int32_truncated_loads_, que cambio en la linea 106: puede haber realocado",
+        "titulo": "Referencia invalidada por crecimiento de vector",
+        "visto": "it"
+      },
+      {
+        "archivo": "v8/src/compiler/code-assembler.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 684,
+        "texto": "str se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string str"
+      },
+      {
+        "archivo": "v8/src/compiler/code-assembler.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 2048,
+        "texto": "inputs se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<Node*>inputs"
+      },
+      {
+        "archivo": "v8/src/compiler/code-assembler.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 2076,
+        "texto": "representations se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<MachineRepresentation>representations"
+      },
+      {
+        "archivo": "v8/src/compiler/js-create-lowering.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 577,
+        "texto": "values se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<Node*>values"
+      },
+      {
+        "archivo": "v8/src/compiler/pipeline-statistics.h",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 73,
+        "texto": "function_name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string function_name"
+      },
+      {
+        "archivo": "v8/src/compiler/turboshaft/graph.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 36,
+        "texto": "tree_symbols se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<const char*>tree_symbols"
+      },
+      {
+        "archivo": "v8/src/compiler/turboshaft/load-store-verification-reducer.h",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 61,
+        "texto": "load_or_store se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string load_or_store"
+      },
+      {
+        "archivo": "v8/src/compiler/turboshaft/turbolev-frontend-pipeline.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 60,
+        "texto": "str se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string str"
+      },
+      {
+        "archivo": "v8/src/compiler/turboshaft/typer.h",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 425,
+        "texto": "elements se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<float_t>elements"
+      },
+      {
+        "archivo": "v8/src/compiler/access-builder.h",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 25,
+        "texto": "la funcion ocupa 403 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "NON_EXPORTED_BASE(AllStatic){"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 348,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ": case AccessMode::kLoad : {"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 521,
+        "texto": "la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "AccessMode access_mode)const{"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 564,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "handler_map.is_stable()){"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 678,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "AccessMode access_mode)const{"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 794,
+        "texto": "la funcion ocupa 121 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", AccessorsObjectGetter get_accessors){"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1052,
+        "texto": "la funcion ocupa 246 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "OptionalObjectRef handler)const{"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1118,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "holder.has_value()){"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1482,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ") == Builtin::kTypedArrayPrototypeLength){"
+      },
+      {
+        "archivo": "v8/src/compiler/access-info.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1503,
+        "texto": "la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "PropertyAttributes attrs)const{"
+      },
+      {
+        "archivo": "v8/src/compiler/all-nodes.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 46,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "graph->NodeCount()){"
+      },
+      {
+        "archivo": "v8/src/compiler/backend/arm/code-generator-arm.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 732,
+        "texto": "la funcion ocupa 3085 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "Instruction*instr){"
+      },
+      {
+        "archivo": "v8/src/compiler/backend/arm/code-generator-arm.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 838,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "constant, &function)){"
+      },
+      {
+        "archivo": "v8/src/compiler/backend/arm/code-generator-arm.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 3930,
+        "texto": "la funcion ocupa 726 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::AssembleConstructFrame(){"
+      },
+      {
+        "archivo": "v8/src/compiler/backend/arm/code-generator-arm.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 4012,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(stack_space>0){"
+      },
+      {
+        "archivo": "v8/src/compiler/backend/arm/instruction-scheduler-arm.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 31,
+        "texto": "la funcion ocupa 372 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "*instr)const{"
+      },
+      {
+        "archivo": "v8/src/compiler/backend/arm/instruction-selector-arm.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 760,
+        "texto": "la funcion ocupa 121 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "AtomicMemoryOrder>atomic_order){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 644,
+    "total": 674
+  }
+}

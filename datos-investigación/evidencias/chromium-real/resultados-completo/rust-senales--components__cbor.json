@@ -1,0 +1,39 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"components/cbor/cbor_perftest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":96,\"texto\":\"la funcion ocupa 139 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\">BuildHugeAndComplexWebBundlePayload(){\"},{\"archivo\":\"components/cbor/writer_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":168,\"texto\":\"la funcion ocupa 123 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"CBORWriterTest, TestWriteMap){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":0,\"total\":2}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "components/cbor/cbor_perftest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 96,
+        "texto": "la funcion ocupa 139 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ">BuildHugeAndComplexWebBundlePayload(){"
+      },
+      {
+        "archivo": "components/cbor/writer_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 168,
+        "texto": "la funcion ocupa 123 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "CBORWriterTest, TestWriteMap){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 0,
+    "total": 2
+  }
+}

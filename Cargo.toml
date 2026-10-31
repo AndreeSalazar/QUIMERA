@@ -1,0 +1,28 @@
+[workspace]
+resolver = "3"
+members = [
+    "cimientos/valor",
+    "motor-js/gc",
+    "bancos/gc",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.97"
+license = "MIT OR Apache-2.0"
+authors = ["Eddi Salazar"]
+
+[workspace.dependencies]
+quimera-valor = { path = "cimientos/valor" }
+quimera-gc = { path = "motor-js/gc" }
+
+[workspace.lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+undocumented_unsafe_blocks = "deny"
+
+[profile.release]
+debug = "line-tables-only"

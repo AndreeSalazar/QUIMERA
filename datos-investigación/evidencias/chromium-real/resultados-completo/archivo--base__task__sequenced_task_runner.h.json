@@ -1,0 +1,323 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":14},\"ruta\":\"base/task/single_thread_task_runner.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":27},\"ruta\":\"components/visitedlink/browser/visitedlink_writer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":26},\"ruta\":\"android_webview/browser/aw_browser_context_store.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":19},\"ruta\":\"components/heap_profiling/in_process/heap_profiler_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":25},\"ruta\":\"android_webview/browser/aw_browser_process.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":20},\"ruta\":\"base/android/pre_freeze_background_memory_trimmer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":8},\"ruta\":\"base/memory/post_delayed_memory_reduction_task.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":77},\"ruta\":\"android_webview/browser/aw_content_browser_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":12},\"ruta\":\"android_webview/common/aw_content_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":15},\"ruta\":\"mojo/public/cpp/bindings/pending_associated_receiver.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":16},\"ruta\":\"services/service_manager/public/cpp/binder_registry.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":10},\"ruta\":\"services/service_manager/public/cpp/interface_provider.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":16},\"ruta\":\"mojo/public/cpp/bindings/binder_map.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":13},\"ruta\":\"mojo/public/cpp/bindings/self_owned_receiver.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":16},\"ruta\":\"android_webview/browser/aw_content_browser_client_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":21},\"ruta\":\"components/autofill/core/browser/foundations/browser_autofill_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":13},\"ruta\":\"components/security_interstitials/core/unsafe_resource.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":22},\"ruta\":\"mojo/public/cpp/bindings/receiver_set.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":16},\"ruta\":\"mojo/public/cpp/bindings/remote.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":15},\"ruta\":\"mojo/public/cpp/bindings/receiver.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":27},\"ruta\":\"android_webview/browser/aw_quota_manager_bridge.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":18},\"ruta\":\"base/functional/concurrent_callbacks.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":16},\"ruta\":\"base/task/bind_post_task.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":16},\"ruta\":\"mojo/public/cpp/bindings/associated_remote.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/cookie_manager_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":14},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_manager_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":29},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":13},\"ruta\":\"base/memory/ref_counted_delete_on_sequence.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":14},\"ruta\":\"mojo/public/cpp/system/simple_watcher.h\"}],\"total\":4376},\"papel\":\"arrastra\",\"ruta\":\"base/task/sequenced_task_runner.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":11},\"ruta\":\"base/functional/callback.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"ruta\":\"base/memory/raw_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/gtest_prod_util.h\\\"\",\"linea\":12},\"ruta\":\"base/gtest_prod_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/task_runner.h\\\"\",\"linea\":16},\"ruta\":\"base/task/task_runner.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/base_export.h\\\"\",\"linea\":10},\"ruta\":\"base/base_export.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/delayed_task_handle.h\\\"\",\"linea\":14},\"ruta\":\"base/task/delayed_task_handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner_helpers.h\\\"\",\"linea\":15},\"ruta\":\"base/task/sequenced_task_runner_helpers.h\"}],\"total\":7}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 14
+          },
+          "ruta": "base/task/single_thread_task_runner.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 27
+          },
+          "ruta": "components/visitedlink/browser/visitedlink_writer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 26
+          },
+          "ruta": "android_webview/browser/aw_browser_context_store.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 19
+          },
+          "ruta": "components/heap_profiling/in_process/heap_profiler_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 25
+          },
+          "ruta": "android_webview/browser/aw_browser_process.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 20
+          },
+          "ruta": "base/android/pre_freeze_background_memory_trimmer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 8
+          },
+          "ruta": "base/memory/post_delayed_memory_reduction_task.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 77
+          },
+          "ruta": "android_webview/browser/aw_content_browser_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 12
+          },
+          "ruta": "android_webview/common/aw_content_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 15
+          },
+          "ruta": "mojo/public/cpp/bindings/pending_associated_receiver.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "services/service_manager/public/cpp/binder_registry.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 10
+          },
+          "ruta": "services/service_manager/public/cpp/interface_provider.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "mojo/public/cpp/bindings/binder_map.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 13
+          },
+          "ruta": "mojo/public/cpp/bindings/self_owned_receiver.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "android_webview/browser/aw_content_browser_client_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 21
+          },
+          "ruta": "components/autofill/core/browser/foundations/browser_autofill_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 13
+          },
+          "ruta": "components/security_interstitials/core/unsafe_resource.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 22
+          },
+          "ruta": "mojo/public/cpp/bindings/receiver_set.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "mojo/public/cpp/bindings/remote.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 15
+          },
+          "ruta": "mojo/public/cpp/bindings/receiver.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 27
+          },
+          "ruta": "android_webview/browser/aw_quota_manager_bridge.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 18
+          },
+          "ruta": "base/functional/concurrent_callbacks.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "base/task/bind_post_task.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "mojo/public/cpp/bindings/associated_remote.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/cookie_manager_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 14
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_manager_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 29
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 13
+          },
+          "ruta": "base/memory/ref_counted_delete_on_sequence.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 14
+          },
+          "ruta": "mojo/public/cpp/system/simple_watcher.h"
+        }
+      ],
+      "total": 4376
+    },
+    "papel": "arrastra",
+    "ruta": "base/task/sequenced_task_runner.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 11
+          },
+          "ruta": "base/functional/callback.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 13
+          },
+          "ruta": "base/memory/raw_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/gtest_prod_util.h\"",
+            "linea": 12
+          },
+          "ruta": "base/gtest_prod_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "base/task/task_runner.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/base_export.h\"",
+            "linea": 10
+          },
+          "ruta": "base/base_export.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/delayed_task_handle.h\"",
+            "linea": 14
+          },
+          "ruta": "base/task/delayed_task_handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner_helpers.h\"",
+            "linea": 15
+          },
+          "ruta": "base/task/sequenced_task_runner_helpers.h"
+        }
+      ],
+      "total": 7
+    }
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":8036,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":65},\"ruta\":\"content/public/browser/web_contents.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":15},\"ruta\":\"content/public/browser/child_process_security_policy.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":13},\"ruta\":\"net/cookies/site_for_cookies.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":36},\"ruta\":\"content/public/browser/navigation_controller.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":12},\"ruta\":\"content/public/common/referrer.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":18},\"ruta\":\"net/test/embedded_test_server/http_request.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":12},\"ruta\":\"ui/base/data_transfer_policy/data_transfer_endpoint.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":41},\"ruta\":\"net/test/embedded_test_server/embedded_test_server.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":18},\"ruta\":\"storage/browser/file_system/file_system_url.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":18},\"ruta\":\"components/tabs/public/tab_interface.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":20},\"ruta\":\"content/public/browser/site_instance.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":38},\"ruta\":\"storage/browser/file_system/file_system_context.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":30},\"ruta\":\"content/public/browser/page_navigator.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":49},\"ruta\":\"ui/base/metadata/base_type_conversion.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":14},\"ruta\":\"components/user_manager/user_image/user_image.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":27},\"ruta\":\"content/public/common/drop_data.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":18},\"ruta\":\"components/file_access/scoped_file_access_delegate.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":16},\"ruta\":\"content/public/browser/file_system_access_write_item.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":10},\"ruta\":\"storage/browser/file_system/file_system_request_info.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":8},\"ruta\":\"ui/base/clipboard/clipboard_url_info.h\"}],\"recortado\":false,\"ruta\":\"url/gurl.h\",\"se_recompilan\":54128}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 8036,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 65
+        },
+        "ruta": "content/public/browser/web_contents.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 15
+        },
+        "ruta": "content/public/browser/child_process_security_policy.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 13
+        },
+        "ruta": "net/cookies/site_for_cookies.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 36
+        },
+        "ruta": "content/public/browser/navigation_controller.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 12
+        },
+        "ruta": "content/public/common/referrer.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 18
+        },
+        "ruta": "net/test/embedded_test_server/http_request.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 12
+        },
+        "ruta": "ui/base/data_transfer_policy/data_transfer_endpoint.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 41
+        },
+        "ruta": "net/test/embedded_test_server/embedded_test_server.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 18
+        },
+        "ruta": "storage/browser/file_system/file_system_url.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 18
+        },
+        "ruta": "components/tabs/public/tab_interface.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 20
+        },
+        "ruta": "content/public/browser/site_instance.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 38
+        },
+        "ruta": "storage/browser/file_system/file_system_context.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 30
+        },
+        "ruta": "content/public/browser/page_navigator.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 49
+        },
+        "ruta": "ui/base/metadata/base_type_conversion.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 14
+        },
+        "ruta": "components/user_manager/user_image/user_image.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 27
+        },
+        "ruta": "content/public/common/drop_data.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 18
+        },
+        "ruta": "components/file_access/scoped_file_access_delegate.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 16
+        },
+        "ruta": "content/public/browser/file_system_access_write_item.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 10
+        },
+        "ruta": "storage/browser/file_system/file_system_request_info.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"url/gurl.h\"",
+          "linea": 8
+        },
+        "ruta": "ui/base/clipboard/clipboard_url_info.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "url/gurl.h",
+    "se_recompilan": 54128
+  }
+}

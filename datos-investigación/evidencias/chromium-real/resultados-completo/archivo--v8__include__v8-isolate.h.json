@@ -1,0 +1,403 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":65},\"ruta\":\"android_webview/js_sandbox/service/js_sandbox_isolate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":18},\"ruta\":\"gin/public/isolate_holder.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":17},\"ruta\":\"v8/include/v8-inspector.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":34},\"ruta\":\"android_webview/js_sandbox/service/js_sandbox_message_port.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":24},\"ruta\":\"gin/converter.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":36},\"ruta\":\"v8/include/v8.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":28},\"ruta\":\"chrome/renderer/benchmarking_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":192},\"ruta\":\"chrome/renderer/chrome_content_renderer_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":23},\"ruta\":\"chrome/renderer/loadtimes_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":24},\"ruta\":\"chrome/renderer/tab_context_decryption_token_extension_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":15},\"ruta\":\"chrome/renderer/v8_unwinder.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":16},\"ruta\":\"chrome/renderer/controlled_frame/web_url_pattern_natives.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":24},\"ruta\":\"chrome/renderer/extensions/api/pdf_viewer_private_custom_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":17},\"ruta\":\"gin/weak_cell.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":17},\"ruta\":\"chrome/renderer/wallet/boarding_pass_extractor.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":21},\"ruta\":\"chrome/renderer/webui_browser/webui_browser_renderer_extension.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":38},\"ruta\":\"third_party/blink/public/web/blink.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":28},\"ruta\":\"components/guest_view/renderer/slim_web_view/slim_web_view_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":39},\"ruta\":\"components/pdf/renderer/pdf_view_web_plugin_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":13},\"ruta\":\"v8/include/v8-initialization.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":13},\"ruta\":\"content/renderer/blink_isolates_pressure_listener.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":37},\"ruta\":\"content/renderer/browser_exposed_renderer_interfaces.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":81},\"ruta\":\"content/renderer/gpu_benchmarking_extension.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":256},\"ruta\":\"content/renderer/render_frame_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":51},\"ruta\":\"content/renderer/skia_benchmarking_extension.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":31},\"ruta\":\"content/renderer/v8_value_converter_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":25},\"ruta\":\"content/renderer/v8_value_converter_impl_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":21},\"ruta\":\"content/renderer/java/gin_java_bridge_dispatcher.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":18},\"ruta\":\"content/renderer/java/gin_java_bridge_value_converter_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8-isolate.h\\\"\",\"linea\":13},\"ruta\":\"extensions/renderer/activity_log_converter_strategy.cc\"}],\"total\":188},\"papel\":null,\"ruta\":\"v8/include/v8-isolate.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-array-buffer.h\\\"\",\"linea\":18},\"ruta\":\"v8/include/v8-array-buffer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-statistics.h\\\"\",\"linea\":30},\"ruta\":\"v8/include/v8-statistics.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-primitive.h\\\"\",\"linea\":29},\"ruta\":\"v8/include/v8-primitive.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-local-handle.h\\\"\",\"linea\":26},\"ruta\":\"v8/include/v8-local-handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-exception.h\\\"\",\"linea\":23},\"ruta\":\"v8/include/v8-exception.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-persistent-handle.h\\\"\",\"linea\":28},\"ruta\":\"v8/include/v8-persistent-handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-unwinder.h\\\"\",\"linea\":31},\"ruta\":\"v8/include/v8-unwinder.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-function-callback.h\\\"\",\"linea\":24},\"ruta\":\"v8/include/v8-function-callback.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-debug.h\\\"\",\"linea\":21},\"ruta\":\"v8/include/v8-debug.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-callbacks.h\\\"\",\"linea\":19},\"ruta\":\"v8/include/v8-callbacks.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cppgc/macros.h\\\"\",\"linea\":17},\"ruta\":\"v8/include/cppgc/macros.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-data.h\\\"\",\"linea\":20},\"ruta\":\"v8/include/v8-data.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-embedder-heap.h\\\"\",\"linea\":22},\"ruta\":\"v8/include/v8-embedder-heap.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cppgc/common.h\\\"\",\"linea\":16},\"ruta\":\"v8/include/cppgc/common.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8config.h\\\"\",\"linea\":32},\"ruta\":\"v8/include/v8config.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-internal.h\\\"\",\"linea\":25},\"ruta\":\"v8/include/v8-internal.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-microtask.h\\\"\",\"linea\":27},\"ruta\":\"v8/include/v8-microtask.h\"}],\"total\":17}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 65
+          },
+          "ruta": "android_webview/js_sandbox/service/js_sandbox_isolate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 18
+          },
+          "ruta": "gin/public/isolate_holder.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-isolate.h\"",
+            "linea": 17
+          },
+          "ruta": "v8/include/v8-inspector.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 34
+          },
+          "ruta": "android_webview/js_sandbox/service/js_sandbox_message_port.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 24
+          },
+          "ruta": "gin/converter.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-isolate.h\"",
+            "linea": 36
+          },
+          "ruta": "v8/include/v8.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 28
+          },
+          "ruta": "chrome/renderer/benchmarking_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 192
+          },
+          "ruta": "chrome/renderer/chrome_content_renderer_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 23
+          },
+          "ruta": "chrome/renderer/loadtimes_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 24
+          },
+          "ruta": "chrome/renderer/tab_context_decryption_token_extension_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 15
+          },
+          "ruta": "chrome/renderer/v8_unwinder.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/renderer/controlled_frame/web_url_pattern_natives.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 24
+          },
+          "ruta": "chrome/renderer/extensions/api/pdf_viewer_private_custom_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 17
+          },
+          "ruta": "gin/weak_cell.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 17
+          },
+          "ruta": "chrome/renderer/wallet/boarding_pass_extractor.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 21
+          },
+          "ruta": "chrome/renderer/webui_browser/webui_browser_renderer_extension.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 38
+          },
+          "ruta": "third_party/blink/public/web/blink.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 28
+          },
+          "ruta": "components/guest_view/renderer/slim_web_view/slim_web_view_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 39
+          },
+          "ruta": "components/pdf/renderer/pdf_view_web_plugin_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-isolate.h\"",
+            "linea": 13
+          },
+          "ruta": "v8/include/v8-initialization.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 13
+          },
+          "ruta": "content/renderer/blink_isolates_pressure_listener.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 37
+          },
+          "ruta": "content/renderer/browser_exposed_renderer_interfaces.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 81
+          },
+          "ruta": "content/renderer/gpu_benchmarking_extension.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 256
+          },
+          "ruta": "content/renderer/render_frame_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 51
+          },
+          "ruta": "content/renderer/skia_benchmarking_extension.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 31
+          },
+          "ruta": "content/renderer/v8_value_converter_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 25
+          },
+          "ruta": "content/renderer/v8_value_converter_impl_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 21
+          },
+          "ruta": "content/renderer/java/gin_java_bridge_dispatcher.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 18
+          },
+          "ruta": "content/renderer/java/gin_java_bridge_value_converter_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8-isolate.h\"",
+            "linea": 13
+          },
+          "ruta": "extensions/renderer/activity_log_converter_strategy.cc"
+        }
+      ],
+      "total": 188
+    },
+    "papel": null,
+    "ruta": "v8/include/v8-isolate.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-array-buffer.h\"",
+            "linea": 18
+          },
+          "ruta": "v8/include/v8-array-buffer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-statistics.h\"",
+            "linea": 30
+          },
+          "ruta": "v8/include/v8-statistics.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-primitive.h\"",
+            "linea": 29
+          },
+          "ruta": "v8/include/v8-primitive.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-local-handle.h\"",
+            "linea": 26
+          },
+          "ruta": "v8/include/v8-local-handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-exception.h\"",
+            "linea": 23
+          },
+          "ruta": "v8/include/v8-exception.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-persistent-handle.h\"",
+            "linea": 28
+          },
+          "ruta": "v8/include/v8-persistent-handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-unwinder.h\"",
+            "linea": 31
+          },
+          "ruta": "v8/include/v8-unwinder.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-function-callback.h\"",
+            "linea": 24
+          },
+          "ruta": "v8/include/v8-function-callback.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-debug.h\"",
+            "linea": 21
+          },
+          "ruta": "v8/include/v8-debug.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-callbacks.h\"",
+            "linea": 19
+          },
+          "ruta": "v8/include/v8-callbacks.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"cppgc/macros.h\"",
+            "linea": 17
+          },
+          "ruta": "v8/include/cppgc/macros.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-data.h\"",
+            "linea": 20
+          },
+          "ruta": "v8/include/v8-data.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-embedder-heap.h\"",
+            "linea": 22
+          },
+          "ruta": "v8/include/v8-embedder-heap.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"cppgc/common.h\"",
+            "linea": 16
+          },
+          "ruta": "v8/include/cppgc/common.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8config.h\"",
+            "linea": 32
+          },
+          "ruta": "v8/include/v8config.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-internal.h\"",
+            "linea": 25
+          },
+          "ruta": "v8/include/v8-internal.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-microtask.h\"",
+            "linea": 27
+          },
+          "ruta": "v8/include/v8-microtask.h"
+        }
+      ],
+      "total": 17
+    }
+  }
+}

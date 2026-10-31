@@ -1,0 +1,292 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"components/background_hang_monitor/background_hang_monitor.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":50,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/background_hang_monitor.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":138,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/background_hang_monitor.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":349,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/background_hang_monitor.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":355,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/background_hang_monitor.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":366,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/background_hang_monitor.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":380,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":51,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":52,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":53,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":64,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":71,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":76,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":84,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":97,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":115,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":127,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":135,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":135,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":161,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":165,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":167,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":170,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":185,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":187,\"texto\":\"expect convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"expect(\"},{\"archivo\":\"components/background_hang_monitor/sampler_linux.rs\",\"control_valido\":\"let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-006\",\"linea\":193,\"texto\":\"unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera\",\"titulo\":\"unwrap o expect fuera de las pruebas\",\"visto\":\"unwrap(\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":15,\"total\":40}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "components/background_hang_monitor/background_hang_monitor.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 50,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/background_hang_monitor.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 138,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/background_hang_monitor.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 349,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/background_hang_monitor.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 355,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/background_hang_monitor.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 366,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/background_hang_monitor.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 380,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 51,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 52,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 53,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 64,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 71,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 76,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 84,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 97,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 115,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 127,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 135,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 135,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 161,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 165,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 167,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 170,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 185,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 187,
+        "texto": "expect convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "expect("
+      },
+      {
+        "archivo": "components/background_hang_monitor/sampler_linux.rs",
+        "control_valido": "let n = texto.parse::<u32>()?;  // o match / unwrap_or / ok_or(Error::...)",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-006",
+        "linea": 193,
+        "texto": "unwrap convierte un error en panic: devolver el error con ? si el dato viene de fuera",
+        "titulo": "unwrap o expect fuera de las pruebas",
+        "visto": "unwrap("
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 15,
+    "total": 40
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "content": [
+    {
+      "text": "{\"analisis_ms\":51508,\"archivos_indexados\":558218,\"archivos_leidos\":160231,\"cabeceras_exportadas\":null,\"carpeta\":\"/var/tmp/ultra-main-work/chromium-personal/src\",\"ciclos\":{\"archivos\":78,\"dependen_de_un_if\":6,\"total\":30},\"compile_commands\":null,\"dependencias\":1271361,\"diagnosticos_gcc\":0,\"fallo_conectado\":{\"archivos_que_fallan\":219,\"causas\":219,\"se_pueden_romper\":114003},\"guardianes\":null,\"megabytes\":1398.3,\"recortado\":false,\"reutilizados_de_la_cache\":0,\"revisiones_gcc\":{\"archivos\":0,\"pendientes\":0},\"siguiente\":\"fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo\",\"sospechas\":{\"Elegancia\":18649,\"Rendimiento\":6620,\"Seguridad\":352,\"a_proposito\":0},\"version\":1}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "analisis_ms": 51508,
+    "archivos_indexados": 558218,
+    "archivos_leidos": 160231,
+    "cabeceras_exportadas": null,
+    "carpeta": "/var/tmp/ultra-main-work/chromium-personal/src",
+    "ciclos": {
+      "archivos": 78,
+      "dependen_de_un_if": 6,
+      "total": 30
+    },
+    "compile_commands": null,
+    "dependencias": 1271361,
+    "diagnosticos_gcc": 0,
+    "fallo_conectado": {
+      "archivos_que_fallan": 219,
+      "causas": 219,
+      "se_pueden_romper": 114003
+    },
+    "guardianes": null,
+    "megabytes": 1398.3,
+    "recortado": false,
+    "reutilizados_de_la_cache": 0,
+    "revisiones_gcc": {
+      "archivos": 0,
+      "pendientes": 0
+    },
+    "siguiente": "fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo",
+    "sospechas": {
+      "Elegancia": 18649,
+      "Rendimiento": 6620,
+      "Seguridad": 352,
+      "a_proposito": 0
+    },
+    "version": 1
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"v8/src/objects/objects.cc\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":4500,\"texto\":\"origen y destino salen de sink: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(sink, sink - copy_length, copy_length*sizeof(sinkchar))\"},{\"archivo\":\"v8/src/objects/objects.cc\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":4507,\"texto\":\"origen y destino salen de sink: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(sink, sink - remaining - separator_length, remaining*sizeof(sinkchar))\"},{\"archivo\":\"v8/src/objects/intl-objects.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1934,\"texto\":\"candidate se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string candidate\"},{\"archivo\":\"v8/src/objects/intl-objects.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":2169,\"texto\":\"elements se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<std::string>elements\"},{\"archivo\":\"v8/src/objects/allocation-site-inl.h\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":145,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"update_or_check == AllocationSiteUpdateMode::kCheckOnly){\"},{\"archivo\":\"v8/src/objects/backing-store.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":306,\"texto\":\"la funcion ocupa 119 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", HasGuardRegions has_guard_regions){\"},{\"archivo\":\"v8/src/objects/bigint.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":774,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", double y){\"},{\"archivo\":\"v8/src/objects/bigint.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1071,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"length()>kMaxRenderedLength){\"},{\"archivo\":\"v8/src/objects/bigint.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1706,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"bigint::Status::kInterrupted){\"},{\"archivo\":\"v8/src/objects/bytecode-array.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":149,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"){if(first_entry){\"},{\"archivo\":\"v8/src/objects/call-site-info.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":300,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"IsString(*eval_script_name)){\"},{\"archivo\":\"v8/src/objects/call-site-info.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":556,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"() == *function){\"},{\"archivo\":\"v8/src/objects/code.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":193,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\");switch(reason){\"},{\"archivo\":\"v8/src/objects/code.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":264,\"texto\":\"la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", Address current_pc){\"},{\"archivo\":\"v8/src/objects/code.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":308,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"it.Advance()){\"},{\"archivo\":\"v8/src/objects/contexts.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":277,\"texto\":\"la funcion ocupa 271 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"bool*is_sloppy_function_name){\"},{\"archivo\":\"v8/src/objects/contexts.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":316,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(v8_flags.trace_contexts){\"},{\"archivo\":\"v8/src/objects/contexts.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":622,\"texto\":\"la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"Isolate*isolate){\"},{\"archivo\":\"v8/src/objects/deoptimization-data.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":202,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"--;if(first_frame){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1675,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"dict->IterateEntries()){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2068,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"isolate, *receiver)){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2179,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"*value, element_k)){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2582,\"texto\":\"la funcion ocupa 157 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", size_t length){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2613,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"<length;++k){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3511,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"->is_undefined(k)){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3950,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"<length;++k){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":4034,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"<length;++k){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":4229,\"texto\":\"la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", size_t offset){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":4361,\"texto\":\"la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", size_t offset){\"},{\"archivo\":\"v8/src/objects/elements.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":4422,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"(IsFloat16TypedArrayElementsKind(Kind)){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":164,\"total\":194}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "v8/src/objects/objects.cc",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 4500,
+        "texto": "origen y destino salen de sink: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(sink, sink - copy_length, copy_length*sizeof(sinkchar))"
+      },
+      {
+        "archivo": "v8/src/objects/objects.cc",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 4507,
+        "texto": "origen y destino salen de sink: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(sink, sink - remaining - separator_length, remaining*sizeof(sinkchar))"
+      },
+      {
+        "archivo": "v8/src/objects/intl-objects.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1934,
+        "texto": "candidate se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string candidate"
+      },
+      {
+        "archivo": "v8/src/objects/intl-objects.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 2169,
+        "texto": "elements se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<std::string>elements"
+      },
+      {
+        "archivo": "v8/src/objects/allocation-site-inl.h",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 145,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "update_or_check == AllocationSiteUpdateMode::kCheckOnly){"
+      },
+      {
+        "archivo": "v8/src/objects/backing-store.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 306,
+        "texto": "la funcion ocupa 119 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", HasGuardRegions has_guard_regions){"
+      },
+      {
+        "archivo": "v8/src/objects/bigint.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 774,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", double y){"
+      },
+      {
+        "archivo": "v8/src/objects/bigint.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1071,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "length()>kMaxRenderedLength){"
+      },
+      {
+        "archivo": "v8/src/objects/bigint.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1706,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "bigint::Status::kInterrupted){"
+      },
+      {
+        "archivo": "v8/src/objects/bytecode-array.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 149,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "){if(first_entry){"
+      },
+      {
+        "archivo": "v8/src/objects/call-site-info.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 300,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "IsString(*eval_script_name)){"
+      },
+      {
+        "archivo": "v8/src/objects/call-site-info.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 556,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "() == *function){"
+      },
+      {
+        "archivo": "v8/src/objects/code.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 193,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ");switch(reason){"
+      },
+      {
+        "archivo": "v8/src/objects/code.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 264,
+        "texto": "la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", Address current_pc){"
+      },
+      {
+        "archivo": "v8/src/objects/code.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 308,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "it.Advance()){"
+      },
+      {
+        "archivo": "v8/src/objects/contexts.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 277,
+        "texto": "la funcion ocupa 271 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "bool*is_sloppy_function_name){"
+      },
+      {
+        "archivo": "v8/src/objects/contexts.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 316,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(v8_flags.trace_contexts){"
+      },
+      {
+        "archivo": "v8/src/objects/contexts.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 622,
+        "texto": "la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "Isolate*isolate){"
+      },
+      {
+        "archivo": "v8/src/objects/deoptimization-data.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 202,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "--;if(first_frame){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1675,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "dict->IterateEntries()){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2068,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "isolate, *receiver)){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2179,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "*value, element_k)){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2582,
+        "texto": "la funcion ocupa 157 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", size_t length){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2613,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "<length;++k){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3511,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "->is_undefined(k)){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3950,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "<length;++k){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 4034,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "<length;++k){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 4229,
+        "texto": "la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", size_t offset){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 4361,
+        "texto": "la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", size_t offset){"
+      },
+      {
+        "archivo": "v8/src/objects/elements.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 4422,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "(IsFloat16TypedArrayElementsKind(Kind)){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 164,
+    "total": 194
+  }
+}

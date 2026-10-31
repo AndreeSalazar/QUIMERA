@@ -1,0 +1,22 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"third_party/openh264rs\"},{\"carpeta\":false,\"ruta\":\"third_party/openh264/openh264_sources.gni\"}],\"texto\":\"third_party/openh264rs\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "third_party/openh264rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/openh264/openh264_sources.gni"
+      }
+    ],
+    "texto": "third_party/openh264rs"
+  }
+}

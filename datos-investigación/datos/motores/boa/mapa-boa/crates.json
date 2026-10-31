@@ -1,0 +1,654 @@
+{
+ "boa_benches": {
+  "ruta": "benches",
+  "no_std": false,
+  "version": "0.1.0",
+  "descripcion": null,
+  "archivos_rs": 2,
+  "lineas_rs": 88,
+  "lineas_unsafe": 0,
+  "nivel": 8,
+  "usa_internos": [
+   "boa_engine",
+   "boa_runtime"
+  ],
+  "lo_usan": [],
+  "externos": []
+ },
+ "boa_cli": {
+  "ruta": "cli",
+  "no_std": null,
+  "version": null,
+  "descripcion": null,
+  "archivos_rs": 13,
+  "lineas_rs": 1932,
+  "lineas_unsafe": 0,
+  "nivel": 8,
+  "usa_internos": [
+   "boa_engine",
+   "boa_gc",
+   "boa_parser",
+   "boa_runtime"
+  ],
+  "lo_usan": [],
+  "externos": [
+   "async-channel",
+   "clap",
+   "color-eyre",
+   "colored",
+   "cow-utils",
+   "dhat",
+   "futures-concurrency",
+   "mimalloc-safe",
+   "phf",
+   "regex",
+   "rustls",
+   "rustyline",
+   "serde_json",
+   "smol",
+   "tikv-jemallocator",
+   "unsend"
+  ]
+ },
+ "boa_ast": {
+  "ruta": "core/ast",
+  "no_std": false,
+  "version": null,
+  "descripcion": "Abstract Syntax Tree definition for the Boa JavaScript engine.",
+  "archivos_rs": 77,
+  "lineas_rs": 21600,
+  "lineas_unsafe": 0,
+  "nivel": 3,
+  "usa_internos": [
+   "boa_interner",
+   "boa_macros",
+   "boa_string"
+  ],
+  "lo_usan": [
+   "boa_engine",
+   "boa_examples",
+   "boa_fuzz",
+   "boa_parser"
+  ],
+  "externos": [
+   "arbitrary",
+   "bitflags",
+   "indexmap",
+   "num-bigint",
+   "rustc-hash",
+   "serde",
+   "strum"
+  ]
+ },
+ "boa_engine": {
+  "ruta": "core/engine",
+  "no_std": false,
+  "version": null,
+  "descripcion": null,
+  "archivos_rs": 400,
+  "lineas_rs": 141360,
+  "lineas_unsafe": 277,
+  "nivel": 5,
+  "usa_internos": [
+   "boa_ast",
+   "boa_gc",
+   "boa_icu_provider",
+   "boa_interner",
+   "boa_macros",
+   "boa_parser",
+   "boa_string",
+   "small_btree",
+   "tag_ptr"
+  ],
+  "lo_usan": [
+   "boa_benches",
+   "boa_cli",
+   "boa_examples",
+   "boa_fuzz",
+   "boa_runtime",
+   "boa_tester",
+   "boa_wasm",
+   "boa_wintertc",
+   "boa_wpt",
+   "insta-bytecode"
+  ],
+  "externos": [
+   "aligned-vec",
+   "arrayvec",
+   "async-channel",
+   "bitflags",
+   "bytemuck",
+   "cfg-if",
+   "cow-utils",
+   "dashmap",
+   "data-encoding",
+   "data-encoding-macro",
+   "dynify",
+   "either",
+   "fast-float2",
+   "fixed_decimal",
+   "float16",
+   "futures-concurrency",
+   "futures-lite",
+   "getrandom",
+   "hashbrown",
+   "iana-time-zone",
+   "icu_calendar",
+   "icu_casemap",
+   "icu_collator",
+   "icu_datetime",
+   "icu_decimal",
+   "icu_list",
+   "icu_locale",
+   "icu_normalizer",
+   "icu_plurals",
+   "icu_provider",
+   "icu_segmenter",
+   "icu_time",
+   "indexmap",
+   "intrusive-collections",
+   "itertools",
+   "lz4_flex",
+   "num-bigint",
+   "num-integer",
+   "num-traits",
+   "num_enum",
+   "oneshot",
+   "pastey",
+   "portable-atomic",
+   "rand",
+   "regress",
+   "rustc-hash",
+   "ryu-js",
+   "serde",
+   "serde_json",
+   "static_assertions",
+   "sys-locale",
+   "tap",
+   "temporal_rs",
+   "thin-vec",
+   "thiserror",
+   "time",
+   "timezone_provider",
+   "tinystr",
+   "web-time",
+   "writeable",
+   "xsum",
+   "yoke",
+   "zerofrom"
+  ]
+ },
+ "boa_gc": {
+  "ruta": "core/gc",
+  "no_std": false,
+  "version": null,
+  "descripcion": "Garbage collector for the Boa JavaScript engine.",
+  "archivos_rs": 21,
+  "lineas_rs": 3672,
+  "lineas_unsafe": 175,
+  "nivel": 1,
+  "usa_internos": [
+   "boa_macros",
+   "boa_string"
+  ],
+  "lo_usan": [
+   "boa_cli",
+   "boa_engine",
+   "boa_examples",
+   "boa_interner",
+   "boa_runtime",
+   "boa_wintertc",
+   "boa_wpt"
+  ],
+  "externos": [
+   "arrayvec",
+   "either",
+   "hashbrown",
+   "icu_locale_core",
+   "thin-vec"
+  ]
+ },
+ "boa_icu_provider": {
+  "ruta": "core/icu_provider",
+  "no_std": true,
+  "version": null,
+  "descripcion": "ICU4X data provider for the Boa JavaScript engine.",
+  "archivos_rs": 1,
+  "lineas_rs": 127,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "boa_engine"
+  ],
+  "externos": [
+   "icu_calendar",
+   "icu_casemap",
+   "icu_collator",
+   "icu_datetime",
+   "icu_decimal",
+   "icu_list",
+   "icu_locale",
+   "icu_locale_fallback",
+   "icu_normalizer",
+   "icu_plurals",
+   "icu_provider",
+   "icu_provider_adapters",
+   "icu_provider_blob",
+   "icu_segmenter",
+   "icu_time",
+   "once_cell",
+   "pastey"
+  ]
+ },
+ "boa_interner": {
+  "ruta": "core/interner",
+  "no_std": true,
+  "version": null,
+  "descripcion": "String interner for the Boa JavaScript engine.",
+  "archivos_rs": 6,
+  "lineas_rs": 1175,
+  "lineas_unsafe": 23,
+  "nivel": 2,
+  "usa_internos": [
+   "boa_gc",
+   "boa_macros"
+  ],
+  "lo_usan": [
+   "boa_ast",
+   "boa_engine",
+   "boa_examples",
+   "boa_fuzz",
+   "boa_parser"
+  ],
+  "externos": [
+   "arbitrary",
+   "hashbrown",
+   "indexmap",
+   "once_cell",
+   "phf",
+   "rustc-hash",
+   "serde",
+   "static_assertions"
+  ]
+ },
+ "boa_macros": {
+  "ruta": "core/macros",
+  "no_std": false,
+  "version": null,
+  "descripcion": "Macros for the Boa JavaScript engine.",
+  "archivos_rs": 7,
+  "lineas_rs": 2277,
+  "lineas_unsafe": 8,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "boa_ast",
+   "boa_engine",
+   "boa_gc",
+   "boa_interner",
+   "boa_parser"
+  ],
+  "externos": [
+   "cfg-if",
+   "cow-utils",
+   "lz4_flex",
+   "proc-macro2",
+   "quote",
+   "syn",
+   "synstructure"
+  ]
+ },
+ "boa_parser": {
+  "ruta": "core/parser",
+  "no_std": false,
+  "version": null,
+  "descripcion": "ECMAScript parser for the Boa JavaScript engine.",
+  "archivos_rs": 114,
+  "lineas_rs": 27142,
+  "lineas_unsafe": 2,
+  "nivel": 4,
+  "usa_internos": [
+   "boa_ast",
+   "boa_interner",
+   "boa_macros"
+  ],
+  "lo_usan": [
+   "boa_cli",
+   "boa_engine",
+   "boa_examples",
+   "boa_fuzz"
+  ],
+  "externos": [
+   "bitflags",
+   "fast-float2",
+   "icu_properties",
+   "num-bigint",
+   "num-traits",
+   "regress",
+   "rustc-hash"
+  ]
+ },
+ "boa_runtime": {
+  "ruta": "core/runtime",
+  "no_std": false,
+  "version": null,
+  "descripcion": "Example runtime for the Boa JavaScript engine.",
+  "archivos_rs": 28,
+  "lineas_rs": 6971,
+  "lineas_unsafe": 6,
+  "nivel": 7,
+  "usa_internos": [
+   "boa_engine",
+   "boa_gc",
+   "boa_wintertc"
+  ],
+  "lo_usan": [
+   "boa_benches",
+   "boa_cli",
+   "boa_examples",
+   "boa_tester",
+   "boa_wpt"
+  ],
+  "externos": [
+   "bus",
+   "bytemuck",
+   "either",
+   "futures",
+   "futures-lite",
+   "http",
+   "reqwest",
+   "rustc-hash",
+   "serde_json",
+   "url"
+  ]
+ },
+ "boa_string": {
+  "ruta": "core/string",
+  "no_std": false,
+  "version": null,
+  "descripcion": null,
+  "archivos_rs": 13,
+  "lineas_rs": 4593,
+  "lineas_unsafe": 92,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "boa_ast",
+   "boa_engine",
+   "boa_gc"
+  ],
+  "externos": [
+   "fast-float2",
+   "itoa",
+   "pastey",
+   "rustc-hash",
+   "ryu-js",
+   "static_assertions"
+  ]
+ },
+ "boa_wintertc": {
+  "ruta": "core/wintertc",
+  "no_std": false,
+  "version": null,
+  "descripcion": "WinterTC (TC55) Minimum Common Web API implementation for the Boa JavaScript engine.",
+  "archivos_rs": 19,
+  "lineas_rs": 3845,
+  "lineas_unsafe": 8,
+  "nivel": 6,
+  "usa_internos": [
+   "boa_engine",
+   "boa_gc"
+  ],
+  "lo_usan": [
+   "boa_runtime"
+  ],
+  "externos": [
+   "base64",
+   "comfy-table",
+   "rustc-hash"
+  ]
+ },
+ "boa_examples": {
+  "ruta": "examples",
+  "no_std": null,
+  "version": null,
+  "descripcion": "Usage examples of the Boa JavaScript engine.",
+  "archivos_rs": 30,
+  "lineas_rs": 2717,
+  "lineas_unsafe": 1,
+  "nivel": 8,
+  "usa_internos": [
+   "boa_ast",
+   "boa_engine",
+   "boa_gc",
+   "boa_interner",
+   "boa_parser",
+   "boa_runtime"
+  ],
+  "lo_usan": [],
+  "externos": [
+   "futures-concurrency",
+   "futures-lite",
+   "reqwest",
+   "rustls",
+   "smol",
+   "time",
+   "tokio"
+  ]
+ },
+ "boa_wasm": {
+  "ruta": "ffi/wasm",
+  "no_std": false,
+  "version": null,
+  "descripcion": "Wasm compatibility layer for the Boa JavaScript engine.",
+  "archivos_rs": 2,
+  "lineas_rs": 45,
+  "lineas_unsafe": 0,
+  "nivel": 6,
+  "usa_internos": [
+   "boa_engine"
+  ],
+  "lo_usan": [],
+  "externos": [
+   "console_error_panic_hook",
+   "wasm-bindgen"
+  ]
+ },
+ "tests": {
+  "ruta": "tests",
+  "no_std": false,
+  "version": null,
+  "descripcion": null,
+  "archivos_rs": 1,
+  "lineas_rs": 0,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [],
+  "externos": []
+ },
+ "boa_fuzz": {
+  "ruta": "tests/fuzz",
+  "no_std": null,
+  "version": "0.0.0",
+  "descripcion": null,
+  "archivos_rs": 4,
+  "lineas_rs": 190,
+  "lineas_unsafe": 0,
+  "nivel": 6,
+  "usa_internos": [
+   "boa_ast",
+   "boa_engine",
+   "boa_interner",
+   "boa_parser"
+  ],
+  "lo_usan": [],
+  "externos": [
+   "arbitrary",
+   "libfuzzer-sys"
+  ]
+ },
+ "insta-bytecode": {
+  "ruta": "tests/insta-bytecode",
+  "no_std": false,
+  "version": null,
+  "descripcion": null,
+  "archivos_rs": 1,
+  "lineas_rs": 12,
+  "lineas_unsafe": 0,
+  "nivel": 6,
+  "usa_internos": [
+   "boa_engine"
+  ],
+  "lo_usan": [],
+  "externos": []
+ },
+ "boa_macros_tests": {
+  "ruta": "tests/macros",
+  "no_std": null,
+  "version": null,
+  "descripcion": "Testing crate for boa_macros",
+  "archivos_rs": 10,
+  "lineas_rs": 556,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [],
+  "externos": []
+ },
+ "boa_tester": {
+  "ruta": "tests/tester",
+  "no_std": null,
+  "version": null,
+  "descripcion": "ECMA-262 tests runner for the Boa JavaScript engine.",
+  "archivos_rs": 5,
+  "lineas_rs": 2567,
+  "lineas_unsafe": 1,
+  "nivel": 8,
+  "usa_internos": [
+   "boa_engine",
+   "boa_runtime"
+  ],
+  "lo_usan": [],
+  "externos": [
+   "bitflags",
+   "clap",
+   "color-eyre",
+   "colored",
+   "comfy-table",
+   "cow-utils",
+   "phf",
+   "rayon",
+   "rustc-hash",
+   "serde",
+   "serde_json",
+   "serde_repr",
+   "serde_yaml",
+   "toml"
+  ]
+ },
+ "boa_wpt": {
+  "ruta": "tests/wpt",
+  "no_std": false,
+  "version": "0.1.0",
+  "descripcion": null,
+  "archivos_rs": 4,
+  "lineas_rs": 637,
+  "lineas_unsafe": 0,
+  "nivel": 8,
+  "usa_internos": [
+   "boa_engine",
+   "boa_gc",
+   "boa_runtime"
+  ],
+  "lo_usan": [],
+  "externos": [
+   "git2",
+   "rstest",
+   "rustls",
+   "serde",
+   "toml",
+   "url"
+  ]
+ },
+ "gen-icu4x-data": {
+  "ruta": "tools/gen-icu4x-data",
+  "no_std": null,
+  "version": null,
+  "descripcion": null,
+  "archivos_rs": 1,
+  "lineas_rs": 77,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [],
+  "externos": [
+   "icu_calendar",
+   "icu_casemap",
+   "icu_collator",
+   "icu_datetime",
+   "icu_decimal",
+   "icu_list",
+   "icu_locale",
+   "icu_locale_fallback",
+   "icu_normalizer",
+   "icu_plurals",
+   "icu_provider_export",
+   "icu_provider_source",
+   "icu_segmenter",
+   "icu_time",
+   "log",
+   "simple_logger"
+  ]
+ },
+ "scripts": {
+  "ruta": "tools/scripts",
+  "no_std": null,
+  "version": "0.0.0",
+  "descripcion": null,
+  "archivos_rs": 1,
+  "lineas_rs": 21,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [],
+  "externos": [
+   "cargo_metadata",
+   "log",
+   "simple_logger"
+  ]
+ },
+ "small_btree": {
+  "ruta": "utils/small_btree",
+  "no_std": false,
+  "version": "0.1.0",
+  "descripcion": "Utility library that add SmallBTreeMap data structure",
+  "archivos_rs": 2,
+  "lineas_rs": 866,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "boa_engine"
+  ],
+  "externos": [
+   "arrayvec"
+  ]
+ },
+ "tag_ptr": {
+  "ruta": "utils/tag_ptr",
+  "no_std": false,
+  "version": "0.1.0",
+  "descripcion": "Utility library that enables a pointer to be associated with a tag of type `usize`",
+  "archivos_rs": 1,
+  "lineas_rs": 113,
+  "lineas_unsafe": 3,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "boa_engine"
+  ],
+  "externos": []
+ }
+}

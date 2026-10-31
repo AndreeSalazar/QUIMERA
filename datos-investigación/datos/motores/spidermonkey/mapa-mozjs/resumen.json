@@ -1,0 +1,148 @@
+{
+ "lenguajes": {
+  "C++": {
+   "archivos": 2169,
+   "lineas": 1189821
+  },
+  "Python": {
+   "archivos": 3139,
+   "lineas": 724321
+  },
+  "C/C++ cab": {
+   "archivos": 2546,
+   "lineas": 666065
+  },
+  "C": {
+   "archivos": 352,
+   "lineas": 131123
+  },
+  "Rust": {
+   "archivos": 133,
+   "lineas": 42871
+  },
+  "JS": {
+   "archivos": 84,
+   "lineas": 18891
+  },
+  "HTML": {
+   "archivos": 41,
+   "lineas": 10538
+  },
+  "CSS": {
+   "archivos": 7,
+   "lineas": 558
+  },
+  "TOML": {
+   "archivos": 98,
+   "lineas": 0
+  }
+ },
+ "crates": 14,
+ "niveles": 7,
+ "ciclos_entre_crates": 0,
+ "lineas_rs": 42871,
+ "lineas_unsafe": 757,
+ "externos_distintos": 35,
+ "externos_mas_usados": [
+  [
+   "cbindgen",
+   5
+  ],
+  [
+   "icu_properties",
+   4
+  ],
+  [
+   "databake",
+   3
+  ],
+  [
+   "displaydoc",
+   3
+  ],
+  [
+   "serde",
+   3
+  ],
+  [
+   "smallvec",
+   3
+  ],
+  [
+   "zerovec",
+   3
+  ],
+  [
+   "bindgen",
+   2
+  ],
+  [
+   "cc",
+   2
+  ],
+  [
+   "encoding_rs",
+   2
+  ],
+  [
+   "libc",
+   2
+  ],
+  [
+   "icu_locale_core",
+   2
+  ],
+  [
+   "tinystr",
+   2
+  ],
+  [
+   "icu_locale",
+   2
+  ],
+  [
+   "icu_provider",
+   2
+  ],
+  [
+   "icu_casemap",
+   2
+  ],
+  [
+   "write16",
+   2
+  ],
+  [
+   "log",
+   1
+  ],
+  [
+   "num-traits",
+   1
+  ],
+  [
+   "arraystring",
+   1
+  ],
+  [
+   "arrayvec",
+   1
+  ],
+  [
+   "writeable",
+   1
+  ],
+  [
+   "potential_utf",
+   1
+  ],
+  [
+   "yoke",
+   1
+  ],
+  [
+   "zerofrom",
+   1
+  ]
+ ]
+}

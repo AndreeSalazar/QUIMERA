@@ -1,0 +1,4 @@
+PROGRESS Earley
+PROGRESS Boyer
+RESULT EarleyBoyer 434
+SCORE 434

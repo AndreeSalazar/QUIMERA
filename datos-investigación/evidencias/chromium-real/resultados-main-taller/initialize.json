@@ -1,0 +1,19 @@
+{
+  "capabilities": {
+    "logging": {},
+    "resources": {
+      "listChanged": false,
+      "subscribe": true
+    },
+    "tools": {
+      "listChanged": false
+    }
+  },
+  "instructions": "SUPER GRAFO de ULTRA Carpetas: el mapa de un proyecto C/C++/ASM (tambien Rust y Python) con el museo de fallos (Seguridad, Rendimiento, Elegancia), el fallo conectado, caminos, ciclos y pesos. Empezar por `resumen`; despues `fallos`, `ciclos` o `senales` para lo peor, y `camino`, `peso` o `archivo` para bajar. Las rutas son relativas a la carpeta. Todas las respuestas tienen tope (`limite`, 10 por defecto). Es analisis lexico: `gcc_deps` mide cuanto acierta contra gcc -MM y `gcc_diagnosticos` pide la opinion de GCC (SARIF, -fanalyzer).",
+  "protocolVersion": "2024-11-05",
+  "serverInfo": {
+    "name": "super-grafo",
+    "title": "SUPER GRAFO (ULTRA Carpetas)",
+    "version": "0.1.0"
+  }
+}

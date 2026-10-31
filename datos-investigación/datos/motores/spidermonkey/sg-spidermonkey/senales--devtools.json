@@ -1,0 +1,61 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"devtools/rootAnalysis/t/hazards/source.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":275,\"texto\":\"la funcion ocupa 152 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"void safevals(){\"},{\"archivo\":\"devtools/rootAnalysis/t/hazards/source.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":584,\"texto\":\"la funcion ocupa 144 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"void partial_assignments(){\"},{\"archivo\":\"devtools/rootAnalysis/t/virtual/source.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":158,\"texto\":\"la funcion ocupa 133 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"void f(){\"},{\"archivo\":\"devtools/vprof/vprof.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":145,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"[j]!=0){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":0,\"total\":4}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "devtools/rootAnalysis/t/hazards/source.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 275,
+        "texto": "la funcion ocupa 152 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "void safevals(){"
+      },
+      {
+        "archivo": "devtools/rootAnalysis/t/hazards/source.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 584,
+        "texto": "la funcion ocupa 144 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "void partial_assignments(){"
+      },
+      {
+        "archivo": "devtools/rootAnalysis/t/virtual/source.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 158,
+        "texto": "la funcion ocupa 133 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "void f(){"
+      },
+      {
+        "archivo": "devtools/vprof/vprof.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 145,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "[j]!=0){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 0,
+    "total": 4
+  }
+}

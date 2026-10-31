@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"chrome/utility\"},{\"carpeta\":false,\"ruta\":\"chrome/test/data/ash/clipboard_history/utility.js\"},{\"carpeta\":false,\"ruta\":\"chromeos/ash/components/mojo_service_manager/utility_process_bridge.h\"},{\"carpeta\":false,\"ruta\":\"chromeos/ash/components/mojo_service_manager/utility_process_bridge.cc\"},{\"carpeta\":false,\"ruta\":\"chrome/utility/chrome_content_utility_client.h\"},{\"carpeta\":false,\"ruta\":\"chrome/utility/chrome_content_utility_client.cc\"},{\"carpeta\":false,\"ruta\":\"chrome/app/chromeos_strings_grdp/IDS_UTILITY_PROCESS_PDF_SERVICE_NAME.png.sha1\"},{\"carpeta\":false,\"ruta\":\"chrome/app/printing_strings_grdp/IDS_UTILITY_PROCESS_PRINT_BACKEND_SERVICE_NAME.png.sha1\"},{\"carpeta\":false,\"ruta\":\"chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h\"},{\"carpeta\":false,\"ruta\":\"chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.cc\"},{\"carpeta\":false,\"ruta\":\"chrome/browser/extensions/api/image_writer_private/image_writer_utility_client_browsertest.cc\"},{\"carpeta\":false,\"ruta\":\"chrome/browser/resources/chromeos/accessibility/switch_access/test_utility.js\"},{\"carpeta\":false,\"ruta\":\"chrome/browser/page_load_metrics/integration_tests/layout_instability_browsertest.cc\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/page_load_metrics/integration_tests/data/layout-instability\"},{\"carpeta\":false,\"ruta\":\"ios/chrome/app/strings/ios_strings_grd/IDS_IOS_TABLE_VIEW_INFO_BUTTON_ITEM_ACCESSIBILITY_TAP.png.sha1\"},{\"carpeta\":false,\"ruta\":\"chrome/browser/ui/android/strings/android_chrome_strings_grd/IDS_IPH_TAB_SWITCHER_SWITCH_OUT_OF_INCOGNITO_ACCESSIBILITY_TEXT.png.sha1\"},{\"carpeta\":false,\"ruta\":\"ios/chrome/browser/intents/model/user_activity_compatibility_util.h\"},{\"carpeta\":false,\"ruta\":\"ios/chrome/browser/intents/model/user_activity_compatibility_util.mm\"},{\"carpeta\":false,\"ruta\":\"ios/chrome/browser/intents/model/user_activity_compatibility_util_unittest.mm\"},{\"carpeta\":false,\"ruta\":\"chrome/test/android/javatests/src/org/chromium/chrome/test/transit/ntp/RegularNewTabPageAppMenuFacility.java\"}],\"texto\":\"chrome/utility\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "chrome/utility"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/test/data/ash/clipboard_history/utility.js"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chromeos/ash/components/mojo_service_manager/utility_process_bridge.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chromeos/ash/components/mojo_service_manager/utility_process_bridge.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/utility/chrome_content_utility_client.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/utility/chrome_content_utility_client.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/app/chromeos_strings_grdp/IDS_UTILITY_PROCESS_PDF_SERVICE_NAME.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/app/printing_strings_grdp/IDS_UTILITY_PROCESS_PRINT_BACKEND_SERVICE_NAME.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client_browsertest.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/browser/resources/chromeos/accessibility/switch_access/test_utility.js"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/browser/page_load_metrics/integration_tests/layout_instability_browsertest.cc"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/page_load_metrics/integration_tests/data/layout-instability"
+      },
+      {
+        "carpeta": false,
+        "ruta": "ios/chrome/app/strings/ios_strings_grd/IDS_IOS_TABLE_VIEW_INFO_BUTTON_ITEM_ACCESSIBILITY_TAP.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/browser/ui/android/strings/android_chrome_strings_grd/IDS_IPH_TAB_SWITCHER_SWITCH_OUT_OF_INCOGNITO_ACCESSIBILITY_TEXT.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "ios/chrome/browser/intents/model/user_activity_compatibility_util.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "ios/chrome/browser/intents/model/user_activity_compatibility_util.mm"
+      },
+      {
+        "carpeta": false,
+        "ruta": "ios/chrome/browser/intents/model/user_activity_compatibility_util_unittest.mm"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/test/android/javatests/src/org/chromium/chrome/test/transit/ntp/RegularNewTabPageAppMenuFacility.java"
+      }
+    ],
+    "texto": "chrome/utility"
+  }
+}

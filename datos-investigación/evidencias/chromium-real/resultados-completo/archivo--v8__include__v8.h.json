@@ -1,0 +1,507 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_POSIX) && !BUILDFLAG(IS_MAC) && !BUILDFLAG(IS_ANDROID)\",\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":163},\"ruta\":\"chrome/app/chrome_main_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":12},\"ruta\":\"components/dom_distiller/content/renderer/distiller_js_render_frame_observer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":50},\"ruta\":\"third_party/blink/public/web/web_plugin.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":16},\"ruta\":\"chrome/renderer/sandbox_status_extension_android.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":104},\"ruta\":\"third_party/blink/public/web/web_local_frame_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":27},\"ruta\":\"chrome/renderer/sandbox_status_extension_android.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":23},\"ruta\":\"chrome/renderer/v8_unwinder_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":18},\"ruta\":\"chrome/renderer/controlled_frame/web_url_pattern_natives_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":14},\"ruta\":\"extensions/renderer/bindings/api_binding_test_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":15},\"ruta\":\"extensions/renderer/bindings/api_binding_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":9},\"ruta\":\"chrome/renderer/extensions/api/accessibility_private_hooks_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":15},\"ruta\":\"extensions/renderer/bindings/api_signature.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":9},\"ruta\":\"extensions/renderer/bindings/api_binding_hooks_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":13},\"ruta\":\"chrome/renderer/extensions/api/app_hooks_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":11},\"ruta\":\"extensions/renderer/bindings/api_binding_types.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":20},\"ruta\":\"extensions/renderer/bindings/api_request_handler.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":11},\"ruta\":\"chrome/renderer/extensions/api/extension_hooks_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":11},\"ruta\":\"chrome/renderer/extensions/api/tabs_hooks_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":9},\"ruta\":\"chrome/renderer/extensions/api/sync_file_system_custom_bindings.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":9},\"ruta\":\"chrome/renderer/extensions/api/platform_keys_natives.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":9},\"ruta\":\"chrome/renderer/extensions/api/printing_hooks_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":18},\"ruta\":\"chrome/renderer/extensions/api/media_galleries_custom_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":12},\"ruta\":\"chrome/renderer/extensions/api/page_capture_custom_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":14},\"ruta\":\"chrome/renderer/extensions/api/sync_file_system_custom_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":33},\"ruta\":\"chrome/renderer/indigo/indigo_agent.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":30},\"ruta\":\"chrome/renderer/indigo/indigo_agent_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":20},\"ruta\":\"chrome/renderer/indigo/onboarding_agent.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":14},\"ruta\":\"extensions/renderer/guest_view/mime_handler_view/post_message_support.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":59},\"ruta\":\"chrome/renderer/searchbox/searchbox_extension.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":16},\"ruta\":\"chrome/renderer/translate/translate_script_browsertest.cc\"}],\"total\":421},\"papel\":null,\"ruta\":\"v8/include/v8.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-array-buffer.h\\\"\",\"linea\":24},\"ruta\":\"v8/include/v8-array-buffer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-function.h\\\"\",\"linea\":33},\"ruta\":\"v8/include/v8-function.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":36},\"ruta\":\"v8/include/v8-isolate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-microtask-queue.h\\\"\",\"linea\":43},\"ruta\":\"v8/include/v8-microtask-queue.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-statistics.h\\\"\",\"linea\":54},\"ruta\":\"v8/include/v8-statistics.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-template.h\\\"\",\"linea\":55},\"ruta\":\"v8/include/v8-template.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-promise.h\\\"\",\"linea\":49},\"ruta\":\"v8/include/v8-promise.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-context.h\\\"\",\"linea\":26},\"ruta\":\"v8/include/v8-context.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-locker.h\\\"\",\"linea\":39},\"ruta\":\"v8/include/v8-locker.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-object.h\\\"\",\"linea\":45},\"ruta\":\"v8/include/v8-object.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-primitive.h\\\"\",\"linea\":48},\"ruta\":\"v8/include/v8-primitive.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-traced-handle.h\\\"\",\"linea\":56},\"ruta\":\"v8/include/v8-traced-handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-local-handle.h\\\"\",\"linea\":38},\"ruta\":\"v8/include/v8-local-handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-exception.h\\\"\",\"linea\":30},\"ruta\":\"v8/include/v8-exception.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-persistent-handle.h\\\"\",\"linea\":46},\"ruta\":\"v8/include/v8-persistent-handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-unwinder.h\\\"\",\"linea\":58},\"ruta\":\"v8/include/v8-unwinder.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-typed-array.h\\\"\",\"linea\":57},\"ruta\":\"v8/include/v8-typed-array.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-container.h\\\"\",\"linea\":25},\"ruta\":\"v8/include/v8-container.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-value.h\\\"\",\"linea\":60},\"ruta\":\"v8/include/v8-value.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-initialization.h\\\"\",\"linea\":34},\"ruta\":\"v8/include/v8-initialization.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-extension.h\\\"\",\"linea\":31},\"ruta\":\"v8/include/v8-extension.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-date.h\\\"\",\"linea\":28},\"ruta\":\"v8/include/v8-date.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-regexp.h\\\"\",\"linea\":51},\"ruta\":\"v8/include/v8-regexp.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-script.h\\\"\",\"linea\":52},\"ruta\":\"v8/include/v8-script.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-external.h\\\"\",\"linea\":32},\"ruta\":\"v8/include/v8-external.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-message.h\\\"\",\"linea\":42},\"ruta\":\"v8/include/v8-message.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-debug.h\\\"\",\"linea\":29},\"ruta\":\"v8/include/v8-debug.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-json.h\\\"\",\"linea\":37},\"ruta\":\"v8/include/v8-json.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-maybe.h\\\"\",\"linea\":40},\"ruta\":\"v8/include/v8-maybe.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-snapshot.h\\\"\",\"linea\":53},\"ruta\":\"v8/include/v8-snapshot.h\"}],\"total\":41}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(IS_POSIX) && !BUILDFLAG(IS_MAC) && !BUILDFLAG(IS_ANDROID)",
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 163
+          },
+          "ruta": "chrome/app/chrome_main_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 12
+          },
+          "ruta": "components/dom_distiller/content/renderer/distiller_js_render_frame_observer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 50
+          },
+          "ruta": "third_party/blink/public/web/web_plugin.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/renderer/sandbox_status_extension_android.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 104
+          },
+          "ruta": "third_party/blink/public/web/web_local_frame_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 27
+          },
+          "ruta": "chrome/renderer/sandbox_status_extension_android.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 23
+          },
+          "ruta": "chrome/renderer/v8_unwinder_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 18
+          },
+          "ruta": "chrome/renderer/controlled_frame/web_url_pattern_natives_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 14
+          },
+          "ruta": "extensions/renderer/bindings/api_binding_test_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 15
+          },
+          "ruta": "extensions/renderer/bindings/api_binding_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 9
+          },
+          "ruta": "chrome/renderer/extensions/api/accessibility_private_hooks_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 15
+          },
+          "ruta": "extensions/renderer/bindings/api_signature.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 9
+          },
+          "ruta": "extensions/renderer/bindings/api_binding_hooks_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 13
+          },
+          "ruta": "chrome/renderer/extensions/api/app_hooks_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 11
+          },
+          "ruta": "extensions/renderer/bindings/api_binding_types.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 20
+          },
+          "ruta": "extensions/renderer/bindings/api_request_handler.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 11
+          },
+          "ruta": "chrome/renderer/extensions/api/extension_hooks_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 11
+          },
+          "ruta": "chrome/renderer/extensions/api/tabs_hooks_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 9
+          },
+          "ruta": "chrome/renderer/extensions/api/sync_file_system_custom_bindings.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 9
+          },
+          "ruta": "chrome/renderer/extensions/api/platform_keys_natives.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 9
+          },
+          "ruta": "chrome/renderer/extensions/api/printing_hooks_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 18
+          },
+          "ruta": "chrome/renderer/extensions/api/media_galleries_custom_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 12
+          },
+          "ruta": "chrome/renderer/extensions/api/page_capture_custom_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 14
+          },
+          "ruta": "chrome/renderer/extensions/api/sync_file_system_custom_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 33
+          },
+          "ruta": "chrome/renderer/indigo/indigo_agent.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 30
+          },
+          "ruta": "chrome/renderer/indigo/indigo_agent_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 20
+          },
+          "ruta": "chrome/renderer/indigo/onboarding_agent.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 14
+          },
+          "ruta": "extensions/renderer/guest_view/mime_handler_view/post_message_support.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 59
+          },
+          "ruta": "chrome/renderer/searchbox/searchbox_extension.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/v8.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/renderer/translate/translate_script_browsertest.cc"
+        }
+      ],
+      "total": 421
+    },
+    "papel": null,
+    "ruta": "v8/include/v8.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-array-buffer.h\"",
+            "linea": 24
+          },
+          "ruta": "v8/include/v8-array-buffer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-function.h\"",
+            "linea": 33
+          },
+          "ruta": "v8/include/v8-function.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-isolate.h\"",
+            "linea": 36
+          },
+          "ruta": "v8/include/v8-isolate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-microtask-queue.h\"",
+            "linea": 43
+          },
+          "ruta": "v8/include/v8-microtask-queue.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-statistics.h\"",
+            "linea": 54
+          },
+          "ruta": "v8/include/v8-statistics.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-template.h\"",
+            "linea": 55
+          },
+          "ruta": "v8/include/v8-template.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-promise.h\"",
+            "linea": 49
+          },
+          "ruta": "v8/include/v8-promise.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-context.h\"",
+            "linea": 26
+          },
+          "ruta": "v8/include/v8-context.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-locker.h\"",
+            "linea": 39
+          },
+          "ruta": "v8/include/v8-locker.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-object.h\"",
+            "linea": 45
+          },
+          "ruta": "v8/include/v8-object.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-primitive.h\"",
+            "linea": 48
+          },
+          "ruta": "v8/include/v8-primitive.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-traced-handle.h\"",
+            "linea": 56
+          },
+          "ruta": "v8/include/v8-traced-handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-local-handle.h\"",
+            "linea": 38
+          },
+          "ruta": "v8/include/v8-local-handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-exception.h\"",
+            "linea": 30
+          },
+          "ruta": "v8/include/v8-exception.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-persistent-handle.h\"",
+            "linea": 46
+          },
+          "ruta": "v8/include/v8-persistent-handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-unwinder.h\"",
+            "linea": 58
+          },
+          "ruta": "v8/include/v8-unwinder.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-typed-array.h\"",
+            "linea": 57
+          },
+          "ruta": "v8/include/v8-typed-array.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-container.h\"",
+            "linea": 25
+          },
+          "ruta": "v8/include/v8-container.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-value.h\"",
+            "linea": 60
+          },
+          "ruta": "v8/include/v8-value.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-initialization.h\"",
+            "linea": 34
+          },
+          "ruta": "v8/include/v8-initialization.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-extension.h\"",
+            "linea": 31
+          },
+          "ruta": "v8/include/v8-extension.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-date.h\"",
+            "linea": 28
+          },
+          "ruta": "v8/include/v8-date.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-regexp.h\"",
+            "linea": 51
+          },
+          "ruta": "v8/include/v8-regexp.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-script.h\"",
+            "linea": 52
+          },
+          "ruta": "v8/include/v8-script.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-external.h\"",
+            "linea": 32
+          },
+          "ruta": "v8/include/v8-external.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-message.h\"",
+            "linea": 42
+          },
+          "ruta": "v8/include/v8-message.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-debug.h\"",
+            "linea": 29
+          },
+          "ruta": "v8/include/v8-debug.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-json.h\"",
+            "linea": 37
+          },
+          "ruta": "v8/include/v8-json.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-maybe.h\"",
+            "linea": 40
+          },
+          "ruta": "v8/include/v8-maybe.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8-snapshot.h\"",
+            "linea": 53
+          },
+          "ruta": "v8/include/v8-snapshot.h"
+        }
+      ],
+      "total": 41
+    }
+  }
+}

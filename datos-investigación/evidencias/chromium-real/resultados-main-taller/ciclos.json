@@ -1,0 +1,638 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos\":78,\"dependen_de_un_if\":6,\"ficha\":\"E-003 (Elegancia): compila por las guardas, pero ninguno se entiende sin los otros\",\"lista\":[{\"archivos\":9,\"aristas\":24,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ZonedDateTime.hpp\\\"\",\"linea\":30}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"PlainDate.hpp\\\"\",\"linea\":28}}]},{\"archivos\":4,\"aristas\":6,\"cortar\":{\"desde\":\"content/browser/cache_storage/cache_storage_manager.h\",\"hasta\":\"content/browser/cache_storage/cache_storage.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"content/browser/cache_storage/cache_storage_manager.h\",\"hasta\":\"content/browser/cache_storage/cache_storage.h\",\"lo_usan\":8,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/browser/cache_storage/cache_storage.h\\\"\",\"linea\":21}},{\"desde\":\"content/browser/cache_storage/cache_storage.h\",\"hasta\":\"content/browser/cache_storage/cache_storage_manager.h\",\"lo_usan\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/browser/cache_storage/cache_storage_manager.h\\\"\",\"linea\":34}}]},{\"archivos\":4,\"aristas\":6,\"cortar\":{\"desde\":\"third_party/protobuf/objectivec/GPBMessage.h\",\"hasta\":\"third_party/protobuf/objectivec/GPBCodedInputStream.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/protobuf/objectivec/GPBMessage.h\",\"hasta\":\"third_party/protobuf/objectivec/GPBCodedInputStream.h\",\"lo_usan\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"GPBCodedInputStream.h\\\"\",\"linea\":11}},{\"desde\":\"third_party/protobuf/objectivec/GPBCodedInputStream.h\",\"hasta\":\"third_party/protobuf/objectivec/GPBMessage.h\",\"lo_usan\":36,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"GPBMessage.h\\\"\",\"linea\":12}}]},{\"archivos\":3,\"aristas\":4,\"cortar\":{\"desde\":\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\",\"hasta\":\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\",\"hasta\":\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\\\"\",\"linea\":16}},{\"desde\":\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\",\"hasta\":\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\",\"lo_usan\":8,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\\\"\",\"linea\":13}}]},{\"archivos\":3,\"aristas\":5,\"cortar\":{\"desde\":\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\",\"hasta\":\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\",\"hasta\":\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\\\"\",\"linea\":16}},{\"desde\":\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\",\"hasta\":\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\\\"\",\"linea\":15}}]},{\"archivos\":3,\"aristas\":4,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"TimeZoneInfo.hpp\\\"\",\"linea\":14}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"TimeZone.hpp\\\"\",\"linea\":18}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"mojo/public/cpp/bindings/pending_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_remote.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"mojo/public/cpp/bindings/pending_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_remote.h\",\"lo_usan\":1947,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_remote.h\\\"\",\"linea\":163}},{\"desde\":\"mojo/public/cpp/bindings/pending_remote.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_receiver.h\",\"lo_usan\":1993,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_receiver.h\\\"\",\"linea\":162}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"mojo/public/cpp/bindings/pending_associated_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_associated_remote.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"mojo/public/cpp/bindings/pending_associated_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_associated_remote.h\",\"lo_usan\":174,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_associated_remote.h\\\"\",\"linea\":130}},{\"desde\":\"mojo/public/cpp/bindings/pending_associated_remote.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_associated_receiver.h\",\"lo_usan\":219,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_associated_receiver.h\\\"\",\"linea\":127}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"android_webview/js_sandbox/service/js_sandbox_isolate.h\",\"hasta\":\"android_webview/js_sandbox/service/js_sandbox_message_port.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"android_webview/js_sandbox/service/js_sandbox_isolate.h\",\"hasta\":\"android_webview/js_sandbox/service/js_sandbox_message_port.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"android_webview/js_sandbox/service/js_sandbox_message_port.h\\\"\",\"linea\":14}},{\"desde\":\"android_webview/js_sandbox/service/js_sandbox_message_port.h\",\"hasta\":\"android_webview/js_sandbox/service/js_sandbox_isolate.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"android_webview/js_sandbox/service/js_sandbox_isolate.h\\\"\",\"linea\":10}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp\",\"lo_usan\":55,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"DataProvider.hpp\\\"\",\"linea\":15}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"LocaleFallbacker.hpp\\\"\",\"linea\":15}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"components/exo/client_controlled_shell_surface.h\",\"hasta\":\"components/exo/client_controlled_accelerators.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"components/exo/client_controlled_shell_surface.h\",\"hasta\":\"components/exo/client_controlled_accelerators.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/exo/client_controlled_accelerators.h\\\"\",\"linea\":17}},{\"desde\":\"components/exo/client_controlled_accelerators.h\",\"hasta\":\"components/exo/client_controlled_shell_surface.h\",\"lo_usan\":19,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/exo/client_controlled_shell_surface.h\\\"\",\"linea\":9}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\",\"hasta\":\"third_party/blink/renderer/platform/wtf/text/strcat.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\",\"hasta\":\"third_party/blink/renderer/platform/wtf/text/strcat.h\",\"lo_usan\":232,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/wtf/text/strcat.h\\\"\",\"linea\":756}},{\"desde\":\"third_party/blink/renderer/platform/wtf/text/strcat.h\",\"hasta\":\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\",\"lo_usan\":1362,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\\\"\",\"linea\":12}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\",\"hasta\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\",\"hasta\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\\\"\",\"linea\":14}},{\"desde\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\",\"hasta\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\\\"\",\"linea\":14}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\",\"hasta\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\",\"hasta\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\\\"\",\"linea\":14}},{\"desde\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\",\"hasta\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\",\"lo_usan\":6,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\\\"\",\"linea\":11}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\",\"hasta\":\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\",\"hasta\":\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\\\"\",\"linea\":11}},{\"desde\":\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\",\"hasta\":\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\\\"\",\"linea\":12}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"ui/accessibility/platform/browser_accessibility_win.h\",\"hasta\":\"ui/accessibility/platform/browser_accessibility_com_win.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"ui/accessibility/platform/browser_accessibility_win.h\",\"hasta\":\"ui/accessibility/platform/browser_accessibility_com_win.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/accessibility/platform/browser_accessibility_com_win.h\\\"\",\"linea\":17}},{\"desde\":\"ui/accessibility/platform/browser_accessibility_com_win.h\",\"hasta\":\"ui/accessibility/platform/browser_accessibility_win.h\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/accessibility/platform/browser_accessibility_win.h\\\"\",\"linea\":30}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/blink/renderer/core/style/computed_style.h\",\"hasta\":\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/blink/renderer/core/style/computed_style.h\",\"hasta\":\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\\\"\",\"linea\":43}},{\"desde\":\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\",\"hasta\":\"third_party/blink/renderer/core/style/computed_style.h\",\"lo_usan\":355,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/style/computed_style.h\\\"\",\"linea\":32}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h\",\"hasta\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\",\"hasta\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/core/tsi/alts/handshaker/alts_handshaker_client.h\\\"\",\"linea\":27}},{\"desde\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h\",\"hasta\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\\\"\",\"linea\":29}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/biquad_filter-inl.h\\\"\",\"linea\":257}},{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h\",\"lo_usan\":11,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/biquad_filter.h\\\"\",\"linea\":20}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/ladder_filter-inl.h\\\"\",\"linea\":270}},{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/ladder_filter.h\\\"\",\"linea\":25}}]}],\"quedan\":10,\"total\":30}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos": 78,
+    "dependen_de_un_if": 6,
+    "ficha": "E-003 (Elegancia): compila por las guardas, pero ninguno se entiende sin los otros",
+    "lista": [
+      {
+        "archivos": 9,
+        "aristas": 24,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"ZonedDateTime.hpp\"",
+              "linea": 30
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"PlainDate.hpp\"",
+              "linea": 28
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 4,
+        "aristas": 6,
+        "cortar": {
+          "desde": "content/browser/cache_storage/cache_storage_manager.h",
+          "hasta": "content/browser/cache_storage/cache_storage.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "content/browser/cache_storage/cache_storage_manager.h",
+            "hasta": "content/browser/cache_storage/cache_storage.h",
+            "lo_usan": 8,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"content/browser/cache_storage/cache_storage.h\"",
+              "linea": 21
+            }
+          },
+          {
+            "desde": "content/browser/cache_storage/cache_storage.h",
+            "hasta": "content/browser/cache_storage/cache_storage_manager.h",
+            "lo_usan": 13,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"content/browser/cache_storage/cache_storage_manager.h\"",
+              "linea": 34
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 4,
+        "aristas": 6,
+        "cortar": {
+          "desde": "third_party/protobuf/objectivec/GPBMessage.h",
+          "hasta": "third_party/protobuf/objectivec/GPBCodedInputStream.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/protobuf/objectivec/GPBMessage.h",
+            "hasta": "third_party/protobuf/objectivec/GPBCodedInputStream.h",
+            "lo_usan": 13,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"GPBCodedInputStream.h\"",
+              "linea": 11
+            }
+          },
+          {
+            "desde": "third_party/protobuf/objectivec/GPBCodedInputStream.h",
+            "hasta": "third_party/protobuf/objectivec/GPBMessage.h",
+            "lo_usan": 36,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"GPBMessage.h\"",
+              "linea": 12
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 4,
+        "cortar": {
+          "desde": "device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h",
+          "hasta": "device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h",
+            "hasta": "device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\"",
+              "linea": 16
+            }
+          },
+          {
+            "desde": "device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h",
+            "hasta": "device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h",
+            "lo_usan": 8,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\"",
+              "linea": 13
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 5,
+        "cortar": {
+          "desde": "device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h",
+          "hasta": "device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h",
+            "hasta": "device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\"",
+              "linea": 16
+            }
+          },
+          {
+            "desde": "device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h",
+            "hasta": "device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\"",
+              "linea": 15
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 4,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"TimeZoneInfo.hpp\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"TimeZone.hpp\"",
+              "linea": 18
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "mojo/public/cpp/bindings/pending_receiver.h",
+          "hasta": "mojo/public/cpp/bindings/pending_remote.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "mojo/public/cpp/bindings/pending_receiver.h",
+            "hasta": "mojo/public/cpp/bindings/pending_remote.h",
+            "lo_usan": 1947,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_remote.h\"",
+              "linea": 163
+            }
+          },
+          {
+            "desde": "mojo/public/cpp/bindings/pending_remote.h",
+            "hasta": "mojo/public/cpp/bindings/pending_receiver.h",
+            "lo_usan": 1993,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_receiver.h\"",
+              "linea": 162
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "mojo/public/cpp/bindings/pending_associated_receiver.h",
+          "hasta": "mojo/public/cpp/bindings/pending_associated_remote.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "mojo/public/cpp/bindings/pending_associated_receiver.h",
+            "hasta": "mojo/public/cpp/bindings/pending_associated_remote.h",
+            "lo_usan": 174,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_associated_remote.h\"",
+              "linea": 130
+            }
+          },
+          {
+            "desde": "mojo/public/cpp/bindings/pending_associated_remote.h",
+            "hasta": "mojo/public/cpp/bindings/pending_associated_receiver.h",
+            "lo_usan": 219,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_associated_receiver.h\"",
+              "linea": 127
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "android_webview/js_sandbox/service/js_sandbox_isolate.h",
+          "hasta": "android_webview/js_sandbox/service/js_sandbox_message_port.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "android_webview/js_sandbox/service/js_sandbox_isolate.h",
+            "hasta": "android_webview/js_sandbox/service/js_sandbox_message_port.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"android_webview/js_sandbox/service/js_sandbox_message_port.h\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "android_webview/js_sandbox/service/js_sandbox_message_port.h",
+            "hasta": "android_webview/js_sandbox/service/js_sandbox_isolate.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"android_webview/js_sandbox/service/js_sandbox_isolate.h\"",
+              "linea": 10
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp",
+            "lo_usan": 55,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"DataProvider.hpp\"",
+              "linea": 15
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"LocaleFallbacker.hpp\"",
+              "linea": 15
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "components/exo/client_controlled_shell_surface.h",
+          "hasta": "components/exo/client_controlled_accelerators.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "components/exo/client_controlled_shell_surface.h",
+            "hasta": "components/exo/client_controlled_accelerators.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/exo/client_controlled_accelerators.h\"",
+              "linea": 17
+            }
+          },
+          {
+            "desde": "components/exo/client_controlled_accelerators.h",
+            "hasta": "components/exo/client_controlled_shell_surface.h",
+            "lo_usan": 19,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/exo/client_controlled_shell_surface.h\"",
+              "linea": 9
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/blink/renderer/platform/wtf/text/wtf_string.h",
+          "hasta": "third_party/blink/renderer/platform/wtf/text/strcat.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/blink/renderer/platform/wtf/text/wtf_string.h",
+            "hasta": "third_party/blink/renderer/platform/wtf/text/strcat.h",
+            "lo_usan": 232,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/platform/wtf/text/strcat.h\"",
+              "linea": 756
+            }
+          },
+          {
+            "desde": "third_party/blink/renderer/platform/wtf/text/strcat.h",
+            "hasta": "third_party/blink/renderer/platform/wtf/text/wtf_string.h",
+            "lo_usan": 1362,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/platform/wtf/text/wtf_string.h\"",
+              "linea": 12
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/blink/renderer/modules/bluetooth/bluetooth_device.h",
+          "hasta": "third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/blink/renderer/modules/bluetooth/bluetooth_device.h",
+            "hasta": "third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h",
+            "hasta": "third_party/blink/renderer/modules/bluetooth/bluetooth_device.h",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\"",
+              "linea": 14
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h",
+          "hasta": "chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h",
+            "hasta": "chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h",
+            "hasta": "chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h",
+            "lo_usan": 6,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\"",
+              "linea": 11
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h",
+          "hasta": "components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h",
+            "hasta": "components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\"",
+              "linea": 11
+            }
+          },
+          {
+            "desde": "components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h",
+            "hasta": "components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\"",
+              "linea": 12
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "ui/accessibility/platform/browser_accessibility_win.h",
+          "hasta": "ui/accessibility/platform/browser_accessibility_com_win.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "ui/accessibility/platform/browser_accessibility_win.h",
+            "hasta": "ui/accessibility/platform/browser_accessibility_com_win.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"ui/accessibility/platform/browser_accessibility_com_win.h\"",
+              "linea": 17
+            }
+          },
+          {
+            "desde": "ui/accessibility/platform/browser_accessibility_com_win.h",
+            "hasta": "ui/accessibility/platform/browser_accessibility_win.h",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"ui/accessibility/platform/browser_accessibility_win.h\"",
+              "linea": 30
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/blink/renderer/core/style/computed_style.h",
+          "hasta": "third_party/blink/renderer/core/css/resolver/matched_properties_cache.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/blink/renderer/core/style/computed_style.h",
+            "hasta": "third_party/blink/renderer/core/css/resolver/matched_properties_cache.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\"",
+              "linea": 43
+            }
+          },
+          {
+            "desde": "third_party/blink/renderer/core/css/resolver/matched_properties_cache.h",
+            "hasta": "third_party/blink/renderer/core/style/computed_style.h",
+            "lo_usan": 355,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/core/style/computed_style.h\"",
+              "linea": 32
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h",
+          "hasta": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h",
+            "hasta": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/core/tsi/alts/handshaker/alts_handshaker_client.h\"",
+              "linea": 27
+            }
+          },
+          {
+            "desde": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h",
+            "hasta": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\"",
+              "linea": 29
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h",
+          "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/biquad_filter-inl.h\"",
+              "linea": 257
+            }
+          },
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h",
+            "lo_usan": 11,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/biquad_filter.h\"",
+              "linea": 20
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h",
+          "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/ladder_filter-inl.h\"",
+              "linea": 270
+            }
+          },
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/ladder_filter.h\"",
+              "linea": 25
+            }
+          }
+        ]
+      }
+    ],
+    "quedan": 10,
+    "total": 30
+  }
+}

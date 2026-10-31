@@ -1,0 +1,40 @@
+ 29.33% boa_engine::vm::opcode
+ 12.61% <boa_engine::object::property_map
+  8.90% <boa_engine::context::Context>
+  6.96% <boa_engine::object::jsobject
+  6.90% <boa_gc::Collector>::mark_heap - -
+  3.67% boa_engine::object::internal_methods
+  3.42% boa_string::vtable::sequence
+  2.33% core::ptr::drop_glue
+  2.29% <hashbrown::map::HashMap<boa_engine
+  2.03% <boa_gc::Collector>::collect - -
+  1.89% <boa_engine::vm::inline_cache
+  1.60% <boa_engine::object::shape
+  1.53% _rjem_je_arena_ptr_array_flush - -
+  1.16% <boa_engine::property::PropertyKey as core
+  1.13% <boa_engine::value::JsValue>
+  1.02% <boa_engine::vm::Vm>
+  0.91% <std::thread::local
+  0.87% <boa_engine::property::PropertyDescriptorBuilder>
+  0.83% boa_engine::builtins::function
+  0.80% <thin_vec::ThinVec<i32>>::push - -
+  0.69% do_rallocx - -
+  0.69%  [k] clear_highpages_kasan_tagged - -
+  0.66% boa_string::vtable::static
+  0.58% _rjem_sdallocx - -
+  0.58% _rjem_je_arena_ralloc - -
+  0.54% <boa_engine::vm::Stack>
+  0.51% _rjem_malloc - -
+  0.40% _rjem_je_bin_slab_reg_alloc_batch - -
+  0.36% 0x0000000000175f23 - -
+  0.33% <boa_string::JsString>::concat_array - -
+  0.25% thin_vec::drop_non_singleton::<boa_engine
+  0.25% boa_engine::property::parse_u32_index
+  0.25% _rjem_je_edata_heap_remove_first - -
+  0.22% <thin_vec::ThinVec<(boa_engine::object
+  0.18% 0x0000000000175f19 - -
+  0.15% _rjem_je_malloc_default - -
+  0.15% _rjem_je_arena_ralloc_no_move - -
+  0.15% <alloc::raw_vec::RawVecInner>
+  0.15% 0x0000000000175c20 - -
+  0.15%  [k] _raw_spin_unlock_irqrestore - -

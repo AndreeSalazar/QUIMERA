@@ -1,0 +1,191 @@
+{
+  "content": [
+    {
+      "text": "{\"autores\":1,\"aviso\":\"repositorio superficial (clonado sin toda la historia): el primer commit no es el de verdad; git fetch --unshallow lo trae entero\",\"carpetas_en_orden\":[{\"carpeta\":\".cargo\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\".config\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\".devcontainer\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\".github\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\".vscode\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"components\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"docs\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"etc\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"ffi\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"ports\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"python\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"resources\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"support\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"tests\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"third_party\",\"nace\":{\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"autor\":\"Jonathan Schwender\",\"commit\":\"585585e38\",\"fecha\":\"2026-10-31\"}}],\"carpetas_total\":15,\"commits\":1,\"cortada\":false,\"crecimiento\":[{\"archivos\":199808,\"asunto\":\"build: Replace webcrypto with subtlecrypto feature (#48860)\",\"ciclos\":0,\"codigo\":5181,\"commit\":\"585585e38\",\"dependencias\":9802,\"fecha\":\"2026-10-31\"}],\"desde\":\"2026-10-31\",\"hasta\":\"2026-10-31\",\"leida_ms\":1528,\"nota\":\"git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.\",\"superficial\":true,\"verificacion\":{\"coinciden\":199558,\"dependencias\":{\"coinciden\":9802,\"hoy\":9803,\"nota\":\"solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas\",\"reconstruidas\":9802,\"solo_en_git\":[],\"solo_hoy\":[\"components/script/dom/canvas/mod.rs -> components/script/dom/canvas/2d/mod.rs\"]},\"hoy\":199558,\"nota\":\"hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio\",\"pct_de_lo_reconstruido\":100.0,\"reconstruidos\":199561,\"solo_en_git\":[\"support/openharmony/AppScope/resources/base/media/servo_64.png\",\"support/openharmony/entry/src/main/resources/base/media/servo_1024.png\",\"support/openharmony/entry/src/main/resources/base/media/servo_64.png\"]}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "autores": 1,
+    "aviso": "repositorio superficial (clonado sin toda la historia): el primer commit no es el de verdad; git fetch --unshallow lo trae entero",
+    "carpetas_en_orden": [
+      {
+        "carpeta": ".cargo",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": ".config",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": ".devcontainer",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": ".github",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": ".vscode",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "components",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "docs",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "etc",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "ffi",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "ports",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "python",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "resources",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "support",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "tests",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "third_party",
+        "nace": {
+          "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+          "autor": "Jonathan Schwender",
+          "commit": "585585e38",
+          "fecha": "2026-10-31"
+        }
+      }
+    ],
+    "carpetas_total": 15,
+    "commits": 1,
+    "cortada": false,
+    "crecimiento": [
+      {
+        "archivos": 199808,
+        "asunto": "build: Replace webcrypto with subtlecrypto feature (#48860)",
+        "ciclos": 0,
+        "codigo": 5181,
+        "commit": "585585e38",
+        "dependencias": 9802,
+        "fecha": "2026-10-31"
+      }
+    ],
+    "desde": "2026-10-31",
+    "hasta": "2026-10-31",
+    "leida_ms": 1528,
+    "nota": "git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.",
+    "superficial": true,
+    "verificacion": {
+      "coinciden": 199558,
+      "dependencias": {
+        "coinciden": 9802,
+        "hoy": 9803,
+        "nota": "solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas",
+        "reconstruidas": 9802,
+        "solo_en_git": [],
+        "solo_hoy": [
+          "components/script/dom/canvas/mod.rs -> components/script/dom/canvas/2d/mod.rs"
+        ]
+      },
+      "hoy": 199558,
+      "nota": "hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio",
+      "pct_de_lo_reconstruido": 100.0,
+      "reconstruidos": 199561,
+      "solo_en_git": [
+        "support/openharmony/AppScope/resources/base/media/servo_64.png",
+        "support/openharmony/entry/src/main/resources/base/media/servo_1024.png",
+        "support/openharmony/entry/src/main/resources/base/media/servo_64.png"
+      ]
+    }
+  }
+}

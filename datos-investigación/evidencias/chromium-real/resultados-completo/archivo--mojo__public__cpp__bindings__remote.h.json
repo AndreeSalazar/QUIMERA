@@ -1,0 +1,355 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":21},\"ruta\":\"android_webview/browser/cookie_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":20},\"ruta\":\"android_webview/browser/aw_preconnector.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":13},\"ruta\":\"content/public/browser/network_service_instance.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":17},\"ruta\":\"content/public/browser/synthetic_trial_syncer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":35},\"ruta\":\"services/network/network_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/network_service/aw_proxying_restricted_cookie_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":22},\"ruta\":\"android_webview/browser/network_service/aw_proxying_url_loader_factory.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":13},\"ruta\":\"services/network/public/cpp/url_loader_factory_builder.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":13},\"ruta\":\"services/service_manager/public/cpp/interface_provider.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":67},\"ruta\":\"content/public/browser/content_browser_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":27},\"ruta\":\"mojo/public/cpp/bindings/receiver_set.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":24},\"ruta\":\"android_webview/browser/aw_preconnector_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":18},\"ruta\":\"content/public/test/test_storage_partition.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":39},\"ruta\":\"storage/browser/quota/quota_manager_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":33},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":53},\"ruta\":\"components/viz/service/frame_sinks/frame_sink_manager_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":22},\"ruta\":\"mojo/public/cpp/bindings/remote_set.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":26},\"ruta\":\"android_webview/browser/network_service/aw_proxying_restricted_cookie_manager.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":23},\"ruta\":\"android_webview/browser/network_service/aw_proxying_restricted_cookie_manager_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":16},\"ruta\":\"components/embedder_support/android/util/android_stream_reader_url_loader.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":22},\"ruta\":\"android_webview/browser/network_service/aw_proxying_url_loader_factory_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":18},\"ruta\":\"services/network/test/test_url_loader_factory.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":19},\"ruta\":\"content/public/test/url_loader_interceptor.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":31},\"ruta\":\"components/safe_browsing/content/browser/threat_details.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":17},\"ruta\":\"android_webview/renderer/aw_content_renderer_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":9},\"ruta\":\"components/network_hints/renderer/web_prescient_networking_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":21},\"ruta\":\"components/spellcheck/renderer/spellcheck_provider.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":15},\"ruta\":\"components/safe_browsing/content/renderer/renderer_url_loader_throttle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":39},\"ruta\":\"ash/ambient/ambient_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":41},\"ruta\":\"ash/capture_mode/capture_mode_controller.h\"}],\"total\":2318},\"papel\":\"arrastra\",\"ruta\":\"mojo/public/cpp/bindings/remote.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/scoped_refptr.h\\\"\",\"linea\":15},\"ruta\":\"base/memory/scoped_refptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/task/sequenced_task_runner.h\\\"\",\"linea\":16},\"ruta\":\"base/task/sequenced_task_runner.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback_forward.h\\\"\",\"linea\":14},\"ruta\":\"base/functional/callback_forward.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/time/time.h\\\"\",\"linea\":17},\"ruta\":\"base/time/time.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_remote.h\\\"\",\"linea\":21},\"ruta\":\"mojo/public/cpp/bindings/pending_remote.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/check.h\\\"\",\"linea\":13},\"ruta\":\"base/check.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/system/message_pipe.h\\\"\",\"linea\":23},\"ruta\":\"mojo/public/cpp/system/message_pipe.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/runtime_features.h\\\"\",\"linea\":22},\"ruta\":\"mojo/public/cpp/bindings/runtime_features.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/async_flusher.h\\\"\",\"linea\":18},\"ruta\":\"mojo/public/cpp/bindings/async_flusher.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_flush.h\\\"\",\"linea\":20},\"ruta\":\"mojo/public/cpp/bindings/pending_flush.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/lib/interface_ptr_state.h\\\"\",\"linea\":19},\"ruta\":\"mojo/public/cpp/bindings/lib/interface_ptr_state.h\"}],\"total\":11}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 21
+          },
+          "ruta": "android_webview/browser/cookie_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 20
+          },
+          "ruta": "android_webview/browser/aw_preconnector.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 13
+          },
+          "ruta": "content/public/browser/network_service_instance.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 17
+          },
+          "ruta": "content/public/browser/synthetic_trial_syncer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 35
+          },
+          "ruta": "services/network/network_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/network_service/aw_proxying_restricted_cookie_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 22
+          },
+          "ruta": "android_webview/browser/network_service/aw_proxying_url_loader_factory.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 13
+          },
+          "ruta": "services/network/public/cpp/url_loader_factory_builder.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 13
+          },
+          "ruta": "services/service_manager/public/cpp/interface_provider.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 67
+          },
+          "ruta": "content/public/browser/content_browser_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 27
+          },
+          "ruta": "mojo/public/cpp/bindings/receiver_set.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 24
+          },
+          "ruta": "android_webview/browser/aw_preconnector_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 18
+          },
+          "ruta": "content/public/test/test_storage_partition.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 39
+          },
+          "ruta": "storage/browser/quota/quota_manager_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 33
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 53
+          },
+          "ruta": "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 22
+          },
+          "ruta": "mojo/public/cpp/bindings/remote_set.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 26
+          },
+          "ruta": "android_webview/browser/network_service/aw_proxying_restricted_cookie_manager.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 23
+          },
+          "ruta": "android_webview/browser/network_service/aw_proxying_restricted_cookie_manager_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 16
+          },
+          "ruta": "components/embedder_support/android/util/android_stream_reader_url_loader.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 22
+          },
+          "ruta": "android_webview/browser/network_service/aw_proxying_url_loader_factory_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 18
+          },
+          "ruta": "services/network/test/test_url_loader_factory.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 19
+          },
+          "ruta": "content/public/test/url_loader_interceptor.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 31
+          },
+          "ruta": "components/safe_browsing/content/browser/threat_details.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 17
+          },
+          "ruta": "android_webview/renderer/aw_content_renderer_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 9
+          },
+          "ruta": "components/network_hints/renderer/web_prescient_networking_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 21
+          },
+          "ruta": "components/spellcheck/renderer/spellcheck_provider.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 15
+          },
+          "ruta": "components/safe_browsing/content/renderer/renderer_url_loader_throttle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 39
+          },
+          "ruta": "ash/ambient/ambient_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+            "linea": 41
+          },
+          "ruta": "ash/capture_mode/capture_mode_controller.h"
+        }
+      ],
+      "total": 2318
+    },
+    "papel": "arrastra",
+    "ruta": "mojo/public/cpp/bindings/remote.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/scoped_refptr.h\"",
+            "linea": 15
+          },
+          "ruta": "base/memory/scoped_refptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/task/sequenced_task_runner.h\"",
+            "linea": 16
+          },
+          "ruta": "base/task/sequenced_task_runner.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback_forward.h\"",
+            "linea": 14
+          },
+          "ruta": "base/functional/callback_forward.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/time/time.h\"",
+            "linea": 17
+          },
+          "ruta": "base/time/time.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/pending_remote.h\"",
+            "linea": 21
+          },
+          "ruta": "mojo/public/cpp/bindings/pending_remote.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/check.h\"",
+            "linea": 13
+          },
+          "ruta": "base/check.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/system/message_pipe.h\"",
+            "linea": 23
+          },
+          "ruta": "mojo/public/cpp/system/message_pipe.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/runtime_features.h\"",
+            "linea": 22
+          },
+          "ruta": "mojo/public/cpp/bindings/runtime_features.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/async_flusher.h\"",
+            "linea": 18
+          },
+          "ruta": "mojo/public/cpp/bindings/async_flusher.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/pending_flush.h\"",
+            "linea": 20
+          },
+          "ruta": "mojo/public/cpp/bindings/pending_flush.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/lib/interface_ptr_state.h\"",
+            "linea": 19
+          },
+          "ruta": "mojo/public/cpp/bindings/lib/interface_ptr_state.h"
+        }
+      ],
+      "total": 11
+    }
+  }
+}

@@ -1,0 +1,540 @@
+{
+  "content": [
+    {
+      "text": "{\"comparten\":{\"lista\":[{\"lo_usan\":[\"builtin\",\"debugger\",\"ds\",\"frontend\",\"gc\",\"irregexp\",\"jit\",\"jsapi-tests\",\"shell\",\"threading\",\"util\",\"vm\",\"vtune\",\"wasm\"],\"ruta\":\"jstypes.h\"},{\"lo_usan\":[\"builtin\",\"debugger\",\"frontend\",\"gc\",\"gdb\",\"jit\",\"proxy\",\"shell\",\"util\",\"vm\",\"wasm\"],\"ruta\":\"NamespaceImports.h\"},{\"lo_usan\":[\"builtin\",\"debugger\",\"gc\",\"gdb\",\"jit\",\"jsapi-tests\",\"proxy\",\"shell\",\"vm\",\"wasm\"],\"ruta\":\"jsapi.h\"},{\"lo_usan\":[\"builtin\",\"gc\",\"gdb\",\"jit\",\"jsapi-tests\",\"shell\",\"util\",\"vm\",\"wasm\"],\"ruta\":\"jsfriendapi.h\"},{\"lo_usan\":[\"builtin\",\"frontend\",\"gc\",\"jit\",\"jsapi-tests\",\"util\",\"vm\"],\"ruta\":\"jspubtd.h\"}],\"total\":5},\"directas\":[{\"a\":\"builtin\",\"aristas\":2,\"usa\":\"debugger\"},{\"a\":\"builtin\",\"aristas\":1,\"usa\":\"devtools\"},{\"a\":\"builtin\",\"aristas\":4,\"usa\":\"ds\"},{\"a\":\"builtin\",\"aristas\":16,\"usa\":\"frontend\"},{\"a\":\"builtin\",\"aristas\":90,\"usa\":\"gc\"},{\"a\":\"builtin\",\"aristas\":1,\"usa\":\"irregexp\"},{\"a\":\"builtin\",\"aristas\":30,\"usa\":\"jit\"},{\"a\":\"builtin\",\"aristas\":3,\"usa\":\"threading\"},{\"a\":\"builtin\",\"aristas\":42,\"usa\":\"util\"},{\"a\":\"builtin\",\"aristas\":602,\"usa\":\"vm\"},{\"a\":\"builtin\",\"aristas\":15,\"usa\":\"wasm\"},{\"a\":\"builtin\",\"aristas\":1,\"usa\":\"xsum\"},{\"a\":\"debugger\",\"aristas\":11,\"usa\":\"builtin\"},{\"a\":\"debugger\",\"aristas\":1,\"usa\":\"ds\"},{\"a\":\"debugger\",\"aristas\":6,\"usa\":\"frontend\"},{\"a\":\"debugger\",\"aristas\":53,\"usa\":\"gc\"},{\"a\":\"debugger\",\"aristas\":12,\"usa\":\"jit\"},{\"a\":\"debugger\",\"aristas\":2,\"usa\":\"proxy\"},{\"a\":\"debugger\",\"aristas\":3,\"usa\":\"util\"},{\"a\":\"debugger\",\"aristas\":212,\"usa\":\"vm\"},{\"a\":\"debugger\",\"aristas\":25,\"usa\":\"wasm\"},{\"a\":\"devtools\",\"aristas\":1,\"usa\":\"util\"},{\"a\":\"ds\",\"aristas\":2,\"usa\":\"gc\"},{\"a\":\"ds\",\"aristas\":2,\"usa\":\"util\"},{\"a\":\"ds\",\"aristas\":1,\"usa\":\"vm\"},{\"a\":\"frontend\",\"aristas\":7,\"usa\":\"builtin\"},{\"a\":\"frontend\",\"aristas\":1,\"usa\":\"debugger\"},{\"a\":\"frontend\",\"aristas\":11,\"usa\":\"ds\"},{\"a\":\"frontend\",\"aristas\":5,\"usa\":\"gc\"},{\"a\":\"frontend\",\"aristas\":1,\"usa\":\"irregexp\"},{\"a\":\"frontend\",\"aristas\":8,\"usa\":\"jit\"},{\"a\":\"frontend\",\"aristas\":1,\"usa\":\"threading\"},{\"a\":\"frontend\",\"aristas\":19,\"usa\":\"util\"},{\"a\":\"frontend\",\"aristas\":192,\"usa\":\"vm\"},{\"a\":\"frontend\",\"aristas\":3,\"usa\":\"wasm\"},{\"a\":\"gc\",\"aristas\":5,\"usa\":\"builtin\"},{\"a\":\"gc\",\"aristas\":7,\"usa\":\"debugger\"},{\"a\":\"gc\",\"aristas\":11,\"usa\":\"ds\"},{\"a\":\"gc\",\"aristas\":32,\"usa\":\"jit\"},{\"a\":\"gc\",\"aristas\":2,\"usa\":\"proxy\"},{\"a\":\"gc\",\"aristas\":18,\"usa\":\"threading\"},{\"a\":\"gc\",\"aristas\":24,\"usa\":\"util\"},{\"a\":\"gc\",\"aristas\":160,\"usa\":\"vm\"},{\"a\":\"gc\",\"aristas\":5,\"usa\":\"wasm\"},{\"a\":\"gdb\",\"aristas\":1,\"usa\":\"gc\"},{\"a\":\"gdb\",\"aristas\":2,\"usa\":\"jit\"},{\"a\":\"gdb\",\"aristas\":2,\"usa\":\"util\"},{\"a\":\"gdb\",\"aristas\":14,\"usa\":\"vm\"},{\"a\":\"intgemm\",\"aristas\":3,\"usa\":\"vm\"},{\"a\":\"intgemm\",\"aristas\":3,\"usa\":\"wasm\"},{\"a\":\"irregexp\",\"aristas\":2,\"usa\":\"ds\"},{\"a\":\"irregexp\",\"aristas\":2,\"usa\":\"frontend\"},{\"a\":\"irregexp\",\"aristas\":2,\"usa\":\"gc\"},{\"a\":\"irregexp\",\"aristas\":9,\"usa\":\"jit\"},{\"a\":\"irregexp\",\"aristas\":1,\"usa\":\"threading\"},{\"a\":\"irregexp\",\"aristas\":2,\"usa\":\"util\"},{\"a\":\"irregexp\",\"aristas\":11,\"usa\":\"vm\"},{\"a\":\"irregexp\",\"aristas\":1,\"usa\":\"vtune\"},{\"a\":\"jit\",\"aristas\":69,\"usa\":\"builtin\"},{\"a\":\"jit\",\"aristas\":8,\"usa\":\"debugger\"}],\"los_juntan\":{\"lista\":[{\"ruta\":\"jsapi.cpp\",\"usa_a\":[\"builtin\",\"debugger\",\"frontend\",\"gc\",\"jit\",\"proxy\",\"util\",\"vm\",\"wasm\"]},{\"ruta\":\"jsfriendapi.cpp\",\"usa_a\":[\"builtin\",\"frontend\",\"gc\",\"proxy\",\"util\",\"vm\"]}],\"total\":2},\"miembros\":[{\"archivos\":154,\"ruta\":\"builtin\",\"se_toca_con\":17},{\"archivos\":27,\"ruta\":\"debugger\",\"se_toca_con\":15},{\"archivos\":7,\"ruta\":\"devtools\",\"se_toca_con\":2},{\"archivos\":16,\"ruta\":\"ds\",\"se_toca_con\":13},{\"archivos\":4,\"ruta\":\"editline\",\"se_toca_con\":0},{\"archivos\":121,\"ruta\":\"frontend\",\"se_toca_con\":15},{\"archivos\":90,\"ruta\":\"gc\",\"se_toca_con\":15},{\"archivos\":21,\"ruta\":\"gdb\",\"se_toca_con\":11},{\"archivos\":2,\"ruta\":\"intgemm\",\"se_toca_con\":2},{\"archivos\":64,\"ruta\":\"irregexp\",\"se_toca_con\":13},{\"archivos\":551,\"ruta\":\"jit\",\"se_toca_con\":16},{\"archivos\":171,\"ruta\":\"jsapi-tests\",\"se_toca_con\":15},{\"archivos\":13,\"ruta\":\"proxy\",\"se_toca_con\":11},{\"archivos\":16,\"ruta\":\"shell\",\"se_toca_con\":15},{\"archivos\":20,\"ruta\":\"threading\",\"se_toca_con\":13},{\"archivos\":36,\"ruta\":\"util\",\"se_toca_con\":16},{\"archivos\":273,\"ruta\":\"vm\",\"se_toca_con\":16},{\"archivos\":11,\"ruta\":\"vtune\",\"se_toca_con\":13},{\"archivos\":114,\"ruta\":\"wasm\",\"se_toca_con\":16},{\"archivos\":2,\"ruta\":\"xsum\",\"se_toca_con\":1},{\"archivos\":92,\"ruta\":\"zydis\",\"se_toca_con\":1}],\"piezas\":2,\"sin_datos\":[\"build\",\"doc\",\"ics\"],\"sueltos\":[\"editline\"]}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "comparten": {
+      "lista": [
+        {
+          "lo_usan": [
+            "builtin",
+            "debugger",
+            "ds",
+            "frontend",
+            "gc",
+            "irregexp",
+            "jit",
+            "jsapi-tests",
+            "shell",
+            "threading",
+            "util",
+            "vm",
+            "vtune",
+            "wasm"
+          ],
+          "ruta": "jstypes.h"
+        },
+        {
+          "lo_usan": [
+            "builtin",
+            "debugger",
+            "frontend",
+            "gc",
+            "gdb",
+            "jit",
+            "proxy",
+            "shell",
+            "util",
+            "vm",
+            "wasm"
+          ],
+          "ruta": "NamespaceImports.h"
+        },
+        {
+          "lo_usan": [
+            "builtin",
+            "debugger",
+            "gc",
+            "gdb",
+            "jit",
+            "jsapi-tests",
+            "proxy",
+            "shell",
+            "vm",
+            "wasm"
+          ],
+          "ruta": "jsapi.h"
+        },
+        {
+          "lo_usan": [
+            "builtin",
+            "gc",
+            "gdb",
+            "jit",
+            "jsapi-tests",
+            "shell",
+            "util",
+            "vm",
+            "wasm"
+          ],
+          "ruta": "jsfriendapi.h"
+        },
+        {
+          "lo_usan": [
+            "builtin",
+            "frontend",
+            "gc",
+            "jit",
+            "jsapi-tests",
+            "util",
+            "vm"
+          ],
+          "ruta": "jspubtd.h"
+        }
+      ],
+      "total": 5
+    },
+    "directas": [
+      {
+        "a": "builtin",
+        "aristas": 2,
+        "usa": "debugger"
+      },
+      {
+        "a": "builtin",
+        "aristas": 1,
+        "usa": "devtools"
+      },
+      {
+        "a": "builtin",
+        "aristas": 4,
+        "usa": "ds"
+      },
+      {
+        "a": "builtin",
+        "aristas": 16,
+        "usa": "frontend"
+      },
+      {
+        "a": "builtin",
+        "aristas": 90,
+        "usa": "gc"
+      },
+      {
+        "a": "builtin",
+        "aristas": 1,
+        "usa": "irregexp"
+      },
+      {
+        "a": "builtin",
+        "aristas": 30,
+        "usa": "jit"
+      },
+      {
+        "a": "builtin",
+        "aristas": 3,
+        "usa": "threading"
+      },
+      {
+        "a": "builtin",
+        "aristas": 42,
+        "usa": "util"
+      },
+      {
+        "a": "builtin",
+        "aristas": 602,
+        "usa": "vm"
+      },
+      {
+        "a": "builtin",
+        "aristas": 15,
+        "usa": "wasm"
+      },
+      {
+        "a": "builtin",
+        "aristas": 1,
+        "usa": "xsum"
+      },
+      {
+        "a": "debugger",
+        "aristas": 11,
+        "usa": "builtin"
+      },
+      {
+        "a": "debugger",
+        "aristas": 1,
+        "usa": "ds"
+      },
+      {
+        "a": "debugger",
+        "aristas": 6,
+        "usa": "frontend"
+      },
+      {
+        "a": "debugger",
+        "aristas": 53,
+        "usa": "gc"
+      },
+      {
+        "a": "debugger",
+        "aristas": 12,
+        "usa": "jit"
+      },
+      {
+        "a": "debugger",
+        "aristas": 2,
+        "usa": "proxy"
+      },
+      {
+        "a": "debugger",
+        "aristas": 3,
+        "usa": "util"
+      },
+      {
+        "a": "debugger",
+        "aristas": 212,
+        "usa": "vm"
+      },
+      {
+        "a": "debugger",
+        "aristas": 25,
+        "usa": "wasm"
+      },
+      {
+        "a": "devtools",
+        "aristas": 1,
+        "usa": "util"
+      },
+      {
+        "a": "ds",
+        "aristas": 2,
+        "usa": "gc"
+      },
+      {
+        "a": "ds",
+        "aristas": 2,
+        "usa": "util"
+      },
+      {
+        "a": "ds",
+        "aristas": 1,
+        "usa": "vm"
+      },
+      {
+        "a": "frontend",
+        "aristas": 7,
+        "usa": "builtin"
+      },
+      {
+        "a": "frontend",
+        "aristas": 1,
+        "usa": "debugger"
+      },
+      {
+        "a": "frontend",
+        "aristas": 11,
+        "usa": "ds"
+      },
+      {
+        "a": "frontend",
+        "aristas": 5,
+        "usa": "gc"
+      },
+      {
+        "a": "frontend",
+        "aristas": 1,
+        "usa": "irregexp"
+      },
+      {
+        "a": "frontend",
+        "aristas": 8,
+        "usa": "jit"
+      },
+      {
+        "a": "frontend",
+        "aristas": 1,
+        "usa": "threading"
+      },
+      {
+        "a": "frontend",
+        "aristas": 19,
+        "usa": "util"
+      },
+      {
+        "a": "frontend",
+        "aristas": 192,
+        "usa": "vm"
+      },
+      {
+        "a": "frontend",
+        "aristas": 3,
+        "usa": "wasm"
+      },
+      {
+        "a": "gc",
+        "aristas": 5,
+        "usa": "builtin"
+      },
+      {
+        "a": "gc",
+        "aristas": 7,
+        "usa": "debugger"
+      },
+      {
+        "a": "gc",
+        "aristas": 11,
+        "usa": "ds"
+      },
+      {
+        "a": "gc",
+        "aristas": 32,
+        "usa": "jit"
+      },
+      {
+        "a": "gc",
+        "aristas": 2,
+        "usa": "proxy"
+      },
+      {
+        "a": "gc",
+        "aristas": 18,
+        "usa": "threading"
+      },
+      {
+        "a": "gc",
+        "aristas": 24,
+        "usa": "util"
+      },
+      {
+        "a": "gc",
+        "aristas": 160,
+        "usa": "vm"
+      },
+      {
+        "a": "gc",
+        "aristas": 5,
+        "usa": "wasm"
+      },
+      {
+        "a": "gdb",
+        "aristas": 1,
+        "usa": "gc"
+      },
+      {
+        "a": "gdb",
+        "aristas": 2,
+        "usa": "jit"
+      },
+      {
+        "a": "gdb",
+        "aristas": 2,
+        "usa": "util"
+      },
+      {
+        "a": "gdb",
+        "aristas": 14,
+        "usa": "vm"
+      },
+      {
+        "a": "intgemm",
+        "aristas": 3,
+        "usa": "vm"
+      },
+      {
+        "a": "intgemm",
+        "aristas": 3,
+        "usa": "wasm"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 2,
+        "usa": "ds"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 2,
+        "usa": "frontend"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 2,
+        "usa": "gc"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 9,
+        "usa": "jit"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 1,
+        "usa": "threading"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 2,
+        "usa": "util"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 11,
+        "usa": "vm"
+      },
+      {
+        "a": "irregexp",
+        "aristas": 1,
+        "usa": "vtune"
+      },
+      {
+        "a": "jit",
+        "aristas": 69,
+        "usa": "builtin"
+      },
+      {
+        "a": "jit",
+        "aristas": 8,
+        "usa": "debugger"
+      }
+    ],
+    "los_juntan": {
+      "lista": [
+        {
+          "ruta": "jsapi.cpp",
+          "usa_a": [
+            "builtin",
+            "debugger",
+            "frontend",
+            "gc",
+            "jit",
+            "proxy",
+            "util",
+            "vm",
+            "wasm"
+          ]
+        },
+        {
+          "ruta": "jsfriendapi.cpp",
+          "usa_a": [
+            "builtin",
+            "frontend",
+            "gc",
+            "proxy",
+            "util",
+            "vm"
+          ]
+        }
+      ],
+      "total": 2
+    },
+    "miembros": [
+      {
+        "archivos": 154,
+        "ruta": "builtin",
+        "se_toca_con": 17
+      },
+      {
+        "archivos": 27,
+        "ruta": "debugger",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 7,
+        "ruta": "devtools",
+        "se_toca_con": 2
+      },
+      {
+        "archivos": 16,
+        "ruta": "ds",
+        "se_toca_con": 13
+      },
+      {
+        "archivos": 4,
+        "ruta": "editline",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 121,
+        "ruta": "frontend",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 90,
+        "ruta": "gc",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 21,
+        "ruta": "gdb",
+        "se_toca_con": 11
+      },
+      {
+        "archivos": 2,
+        "ruta": "intgemm",
+        "se_toca_con": 2
+      },
+      {
+        "archivos": 64,
+        "ruta": "irregexp",
+        "se_toca_con": 13
+      },
+      {
+        "archivos": 551,
+        "ruta": "jit",
+        "se_toca_con": 16
+      },
+      {
+        "archivos": 171,
+        "ruta": "jsapi-tests",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 13,
+        "ruta": "proxy",
+        "se_toca_con": 11
+      },
+      {
+        "archivos": 16,
+        "ruta": "shell",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 20,
+        "ruta": "threading",
+        "se_toca_con": 13
+      },
+      {
+        "archivos": 36,
+        "ruta": "util",
+        "se_toca_con": 16
+      },
+      {
+        "archivos": 273,
+        "ruta": "vm",
+        "se_toca_con": 16
+      },
+      {
+        "archivos": 11,
+        "ruta": "vtune",
+        "se_toca_con": 13
+      },
+      {
+        "archivos": 114,
+        "ruta": "wasm",
+        "se_toca_con": 16
+      },
+      {
+        "archivos": 2,
+        "ruta": "xsum",
+        "se_toca_con": 1
+      },
+      {
+        "archivos": 92,
+        "ruta": "zydis",
+        "se_toca_con": 1
+      }
+    ],
+    "piezas": 2,
+    "sin_datos": [
+      "build",
+      "doc",
+      "ics"
+    ],
+    "sueltos": [
+      "editline"
+    ]
+  }
+}

@@ -1,0 +1,519 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos_que_fallan\":1787,\"causas\":{\"lista\":[{\"explica\":6,\"lo_usan\":30,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":190,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-crypto/src/lib.rs\"},{\"explica\":4,\"lo_usan\":762,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":519,\"motivo\":\"region apunta dentro de regions, que cambio en la linea 508: puede haber realocado\"},\"ruta\":\"third_party/angle/src/libANGLE/cl_types.h\"},{\"explica\":2,\"lo_usan\":338,\"primera_senal\":{\"ficha\":\"UB-005\",\"linea\":169,\"motivo\":\"buffer es local: su vida termina al salir de la funcion y la direccion queda colgando\"},\"ruta\":\"third_party/angle/src/compiler/translator/Common.h\"},{\"explica\":1,\"lo_usan\":10,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":357,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-tls/src/context/credentials.rs\"},{\"explica\":1,\"lo_usan\":6,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":177,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-tls/src/credentials/early_callback.rs\"},{\"explica\":1,\"lo_usan\":4,\"primera_senal\":{\"ficha\":\"ASM-003\",\"linea\":67,\"motivo\":\"la plantilla cambia rax y no esta en las salidas ni en los clobbers: GCC cree que sigue igual\"},\"ruta\":\"third_party/compiler-rt/src/lib/hwasan/hwasan_checks.h\"},{\"explica\":1,\"lo_usan\":2,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":396,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-tls/src/connection/credentials.rs\"},{\"explica\":1,\"lo_usan\":2,\"primera_senal\":{\"ficha\":\"RS-004\",\"linea\":260,\"motivo\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-tls/src/connection/transport.rs\"},{\"explica\":1,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":363,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"third_party/angle/src/third_party/ceval/ceval.h\"},{\"explica\":0,\"lo_usan\":365,\"primera_senal\":{\"ficha\":\"UB-003\",\"linea\":3101,\"motivo\":\"170 << 24 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)\"},\"ruta\":\"third_party/angle/include/CL/cl_ext.h\"},{\"explica\":0,\"lo_usan\":9,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":334,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-tls/src/context.rs\"},{\"explica\":0,\"lo_usan\":5,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":211,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-tls/src/credentials.rs\"},{\"explica\":0,\"lo_usan\":5,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":719,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-x509/src/certificates.rs\"},{\"explica\":0,\"lo_usan\":5,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":246,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-x509/src/keys.rs\"},{\"explica\":0,\"lo_usan\":2,\"primera_senal\":{\"ficha\":\"UB-003\",\"linea\":105,\"motivo\":\"255 << 24 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)\"},\"ruta\":\"third_party/compiler-rt/src/lib/builtins/arm/fcmp.h\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":123,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"build/rust/tests/test_rust_static_library/src/lib.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":148,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"mojo/public/rust/c_mojo_api/message.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":202,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"mojo/public/rust/c_mojo_api/trap.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":122,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"mojo/public/rust/system/buffer.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":90,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"mojo/public/rust/system/test/core_api_unittests.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":127,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"third_party/boringssl/src/rust/bssl-tls/src/connection.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"UB-004\",\"linea\":604,\"motivo\":\"char[3] con 2 elementos: el ultimo indice valido es 1\"},\"ruta\":\"third_party/boringssl/src/third_party/googletest/googlemock/test/gmock-internal-utils_test.cc\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"CXX-004\",\"linea\":1085,\"motivo\":\"volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex\"},\"ruta\":\"third_party/boringssl/src/third_party/googletest/googletest/test/googletest-port-test.cc\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":36,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"third_party/ced/src/util/case_insensitive_hash.h\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":56,\"motivo\":\"fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando\"},\"ruta\":\"ash/quick_pair/fast_pair_handshake/fake_fast_pair_handshake_lookup.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":52,\"motivo\":\"fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando\"},\"ruta\":\"ash/quick_pair/fast_pair_handshake/fast_pair_handshake_lookup_impl.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":179,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"ash/system/focus_mode/focus_mode_detailed_view.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":94,\"motivo\":\"menu_items_.push_back() dentro de un for que recorre menu_items_: puede realocar y dejar el recorrido colgando\"},\"ruta\":\"ash/system/ime/ime_feature_pod_controller_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-005\",\"linea\":64,\"motivo\":\"image_index_ se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\"},\"ruta\":\"ash/wallpaper/test_wallpaper_controller_client.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-001\",\"linea\":263,\"motivo\":\"initiator_gaia_id mira un std::string temporal que se destruye al terminar esta linea\"},\"ruta\":\"ash/webui/boca_receiver_app_ui/boca_receiver_untrusted_page_handler_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-004\",\"linea\":322,\"motivo\":\"volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex\"},\"ruta\":\"base/allocator/partition_allocator/src/partition_alloc/pointers/raw_ptr_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-018\",\"linea\":176,\"motivo\":\"origen y destino salen de buf: si se solapan es UB; memmove si permite solapamiento\"},\"ruta\":\"base/android/linker/linker_jni.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":957,\"motivo\":\"old_begin apunta dentro de q, que cambio en la linea 954: puede haber realocado\"},\"ruta\":\"base/containers/circular_deque_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":105,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"base/feature.rs\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-014\",\"linea\":800,\"motivo\":\"tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas\"},\"ruta\":\"base/process/launch_posix.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":29,\"motivo\":\"old_first apunta dentro de set_, que cambio en la linea 26: puede haber realocado\"},\"ruta\":\"base/task/thread_pool/worker_thread_set.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-004\",\"linea\":121,\"motivo\":\"volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex\"},\"ruta\":\"base/threading/thread_local_storage_perftest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-002\",\"linea\":2516,\"motivo\":\"si el operando es un entero, el divisor cero es indefinido\"},\"ruta\":\"base/time/time_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-004\",\"linea\":48,\"motivo\":\"volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex\"},\"ruta\":\"base/time/time_win_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":40,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"build/rust/tests/test_control_flow_guard/test_control_flow_guard.rs\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-005\",\"linea\":147,\"motivo\":\"str se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\"},\"ruta\":\"cc/metrics/frame_sequence_tracker_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":170,\"motivo\":\"frame_state apunta dentro de frame_states_, que cambio en la linea 166: puede haber realocado\"},\"ruta\":\"cc/metrics/frame_sorter.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":378,\"motivo\":\"frame apunta dentro de stack, que cambio en la linea 272: puede haber realocado\"},\"ruta\":\"cc/paint/solid_color_analyzer.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":73,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"chrome/browser/accessibility/live_caption/live_caption_speech_recognition_host.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":715,\"motivo\":\"windows_.erase() dentro de un for que recorre windows_: puede realocar y dejar el recorrido colgando\"},\"ruta\":\"chrome/browser/ash/app_restore/arc_app_queue_restore_handler.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":163,\"motivo\":\"recommended_locales apunta dentro de public_session_recommended_locales_, que cambio en la linea 161: puede haber realocado\"},\"ruta\":\"chrome/browser/ash/login/screens/chrome_user_selection_screen.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-001\",\"linea\":721,\"motivo\":\"frame_name mira un std::string temporal que se destruye al terminar esta linea\"},\"ruta\":\"chrome/browser/autofill/autofill_event_handler_browsertest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":1462,\"motivo\":\"it apunta dentro de task_id_to_web_contents_cache_, que cambio en la linea 1441: puede haber realocado\"},\"ruta\":\"chrome/browser/contextual_tasks/contextual_tasks_side_panel_coordinator.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":213,\"motivo\":\"i apunta dentro de children_, que cambio en la linea 209: puede haber realocado\"},\"ruta\":\"chrome/browser/extensions/menu_manager.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-001\",\"linea\":104,\"motivo\":\"email mira un std::string temporal que se destruye al terminar esta linea\"},\"ruta\":\"chrome/browser/indigo/indigo_service_unittest.cc\"}],\"total\":1787},\"recortado\":true,\"regla\":\"Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla.\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos_que_fallan": 1787,
+    "causas": {
+      "lista": [
+        {
+          "explica": 6,
+          "lo_usan": 30,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 190,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-crypto/src/lib.rs"
+        },
+        {
+          "explica": 4,
+          "lo_usan": 762,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 519,
+            "motivo": "region apunta dentro de regions, que cambio en la linea 508: puede haber realocado"
+          },
+          "ruta": "third_party/angle/src/libANGLE/cl_types.h"
+        },
+        {
+          "explica": 2,
+          "lo_usan": 338,
+          "primera_senal": {
+            "ficha": "UB-005",
+            "linea": 169,
+            "motivo": "buffer es local: su vida termina al salir de la funcion y la direccion queda colgando"
+          },
+          "ruta": "third_party/angle/src/compiler/translator/Common.h"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 10,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 357,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-tls/src/context/credentials.rs"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 6,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 177,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-tls/src/credentials/early_callback.rs"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 4,
+          "primera_senal": {
+            "ficha": "ASM-003",
+            "linea": 67,
+            "motivo": "la plantilla cambia rax y no esta en las salidas ni en los clobbers: GCC cree que sigue igual"
+          },
+          "ruta": "third_party/compiler-rt/src/lib/hwasan/hwasan_checks.h"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 2,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 396,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-tls/src/connection/credentials.rs"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 2,
+          "primera_senal": {
+            "ficha": "RS-004",
+            "linea": 260,
+            "motivo": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-tls/src/connection/transport.rs"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 363,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "third_party/angle/src/third_party/ceval/ceval.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 365,
+          "primera_senal": {
+            "ficha": "UB-003",
+            "linea": 3101,
+            "motivo": "170 << 24 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)"
+          },
+          "ruta": "third_party/angle/include/CL/cl_ext.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 9,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 334,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-tls/src/context.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 5,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 211,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-tls/src/credentials.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 5,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 719,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-x509/src/certificates.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 5,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 246,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-x509/src/keys.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 2,
+          "primera_senal": {
+            "ficha": "UB-003",
+            "linea": 105,
+            "motivo": "255 << 24 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)"
+          },
+          "ruta": "third_party/compiler-rt/src/lib/builtins/arm/fcmp.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 123,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "build/rust/tests/test_rust_static_library/src/lib.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 148,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "mojo/public/rust/c_mojo_api/message.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 202,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "mojo/public/rust/c_mojo_api/trap.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 122,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "mojo/public/rust/system/buffer.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 90,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "mojo/public/rust/system/test/core_api_unittests.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 127,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "third_party/boringssl/src/rust/bssl-tls/src/connection.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "UB-004",
+            "linea": 604,
+            "motivo": "char[3] con 2 elementos: el ultimo indice valido es 1"
+          },
+          "ruta": "third_party/boringssl/src/third_party/googletest/googlemock/test/gmock-internal-utils_test.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "CXX-004",
+            "linea": 1085,
+            "motivo": "volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex"
+          },
+          "ruta": "third_party/boringssl/src/third_party/googletest/googletest/test/googletest-port-test.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 36,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "third_party/ced/src/util/case_insensitive_hash.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 56,
+            "motivo": "fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando"
+          },
+          "ruta": "ash/quick_pair/fast_pair_handshake/fake_fast_pair_handshake_lookup.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 52,
+            "motivo": "fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando"
+          },
+          "ruta": "ash/quick_pair/fast_pair_handshake/fast_pair_handshake_lookup_impl.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 179,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "ash/system/focus_mode/focus_mode_detailed_view.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 94,
+            "motivo": "menu_items_.push_back() dentro de un for que recorre menu_items_: puede realocar y dejar el recorrido colgando"
+          },
+          "ruta": "ash/system/ime/ime_feature_pod_controller_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-005",
+            "linea": 64,
+            "motivo": "image_index_ se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++"
+          },
+          "ruta": "ash/wallpaper/test_wallpaper_controller_client.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-001",
+            "linea": 263,
+            "motivo": "initiator_gaia_id mira un std::string temporal que se destruye al terminar esta linea"
+          },
+          "ruta": "ash/webui/boca_receiver_app_ui/boca_receiver_untrusted_page_handler_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-004",
+            "linea": 322,
+            "motivo": "volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex"
+          },
+          "ruta": "base/allocator/partition_allocator/src/partition_alloc/pointers/raw_ptr_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-018",
+            "linea": 176,
+            "motivo": "origen y destino salen de buf: si se solapan es UB; memmove si permite solapamiento"
+          },
+          "ruta": "base/android/linker/linker_jni.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 957,
+            "motivo": "old_begin apunta dentro de q, que cambio en la linea 954: puede haber realocado"
+          },
+          "ruta": "base/containers/circular_deque_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 105,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "base/feature.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-014",
+            "linea": 800,
+            "motivo": "tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas"
+          },
+          "ruta": "base/process/launch_posix.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 29,
+            "motivo": "old_first apunta dentro de set_, que cambio en la linea 26: puede haber realocado"
+          },
+          "ruta": "base/task/thread_pool/worker_thread_set.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-004",
+            "linea": 121,
+            "motivo": "volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex"
+          },
+          "ruta": "base/threading/thread_local_storage_perftest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-002",
+            "linea": 2516,
+            "motivo": "si el operando es un entero, el divisor cero es indefinido"
+          },
+          "ruta": "base/time/time_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-004",
+            "linea": 48,
+            "motivo": "volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex"
+          },
+          "ruta": "base/time/time_win_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 40,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "build/rust/tests/test_control_flow_guard/test_control_flow_guard.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-005",
+            "linea": 147,
+            "motivo": "str se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++"
+          },
+          "ruta": "cc/metrics/frame_sequence_tracker_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 170,
+            "motivo": "frame_state apunta dentro de frame_states_, que cambio en la linea 166: puede haber realocado"
+          },
+          "ruta": "cc/metrics/frame_sorter.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 378,
+            "motivo": "frame apunta dentro de stack, que cambio en la linea 272: puede haber realocado"
+          },
+          "ruta": "cc/paint/solid_color_analyzer.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 73,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "chrome/browser/accessibility/live_caption/live_caption_speech_recognition_host.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 715,
+            "motivo": "windows_.erase() dentro de un for que recorre windows_: puede realocar y dejar el recorrido colgando"
+          },
+          "ruta": "chrome/browser/ash/app_restore/arc_app_queue_restore_handler.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 163,
+            "motivo": "recommended_locales apunta dentro de public_session_recommended_locales_, que cambio en la linea 161: puede haber realocado"
+          },
+          "ruta": "chrome/browser/ash/login/screens/chrome_user_selection_screen.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-001",
+            "linea": 721,
+            "motivo": "frame_name mira un std::string temporal que se destruye al terminar esta linea"
+          },
+          "ruta": "chrome/browser/autofill/autofill_event_handler_browsertest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 1462,
+            "motivo": "it apunta dentro de task_id_to_web_contents_cache_, que cambio en la linea 1441: puede haber realocado"
+          },
+          "ruta": "chrome/browser/contextual_tasks/contextual_tasks_side_panel_coordinator.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 213,
+            "motivo": "i apunta dentro de children_, que cambio en la linea 209: puede haber realocado"
+          },
+          "ruta": "chrome/browser/extensions/menu_manager.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-001",
+            "linea": 104,
+            "motivo": "email mira un std::string temporal que se destruye al terminar esta linea"
+          },
+          "ruta": "chrome/browser/indigo/indigo_service_unittest.cc"
+        }
+      ],
+      "total": 1787
+    },
+    "recortado": true,
+    "regla": "Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla."
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "content": [
+    {
+      "text": "{\"comparten\":{\"lista\":[],\"total\":0},\"directas\":[{\"a\":\"components/script\",\"aristas\":1,\"usa\":\"components/xpath\"}],\"los_juntan\":{\"lista\":[],\"total\":0},\"miembros\":[{\"archivos\":2,\"ruta\":\"components/allocator\",\"se_toca_con\":0},{\"archivos\":6,\"ruta\":\"components/background_hang_monitor\",\"se_toca_con\":0},{\"archivos\":4,\"ruta\":\"components/bluetooth\",\"se_toca_con\":0},{\"archivos\":7,\"ruta\":\"components/canvas\",\"se_toca_con\":0},{\"archivos\":4,\"ruta\":\"components/config\",\"se_toca_con\":0},{\"archivos\":15,\"ruta\":\"components/constellation\",\"se_toca_con\":0},{\"archivos\":47,\"ruta\":\"components/devtools\",\"se_toca_con\":0},{\"archivos\":2,\"ruta\":\"components/dom_struct\",\"se_toca_con\":0},{\"archivos\":22,\"ruta\":\"components/fonts\",\"se_toca_con\":0},{\"archivos\":68,\"ruta\":\"components/layout\",\"se_toca_con\":0},{\"archivos\":68,\"ruta\":\"components/media\",\"se_toca_con\":0},{\"archivos\":43,\"ruta\":\"components/net\",\"se_toca_con\":0},{\"archivos\":13,\"ruta\":\"components/paint\",\"se_toca_con\":0},{\"archivos\":3,\"ruta\":\"components/pixels\",\"se_toca_con\":0},{\"archivos\":5,\"ruta\":\"components/profile\",\"se_toca_con\":0},{\"archivos\":863,\"ruta\":\"components/script\",\"se_toca_con\":1},{\"archivos\":63,\"ruta\":\"components/script_bindings\",\"se_toca_con\":0},{\"archivos\":36,\"ruta\":\"components/script_webcrypto\",\"se_toca_con\":0},{\"archivos\":45,\"ruta\":\"components/script_webgpu\",\"se_toca_con\":0},{\"archivos\":30,\"ruta\":\"components/servo\",\"se_toca_con\":0},{\"archivos\":101,\"ruta\":\"components/shared\",\"se_toca_con\":0},{\"archivos\":22,\"ruta\":\"components/storage\",\"se_toca_con\":0},{\"archivos\":21,\"ruta\":\"components/svg\",\"se_toca_con\":0},{\"archivos\":3,\"ruta\":\"components/url\",\"se_toca_con\":0},{\"archivos\":7,\"ruta\":\"components/webdriver_server\",\"se_toca_con\":0},{\"archivos\":6,\"ruta\":\"components/webgl\",\"se_toca_con\":0},{\"archivos\":5,\"ruta\":\"components/webgpu\",\"se_toca_con\":0},{\"archivos\":6,\"ruta\":\"components/webvtt\",\"se_toca_con\":0},{\"archivos\":10,\"ruta\":\"components/webxr\",\"se_toca_con\":0},{\"archivos\":8,\"ruta\":\"components/xpath\",\"se_toca_con\":1},{\"archivos\":7,\"ruta\":\"ffi\",\"se_toca_con\":0},{\"archivos\":37,\"ruta\":\"ports\",\"se_toca_con\":0}],\"piezas\":31,\"sin_datos\":[\"components/default-resources\",\"components/deny_public_fields\",\"components/geometry\",\"components/hyper_serde\",\"components/jstraceable_derive\",\"components/malloc_size_of\",\"components/metrics\",\"components/servo_tracing\",\"components/timers\",\"components/wakelock\"],\"sueltos\":[\"components/allocator\",\"components/background_hang_monitor\",\"components/bluetooth\",\"components/canvas\",\"components/config\",\"components/constellation\",\"components/devtools\",\"components/dom_struct\",\"components/fonts\",\"components/layout\",\"components/media\",\"components/net\",\"components/paint\",\"components/pixels\",\"components/profile\",\"components/script_bindings\",\"components/script_webcrypto\",\"components/script_webgpu\",\"components/servo\",\"components/shared\",\"components/storage\",\"components/svg\",\"components/url\",\"components/webdriver_server\",\"components/webgl\",\"components/webgpu\",\"components/webvtt\",\"components/webxr\",\"ffi\",\"ports\"]}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "comparten": {
+      "lista": [],
+      "total": 0
+    },
+    "directas": [
+      {
+        "a": "components/script",
+        "aristas": 1,
+        "usa": "components/xpath"
+      }
+    ],
+    "los_juntan": {
+      "lista": [],
+      "total": 0
+    },
+    "miembros": [
+      {
+        "archivos": 2,
+        "ruta": "components/allocator",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 6,
+        "ruta": "components/background_hang_monitor",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 4,
+        "ruta": "components/bluetooth",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 7,
+        "ruta": "components/canvas",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 4,
+        "ruta": "components/config",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 15,
+        "ruta": "components/constellation",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 47,
+        "ruta": "components/devtools",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 2,
+        "ruta": "components/dom_struct",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 22,
+        "ruta": "components/fonts",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 68,
+        "ruta": "components/layout",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 68,
+        "ruta": "components/media",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 43,
+        "ruta": "components/net",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 13,
+        "ruta": "components/paint",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 3,
+        "ruta": "components/pixels",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 5,
+        "ruta": "components/profile",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 863,
+        "ruta": "components/script",
+        "se_toca_con": 1
+      },
+      {
+        "archivos": 63,
+        "ruta": "components/script_bindings",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 36,
+        "ruta": "components/script_webcrypto",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 45,
+        "ruta": "components/script_webgpu",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 30,
+        "ruta": "components/servo",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 101,
+        "ruta": "components/shared",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 22,
+        "ruta": "components/storage",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 21,
+        "ruta": "components/svg",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 3,
+        "ruta": "components/url",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 7,
+        "ruta": "components/webdriver_server",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 6,
+        "ruta": "components/webgl",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 5,
+        "ruta": "components/webgpu",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 6,
+        "ruta": "components/webvtt",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 10,
+        "ruta": "components/webxr",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 8,
+        "ruta": "components/xpath",
+        "se_toca_con": 1
+      },
+      {
+        "archivos": 7,
+        "ruta": "ffi",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 37,
+        "ruta": "ports",
+        "se_toca_con": 0
+      }
+    ],
+    "piezas": 31,
+    "sin_datos": [
+      "components/default-resources",
+      "components/deny_public_fields",
+      "components/geometry",
+      "components/hyper_serde",
+      "components/jstraceable_derive",
+      "components/malloc_size_of",
+      "components/metrics",
+      "components/servo_tracing",
+      "components/timers",
+      "components/wakelock"
+    ],
+    "sueltos": [
+      "components/allocator",
+      "components/background_hang_monitor",
+      "components/bluetooth",
+      "components/canvas",
+      "components/config",
+      "components/constellation",
+      "components/devtools",
+      "components/dom_struct",
+      "components/fonts",
+      "components/layout",
+      "components/media",
+      "components/net",
+      "components/paint",
+      "components/pixels",
+      "components/profile",
+      "components/script_bindings",
+      "components/script_webcrypto",
+      "components/script_webgpu",
+      "components/servo",
+      "components/shared",
+      "components/storage",
+      "components/svg",
+      "components/url",
+      "components/webdriver_server",
+      "components/webgl",
+      "components/webgpu",
+      "components/webvtt",
+      "components/webxr",
+      "ffi",
+      "ports"
+    ]
+  }
+}

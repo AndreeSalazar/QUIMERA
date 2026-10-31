@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"net/quic/quic_network_transaction_unittest.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":7574,\"texto\":\"from_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddRead(\\\"endpoint-response\\\", server_maker_.Packet(from_proxy_packet_num++).…\"},{\"archivo\":\"net/quic/quic_network_transaction_unittest.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":7726,\"texto\":\"to_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddWrite(\\\"proxy2-settings-and-request\\\", to_proxy1.Packet(to_proxy1_packet_n…\"},{\"archivo\":\"net/quic/quic_network_transaction_unittest.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":7744,\"texto\":\"from_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddRead(\\\"proxy2-server-settings-and-ok-response\\\", from_proxy1.Packet(from_p…\"},{\"archivo\":\"net/quic/quic_network_transaction_unittest.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":7812,\"texto\":\"from_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddRead(\\\"endpoint-response\\\", from_proxy1.Packet(from_proxy1_packet_num++).A…\"},{\"archivo\":\"net/quic/quic_session_pool_proxy_job_unittest.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":265,\"texto\":\"to_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddWrite(\\\"proxy2 settings-and-request\\\", to_proxy1.Packet(to_proxy1_packet_n…\"},{\"archivo\":\"net/quic/quic_session_pool_proxy_job_unittest.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":284,\"texto\":\"from_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddRead(\\\"proxy2 server settings and ok response\\\", from_proxy1.Packet(from_p…\"},{\"archivo\":\"net/quic/quic_session_pool_test.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":5765,\"texto\":\"to_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddWrite(\\\"initial-settings-and-get\\\", client_maker_.Packet(to_proxy_packet_n…\"},{\"archivo\":\"net/quic/quic_session_pool_test.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":5983,\"texto\":\"to_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"socket_data.AddWrite(\\\"initial-settings-and-get\\\", client_maker_.Packet(to_proxy_packet_n…\"},{\"archivo\":\"net/quic/quic_event_logger.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":270,\"texto\":\"error_details se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string error_details\"},{\"archivo\":\"net/quic/quic_network_transaction_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":178,\"texto\":\"host se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string host\"},{\"archivo\":\"net/quic/quic_proxy_client_socket_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":289,\"texto\":\"extra_headers se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<std::pair<std::string, std::string >> extra_headers\"},{\"archivo\":\"net/quic/quic_proxy_client_socket_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":425,\"texto\":\"extra_headers se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<std::pair<std::string, std::string >> extra_headers\"},{\"archivo\":\"net/quic/quic_session_pool.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":2293,\"texto\":\"user_agent se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string user_agent\"},{\"archivo\":\"net/quic/quic_session_pool_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":153,\"texto\":\"enabled_features se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<base::test::FeatureRef>enabled_features\"},{\"archivo\":\"net/quic/quic_session_pool_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":155,\"texto\":\"enabled_features_with_params se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<base::test::FeatureRefAndParams>enabled_features_with_params\"},{\"archivo\":\"net/quic/quic_session_pool_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":440,\"texto\":\"authority se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string authority\"},{\"archivo\":\"net/quic/quic_session_pool_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":441,\"texto\":\"path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string path\"},{\"archivo\":\"net/quic/quic_session_pool_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":452,\"texto\":\"authority se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string authority\"},{\"archivo\":\"net/quic/quic_session_pool_test_base.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":453,\"texto\":\"path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string path\"},{\"archivo\":\"net/quic/quic_socket_data_provider.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":262,\"texto\":\"data se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string data\"},{\"archivo\":\"net/quic/quic_socket_data_provider.h\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":132,\"texto\":\"name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string name\"},{\"archivo\":\"net/quic/quic_socket_data_provider_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":56,\"texto\":\"path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string path\"},{\"archivo\":\"net/quic/quic_test_packet_maker.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":777,\"texto\":\"reason_phrase se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string reason_phrase\"},{\"archivo\":\"net/quic/bidirectional_stream_quic_impl_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1011,\"texto\":\"la funcion ocupa 119 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BidirectionalStreamQuicImplTest, CoalesceDataBuffersNotHeadersFrame){\"},{\"archivo\":\"net/quic/bidirectional_stream_quic_impl_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1232,\"texto\":\"la funcion ocupa 112 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BidirectionalStreamQuicImplTest, SendvDataCoalesceDataBuffersAndHeaderFrame){\"},{\"archivo\":\"net/quic/mock_crypto_client_stream.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":94,\"texto\":\"la funcion ocupa 155 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::CryptoConnect(){\"},{\"archivo\":\"net/quic/mock_crypto_client_stream.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":141,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\").IsIetfQuic()){\"},{\"archivo\":\"net/quic/quic_chromium_client_session.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1950,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"state == ZeroRttState::kAttemptedAndSucceeded){\"},{\"archivo\":\"net/quic/quic_chromium_client_session.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2015,\"texto\":\"la funcion ocupa 329 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::ConnectionCloseSource source){\"},{\"archivo\":\"net/quic/quic_chromium_client_session.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2282,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\").key_update_count>=2){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":112,\"total\":142}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "net/quic/quic_network_transaction_unittest.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 7574,
+        "texto": "from_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddRead(\"endpoint-response\", server_maker_.Packet(from_proxy_packet_num++).…"
+      },
+      {
+        "archivo": "net/quic/quic_network_transaction_unittest.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 7726,
+        "texto": "to_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddWrite(\"proxy2-settings-and-request\", to_proxy1.Packet(to_proxy1_packet_n…"
+      },
+      {
+        "archivo": "net/quic/quic_network_transaction_unittest.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 7744,
+        "texto": "from_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddRead(\"proxy2-server-settings-and-ok-response\", from_proxy1.Packet(from_p…"
+      },
+      {
+        "archivo": "net/quic/quic_network_transaction_unittest.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 7812,
+        "texto": "from_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddRead(\"endpoint-response\", from_proxy1.Packet(from_proxy1_packet_num++).A…"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_proxy_job_unittest.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 265,
+        "texto": "to_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddWrite(\"proxy2 settings-and-request\", to_proxy1.Packet(to_proxy1_packet_n…"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_proxy_job_unittest.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 284,
+        "texto": "from_proxy2_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddRead(\"proxy2 server settings and ok response\", from_proxy1.Packet(from_p…"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 5765,
+        "texto": "to_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddWrite(\"initial-settings-and-get\", client_maker_.Packet(to_proxy_packet_n…"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 5983,
+        "texto": "to_endpoint_packet_num se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "socket_data.AddWrite(\"initial-settings-and-get\", client_maker_.Packet(to_proxy_packet_n…"
+      },
+      {
+        "archivo": "net/quic/quic_event_logger.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 270,
+        "texto": "error_details se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string error_details"
+      },
+      {
+        "archivo": "net/quic/quic_network_transaction_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 178,
+        "texto": "host se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string host"
+      },
+      {
+        "archivo": "net/quic/quic_proxy_client_socket_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 289,
+        "texto": "extra_headers se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<std::pair<std::string, std::string >> extra_headers"
+      },
+      {
+        "archivo": "net/quic/quic_proxy_client_socket_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 425,
+        "texto": "extra_headers se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<std::pair<std::string, std::string >> extra_headers"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 2293,
+        "texto": "user_agent se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string user_agent"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 153,
+        "texto": "enabled_features se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<base::test::FeatureRef>enabled_features"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 155,
+        "texto": "enabled_features_with_params se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<base::test::FeatureRefAndParams>enabled_features_with_params"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 440,
+        "texto": "authority se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string authority"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 441,
+        "texto": "path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string path"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 452,
+        "texto": "authority se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string authority"
+      },
+      {
+        "archivo": "net/quic/quic_session_pool_test_base.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 453,
+        "texto": "path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string path"
+      },
+      {
+        "archivo": "net/quic/quic_socket_data_provider.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 262,
+        "texto": "data se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string data"
+      },
+      {
+        "archivo": "net/quic/quic_socket_data_provider.h",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 132,
+        "texto": "name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string name"
+      },
+      {
+        "archivo": "net/quic/quic_socket_data_provider_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 56,
+        "texto": "path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string path"
+      },
+      {
+        "archivo": "net/quic/quic_test_packet_maker.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 777,
+        "texto": "reason_phrase se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string reason_phrase"
+      },
+      {
+        "archivo": "net/quic/bidirectional_stream_quic_impl_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1011,
+        "texto": "la funcion ocupa 119 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BidirectionalStreamQuicImplTest, CoalesceDataBuffersNotHeadersFrame){"
+      },
+      {
+        "archivo": "net/quic/bidirectional_stream_quic_impl_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1232,
+        "texto": "la funcion ocupa 112 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BidirectionalStreamQuicImplTest, SendvDataCoalesceDataBuffersAndHeaderFrame){"
+      },
+      {
+        "archivo": "net/quic/mock_crypto_client_stream.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 94,
+        "texto": "la funcion ocupa 155 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::CryptoConnect(){"
+      },
+      {
+        "archivo": "net/quic/mock_crypto_client_stream.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 141,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ").IsIetfQuic()){"
+      },
+      {
+        "archivo": "net/quic/quic_chromium_client_session.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1950,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "state == ZeroRttState::kAttemptedAndSucceeded){"
+      },
+      {
+        "archivo": "net/quic/quic_chromium_client_session.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2015,
+        "texto": "la funcion ocupa 329 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::ConnectionCloseSource source){"
+      },
+      {
+        "archivo": "net/quic/quic_chromium_client_session.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2282,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ").key_update_count>=2){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 112,
+    "total": 142
+  }
+}

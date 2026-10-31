@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"net\"},{\"carpeta\":true,\"ruta\":\"ios/net\"},{\"carpeta\":true,\"ruta\":\"chromecast/net\"},{\"carpeta\":true,\"ruta\":\"ios/web/net\"},{\"carpeta\":true,\"ruta\":\"chrome/common/net\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/net\"},{\"carpeta\":true,\"ruta\":\"chrome/updater/net\"},{\"carpeta\":true,\"ruta\":\"chrome/renderer/net\"},{\"carpeta\":true,\"ruta\":\"components/metrics/net\"},{\"carpeta\":true,\"ruta\":\"components/enterprise/net\"}],\"texto\":\"net\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ios/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chromecast/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ios/web/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/common/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/updater/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/renderer/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/metrics/net"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/enterprise/net"
+      }
+    ],
+    "texto": "net"
+  }
+}

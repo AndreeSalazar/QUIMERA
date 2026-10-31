@@ -1,0 +1,32 @@
+{
+  "content": [
+    {
+      "text": "{\"a\":\"chrome/browser/ui/browser.h\",\"b\":\"content/public/browser/web_contents.h\",\"ciclo\":false,\"igual_de_cortos\":1,\"pasos\":[{\"desde\":\"chrome/browser/ui/browser.h\",\"hasta\":\"content/public/browser/web_contents.h\",\"lo_usan\":4847,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":43},\"sin_este_paso\":\"otro camino de 4 saltos\"}],\"por_que\":\"browser.h usa a web_contents.h directamente: si cambia web_contents.h, browser.h se recompila. Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.\",\"punto_de_encuentro\":null,\"saltos\":1,\"union\":\"A usa B\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "a": "chrome/browser/ui/browser.h",
+    "b": "content/public/browser/web_contents.h",
+    "ciclo": false,
+    "igual_de_cortos": 1,
+    "pasos": [
+      {
+        "desde": "chrome/browser/ui/browser.h",
+        "hasta": "content/public/browser/web_contents.h",
+        "lo_usan": 4847,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 43
+        },
+        "sin_este_paso": "otro camino de 4 saltos"
+      }
+    ],
+    "por_que": "browser.h usa a web_contents.h directamente: si cambia web_contents.h, browser.h se recompila. Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.",
+    "punto_de_encuentro": null,
+    "saltos": 1,
+    "union": "A usa B"
+  }
+}

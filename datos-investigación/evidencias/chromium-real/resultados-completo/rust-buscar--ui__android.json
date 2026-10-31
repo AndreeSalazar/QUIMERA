@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"ui/android\"},{\"carpeta\":true,\"ruta\":\"ui/gl/android\"},{\"carpeta\":true,\"ruta\":\"ui/gfx/android\"},{\"carpeta\":true,\"ruta\":\"docs/ui/android\"},{\"carpeta\":true,\"ruta\":\"ui/color/android\"},{\"carpeta\":true,\"ruta\":\"ui/menus/android\"},{\"carpeta\":true,\"ruta\":\"ui/events/android\"},{\"carpeta\":true,\"ruta\":\"ui/edge_to_edge/android\"},{\"carpeta\":true,\"ruta\":\"ui/native_theme/android\"},{\"carpeta\":true,\"ruta\":\"ui/accessibility/android\"},{\"carpeta\":true,\"ruta\":\"ui/shell_dialogs/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/uid/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/messages/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/side_panel/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/vertical_tabs/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/facilitated_payments/ui/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/side_ui/test/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/side_ui/public/android\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/side_panel/test/android\"}],\"texto\":\"ui/android\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "ui/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/gl/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/gfx/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "docs/ui/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/color/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/menus/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/events/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/edge_to_edge/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/native_theme/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/accessibility/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/shell_dialogs/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/uid/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/messages/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/side_panel/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/vertical_tabs/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/facilitated_payments/ui/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/side_ui/test/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/side_ui/public/android"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/side_panel/test/android"
+      }
+    ],
+    "texto": "ui/android"
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"mojo/core/broker_host.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":72,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":91,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":229,\"texto\":\"new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>new_handles\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":232,\"texto\":\"new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandleInTransit>new_handles\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":791,\"texto\":\"new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>new_handles\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":801,\"texto\":\"new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandleInTransit>new_handles\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1302,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel_posix.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":540,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":99,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":404,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":492,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":603,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":735,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1160,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<PlatformHandle>handles\"},{\"archivo\":\"mojo/core/fuzzing_utils.h\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":27,\"texto\":\"handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<mojo::PlatformHandle>handles\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":445,\"texto\":\"la funcion ocupa 130 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::ProcessHandle from_process){\"},{\"archivo\":\"mojo/core/channel.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1121,\"texto\":\"la funcion ocupa 171 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"size_t*size_hint){\"},{\"archivo\":\"mojo/core/channel_linux.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":592,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"SharedBuffer::Error::kControlCorruption){\"},{\"archivo\":\"mojo/core/channel_linux.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":639,\"texto\":\"la funcion ocupa 117 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"PlatformHandle>handles){\"},{\"archivo\":\"mojo/core/channel_linux.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":790,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"result!=DispatchResult::kOK){\"},{\"archivo\":\"mojo/core/channel_mac.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":537,\"texto\":\"la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"EXCLUSIVE_LOCKS_REQUIRED(write_lock_){\"},{\"archivo\":\"mojo/core/channel_mac.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":600,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(kr!=KERN_SUCCESS){\"},{\"archivo\":\"mojo/core/channel_mac.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":726,\"texto\":\"la funcion ocupa 310 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"mach_port_t port)override{\"},{\"archivo\":\"mojo/core/channel_posix.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":365,\"texto\":\"la funcion ocupa 113 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"(MessageView message_view){\"},{\"archivo\":\"mojo/core/channel_posix.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":417,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"();++i){\"},{\"archivo\":\"mojo/core/channel_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":810,\"texto\":\"la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"ChannelTest, SendToDeadMachPortName){\"},{\"archivo\":\"mojo/core/core_ipcz_test.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":504,\"texto\":\"la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"CoreIpczTest, DataPipeReadWriteQeury){\"},{\"archivo\":\"mojo/core/data_pipe_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":258,\"texto\":\"la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"DataPipeTest, SimpleReadWrite){\"},{\"archivo\":\"mojo/core/data_pipe_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":509,\"texto\":\"la funcion ocupa 135 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"DataPipeTest, BasicConsumerWaiting){\"},{\"archivo\":\"mojo/core/data_pipe_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":884,\"texto\":\"la funcion ocupa 162 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"DataPipeTest, AllOrNone){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":13,\"total\":43}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "mojo/core/broker_host.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 72,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 91,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 229,
+        "texto": "new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>new_handles"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 232,
+        "texto": "new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandleInTransit>new_handles"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 791,
+        "texto": "new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>new_handles"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 801,
+        "texto": "new_handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandleInTransit>new_handles"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1302,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel_posix.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 540,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 99,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 404,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 492,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 603,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 735,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1160,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/fuzzing_utils.h",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 27,
+        "texto": "handles se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<mojo::PlatformHandle>handles"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 445,
+        "texto": "la funcion ocupa 130 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::ProcessHandle from_process){"
+      },
+      {
+        "archivo": "mojo/core/channel.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1121,
+        "texto": "la funcion ocupa 171 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "size_t*size_hint){"
+      },
+      {
+        "archivo": "mojo/core/channel_linux.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 592,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "SharedBuffer::Error::kControlCorruption){"
+      },
+      {
+        "archivo": "mojo/core/channel_linux.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 639,
+        "texto": "la funcion ocupa 117 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "PlatformHandle>handles){"
+      },
+      {
+        "archivo": "mojo/core/channel_linux.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 790,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "result!=DispatchResult::kOK){"
+      },
+      {
+        "archivo": "mojo/core/channel_mac.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 537,
+        "texto": "la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "EXCLUSIVE_LOCKS_REQUIRED(write_lock_){"
+      },
+      {
+        "archivo": "mojo/core/channel_mac.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 600,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(kr!=KERN_SUCCESS){"
+      },
+      {
+        "archivo": "mojo/core/channel_mac.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 726,
+        "texto": "la funcion ocupa 310 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "mach_port_t port)override{"
+      },
+      {
+        "archivo": "mojo/core/channel_posix.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 365,
+        "texto": "la funcion ocupa 113 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "(MessageView message_view){"
+      },
+      {
+        "archivo": "mojo/core/channel_posix.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 417,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "();++i){"
+      },
+      {
+        "archivo": "mojo/core/channel_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 810,
+        "texto": "la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "ChannelTest, SendToDeadMachPortName){"
+      },
+      {
+        "archivo": "mojo/core/core_ipcz_test.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 504,
+        "texto": "la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "CoreIpczTest, DataPipeReadWriteQeury){"
+      },
+      {
+        "archivo": "mojo/core/data_pipe_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 258,
+        "texto": "la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "DataPipeTest, SimpleReadWrite){"
+      },
+      {
+        "archivo": "mojo/core/data_pipe_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 509,
+        "texto": "la funcion ocupa 135 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "DataPipeTest, BasicConsumerWaiting){"
+      },
+      {
+        "archivo": "mojo/core/data_pipe_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 884,
+        "texto": "la funcion ocupa 162 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "DataPipeTest, AllOrNone){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 13,
+    "total": 43
+  }
+}

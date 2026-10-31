@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":59,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":2792,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":25},\"ruta\":\"cc/scheduler/scheduler.h\"},{\"arrastra\":2731,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":23},\"ruta\":\"cc/trees/proxy.h\"},{\"arrastra\":1137,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":28},\"ruta\":\"components/viz/service/gl/gpu_service_impl.h\"},{\"arrastra\":1112,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":21},\"ruta\":\"components/viz/service/frame_sinks/compositor_frame_sink_support.h\"},{\"arrastra\":1068,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":21},\"ruta\":\"components/viz/service/display/display_scheduler.h\"},{\"arrastra\":1061,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":24},\"ruta\":\"components/viz/service/display/display.h\"},{\"arrastra\":1035,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":9},\"ruta\":\"components/input/fling_scheduler_base.h\"},{\"arrastra\":962,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":18},\"ruta\":\"content/common/input/synthetic_gesture_controller.h\"},{\"arrastra\":234,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":23},\"ruta\":\"components/exo/layer_tree_frame_sink_holder.h\"},{\"arrastra\":233,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":23},\"ruta\":\"components/exo/surface.h\"},{\"arrastra\":211,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":23},\"ruta\":\"content/browser/renderer_host/render_widget_host_view_child_frame.h\"},{\"arrastra\":86,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":16},\"ruta\":\"android_webview/browser/gfx/root_frame_sink.h\"},{\"arrastra\":79,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":16},\"ruta\":\"components/viz/service/frame_sinks/external_begin_frame_source_android.h\"},{\"arrastra\":74,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/gfx/begin_frame_source_webview.h\"},{\"arrastra\":61,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":20},\"ruta\":\"content/browser/renderer_host/delegated_frame_host.h\"},{\"arrastra\":35,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":28},\"ruta\":\"content/browser/renderer_host/render_widget_host_view_aura.h\"},{\"arrastra\":33,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":21},\"ruta\":\"cc/mojo_embedder/async_layer_tree_frame_sink.h\"},{\"arrastra\":28,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":13},\"ruta\":\"content/browser/renderer_host/browser_compositor_view_mac.h\"},{\"arrastra\":27,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":12},\"ruta\":\"components/viz/common/frame_sinks/external_begin_frame_source_ios.h\"},{\"arrastra\":22,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/viz/common/frame_sinks/begin_frame_source.h\\\"\",\"linea\":12},\"ruta\":\"content/browser/renderer_host/browser_compositor_ios.h\"}],\"recortado\":false,\"ruta\":\"components/viz/common/frame_sinks/begin_frame_source.h\",\"se_recompilan\":4054}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 59,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 2792,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 25
+        },
+        "ruta": "cc/scheduler/scheduler.h"
+      },
+      {
+        "arrastra": 2731,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 23
+        },
+        "ruta": "cc/trees/proxy.h"
+      },
+      {
+        "arrastra": 1137,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 28
+        },
+        "ruta": "components/viz/service/gl/gpu_service_impl.h"
+      },
+      {
+        "arrastra": 1112,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 21
+        },
+        "ruta": "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
+      },
+      {
+        "arrastra": 1068,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 21
+        },
+        "ruta": "components/viz/service/display/display_scheduler.h"
+      },
+      {
+        "arrastra": 1061,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 24
+        },
+        "ruta": "components/viz/service/display/display.h"
+      },
+      {
+        "arrastra": 1035,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 9
+        },
+        "ruta": "components/input/fling_scheduler_base.h"
+      },
+      {
+        "arrastra": 962,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 18
+        },
+        "ruta": "content/common/input/synthetic_gesture_controller.h"
+      },
+      {
+        "arrastra": 234,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 23
+        },
+        "ruta": "components/exo/layer_tree_frame_sink_holder.h"
+      },
+      {
+        "arrastra": 233,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 23
+        },
+        "ruta": "components/exo/surface.h"
+      },
+      {
+        "arrastra": 211,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 23
+        },
+        "ruta": "content/browser/renderer_host/render_widget_host_view_child_frame.h"
+      },
+      {
+        "arrastra": 86,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 16
+        },
+        "ruta": "android_webview/browser/gfx/root_frame_sink.h"
+      },
+      {
+        "arrastra": 79,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 16
+        },
+        "ruta": "components/viz/service/frame_sinks/external_begin_frame_source_android.h"
+      },
+      {
+        "arrastra": 74,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 15
+        },
+        "ruta": "android_webview/browser/gfx/begin_frame_source_webview.h"
+      },
+      {
+        "arrastra": 61,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 20
+        },
+        "ruta": "content/browser/renderer_host/delegated_frame_host.h"
+      },
+      {
+        "arrastra": 35,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 28
+        },
+        "ruta": "content/browser/renderer_host/render_widget_host_view_aura.h"
+      },
+      {
+        "arrastra": 33,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 21
+        },
+        "ruta": "cc/mojo_embedder/async_layer_tree_frame_sink.h"
+      },
+      {
+        "arrastra": 28,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 13
+        },
+        "ruta": "content/browser/renderer_host/browser_compositor_view_mac.h"
+      },
+      {
+        "arrastra": 27,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 12
+        },
+        "ruta": "components/viz/common/frame_sinks/external_begin_frame_source_ios.h"
+      },
+      {
+        "arrastra": 22,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"components/viz/common/frame_sinks/begin_frame_source.h\"",
+          "linea": 12
+        },
+        "ruta": "content/browser/renderer_host/browser_compositor_ios.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "components/viz/common/frame_sinks/begin_frame_source.h",
+    "se_recompilan": 4054
+  }
+}

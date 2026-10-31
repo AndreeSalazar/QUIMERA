@@ -1,0 +1,315 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":19},\"ruta\":\"third_party/blink/renderer/modules/bluetooth/bluetooth.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/platform/bindings/active_script_wrappable_base.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":58},\"ruta\":\"third_party/blink/renderer/core/frame/local_dom_window.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":39},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_function.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":23},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_promise_resolver.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/platform/heap/collection_support/heap_deque.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":16},\"ruta\":\"third_party/blink/renderer/platform/bindings/script_state.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":45},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_promise.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":37},\"ruta\":\"third_party/blink/renderer/platform/bindings/script_wrappable.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":16},\"ruta\":\"third_party/blink/renderer/core/execution_context/agent.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":20},\"ruta\":\"third_party/blink/renderer/core/frame/dom_window.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":92},\"ruta\":\"third_party/blink/renderer/core/frame/local_frame.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/platform/instrumentation/use_counter.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/boxed_v8_module.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":13},\"ruta\":\"third_party/blink/renderer/platform/bindings/callback_function_base.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/platform/bindings/callback_interface_base.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":18},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/capture_source_location.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/platform/bindings/source_location.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":40},\"ruta\":\"third_party/blink/renderer/platform/bindings/v8_per_isolate_data.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":39},\"ruta\":\"third_party/blink/renderer/platform/bindings/dom_wrapper_world.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":35},\"ruta\":\"third_party/blink/renderer/core/dom/range.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":14},\"ruta\":\"third_party/blink/renderer/core/inspector/console_message.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":25},\"ruta\":\"third_party/blink/renderer/core/xml/dom_parser.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":43},\"ruta\":\"third_party/blink/renderer/platform/bindings/v8_per_context_data.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":41},\"ruta\":\"third_party/blink/renderer/core/dom/events/event_target.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":69},\"ruta\":\"third_party/blink/renderer/core/dom/element.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":13},\"ruta\":\"third_party/blink/renderer/platform/heap/collection_support/heap_vector.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/core/typed_arrays/array_buffer_view_helpers.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":19},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/isolated_world_csp.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":37},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_controller.h\"}],\"total\":2318},\"papel\":\"arrastra\",\"ruta\":\"third_party/blink/renderer/platform/heap/garbage_collected.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/cppgc/allocation.h\\\"\",\"linea\":12},\"ruta\":\"v8/include/cppgc/allocation.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/unretained_traits.h\\\"\",\"linea\":10},\"ruta\":\"base/functional/unretained_traits.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/cppgc/garbage-collected.h\\\"\",\"linea\":13},\"ruta\":\"v8/include/cppgc/garbage-collected.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/thread_state_storage.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/platform/heap/thread_state_storage.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/cppgc/liveness-broker.h\\\"\",\"linea\":14},\"ruta\":\"v8/include/cppgc/liveness-broker.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/cppgc/type-traits.h\\\"\",\"linea\":15},\"ruta\":\"v8/include/cppgc/type-traits.h\"}],\"total\":6}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 19
+          },
+          "ruta": "third_party/blink/renderer/modules/bluetooth/bluetooth.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 10
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/active_script_wrappable_base.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 58
+          },
+          "ruta": "third_party/blink/renderer/core/frame/local_dom_window.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 39
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_function.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 23
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_promise_resolver.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 12
+          },
+          "ruta": "third_party/blink/renderer/platform/heap/collection_support/heap_deque.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 16
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/script_state.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 45
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_promise.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 37
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/script_wrappable.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 16
+          },
+          "ruta": "third_party/blink/renderer/core/execution_context/agent.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 20
+          },
+          "ruta": "third_party/blink/renderer/core/frame/dom_window.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 92
+          },
+          "ruta": "third_party/blink/renderer/core/frame/local_frame.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 10
+          },
+          "ruta": "third_party/blink/renderer/platform/instrumentation/use_counter.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 10
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/boxed_v8_module.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 13
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/callback_function_base.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 12
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/callback_interface_base.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 18
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/capture_source_location.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 10
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/source_location.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 40
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/v8_per_isolate_data.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 39
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/dom_wrapper_world.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 35
+          },
+          "ruta": "third_party/blink/renderer/core/dom/range.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 14
+          },
+          "ruta": "third_party/blink/renderer/core/inspector/console_message.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 25
+          },
+          "ruta": "third_party/blink/renderer/core/xml/dom_parser.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 43
+          },
+          "ruta": "third_party/blink/renderer/platform/bindings/v8_per_context_data.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 41
+          },
+          "ruta": "third_party/blink/renderer/core/dom/events/event_target.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 69
+          },
+          "ruta": "third_party/blink/renderer/core/dom/element.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 13
+          },
+          "ruta": "third_party/blink/renderer/platform/heap/collection_support/heap_vector.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 12
+          },
+          "ruta": "third_party/blink/renderer/core/typed_arrays/array_buffer_view_helpers.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 19
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/isolated_world_csp.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+            "linea": 37
+          },
+          "ruta": "third_party/blink/renderer/bindings/core/v8/script_controller.h"
+        }
+      ],
+      "total": 2318
+    },
+    "papel": "arrastra",
+    "ruta": "third_party/blink/renderer/platform/heap/garbage_collected.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/cppgc/allocation.h\"",
+            "linea": 12
+          },
+          "ruta": "v8/include/cppgc/allocation.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/unretained_traits.h\"",
+            "linea": 10
+          },
+          "ruta": "base/functional/unretained_traits.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/cppgc/garbage-collected.h\"",
+            "linea": 13
+          },
+          "ruta": "v8/include/cppgc/garbage-collected.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/renderer/platform/heap/thread_state_storage.h\"",
+            "linea": 11
+          },
+          "ruta": "third_party/blink/renderer/platform/heap/thread_state_storage.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/cppgc/liveness-broker.h\"",
+            "linea": 14
+          },
+          "ruta": "v8/include/cppgc/liveness-broker.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"v8/include/cppgc/type-traits.h\"",
+            "linea": 15
+          },
+          "ruta": "v8/include/cppgc/type-traits.h"
+        }
+      ],
+      "total": 6
+    }
+  }
+}

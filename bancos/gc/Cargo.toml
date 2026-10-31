@@ -1,0 +1,24 @@
+[package]
+name = "quimera-banco-gc"
+description = "Mide quimera-gc contra boa_gc con la misma carga (estilo Splay)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[package.metadata.quimera]
+nivel = 99
+capa = "bancos"
+no_std = false
+# Solo los bancos de medida pueden usar crates de fuera, para comparar.
+externos = ["boa_gc"]
+
+[dependencies]
+quimera-valor.workspace = true
+quimera-gc.workspace = true
+boa_gc = "0.22.0"
+
+[lints]
+workspace = true

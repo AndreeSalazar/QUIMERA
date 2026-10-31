@@ -1,0 +1,22 @@
+{
+  "raiz": "/var/tmp/ultra-main-work/motores/boa",
+  "binario": "/var/tmp/ultra-main-work/cache/carpetas-target-v2/release/ultra-carpetas",
+  "git_head": "329e89748ed34e218fe593b4209b1dbe1d6eb64d",
+  "binario_sha256": "bba420334c75dbf9ac5a54880f745cbc0b54b732ca380e51007bb34b21c05af9",
+  "inicio_unix": 1793474450.969734,
+  "areas": [
+    "cli",
+    "core/ast",
+    "core/engine",
+    "core/gc",
+    "core/icu_provider",
+    "core/interner",
+    "core/macros",
+    "core/parser",
+    "core/runtime",
+    "core/string",
+    "core/wintertc",
+    "ffi",
+    "tools"
+  ]
+}

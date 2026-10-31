@@ -1,0 +1,9 @@
+{
+  "tracked_entries": 514576,
+  "gitlinks": 272,
+  "tracked_files": 514304,
+  "archive_entries": 561176,
+  "missing": [],
+  "tar_exit": 0,
+  "note": "Directorios gitlink vacios se conservan; contenido externo pendiente de gclient"
+}

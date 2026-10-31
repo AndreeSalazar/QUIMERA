@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":17601,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":26},\"ruta\":\"base/feature_list.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":15},\"ruta\":\"base/functional/bind.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":18},\"ruta\":\"base/memory/scoped_refptr.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"ruta\":\"base/task/single_thread_task_runner.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":25},\"ruta\":\"components/prefs/pref_service.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":21},\"ruta\":\"content/public/browser/web_contents.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":83},\"ruta\":\"base/memory/weak_ptr.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"ruta\":\"base/task/sequenced_task_runner.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":17},\"ruta\":\"base/run_loop.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":16},\"ruta\":\"base/test/scoped_feature_list.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":16},\"ruta\":\"base/synchronization/waitable_event.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":75},\"ruta\":\"base/timer/timer.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":14},\"ruta\":\"components/prefs/pref_change_registrar.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":17},\"ruta\":\"net/log/net_log.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":11},\"ruta\":\"content/public/browser/navigation_throttle.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":12},\"ruta\":\"content/public/browser/web_contents_observer.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":22},\"ruta\":\"base/containers/id_map.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":10},\"ruta\":\"content/public/browser/web_contents_user_data.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":16},\"ruta\":\"base/types/optional_ref.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":85},\"ruta\":\"base/metrics/field_trial.h\"}],\"recortado\":false,\"ruta\":\"base/memory/raw_ptr.h\",\"se_recompilan\":112173}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 17601,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 26
+        },
+        "ruta": "base/feature_list.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 15
+        },
+        "ruta": "base/functional/bind.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 18
+        },
+        "ruta": "base/memory/scoped_refptr.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 13
+        },
+        "ruta": "base/task/single_thread_task_runner.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 25
+        },
+        "ruta": "components/prefs/pref_service.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 21
+        },
+        "ruta": "content/public/browser/web_contents.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 83
+        },
+        "ruta": "base/memory/weak_ptr.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 13
+        },
+        "ruta": "base/task/sequenced_task_runner.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 17
+        },
+        "ruta": "base/run_loop.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 16
+        },
+        "ruta": "base/test/scoped_feature_list.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 16
+        },
+        "ruta": "base/synchronization/waitable_event.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 75
+        },
+        "ruta": "base/timer/timer.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 14
+        },
+        "ruta": "components/prefs/pref_change_registrar.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 17
+        },
+        "ruta": "net/log/net_log.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 11
+        },
+        "ruta": "content/public/browser/navigation_throttle.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 12
+        },
+        "ruta": "content/public/browser/web_contents_observer.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 22
+        },
+        "ruta": "base/containers/id_map.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 10
+        },
+        "ruta": "content/public/browser/web_contents_user_data.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 16
+        },
+        "ruta": "base/types/optional_ref.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 85
+        },
+        "ruta": "base/metrics/field_trial.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "base/memory/raw_ptr.h",
+    "se_recompilan": 112173
+  }
+}

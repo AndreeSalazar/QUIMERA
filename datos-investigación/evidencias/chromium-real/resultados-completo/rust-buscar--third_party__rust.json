@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"third_party/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/skia/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/webrtc/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/protobuf/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/angle/tools/rust\"},{\"carpeta\":false,\"ruta\":\"third_party/skia/gn/rust.gni\"},{\"carpeta\":true,\"ruta\":\"third_party/fuzztest/src/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/boringssl/src/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/flatbuffers/src/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/angle/third_party/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/oak/src/bazel/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/harfbuzz/src/src/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/litert/src/litert/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/nearby/src/presence/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/openscreen/src/tools/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/flatbuffers/src/goldens/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/openscreen/src/third_party/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/google_benchmark/src/bindings/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/harfbuzz/src/src/wasm/rust\"},{\"carpeta\":true,\"ruta\":\"third_party/oak/src/oak_session/tls/rust\"}],\"texto\":\"third_party/rust\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "third_party/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/skia/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/webrtc/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/protobuf/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/angle/tools/rust"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/skia/gn/rust.gni"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/fuzztest/src/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/boringssl/src/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/flatbuffers/src/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/angle/third_party/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/oak/src/bazel/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/harfbuzz/src/src/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/litert/src/litert/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/nearby/src/presence/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/openscreen/src/tools/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/flatbuffers/src/goldens/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/openscreen/src/third_party/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/google_benchmark/src/bindings/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/harfbuzz/src/src/wasm/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/oak/src/oak_session/tls/rust"
+      }
+    ],
+    "texto": "third_party/rust"
+  }
+}

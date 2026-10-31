@@ -1,0 +1,138 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"vtune/ittnotify_config.h\",\"control_valido\":\"atomic_int count; /* inicializar y usar atomic_fetch_add */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-021\",\"linea\":467,\"texto\":\"volatile no sincroniza hilos: _Atomic o un mutex\",\"titulo\":\"volatile no sincroniza hilos\",\"visto\":\"volatile long api_initialized\"},{\"archivo\":\"vtune/ittnotify_config.h\",\"control_valido\":\"atomic_int count; /* inicializar y usar atomic_fetch_add */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-021\",\"linea\":468,\"texto\":\"volatile no sincroniza hilos: _Atomic o un mutex\",\"titulo\":\"volatile no sincroniza hilos\",\"visto\":\"volatile long mutex_initialized\"},{\"archivo\":\"vtune/ittnotify_config.h\",\"control_valido\":\"atomic_int count; /* inicializar y usar atomic_fetch_add */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-021\",\"linea\":469,\"texto\":\"volatile no sincroniza hilos: _Atomic o un mutex\",\"titulo\":\"volatile no sincroniza hilos\",\"visto\":\"volatile long atomic_counter\"},{\"archivo\":\"vtune/ittnotify_static.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":855,\"texto\":\"la funcion ocupa 118 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"__itt_get_lib_name(void){\"},{\"archivo\":\"vtune/ittnotify_static.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":909,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"(res == - 1){\"},{\"archivo\":\"vtune/ittnotify_static.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":998,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"i].name)){\"},{\"archivo\":\"vtune/ittnotify_static.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1075,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\").lib!=NULL){\"},{\"archivo\":\"vtune/ittnotify_static.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1099,\"texto\":\"la funcion ocupa 126 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", __itt_group_id init_groups){\"},{\"archivo\":\"vtune/ittnotify_static.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1119,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(lib_name == NULL){\"},{\"archivo\":\"vtune/jitprofiling.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":177,\"texto\":\"la funcion ocupa 128 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"int loadiJIT_Funcs(){\"},{\"archivo\":\"vtune/jitprofiling.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":235,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\");if(envret){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":0,\"total\":11}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "vtune/ittnotify_config.h",
+        "control_valido": "atomic_int count; /* inicializar y usar atomic_fetch_add */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-021",
+        "linea": 467,
+        "texto": "volatile no sincroniza hilos: _Atomic o un mutex",
+        "titulo": "volatile no sincroniza hilos",
+        "visto": "volatile long api_initialized"
+      },
+      {
+        "archivo": "vtune/ittnotify_config.h",
+        "control_valido": "atomic_int count; /* inicializar y usar atomic_fetch_add */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-021",
+        "linea": 468,
+        "texto": "volatile no sincroniza hilos: _Atomic o un mutex",
+        "titulo": "volatile no sincroniza hilos",
+        "visto": "volatile long mutex_initialized"
+      },
+      {
+        "archivo": "vtune/ittnotify_config.h",
+        "control_valido": "atomic_int count; /* inicializar y usar atomic_fetch_add */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-021",
+        "linea": 469,
+        "texto": "volatile no sincroniza hilos: _Atomic o un mutex",
+        "titulo": "volatile no sincroniza hilos",
+        "visto": "volatile long atomic_counter"
+      },
+      {
+        "archivo": "vtune/ittnotify_static.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 855,
+        "texto": "la funcion ocupa 118 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "__itt_get_lib_name(void){"
+      },
+      {
+        "archivo": "vtune/ittnotify_static.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 909,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "(res == - 1){"
+      },
+      {
+        "archivo": "vtune/ittnotify_static.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 998,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "i].name)){"
+      },
+      {
+        "archivo": "vtune/ittnotify_static.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1075,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ").lib!=NULL){"
+      },
+      {
+        "archivo": "vtune/ittnotify_static.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1099,
+        "texto": "la funcion ocupa 126 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", __itt_group_id init_groups){"
+      },
+      {
+        "archivo": "vtune/ittnotify_static.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1119,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(lib_name == NULL){"
+      },
+      {
+        "archivo": "vtune/jitprofiling.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 177,
+        "texto": "la funcion ocupa 128 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "int loadiJIT_Funcs(){"
+      },
+      {
+        "archivo": "vtune/jitprofiling.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 235,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ");if(envret){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 0,
+    "total": 11
+  }
+}

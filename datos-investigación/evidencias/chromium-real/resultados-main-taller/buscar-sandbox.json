@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"sandbox\"},{\"carpeta\":true,\"ruta\":\"printing/sandbox\"},{\"carpeta\":true,\"ruta\":\"media/gpu/sandbox\"},{\"carpeta\":false,\"ruta\":\"docs/design/sandbox.md\"},{\"carpeta\":false,\"ruta\":\"sandbox/policy/sandbox.h\"},{\"carpeta\":false,\"ruta\":\"sandbox/policy/sandbox.cc\"},{\"carpeta\":true,\"ruta\":\"services/screen_ai/sandbox\"},{\"carpeta\":false,\"ruta\":\"third_party/jinja2/sandbox.py\"},{\"carpeta\":false,\"ruta\":\"sandbox/win/src/sandbox.h\"},{\"carpeta\":false,\"ruta\":\"sandbox/win/src/sandbox.cc\"}],\"texto\":\"sandbox\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "sandbox"
+      },
+      {
+        "carpeta": true,
+        "ruta": "printing/sandbox"
+      },
+      {
+        "carpeta": true,
+        "ruta": "media/gpu/sandbox"
+      },
+      {
+        "carpeta": false,
+        "ruta": "docs/design/sandbox.md"
+      },
+      {
+        "carpeta": false,
+        "ruta": "sandbox/policy/sandbox.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "sandbox/policy/sandbox.cc"
+      },
+      {
+        "carpeta": true,
+        "ruta": "services/screen_ai/sandbox"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/jinja2/sandbox.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "sandbox/win/src/sandbox.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "sandbox/win/src/sandbox.cc"
+      }
+    ],
+    "texto": "sandbox"
+  }
+}

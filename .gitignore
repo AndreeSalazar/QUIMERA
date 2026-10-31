@@ -1,0 +1,7 @@
+/target/
+# La investigación pesa 11 GB (disco de VM, SARIF, copias): no va al repositorio.
+/datos-investigación/vm/
+/datos-investigación/evidencias/chromium-real/*.sarif
+/datos-investigación/referencia/
+__pycache__/
+*.pyc

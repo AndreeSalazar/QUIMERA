@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"content/browser/renderer_host/clipboard_host_impl.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":795,\"texto\":\"filenames se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<ui::FileInfo>filenames\"},{\"archivo\":\"content/browser/renderer_host/clipboard_host_impl.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1090,\"texto\":\"custom_format_names se copia entero en cada llamada: const std::map& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::map<std::string, std::string>custom_format_names\"},{\"archivo\":\"content/browser/renderer_host/clipboard_host_impl.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1126,\"texto\":\"result se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string result\"},{\"archivo\":\"content/browser/renderer_host/clipboard_host_impl.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1391,\"texto\":\"ascii se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string ascii\"},{\"archivo\":\"content/browser/renderer_host/clipboard_host_impl_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":62,\"texto\":\"files se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<File>files\"},{\"archivo\":\"content/browser/renderer_host/code_cache_host_impl_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":525,\"texto\":\"expected_data se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string expected_data\"},{\"archivo\":\"content/browser/renderer_host/code_cache_host_impl_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":653,\"texto\":\"expected_data se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string expected_data\"},{\"archivo\":\"content/browser/renderer_host/cookie_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":78,\"texto\":\"cookie se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string cookie\"},{\"archivo\":\"content/browser/renderer_host/data_transfer_util.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":128,\"texto\":\"file_system_file_infos se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<DropData::FileSystemFileInfo>file_system_file_infos\"},{\"archivo\":\"content/browser/renderer_host/input/double_tap_to_zoom_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":28,\"texto\":\"viewport_content se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string viewport_content\"},{\"archivo\":\"content/browser/renderer_host/input/scroll_behavior_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":170,\"texto\":\"page_url se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"const std::string page_url\"},{\"archivo\":\"content/browser/renderer_host/input/scroll_latency_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":141,\"texto\":\"scroll_events se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<gfx::Vector2d>scroll_events\"},{\"archivo\":\"content/browser/renderer_host/input/scroll_tracing_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":52,\"texto\":\"distances se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<gfx::Vector2d>distances\"},{\"archivo\":\"content/browser/renderer_host/input/scroll_tracing_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":80,\"texto\":\"expected_values se copia entero en cada llamada: const std::map& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::map<std::string_view, int64_t>expected_values\"},{\"archivo\":\"content/browser/renderer_host/input/scroll_tracing_browsertest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":105,\"texto\":\"query_value se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string query_value\"},{\"archivo\":\"content/browser/renderer_host/media/capture_handle_manager_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":71,\"texto\":\"permitted_origins se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"const std::vector<url::Origin>permitted_origins\"},{\"archivo\":\"content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":604,\"texto\":\"devices_info se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<media::VideoCaptureDeviceInfo>devices_info\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":340,\"texto\":\"capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<blink::mojom::VideoInputDeviceCapabilitiesPtr>capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":362,\"texto\":\"capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<blink::mojom::VideoInputDeviceCapabilitiesPtr>capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":368,\"texto\":\"capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<blink::mojom::AudioInputDeviceCapabilitiesPtr>capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":410,\"texto\":\"video_input_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<blink::mojom::VideoInputDeviceCapabilitiesPtr>video_input_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":412,\"texto\":\"audio_input_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<blink::mojom::AudioInputDeviceCapabilitiesPtr>audio_input_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_manager_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":389,\"texto\":\"video_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<VideoInputDeviceCapabilitiesPtr>video_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_manager_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":390,\"texto\":\"audio_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<AudioInputDeviceCapabilitiesPtr>audio_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_manager_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":709,\"texto\":\"video_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<VideoInputDeviceCapabilitiesPtr>video_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_manager_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":710,\"texto\":\"audio_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<AudioInputDeviceCapabilitiesPtr>audio_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_manager_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":750,\"texto\":\"video_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<VideoInputDeviceCapabilitiesPtr>video_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_devices_manager_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":751,\"texto\":\"audio_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<AudioInputDeviceCapabilitiesPtr>audio_capabilities\"},{\"archivo\":\"content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":303,\"texto\":\"screen_share_ids se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<DesktopMediaID>screen_share_ids\"},{\"archivo\":\"content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1378,\"texto\":\"device_id se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"const std::string device_id\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":374,\"total\":404}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 795,
+        "texto": "filenames se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<ui::FileInfo>filenames"
+      },
+      {
+        "archivo": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1090,
+        "texto": "custom_format_names se copia entero en cada llamada: const std::map& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::map<std::string, std::string>custom_format_names"
+      },
+      {
+        "archivo": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1126,
+        "texto": "result se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string result"
+      },
+      {
+        "archivo": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1391,
+        "texto": "ascii se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string ascii"
+      },
+      {
+        "archivo": "content/browser/renderer_host/clipboard_host_impl_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 62,
+        "texto": "files se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<File>files"
+      },
+      {
+        "archivo": "content/browser/renderer_host/code_cache_host_impl_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 525,
+        "texto": "expected_data se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string expected_data"
+      },
+      {
+        "archivo": "content/browser/renderer_host/code_cache_host_impl_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 653,
+        "texto": "expected_data se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string expected_data"
+      },
+      {
+        "archivo": "content/browser/renderer_host/cookie_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 78,
+        "texto": "cookie se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string cookie"
+      },
+      {
+        "archivo": "content/browser/renderer_host/data_transfer_util.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 128,
+        "texto": "file_system_file_infos se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<DropData::FileSystemFileInfo>file_system_file_infos"
+      },
+      {
+        "archivo": "content/browser/renderer_host/input/double_tap_to_zoom_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 28,
+        "texto": "viewport_content se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string viewport_content"
+      },
+      {
+        "archivo": "content/browser/renderer_host/input/scroll_behavior_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 170,
+        "texto": "page_url se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "const std::string page_url"
+      },
+      {
+        "archivo": "content/browser/renderer_host/input/scroll_latency_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 141,
+        "texto": "scroll_events se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<gfx::Vector2d>scroll_events"
+      },
+      {
+        "archivo": "content/browser/renderer_host/input/scroll_tracing_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 52,
+        "texto": "distances se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<gfx::Vector2d>distances"
+      },
+      {
+        "archivo": "content/browser/renderer_host/input/scroll_tracing_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 80,
+        "texto": "expected_values se copia entero en cada llamada: const std::map& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::map<std::string_view, int64_t>expected_values"
+      },
+      {
+        "archivo": "content/browser/renderer_host/input/scroll_tracing_browsertest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 105,
+        "texto": "query_value se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string query_value"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/capture_handle_manager_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 71,
+        "texto": "permitted_origins se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "const std::vector<url::Origin>permitted_origins"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 604,
+        "texto": "devices_info se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<media::VideoCaptureDeviceInfo>devices_info"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 340,
+        "texto": "capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<blink::mojom::VideoInputDeviceCapabilitiesPtr>capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 362,
+        "texto": "capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<blink::mojom::VideoInputDeviceCapabilitiesPtr>capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 368,
+        "texto": "capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<blink::mojom::AudioInputDeviceCapabilitiesPtr>capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 410,
+        "texto": "video_input_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<blink::mojom::VideoInputDeviceCapabilitiesPtr>video_input_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 412,
+        "texto": "audio_input_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<blink::mojom::AudioInputDeviceCapabilitiesPtr>audio_input_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 389,
+        "texto": "video_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<VideoInputDeviceCapabilitiesPtr>video_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 390,
+        "texto": "audio_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<AudioInputDeviceCapabilitiesPtr>audio_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 709,
+        "texto": "video_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<VideoInputDeviceCapabilitiesPtr>video_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 710,
+        "texto": "audio_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<AudioInputDeviceCapabilitiesPtr>audio_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 750,
+        "texto": "video_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<VideoInputDeviceCapabilitiesPtr>video_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_devices_manager_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 751,
+        "texto": "audio_capabilities se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<AudioInputDeviceCapabilitiesPtr>audio_capabilities"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 303,
+        "texto": "screen_share_ids se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<DesktopMediaID>screen_share_ids"
+      },
+      {
+        "archivo": "content/browser/renderer_host/media/media_stream_dispatcher_host_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1378,
+        "texto": "device_id se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "const std::string device_id"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 374,
+    "total": 404
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":843,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":2529,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":43},\"ruta\":\"content/public/test/browser_test_utils.h\"},{\"arrastra\":1026,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":27},\"ruta\":\"content/browser/notifications/platform_notification_context_impl.h\"},{\"arrastra\":912,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":30},\"ruta\":\"content/browser/back_forward_cache/back_forward_cache_impl.h\"},{\"arrastra\":911,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":22},\"ruta\":\"content/browser/renderer_host/render_frame_proxy_host.h\"},{\"arrastra\":754,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":10},\"ruta\":\"content/browser/renderer_host/scoped_view_transition_resources.h\"},{\"arrastra\":754,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":13},\"ruta\":\"content/browser/security/coop/cross_origin_opener_policy_status.h\"},{\"arrastra\":304,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":27},\"ruta\":\"content/public/test/mock_render_process_host.h\"},{\"arrastra\":215,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":33},\"ruta\":\"chrome/browser/extensions/extension_service.h\"},{\"arrastra\":188,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":11},\"ruta\":\"extensions/browser/extension_util.h\"},{\"arrastra\":95,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":20},\"ruta\":\"components/metrics/content/subprocess_metrics_provider.h\"},{\"arrastra\":94,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":12},\"ruta\":\"content/browser/renderer_host/android_spare_renderer_navigation_throttle.h\"},{\"arrastra\":92,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":55},\"ruta\":\"content/browser/renderer_host/render_process_host_impl.h\"},{\"arrastra\":78,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":19},\"ruta\":\"content/browser/service_worker/service_worker_host.h\"},{\"arrastra\":67,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":16},\"ruta\":\"extensions/browser/api/automation_internal/automation_event_router.h\"},{\"arrastra\":32,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":27},\"ruta\":\"extensions/browser/api/web_request/extension_web_request_event_router.h\"},{\"arrastra\":28,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":27},\"ruta\":\"content/browser/worker_host/shared_worker_host.h\"},{\"arrastra\":23,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":20},\"ruta\":\"components/subresource_filter/content/browser/ruleset_publisher.h\"},{\"arrastra\":22,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":21},\"ruta\":\"components/crash/content/browser/child_exit_observer_android.h\"},{\"arrastra\":22,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":17},\"ruta\":\"chrome/browser/profiles/profile_destroyer.h\"},{\"arrastra\":20,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":25},\"ruta\":\"content/browser/worker_host/dedicated_worker_host.h\"}],\"recortado\":false,\"ruta\":\"content/public/browser/render_process_host.h\",\"se_recompilan\":4454}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 843,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 2529,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 43
+        },
+        "ruta": "content/public/test/browser_test_utils.h"
+      },
+      {
+        "arrastra": 1026,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 27
+        },
+        "ruta": "content/browser/notifications/platform_notification_context_impl.h"
+      },
+      {
+        "arrastra": 912,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 30
+        },
+        "ruta": "content/browser/back_forward_cache/back_forward_cache_impl.h"
+      },
+      {
+        "arrastra": 911,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 22
+        },
+        "ruta": "content/browser/renderer_host/render_frame_proxy_host.h"
+      },
+      {
+        "arrastra": 754,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 10
+        },
+        "ruta": "content/browser/renderer_host/scoped_view_transition_resources.h"
+      },
+      {
+        "arrastra": 754,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 13
+        },
+        "ruta": "content/browser/security/coop/cross_origin_opener_policy_status.h"
+      },
+      {
+        "arrastra": 304,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 27
+        },
+        "ruta": "content/public/test/mock_render_process_host.h"
+      },
+      {
+        "arrastra": 215,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 33
+        },
+        "ruta": "chrome/browser/extensions/extension_service.h"
+      },
+      {
+        "arrastra": 188,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 11
+        },
+        "ruta": "extensions/browser/extension_util.h"
+      },
+      {
+        "arrastra": 95,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 20
+        },
+        "ruta": "components/metrics/content/subprocess_metrics_provider.h"
+      },
+      {
+        "arrastra": 94,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 12
+        },
+        "ruta": "content/browser/renderer_host/android_spare_renderer_navigation_throttle.h"
+      },
+      {
+        "arrastra": 92,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 55
+        },
+        "ruta": "content/browser/renderer_host/render_process_host_impl.h"
+      },
+      {
+        "arrastra": 78,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 19
+        },
+        "ruta": "content/browser/service_worker/service_worker_host.h"
+      },
+      {
+        "arrastra": 67,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 16
+        },
+        "ruta": "extensions/browser/api/automation_internal/automation_event_router.h"
+      },
+      {
+        "arrastra": 32,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 27
+        },
+        "ruta": "extensions/browser/api/web_request/extension_web_request_event_router.h"
+      },
+      {
+        "arrastra": 28,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 27
+        },
+        "ruta": "content/browser/worker_host/shared_worker_host.h"
+      },
+      {
+        "arrastra": 23,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 20
+        },
+        "ruta": "components/subresource_filter/content/browser/ruleset_publisher.h"
+      },
+      {
+        "arrastra": 22,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 21
+        },
+        "ruta": "components/crash/content/browser/child_exit_observer_android.h"
+      },
+      {
+        "arrastra": 22,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 17
+        },
+        "ruta": "chrome/browser/profiles/profile_destroyer.h"
+      },
+      {
+        "arrastra": 20,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/render_process_host.h\"",
+          "linea": 25
+        },
+        "ruta": "content/browser/worker_host/dedicated_worker_host.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "content/public/browser/render_process_host.h",
+    "se_recompilan": 4454
+  }
+}

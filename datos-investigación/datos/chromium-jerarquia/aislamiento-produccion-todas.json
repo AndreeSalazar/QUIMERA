@@ -1,0 +1,7525 @@
+{
+ "plataformas": "todas",
+ "nota": "Solo objetivos de produccion (sin pruebas, herramientas, ejemplos ni //:gn_all). Lexico: incluye las ramas de todos los if de GN, asi que sobreestima. Una pieza de varios componentes es un ciclo: se construye o sustituye entera.",
+ "componentes": 820,
+ "aristas": 9384,
+ "piezas": 312,
+ "niveles": 12,
+ "por_nivel": {
+  "0": {
+   "componentes": 151,
+   "archivos": 108504
+  },
+  "1": {
+   "componentes": 16,
+   "archivos": 7349
+  },
+  "2": {
+   "componentes": 9,
+   "archivos": 4408
+  },
+  "3": {
+   "componentes": 23,
+   "archivos": 37432
+  },
+  "4": {
+   "componentes": 83,
+   "archivos": 154035
+  },
+  "5": {
+   "componentes": 24,
+   "archivos": 76101
+  },
+  "6": {
+   "componentes": 10,
+   "archivos": 13284
+  },
+  "7": {
+   "componentes": 1,
+   "archivos": 16
+  },
+  "8": {
+   "componentes": 486,
+   "archivos": 421517
+  },
+  "9": {
+   "componentes": 14,
+   "archivos": 1626
+  },
+  "10": {
+   "componentes": 2,
+   "archivos": 202
+  },
+  "11": {
+   "componentes": 1,
+   "archivos": 43
+  }
+ },
+ "objetivos": {
+  "nodos": 26921,
+  "aristas": 149756,
+  "niveles": 210,
+  "ciclos": 7,
+  "mayor_ciclo": 210,
+  "ciclos_lista": [
+   [
+    "//chrome/browser/actor/ui:ui",
+    "//chrome/browser/actor/ui:ui_event_types",
+    "//chrome/browser/actor/ui:ui_event_utils",
+    "//chrome/browser/actor:actor",
+    "//chrome/browser/android:tabs_public",
+    "//chrome/browser/apps/app_service/app_icon:app_icon",
+    "//chrome/browser/ash/accessibility/live_caption:live_caption",
+    "//chrome/browser/ash/accessibility:accessibility",
+    "//chrome/browser/ash/app_list/arc:arc",
+    "//chrome/browser/ash/app_list/search:search",
+    "//chrome/browser/ash/app_list:app_list",
+    "//chrome/browser/ash/app_mode/auto_sleep:auto_sleep",
+    "//chrome/browser/ash/app_mode/isolated_web_app:isolated_web_app",
+    "//chrome/browser/ash/app_mode/isolated_web_app:policy_util",
+    "//chrome/browser/ash/app_restore:app_restore",
+    "//chrome/browser/ash/apps:apps",
+    "//chrome/browser/ash/arc/adbd:adbd",
+    "//chrome/browser/ash/arc/app_shortcuts:app_shortcuts",
+    "//chrome/browser/ash/arc/auth:auth",
+    "//chrome/browser/ash/arc/enterprise/cert_store:cert_store"
+   ],
+   [
+    "//gpu/vulkan:vma_wrapper",
+    "//gpu/vulkan:vulkan",
+    "//gpu/vulkan:vulkan_function_pointers",
+    "//ui/base/clipboard:clipboard",
+    "//ui/base/x:x",
+    "//ui/base:base",
+    "//ui/gl:gl",
+    "//ui/ozone:ozone",
+    "//ui/ozone:ozone_base",
+    "//ui/ozone:platform",
+    "//ui/platform_window:platform_window"
+   ],
+   [
+    "//chrome/browser/content_settings:content_settings",
+    "//chrome/browser/extensions:extensions",
+    "//chrome/browser/ui/search_engines:search_engines",
+    "//chrome/browser/ui/webui/ash/settings/pages/a11y:a11y",
+    "//chrome/browser/ui/webui/settings:settings"
+   ],
+   [
+    "//components/crash/core/app:app",
+    "//components/crash/core/common:common",
+    "//components/crash/core/common:zombies",
+    "//components/gwp_asan/client:client"
+   ],
+   [
+    "//device/fido:fido",
+    "//services/device/public/cpp/hid:hid",
+    "//services/device/public/cpp:device_features"
+   ],
+   [
+    "//chrome/browser/ui/webui/management:management",
+    "//chrome/browser/ui:managed_ui"
+   ],
+   [
+    "//third_party/webrtc/tools_webrtc/presubmit_checks_lib/testdata/circular_dependency:bar",
+    "//third_party/webrtc/tools_webrtc/presubmit_checks_lib/testdata/circular_dependency:foo"
+   ]
+  ]
+ },
+ "rango_de_niveles_por_componente": {
+  "*": [
+   0,
+   0
+  ],
+  "android_webview": [
+   0,
+   146
+  ],
+  "android_webview/browser": [
+   0,
+   144
+  ],
+  "android_webview/common": [
+   73,
+   122
+  ],
+  "android_webview/glue": [
+   28,
+   28
+  ],
+  "android_webview/gpu": [
+   123,
+   123
+  ],
+  "android_webview/js_sandbox": [
+   0,
+   123
+  ],
+  "android_webview/lib": [
+   145,
+   147
+  ],
+  "android_webview/nonembedded": [
+   0,
+   123
+  ],
+  "android_webview/proto": [
+   0,
+   0
+  ],
+  "android_webview/public": [
+   0,
+   0
+  ],
+  "android_webview/renderer": [
+   124,
+   124
+  ],
+  "android_webview/support_library": [
+   3,
+   27
+  ],
+  "api": [
+   0,
+   0
+  ],
+  "apps": [
+   151,
+   151
+  ],
+  "ash": [
+   0,
+   126
+  ],
+  "ash/ambient": [
+   0,
+   1
+  ],
+  "ash/app_list": [
+   0,
+   121
+  ],
+  "ash/app_menu": [
+   120,
+   120
+  ],
+  "ash/birch": [
+   0,
+   0
+  ],
+  "ash/constants": [
+   0,
+   41
+  ],
+  "ash/dbus": [
+   0,
+   0
+  ],
+  "ash/in_session_auth": [
+   121,
+   121
+  ],
+  "ash/keyboard": [
+   0,
+   120
+  ],
+  "ash/login": [
+   0,
+   0
+  ],
+  "ash/public": [
+   0,
+   119
+  ],
+  "ash/quick_insert": [
+   0,
+   0
+  ],
+  "ash/quick_pair": [
+   0,
+   122
+  ],
+  "ash/resources": [
+   0,
+   69
+  ],
+  "ash/search_box": [
+   120,
+   120
+  ],
+  "ash/strings": [
+   0,
+   0
+  ],
+  "ash/style": [
+   0,
+   39
+  ],
+  "ash/system": [
+   0,
+   0
+  ],
+  "ash/webui": [
+   0,
+   140
+  ],
+  "ash/wm": [
+   0,
+   0
+  ],
+  "base": [
+   0,
+   39
+  ],
+  "base/": [
+   0,
+   0
+  ],
+  "base/allocator": [
+   0,
+   7
+  ],
+  "base/android": [
+   0,
+   35
+  ],
+  "base/i18n": [
+   0,
+   38
+  ],
+  "base/ios": [
+   35,
+   36
+  ],
+  "base/logging": [
+   2,
+   8
+  ],
+  "base/numerics": [
+   0,
+   0
+  ],
+  "base/third_party": [
+   0,
+   0
+  ],
+  "base/tracing": [
+   0,
+   1
+  ],
+  "base/version_info": [
+   0,
+   36
+  ],
+  "base/win": [
+   0,
+   31
+  ],
+  "build": [
+   0,
+   0
+  ],
+  "build/android": [
+   0,
+   4
+  ],
+  "build/config": [
+   0,
+   38
+  ],
+  "build/fuchsia": [
+   0,
+   3
+  ],
+  "build/linux": [
+   0,
+   0
+  ],
+  "build/modules": [
+   0,
+   9
+  ],
+  "build/rust": [
+   0,
+   9
+  ],
+  "build/util": [
+   0,
+   0
+  ],
+  "build/win": [
+   0,
+   0
+  ],
+  "buildtools": [
+   0,
+   12
+  ],
+  "cast": [
+   0,
+   0
+  ],
+  "cc": [
+   0,
+   95
+  ],
+  "chrome": [
+   0,
+   206
+  ],
+  "chrome/": [
+   0,
+   0
+  ],
+  "chrome/android": [
+   0,
+   67
+  ],
+  "chrome/app": [
+   0,
+   69
+  ],
+  "chrome/app_shim": [
+   0,
+   195
+  ],
+  "chrome/browser": [
+   0,
+   200
+  ],
+  "chrome/child": [
+   122,
+   122
+  ],
+  "chrome/chrome_elf": [
+   0,
+   43
+  ],
+  "chrome/chrome_proxy": [
+   0,
+   43
+  ],
+  "chrome/common": [
+   0,
+   125
+  ],
+  "chrome/credential_provider": [
+   0,
+   128
+  ],
+  "chrome/elevation_service": [
+   0,
+   45
+  ],
+  "chrome/enterprise_companion": [
+   0,
+   126
+  ],
+  "chrome/gpu": [
+   123,
+   123
+  ],
+  "chrome/install_static": [
+   0,
+   36
+  ],
+  "chrome/installer": [
+   0,
+   209
+  ],
+  "chrome/notification_helper": [
+   0,
+   44
+  ],
+  "chrome/renderer": [
+   0,
+   128
+  ],
+  "chrome/services": [
+   0,
+   127
+  ],
+  "chrome/updater": [
+   0,
+   129
+  ],
+  "chrome/utility": [
+   0,
+   128
+  ],
+  "chrome/views_examples": [
+   0,
+   3
+  ],
+  "chrome/windows_services": [
+   0,
+   66
+  ],
+  "chromecast": [
+   0,
+   145
+  ],
+  "chromeos": [
+   0,
+   35
+  ],
+  "chromeos/ash": [
+   0,
+   144
+  ],
+  "chromeos/assistant": [
+   0,
+   0
+  ],
+  "chromeos/components": [
+   0,
+   127
+  ],
+  "chromeos/constants": [
+   0,
+   35
+  ],
+  "chromeos/dbus": [
+   0,
+   70
+  ],
+  "chromeos/ime": [
+   0,
+   0
+  ],
+  "chromeos/printing": [
+   113,
+   113
+  ],
+  "chromeos/process_proxy": [
+   35,
+   35
+  ],
+  "chromeos/services": [
+   0,
+   93
+  ],
+  "chromeos/strings": [
+   0,
+   0
+  ],
+  "chromeos/system": [
+   36,
+   36
+  ],
+  "chromeos/ui": [
+   0,
+   112
+  ],
+  "chromeos/utils": [
+   76,
+   76
+  ],
+  "chromeos/version": [
+   40,
+   40
+  ],
+  "clank": [
+   0,
+   0
+  ],
+  "codelabs": [
+   0,
+   64
+  ],
+  "common_video": [
+   0,
+   0
+  ],
+  "components/access_code_cast": [
+   35,
+   35
+  ],
+  "components/accessibility": [
+   0,
+   125
+  ],
+  "components/accessibility_annotator": [
+   0,
+   0
+  ],
+  "components/account_id": [
+   0,
+   70
+  ],
+  "components/account_manager_core": [
+   0,
+   70
+  ],
+  "components/account_settings": [
+   102,
+   102
+  ],
+  "components/activity_reporter": [
+   0,
+   84
+  ],
+  "components/actor": [
+   0,
+   128
+  ],
+  "components/affiliations": [
+   0,
+   101
+  ],
+  "components/allocation_recorder": [
+   0,
+   41
+  ],
+  "components/android_autofill": [
+   0,
+   135
+  ],
+  "components/android_system_error_page": [
+   116,
+   116
+  ],
+  "components/apdu": [
+   35,
+   35
+  ],
+  "components/app_constants": [
+   0,
+   0
+  ],
+  "components/app_icon_loader": [
+   35,
+   35
+  ],
+  "components/app_launch_prefetch": [
+   35,
+   35
+  ],
+  "components/app_restore": [
+   111,
+   111
+  ],
+  "components/application_locale_storage": [
+   37,
+   37
+  ],
+  "components/apps": [
+   76,
+   76
+  ],
+  "components/attribution_reporting": [
+   35,
+   35
+  ],
+  "components/autofill": [
+   0,
+   134
+  ],
+  "components/back_forward_cache": [
+   0,
+   125
+  ],
+  "components/background_fetch": [
+   125,
+   125
+  ],
+  "components/background_sync": [
+   136,
+   136
+  ],
+  "components/background_task_scheduler": [
+   0,
+   43
+  ],
+  "components/base32": [
+   0,
+   36
+  ],
+  "components/blocked_content": [
+   0,
+   136
+  ],
+  "components/blocklist": [
+   35,
+   36
+  ],
+  "components/bookmarks": [
+   0,
+   84
+  ],
+  "components/breadcrumbs": [
+   0,
+   111
+  ],
+  "components/browser_actuator": [
+   0,
+   122
+  ],
+  "components/browser_apis": [
+   0,
+   131
+  ],
+  "components/browser_sync": [
+   35,
+   138
+  ],
+  "components/browser_ui": [
+   0,
+   138
+  ],
+  "components/browsing_data": [
+   0,
+   136
+  ],
+  "components/cached_flags": [
+   0,
+   35
+  ],
+  "components/captive_portal": [
+   0,
+   125
+  ],
+  "components/capture_mode": [
+   105,
+   105
+  ],
+  "components/cast": [
+   0,
+   101
+  ],
+  "components/cast_receiver": [
+   0,
+   126
+  ],
+  "components/cast_streaming": [
+   0,
+   105
+  ],
+  "components/cbor": [
+   0,
+   37
+  ],
+  "components/cdm": [
+   0,
+   125
+  ],
+  "components/certificate_matching": [
+   50,
+   50
+  ],
+  "components/certificate_model": [
+   76,
+   76
+  ],
+  "components/certificate_transparency": [
+   0,
+   72
+  ],
+  "components/chromeos_camera": [
+   66,
+   96
+  ],
+  "components/client_hints": [
+   97,
+   125
+  ],
+  "components/client_update_protocol": [
+   36,
+   36
+  ],
+  "components/cloud_devices": [
+   36,
+   36
+  ],
+  "components/collaboration": [
+   0,
+   112
+  ],
+  "components/color": [
+   39,
+   42
+  ],
+  "components/commerce": [
+   0,
+   132
+  ],
+  "components/component_updater": [
+   0,
+   145
+  ],
+  "components/compose": [
+   0,
+   123
+  ],
+  "components/consent_auditor": [
+   0,
+   105
+  ],
+  "components/constrained_window": [
+   127,
+   127
+  ],
+  "components/content_capture": [
+   0,
+   126
+  ],
+  "components/content_extraction": [
+   125,
+   125
+  ],
+  "components/content_relationship_verification": [
+   0,
+   125
+  ],
+  "components/content_settings": [
+   0,
+   138
+  ],
+  "components/contextual_cueing": [
+   41,
+   41
+  ],
+  "components/contextual_search": [
+   0,
+   139
+  ],
+  "components/contextual_tasks": [
+   2,
+   138
+  ],
+  "components/continuous_search": [
+   35,
+   125
+  ],
+  "components/cookie_config": [
+   67,
+   67
+  ],
+  "components/country_codes": [
+   40,
+   40
+  ],
+  "components/crash": [
+   0,
+   125
+  ],
+  "components/credential_management": [
+   0,
+   132
+  ],
+  "components/critical_actions": [
+   120,
+   120
+  ],
+  "components/cronet": [
+   0,
+   56
+  ],
+  "components/cross_device": [
+   35,
+   37
+  ],
+  "components/crx_file": [
+   0,
+   38
+  ],
+  "components/custom_handlers": [
+   136,
+   136
+  ],
+  "components/data_sharing": [
+   0,
+   119
+  ],
+  "components/database_utils": [
+   41,
+   41
+  ],
+  "components/dbus": [
+   36,
+   81
+  ],
+  "components/desks_storage": [
+   0,
+   120
+  ],
+  "components/desktop_to_mobile_promos": [
+   36,
+   36
+  ],
+  "components/device_event_log": [
+   40,
+   40
+  ],
+  "components/device_reauth": [
+   3,
+   40
+  ],
+  "components/device_signals": [
+   0,
+   127
+  ],
+  "components/devtools": [
+   125,
+   125
+  ],
+  "components/digital_goods": [
+   0,
+   1
+  ],
+  "components/discardable_memory": [
+   35,
+   63
+  ],
+  "components/dom_distiller": [
+   0,
+   126
+  ],
+  "components/domain_reliability": [
+   0,
+   50
+  ],
+  "components/download": [
+   0,
+   127
+  ],
+  "components/drive": [
+   0,
+   83
+  ],
+  "components/embedder_support": [
+   0,
+   137
+  ],
+  "components/encrypted_messages": [
+   0,
+   36
+  ],
+  "components/endpoint_fetcher": [
+   118,
+   118
+  ],
+  "components/enterprise": [
+   0,
+   138
+  ],
+  "components/error_page": [
+   76,
+   125
+  ],
+  "components/exo": [
+   0,
+   129
+  ],
+  "components/external_intents": [
+   0,
+   126
+  ],
+  "components/externalauth": [
+   23,
+   24
+  ],
+  "components/eye_dropper": [
+   41,
+   125
+  ],
+  "components/facilitated_payments": [
+   0,
+   127
+  ],
+  "components/favicon": [
+   0,
+   126
+  ],
+  "components/favicon_base": [
+   76,
+   76
+  ],
+  "components/fcm": [
+   0,
+   72
+  ],
+  "components/feature_engagement": [
+   0,
+   82
+  ],
+  "components/feed": [
+   0,
+   121
+  ],
+  "components/feedback": [
+   0,
+   126
+  ],
+  "components/file_access": [
+   41,
+   41
+  ],
+  "components/filename_generation": [
+   70,
+   70
+  ],
+  "components/find_in_page": [
+   0,
+   125
+  ],
+  "components/fuchsia_component_support": [
+   35,
+   35
+  ],
+  "components/fuchsia_legacymetrics": [
+   35,
+   35
+  ],
+  "components/fullscreen_control": [
+   41,
+   111
+  ],
+  "components/gapis": [
+   0,
+   125
+  ],
+  "components/gcm_driver": [
+   0,
+   73
+  ],
+  "components/glic": [
+   39,
+   39
+  ],
+  "components/global_media_controls": [
+   64,
+   112
+  ],
+  "components/google": [
+   70,
+   70
+  ],
+  "components/guest_contents": [
+   63,
+   125
+  ],
+  "components/guest_os": [
+   38,
+   128
+  ],
+  "components/guest_view": [
+   0,
+   128
+  ],
+  "components/gwp_asan": [
+   0,
+   40
+  ],
+  "components/handoff": [
+   50,
+   50
+  ],
+  "components/headless": [
+   0,
+   128
+  ],
+  "components/heap_profiling": [
+   62,
+   77
+  ],
+  "components/heavy_ad_intervention": [
+   125,
+   125
+  ],
+  "components/history": [
+   35,
+   126
+  ],
+  "components/history_clusters": [
+   0,
+   126
+  ],
+  "components/history_embeddings": [
+   0,
+   130
+  ],
+  "components/image_fetcher": [
+   0,
+   118
+  ],
+  "components/infobars": [
+   77,
+   125
+  ],
+  "components/input": [
+   0,
+   102
+  ],
+  "components/installedapp": [
+   0,
+   126
+  ],
+  "components/invalidation": [
+   74,
+   74
+  ],
+  "components/javascript_dialogs": [
+   0,
+   126
+  ],
+  "components/js_injection": [
+   0,
+   126
+  ],
+  "components/keep_alive_registry": [
+   35,
+   35
+  ],
+  "components/keyed_service": [
+   0,
+   125
+  ],
+  "components/language": [
+   0,
+   126
+  ],
+  "components/language_detection": [
+   0,
+   122
+  ],
+  "components/lens": [
+   0,
+   126
+  ],
+  "components/leveldb_proto": [
+   0,
+   65
+  ],
+  "components/link_header_util": [
+   50,
+   50
+  ],
+  "components/live_caption": [
+   91,
+   126
+  ],
+  "components/local_state": [
+   1,
+   38
+  ],
+  "components/location": [
+   0,
+   108
+  ],
+  "components/login": [
+   76,
+   76
+  ],
+  "components/lookalikes": [
+   0,
+   121
+  ],
+  "components/manta": [
+   0,
+   119
+  ],
+  "components/media_control": [
+   0,
+   125
+  ],
+  "components/media_device_salt": [
+   126,
+   126
+  ],
+  "components/media_effects": [
+   126,
+   126
+  ],
+  "components/media_gallery_util": [
+   0,
+   125
+  ],
+  "components/media_message_center": [
+   0,
+   111
+  ],
+  "components/media_router": [
+   0,
+   128
+  ],
+  "components/memory_pressure": [
+   35,
+   35
+  ],
+  "components/memory_system": [
+   78,
+   78
+  ],
+  "components/messages": [
+   0,
+   125
+  ],
+  "components/metal_util": [
+   69,
+   69
+  ],
+  "components/metrics": [
+   0,
+   126
+  ],
+  "components/metrics_services_manager": [
+   105,
+   105
+  ],
+  "components/minidump_uploader": [
+   0,
+   38
+  ],
+  "components/mirroring": [
+   62,
+   125
+  ],
+  "components/module_installer": [
+   0,
+   76
+  ],
+  "components/multistep_filter": [
+   0,
+   125
+  ],
+  "components/named_mojo_ipc_server": [
+   58,
+   58
+  ],
+  "components/named_system_lock": [
+   35,
+   35
+  ],
+  "components/navigation_interception": [
+   0,
+   125
+  ],
+  "components/navigation_metrics": [
+   0,
+   77
+  ],
+  "components/net_log": [
+   0,
+   68
+  ],
+  "components/neterror": [
+   0,
+   5
+  ],
+  "components/network_hints": [
+   1,
+   125
+  ],
+  "components/network_session_configurator": [
+   0,
+   50
+  ],
+  "components/network_time": [
+   35,
+   69
+  ],
+  "components/no_state_prefetch": [
+   1,
+   127
+  ],
+  "components/notebooks": [
+   0,
+   126
+  ],
+  "components/ntp_tiles": [
+   0,
+   122
+  ],
+  "components/offline_items_collection": [
+   0,
+   105
+  ],
+  "components/offline_pages": [
+   0,
+   125
+  ],
+  "components/omnibox": [
+   0,
+   137
+  ],
+  "components/on_device_ai": [
+   121,
+   121
+  ],
+  "components/on_device_translation": [
+   0,
+   126
+  ],
+  "components/on_load_script_injector": [
+   0,
+   125
+  ],
+  "components/onc": [
+   39,
+   39
+  ],
+  "components/one_time_tokens": [
+   0,
+   125
+  ],
+  "components/open_from_clipboard": [
+   0,
+   76
+  ],
+  "components/openscreen_platform": [
+   50,
+   101
+  ],
+  "components/optimization_guide": [
+   0,
+   126
+  ],
+  "components/origin_gating": [
+   50,
+   125
+  ],
+  "components/origin_matcher": [
+   0,
+   73
+  ],
+  "components/origin_trials": [
+   0,
+   125
+  ],
+  "components/os_crypt": [
+   0,
+   66
+  ],
+  "components/ownership": [
+   84,
+   84
+  ],
+  "components/page_content_annotations": [
+   35,
+   129
+  ],
+  "components/page_image_service": [
+   0,
+   137
+  ],
+  "components/page_info": [
+   0,
+   142
+  ],
+  "components/page_load_metrics": [
+   72,
+   136
+  ],
+  "components/paint_preview": [
+   0,
+   128
+  ],
+  "components/passage_embeddings": [
+   63,
+   113
+  ],
+  "components/password_manager": [
+   0,
+   135
+  ],
+  "components/payments": [
+   0,
+   134
+  ],
+  "components/pdf": [
+   0,
+   125
+  ],
+  "components/performance_manager": [
+   0,
+   63
+  ],
+  "components/permissions": [
+   0,
+   135
+  ],
+  "components/persistent_cache": [
+   0,
+   63
+  ],
+  "components/personal_context": [
+   0,
+   107
+  ],
+  "components/plugins": [
+   122,
+   122
+  ],
+  "components/policy": [
+   0,
+   127
+  ],
+  "components/power_bookmarks": [
+   1,
+   102
+  ],
+  "components/power_metrics": [
+   35,
+   35
+  ],
+  "components/power_monitor": [
+   43,
+   43
+  ],
+  "components/pref_registry": [
+   38,
+   38
+  ],
+  "components/prefs": [
+   0,
+   38
+  ],
+  "components/previous_session_info": [
+   41,
+   41
+  ],
+  "components/printing": [
+   65,
+   128
+  ],
+  "components/privacy_sandbox": [
+   1,
+   126
+  ],
+  "components/private_ai": [
+   0,
+   125
+  ],
+  "components/private_insights": [
+   0,
+   77
+  ],
+  "components/private_verification_tokens": [
+   0,
+   69
+  ],
+  "components/profile_metrics": [
+   3,
+   35
+  ],
+  "components/proto_extras": [
+   0,
+   35
+  ],
+  "components/proxy_config": [
+   85,
+   86
+  ],
+  "components/push_messaging": [
+   99,
+   99
+  ],
+  "components/push_notification": [
+   35,
+   35
+  ],
+  "components/pwg_encoder": [
+   36,
+   36
+  ],
+  "components/qr_code_generator": [
+   0,
+   70
+  ],
+  "components/query_parser": [
+   40,
+   40
+  ],
+  "components/quirks": [
+   69,
+   69
+  ],
+  "components/reading_list": [
+   0,
+   106
+  ],
+  "components/record_replay": [
+   0,
+   125
+  ],
+  "components/reduce_accept_language": [
+   125,
+   125
+  ],
+  "components/regional_capabilities": [
+   0,
+   77
+  ],
+  "components/remote_cocoa": [
+   35,
+   109
+  ],
+  "components/renderer_context_menu": [
+   125,
+   125
+  ],
+  "components/reporting": [
+   0,
+   51
+  ],
+  "components/resources": [
+   0,
+   7
+  ],
+  "components/rlz": [
+   76,
+   76
+  ],
+  "components/safe_browsing": [
+   0,
+   144
+  ],
+  "components/safe_search_api": [
+   71,
+   72
+  ],
+  "components/safety_check": [
+   0,
+   69
+  ],
+  "components/sampling_profiler": [
+   35,
+   64
+  ],
+  "components/saved_tab_groups": [
+   0,
+   113
+  ],
+  "components/schema_org": [
+   0,
+   62
+  ],
+  "components/search": [
+   119,
+   119
+  ],
+  "components/search_engines": [
+   0,
+   118
+  ],
+  "components/search_provider_logos": [
+   0,
+   119
+  ],
+  "components/security_interstitials": [
+   0,
+   127
+  ],
+  "components/security_state": [
+   0,
+   126
+  ],
+  "components/segmentation_platform": [
+   0,
+   130
+  ],
+  "components/send_tab_to_self": [
+   2,
+   127
+  ],
+  "components/sensitive_content": [
+   0,
+   135
+  ],
+  "components/server_certificate_database": [
+   0,
+   50
+  ],
+  "components/services": [
+   0,
+   125
+  ],
+  "components/session_manager": [
+   71,
+   77
+  ],
+  "components/session_proto_db": [
+   66,
+   67
+  ],
+  "components/sessions": [
+   38,
+   125
+  ],
+  "components/shared_highlighting": [
+   3,
+   79
+  ],
+  "components/sharing_message": [
+   0,
+   128
+  ],
+  "components/signin": [
+   0,
+   122
+  ],
+  "components/site_engagement": [
+   0,
+   136
+  ],
+  "components/site_isolation": [
+   125,
+   125
+  ],
+  "components/site_token_provider": [
+   0,
+   119
+  ],
+  "components/skills": [
+   0,
+   121
+  ],
+  "components/soda": [
+   0,
+   93
+  ],
+  "components/speech": [
+   69,
+   69
+  ],
+  "components/spellcheck": [
+   0,
+   129
+  ],
+  "components/split_tabs": [
+   77,
+   77
+  ],
+  "components/sqlite_encrypted_vfs": [
+   36,
+   36
+  ],
+  "components/sqlite_migration_vfs": [
+   35,
+   35
+  ],
+  "components/sqlite_proto": [
+   36,
+   36
+  ],
+  "components/sqlite_vfs": [
+   0,
+   62
+  ],
+  "components/ssl_errors": [
+   76,
+   76
+  ],
+  "components/stability_report": [
+   0,
+   35
+  ],
+  "components/startup_metric_utils": [
+   38,
+   40
+  ],
+  "components/storage_monitor": [
+   125,
+   125
+  ],
+  "components/streaming_client": [
+   69,
+   69
+  ],
+  "components/strictmode": [
+   10,
+   10
+  ],
+  "components/strike_database": [
+   0,
+   120
+  ],
+  "components/strings": [
+   0,
+   1
+  ],
+  "components/stylus_handwriting": [
+   22,
+   35
+  ],
+  "components/subresource_filter": [
+   0,
+   135
+  ],
+  "components/subscription_eligibility": [
+   35,
+   41
+  ],
+  "components/supervised_user": [
+   0,
+   122
+  ],
+  "components/surface_embed": [
+   35,
+   126
+  ],
+  "components/sync": [
+   0,
+   104
+  ],
+  "components/sync_bookmarks": [
+   105,
+   105
+  ],
+  "components/sync_device_info": [
+   0,
+   105
+  ],
+  "components/sync_preferences": [
+   0,
+   137
+  ],
+  "components/sync_sessions": [
+   126,
+   126
+  ],
+  "components/sync_tab_context": [
+   2,
+   104
+  ],
+  "components/sync_user_events": [
+   105,
+   105
+  ],
+  "components/system_cpu": [
+   35,
+   35
+  ],
+  "components/system_media_controls": [
+   0,
+   92
+  ],
+  "components/tab_groups": [
+   0,
+   76
+  ],
+  "components/tabs": [
+   0,
+   126
+  ],
+  "components/themes": [
+   0,
+   120
+  ],
+  "components/thin_webview": [
+   0,
+   128
+  ],
+  "components/touch_to_search": [
+   0,
+   125
+  ],
+  "components/tracing": [
+   35,
+   127
+  ],
+  "components/translate": [
+   0,
+   126
+  ],
+  "components/trusted_vault": [
+   0,
+   125
+  ],
+  "components/ttc": [
+   35,
+   122
+  ],
+  "components/ui_devtools": [
+   0,
+   126
+  ],
+  "components/ui_metrics": [
+   0,
+   0
+  ],
+  "components/ukm": [
+   0,
+   126
+  ],
+  "components/undo": [
+   79,
+   79
+  ],
+  "components/unexportable_keys": [
+   36,
+   63
+  ],
+  "components/unified_consent": [
+   106,
+   106
+  ],
+  "components/universal_optout": [
+   35,
+   105
+  ],
+  "components/update_client": [
+   41,
+   70
+  ],
+  "components/upload_list": [
+   35,
+   35
+  ],
+  "components/url_deduplication": [
+   70,
+   70
+  ],
+  "components/url_formatter": [
+   0,
+   122
+  ],
+  "components/url_matcher": [
+   71,
+   71
+  ],
+  "components/url_pattern": [
+   41,
+   41
+  ],
+  "components/url_pattern_index": [
+   0,
+   41
+  ],
+  "components/url_rewrite": [
+   62,
+   125
+  ],
+  "components/user_data_importer": [
+   0,
+   132
+  ],
+  "components/user_education": [
+   0,
+   129
+  ],
+  "components/user_manager": [
+   35,
+   78
+  ],
+  "components/user_prefs": [
+   0,
+   125
+  ],
+  "components/value_store": [
+   65,
+   65
+  ],
+  "components/variations": [
+   0,
+   104
+  ],
+  "components/vector_icons": [
+   0,
+   69
+  ],
+  "components/version_info": [
+   1,
+   37
+  ],
+  "components/visibility_timer": [
+   125,
+   125
+  ],
+  "components/visited_url_ranking": [
+   0,
+   131
+  ],
+  "components/visitedlink": [
+   50,
+   125
+  ],
+  "components/viz": [
+   0,
+   107
+  ],
+  "components/vrp_flags": [
+   0,
+   78
+  ],
+  "components/wallet": [
+   0,
+   126
+  ],
+  "components/web_cache": [
+   0,
+   125
+  ],
+  "components/web_modal": [
+   126,
+   126
+  ],
+  "components/web_package": [
+   0,
+   70
+  ],
+  "components/web_resource": [
+   69,
+   69
+  ],
+  "components/webapk": [
+   0,
+   19
+  ],
+  "components/webapps": [
+   0,
+   143
+  ],
+  "components/webauthn": [
+   0,
+   133
+  ],
+  "components/webcrypto": [
+   101,
+   101
+  ],
+  "components/webdata": [
+   67,
+   67
+  ],
+  "components/webdata_services": [
+   132,
+   132
+  ],
+  "components/webid": [
+   41,
+   41
+  ],
+  "components/webrtc": [
+   3,
+   136
+  ],
+  "components/webrtc_logging": [
+   35,
+   125
+  ],
+  "components/webui": [
+   0,
+   125
+  ],
+  "components/webxr": [
+   0,
+   126
+  ],
+  "components/wifi": [
+   40,
+   40
+  ],
+  "components/winhttp": [
+   41,
+   41
+  ],
+  "components/zoom": [
+   0,
+   125
+  ],
+  "components/zucchini": [
+   0,
+   37
+  ],
+  "content": [
+   0,
+   51
+  ],
+  "content/app": [
+   0,
+   119
+  ],
+  "content/browser": [
+   0,
+   122
+  ],
+  "content/child": [
+   0,
+   0
+  ],
+  "content/common": [
+   0,
+   118
+  ],
+  "content/gpu": [
+   0,
+   1
+  ],
+  "content/public": [
+   0,
+   124
+  ],
+  "content/renderer": [
+   0,
+   0
+  ],
+  "content/services": [
+   51,
+   120
+  ],
+  "content/shell": [
+   0,
+   141
+  ],
+  "content/utility": [
+   62,
+   122
+  ],
+  "content/zygote": [
+   120,
+   120
+  ],
+  "crypto": [
+   0,
+   38
+  ],
+  "dbus": [
+   35,
+   35
+  ],
+  "device/base": [
+   13,
+   70
+  ],
+  "device/bluetooth": [
+   0,
+   77
+  ],
+  "device/fido": [
+   0,
+   119
+  ],
+  "device/gamepad": [
+   0,
+   101
+  ],
+  "device/udev_linux": [
+   35,
+   35
+  ],
+  "device/vr": [
+   0,
+   108
+  ],
+  "extensions": [
+   0,
+   36
+  ],
+  "extensions/browser": [
+   0,
+   150
+  ],
+  "extensions/buildflags": [
+   0,
+   0
+  ],
+  "extensions/common": [
+   0,
+   122
+  ],
+  "extensions/components": [
+   151,
+   151
+  ],
+  "extensions/renderer": [
+   0,
+   123
+  ],
+  "extensions/strings": [
+   0,
+   0
+  ],
+  "fuchsia_web": [
+   0,
+   137
+  ],
+  "gin": [
+   1,
+   47
+  ],
+  "gn": [
+   0,
+   0
+  ],
+  "google_apis": [
+   0,
+   101
+  ],
+  "gpu": [
+   35,
+   88
+  ],
+  "gpu/command_buffer": [
+   0,
+   89
+  ],
+  "gpu/config": [
+   0,
+   77
+  ],
+  "gpu/ipc": [
+   0,
+   93
+  ],
+  "gpu/vulkan": [
+   0,
+   77
+  ],
+  "gpu/webgpu": [
+   35,
+   35
+  ],
+  "headless": [
+   0,
+   132
+  ],
+  "ios": [
+   0,
+   194
+  ],
+  "ipc": [
+   0,
+   63
+  ],
+  "logging": [
+   0,
+   0
+  ],
+  "media": [
+   0,
+   89
+  ],
+  "media/audio": [
+   35,
+   94
+  ],
+  "media/base": [
+   0,
+   95
+  ],
+  "media/capabilities": [
+   0,
+   88
+  ],
+  "media/capture": [
+   0,
+   96
+  ],
+  "media/cast": [
+   0,
+   102
+  ],
+  "media/cdm": [
+   0,
+   94
+  ],
+  "media/device_monitors": [
+   95,
+   95
+  ],
+  "media/ffmpeg": [
+   91,
+   91
+  ],
+  "media/filters": [
+   10,
+   96
+  ],
+  "media/formats": [
+   0,
+   90
+  ],
+  "media/fuchsia": [
+   88,
+   101
+  ],
+  "media/gfx": [
+   92,
+   92
+  ],
+  "media/gpu": [
+   0,
+   102
+  ],
+  "media/midi": [
+   0,
+   77
+  ],
+  "media/mojo": [
+   0,
+   103
+  ],
+  "media/muxers": [
+   91,
+   91
+  ],
+  "media/parsers": [
+   0,
+   88
+  ],
+  "media/remoting": [
+   90,
+   103
+  ],
+  "media/renderers": [
+   97,
+   97
+  ],
+  "media/video": [
+   89,
+   89
+  ],
+  "media/webrtc": [
+   90,
+   92
+  ],
+  "modules": [
+   0,
+   0
+  ],
+  "mojo": [
+   0,
+   78
+  ],
+  "mojo/core": [
+   35,
+   53
+  ],
+  "mojo/public": [
+   0,
+   62
+  ],
+  "net": [
+   0,
+   52
+  ],
+  "net/android": [
+   0,
+   11
+  ],
+  "net/base": [
+   0,
+   51
+  ],
+  "net/cert": [
+   0,
+   0
+  ],
+  "net/data": [
+   0,
+   0
+  ],
+  "net/dns": [
+   0,
+   47
+  ],
+  "net/http": [
+   0,
+   48
+  ],
+  "net/log": [
+   3,
+   3
+  ],
+  "net/third_party": [
+   0,
+   52
+  ],
+  "net/traffic_annotation": [
+   35,
+   35
+  ],
+  "pdf": [
+   0,
+   119
+  ],
+  "platform": [
+   0,
+   0
+  ],
+  "printing": [
+   0,
+   111
+  ],
+  "remoting": [
+   0,
+   174
+  ],
+  "rlz": [
+   0,
+   70
+  ],
+  "rtc_base": [
+   0,
+   0
+  ],
+  "sandbox": [
+   0,
+   50
+  ],
+  "sdk": [
+   0,
+   0
+  ],
+  "services/accessibility": [
+   62,
+   139
+  ],
+  "services/audio": [
+   70,
+   92
+  ],
+  "services/cert_verifier": [
+   68,
+   73
+  ],
+  "services/data_decoder": [
+   62,
+   117
+  ],
+  "services/device": [
+   0,
+   121
+  ],
+  "services/image_annotation": [
+   0,
+   121
+  ],
+  "services/media_session": [
+   0,
+   64
+  ],
+  "services/metrics": [
+   0,
+   59
+  ],
+  "services/network": [
+   0,
+   100
+  ],
+  "services/on_device_model": [
+   0,
+   109
+  ],
+  "services/passage_embeddings": [
+   62,
+   82
+  ],
+  "services/preferences": [
+   35,
+   67
+  ],
+  "services/proxy_resolver": [
+   63,
+   65
+  ],
+  "services/proxy_resolver_mac": [
+   50,
+   69
+  ],
+  "services/proxy_resolver_win": [
+   69,
+   69
+  ],
+  "services/resource_coordinator": [
+   0,
+   65
+  ],
+  "services/screen_ai": [
+   0,
+   110
+  ],
+  "services/service_manager": [
+   0,
+   77
+  ],
+  "services/shape_detection": [
+   0,
+   97
+  ],
+  "services/strings": [
+   0,
+   0
+  ],
+  "services/tracing": [
+   0,
+   63
+  ],
+  "services/video_capture": [
+   0,
+   98
+  ],
+  "services/viz": [
+   0,
+   93
+  ],
+  "services/webnn": [
+   0,
+   101
+  ],
+  "skia": [
+   0,
+   62
+  ],
+  "sql": [
+   0,
+   35
+  ],
+  "src": [
+   0,
+   0
+  ],
+  "storage": [
+   6,
+   103
+  ],
+  "third_party": [
+   0,
+   3
+  ],
+  "third_party/Vulkan-Headers": [
+   0,
+   0
+  ],
+  "third_party/Vulkan-Loader": [
+   0,
+   0
+  ],
+  "third_party/abseil": [
+   0,
+   0
+  ],
+  "third_party/abseil-cpp": [
+   0,
+   31
+  ],
+  "third_party/android_build_tools": [
+   0,
+   1
+  ],
+  "third_party/android_deps": [
+   0,
+   19
+  ],
+  "third_party/android_opengl": [
+   0,
+   0
+  ],
+  "third_party/android_provider": [
+   3,
+   3
+  ],
+  "third_party/android_sdk": [
+   0,
+   3
+  ],
+  "third_party/android_swipe_refresh": [
+   4,
+   4
+  ],
+  "third_party/androidx": [
+   0,
+   38
+  ],
+  "third_party/androidx_javascriptengine": [
+   3,
+   10
+  ],
+  "third_party/angle": [
+   0,
+   31
+  ],
+  "third_party/angle2": [
+   0,
+   0
+  ],
+  "third_party/anonymous_tokens": [
+   1,
+   35
+  ],
+  "third_party/aosp_dalvik": [
+   0,
+   0
+  ],
+  "third_party/apache-portable-runtime": [
+   0,
+   0
+  ],
+  "third_party/arcore-android-sdk-client": [
+   0,
+   0
+  ],
+  "third_party/blink": [
+   0,
+   119
+  ],
+  "third_party/boringssl": [
+   0,
+   3
+  ],
+  "third_party/breakpad": [
+   0,
+   5
+  ],
+  "third_party/brotli": [
+   0,
+   3
+  ],
+  "third_party/byte_buddy": [
+   3,
+   3
+  ],
+  "third_party/cardboard": [
+   0,
+   76
+  ],
+  "third_party/cast_core": [
+   0,
+   6
+  ],
+  "third_party/catapult": [
+   0,
+   5
+  ],
+  "third_party/ced": [
+   0,
+   0
+  ],
+  "third_party/chromium-bidi": [
+   0,
+   3
+  ],
+  "third_party/cld_3": [
+   0,
+   5
+  ],
+  "third_party/cloud_authenticator": [
+   1,
+   7
+  ],
+  "third_party/clspv": [
+   0,
+   0
+  ],
+  "third_party/compiler-rt": [
+   0,
+   0
+  ],
+  "third_party/content_analysis_sdk": [
+   0,
+   6
+  ],
+  "third_party/coremltools": [
+   0,
+   0
+  ],
+  "third_party/cpu-features": [
+   0,
+   0
+  ],
+  "third_party/cpu_features": [
+   0,
+   1
+  ],
+  "third_party/cpuinfo": [
+   0,
+   1
+  ],
+  "third_party/crabbyavif": [
+   0,
+   5
+  ],
+  "third_party/crashpad": [
+   0,
+   35
+  ],
+  "third_party/crc32c": [
+   0,
+   2
+  ],
+  "third_party/cros-components": [
+   1,
+   4
+  ],
+  "third_party/cros_system_api": [
+   0,
+   2
+  ],
+  "third_party/d3": [
+   0,
+   0
+  ],
+  "third_party/d3d12allocator": [
+   0,
+   0
+  ],
+  "third_party/dav1d": [
+   0,
+   2
+  ],
+  "third_party/dawn": [
+   0,
+   8
+  ],
+  "third_party/decklink": [
+   0,
+   0
+  ],
+  "third_party/delaunator": [
+   0,
+   0
+  ],
+  "third_party/devtools-frontend": [
+   0,
+   8
+  ],
+  "third_party/disarm": [
+   0,
+   1
+  ],
+  "third_party/dng_sdk": [
+   0,
+   0
+  ],
+  "third_party/dragonbox": [
+   0,
+   0
+  ],
+  "third_party/emoji-segmenter": [
+   0,
+   0
+  ],
+  "third_party/expat": [
+   0,
+   0
+  ],
+  "third_party/externals": [
+   0,
+   0
+  ],
+  "third_party/fadec": [
+   0,
+   1
+  ],
+  "third_party/farmhash": [
+   0,
+   0
+  ],
+  "third_party/fast_float": [
+   0,
+   0
+  ],
+  "third_party/fdlibm": [
+   35,
+   35
+  ],
+  "third_party/federated_compute": [
+   0,
+   39
+  ],
+  "third_party/ffmpeg": [
+   0,
+   1
+  ],
+  "third_party/fft2d": [
+   0,
+   0
+  ],
+  "third_party/flac": [
+   0,
+   0
+  ],
+  "third_party/flatbuffers": [
+   0,
+   2
+  ],
+  "third_party/fontconfig": [
+   0,
+   11
+  ],
+  "third_party/fp16": [
+   0,
+   0
+  ],
+  "third_party/freetype": [
+   3,
+   3
+  ],
+  "third_party/freetype2": [
+   0,
+   0
+  ],
+  "third_party/fuchsia-gn-sdk": [
+   0,
+   1
+  ],
+  "third_party/fuchsia-sdk": [
+   0,
+   0
+  ],
+  "third_party/fuzztest": [
+   0,
+   35
+  ],
+  "third_party/fxdiv": [
+   0,
+   0
+  ],
+  "third_party/gemmlowp": [
+   0,
+   0
+  ],
+  "third_party/glib": [
+   0,
+   6
+  ],
+  "third_party/glslang": [
+   0,
+   1
+  ],
+  "third_party/google-truth": [
+   4,
+   4
+  ],
+  "third_party/googleurl": [
+   0,
+   0
+  ],
+  "third_party/grpc": [
+   0,
+   34
+  ],
+  "third_party/grpc-java": [
+   3,
+   10
+  ],
+  "third_party/gsettings-desktop-schemas": [
+   0,
+   1
+  ],
+  "third_party/gvdb": [
+   3,
+   6
+  ],
+  "third_party/hamcrest": [
+   0,
+   2
+  ],
+  "third_party/harfbuzz": [
+   14,
+   15
+  ],
+  "third_party/highway": [
+   0,
+   0
+  ],
+  "third_party/hunspell": [
+   36,
+   36
+  ],
+  "third_party/hyphenation-patterns": [
+   0,
+   0
+  ],
+  "third_party/iaccessible2": [
+   0,
+   0
+  ],
+  "third_party/iamf_tools": [
+   31,
+   31
+  ],
+  "third_party/icu": [
+   0,
+   3
+  ],
+  "third_party/icu4j": [
+   0,
+   0
+  ],
+  "third_party/icu4x": [
+   0,
+   0
+  ],
+  "third_party/imgui": [
+   0,
+   0
+  ],
+  "third_party/ink": [
+   37,
+   37
+  ],
+  "third_party/inspector_protocol": [
+   35,
+   36
+  ],
+  "third_party/instrumented_libs": [
+   0,
+   0
+  ],
+  "third_party/ipcz": [
+   0,
+   38
+  ],
+  "third_party/isimpledom": [
+   0,
+   0
+  ],
+  "third_party/jacoco": [
+   0,
+   1
+  ],
+  "third_party/jdk": [
+   0,
+   0
+  ],
+  "third_party/jni_zero": [
+   0,
+   33
+  ],
+  "third_party/jsoncpp": [
+   0,
+   0
+  ],
+  "third_party/junit": [
+   3,
+   3
+  ],
+  "third_party/kleidiai": [
+   0,
+   0
+  ],
+  "third_party/lens_server_proto": [
+   2,
+   2
+  ],
+  "third_party/leveldatabase": [
+   64,
+   65
+  ],
+  "third_party/libaddressinput": [
+   0,
+   69
+  ],
+  "third_party/libaom": [
+   0,
+   3
+  ],
+  "third_party/libbrlapi": [
+   0,
+   0
+  ],
+  "third_party/libdmg-hfsplus": [
+   0,
+   6
+  ],
+  "third_party/libdrm": [
+   0,
+   1
+  ],
+  "third_party/libei": [
+   0,
+   2
+  ],
+  "third_party/libgav1": [
+   0,
+   4
+  ],
+  "third_party/libgudev": [
+   4,
+   4
+  ],
+  "third_party/libinput": [
+   0,
+   1
+  ],
+  "third_party/libipp": [
+   0,
+   1
+  ],
+  "third_party/libjingle_xmpp": [
+   35,
+   35
+  ],
+  "third_party/libjpeg": [
+   0,
+   0
+  ],
+  "third_party/libjpeg-turbo": [
+   0,
+   0
+  ],
+  "third_party/libjpeg_turbo": [
+   0,
+   5
+  ],
+  "third_party/libjxl": [
+   0,
+   0
+  ],
+  "third_party/liblouis": [
+   0,
+   0
+  ],
+  "third_party/libphonenumber": [
+   0,
+   35
+  ],
+  "third_party/libpng": [
+   3,
+   4
+  ],
+  "third_party/libprotobuf-mutator": [
+   6,
+   6
+  ],
+  "third_party/libsrtp": [
+   0,
+   3
+  ],
+  "third_party/libsync": [
+   0,
+   0
+  ],
+  "third_party/libtess2": [
+   35,
+   36
+  ],
+  "third_party/libunwindstack": [
+   0,
+   0
+  ],
+  "third_party/liburlpattern": [
+   35,
+   35
+  ],
+  "third_party/libusb": [
+   1,
+   1
+  ],
+  "third_party/libvpx": [
+   0,
+   3
+  ],
+  "third_party/libwebm": [
+   0,
+   0
+  ],
+  "third_party/libwebp": [
+   0,
+   35
+  ],
+  "third_party/libxml": [
+   3,
+   5
+  ],
+  "third_party/libxslt": [
+   4,
+   4
+  ],
+  "third_party/libyuv": [
+   1,
+   6
+  ],
+  "third_party/libzip": [
+   0,
+   3
+  ],
+  "third_party/lit": [
+   0,
+   4
+  ],
+  "third_party/litert": [
+   0,
+   35
+  ],
+  "third_party/llvm-libc": [
+   0,
+   0
+  ],
+  "third_party/lottie": [
+   0,
+   1
+  ],
+  "third_party/lzma_sdk": [
+   0,
+   35
+  ],
+  "third_party/material_color_utilities": [
+   31,
+   31
+  ],
+  "third_party/material_web_components": [
+   0,
+   3
+  ],
+  "third_party/mediapipe": [
+   0,
+   33
+  ],
+  "third_party/metrics_proto": [
+   0,
+   1
+  ],
+  "third_party/microsoft_dxheaders": [
+   0,
+   0
+  ],
+  "third_party/microsoft_multimedia_redirection": [
+   0,
+   0
+  ],
+  "third_party/microsoft_webauthn": [
+   0,
+   0
+  ],
+  "third_party/mini_chromium": [
+   0,
+   0
+  ],
+  "third_party/minigbm": [
+   3,
+   4
+  ],
+  "third_party/ml_drift": [
+   0,
+   2
+  ],
+  "third_party/modp_b64": [
+   0,
+   0
+  ],
+  "third_party/mutter": [
+   0,
+   8
+  ],
+  "third_party/native_app_glue": [
+   0,
+   0
+  ],
+  "third_party/nearby": [
+   0,
+   49
+  ],
+  "third_party/neon_2_sse": [
+   0,
+   0
+  ],
+  "third_party/netty-tcnative": [
+   2,
+   10
+  ],
+  "third_party/nlohmann_json": [
+   0,
+   1
+  ],
+  "third_party/oak": [
+   0,
+   31
+  ],
+  "third_party/omnibox_proto": [
+   0,
+   0
+  ],
+  "third_party/one_euro_filter": [
+   0,
+   0
+  ],
+  "third_party/openh264": [
+   0,
+   4
+  ],
+  "third_party/openscreen": [
+   0,
+   43
+  ],
+  "third_party/openxr": [
+   0,
+   2
+  ],
+  "third_party/opus": [
+   0,
+   2
+  ],
+  "third_party/ots": [
+   4,
+   4
+  ],
+  "third_party/partition_alloc": [
+   0,
+   0
+  ],
+  "third_party/pdfium": [
+   0,
+   50
+  ],
+  "third_party/perfetto": [
+   0,
+   32
+  ],
+  "third_party/pffft": [
+   0,
+   0
+  ],
+  "third_party/piex": [
+   0,
+   0
+  ],
+  "third_party/pipewire": [
+   0,
+   2
+  ],
+  "third_party/polymer": [
+   0,
+   1
+  ],
+  "third_party/private-join-and-compute": [
+   35,
+   35
+  ],
+  "third_party/private_membership": [
+   1,
+   36
+  ],
+  "third_party/protobuf": [
+   0,
+   11
+  ],
+  "third_party/protobuf-javascript": [
+   10,
+   10
+  ],
+  "third_party/pthreadpool": [
+   1,
+   35
+  ],
+  "third_party/puffin": [
+   0,
+   38
+  ],
+  "third_party/pybind11": [
+   0,
+   0
+  ],
+  "third_party/r8": [
+   0,
+   1
+  ],
+  "third_party/rapidhash": [
+   35,
+   35
+  ],
+  "third_party/re2": [
+   31,
+   31
+  ],
+  "third_party/rnnoise": [
+   0,
+   1
+  ],
+  "third_party/rust": [
+   0,
+   36
+  ],
+  "third_party/ruy": [
+   0,
+   9
+  ],
+  "third_party/s2cellid": [
+   35,
+   35
+  ],
+  "third_party/search_engines_data": [
+   0,
+   36
+  ],
+  "third_party/securemessage": [
+   0,
+   2
+  ],
+  "third_party/sentencepiece": [
+   0,
+   31
+  ],
+  "third_party/sframe": [
+   2,
+   2
+  ],
+  "third_party/shell-encryption": [
+   0,
+   35
+  ],
+  "third_party/simdutf": [
+   0,
+   1
+  ],
+  "third_party/skia": [
+   0,
+   24
+  ],
+  "third_party/smhasher": [
+   0,
+   0
+  ],
+  "third_party/snappy": [
+   0,
+   0
+  ],
+  "third_party/speech-dispatcher": [
+   0,
+   0
+  ],
+  "third_party/spirv-cross": [
+   0,
+   0
+  ],
+  "third_party/spirv-headers": [
+   0,
+   0
+  ],
+  "third_party/spirv-tools": [
+   0,
+   5
+  ],
+  "third_party/sqlite": [
+   3,
+   40
+  ],
+  "third_party/sqlite4java": [
+   0,
+   0
+  ],
+  "third_party/swiftshader": [
+   0,
+   5
+  ],
+  "third_party/tensorflow-text": [
+   0,
+   33
+  ],
+  "third_party/tensorflow_models": [
+   37,
+   37
+  ],
+  "third_party/test_fonts": [
+   0,
+   13
+  ],
+  "third_party/tflite": [
+   0,
+   36
+  ],
+  "third_party/ukey2": [
+   1,
+   3
+  ],
+  "third_party/unrar": [
+   35,
+   35
+  ],
+  "third_party/utf": [
+   0,
+   36
+  ],
+  "third_party/v8": [
+   0,
+   0
+  ],
+  "third_party/vello": [
+   0,
+   0
+  ],
+  "third_party/vulkan-headers": [
+   0,
+   0
+  ],
+  "third_party/vulkan-loader": [
+   0,
+   3
+  ],
+  "third_party/vulkan-tools": [
+   0,
+   4
+  ],
+  "third_party/vulkan_memory_allocator": [
+   0,
+   0
+  ],
+  "third_party/wayland": [
+   0,
+   3
+  ],
+  "third_party/wayland-protocols": [
+   0,
+   0
+  ],
+  "third_party/webgpu-cts": [
+   0,
+   1
+  ],
+  "third_party/webrtc": [
+   0,
+   47
+  ],
+  "third_party/webrtc_overrides": [
+   0,
+   42
+  ],
+  "third_party/webview2": [
+   0,
+   0
+  ],
+  "third_party/weston": [
+   0,
+   14
+  ],
+  "third_party/widevine": [
+   0,
+   35
+  ],
+  "third_party/win_virtual_display": [
+   35,
+   37
+  ],
+  "third_party/windows_app_sdk_headers": [
+   0,
+   1
+  ],
+  "third_party/woff2": [
+   3,
+   3
+  ],
+  "third_party/wtl": [
+   0,
+   0
+  ],
+  "third_party/wuffs": [
+   0,
+   0
+  ],
+  "third_party/xnnpack": [
+   0,
+   36
+  ],
+  "third_party/zlib": [
+   0,
+   40
+  ],
+  "third_party/zoslib": [
+   0,
+   0
+  ],
+  "third_party/zstd": [
+   0,
+   2
+  ],
+  "third_party/zxcvbn-cpp": [
+   35,
+   35
+  ],
+  "ui/accelerated_widget_mac": [
+   90,
+   90
+  ],
+  "ui/accessibility": [
+   0,
+   109
+  ],
+  "ui/actions": [
+   78,
+   79
+  ],
+  "ui/android": [
+   0,
+   107
+  ],
+  "ui/aura": [
+   105,
+   105
+  ],
+  "ui/aura_extra": [
+   106,
+   106
+  ],
+  "ui/base": [
+   0,
+   125
+  ],
+  "ui/chromeos": [
+   0,
+   125
+  ],
+  "ui/color": [
+   0,
+   41
+  ],
+  "ui/compositor": [
+   104,
+   104
+  ],
+  "ui/content_accelerators": [
+   125,
+   125
+  ],
+  "ui/decoration": [
+   105,
+   105
+  ],
+  "ui/display": [
+   0,
+   78
+  ],
+  "ui/edge_to_edge": [
+   0,
+   19
+  ],
+  "ui/events": [
+   0,
+   101
+  ],
+  "ui/file_manager": [
+   0,
+   35
+  ],
+  "ui/gfx": [
+   0,
+   70
+  ],
+  "ui/gl": [
+   0,
+   76
+  ],
+  "ui/gtk": [
+   0,
+   118
+  ],
+  "ui/latency": [
+   0,
+   70
+  ],
+  "ui/linux": [
+   64,
+   120
+  ],
+  "ui/lottie": [
+   69,
+   69
+  ],
+  "ui/menus": [
+   80,
+   80
+  ],
+  "ui/message_center": [
+   0,
+   111
+  ],
+  "ui/native_theme": [
+   0,
+   76
+  ],
+  "ui/native_window_tracker": [
+   108,
+   108
+  ],
+  "ui/ozone": [
+   0,
+   79
+  ],
+  "ui/platform_window": [
+   35,
+   77
+  ],
+  "ui/qt": [
+   0,
+   112
+  ],
+  "ui/resources": [
+   0,
+   2
+  ],
+  "ui/shell_dialogs": [
+   111,
+   111
+  ],
+  "ui/snapshot": [
+   0,
+   108
+  ],
+  "ui/strings": [
+   0,
+   1
+  ],
+  "ui/touch_selection": [
+   0,
+   106
+  ],
+  "ui/views": [
+   0,
+   127
+  ],
+  "ui/views_content_client": [
+   138,
+   138
+  ],
+  "ui/web_dialogs": [
+   126,
+   126
+  ],
+  "ui/webui": [
+   0,
+   128
+  ],
+  "ui/wm": [
+   106,
+   107
+  ],
+  "url": [
+   0,
+   64
+  ],
+  "util": [
+   0,
+   0
+  ],
+  "v8": [
+   0,
+   48
+  ],
+  "zircon": [
+   0,
+   0
+  ]
+ },
+ "ciclos": [
+  {
+   "componentes": 486,
+   "archivos": 421517,
+   "nivel": 8,
+   "lista": [
+    "android_webview",
+    "android_webview/browser",
+    "android_webview/common",
+    "android_webview/glue",
+    "android_webview/gpu",
+    "android_webview/js_sandbox",
+    "android_webview/lib",
+    "android_webview/nonembedded",
+    "android_webview/renderer",
+    "android_webview/support_library",
+    "apps",
+    "ash",
+    "ash/app_list",
+    "ash/app_menu",
+    "ash/constants",
+    "ash/in_session_auth",
+    "ash/keyboard",
+    "ash/public",
+    "ash/quick_pair",
+    "ash/resources",
+    "ash/search_box",
+    "ash/style",
+    "ash/webui",
+    "cc",
+    "chrome",
+    "chrome/android",
+    "chrome/app",
+    "chrome/app_shim",
+    "chrome/browser",
+    "chrome/child",
+    "chrome/chrome_elf",
+    "chrome/common",
+    "chrome/credential_provider",
+    "chrome/elevation_service",
+    "chrome/enterprise_companion",
+    "chrome/gpu",
+    "chrome/install_static",
+    "chrome/installer",
+    "chrome/notification_helper",
+    "chrome/renderer",
+    "chrome/services",
+    "chrome/updater",
+    "chrome/utility",
+    "chrome/windows_services",
+    "chromecast",
+    "chromeos/ash",
+    "chromeos/components",
+    "chromeos/constants",
+    "chromeos/dbus",
+    "chromeos/printing",
+    "chromeos/services",
+    "chromeos/ui",
+    "chromeos/utils",
+    "components/account_id",
+    "components/account_manager_core",
+    "components/account_settings",
+    "components/activity_reporter",
+    "components/actor",
+    "components/affiliations",
+    "components/allocation_recorder",
+    "components/android_autofill",
+    "components/android_system_error_page",
+    "components/app_restore",
+    "components/apps",
+    "components/autofill",
+    "components/back_forward_cache",
+    "components/background_fetch",
+    "components/background_sync",
+    "components/background_task_scheduler",
+    "components/blocked_content",
+    "components/bookmarks",
+    "components/breadcrumbs",
+    "components/browser_actuator",
+    "components/browser_apis",
+    "components/browser_sync",
+    "components/browser_ui",
+    "components/browsing_data",
+    "components/captive_portal",
+    "components/capture_mode",
+    "components/cast",
+    "components/cast_receiver",
+    "components/cast_streaming",
+    "components/cdm",
+    "components/certificate_matching",
+    "components/certificate_model",
+    "components/certificate_transparency",
+    "components/chromeos_camera",
+    "components/client_hints",
+    "components/cloud_devices",
+    "components/collaboration",
+    "components/color",
+    "components/commerce",
+    "components/component_updater",
+    "components/compose",
+    "components/consent_auditor",
+    "components/constrained_window",
+    "components/content_capture",
+    "components/content_extraction",
+    "components/content_relationship_verification",
+    "components/content_settings",
+    "components/contextual_cueing",
+    "components/contextual_search",
+    "components/contextual_tasks",
+    "components/continuous_search",
+    "components/cookie_config",
+    "components/crash",
+    "components/credential_management",
+    "components/critical_actions",
+    "components/cross_device",
+    "components/custom_handlers",
+    "components/data_sharing",
+    "components/database_utils",
+    "components/dbus",
+    "components/desks_storage",
+    "components/desktop_to_mobile_promos",
+    "components/device_reauth",
+    "components/device_signals",
+    "components/devtools",
+    "components/digital_goods",
+    "components/discardable_memory",
+    "components/dom_distiller",
+    "components/domain_reliability",
+    "components/download",
+    "components/drive",
+    "components/embedder_support",
+    "components/endpoint_fetcher",
+    "components/enterprise",
+    "components/error_page",
+    "components/exo",
+    "components/external_intents",
+    "components/externalauth",
+    "components/eye_dropper",
+    "components/facilitated_payments",
+    "components/favicon",
+    "components/favicon_base",
+    "components/fcm",
+    "components/feature_engagement",
+    "components/feed",
+    "components/feedback",
+    "components/file_access",
+    "components/filename_generation",
+    "components/find_in_page",
+    "components/fullscreen_control",
+    "components/gapis",
+    "components/gcm_driver",
+    "components/global_media_controls",
+    "components/google",
+    "components/guest_contents",
+    "components/guest_os",
+    "components/guest_view",
+    "components/gwp_asan",
+    "components/handoff",
+    "components/headless",
+    "components/heap_profiling",
+    "components/heavy_ad_intervention",
+    "components/history",
+    "components/history_clusters",
+    "components/history_embeddings",
+    "components/image_fetcher",
+    "components/infobars",
+    "components/input",
+    "components/installedapp",
+    "components/invalidation",
+    "components/javascript_dialogs",
+    "components/js_injection",
+    "components/keep_alive_registry",
+    "components/keyed_service",
+    "components/language",
+    "components/language_detection",
+    "components/lens",
+    "components/leveldb_proto",
+    "components/link_header_util",
+    "components/live_caption",
+    "components/local_state",
+    "components/location",
+    "components/login",
+    "components/lookalikes",
+    "components/manta",
+    "components/media_control",
+    "components/media_device_salt",
+    "components/media_effects",
+    "components/media_gallery_util",
+    "components/media_message_center",
+    "components/media_router",
+    "components/memory_system",
+    "components/messages",
+    "components/metal_util",
+    "components/metrics",
+    "components/metrics_services_manager",
+    "components/minidump_uploader",
+    "components/mirroring",
+    "components/module_installer",
+    "components/multistep_filter",
+    "components/named_mojo_ipc_server",
+    "components/navigation_interception",
+    "components/navigation_metrics",
+    "components/net_log",
+    "components/neterror",
+    "components/network_hints",
+    "components/network_session_configurator",
+    "components/network_time",
+    "components/no_state_prefetch",
+    "components/notebooks",
+    "components/ntp_tiles",
+    "components/offline_items_collection",
+    "components/offline_pages",
+    "components/omnibox",
+    "components/on_device_ai",
+    "components/on_device_translation",
+    "components/on_load_script_injector",
+    "components/one_time_tokens",
+    "components/open_from_clipboard",
+    "components/openscreen_platform",
+    "components/optimization_guide",
+    "components/origin_gating",
+    "components/origin_matcher",
+    "components/origin_trials",
+    "components/os_crypt",
+    "components/ownership",
+    "components/page_content_annotations",
+    "components/page_image_service",
+    "components/page_info",
+    "components/page_load_metrics",
+    "components/paint_preview",
+    "components/passage_embeddings",
+    "components/password_manager",
+    "components/payments",
+    "components/pdf",
+    "components/performance_manager",
+    "components/permissions",
+    "components/persistent_cache",
+    "components/personal_context",
+    "components/plugins",
+    "components/policy",
+    "components/power_bookmarks",
+    "components/power_monitor",
+    "components/previous_session_info",
+    "components/printing",
+    "components/privacy_sandbox",
+    "components/private_ai",
+    "components/private_insights",
+    "components/private_verification_tokens",
+    "components/proxy_config",
+    "components/push_messaging",
+    "components/pwg_encoder",
+    "components/qr_code_generator",
+    "components/quirks",
+    "components/reading_list",
+    "components/record_replay",
+    "components/reduce_accept_language",
+    "components/regional_capabilities",
+    "components/remote_cocoa",
+    "components/renderer_context_menu",
+    "components/reporting",
+    "components/resources",
+    "components/rlz",
+    "components/safe_browsing",
+    "components/safe_search_api",
+    "components/safety_check",
+    "components/sampling_profiler",
+    "components/saved_tab_groups",
+    "components/schema_org",
+    "components/search",
+    "components/search_engines",
+    "components/search_provider_logos",
+    "components/security_interstitials",
+    "components/security_state",
+    "components/segmentation_platform",
+    "components/send_tab_to_self",
+    "components/sensitive_content",
+    "components/server_certificate_database",
+    "components/services",
+    "components/session_manager",
+    "components/session_proto_db",
+    "components/sessions",
+    "components/shared_highlighting",
+    "components/sharing_message",
+    "components/signin",
+    "components/site_engagement",
+    "components/site_isolation",
+    "components/site_token_provider",
+    "components/skills",
+    "components/soda",
+    "components/speech",
+    "components/spellcheck",
+    "components/split_tabs",
+    "components/sqlite_vfs",
+    "components/ssl_errors",
+    "components/stability_report",
+    "components/storage_monitor",
+    "components/streaming_client",
+    "components/strike_database",
+    "components/stylus_handwriting",
+    "components/subresource_filter",
+    "components/subscription_eligibility",
+    "components/supervised_user",
+    "components/surface_embed",
+    "components/sync",
+    "components/sync_bookmarks",
+    "components/sync_device_info",
+    "components/sync_preferences",
+    "components/sync_sessions",
+    "components/sync_tab_context",
+    "components/sync_user_events",
+    "components/system_media_controls",
+    "components/tab_groups",
+    "components/tabs",
+    "components/themes",
+    "components/thin_webview",
+    "components/touch_to_search",
+    "components/tracing",
+    "components/translate",
+    "components/trusted_vault",
+    "components/ttc",
+    "components/ui_devtools",
+    "components/ukm",
+    "components/undo",
+    "components/unexportable_keys",
+    "components/unified_consent",
+    "components/universal_optout",
+    "components/update_client",
+    "components/url_deduplication",
+    "components/url_formatter",
+    "components/url_matcher",
+    "components/url_pattern",
+    "components/url_pattern_index",
+    "components/url_rewrite",
+    "components/user_data_importer",
+    "components/user_education",
+    "components/user_manager",
+    "components/user_prefs",
+    "components/value_store",
+    "components/variations",
+    "components/vector_icons",
+    "components/visibility_timer",
+    "components/visited_url_ranking",
+    "components/visitedlink",
+    "components/viz",
+    "components/vrp_flags",
+    "components/wallet",
+    "components/web_cache",
+    "components/web_modal",
+    "components/web_package",
+    "components/web_resource",
+    "components/webapk",
+    "components/webapps",
+    "components/webauthn",
+    "components/webdata",
+    "components/webdata_services",
+    "components/webid",
+    "components/webrtc",
+    "components/webrtc_logging",
+    "components/webui",
+    "components/webxr",
+    "components/winhttp",
+    "components/zoom",
+    "content",
+    "content/app",
+    "content/browser",
+    "content/common",
+    "content/gpu",
+    "content/public",
+    "content/services",
+    "content/utility",
+    "device/base",
+    "device/bluetooth",
+    "device/fido",
+    "device/gamepad",
+    "device/vr",
+    "extensions",
+    "extensions/browser",
+    "extensions/common",
+    "extensions/components",
+    "extensions/renderer",
+    "fuchsia_web",
+    "google_apis",
+    "gpu",
+    "gpu/command_buffer",
+    "gpu/config",
+    "gpu/ipc",
+    "gpu/vulkan",
+    "ios",
+    "ipc",
+    "media",
+    "media/audio",
+    "media/base",
+    "media/capture",
+    "media/cast",
+    "media/cdm",
+    "media/formats",
+    "media/fuchsia",
+    "media/gpu",
+    "media/midi",
+    "media/mojo",
+    "media/parsers",
+    "media/remoting",
+    "media/video",
+    "media/webrtc",
+    "mojo",
+    "mojo/core",
+    "mojo/public",
+    "net",
+    "net/base",
+    "net/dns",
+    "net/http",
+    "net/third_party",
+    "pdf",
+    "printing",
+    "remoting",
+    "rlz",
+    "sandbox",
+    "services/accessibility",
+    "services/audio",
+    "services/cert_verifier",
+    "services/data_decoder",
+    "services/device",
+    "services/image_annotation",
+    "services/media_session",
+    "services/metrics",
+    "services/network",
+    "services/on_device_model",
+    "services/passage_embeddings",
+    "services/preferences",
+    "services/proxy_resolver",
+    "services/proxy_resolver_mac",
+    "services/proxy_resolver_win",
+    "services/resource_coordinator",
+    "services/screen_ai",
+    "services/service_manager",
+    "services/shape_detection",
+    "services/tracing",
+    "services/video_capture",
+    "services/viz",
+    "services/webnn",
+    "skia",
+    "storage",
+    "third_party/blink",
+    "third_party/cardboard",
+    "third_party/crashpad",
+    "third_party/cros-components",
+    "third_party/ink",
+    "third_party/lens_server_proto",
+    "third_party/leveldatabase",
+    "third_party/libaddressinput",
+    "third_party/nearby",
+    "third_party/openscreen",
+    "third_party/pdfium",
+    "third_party/webrtc",
+    "third_party/webrtc_overrides",
+    "ui/accelerated_widget_mac",
+    "ui/accessibility",
+    "ui/actions",
+    "ui/android",
+    "ui/aura",
+    "ui/aura_extra",
+    "ui/base",
+    "ui/chromeos",
+    "ui/color",
+    "ui/compositor",
+    "ui/content_accelerators",
+    "ui/decoration",
+    "ui/display",
+    "ui/edge_to_edge",
+    "ui/events",
+    "ui/file_manager",
+    "ui/gfx",
+    "ui/gl",
+    "ui/gtk",
+    "ui/latency",
+    "ui/linux",
+    "ui/lottie",
+    "ui/menus",
+    "ui/message_center",
+    "ui/native_theme",
+    "ui/native_window_tracker",
+    "ui/ozone",
+    "ui/platform_window",
+    "ui/qt",
+    "ui/shell_dialogs",
+    "ui/snapshot",
+    "ui/touch_selection",
+    "ui/views",
+    "ui/web_dialogs",
+    "ui/webui",
+    "ui/wm",
+    "url"
+   ]
+  },
+  {
+   "componentes": 22,
+   "archivos": 37396,
+   "nivel": 3,
+   "lista": [
+    "base",
+    "base/android",
+    "base/i18n",
+    "base/logging",
+    "base/tracing",
+    "base/version_info",
+    "base/win",
+    "build/android",
+    "build/config",
+    "build/rust",
+    "third_party/android_deps",
+    "third_party/android_sdk",
+    "third_party/androidx",
+    "third_party/freetype",
+    "third_party/jni_zero",
+    "third_party/libtess2",
+    "third_party/perfetto",
+    "third_party/protobuf",
+    "third_party/protobuf-javascript",
+    "third_party/rust",
+    "third_party/sqlite",
+    "third_party/zlib"
+   ]
+  },
+  {
+   "componentes": 2,
+   "archivos": 26,
+   "nivel": 4,
+   "lista": [
+    "third_party/glib",
+    "third_party/gvdb"
+   ]
+  },
+  {
+   "componentes": 2,
+   "archivos": 45624,
+   "nivel": 5,
+   "lista": [
+    "third_party/litert",
+    "third_party/tflite"
+   ]
+  }
+ ],
+ "piezas_lista": [
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/swiftshader"
+   ],
+   "archivos": 14390,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/ffmpeg"
+   ],
+   "archivos": 11352,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/llvm-libc"
+   ],
+   "archivos": 9098,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/devtools-frontend"
+   ],
+   "archivos": 8759,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/boringssl"
+   ],
+   "archivos": 8724,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/icu"
+   ],
+   "archivos": 7124,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/compiler-rt"
+   ],
+   "archivos": 5003,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/spirv-cross"
+   ],
+   "archivos": 4345,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "infra"
+   ],
+   "archivos": 3843,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/glslang"
+   ],
+   "archivos": 3792,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "net/data"
+   ],
+   "archivos": 2718,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/flatbuffers"
+   ],
+   "archivos": 1909,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/spirv-tools"
+   ],
+   "archivos": 1760,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/system"
+   ],
+   "archivos": 1598,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/pipewire"
+   ],
+   "archivos": 1362,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/nasm"
+   ],
+   "archivos": 1356,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/webgpu-cts"
+   ],
+   "archivos": 1343,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/tflite_support"
+   ],
+   "archivos": 1213,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/nlohmann_json"
+   ],
+   "archivos": 1167,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/vulkan-validation-layers"
+   ],
+   "archivos": 1033,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/liblouis"
+   ],
+   "archivos": 1017,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libwebm"
+   ],
+   "archivos": 909,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/ml_drift"
+   ],
+   "archivos": 888,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/login"
+   ],
+   "archivos": 794,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/material_web_components"
+   ],
+   "archivos": 766,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/zstd"
+   ],
+   "archivos": 659,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/wm"
+   ],
+   "archivos": 644,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/cpuinfo"
+   ],
+   "archivos": 571,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libpfm4"
+   ],
+   "archivos": 551,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ui/strings"
+   ],
+   "archivos": 489,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/dav1d"
+   ],
+   "archivos": 397,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libgav1"
+   ],
+   "archivos": 393,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/hyphenation-patterns"
+   ],
+   "archivos": 384,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "components/strings"
+   ],
+   "archivos": 380,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/chromium-bidi"
+   ],
+   "archivos": 349,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libdrm"
+   ],
+   "archivos": 318,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libjpeg_turbo"
+   ],
+   "archivos": 308,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/vulkan_memory_allocator"
+   ],
+   "archivos": 300,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/vulkan-loader"
+   ],
+   "archivos": 293,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/highway"
+   ],
+   "archivos": 283,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/jsoncpp"
+   ],
+   "archivos": 273,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/cros_system_api"
+   ],
+   "archivos": 253,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/wayland-protocols"
+   ],
+   "archivos": 242,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/quick_insert"
+   ],
+   "archivos": 240,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "content/renderer"
+   ],
+   "archivos": 232,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/expat"
+   ],
+   "archivos": 225,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "net/cert"
+   ],
+   "archivos": 207,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/polymer"
+   ],
+   "archivos": 206,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libei"
+   ],
+   "archivos": 188,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/ambient"
+   ],
+   "archivos": 182,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/gemmlowp"
+   ],
+   "archivos": 150,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/vulkan-tools"
+   ],
+   "archivos": 134,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/cpu_features"
+   ],
+   "archivos": 130,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ui/resources"
+   ],
+   "archivos": 128,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/spirv-headers"
+   ],
+   "archivos": 125,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/fast_float"
+   ],
+   "archivos": 124,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "extensions/strings"
+   ],
+   "archivos": 117,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/android_build_tools"
+   ],
+   "archivos": 108,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "base/third_party"
+   ],
+   "archivos": 95,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/dragonbox"
+   ],
+   "archivos": 95,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "build/linux"
+   ],
+   "archivos": 95,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/flac"
+   ],
+   "archivos": 94,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/vulkan-headers"
+   ],
+   "archivos": 92,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/vulkan-utility-libraries"
+   ],
+   "archivos": 88,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "build"
+   ],
+   "archivos": 87,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/pywebsocket3"
+   ],
+   "archivos": 85,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/strings"
+   ],
+   "archivos": 82,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "chromeos/strings"
+   ],
+   "archivos": 82,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "services/strings"
+   ],
+   "archivos": 82,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/farmhash"
+   ],
+   "archivos": 74,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "content/child"
+   ],
+   "archivos": 69,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/quic_trace"
+   ],
+   "archivos": 68,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "build/modules"
+   ],
+   "archivos": 67,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "build/toolchain"
+   ],
+   "archivos": 65,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/snappy"
+   ],
+   "archivos": 62,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "build/util"
+   ],
+   "archivos": 61,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/smhasher"
+   ],
+   "archivos": 52,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/ced"
+   ],
+   "archivos": 50,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libipp"
+   ],
+   "archivos": 48,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/disarm"
+   ],
+   "archivos": 47,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/metrics_proto"
+   ],
+   "archivos": 43,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/updater"
+   ],
+   "archivos": 43,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/crc32c"
+   ],
+   "archivos": 42,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/birch"
+   ],
+   "archivos": 42,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libva-fake-driver"
+   ],
+   "archivos": 40,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/omnibox_proto"
+   ],
+   "archivos": 39,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/coremltools"
+   ],
+   "archivos": 39,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/fp16"
+   ],
+   "archivos": 36,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/utility"
+   ],
+   "archivos": 36,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/decklink"
+   ],
+   "archivos": 31,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/node"
+   ],
+   "archivos": 31,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/fadec"
+   ],
+   "archivos": 29,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "base/numerics"
+   ],
+   "archivos": 27,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "ash/dbus"
+   ],
+   "archivos": 27,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/fuchsia-gn-sdk"
+   ],
+   "archivos": 26,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/fxdiv"
+   ],
+   "archivos": 25,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/pffft"
+   ],
+   "archivos": 21,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/enterprise_companion"
+   ],
+   "archivos": 20,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/wuffs"
+   ],
+   "archivos": 19,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "build/win"
+   ],
+   "archivos": 17,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libsync"
+   ],
+   "archivos": 14,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/neon_2_sse"
+   ],
+   "archivos": 13,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "chrome/views_examples"
+   ],
+   "archivos": 13,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/android_platform"
+   ],
+   "archivos": 13,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/emoji-segmenter"
+   ],
+   "archivos": 12,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/robolectric"
+   ],
+   "archivos": 12,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/windows_app_sdk_headers"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/arcore-android-sdk-client"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libbrlapi"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/jacoco"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/wtl"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/lit"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/lottie"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/speech-dispatcher"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/selenium-atoms"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/d3"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/one_euro_filter"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/jdk"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/modp_b64"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/webview2"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/rnnoise"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/isimpledom"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/pefile_py3"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/hamcrest"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/iaccessible2"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/fft2d"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/android_opengl"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "components/management"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/aosp_dalvik"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libinput"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/netty4"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/icu4j"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/sqlite4java"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/simdutf"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "build/private_code_test"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/apache-portable-runtime"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/microsoft_webauthn"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "chromeos/ime"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/microsoft_dxheaders"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/gsettings-desktop-schemas"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/libdisplay-info"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "components/app_constants"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/microsoft_multimedia_redirection"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "components/ui_metrics"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "android_webview/proto"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "android_webview/public"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/jdk11"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/screen-ai"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "third_party/fuchsia-sdk"
+   ],
+   "archivos": 3,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "extensions/buildflags"
+   ],
+   "archivos": 3,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 0,
+   "componentes": [
+    "chromeos/assistant"
+   ],
+   "archivos": 3,
+   "depende_de_niveles": []
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/abseil-cpp"
+   ],
+   "archivos": 1658,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/libaom"
+   ],
+   "archivos": 1584,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/libvpx"
+   ],
+   "archivos": 1399,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/openh264"
+   ],
+   "archivos": 747,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/opus"
+   ],
+   "archivos": 715,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/openxr"
+   ],
+   "archivos": 439,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/wayland"
+   ],
+   "archivos": 211,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/ruy"
+   ],
+   "archivos": 148,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/brotli"
+   ],
+   "archivos": 119,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "buildtools"
+   ],
+   "archivos": 84,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/libsrtp"
+   ],
+   "archivos": 75,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/libusb"
+   ],
+   "archivos": 60,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/securemessage"
+   ],
+   "archivos": 49,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/sframe"
+   ],
+   "archivos": 44,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 1,
+   "componentes": [
+    "third_party/junit"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": [
+    0
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/oak"
+   ],
+   "archivos": 2208,
+   "depende_de_niveles": [
+    0,
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/fuzztest"
+   ],
+   "archivos": 615,
+   "depende_de_niveles": [
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "base/allocator"
+   ],
+   "archivos": 469,
+   "depende_de_niveles": [
+    0,
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/material_color_utilities"
+   ],
+   "archivos": 389,
+   "depende_de_niveles": [
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/iamf_tools"
+   ],
+   "archivos": 258,
+   "depende_de_niveles": [
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/libyuv"
+   ],
+   "archivos": 199,
+   "depende_de_niveles": [
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/re2"
+   ],
+   "archivos": 144,
+   "depende_de_niveles": [
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/ukey2"
+   ],
+   "archivos": 87,
+   "depende_de_niveles": [
+    1
+   ]
+  },
+  {
+   "nivel": 2,
+   "componentes": [
+    "third_party/woff2"
+   ],
+   "archivos": 39,
+   "depende_de_niveles": [
+    1
+   ]
+  },
+  {
+   "nivel": 3,
+   "componentes": [
+    "base",
+    "base/android",
+    "base/i18n",
+    "base/logging",
+    "base/tracing",
+    "base/version_info",
+    "base/win",
+    "build/android",
+    "build/config",
+    "build/rust",
+    "third_party/android_deps",
+    "third_party/android_sdk",
+    "third_party/androidx",
+    "third_party/freetype",
+    "third_party/jni_zero",
+    "third_party/libtess2",
+    "third_party/perfetto",
+    "third_party/protobuf",
+    "third_party/protobuf-javascript",
+    "third_party/rust",
+    "third_party/sqlite",
+    "third_party/zlib"
+   ],
+   "archivos": 37396,
+   "depende_de_niveles": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "nivel": 3,
+   "componentes": [
+    "third_party/tensorflow-text"
+   ],
+   "archivos": 36,
+   "depende_de_niveles": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/dawn"
+   ],
+   "archivos": 107931,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "v8"
+   ],
+   "archivos": 20593,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/catapult"
+   ],
+   "archivos": 8210,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/harfbuzz"
+   ],
+   "archivos": 3937,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/libphonenumber"
+   ],
+   "archivos": 3773,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/grpc"
+   ],
+   "archivos": 2943,
+   "depende_de_niveles": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/libxml"
+   ],
+   "archivos": 1156,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/breakpad"
+   ],
+   "archivos": 940,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/libzip"
+   ],
+   "archivos": 912,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/ots"
+   ],
+   "archivos": 530,
+   "depende_de_niveles": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/crabbyavif"
+   ],
+   "archivos": 357,
+   "depende_de_niveles": [
+    0,
+    2,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/ipcz"
+   ],
+   "archivos": 185,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/lzma_sdk"
+   ],
+   "archivos": 185,
+   "depende_de_niveles": [
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/zucchini"
+   ],
+   "archivos": 173,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/unrar"
+   ],
+   "archivos": 171,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/sentencepiece"
+   ],
+   "archivos": 134,
+   "depende_de_niveles": [
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/cbor"
+   ],
+   "archivos": 112,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/anonymous_tokens"
+   ],
+   "archivos": 101,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/minigbm"
+   ],
+   "archivos": 99,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/cld_3"
+   ],
+   "archivos": 91,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/prefs"
+   ],
+   "archivos": 89,
+   "depende_de_niveles": [
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/shell-encryption"
+   ],
+   "archivos": 80,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "net/android"
+   ],
+   "archivos": 74,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "sql"
+   ],
+   "archivos": 74,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/libprotobuf-mutator"
+   ],
+   "archivos": 71,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/inspector_protocol"
+   ],
+   "archivos": 69,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/content_analysis_sdk"
+   ],
+   "archivos": 65,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "dbus"
+   ],
+   "archivos": 58,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/pthreadpool"
+   ],
+   "archivos": 51,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/libpng"
+   ],
+   "archivos": 47,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/cast_core"
+   ],
+   "archivos": 42,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "net/log"
+   ],
+   "archivos": 38,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/memory_pressure"
+   ],
+   "archivos": 36,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/zxcvbn-cpp"
+   ],
+   "archivos": 34,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/win_virtual_display"
+   ],
+   "archivos": 34,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/power_metrics"
+   ],
+   "archivos": 31,
+   "depende_de_niveles": [
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/system_cpu"
+   ],
+   "archivos": 30,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/libjingle_xmpp"
+   ],
+   "archivos": 29,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/private-join-and-compute"
+   ],
+   "archivos": 28,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/s2cellid"
+   ],
+   "archivos": 28,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/glib",
+    "third_party/gvdb"
+   ],
+   "archivos": 26,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/liburlpattern"
+   ],
+   "archivos": 25,
+   "depende_de_niveles": [
+    0,
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/fuchsia_component_support"
+   ],
+   "archivos": 25,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "base/ios"
+   ],
+   "archivos": 25,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/cloud_authenticator"
+   ],
+   "archivos": 24,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/proto_extras"
+   ],
+   "archivos": 22,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "chromeos"
+   ],
+   "archivos": 21,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/r8"
+   ],
+   "archivos": 21,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/cached_flags"
+   ],
+   "archivos": 18,
+   "depende_de_niveles": [
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/push_notification"
+   ],
+   "archivos": 16,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "device/udev_linux"
+   ],
+   "archivos": 14,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/version_info"
+   ],
+   "archivos": 13,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/upload_list"
+   ],
+   "archivos": 13,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/sqlite_migration_vfs"
+   ],
+   "archivos": 13,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/strictmode"
+   ],
+   "archivos": 12,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/fuchsia_legacymetrics"
+   ],
+   "archivos": 12,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/base32"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/rapidhash"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "chromeos/process_proxy"
+   ],
+   "archivos": 11,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/device_event_log"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/profile_metrics"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/query_parser"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/widevine"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/fdlibm"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/grpc-java"
+   ],
+   "archivos": 10,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/apdu"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/android_swipe_refresh"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/named_system_lock"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/search_engines_data"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/attribution_reporting"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/byte_buddy"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/application_locale_storage"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/access_code_cast"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/android_provider"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/google-truth"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": [
+    1,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/app_icon_loader"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/netty-tcnative"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "net/traffic_annotation"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "chromeos/version"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": [
+    0,
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "components/app_launch_prefetch"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "gpu/webgpu"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 4,
+   "componentes": [
+    "third_party/androidx_javascriptengine"
+   ],
+   "archivos": 4,
+   "depende_de_niveles": [
+    3
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/litert",
+    "third_party/tflite"
+   ],
+   "archivos": 45624,
+   "depende_de_niveles": [
+    0,
+    1,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/angle"
+   ],
+   "archivos": 12915,
+   "depende_de_niveles": [
+    0,
+    1,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/xnnpack"
+   ],
+   "archivos": 12579,
+   "depende_de_niveles": [
+    0,
+    1,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/mediapipe"
+   ],
+   "archivos": 2271,
+   "depende_de_niveles": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/fontconfig"
+   ],
+   "archivos": 757,
+   "depende_de_niveles": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/federated_compute"
+   ],
+   "archivos": 719,
+   "depende_de_niveles": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/libwebp"
+   ],
+   "archivos": 491,
+   "depende_de_niveles": [
+    0,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "crypto"
+   ],
+   "archivos": 156,
+   "depende_de_niveles": [
+    0,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/libxslt"
+   ],
+   "archivos": 111,
+   "depende_de_niveles": [
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/libdmg-hfsplus"
+   ],
+   "archivos": 102,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "gin"
+   ],
+   "archivos": 98,
+   "depende_de_niveles": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/puffin"
+   ],
+   "archivos": 66,
+   "depende_de_niveles": [
+    1,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/utf"
+   ],
+   "archivos": 61,
+   "depende_de_niveles": [
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/private_membership"
+   ],
+   "archivos": 44,
+   "depende_de_niveles": [
+    0,
+    1,
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "components/blocklist"
+   ],
+   "archivos": 19,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/mutter"
+   ],
+   "archivos": 18,
+   "depende_de_niveles": [
+    0,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "components/sqlite_proto"
+   ],
+   "archivos": 16,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "components/startup_metric_utils"
+   ],
+   "archivos": 16,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "third_party/libgudev"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": [
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "components/country_codes"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "components/sqlite_encrypted_vfs"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "components/pref_registry"
+   ],
+   "archivos": 7,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 5,
+   "componentes": [
+    "chromeos/system"
+   ],
+   "archivos": 6,
+   "depende_de_niveles": [
+    3,
+    4
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "third_party/skia"
+   ],
+   "archivos": 12500,
+   "depende_de_niveles": [
+    0,
+    1,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "third_party/weston"
+   ],
+   "archivos": 593,
+   "depende_de_niveles": [
+    0,
+    1,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "third_party/hunspell"
+   ],
+   "archivos": 104,
+   "depende_de_niveles": [
+    0,
+    3,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "third_party/tensorflow_models"
+   ],
+   "archivos": 26,
+   "depende_de_niveles": [
+    0,
+    1,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "components/crx_file"
+   ],
+   "archivos": 18,
+   "depende_de_niveles": [
+    3,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "third_party/test_fonts"
+   ],
+   "archivos": 12,
+   "depende_de_niveles": [
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "components/encrypted_messages"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": [
+    3,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "components/onc"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": [
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "components/client_update_protocol"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": [
+    3,
+    5
+   ]
+  },
+  {
+   "nivel": 6,
+   "componentes": [
+    "components/glic"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": [
+    5
+   ]
+  },
+  {
+   "nivel": 7,
+   "componentes": [
+    "components/wifi"
+   ],
+   "archivos": 16,
+   "depende_de_niveles": [
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "nivel": 8,
+   "componentes": [
+    "android_webview",
+    "android_webview/browser",
+    "android_webview/common",
+    "android_webview/glue",
+    "android_webview/gpu",
+    "android_webview/js_sandbox",
+    "android_webview/lib",
+    "android_webview/nonembedded",
+    "android_webview/renderer",
+    "android_webview/support_library",
+    "apps",
+    "ash",
+    "ash/app_list",
+    "ash/app_menu",
+    "ash/constants",
+    "ash/in_session_auth",
+    "ash/keyboard",
+    "ash/public",
+    "ash/quick_pair",
+    "ash/resources",
+    "ash/search_box",
+    "ash/style",
+    "ash/webui",
+    "cc",
+    "chrome",
+    "chrome/android",
+    "chrome/app",
+    "chrome/app_shim",
+    "chrome/browser",
+    "chrome/child",
+    "chrome/chrome_elf",
+    "chrome/common",
+    "chrome/credential_provider",
+    "chrome/elevation_service",
+    "chrome/enterprise_companion",
+    "chrome/gpu",
+    "chrome/install_static",
+    "chrome/installer",
+    "chrome/notification_helper",
+    "chrome/renderer",
+    "chrome/services",
+    "chrome/updater",
+    "chrome/utility",
+    "chrome/windows_services",
+    "chromecast",
+    "chromeos/ash",
+    "chromeos/components",
+    "chromeos/constants",
+    "chromeos/dbus",
+    "chromeos/printing",
+    "chromeos/services",
+    "chromeos/ui",
+    "chromeos/utils",
+    "components/account_id",
+    "components/account_manager_core",
+    "components/account_settings",
+    "components/activity_reporter",
+    "components/actor",
+    "components/affiliations",
+    "components/allocation_recorder",
+    "components/android_autofill",
+    "components/android_system_error_page",
+    "components/app_restore",
+    "components/apps",
+    "components/autofill",
+    "components/back_forward_cache",
+    "components/background_fetch",
+    "components/background_sync",
+    "components/background_task_scheduler",
+    "components/blocked_content",
+    "components/bookmarks",
+    "components/breadcrumbs",
+    "components/browser_actuator",
+    "components/browser_apis",
+    "components/browser_sync",
+    "components/browser_ui",
+    "components/browsing_data",
+    "components/captive_portal",
+    "components/capture_mode",
+    "components/cast",
+    "components/cast_receiver",
+    "components/cast_streaming",
+    "components/cdm",
+    "components/certificate_matching",
+    "components/certificate_model",
+    "components/certificate_transparency",
+    "components/chromeos_camera",
+    "components/client_hints",
+    "components/cloud_devices",
+    "components/collaboration",
+    "components/color",
+    "components/commerce",
+    "components/component_updater",
+    "components/compose",
+    "components/consent_auditor",
+    "components/constrained_window",
+    "components/content_capture",
+    "components/content_extraction",
+    "components/content_relationship_verification",
+    "components/content_settings",
+    "components/contextual_cueing",
+    "components/contextual_search",
+    "components/contextual_tasks",
+    "components/continuous_search",
+    "components/cookie_config",
+    "components/crash",
+    "components/credential_management",
+    "components/critical_actions",
+    "components/cross_device",
+    "components/custom_handlers",
+    "components/data_sharing",
+    "components/database_utils",
+    "components/dbus",
+    "components/desks_storage",
+    "components/desktop_to_mobile_promos",
+    "components/device_reauth",
+    "components/device_signals",
+    "components/devtools",
+    "components/digital_goods",
+    "components/discardable_memory",
+    "components/dom_distiller",
+    "components/domain_reliability",
+    "components/download",
+    "components/drive",
+    "components/embedder_support",
+    "components/endpoint_fetcher",
+    "components/enterprise",
+    "components/error_page",
+    "components/exo",
+    "components/external_intents",
+    "components/externalauth",
+    "components/eye_dropper",
+    "components/facilitated_payments",
+    "components/favicon",
+    "components/favicon_base",
+    "components/fcm",
+    "components/feature_engagement",
+    "components/feed",
+    "components/feedback",
+    "components/file_access",
+    "components/filename_generation",
+    "components/find_in_page",
+    "components/fullscreen_control",
+    "components/gapis",
+    "components/gcm_driver",
+    "components/global_media_controls",
+    "components/google",
+    "components/guest_contents",
+    "components/guest_os",
+    "components/guest_view",
+    "components/gwp_asan",
+    "components/handoff",
+    "components/headless",
+    "components/heap_profiling",
+    "components/heavy_ad_intervention",
+    "components/history",
+    "components/history_clusters",
+    "components/history_embeddings",
+    "components/image_fetcher",
+    "components/infobars",
+    "components/input",
+    "components/installedapp",
+    "components/invalidation",
+    "components/javascript_dialogs",
+    "components/js_injection",
+    "components/keep_alive_registry",
+    "components/keyed_service",
+    "components/language",
+    "components/language_detection",
+    "components/lens",
+    "components/leveldb_proto",
+    "components/link_header_util",
+    "components/live_caption",
+    "components/local_state",
+    "components/location",
+    "components/login",
+    "components/lookalikes",
+    "components/manta",
+    "components/media_control",
+    "components/media_device_salt",
+    "components/media_effects",
+    "components/media_gallery_util",
+    "components/media_message_center",
+    "components/media_router",
+    "components/memory_system",
+    "components/messages",
+    "components/metal_util",
+    "components/metrics",
+    "components/metrics_services_manager",
+    "components/minidump_uploader",
+    "components/mirroring",
+    "components/module_installer",
+    "components/multistep_filter",
+    "components/named_mojo_ipc_server",
+    "components/navigation_interception",
+    "components/navigation_metrics",
+    "components/net_log",
+    "components/neterror",
+    "components/network_hints",
+    "components/network_session_configurator",
+    "components/network_time",
+    "components/no_state_prefetch",
+    "components/notebooks",
+    "components/ntp_tiles",
+    "components/offline_items_collection",
+    "components/offline_pages",
+    "components/omnibox",
+    "components/on_device_ai",
+    "components/on_device_translation",
+    "components/on_load_script_injector",
+    "components/one_time_tokens",
+    "components/open_from_clipboard",
+    "components/openscreen_platform",
+    "components/optimization_guide",
+    "components/origin_gating",
+    "components/origin_matcher",
+    "components/origin_trials",
+    "components/os_crypt",
+    "components/ownership",
+    "components/page_content_annotations",
+    "components/page_image_service",
+    "components/page_info",
+    "components/page_load_metrics",
+    "components/paint_preview",
+    "components/passage_embeddings",
+    "components/password_manager",
+    "components/payments",
+    "components/pdf",
+    "components/performance_manager",
+    "components/permissions",
+    "components/persistent_cache",
+    "components/personal_context",
+    "components/plugins",
+    "components/policy",
+    "components/power_bookmarks",
+    "components/power_monitor",
+    "components/previous_session_info",
+    "components/printing",
+    "components/privacy_sandbox",
+    "components/private_ai",
+    "components/private_insights",
+    "components/private_verification_tokens",
+    "components/proxy_config",
+    "components/push_messaging",
+    "components/pwg_encoder",
+    "components/qr_code_generator",
+    "components/quirks",
+    "components/reading_list",
+    "components/record_replay",
+    "components/reduce_accept_language",
+    "components/regional_capabilities",
+    "components/remote_cocoa",
+    "components/renderer_context_menu",
+    "components/reporting",
+    "components/resources",
+    "components/rlz",
+    "components/safe_browsing",
+    "components/safe_search_api",
+    "components/safety_check",
+    "components/sampling_profiler",
+    "components/saved_tab_groups",
+    "components/schema_org",
+    "components/search",
+    "components/search_engines",
+    "components/search_provider_logos",
+    "components/security_interstitials",
+    "components/security_state",
+    "components/segmentation_platform",
+    "components/send_tab_to_self",
+    "components/sensitive_content",
+    "components/server_certificate_database",
+    "components/services",
+    "components/session_manager",
+    "components/session_proto_db",
+    "components/sessions",
+    "components/shared_highlighting",
+    "components/sharing_message",
+    "components/signin",
+    "components/site_engagement",
+    "components/site_isolation",
+    "components/site_token_provider",
+    "components/skills",
+    "components/soda",
+    "components/speech",
+    "components/spellcheck",
+    "components/split_tabs",
+    "components/sqlite_vfs",
+    "components/ssl_errors",
+    "components/stability_report",
+    "components/storage_monitor",
+    "components/streaming_client",
+    "components/strike_database",
+    "components/stylus_handwriting",
+    "components/subresource_filter",
+    "components/subscription_eligibility",
+    "components/supervised_user",
+    "components/surface_embed",
+    "components/sync",
+    "components/sync_bookmarks",
+    "components/sync_device_info",
+    "components/sync_preferences",
+    "components/sync_sessions",
+    "components/sync_tab_context",
+    "components/sync_user_events",
+    "components/system_media_controls",
+    "components/tab_groups",
+    "components/tabs",
+    "components/themes",
+    "components/thin_webview",
+    "components/touch_to_search",
+    "components/tracing",
+    "components/translate",
+    "components/trusted_vault",
+    "components/ttc",
+    "components/ui_devtools",
+    "components/ukm",
+    "components/undo",
+    "components/unexportable_keys",
+    "components/unified_consent",
+    "components/universal_optout",
+    "components/update_client",
+    "components/url_deduplication",
+    "components/url_formatter",
+    "components/url_matcher",
+    "components/url_pattern",
+    "components/url_pattern_index",
+    "components/url_rewrite",
+    "components/user_data_importer",
+    "components/user_education",
+    "components/user_manager",
+    "components/user_prefs",
+    "components/value_store",
+    "components/variations",
+    "components/vector_icons",
+    "components/visibility_timer",
+    "components/visited_url_ranking",
+    "components/visitedlink",
+    "components/viz",
+    "components/vrp_flags",
+    "components/wallet",
+    "components/web_cache",
+    "components/web_modal",
+    "components/web_package",
+    "components/web_resource",
+    "components/webapk",
+    "components/webapps",
+    "components/webauthn",
+    "components/webdata",
+    "components/webdata_services",
+    "components/webid",
+    "components/webrtc",
+    "components/webrtc_logging",
+    "components/webui",
+    "components/webxr",
+    "components/winhttp",
+    "components/zoom",
+    "content",
+    "content/app",
+    "content/browser",
+    "content/common",
+    "content/gpu",
+    "content/public",
+    "content/services",
+    "content/utility",
+    "device/base",
+    "device/bluetooth",
+    "device/fido",
+    "device/gamepad",
+    "device/vr",
+    "extensions",
+    "extensions/browser",
+    "extensions/common",
+    "extensions/components",
+    "extensions/renderer",
+    "fuchsia_web",
+    "google_apis",
+    "gpu",
+    "gpu/command_buffer",
+    "gpu/config",
+    "gpu/ipc",
+    "gpu/vulkan",
+    "ios",
+    "ipc",
+    "media",
+    "media/audio",
+    "media/base",
+    "media/capture",
+    "media/cast",
+    "media/cdm",
+    "media/formats",
+    "media/fuchsia",
+    "media/gpu",
+    "media/midi",
+    "media/mojo",
+    "media/parsers",
+    "media/remoting",
+    "media/video",
+    "media/webrtc",
+    "mojo",
+    "mojo/core",
+    "mojo/public",
+    "net",
+    "net/base",
+    "net/dns",
+    "net/http",
+    "net/third_party",
+    "pdf",
+    "printing",
+    "remoting",
+    "rlz",
+    "sandbox",
+    "services/accessibility",
+    "services/audio",
+    "services/cert_verifier",
+    "services/data_decoder",
+    "services/device",
+    "services/image_annotation",
+    "services/media_session",
+    "services/metrics",
+    "services/network",
+    "services/on_device_model",
+    "services/passage_embeddings",
+    "services/preferences",
+    "services/proxy_resolver",
+    "services/proxy_resolver_mac",
+    "services/proxy_resolver_win",
+    "services/resource_coordinator",
+    "services/screen_ai",
+    "services/service_manager",
+    "services/shape_detection",
+    "services/tracing",
+    "services/video_capture",
+    "services/viz",
+    "services/webnn",
+    "skia",
+    "storage",
+    "third_party/blink",
+    "third_party/cardboard",
+    "third_party/crashpad",
+    "third_party/cros-components",
+    "third_party/ink",
+    "third_party/lens_server_proto",
+    "third_party/leveldatabase",
+    "third_party/libaddressinput",
+    "third_party/nearby",
+    "third_party/openscreen",
+    "third_party/pdfium",
+    "third_party/webrtc",
+    "third_party/webrtc_overrides",
+    "ui/accelerated_widget_mac",
+    "ui/accessibility",
+    "ui/actions",
+    "ui/android",
+    "ui/aura",
+    "ui/aura_extra",
+    "ui/base",
+    "ui/chromeos",
+    "ui/color",
+    "ui/compositor",
+    "ui/content_accelerators",
+    "ui/decoration",
+    "ui/display",
+    "ui/edge_to_edge",
+    "ui/events",
+    "ui/file_manager",
+    "ui/gfx",
+    "ui/gl",
+    "ui/gtk",
+    "ui/latency",
+    "ui/linux",
+    "ui/lottie",
+    "ui/menus",
+    "ui/message_center",
+    "ui/native_theme",
+    "ui/native_window_tracker",
+    "ui/ozone",
+    "ui/platform_window",
+    "ui/qt",
+    "ui/shell_dialogs",
+    "ui/snapshot",
+    "ui/touch_selection",
+    "ui/views",
+    "ui/web_dialogs",
+    "ui/webui",
+    "ui/wm",
+    "url"
+   ],
+   "archivos": 421517,
+   "depende_de_niveles": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "components/cronet"
+   ],
+   "archivos": 504,
+   "depende_de_niveles": [
+    0,
+    3,
+    4,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "headless"
+   ],
+   "archivos": 473,
+   "depende_de_niveles": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "content/shell"
+   ],
+   "archivos": 232,
+   "depende_de_niveles": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "build/fuchsia"
+   ],
+   "archivos": 98,
+   "depende_de_niveles": [
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "components/webcrypto"
+   ],
+   "archivos": 89,
+   "depende_de_niveles": [
+    0,
+    3,
+    5,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "codelabs"
+   ],
+   "archivos": 57,
+   "depende_de_niveles": [
+    3,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "media/muxers"
+   ],
+   "archivos": 44,
+   "depende_de_niveles": [
+    0,
+    3,
+    4,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "media/ffmpeg"
+   ],
+   "archivos": 41,
+   "depende_de_niveles": [
+    0,
+    3,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "media/gfx"
+   ],
+   "archivos": 29,
+   "depende_de_niveles": [
+    0,
+    2,
+    3,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "media/capabilities"
+   ],
+   "archivos": 28,
+   "depende_de_niveles": [
+    3,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "components/accessibility"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": [
+    3,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "content/zygote"
+   ],
+   "archivos": 9,
+   "depende_de_niveles": [
+    0,
+    3,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "media/device_monitors"
+   ],
+   "archivos": 8,
+   "depende_de_niveles": [
+    3,
+    4,
+    8
+   ]
+  },
+  {
+   "nivel": 9,
+   "componentes": [
+    "chrome/chrome_proxy"
+   ],
+   "archivos": 5,
+   "depende_de_niveles": [
+    3,
+    8
+   ]
+  },
+  {
+   "nivel": 10,
+   "componentes": [
+    "media/filters"
+   ],
+   "archivos": 184,
+   "depende_de_niveles": [
+    0,
+    1,
+    2,
+    3,
+    8,
+    9
+   ]
+  },
+  {
+   "nivel": 10,
+   "componentes": [
+    "ui/views_content_client"
+   ],
+   "archivos": 18,
+   "depende_de_niveles": [
+    0,
+    3,
+    8,
+    9
+   ]
+  },
+  {
+   "nivel": 11,
+   "componentes": [
+    "media/renderers"
+   ],
+   "archivos": 43,
+   "depende_de_niveles": [
+    3,
+    8,
+    9,
+    10
+   ]
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+[package]
+name = "quimera-valor"
+description = "Valor de JavaScript en 64 bits (NaN-boxing), Copy y sin contador: la base de QUIMERA."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[package.metadata.quimera]
+nivel = 0
+capa = "cimientos"
+no_std = true
+externos = []
+
+[lints]
+workspace = true

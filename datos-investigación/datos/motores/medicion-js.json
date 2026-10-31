@@ -1,0 +1,812 @@
+{
+ "motores": {
+  "boa": "/var/tmp/ultra-main-work/cache/boa-target/release/boa",
+  "sm-completo": "js140",
+  "sm-baseline-interp": "js140 --no-ion --no-baseline",
+  "sm-interp-cpp": "js140 --no-ion --no-baseline --no-blinterp"
+ },
+ "scripts": {
+  "basic/call-loop.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0204,
+    "rss_kib": 27732
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.012,
+    "rss_kib": 16692
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0137,
+    "rss_kib": 15964
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0206,
+    "rss_kib": 15464
+   }
+  },
+  "basic/closure.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 1.5603,
+    "rss_kib": 27700
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0171,
+    "rss_kib": 16452
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.3308,
+    "rss_kib": 15968
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.9825,
+    "rss_kib": 15800
+   }
+  },
+  "basic/nested-loop.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0288,
+    "rss_kib": 27856
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0134,
+    "rss_kib": 16536
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0259,
+    "rss_kib": 15932
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0345,
+    "rss_kib": 15528
+   }
+  },
+  "closures/create.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0542,
+    "rss_kib": 30492
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.013,
+    "rss_kib": 18260
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0192,
+    "rss_kib": 16504
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0301,
+    "rss_kib": 15900
+   }
+  },
+  "closures/invoke.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0761,
+    "rss_kib": 27528
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.012,
+    "rss_kib": 16484
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0275,
+    "rss_kib": 15900
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0483,
+    "rss_kib": 15628
+   }
+  },
+  "intl/collator-compare.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0127,
+    "rss_kib": 29276
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0137,
+    "rss_kib": 17528
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0131,
+    "rss_kib": 17624
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0146,
+    "rss_kib": 17600
+   }
+  },
+  "intl/collator-construction.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0143,
+    "rss_kib": 30124
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0169,
+    "rss_kib": 17460
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.015,
+    "rss_kib": 16888
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0185,
+    "rss_kib": 16584
+   }
+  },
+  "intl/datetimeformat-construction.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0249,
+    "rss_kib": 30108
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0155,
+    "rss_kib": 19068
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0189,
+    "rss_kib": 18448
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0212,
+    "rss_kib": 18272
+   }
+  },
+  "intl/datetimeformat-format.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0123,
+    "rss_kib": 30428
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0265,
+    "rss_kib": 20880
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0228,
+    "rss_kib": 20964
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0253,
+    "rss_kib": 20768
+   }
+  },
+  "intl/datetimeformat-with-options.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.016,
+    "rss_kib": 29700
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0138,
+    "rss_kib": 18852
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0131,
+    "rss_kib": 17840
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0129,
+    "rss_kib": 17560
+   }
+  },
+  "intl/datetimeformat_resolved_options.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0098,
+    "rss_kib": 30016
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0208,
+    "rss_kib": 21212
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0197,
+    "rss_kib": 21072
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0204,
+    "rss_kib": 21076
+   }
+  },
+  "intl/listformat-construction.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0111,
+    "rss_kib": 28752
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.013,
+    "rss_kib": 17716
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0126,
+    "rss_kib": 16556
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0141,
+    "rss_kib": 16612
+   }
+  },
+  "intl/listformat-format.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0117,
+    "rss_kib": 29252
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0143,
+    "rss_kib": 19148
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0138,
+    "rss_kib": 17980
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0157,
+    "rss_kib": 17708
+   }
+  },
+  "intl/numberformat-construction.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0115,
+    "rss_kib": 28596
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0139,
+    "rss_kib": 18032
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.017,
+    "rss_kib": 17180
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0165,
+    "rss_kib": 17280
+   }
+  },
+  "intl/numberformat-different-options.js": {
+   "boa": {
+    "ok": false,
+    "segundos": 0.0095,
+    "error": "Uncaught Error: TypeError: unimplemented (/tmp/tmpivmtvqih/intl__numberformat-different-options.js:12:5)\n    at main (/tmp/tmpivmtvqih/intl__numberformat-different-options.js:6:5)\n    at <main> (/tmp/tmpivmtvqih/intl__numberformat-different-options.js:12:5)\nError: \n   0: \u001b[91mexecution failed\u001b[0m\n"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0132,
+    "rss_kib": 17724
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0127,
+    "rss_kib": 16988
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0136,
+    "rss_kib": 16660
+   }
+  },
+  "intl/pluralrules-construction.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0112,
+    "rss_kib": 29052
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0131,
+    "rss_kib": 17384
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0133,
+    "rss_kib": 16988
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0142,
+    "rss_kib": 17060
+   }
+  },
+  "intl/pluralrules-select.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0097,
+    "rss_kib": 28468
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0123,
+    "rss_kib": 18424
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0131,
+    "rss_kib": 18592
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0128,
+    "rss_kib": 18372
+   }
+  },
+  "intl/segmenter-construction.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0109,
+    "rss_kib": 29592
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0126,
+    "rss_kib": 16860
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0131,
+    "rss_kib": 17008
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.013,
+    "rss_kib": 16684
+   }
+  },
+  "intl/segmenter-segment.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0138,
+    "rss_kib": 31784
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.013,
+    "rss_kib": 18820
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0137,
+    "rss_kib": 17568
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0153,
+    "rss_kib": 17496
+   }
+  },
+  "json/stringify_circular.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0095,
+    "rss_kib": 27964
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0119,
+    "rss_kib": 15992
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0117,
+    "rss_kib": 16168
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.011,
+    "rss_kib": 16044
+   }
+  },
+  "json/stringify_deep.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0177,
+    "rss_kib": 29780
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0115,
+    "rss_kib": 16364
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0118,
+    "rss_kib": 16252
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0118,
+    "rss_kib": 15920
+   }
+  },
+  "properties/access.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0585,
+    "rss_kib": 27512
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0143,
+    "rss_kib": 17264
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0205,
+    "rss_kib": 16024
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0374,
+    "rss_kib": 15812
+   }
+  },
+  "prototypes/chain.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0754,
+    "rss_kib": 28008
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0124,
+    "rss_kib": 16964
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0193,
+    "rss_kib": 16068
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0344,
+    "rss_kib": 15564
+   }
+  },
+  "strings/concat.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.013,
+    "rss_kib": 27792
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.012,
+    "rss_kib": 17468
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0119,
+    "rss_kib": 16408
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0122,
+    "rss_kib": 15980
+   }
+  },
+  "strings/replace.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0162,
+    "rss_kib": 30496
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0125,
+    "rss_kib": 17276
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0137,
+    "rss_kib": 15996
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0147,
+    "rss_kib": 16348
+   }
+  },
+  "strings/slice.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.2536,
+    "rss_kib": 517680
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0232,
+    "rss_kib": 59144
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.024,
+    "rss_kib": 58236
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0242,
+    "rss_kib": 58300
+   }
+  },
+  "strings/split.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 0.0132,
+    "rss_kib": 27848
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 0.0115,
+    "rss_kib": 15884
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 0.0113,
+    "rss_kib": 16080
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 0.0108,
+    "rss_kib": 15760
+   }
+  },
+  "v8-benches/crypto.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 18.365,
+    "rss_kib": 33376,
+    "puntuacion": "255"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 4.0183,
+    "rss_kib": 25312,
+    "puntuacion": "26194"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 7.3389,
+    "rss_kib": 17756,
+    "puntuacion": "1024"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 8.7223,
+    "rss_kib": 17428,
+    "puntuacion": "708"
+   }
+  },
+  "v8-benches/deltablue.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 2.0469,
+    "rss_kib": 31120,
+    "puntuacion": "208"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 2.015,
+    "rss_kib": 41752,
+    "puntuacion": "17482"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 2.0155,
+    "rss_kib": 21032,
+    "puntuacion": "1531"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 2.0317,
+    "rss_kib": 19720,
+    "puntuacion": "437"
+   }
+  },
+  "v8-benches/earley-boyer.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 26.3722,
+    "rss_kib": 74140,
+    "puntuacion": "461"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 4.0339,
+    "rss_kib": 174048,
+    "puntuacion": "50343"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 5.074,
+    "rss_kib": 109228,
+    "puntuacion": "5180"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 9.8018,
+    "rss_kib": 130316,
+    "puntuacion": "1751"
+   }
+  },
+  "v8-benches/navier-stokes.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 9.9572,
+    "rss_kib": 32180,
+    "puntuacion": "540"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 2.02,
+    "rss_kib": 20360,
+    "puntuacion": "30479"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 4.0995,
+    "rss_kib": 18272,
+    "puntuacion": "1886"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 5.3276,
+    "rss_kib": 18236,
+    "puntuacion": "1259"
+   }
+  },
+  "v8-benches/raytrace.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 7.6888,
+    "rss_kib": 33136,
+    "puntuacion": "405"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 2.016,
+    "rss_kib": 27260,
+    "puntuacion": "36075"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 2.0405,
+    "rss_kib": 22272,
+    "puntuacion": "2942"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 3.1248,
+    "rss_kib": 20332,
+    "puntuacion": "1213"
+   }
+  },
+  "v8-benches/regexp.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 48.9598,
+    "rss_kib": 38664,
+    "puntuacion": "63.4"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 2.0561,
+    "rss_kib": 32936,
+    "puntuacion": "11103"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 3.1655,
+    "rss_kib": 25712,
+    "puntuacion": "1999"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 4.2404,
+    "rss_kib": 24672,
+    "puntuacion": "977"
+   }
+  },
+  "v8-benches/richards.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 2.0219,
+    "rss_kib": 30904,
+    "puntuacion": "233"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 2.0131,
+    "rss_kib": 20108,
+    "puntuacion": "17676"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 2.0148,
+    "rss_kib": 16616,
+    "puntuacion": "1050"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 2.0195,
+    "rss_kib": 16368,
+    "puntuacion": "422"
+   }
+  },
+  "v8-benches/splay.js": {
+   "boa": {
+    "ok": true,
+    "segundos": 2.7127,
+    "rss_kib": 277780,
+    "puntuacion": "877"
+   },
+   "sm-completo": {
+    "ok": true,
+    "segundos": 2.1623,
+    "rss_kib": 401708,
+    "puntuacion": "25743"
+   },
+   "sm-baseline-interp": {
+    "ok": true,
+    "segundos": 2.2324,
+    "rss_kib": 396288,
+    "puntuacion": "6120"
+   },
+   "sm-interp-cpp": {
+    "ok": true,
+    "segundos": 2.3182,
+    "rss_kib": 357248,
+    "puntuacion": "2939"
+   }
+  }
+ }
+}

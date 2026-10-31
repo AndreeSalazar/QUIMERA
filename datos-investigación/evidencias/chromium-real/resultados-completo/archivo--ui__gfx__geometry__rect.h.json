@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":21},\"ruta\":\"content/public/browser/android/synchronous_compositor.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":30},\"ruta\":\"android_webview/browser/gfx/browser_view_renderer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":17},\"ruta\":\"ui/gfx/geometry/rect_f.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":21},\"ruta\":\"printing/print_settings.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":21},\"ruta\":\"content/public/browser/permission_controller_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":8},\"ruta\":\"android_webview/browser/gfx/aw_gl_surface.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":22},\"ruta\":\"components/viz/common/frame_sinks/copy_output_request.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":23},\"ruta\":\"ui/gfx/android/android_surface_control_compat.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":17},\"ruta\":\"components/viz/common/quads/texture_draw_quad.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":32},\"ruta\":\"gpu/command_buffer/service/shared_image/shared_image_representation.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":16},\"ruta\":\"android_webview/browser/gfx/test/fake_window.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":16},\"ruta\":\"content/public/browser/media_stream_request.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":35},\"ruta\":\"components/printing/renderer/print_render_frame_helper.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":50},\"ruta\":\"third_party/blink/public/web/web_frame_widget.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":23},\"ruta\":\"gpu/vulkan/vulkan_swap_chain.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":11},\"ruta\":\"apps/ui/views/app_window_frame_view.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":15},\"ruta\":\"ui/views/window/frame_view.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":30},\"ruta\":\"ash/accessibility/accessibility_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":43},\"ruta\":\"ash/capture_mode/capture_mode_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":23},\"ruta\":\"ash/game_dashboard/game_dashboard_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":31},\"ruta\":\"ui/compositor/layer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":46},\"ruta\":\"ui/aura/window.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":13},\"ruta\":\"ui/aura/test/test_window_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":17},\"ruta\":\"ui/display/display.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":14},\"ruta\":\"ui/views/test/test_widget_builder.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":14},\"ruta\":\"ash/accessibility/ui/accessibility_panel_layout_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":16},\"ruta\":\"ash/app_menu/app_menu_model_adapter.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":11},\"ruta\":\"ash/keyboard/arc/arc_virtual_keyboard_container_layout_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":36},\"ruta\":\"ash/keyboard/ui/keyboard_ui_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":46},\"ruta\":\"ash/shelf/shelf_layout_manager.h\"}],\"total\":2077},\"papel\":\"arrastra\",\"ruta\":\"ui/gfx/geometry/rect.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":23},\"ruta\":\"build/build_config.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/containers/span.h\\\"\",\"linea\":20},\"ruta\":\"base/containers/span.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/size.h\\\"\",\"linea\":27},\"ruta\":\"ui/gfx/geometry/size.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/numerics/safe_conversions.h\\\"\",\"linea\":22},\"ruta\":\"base/numerics/safe_conversions.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/point.h\\\"\",\"linea\":26},\"ruta\":\"ui/gfx/geometry/point.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/component_export.h\\\"\",\"linea\":19},\"ruta\":\"base/component_export.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/insets.h\\\"\",\"linea\":24},\"ruta\":\"ui/gfx/geometry/insets.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/vector2d.h\\\"\",\"linea\":28},\"ruta\":\"ui/gfx/geometry/vector2d.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/outsets.h\\\"\",\"linea\":25},\"ruta\":\"ui/gfx/geometry/outsets.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/numerics/clamped_math.h\\\"\",\"linea\":21},\"ruta\":\"base/numerics/clamped_math.h\"}],\"total\":10}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 21
+          },
+          "ruta": "content/public/browser/android/synchronous_compositor.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 30
+          },
+          "ruta": "android_webview/browser/gfx/browser_view_renderer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 17
+          },
+          "ruta": "ui/gfx/geometry/rect_f.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 21
+          },
+          "ruta": "printing/print_settings.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 21
+          },
+          "ruta": "content/public/browser/permission_controller_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 8
+          },
+          "ruta": "android_webview/browser/gfx/aw_gl_surface.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 22
+          },
+          "ruta": "components/viz/common/frame_sinks/copy_output_request.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 23
+          },
+          "ruta": "ui/gfx/android/android_surface_control_compat.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 17
+          },
+          "ruta": "components/viz/common/quads/texture_draw_quad.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 32
+          },
+          "ruta": "gpu/command_buffer/service/shared_image/shared_image_representation.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 16
+          },
+          "ruta": "android_webview/browser/gfx/test/fake_window.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 16
+          },
+          "ruta": "content/public/browser/media_stream_request.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 35
+          },
+          "ruta": "components/printing/renderer/print_render_frame_helper.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 50
+          },
+          "ruta": "third_party/blink/public/web/web_frame_widget.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 23
+          },
+          "ruta": "gpu/vulkan/vulkan_swap_chain.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 11
+          },
+          "ruta": "apps/ui/views/app_window_frame_view.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 15
+          },
+          "ruta": "ui/views/window/frame_view.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 30
+          },
+          "ruta": "ash/accessibility/accessibility_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 43
+          },
+          "ruta": "ash/capture_mode/capture_mode_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 23
+          },
+          "ruta": "ash/game_dashboard/game_dashboard_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 31
+          },
+          "ruta": "ui/compositor/layer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 46
+          },
+          "ruta": "ui/aura/window.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 13
+          },
+          "ruta": "ui/aura/test/test_window_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 17
+          },
+          "ruta": "ui/display/display.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 14
+          },
+          "ruta": "ui/views/test/test_widget_builder.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 14
+          },
+          "ruta": "ash/accessibility/ui/accessibility_panel_layout_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 16
+          },
+          "ruta": "ash/app_menu/app_menu_model_adapter.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 11
+          },
+          "ruta": "ash/keyboard/arc/arc_virtual_keyboard_container_layout_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 36
+          },
+          "ruta": "ash/keyboard/ui/keyboard_ui_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+            "linea": 46
+          },
+          "ruta": "ash/shelf/shelf_layout_manager.h"
+        }
+      ],
+      "total": 2077
+    },
+    "papel": "arrastra",
+    "ruta": "ui/gfx/geometry/rect.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 23
+          },
+          "ruta": "build/build_config.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/containers/span.h\"",
+            "linea": 20
+          },
+          "ruta": "base/containers/span.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/size.h\"",
+            "linea": 27
+          },
+          "ruta": "ui/gfx/geometry/size.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/numerics/safe_conversions.h\"",
+            "linea": 22
+          },
+          "ruta": "base/numerics/safe_conversions.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/point.h\"",
+            "linea": 26
+          },
+          "ruta": "ui/gfx/geometry/point.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/component_export.h\"",
+            "linea": 19
+          },
+          "ruta": "base/component_export.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/insets.h\"",
+            "linea": 24
+          },
+          "ruta": "ui/gfx/geometry/insets.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/vector2d.h\"",
+            "linea": 28
+          },
+          "ruta": "ui/gfx/geometry/vector2d.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/gfx/geometry/outsets.h\"",
+            "linea": 25
+          },
+          "ruta": "ui/gfx/geometry/outsets.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/numerics/clamped_math.h\"",
+            "linea": 21
+          },
+          "ruta": "base/numerics/clamped_math.h"
+        }
+      ],
+      "total": 10
+    }
+  }
+}

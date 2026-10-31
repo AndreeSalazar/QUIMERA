@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"third_party/oak\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.debug.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.verity.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.packages.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.crypto.v1.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.functions.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.containers.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.session.v1.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.containers.v1.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.functions.abi.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.attestation.v1.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.functions.config.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.trusted_agent.v1.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.functions.testing.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.functions.wasm.v1.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.restricted_kernel.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.functions.standalone.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/oak_proto_rust/generated/oak.functions.lookup_data.rs\"},{\"carpeta\":true,\"ruta\":\"third_party/oak/src/third_party/llvm_libc/overlay/libc/config/oak\"}],\"texto\":\"third_party/oak\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "third_party/oak"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.debug.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.verity.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.packages.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.crypto.v1.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.functions.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.containers.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.session.v1.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.containers.v1.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.functions.abi.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.attestation.v1.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.functions.config.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.trusted_agent.v1.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.functions.testing.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.functions.wasm.v1.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.restricted_kernel.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.functions.standalone.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/oak_proto_rust/generated/oak.functions.lookup_data.rs"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/oak/src/third_party/llvm_libc/overlay/libc/config/oak"
+      }
+    ],
+    "texto": "third_party/oak"
+  }
+}

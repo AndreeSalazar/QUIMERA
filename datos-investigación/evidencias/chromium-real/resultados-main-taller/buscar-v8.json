@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"v8\"},{\"carpeta\":true,\"ruta\":\"chrome/test/v8\"},{\"carpeta\":true,\"ruta\":\"third_party/rust/zip/v8\"},{\"carpeta\":false,\"ruta\":\"build/config/siso/v8.star\"},{\"carpeta\":false,\"ruta\":\"tools/perf/benchmarks/v8.py\"},{\"carpeta\":false,\"ruta\":\"content/test/data/btm/v8.sql\"},{\"carpeta\":false,\"ruta\":\"docs/speed/benchmark/harnesses/v8.md\"},{\"carpeta\":true,\"ruta\":\"tools/metrics/histograms/metadata/v8\"},{\"carpeta\":false,\"ruta\":\"tools/perf/core/schedule/v8.browsing_mobile.csv\"},{\"carpeta\":false,\"ruta\":\"tools/perf/core/schedule/v8.browsing_desktop.csv\"}],\"texto\":\"v8\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "v8"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/test/v8"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/rust/zip/v8"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/config/siso/v8.star"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/perf/benchmarks/v8.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "content/test/data/btm/v8.sql"
+      },
+      {
+        "carpeta": false,
+        "ruta": "docs/speed/benchmark/harnesses/v8.md"
+      },
+      {
+        "carpeta": true,
+        "ruta": "tools/metrics/histograms/metadata/v8"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/perf/core/schedule/v8.browsing_mobile.csv"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/perf/core/schedule/v8.browsing_desktop.csv"
+      }
+    ],
+    "texto": "v8"
+  }
+}

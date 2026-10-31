@@ -1,0 +1,507 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":29},\"ruta\":\"net/url_request/url_request_context.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":86},\"ruta\":\"chrome/app/chrome_main_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":33},\"ruta\":\"net/url_request/url_request_job.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":46},\"ruta\":\"net/url_request/url_request_test_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":88},\"ruta\":\"chrome/browser/client_hints/client_hints_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":31},\"ruta\":\"chrome/browser/enterprise/platform_auth/extensible_enterprise_sso_provider_mac.mm\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":50},\"ruta\":\"chrome/browser/favicon/content_favicon_driver_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":23},\"ruta\":\"chrome/browser/search/most_visited_iframe_source_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":44},\"ruta\":\"chrome/browser/signin/chrome_signin_helper_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":14},\"ruta\":\"net/url_request/url_request_test_job.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":50},\"ruta\":\"chrome/browser/supervised_user/linux_mac_windows/supervised_user_web_content_handler_impl_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":40},\"ruta\":\"services/network/url_loader.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":13},\"ruta\":\"chromecast/browser/webui/cast_resource_data_source.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":20},\"ruta\":\"components/cronet/cronet_url_request.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":22},\"ruta\":\"components/cronet/network_tasks_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":25},\"ruta\":\"components/cronet/android/test/cronet_test_util.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":28},\"ruta\":\"components/domain_reliability/monitor.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":23},\"ruta\":\"components/domain_reliability/uploader.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":27},\"ruta\":\"components/domain_reliability/uploader_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":21},\"ruta\":\"components/embedder_support/android/util/web_resource_response.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":17},\"ruta\":\"components/ukm/content/source_url_recorder.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":20},\"ruta\":\"components/variations/net/variations_http_headers.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":20},\"ruta\":\"components/variations/net/variations_http_headers_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":28},\"ruta\":\"content/browser/loader/navigation_url_loader_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":29},\"ruta\":\"content/browser/loader/keep_alive_url_loader.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":8},\"ruta\":\"content/browser/websockets/websocket_handshake_request_info_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":21},\"ruta\":\"content/browser/worker_host/worker_script_loader.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":31},\"ruta\":\"content/renderer/service_worker/service_worker_subresource_loader.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":36},\"ruta\":\"content/renderer/service_worker/service_worker_subresource_loader_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/url_request.h\\\"\",\"linea\":24},\"ruta\":\"ios/chrome/browser/net/model/ios_chrome_network_delegate.cc\"}],\"total\":118},\"papel\":null,\"ruta\":\"net/url_request/url_request.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":34},\"ruta\":\"net/base/net_errors.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":70},\"ruta\":\"url/gurl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/http/http_request_headers.h\\\"\",\"linea\":52},\"ruta\":\"net/http/http_request_headers.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/containers/flat_set.h\\\"\",\"linea\":17},\"ruta\":\"base/containers/flat_set.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/weak_ptr.h\\\"\",\"linea\":19},\"ruta\":\"base/memory/weak_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":18},\"ruta\":\"base/memory/raw_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/values.h\\\"\",\"linea\":24},\"ruta\":\"base/values.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/byte_size.h\\\"\",\"linea\":16},\"ruta\":\"base/byte_size.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/time/time.h\\\"\",\"linea\":22},\"ruta\":\"base/time/time.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/origin.h\\\"\",\"linea\":71},\"ruta\":\"url/origin.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/cookies/cookie_setting_override.h\\\"\",\"linea\":43},\"ruta\":\"net/cookies/cookie_setting_override.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/cookies/site_for_cookies.h\\\"\",\"linea\":45},\"ruta\":\"net/cookies/site_for_cookies.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/supports_user_data.h\\\"\",\"linea\":20},\"ruta\":\"base/supports_user_data.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/auth.h\\\"\",\"linea\":25},\"ruta\":\"net/base/auth.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/http/http_response_headers.h\\\"\",\"linea\":53},\"ruta\":\"net/http/http_response_headers.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/socket/socket_tag.h\\\"\",\"linea\":63},\"ruta\":\"net/socket/socket_tag.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/storage_access_api/status.h\\\"\",\"linea\":64},\"ruta\":\"net/storage_access_api/status.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/network_delegate.h\\\"\",\"linea\":36},\"ruta\":\"net/base/network_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/log/net_log_with_source.h\\\"\",\"linea\":58},\"ruta\":\"net/log/net_log_with_source.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/cookies/canonical_cookie.h\\\"\",\"linea\":41},\"ruta\":\"net/cookies/canonical_cookie.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/cookies/cookie_partition_key.h\\\"\",\"linea\":42},\"ruta\":\"net/cookies/cookie_partition_key.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/cookies/cookie_util.h\\\"\",\"linea\":44},\"ruta\":\"net/cookies/cookie_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/url_request/redirect_info.h\\\"\",\"linea\":67},\"ruta\":\"net/url_request/redirect_info.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/threading/thread_checker.h\\\"\",\"linea\":21},\"ruta\":\"base/threading/thread_checker.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/network_handle.h\\\"\",\"linea\":37},\"ruta\":\"net/base/network_handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/traffic_annotation/network_traffic_annotation.h\\\"\",\"linea\":65},\"ruta\":\"net/traffic_annotation/network_traffic_annotation.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/isolation_info.h\\\"\",\"linea\":29},\"ruta\":\"net/base/isolation_info.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/load_flags.h\\\"\",\"linea\":30},\"ruta\":\"net/base/load_flags.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/types/pass_key.h\\\"\",\"linea\":23},\"ruta\":\"base/types/pass_key.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/log/net_log_event_type.h\\\"\",\"linea\":56},\"ruta\":\"net/log/net_log_event_type.h\"}],\"total\":55}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 29
+          },
+          "ruta": "net/url_request/url_request_context.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 86
+          },
+          "ruta": "chrome/app/chrome_main_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 33
+          },
+          "ruta": "net/url_request/url_request_job.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 46
+          },
+          "ruta": "net/url_request/url_request_test_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 88
+          },
+          "ruta": "chrome/browser/client_hints/client_hints_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 31
+          },
+          "ruta": "chrome/browser/enterprise/platform_auth/extensible_enterprise_sso_provider_mac.mm"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 50
+          },
+          "ruta": "chrome/browser/favicon/content_favicon_driver_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 23
+          },
+          "ruta": "chrome/browser/search/most_visited_iframe_source_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 44
+          },
+          "ruta": "chrome/browser/signin/chrome_signin_helper_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 14
+          },
+          "ruta": "net/url_request/url_request_test_job.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 50
+          },
+          "ruta": "chrome/browser/supervised_user/linux_mac_windows/supervised_user_web_content_handler_impl_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 40
+          },
+          "ruta": "services/network/url_loader.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 13
+          },
+          "ruta": "chromecast/browser/webui/cast_resource_data_source.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 20
+          },
+          "ruta": "components/cronet/cronet_url_request.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 22
+          },
+          "ruta": "components/cronet/network_tasks_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 25
+          },
+          "ruta": "components/cronet/android/test/cronet_test_util.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 28
+          },
+          "ruta": "components/domain_reliability/monitor.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 23
+          },
+          "ruta": "components/domain_reliability/uploader.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 27
+          },
+          "ruta": "components/domain_reliability/uploader_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 21
+          },
+          "ruta": "components/embedder_support/android/util/web_resource_response.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 17
+          },
+          "ruta": "components/ukm/content/source_url_recorder.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 20
+          },
+          "ruta": "components/variations/net/variations_http_headers.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 20
+          },
+          "ruta": "components/variations/net/variations_http_headers_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 28
+          },
+          "ruta": "content/browser/loader/navigation_url_loader_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 29
+          },
+          "ruta": "content/browser/loader/keep_alive_url_loader.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 8
+          },
+          "ruta": "content/browser/websockets/websocket_handshake_request_info_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 21
+          },
+          "ruta": "content/browser/worker_host/worker_script_loader.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 31
+          },
+          "ruta": "content/renderer/service_worker/service_worker_subresource_loader.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 36
+          },
+          "ruta": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/url_request.h\"",
+            "linea": 24
+          },
+          "ruta": "ios/chrome/browser/net/model/ios_chrome_network_delegate.cc"
+        }
+      ],
+      "total": 118
+    },
+    "papel": null,
+    "ruta": "net/url_request/url_request.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 34
+          },
+          "ruta": "net/base/net_errors.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 70
+          },
+          "ruta": "url/gurl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/http/http_request_headers.h\"",
+            "linea": 52
+          },
+          "ruta": "net/http/http_request_headers.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/containers/flat_set.h\"",
+            "linea": 17
+          },
+          "ruta": "base/containers/flat_set.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/weak_ptr.h\"",
+            "linea": 19
+          },
+          "ruta": "base/memory/weak_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 18
+          },
+          "ruta": "base/memory/raw_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/values.h\"",
+            "linea": 24
+          },
+          "ruta": "base/values.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/byte_size.h\"",
+            "linea": 16
+          },
+          "ruta": "base/byte_size.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/time/time.h\"",
+            "linea": 22
+          },
+          "ruta": "base/time/time.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/origin.h\"",
+            "linea": 71
+          },
+          "ruta": "url/origin.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/cookies/cookie_setting_override.h\"",
+            "linea": 43
+          },
+          "ruta": "net/cookies/cookie_setting_override.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/cookies/site_for_cookies.h\"",
+            "linea": 45
+          },
+          "ruta": "net/cookies/site_for_cookies.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/supports_user_data.h\"",
+            "linea": 20
+          },
+          "ruta": "base/supports_user_data.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/auth.h\"",
+            "linea": 25
+          },
+          "ruta": "net/base/auth.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/http/http_response_headers.h\"",
+            "linea": 53
+          },
+          "ruta": "net/http/http_response_headers.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/socket/socket_tag.h\"",
+            "linea": 63
+          },
+          "ruta": "net/socket/socket_tag.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/storage_access_api/status.h\"",
+            "linea": 64
+          },
+          "ruta": "net/storage_access_api/status.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/network_delegate.h\"",
+            "linea": 36
+          },
+          "ruta": "net/base/network_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/log/net_log_with_source.h\"",
+            "linea": 58
+          },
+          "ruta": "net/log/net_log_with_source.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/cookies/canonical_cookie.h\"",
+            "linea": 41
+          },
+          "ruta": "net/cookies/canonical_cookie.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/cookies/cookie_partition_key.h\"",
+            "linea": 42
+          },
+          "ruta": "net/cookies/cookie_partition_key.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/cookies/cookie_util.h\"",
+            "linea": 44
+          },
+          "ruta": "net/cookies/cookie_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/url_request/redirect_info.h\"",
+            "linea": 67
+          },
+          "ruta": "net/url_request/redirect_info.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/threading/thread_checker.h\"",
+            "linea": 21
+          },
+          "ruta": "base/threading/thread_checker.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/network_handle.h\"",
+            "linea": 37
+          },
+          "ruta": "net/base/network_handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/traffic_annotation/network_traffic_annotation.h\"",
+            "linea": 65
+          },
+          "ruta": "net/traffic_annotation/network_traffic_annotation.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/isolation_info.h\"",
+            "linea": 29
+          },
+          "ruta": "net/base/isolation_info.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/load_flags.h\"",
+            "linea": 30
+          },
+          "ruta": "net/base/load_flags.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/types/pass_key.h\"",
+            "linea": 23
+          },
+          "ruta": "base/types/pass_key.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/log/net_log_event_type.h\"",
+            "linea": 56
+          },
+          "ruta": "net/log/net_log_event_type.h"
+        }
+      ],
+      "total": 55
+    }
+  }
+}

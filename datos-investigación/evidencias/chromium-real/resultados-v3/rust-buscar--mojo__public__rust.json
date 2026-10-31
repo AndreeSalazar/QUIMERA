@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"mojo/public/rust\"},{\"carpeta\":true,\"ruta\":\"mojo/public/tools/bindings/generators/rust_templates\"},{\"carpeta\":false,\"ruta\":\"mojo/public/rust/bindings/test/rust_associated_sender.rs\"},{\"carpeta\":false,\"ruta\":\"mojo/public/rust/bindings/multiplex_router/cpp_interop/rust_associated_group_controller.h\"},{\"carpeta\":false,\"ruta\":\"mojo/public/rust/bindings/multiplex_router/cpp_interop/rust_associated_group_controller.cc\"},{\"carpeta\":false,\"ruta\":\"mojo/public/tools/bindings/mojom_rust.gni\"},{\"carpeta\":false,\"ruta\":\"mojo/public/tools/bindings/generators/mojom_rust_generator.py\"},{\"carpeta\":false,\"ruta\":\"mojo/public/tools/bindings/generators/mojom_rust_generator_unittest.py\"},{\"carpeta\":false,\"ruta\":\"mojo/public/rust/bindings/multiplex_router/cpp_interop/associated_endpoint_rust_adapter.h\"},{\"carpeta\":false,\"ruta\":\"mojo/public/rust/bindings/multiplex_router/cpp_interop/associated_endpoint_rust_adapter.cc\"},{\"carpeta\":false,\"ruta\":\"mojo/public/tools/run_all_python_unittests.py\"},{\"carpeta\":false,\"ruta\":\"mojo/public/cpp/bindings/tests/remote_unittest.cc\"},{\"carpeta\":false,\"ruta\":\"mojo/public/cpp/bindings/tests/receiver_unittest.cc\"},{\"carpeta\":false,\"ruta\":\"mojo/public/cpp/bindings/tests/receiver_set_unittest.cc\"},{\"carpeta\":false,\"ruta\":\"mojo/public/cpp/bindings/tests/remote_unittest.test-mojom\"},{\"carpeta\":false,\"ruta\":\"mojo/public/cpp/bindings/tests/receiver_unittest.test-mojom\"},{\"carpeta\":false,\"ruta\":\"mojo/public/cpp/bindings/tests/receiver_callback_unittest.cc\"},{\"carpeta\":false,\"ruta\":\"mojo/public/cpp/bindings/tests/report_bad_message_unittest.cc\"},{\"carpeta\":false,\"ruta\":\"mojo/public/interfaces/bindings/tests/data/validation/conformance_mthd1_unexpected_null_struct.data\"},{\"carpeta\":false,\"ruta\":\"mojo/public/interfaces/bindings/tests/data/validation/conformance_mthd8_unexpected_null_string.data\"}],\"texto\":\"mojo/public/rust\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "mojo/public/rust"
+      },
+      {
+        "carpeta": true,
+        "ruta": "mojo/public/tools/bindings/generators/rust_templates"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/rust/bindings/test/rust_associated_sender.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/rust/bindings/multiplex_router/cpp_interop/rust_associated_group_controller.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/rust/bindings/multiplex_router/cpp_interop/rust_associated_group_controller.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/tools/bindings/mojom_rust.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/tools/bindings/generators/mojom_rust_generator.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/tools/bindings/generators/mojom_rust_generator_unittest.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/rust/bindings/multiplex_router/cpp_interop/associated_endpoint_rust_adapter.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/rust/bindings/multiplex_router/cpp_interop/associated_endpoint_rust_adapter.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/tools/run_all_python_unittests.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/cpp/bindings/tests/remote_unittest.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/cpp/bindings/tests/receiver_unittest.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/cpp/bindings/tests/receiver_set_unittest.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/cpp/bindings/tests/remote_unittest.test-mojom"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/cpp/bindings/tests/receiver_unittest.test-mojom"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/cpp/bindings/tests/receiver_callback_unittest.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/cpp/bindings/tests/report_bad_message_unittest.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/interfaces/bindings/tests/data/validation/conformance_mthd1_unexpected_null_struct.data"
+      },
+      {
+        "carpeta": false,
+        "ruta": "mojo/public/interfaces/bindings/tests/data/validation/conformance_mthd8_unexpected_null_string.data"
+      }
+    ],
+    "texto": "mojo/public/rust"
+  }
+}

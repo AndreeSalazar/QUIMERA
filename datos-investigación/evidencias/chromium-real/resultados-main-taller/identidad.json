@@ -1,0 +1,9 @@
+{
+  "root": "/var/tmp/ultra-main-work/chromium-personal/src",
+  "binary": "/var/tmp/ultra-main-work/cache/carpetas-target/release/ultra-carpetas",
+  "uid": 1000,
+  "binary_sha256": "f19191818577adb48794462a95f336c0f18104f08a2fb623f7adc88fe5834f00",
+  "started_unix": 1793469865.1958325,
+  "scope": "Archivos presentes; excludes y limites del motor SUPER GRAFO aplican",
+  "git_head": "e9b6e64b6fa3072793adc5d651051a2b8dd054ed"
+}

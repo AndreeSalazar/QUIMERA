@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"components\"},{\"carpeta\":true,\"ruta\":\"ios/components\"},{\"carpeta\":true,\"ruta\":\"chromeos/components\"},{\"carpeta\":true,\"ruta\":\"extensions/components\"},{\"carpeta\":true,\"ruta\":\"chromeos/ash/components\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/resources/components\"},{\"carpeta\":true,\"ruta\":\"agents/knowledge_base/rules/components\"},{\"carpeta\":true,\"ruta\":\"chrome/browser/ui/webui/components\"},{\"carpeta\":true,\"ruta\":\"tools/metrics/histograms/test_data/components\"},{\"carpeta\":true,\"ruta\":\"ash/webui/recorder_app_ui/resources/components\"}],\"texto\":\"components\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ios/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chromeos/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "extensions/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chromeos/ash/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/resources/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "agents/knowledge_base/rules/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/browser/ui/webui/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "tools/metrics/histograms/test_data/components"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ash/webui/recorder_app_ui/resources/components"
+      }
+    ],
+    "texto": "components"
+  }
+}

@@ -1,0 +1,506 @@
+{
+  "tools": [
+    {
+      "description": "Cifras del proyecto: archivos, dependencias, sospechas por eje (Seguridad, Rendimiento, Elegancia), fallo conectado, ciclos. Empezar por aqui.",
+      "inputSchema": {
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "name": "resumen"
+    },
+    {
+      "description": "Rutas del proyecto cuyo nombre se parece al texto (como Ctrl+P).",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "texto": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "texto"
+        ],
+        "type": "object"
+      },
+      "name": "buscar"
+    },
+    {
+      "description": "Un archivo: lo que usa y quien lo usa (con la linea de cada #include), sus sospechas del museo y su papel en el fallo conectado.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "ruta": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ruta"
+        ],
+        "type": "object"
+      },
+      "name": "archivo"
+    },
+    {
+      "description": "El fallo conectado: causas probables (falla y nada de lo que usa falla), cuantos fallos explica cada una y a cuantos llega.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "fallos"
+    },
+    {
+      "description": "Lo que senalan unos archivos (museo y errores de GCC), en el orden para arreglar, con la ficha de cada una y por donde les llega el fallo.",
+      "inputSchema": {
+        "properties": {
+          "archivos": {
+            "description": "Rutas relativas (archivos o carpetas), como mucho 64",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "archivos"
+        ],
+        "type": "object"
+      },
+      "name": "senales"
+    },
+    {
+      "description": "Por donde se unen dos archivos (A usa B, B usa A, comparten X, los junta X), con la linea de cada paso y que pasos son imprescindibles (donde cortar).",
+      "inputSchema": {
+        "properties": {
+          "a": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "b": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          }
+        },
+        "required": [
+          "a",
+          "b"
+        ],
+        "type": "object"
+      },
+      "name": "camino"
+    },
+    {
+      "description": "Ciclos de cabeceras (C, C++ y ASM): la vuelta mas corta de cada uno, sus lineas, donde cortar y si depende de un #if.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "ciclos"
+    },
+    {
+      "description": "Si cambia este archivo, cuantos se recompilan (quien lo usa, directa o indirectamente) y los que lo usan directamente.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "ruta": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ruta"
+        ],
+        "type": "object"
+      },
+      "name": "peso"
+    },
+    {
+      "description": "Como se combinan varios archivos: directas, lo que comparten, quien los junta, sueltos y piezas.",
+      "inputSchema": {
+        "properties": {
+          "archivos": {
+            "description": "Rutas relativas (archivos o carpetas), como mucho 64",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "archivos"
+        ],
+        "type": "object"
+      },
+      "name": "combinar"
+    },
+    {
+      "description": "Una ficha del museo: regla, control valido, limite, referencia y eje.",
+      "inputSchema": {
+        "properties": {
+          "id": {
+            "description": "C-001, UB-002, E-003...",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "name": "ficha"
+    },
+    {
+      "description": "Revisa un archivo con GCC o Clang (compila a /dev/null: no escribe nada). compilador auto: el de compile_commands.json (Chromium: clang), si no gcc. En C con GCC usa el perfil de los guardianes del proyecto (perfil-gcc.sh: ULTRA_WARN, dos pasadas como ultra_revisar, -O0 -fanalyzer y -O2); si no, -Wall -Wextra -O2 (+ -fanalyzer de GCC o --analyze de Clang si se pide: dan el camino de cada fallo en pasos). La revision se guarda: sobrevive al reanalisis y se repite sola, con el mismo compilador, si el archivo cambia.",
+      "inputSchema": {
+        "properties": {
+          "analizador": {
+            "type": "boolean"
+          },
+          "archivo": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "compilador": {
+            "description": "auto: el de compile_commands.json, si no gcc",
+            "enum": [
+              "auto",
+              "gcc",
+              "clang"
+            ],
+            "type": "string"
+          },
+          "flags": {
+            "description": "Flags extra: solo -I, -D, -std= y -W",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "perfil": {
+            "enum": [
+              "guardian",
+              "generico"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "archivo"
+        ],
+        "type": "object"
+      },
+      "name": "gcc_diagnosticos"
+    },
+    {
+      "description": "Modo guardia: mantener revisados por los guardianes (GCC) todos los archivos de C de una carpeta (o del proyecto), por turnos y despues solo lo que cambie. Sin casos a proposito (CASOS-MUSEO.txt) salvo que se pida.",
+      "inputSchema": {
+        "properties": {
+          "activar": {
+            "description": "false la apaga",
+            "type": "boolean"
+          },
+          "carpeta": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "cpp": {
+            "description": "tambien C++ (perfil generico)",
+            "type": "boolean"
+          },
+          "estudio": {
+            "description": "tambien los casos a proposito",
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "guardia"
+    },
+    {
+      "description": "El perfil de los guardianes (banderas de perfil-gcc.sh) y las revisiones de GCC guardadas: archivo, perfil, errores, avisos y si siguen al dia.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "guardianes"
+    },
+    {
+      "description": "Lee el informe historico del banco LLVM C17/C++20 por perfil y lenguaje; muestra fallos y pendientes sin ejecutar minas. No certifica ausencia de UB ni produccion.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "cobertura_ub"
+    },
+    {
+      "description": "Revalida con el motor instalado de ULTRA los hashes de fuentes, includes y herramientas. Devuelve revisado, caducado, pendiente o diagnostico; no ejecuta programas del proyecto ni confirma UB de runtime.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "revision_estado"
+    },
+    {
+      "description": "Mide cuanto acierta el mapa lexico: para unos archivos C/C++ compara sus cabeceras del proyecto con las que dice gcc -M -MG (con #if resueltos); no mide los que piden cabeceras generadas que faltan. Pasar las -I reales del proyecto en flags.",
+      "inputSchema": {
+        "properties": {
+          "carpeta": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "compilador": {
+            "description": "auto: el de compile_commands.json, si no gcc",
+            "enum": [
+              "auto",
+              "gcc",
+              "clang"
+            ],
+            "type": "string"
+          },
+          "flags": {
+            "description": "-I relativas, -D, -std=",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "gcc_deps"
+    },
+    {
+      "description": "Escribe las sospechas del museo (y los diagnosticos de GCC leidos) en un archivo SARIF 2.1.0 dentro de la carpeta.",
+      "inputSchema": {
+        "properties": {
+          "salida": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          }
+        },
+        "required": [
+          "salida"
+        ],
+        "type": "object"
+      },
+      "name": "exportar_sarif"
+    },
+    {
+      "description": "Vuelve a leer la carpeta ahora (el servidor MCP ya reanaliza solo al ver cambios; incremental: solo relee lo que cambio).",
+      "inputSchema": {
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "name": "reanalizar"
+    },
+    {
+      "description": "Lo que la persona esta mirando ahora en la ventana de ULTRA Carpetas (vista, grupo elegido, seleccion, camino, archivo del editor), con las senales de su grupo. Sin capturas.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "ventana"
+    },
+    {
+      "description": "Ensena algo en la ventana de la persona (solo mueve la vista): accion grupo (rutas, modo ciudad|grafo), revelar (ruta, linea), camino (a, b), aislar (rutas) o limpiar.",
+      "inputSchema": {
+        "properties": {
+          "a": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "accion": {
+            "enum": [
+              "grupo",
+              "revelar",
+              "camino",
+              "aislar",
+              "limpiar"
+            ],
+            "type": "string"
+          },
+          "b": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "linea": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "modo": {
+            "enum": [
+              "ciudad",
+              "grafo"
+            ],
+            "type": "string"
+          },
+          "ruta": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "rutas": {
+            "description": "Rutas relativas (archivos o carpetas), como mucho 64",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "accion"
+        ],
+        "type": "object"
+      },
+      "name": "mostrar"
+    },
+    {
+      "description": "Como se construyo el proyecto desde el primer commit (git), sin sacar versiones viejas: sin argumentos, como crecio por periodos (archivos, dependencias, ciclos, con el mapa de cada momento resuelto como hoy), en que orden nacieron las carpetas y una verificacion (lo reconstruido contra lo de hoy). ruta: cuando nacio un archivo o carpeta, quien, por que (asunto del commit), sus nombres anteriores y como crecio. a y b: que commit anadio la referencia que une a con b. ciclos: que commit cerro cada ciclo de hoy.",
+      "inputSchema": {
+        "properties": {
+          "a": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "b": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          },
+          "ciclos": {
+            "type": "boolean"
+          },
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "periodos": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "profundidad": {
+            "description": "carpetas de hasta tantos niveles en el orden de nacimiento (1 por defecto)",
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "ruta": {
+            "description": "Ruta relativa a la carpeta analizada",
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "cronologia"
+    },
+    {
+      "description": "Que cambio desde el analisis anterior: sospechas nuevas y arregladas, archivos que empiezan o dejan de fallar, la causa principal, ciclos nuevos y rotos.",
+      "inputSchema": {
+        "properties": {
+          "limite": {
+            "description": "Cuantos como mucho (10 por defecto)",
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "cambios"
+    }
+  ]
+}

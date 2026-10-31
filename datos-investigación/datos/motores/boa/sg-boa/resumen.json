@@ -1,0 +1,45 @@
+{
+  "content": [
+    {
+      "text": "{\"analisis_ms\":42,\"archivos_indexados\":1261,\"archivos_leidos\":763,\"cabeceras_exportadas\":null,\"carpeta\":\"/var/tmp/ultra-main-work/motores/boa\",\"ciclos\":{\"archivos\":0,\"dependen_de_un_if\":0,\"total\":0},\"compile_commands\":null,\"dependencias\":993,\"diagnosticos_gcc\":0,\"fallo_conectado\":{\"archivos_que_fallan\":5,\"causas\":5,\"se_pueden_romper\":130},\"guardianes\":null,\"megabytes\":8.3,\"recortado\":false,\"reutilizados_de_la_cache\":0,\"revisiones_gcc\":{\"archivos\":0,\"pendientes\":0},\"siguiente\":\"fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo\",\"sospechas\":{\"Elegancia\":476,\"Rendimiento\":0,\"Seguridad\":7,\"a_proposito\":0},\"version\":1}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "analisis_ms": 42,
+    "archivos_indexados": 1261,
+    "archivos_leidos": 763,
+    "cabeceras_exportadas": null,
+    "carpeta": "/var/tmp/ultra-main-work/motores/boa",
+    "ciclos": {
+      "archivos": 0,
+      "dependen_de_un_if": 0,
+      "total": 0
+    },
+    "compile_commands": null,
+    "dependencias": 993,
+    "diagnosticos_gcc": 0,
+    "fallo_conectado": {
+      "archivos_que_fallan": 5,
+      "causas": 5,
+      "se_pueden_romper": 130
+    },
+    "guardianes": null,
+    "megabytes": 8.3,
+    "recortado": false,
+    "reutilizados_de_la_cache": 0,
+    "revisiones_gcc": {
+      "archivos": 0,
+      "pendientes": 0
+    },
+    "siguiente": "fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo",
+    "sospechas": {
+      "Elegancia": 476,
+      "Rendimiento": 0,
+      "Seguridad": 7,
+      "a_proposito": 0
+    },
+    "version": 1
+  }
+}

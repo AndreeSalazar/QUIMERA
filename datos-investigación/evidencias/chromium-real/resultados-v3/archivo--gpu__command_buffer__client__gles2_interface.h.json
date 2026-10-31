@@ -1,0 +1,331 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":17},\"ruta\":\"gpu/command_buffer/client/client_transfer_cache.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":33},\"ruta\":\"gpu/command_buffer/client/gles2_implementation.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":52},\"ruta\":\"cc/raster/raster_buffer_provider_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":18},\"ruta\":\"media/video/gpu_video_accelerator_factories.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":13},\"ruta\":\"chrome/browser/vr/graphics_delegate_win.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":12},\"ruta\":\"chrome/browser/vr/graphics_delegate_win.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":13},\"ruta\":\"gpu/command_buffer/client/gles2_lib.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":22},\"ruta\":\"components/viz/client/client_resource_provider.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":14},\"ruta\":\"components/viz/test/gl_scaler_test_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":8},\"ruta\":\"gpu/command_buffer/client/gles2_interface_stub.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":23},\"ruta\":\"components/webxr/mailbox_to_surface_bridge_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":17},\"ruta\":\"gpu/ipc/client/gpu_context_tests.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":70},\"ruta\":\"content/browser/renderer_host/compositor_impl_android.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":109},\"ruta\":\"content/renderer/render_thread_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":72},\"ruta\":\"content/renderer/renderer_blink_platform_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":11},\"ruta\":\"content/renderer/webgraphicscontext3d_provider_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":31},\"ruta\":\"content/web_test/renderer/test_plugin.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":32},\"ruta\":\"device/vr/openxr/openxr_render_loop.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":28},\"ruta\":\"device/vr/openxr/openxr_render_loop.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":13},\"ruta\":\"device/vr/windows/d3d11_texture_helper.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":27},\"ruta\":\"gpu/command_buffer/client/client_shared_image.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":5},\"ruta\":\"gpu/command_buffer/client/gles2_interface.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":11},\"ruta\":\"gpu/command_buffer/client/gles2_trace_implementation.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":44},\"ruta\":\"media/gfx/paint_canvas_video_renderer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":18},\"ruta\":\"third_party/blink/renderer/platform/graphics/canvas_resource.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/platform/graphics/test/fake_web_graphics_context_3d_provider.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":41},\"ruta\":\"third_party/blink/renderer/core/testing/internals.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":18},\"ruta\":\"third_party/blink/renderer/modules/canvas/imagebitmap/image_bitmap_rendering_context.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":7},\"ruta\":\"third_party/blink/renderer/modules/webgl/ext_disjoint_timer_query.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface.h\\\"\",\"linea\":7},\"ruta\":\"third_party/blink/renderer/modules/webgl/ext_disjoint_timer_query_webgl2.cc\"}],\"total\":63},\"papel\":null,\"ruta\":\"gpu/command_buffer/client/gles2_interface.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"base/functional/callback.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/compiler_specific.h\\\"\",\"linea\":12},\"ruta\":\"base/compiler_specific.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/common/sync_token.h\\\"\",\"linea\":15},\"ruta\":\"gpu/command_buffer/common/sync_token.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include <GLES2/gl2.h>\",\"linea\":8},\"ruta\":\"third_party/angle/include/GLES2/gl2.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/gpu/ganesh/GrTypes.h\\\"\",\"linea\":17},\"ruta\":\"third_party/skia/include/gpu/ganesh/GrTypes.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkAlphaType.h\\\"\",\"linea\":16},\"ruta\":\"third_party/skia/include/core/SkAlphaType.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/interface_base.h\\\"\",\"linea\":14},\"ruta\":\"gpu/command_buffer/client/interface_base.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"gpu/command_buffer/client/gles2_interface_autogen.h\\\"\",\"linea\":107},\"ruta\":\"gpu/command_buffer/client/gles2_interface_autogen.h\"}],\"total\":8}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 17
+          },
+          "ruta": "gpu/command_buffer/client/client_transfer_cache.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 33
+          },
+          "ruta": "gpu/command_buffer/client/gles2_implementation.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 52
+          },
+          "ruta": "cc/raster/raster_buffer_provider_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 18
+          },
+          "ruta": "media/video/gpu_video_accelerator_factories.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 13
+          },
+          "ruta": "chrome/browser/vr/graphics_delegate_win.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 12
+          },
+          "ruta": "chrome/browser/vr/graphics_delegate_win.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 13
+          },
+          "ruta": "gpu/command_buffer/client/gles2_lib.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 22
+          },
+          "ruta": "components/viz/client/client_resource_provider.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 14
+          },
+          "ruta": "components/viz/test/gl_scaler_test_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 8
+          },
+          "ruta": "gpu/command_buffer/client/gles2_interface_stub.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 23
+          },
+          "ruta": "components/webxr/mailbox_to_surface_bridge_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 17
+          },
+          "ruta": "gpu/ipc/client/gpu_context_tests.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 70
+          },
+          "ruta": "content/browser/renderer_host/compositor_impl_android.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 109
+          },
+          "ruta": "content/renderer/render_thread_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 72
+          },
+          "ruta": "content/renderer/renderer_blink_platform_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 11
+          },
+          "ruta": "content/renderer/webgraphicscontext3d_provider_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 31
+          },
+          "ruta": "content/web_test/renderer/test_plugin.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 32
+          },
+          "ruta": "device/vr/openxr/openxr_render_loop.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 28
+          },
+          "ruta": "device/vr/openxr/openxr_render_loop.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 13
+          },
+          "ruta": "device/vr/windows/d3d11_texture_helper.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 27
+          },
+          "ruta": "gpu/command_buffer/client/client_shared_image.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 5
+          },
+          "ruta": "gpu/command_buffer/client/gles2_interface.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 11
+          },
+          "ruta": "gpu/command_buffer/client/gles2_trace_implementation.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 44
+          },
+          "ruta": "media/gfx/paint_canvas_video_renderer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 18
+          },
+          "ruta": "third_party/blink/renderer/platform/graphics/canvas_resource.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 12
+          },
+          "ruta": "third_party/blink/renderer/platform/graphics/test/fake_web_graphics_context_3d_provider.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 41
+          },
+          "ruta": "third_party/blink/renderer/core/testing/internals.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 18
+          },
+          "ruta": "third_party/blink/renderer/modules/canvas/imagebitmap/image_bitmap_rendering_context.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 7
+          },
+          "ruta": "third_party/blink/renderer/modules/webgl/ext_disjoint_timer_query.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface.h\"",
+            "linea": 7
+          },
+          "ruta": "third_party/blink/renderer/modules/webgl/ext_disjoint_timer_query_webgl2.cc"
+        }
+      ],
+      "total": 63
+    },
+    "papel": null,
+    "ruta": "gpu/command_buffer/client/gles2_interface.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "base/functional/callback.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/compiler_specific.h\"",
+            "linea": 12
+          },
+          "ruta": "base/compiler_specific.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/common/sync_token.h\"",
+            "linea": 15
+          },
+          "ruta": "gpu/command_buffer/common/sync_token.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include <GLES2/gl2.h>",
+            "linea": 8
+          },
+          "ruta": "third_party/angle/include/GLES2/gl2.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/gpu/ganesh/GrTypes.h\"",
+            "linea": 17
+          },
+          "ruta": "third_party/skia/include/gpu/ganesh/GrTypes.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkAlphaType.h\"",
+            "linea": 16
+          },
+          "ruta": "third_party/skia/include/core/SkAlphaType.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/interface_base.h\"",
+            "linea": 14
+          },
+          "ruta": "gpu/command_buffer/client/interface_base.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"gpu/command_buffer/client/gles2_interface_autogen.h\"",
+            "linea": 107
+          },
+          "ruta": "gpu/command_buffer/client/gles2_interface_autogen.h"
+        }
+      ],
+      "total": 8
+    }
+  }
+}

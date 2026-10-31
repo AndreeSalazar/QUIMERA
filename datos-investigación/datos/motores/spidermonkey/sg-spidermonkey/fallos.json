@@ -1,0 +1,79 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos_que_fallan\":6,\"causas\":{\"lista\":[{\"explica\":0,\"lo_usan\":4,\"primera_senal\":{\"ficha\":\"UB-021\",\"linea\":467,\"motivo\":\"volatile no sincroniza hilos: _Atomic o un mutex\"},\"ruta\":\"vtune/ittnotify_config.h\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":339,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"editline/editline.c\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":349,\"motivo\":\"existing apunta dentro de orderedMoves_, que cambio en la linea 345: puede haber realocado\"},\"ruta\":\"jit/MoveResolver.cpp\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":950,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"jit/arm64/vixl/Debugger-vixl.cpp\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":1890,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"jit/arm64/vixl/MacroAssembler-vixl.cpp\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":390,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"shell/js.cpp\"}],\"total\":6},\"recortado\":false,\"regla\":\"Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla.\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos_que_fallan": 6,
+    "causas": {
+      "lista": [
+        {
+          "explica": 0,
+          "lo_usan": 4,
+          "primera_senal": {
+            "ficha": "UB-021",
+            "linea": 467,
+            "motivo": "volatile no sincroniza hilos: _Atomic o un mutex"
+          },
+          "ruta": "vtune/ittnotify_config.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 339,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "editline/editline.c"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 349,
+            "motivo": "existing apunta dentro de orderedMoves_, que cambio en la linea 345: puede haber realocado"
+          },
+          "ruta": "jit/MoveResolver.cpp"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 950,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "jit/arm64/vixl/Debugger-vixl.cpp"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 1890,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "jit/arm64/vixl/MacroAssembler-vixl.cpp"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 390,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "shell/js.cpp"
+        }
+      ],
+      "total": 6
+    },
+    "recortado": false,
+    "regla": "Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla."
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"components/script_bindings/conversions.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":154,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script_bindings/conversions.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":162,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script_bindings/dom.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":161,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script_bindings/dom.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":173,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script_bindings/domstring.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":64,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script_bindings/inheritance.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":39,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script_bindings/inheritance.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":48,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script_bindings/root.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":306,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script_bindings/root.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":315,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script_bindings/root.rs\",\"control_valido\":\"let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-002\",\"linea\":473,\"texto\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\",\"titulo\":\"transmute reinterpreta los bytes\",\"visto\":\"transmute ::\"},{\"archivo\":\"components/script_bindings/str.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":189,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script_bindings/str.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":285,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script_bindings/utils.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":892,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":210,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":213,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":224,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":275,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":296,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":307,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":327,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":335,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":346,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":354,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":362,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"},{\"archivo\":\"components/script_bindings/buffer_source.rs\",\"control_valido\":\"// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"RS-001\",\"linea\":365,\"texto\":\"bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto\",\"titulo\":\"Bloque unsafe sin su porque\",\"visto\":\"unsafe {\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":456,\"total\":481}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "components/script_bindings/conversions.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 154,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script_bindings/conversions.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 162,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script_bindings/dom.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 161,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script_bindings/dom.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 173,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script_bindings/domstring.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 64,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script_bindings/inheritance.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 39,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script_bindings/inheritance.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 48,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script_bindings/root.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 306,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script_bindings/root.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 315,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script_bindings/root.rs",
+        "control_valido": "let n = u32::from_ne_bytes(bytes);  // o f32::from_bits, ptr.cast::<T>(), bytemuck",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-002",
+        "linea": 473,
+        "texto": "transmute no comprueba que los bytes formen un valor valido del tipo destino",
+        "titulo": "transmute reinterpreta los bytes",
+        "visto": "transmute ::"
+      },
+      {
+        "archivo": "components/script_bindings/str.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 189,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script_bindings/str.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 285,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script_bindings/utils.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 892,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 210,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 213,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 224,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 275,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 296,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 307,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 327,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 335,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 346,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 354,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 362,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      },
+      {
+        "archivo": "components/script_bindings/buffer_source.rs",
+        "control_valido": "// SAFETY: p viene de Box::into_raw y nadie mas lo libera. let b = unsafe { Box::from_raw(p) };",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "RS-001",
+        "linea": 365,
+        "texto": "bloque unsafe sin un comentario // SAFETY: que diga que invariante lo hace correcto",
+        "titulo": "Bloque unsafe sin su porque",
+        "visto": "unsafe {"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 456,
+    "total": 481
+  }
+}

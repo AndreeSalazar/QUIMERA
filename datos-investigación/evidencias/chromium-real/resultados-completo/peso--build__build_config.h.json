@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":11269,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":22},\"ruta\":\"base/logging.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":32},\"ruta\":\"base/command_line.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":31},\"ruta\":\"base/feature_list.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":16},\"ruta\":\"base/functional/bind.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":13},\"ruta\":\"base/strings/strcat.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":18},\"ruta\":\"base/strings/string_number_conversions.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":24},\"ruta\":\"base/task/thread_pool.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":16},\"ruta\":\"base/threading/thread_restrictions.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":12},\"ruta\":\"base/timer/elapsed_timer.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":31},\"ruta\":\"components/prefs/pref_service.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":30},\"ruta\":\"content/public/browser/web_contents.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":8},\"ruta\":\"base/compiler_specific.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":115},\"ruta\":\"base/files/file_path.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":23},\"ruta\":\"base/run_loop.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":13},\"ruta\":\"base/i18n/rtl.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":8},\"ruta\":\"base/message_loop/message_pump_type.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":14},\"ruta\":\"content/public/browser/child_process_host.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":18},\"ruta\":\"content/public/browser/render_frame_host.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":14},\"ruta\":\"mojo/public/cpp/bindings/pending_receiver.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":21},\"ruta\":\"ui/base/l10n/l10n_util.h\"}],\"recortado\":false,\"ruta\":\"build/build_config.h\",\"se_recompilan\":120623}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 11269,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 22
+        },
+        "ruta": "base/logging.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 32
+        },
+        "ruta": "base/command_line.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 31
+        },
+        "ruta": "base/feature_list.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 16
+        },
+        "ruta": "base/functional/bind.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 13
+        },
+        "ruta": "base/strings/strcat.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 18
+        },
+        "ruta": "base/strings/string_number_conversions.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 24
+        },
+        "ruta": "base/task/thread_pool.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 16
+        },
+        "ruta": "base/threading/thread_restrictions.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 12
+        },
+        "ruta": "base/timer/elapsed_timer.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 31
+        },
+        "ruta": "components/prefs/pref_service.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 30
+        },
+        "ruta": "content/public/browser/web_contents.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 8
+        },
+        "ruta": "base/compiler_specific.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 115
+        },
+        "ruta": "base/files/file_path.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 23
+        },
+        "ruta": "base/run_loop.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 13
+        },
+        "ruta": "base/i18n/rtl.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 8
+        },
+        "ruta": "base/message_loop/message_pump_type.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 14
+        },
+        "ruta": "content/public/browser/child_process_host.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 18
+        },
+        "ruta": "content/public/browser/render_frame_host.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 14
+        },
+        "ruta": "mojo/public/cpp/bindings/pending_receiver.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"build/build_config.h\"",
+          "linea": 21
+        },
+        "ruta": "ui/base/l10n/l10n_util.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "build/build_config.h",
+    "se_recompilan": 120623
+  }
+}

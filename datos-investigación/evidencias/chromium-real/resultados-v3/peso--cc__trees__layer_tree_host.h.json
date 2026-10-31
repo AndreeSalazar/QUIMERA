@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":106,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":1951,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":30},\"ruta\":\"ui/compositor/compositor.h\"},{\"arrastra\":305,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":16},\"ruta\":\"third_party/blink/renderer/platform/widget/frame_widget.h\"},{\"arrastra\":272,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":48},\"ruta\":\"third_party/blink/renderer/core/frame/web_frame_widget_impl.h\"},{\"arrastra\":255,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/platform/testing/layer_tree_host_embedder.h\"},{\"arrastra\":236,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":47},\"ruta\":\"third_party/blink/renderer/core/frame/frame_test_helpers.h\"},{\"arrastra\":204,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":59},\"ruta\":\"cc/trees/layer_tree_host_impl.h\"},{\"arrastra\":164,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":31},\"ruta\":\"cc/trees/layer_tree_impl.h\"},{\"arrastra\":146,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/core/testing/sim/sim_compositor.h\"},{\"arrastra\":48,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":12},\"ruta\":\"cc/trees/tree_synchronizer.h\"},{\"arrastra\":41,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":16},\"ruta\":\"cc/test/fake_layer_tree_host.h\"},{\"arrastra\":38,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":12},\"ruta\":\"cc/test/test_hooks.h\"},{\"arrastra\":36,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":26},\"ruta\":\"cc/test/layer_tree_test.h\"},{\"arrastra\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":31},\"ruta\":\"third_party/blink/renderer/core/page/pointer_lock_controller.h\"},{\"arrastra\":6,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":20},\"ruta\":\"cc/trees/proxy_main.h\"},{\"arrastra\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":14},\"ruta\":\"cc/test/fake_proxy.h\"},{\"arrastra\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":37},\"ruta\":\"third_party/blink/renderer/core/frame/fullscreen_controller.h\"},{\"arrastra\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":8},\"ruta\":\"third_party/blink/renderer/core/view_transition/view_transition_test_utils.h\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":22},\"ruta\":\"cc/benchmarks/invalidation_benchmark.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":18},\"ruta\":\"cc/benchmarks/micro_benchmark_controller.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/trees/layer_tree_host.h\\\"\",\"linea\":23},\"ruta\":\"cc/benchmarks/rasterize_and_record_benchmark.cc\"}],\"recortado\":false,\"ruta\":\"cc/trees/layer_tree_host.h\",\"se_recompilan\":2730}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 106,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 1951,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 30
+        },
+        "ruta": "ui/compositor/compositor.h"
+      },
+      {
+        "arrastra": 305,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 16
+        },
+        "ruta": "third_party/blink/renderer/platform/widget/frame_widget.h"
+      },
+      {
+        "arrastra": 272,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 48
+        },
+        "ruta": "third_party/blink/renderer/core/frame/web_frame_widget_impl.h"
+      },
+      {
+        "arrastra": 255,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/blink/renderer/platform/testing/layer_tree_host_embedder.h"
+      },
+      {
+        "arrastra": 236,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 47
+        },
+        "ruta": "third_party/blink/renderer/core/frame/frame_test_helpers.h"
+      },
+      {
+        "arrastra": 204,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 59
+        },
+        "ruta": "cc/trees/layer_tree_host_impl.h"
+      },
+      {
+        "arrastra": 164,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 31
+        },
+        "ruta": "cc/trees/layer_tree_impl.h"
+      },
+      {
+        "arrastra": 146,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/blink/renderer/core/testing/sim/sim_compositor.h"
+      },
+      {
+        "arrastra": 48,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 12
+        },
+        "ruta": "cc/trees/tree_synchronizer.h"
+      },
+      {
+        "arrastra": 41,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 16
+        },
+        "ruta": "cc/test/fake_layer_tree_host.h"
+      },
+      {
+        "arrastra": 38,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 12
+        },
+        "ruta": "cc/test/test_hooks.h"
+      },
+      {
+        "arrastra": 36,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 26
+        },
+        "ruta": "cc/test/layer_tree_test.h"
+      },
+      {
+        "arrastra": 13,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 31
+        },
+        "ruta": "third_party/blink/renderer/core/page/pointer_lock_controller.h"
+      },
+      {
+        "arrastra": 6,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 20
+        },
+        "ruta": "cc/trees/proxy_main.h"
+      },
+      {
+        "arrastra": 4,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 14
+        },
+        "ruta": "cc/test/fake_proxy.h"
+      },
+      {
+        "arrastra": 2,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 37
+        },
+        "ruta": "third_party/blink/renderer/core/frame/fullscreen_controller.h"
+      },
+      {
+        "arrastra": 2,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 8
+        },
+        "ruta": "third_party/blink/renderer/core/view_transition/view_transition_test_utils.h"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 22
+        },
+        "ruta": "cc/benchmarks/invalidation_benchmark.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 18
+        },
+        "ruta": "cc/benchmarks/micro_benchmark_controller.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/trees/layer_tree_host.h\"",
+          "linea": 23
+        },
+        "ruta": "cc/benchmarks/rasterize_and_record_benchmark.cc"
+      }
+    ],
+    "recortado": false,
+    "ruta": "cc/trees/layer_tree_host.h",
+    "se_recompilan": 2730
+  }
+}

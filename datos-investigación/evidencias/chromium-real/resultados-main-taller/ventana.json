@@ -1,0 +1,13 @@
+{
+  "content": [
+    {
+      "text": "{\"abierta\":false,\"nota\":\"No hay una ventana de ULTRA Carpetas abierta en esta carpeta (o es de otra version).\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "abierta": false,
+    "nota": "No hay una ventana de ULTRA Carpetas abierta en esta carpeta (o es de otra version)."
+  }
+}

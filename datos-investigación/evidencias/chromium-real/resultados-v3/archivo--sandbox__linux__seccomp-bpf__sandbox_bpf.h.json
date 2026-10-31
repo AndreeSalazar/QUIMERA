@@ -1,0 +1,211 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":13},\"ruta\":\"sandbox/policy/linux/sandbox_seccomp_bpf_linux.h\"},{\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_LINUX)\",\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":41},\"ruta\":\"remoting/host/peer_connection_process_main.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":31},\"ruta\":\"remoting/host/linux/peer_connection_bpf_policy_linux_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":51},\"ruta\":\"sandbox/linux/integration_tests/bpf_dsl_seccomp_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":49},\"ruta\":\"sandbox/linux/integration_tests/seccomp_broker_process_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":19},\"ruta\":\"sandbox/linux/seccomp-bpf/bpf_tests_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":5},\"ruta\":\"sandbox/linux/seccomp-bpf/sandbox_bpf.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":14},\"ruta\":\"sandbox/linux/seccomp-bpf/sandbox_bpf_test_runner.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":5},\"ruta\":\"sandbox/linux/seccomp-bpf/sandbox_bpf_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":29},\"ruta\":\"sandbox/linux/seccomp-bpf/syscall_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":22},\"ruta\":\"sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":42},\"ruta\":\"sandbox/linux/seccomp-bpf-helpers/baseline_policy_unittest.cc\"},{\"motivo\":{\"condicion\":\"#if BUILDFLAG(USE_SECCOMP_BPF)\",\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":13},\"ruta\":\"sandbox/linux/seccomp-bpf-helpers/seccomp_starter_android.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":24},\"ruta\":\"sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":26},\"ruta\":\"sandbox/linux/seccomp-bpf-helpers/sigsys_handlers_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":36},\"ruta\":\"sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":33},\"ruta\":\"sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":14},\"ruta\":\"sandbox/policy/linux/bpf_hardware_video_decoding_policy_linux.cc\"},{\"motivo\":{\"condicion\":\"#if BUILDFLAG(USE_SECCOMP_BPF)\",\"escrito\":\"#include \\\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\\\"\",\"linea\":35},\"ruta\":\"sandbox/policy/linux/sandbox_seccomp_bpf_linux.cc\"}],\"total\":19},\"papel\":null,\"ruta\":\"sandbox/linux/seccomp-bpf/sandbox_bpf.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/files/scoped_file.h\\\"\",\"linea\":12},\"ruta\":\"base/files/scoped_file.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/bpf_dsl/policy.h\\\"\",\"linea\":14},\"ruta\":\"sandbox/linux/bpf_dsl/policy.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/sandbox_export.h\\\"\",\"linea\":15},\"ruta\":\"sandbox/sandbox_export.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sandbox/linux/bpf_dsl/codegen.h\\\"\",\"linea\":13},\"ruta\":\"sandbox/linux/bpf_dsl/codegen.h\"}],\"total\":4}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 13
+          },
+          "ruta": "sandbox/policy/linux/sandbox_seccomp_bpf_linux.h"
+        },
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(IS_LINUX)",
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 41
+          },
+          "ruta": "remoting/host/peer_connection_process_main.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 31
+          },
+          "ruta": "remoting/host/linux/peer_connection_bpf_policy_linux_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 51
+          },
+          "ruta": "sandbox/linux/integration_tests/bpf_dsl_seccomp_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 49
+          },
+          "ruta": "sandbox/linux/integration_tests/seccomp_broker_process_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 19
+          },
+          "ruta": "sandbox/linux/seccomp-bpf/bpf_tests_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 5
+          },
+          "ruta": "sandbox/linux/seccomp-bpf/sandbox_bpf.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 14
+          },
+          "ruta": "sandbox/linux/seccomp-bpf/sandbox_bpf_test_runner.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 5
+          },
+          "ruta": "sandbox/linux/seccomp-bpf/sandbox_bpf_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 29
+          },
+          "ruta": "sandbox/linux/seccomp-bpf/syscall_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 22
+          },
+          "ruta": "sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 42
+          },
+          "ruta": "sandbox/linux/seccomp-bpf-helpers/baseline_policy_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(USE_SECCOMP_BPF)",
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 13
+          },
+          "ruta": "sandbox/linux/seccomp-bpf-helpers/seccomp_starter_android.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 24
+          },
+          "ruta": "sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 26
+          },
+          "ruta": "sandbox/linux/seccomp-bpf-helpers/sigsys_handlers_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 36
+          },
+          "ruta": "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 33
+          },
+          "ruta": "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 14
+          },
+          "ruta": "sandbox/policy/linux/bpf_hardware_video_decoding_policy_linux.cc"
+        },
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(USE_SECCOMP_BPF)",
+            "escrito": "#include \"sandbox/linux/seccomp-bpf/sandbox_bpf.h\"",
+            "linea": 35
+          },
+          "ruta": "sandbox/policy/linux/sandbox_seccomp_bpf_linux.cc"
+        }
+      ],
+      "total": 19
+    },
+    "papel": null,
+    "ruta": "sandbox/linux/seccomp-bpf/sandbox_bpf.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/files/scoped_file.h\"",
+            "linea": 12
+          },
+          "ruta": "base/files/scoped_file.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/bpf_dsl/policy.h\"",
+            "linea": 14
+          },
+          "ruta": "sandbox/linux/bpf_dsl/policy.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/sandbox_export.h\"",
+            "linea": 15
+          },
+          "ruta": "sandbox/sandbox_export.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"sandbox/linux/bpf_dsl/codegen.h\"",
+            "linea": 13
+          },
+          "ruta": "sandbox/linux/bpf_dsl/codegen.h"
+        }
+      ],
+      "total": 4
+    }
+  }
+}

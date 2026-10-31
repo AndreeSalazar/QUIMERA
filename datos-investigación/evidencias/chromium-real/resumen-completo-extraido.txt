@@ -1,0 +1,115 @@
+== PESO
+base/functional/callback.h {'lo_usan_directamente': 9021, 'recortado': False, 'ruta': 'base/functional/callback.h', 'se_recompilan': 83344}
+base/logging.h {'lo_usan_directamente': 7117, 'recortado': False, 'ruta': 'base/logging.h', 'se_recompilan': 99961}
+base/memory/raw_ptr.h {'lo_usan_directamente': 17601, 'recortado': False, 'ruta': 'base/memory/raw_ptr.h', 'se_recompilan': 112173}
+base/task/sequenced_task_runner.h {'lo_usan_directamente': 4376, 'recortado': False, 'ruta': 'base/task/sequenced_task_runner.h', 'se_recompilan': 58431}
+build/build_config.h {'lo_usan_directamente': 11269, 'recortado': False, 'ruta': 'build/build_config.h', 'se_recompilan': 120623}
+cc/trees/layer_tree_host.h {'lo_usan_directamente': 106, 'recortado': False, 'ruta': 'cc/trees/layer_tree_host.h', 'se_recompilan': 2730}
+chrome/browser/profiles/profile.h {'lo_usan_directamente': 6013, 'recortado': False, 'ruta': 'chrome/browser/profiles/profile.h', 'se_recompilan': 11451}
+chrome/browser/ui/browser.h {'lo_usan_directamente': 2, 'recortado': False, 'ruta': 'chrome/browser/ui/browser.h', 'se_recompilan': 2}
+components/viz/common/frame_sinks/begin_frame_source.h {'lo_usan_directamente': 59, 'recortado': False, 'ruta': 'components/viz/common/frame_sinks/begin_frame_source.h', 'se_recompilan': 4054}
+content/public/browser/render_process_host.h {'lo_usan_directamente': 843, 'recortado': False, 'ruta': 'content/public/browser/render_process_host.h', 'se_recompilan': 4454}
+content/public/browser/web_contents.h {'lo_usan_directamente': 4847, 'recortado': False, 'ruta': 'content/public/browser/web_contents.h', 'se_recompilan': 12693}
+content/public/renderer/render_frame.h {'lo_usan_directamente': 220, 'recortado': False, 'ruta': 'content/public/renderer/render_frame.h', 'se_recompilan': 263}
+gpu/command_buffer/client/gles2_interface.h {'lo_usan_directamente': 63, 'recortado': False, 'ruta': 'gpu/command_buffer/client/gles2_interface.h', 'se_recompilan': 873}
+ipc/ipc_message.h {'lo_usan_directamente': 5, 'recortado': False, 'ruta': 'ipc/ipc_message.h', 'se_recompilan': 6}
+mojo/public/cpp/bindings/remote.h {'lo_usan_directamente': 2318, 'recortado': False, 'ruta': 'mojo/public/cpp/bindings/remote.h', 'se_recompilan': 26459}
+net/base/net_errors.h {'lo_usan_directamente': 1606, 'recortado': False, 'ruta': 'net/base/net_errors.h', 'se_recompilan': 22201}
+net/url_request/url_request.h {'lo_usan_directamente': 118, 'recortado': False, 'ruta': 'net/url_request/url_request.h', 'se_recompilan': 1353}
+sandbox/linux/seccomp-bpf/sandbox_bpf.h {'lo_usan_directamente': 19, 'recortado': False, 'ruta': 'sandbox/linux/seccomp-bpf/sandbox_bpf.h', 'se_recompilan': 90}
+sandbox/policy/sandbox.h {'lo_usan_directamente': 15, 'recortado': False, 'ruta': 'sandbox/policy/sandbox.h', 'se_recompilan': 15}
+services/network/public/cpp/resource_request.h {'lo_usan_directamente': 699, 'recortado': False, 'ruta': 'services/network/public/cpp/resource_request.h', 'se_recompilan': 4185}
+third_party/blink/renderer/bindings/core/v8/script_value.h {'lo_usan_directamente': 243, 'recortado': False, 'ruta': 'third_party/blink/renderer/bindings/core/v8/script_value.h', 'se_recompilan': 5530}
+third_party/blink/renderer/core/dom/document.h {'lo_usan_directamente': 1154, 'recortado': False, 'ruta': 'third_party/blink/renderer/core/dom/document.h', 'se_recompilan': 3616}
+third_party/blink/renderer/core/frame/local_frame.h {'lo_usan_directamente': 972, 'recortado': False, 'ruta': 'third_party/blink/renderer/core/frame/local_frame.h', 'se_recompilan': 1914}
+third_party/blink/renderer/platform/heap/garbage_collected.h {'lo_usan_directamente': 2318, 'recortado': False, 'ruta': 'third_party/blink/renderer/platform/heap/garbage_collected.h', 'se_recompilan': 10082}
+third_party/skia/include/core/SkCanvas.h {'lo_usan_directamente': 1205, 'recortado': False, 'ruta': 'third_party/skia/include/core/SkCanvas.h', 'se_recompilan': 12926}
+ui/gfx/geometry/rect.h {'lo_usan_directamente': 2077, 'recortado': False, 'ruta': 'ui/gfx/geometry/rect.h', 'se_recompilan': 37404}
+url/gurl.h {'lo_usan_directamente': 8036, 'recortado': False, 'ruta': 'url/gurl.h', 'se_recompilan': 54128}
+v8/include/v8-isolate.h {'lo_usan_directamente': 188, 'recortado': False, 'ruta': 'v8/include/v8-isolate.h', 'se_recompilan': 11594}
+v8/include/v8.h {'lo_usan_directamente': 421, 'recortado': False, 'ruta': 'v8/include/v8.h', 'se_recompilan': 8515}
+== DIRECTAS (capa usa capa: aristas)
+  mojo -> base: 1897
+  mojo -> ipc: 17
+  mojo -> third_party/blink: 11
+  mojo -> net: 2
+  ipc -> base: 244
+  ipc -> mojo: 94
+  content -> base: 18954
+  content -> mojo: 2434
+  content -> ipc: 30
+  content -> third_party/blink: 2427
+  content -> v8: 150
+  content -> cc: 184
+  content -> components/viz: 379
+  content -> gpu: 257
+  content -> third_party/skia: 207
+  content -> net: 2385
+  content -> services: 1593
+  content -> sandbox: 216
+  content -> ui: 2690
+  content -> url: 1234
+  third_party/blink -> base: 12548
+  third_party/blink -> mojo: 1139
+  third_party/blink -> ipc: 3
+  third_party/blink -> content: 11
+  third_party/blink -> v8: 636
+  third_party/blink -> cc: 843
+  third_party/blink -> components/viz: 275
+  third_party/blink -> gpu: 353
+  third_party/blink -> third_party/skia: 732
+  third_party/blink -> net: 320
+  third_party/blink -> services: 516
+  third_party/blink -> ui: 1685
+  third_party/blink -> url: 165
+  cc -> base: 2260
+  cc -> mojo: 29
+  cc -> third_party/blink: 3
+  cc -> components/viz: 696
+  cc -> gpu: 155
+  cc -> third_party/skia: 603
+  cc -> services: 16
+  cc -> ui: 725
+  cc -> url: 6
+  components/viz -> base: 1885
+  components/viz -> mojo: 165
+  components/viz -> ipc: 1
+  components/viz -> third_party/blink: 5
+  components/viz -> cc: 223
+  components/viz -> gpu: 476
+  components/viz -> third_party/skia: 329
+  components/viz -> services: 7
+keys combinar ['comparten', 'directas', 'los_juntan', 'miembros', 'piezas', 'sin_datos', 'sueltos']
+los_juntan {"lista": [{"ruta": "android_webview/lib/aw_main_delegate.cc", "usa_a": ["base", "mojo", "content", "third_party/blink", "cc", "components/viz", "gpu", "net", "services", "ui"]}, {"ruta": "fuchsia_web/webengine/browser/web_engine_config.cc", "usa_a": ["base", "content", "third_party/blink", "cc", "components/viz", "gpu", "services", "ui", "url"]}, {"ruta": "headless/lib/headless_content_main_delegate.cc", "usa_a": ["base", "content", "third_party/blink", "v8", "cc", "components/viz", "gpu", "sandbox", "ui"]}, {"ruta": "android_webview/browser/aw_contents.cc", "usa_a": ["base", "content", "thir
+miembros [{"archivos": 3180, "ruta": "base", "se_toca_con": 15}, {"archivos": 741, "ruta": "mojo", "se_toca_con": 15}, {"archivos": 58, "ruta": "ipc", "se_toca_con": 15}, {"archivos": 5850, "ruta": "content", "se_toca_con": 15}, {"archivos": 14285, "ruta": "third_party/blink", "se_toca_con": 15}, {"archivos": 4376, "ruta": "v8", "se_toca_con": 15}, {"archivos": 1115, "ruta": "cc", "se_toca_con": 15}, {"archivos": 749, "ruta": "components/viz", "se_toca_con": 15}, {"archivos": 1108, "ruta": "gpu", "se_toca_con": 15}, {"archivos": 6136, "ruta": "third_party/skia", "se_toca_con": 15}, {"archivos": 4515, "
+piezas 1
+sin_datos []
+sueltos []
+== CAMINOS
+chrome/browser/ui/browser.h <-> content/public/browser/web_contents.h | A usa B 1 | browser.h usa a web_contents.h directamente: si cambia web_contents.h, browser.h se recompila. Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.
+content/public/browser/web_contents.h <-> third_party/blink/renderer/core/dom/document.h | comparten 2 | Ninguno usa al otro. Los une scoped_refptr.h, que usan los dos (web_contents.h a 1 salto, document.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.
+third_party/blink/renderer/core/dom/document.h <-> v8/include/v8-isolate.h | A usa B 3 | document.h usa a v8-isolate.h a traves de 2 archivos: si cambia v8-isolate.h, document.h se recompila. Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.
+third_party/blink/renderer/core/frame/local_frame.h <-> cc/trees/layer_tree_host.h | comparten 2 | Ninguno usa al otro. Los une raw_ptr.h, que usan los dos (local_frame.h a 1 salto, layer_tree_host.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.
+cc/trees/layer_tree_host.h <-> third_party/skia/include/core/SkCanvas.h | A usa B 3 | layer_tree_host.h usa a SkCanvas.h a traves de 2 archivos: si cambia SkCanvas.h, layer_tree_host.h se recompila. Hay 2 caminos igual de cortos; este es uno. Ningun paso es imprescindible: quitar uno solo no los separa.
+content/public/browser/render_process_host.h <-> mojo/public/cpp/bindings/remote.h | comparten 2 | Ninguno usa al otro. Los une pending_remote.h, que usan los dos (render_process_host.h a 1 salto, remote.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.
+services/network/public/cpp/resource_request.h <-> net/url_request/url_request.h | comparten 2 | Ninguno usa al otro. Los une gurl.h, que usan los dos (resource_request.h a 1 salto, url_request.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.
+sandbox/policy/sandbox.h <-> base/memory/raw_ptr.h | A usa B 2 | sandbox.h usa a raw_ptr.h a traves de 1 archivo: si cambia raw_ptr.h, sandbox.h se recompila. Es el unico tan corto. Un paso es imprescindible: ahi se cortaria la union.
+== FALLOS top
+{'archivos_que_fallan': 1519, 'recortado': True, 'regla': 'Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla.'}
+  base/allocator/partition_allocator/src/partition_alloc/partition_alloc_base/numerics/safe_conversions_impl.h explica 135 lo_usan 112491 UB-015 se lee o escribe a traves de un puntero nulo convertido
+  base/numerics/safe_conversions_impl.h explica 135 lo_usan 112274 UB-015 se lee o escribe a traves de un puntero nulo convertido
+  third_party/angle/src/common/debug.h explica 16 lo_usan 1892 UB-015 se lee o escribe a traves de un puntero nulo convertido
+  third_party/angle/src/common/base/anglebase/numerics/safe_conversions_impl.h explica 12 lo_usan 1644 UB-015 se lee o escribe a traves de un puntero nulo convertido
+  third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/framework/vulkan/vkQueryUtil.hpp explica 7 lo_usan 825 UB-004 vec[2] con 2 elementos: el ultimo indice valido es 1
+  third_party/blink/renderer/core/style/filter_operation.h explica 4 lo_usan 1745 UB-005 buf es local: su vida termina al salir de la funcion y la direccion queda colgan
+  third_party/angle/src/libANGLE/cl_types.h explica 4 lo_usan 762 CXX-002 region apunta dentro de regions, que cambio en la linea 508: puede haber realoca
+  third_party/angle/src/compiler/translator/Common.h explica 2 lo_usan 338 UB-005 buffer es local: su vida termina al salir de la funcion y la direccion queda col
+  third_party/cld_3/src/src/base.h explica 2 lo_usan 44 UB-015 se lee o escribe a traves de un puntero nulo convertido
+  third_party/compiler-rt/src/lib/hwasan/hwasan_checks.h explica 1 lo_usan 4 ASM-003 la plantilla cambia rax y no esta en las salidas ni en los clobbers: GCC cree qu
+  third_party/angle/src/third_party/ceval/ceval.h explica 1 lo_usan 1 UB-011 el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera 
+  third_party/angle/include/CL/cl_ext.h explica 0 lo_usan 365 UB-003 170 << 24 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)
+  components/zucchini/image_utils.h explica 0 lo_usan 114 UB-005 result es local: su vida termina al salir de la funcion y la direccion queda col
+  third_party/blink/renderer/core/layout/inline/line_info_list.h explica 0 lo_usan 30 UB-004 line_infos_[0] con 0 elementos: el ultimo indice valido es 340282366920938463463
+  printing/printing_test.h explica 0 lo_usan 2 UB-005 printer_name es local: su vida termina al salir de la funcion y la direccion que
+== CICLOS top
+{"archivos": 309, "dependen_de_un_if": 32, "ficha": "E-003 (Elegancia): compila por las guardas, pero ninguno se entiende sin los otros", "lista": [{"archivos": 43, "aristas": 90, "cortar": {"desde": "v8/src/objects/objects-inl.h", "hasta": "v8/src/objects/contexts-inl.h"}, "depende_de_un_if": false, "vuelta": [{"desde": "v8/src/objects/objects-inl.h", "hasta": "v8/src/objects/contexts-inl.h", "lo_usan": 15, "motivo": {"condicion": null, "escrito": "#include \"src/objects/contexts-inl.h\"", "linea": 36}}, {"desde": "v8/src/objects/contexts-inl.h", "hasta": "v8/src/objects/objects-inl.h", "lo_usan": 444, "motivo": {"condicion": null, "escrito": "#include \"src/objects/objects-inl.h\"", "linea": 19}}]}, {"archivos": 13, "aristas": 41, "cortar": {"desde": "third_party/harfbuzz/src/src/hb.hh", "hasta": "third_party/harfbuzz/src/src/hb-algs.hh"}, "depende_de_un_if": false, "vuelta": [{"desde": "third_party/harfbuzz/src/src/hb.hh", "hasta": "third_party/harfbuzz/src/src/hb-algs.hh", "lo_usan": 7, "motivo": {"condicion": null, "escrito": "#include \"hb-algs.hh\"", "linea": 573}}, {"desde": "third_party/harfbuzz/src/src/hb-algs.hh", "hasta": "third_party/harfbuzz/src/src/hb.hh", "lo_usan": 232, "motivo": {"condicion": null, "escrito": "#include \"hb.hh\"", "linea": 32}}]}, {"archivos": 9, "aristas": 18, "cortar": {"desde": "third_party/harfbuzz/src/src/hb.h", "hasta": "third_party/harfbuzz/src/src/hb-draw.h"}, "depende_de_un_if": false, "vuelta": [{"desde": "third_party/harfbuzz/src/

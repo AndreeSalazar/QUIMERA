@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":284,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"toupper(*ctxt->input->cur)\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":290,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"toupper(ctxt->input->cur[(val)])\"},{\"archivo\":\"third_party/libxml/src/xpath.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":7966,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"toupper(lang[i])\"},{\"archivo\":\"third_party/libxml/src/runtest.c\",\"control_valido\":\"size_t n = strlen(s); for (size_t i = 0; i < n; i++) { ... }\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-001\",\"linea\":1371,\"texto\":\"strlen() recorre la cadena en cada vuelta del while: calcular la longitud una vez, antes del bucle\",\"titulo\":\"strlen en la condicion del bucle\",\"visto\":\"while((attlen = strlen((char*)att))>0)\"},{\"archivo\":\"third_party/libxml/src/testlimits.c\",\"control_valido\":\"size_t n = strlen(s); for (size_t i = 0; i < n; i++) { ... }\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-001\",\"linea\":1185,\"texto\":\"strlen() recorre la cadena en cada vuelta del for: calcular la longitud una vez, antes del bucle\",\"titulo\":\"strlen en la condicion del bucle\",\"visto\":\"for(i = 0;i<strlen(crazy);i++)\"},{\"archivo\":\"third_party/libxml/src/testlimits.c\",\"control_valido\":\"size_t n = strlen(s); for (size_t i = 0; i < n; i++) { ... }\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-001\",\"linea\":1195,\"texto\":\"strlen() recorre la cadena en cada vuelta del for: calcular la longitud una vez, antes del bucle\",\"titulo\":\"strlen en la condicion del bucle\",\"visto\":\"for(i = 0;i<strlen(crazy);i++)\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2369,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"nbchar + size <= HTML_PARSER_BUFFER_SIZE){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2517,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"+ len<slen)){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2550,\"texto\":\"la funcion ocupa 299 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int maxLength){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2623,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"){if(comment){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2918,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"(!ctxt->keepBlanks){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2965,\"texto\":\"la funcion ocupa 397 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int partial){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3000,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"{if(!eof){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":3777,\"texto\":\"la funcion ocupa 249 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"(htmlParserCtxtPtr ctxt){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3832,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"], BAD_CAST\\\"body\\\")){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":4042,\"texto\":\"la funcion ocupa 125 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"(htmlParserCtxtPtr ctxt){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":4195,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"8) == 'E')){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":4943,\"texto\":\"la funcion ocupa 190 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int terminate){\"},{\"archivo\":\"third_party/libxml/src/HTMLparser.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":5016,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"->instate == XML_PARSER_PROLOG)){\"},{\"archivo\":\"third_party/libxml/src/HTMLtree.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":802,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"continue;if(isUri){\"},{\"archivo\":\"third_party/libxml/src/HTMLtree.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":833,\"texto\":\"la funcion ocupa 284 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int format){\"},{\"archivo\":\"third_party/libxml/src/HTMLtree.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":856,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"cur->parent == parent){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":274,\"texto\":\"la funcion ocupa 109 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"xmlChar*systemId){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":475,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(ret!=NULL){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":960,\"texto\":\"la funcion ocupa 288 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"xmlChar*prefix){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1007,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"uri->scheme == NULL){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1257,\"texto\":\"la funcion ocupa 153 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"**atts){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1292,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"prefix) == NULL)){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1422,\"texto\":\"la funcion ocupa 170 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"**atts){\"},{\"archivo\":\"third_party/libxml/src/SAX2.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1908,\"texto\":\"la funcion ocupa 220 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"xmlChar*valueend){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":248,\"total\":278}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 284,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "toupper(*ctxt->input->cur)"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 290,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "toupper(ctxt->input->cur[(val)])"
+      },
+      {
+        "archivo": "third_party/libxml/src/xpath.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 7966,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "toupper(lang[i])"
+      },
+      {
+        "archivo": "third_party/libxml/src/runtest.c",
+        "control_valido": "size_t n = strlen(s); for (size_t i = 0; i < n; i++) { ... }",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-001",
+        "linea": 1371,
+        "texto": "strlen() recorre la cadena en cada vuelta del while: calcular la longitud una vez, antes del bucle",
+        "titulo": "strlen en la condicion del bucle",
+        "visto": "while((attlen = strlen((char*)att))>0)"
+      },
+      {
+        "archivo": "third_party/libxml/src/testlimits.c",
+        "control_valido": "size_t n = strlen(s); for (size_t i = 0; i < n; i++) { ... }",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-001",
+        "linea": 1185,
+        "texto": "strlen() recorre la cadena en cada vuelta del for: calcular la longitud una vez, antes del bucle",
+        "titulo": "strlen en la condicion del bucle",
+        "visto": "for(i = 0;i<strlen(crazy);i++)"
+      },
+      {
+        "archivo": "third_party/libxml/src/testlimits.c",
+        "control_valido": "size_t n = strlen(s); for (size_t i = 0; i < n; i++) { ... }",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-001",
+        "linea": 1195,
+        "texto": "strlen() recorre la cadena en cada vuelta del for: calcular la longitud una vez, antes del bucle",
+        "titulo": "strlen en la condicion del bucle",
+        "visto": "for(i = 0;i<strlen(crazy);i++)"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2369,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "nbchar + size <= HTML_PARSER_BUFFER_SIZE){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2517,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "+ len<slen)){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2550,
+        "texto": "la funcion ocupa 299 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int maxLength){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2623,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "){if(comment){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2918,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "(!ctxt->keepBlanks){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2965,
+        "texto": "la funcion ocupa 397 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int partial){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3000,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "{if(!eof){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 3777,
+        "texto": "la funcion ocupa 249 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "(htmlParserCtxtPtr ctxt){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3832,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "], BAD_CAST\"body\")){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 4042,
+        "texto": "la funcion ocupa 125 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "(htmlParserCtxtPtr ctxt){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 4195,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "8) == 'E')){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 4943,
+        "texto": "la funcion ocupa 190 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int terminate){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLparser.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 5016,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "->instate == XML_PARSER_PROLOG)){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLtree.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 802,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "continue;if(isUri){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLtree.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 833,
+        "texto": "la funcion ocupa 284 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int format){"
+      },
+      {
+        "archivo": "third_party/libxml/src/HTMLtree.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 856,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "cur->parent == parent){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 274,
+        "texto": "la funcion ocupa 109 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "xmlChar*systemId){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 475,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(ret!=NULL){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 960,
+        "texto": "la funcion ocupa 288 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "xmlChar*prefix){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1007,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "uri->scheme == NULL){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1257,
+        "texto": "la funcion ocupa 153 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "**atts){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1292,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "prefix) == NULL)){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1422,
+        "texto": "la funcion ocupa 170 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "**atts){"
+      },
+      {
+        "archivo": "third_party/libxml/src/SAX2.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1908,
+        "texto": "la funcion ocupa 220 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "xmlChar*valueend){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 248,
+    "total": 278
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":22},\"ruta\":\"android_webview/browser/android_protocol_handler.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":10},\"ruta\":\"android_webview/common/url_constants.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":11},\"ruta\":\"url/android/gurl_android.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":110},\"ruta\":\"android_webview/browser/aw_browser_context.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/safe_browsing/aw_safe_browsing_allowlist_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":25},\"ruta\":\"components/cdm/browser/media_drm_storage_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":30},\"ruta\":\"components/download/public/common/in_progress_download_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":24},\"ruta\":\"components/policy/core/browser/url_list/url_blocklist_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":11},\"ruta\":\"components/url_formatter/url_fixer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":65},\"ruta\":\"content/public/browser/web_contents.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":25},\"ruta\":\"android_webview/browser/aw_preconnector.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":20},\"ruta\":\"content/public/common/content_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":14},\"ruta\":\"android_webview/browser/aw_enterprise_authentication_app_link_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":19},\"ruta\":\"components/safe_browsing/android/remote_database_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":23},\"ruta\":\"android_webview/browser/aw_client_hints_controller_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":14},\"ruta\":\"android_webview/browser/aw_client_hints_controller_delegate_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":12},\"ruta\":\"android_webview/browser/supervised_user/aw_supervised_user_url_classifier.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":19},\"ruta\":\"components/safe_browsing/content/browser/browser_url_loader_throttle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":11},\"ruta\":\"components/safe_browsing/core/common/hashprefix_realtime/hash_realtime_utils.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":17},\"ruta\":\"components/security_state/core/security_state.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":15},\"ruta\":\"content/public/browser/child_process_security_policy.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":13},\"ruta\":\"content/public/browser/prefetch_service_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":11},\"ruta\":\"content/public/browser/site_isolation_policy.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":13},\"ruta\":\"net/cookies/site_for_cookies.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":47},\"ruta\":\"services/network/public/cpp/resource_request.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":21},\"ruta\":\"third_party/blink/public/common/web_preferences/web_preferences.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":41},\"ruta\":\"content/public/test/mock_navigation_handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":29},\"ruta\":\"android_webview/browser/aw_content_browser_client_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":13},\"ruta\":\"android_webview/browser/permission/aw_permission_request.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/gurl.h\\\"\",\"linea\":17},\"ruta\":\"android_webview/browser/permission/permission_request_handler.h\"}],\"total\":8036},\"papel\":null,\"ruta\":\"url/gurl.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/url_constants.h\\\"\",\"linea\":20},\"ruta\":\"url/url_constants.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/compiler_specific.h\\\"\",\"linea\":15},\"ruta\":\"base/compiler_specific.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/component_export.h\\\"\",\"linea\":16},\"ruta\":\"base/component_export.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/url_canon.h\\\"\",\"linea\":19},\"ruta\":\"url/url_canon.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/trace_event/base_tracing_forward.h\\\"\",\"linea\":17},\"ruta\":\"base/trace_event/base_tracing_forward.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"url/third_party/mozilla/url_parse.h\\\"\",\"linea\":18},\"ruta\":\"url/third_party/mozilla/url_parse.h\"}],\"total\":6}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 22
+          },
+          "ruta": "android_webview/browser/android_protocol_handler.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 10
+          },
+          "ruta": "android_webview/common/url_constants.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 11
+          },
+          "ruta": "url/android/gurl_android.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 110
+          },
+          "ruta": "android_webview/browser/aw_browser_context.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/safe_browsing/aw_safe_browsing_allowlist_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 25
+          },
+          "ruta": "components/cdm/browser/media_drm_storage_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 30
+          },
+          "ruta": "components/download/public/common/in_progress_download_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 24
+          },
+          "ruta": "components/policy/core/browser/url_list/url_blocklist_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 11
+          },
+          "ruta": "components/url_formatter/url_fixer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 65
+          },
+          "ruta": "content/public/browser/web_contents.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 25
+          },
+          "ruta": "android_webview/browser/aw_preconnector.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 20
+          },
+          "ruta": "content/public/common/content_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 14
+          },
+          "ruta": "android_webview/browser/aw_enterprise_authentication_app_link_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 19
+          },
+          "ruta": "components/safe_browsing/android/remote_database_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 23
+          },
+          "ruta": "android_webview/browser/aw_client_hints_controller_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 14
+          },
+          "ruta": "android_webview/browser/aw_client_hints_controller_delegate_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 12
+          },
+          "ruta": "android_webview/browser/supervised_user/aw_supervised_user_url_classifier.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 19
+          },
+          "ruta": "components/safe_browsing/content/browser/browser_url_loader_throttle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 11
+          },
+          "ruta": "components/safe_browsing/core/common/hashprefix_realtime/hash_realtime_utils.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 17
+          },
+          "ruta": "components/security_state/core/security_state.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 15
+          },
+          "ruta": "content/public/browser/child_process_security_policy.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 13
+          },
+          "ruta": "content/public/browser/prefetch_service_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 11
+          },
+          "ruta": "content/public/browser/site_isolation_policy.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 13
+          },
+          "ruta": "net/cookies/site_for_cookies.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 47
+          },
+          "ruta": "services/network/public/cpp/resource_request.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 21
+          },
+          "ruta": "third_party/blink/public/common/web_preferences/web_preferences.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 41
+          },
+          "ruta": "content/public/test/mock_navigation_handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 29
+          },
+          "ruta": "android_webview/browser/aw_content_browser_client_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 13
+          },
+          "ruta": "android_webview/browser/permission/aw_permission_request.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/gurl.h\"",
+            "linea": 17
+          },
+          "ruta": "android_webview/browser/permission/permission_request_handler.h"
+        }
+      ],
+      "total": 8036
+    },
+    "papel": null,
+    "ruta": "url/gurl.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/url_constants.h\"",
+            "linea": 20
+          },
+          "ruta": "url/url_constants.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/compiler_specific.h\"",
+            "linea": 15
+          },
+          "ruta": "base/compiler_specific.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/component_export.h\"",
+            "linea": 16
+          },
+          "ruta": "base/component_export.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/url_canon.h\"",
+            "linea": 19
+          },
+          "ruta": "url/url_canon.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/trace_event/base_tracing_forward.h\"",
+            "linea": 17
+          },
+          "ruta": "base/trace_event/base_tracing_forward.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"url/third_party/mozilla/url_parse.h\"",
+            "linea": 18
+          },
+          "ruta": "url/third_party/mozilla/url_parse.h"
+        }
+      ],
+      "total": 6
+    }
+  }
+}

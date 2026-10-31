@@ -1,0 +1,21 @@
+{
+  "fecha_local": "2026-10-31",
+  "origen": "C:\\Users\\Salazar\\Documents\\Linux Reconstruido",
+  "head": "4778c674a43511dbb5cd166f1e8859182bddc4a4",
+  "referencia_head": "4778c674a43511dbb5cd166f1e8859182bddc4a4",
+  "archivos": 2846,
+  "commits_head": 200,
+  "commits_todas_referencias": 200,
+  "super_grafo_herramientas": 22,
+  "git_superficial": "false",
+  "bundle_sha256": "bedca1a7ccaaae8c07717409a7b2e6c4afb44a869fa2598a0427f263cd55d218",
+  "bundle_verificado": true,
+  "git_fsck_copia_exit": 0,
+  "qemu_proceso_observado": 28168,
+  "ssh_intentos": 2,
+  "ssh_resultado": "Fallo intercambio identificacion puerto 12222; sin consultas nuevas",
+  "navegador_construido": false,
+  "grafo_consultado_en_esta_sesion": false,
+  "alcance": "Git local; excluye archivos ignorados",
+  "nucleo_diferencias": null
+}

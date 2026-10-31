@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":7117,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"net/base/net_errors.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":\"#if defined(UNIT_TEST)\",\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":23},\"ruta\":\"content/public/browser/browser_thread.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":\"#if CHECK_WILL_STREAM()\",\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"base/check_deref.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":16},\"ruta\":\"base/feature.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":43},\"ruta\":\"third_party/blink/renderer/platform/geometry/layout_unit.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":34},\"ruta\":\"third_party/blink/renderer/platform/wtf/assertions.h\"},{\"arrastra\":2655,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":36},\"ruta\":\"third_party/blink/renderer/core/dom/collection_index_cache.h\"},{\"arrastra\":1554,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":16},\"ruta\":\"media/base/status.h\"},{\"arrastra\":1433,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":10},\"ruta\":\"content/public/browser/console_message.h\"},{\"arrastra\":1347,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"components/saved_tab_groups/public/types.h\"},{\"arrastra\":1317,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":20},\"ruta\":\"base/apple/foundation_util.h\"},{\"arrastra\":1004,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"base/apple/osstatus_logging.h\"},{\"arrastra\":958,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":18},\"ruta\":\"media/base/media_log.h\"},{\"arrastra\":703,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":17},\"ruta\":\"components/leveldb_proto/internal/proto_database_impl.h\"},{\"arrastra\":674,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":10},\"ruta\":\"components/optimization_guide/core/hints/optimization_metadata.h\"},{\"arrastra\":669,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":13},\"ruta\":\"services/service_manager/public/cpp/binder_registry.h\"},{\"arrastra\":537,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":39},\"ruta\":\"ui/gl/gl_bindings.h\"},{\"arrastra\":531,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":22},\"ruta\":\"ui/base/interaction/interactive_test_internal.h\"},{\"arrastra\":519,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":18},\"ruta\":\"components/metrics/unsent_log_store.h\"},{\"arrastra\":499,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":18},\"ruta\":\"base/json/json_value_converter.h\"}],\"recortado\":false,\"ruta\":\"base/logging.h\",\"se_recompilan\":99961}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 7117,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 11
+        },
+        "ruta": "net/base/net_errors.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": "#if defined(UNIT_TEST)",
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 23
+        },
+        "ruta": "content/public/browser/browser_thread.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": "#if CHECK_WILL_STREAM()",
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 11
+        },
+        "ruta": "base/check_deref.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 16
+        },
+        "ruta": "base/feature.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 43
+        },
+        "ruta": "third_party/blink/renderer/platform/geometry/layout_unit.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 34
+        },
+        "ruta": "third_party/blink/renderer/platform/wtf/assertions.h"
+      },
+      {
+        "arrastra": 2655,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 36
+        },
+        "ruta": "third_party/blink/renderer/core/dom/collection_index_cache.h"
+      },
+      {
+        "arrastra": 1554,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 16
+        },
+        "ruta": "media/base/status.h"
+      },
+      {
+        "arrastra": 1433,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 10
+        },
+        "ruta": "content/public/browser/console_message.h"
+      },
+      {
+        "arrastra": 1347,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 11
+        },
+        "ruta": "components/saved_tab_groups/public/types.h"
+      },
+      {
+        "arrastra": 1317,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 20
+        },
+        "ruta": "base/apple/foundation_util.h"
+      },
+      {
+        "arrastra": 1004,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 11
+        },
+        "ruta": "base/apple/osstatus_logging.h"
+      },
+      {
+        "arrastra": 958,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 18
+        },
+        "ruta": "media/base/media_log.h"
+      },
+      {
+        "arrastra": 703,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 17
+        },
+        "ruta": "components/leveldb_proto/internal/proto_database_impl.h"
+      },
+      {
+        "arrastra": 674,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 10
+        },
+        "ruta": "components/optimization_guide/core/hints/optimization_metadata.h"
+      },
+      {
+        "arrastra": 669,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 13
+        },
+        "ruta": "services/service_manager/public/cpp/binder_registry.h"
+      },
+      {
+        "arrastra": 537,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 39
+        },
+        "ruta": "ui/gl/gl_bindings.h"
+      },
+      {
+        "arrastra": 531,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 22
+        },
+        "ruta": "ui/base/interaction/interactive_test_internal.h"
+      },
+      {
+        "arrastra": 519,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 18
+        },
+        "ruta": "components/metrics/unsent_log_store.h"
+      },
+      {
+        "arrastra": 499,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/logging.h\"",
+          "linea": 18
+        },
+        "ruta": "base/json/json_value_converter.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "base/logging.h",
+    "se_recompilan": 99961
+  }
+}

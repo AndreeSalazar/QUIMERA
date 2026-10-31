@@ -1,0 +1,45 @@
+{
+  "content": [
+    {
+      "text": "{\"analisis_ms\":1223,\"archivos_indexados\":209145,\"archivos_leidos\":5179,\"cabeceras_exportadas\":null,\"carpeta\":\"/var/tmp/ultra-main-work/motores/servo\",\"ciclos\":{\"archivos\":0,\"dependen_de_un_if\":0,\"total\":0},\"compile_commands\":null,\"dependencias\":9803,\"diagnosticos_gcc\":0,\"fallo_conectado\":{\"archivos_que_fallan\":25,\"causas\":25,\"se_pueden_romper\":892},\"guardianes\":null,\"megabytes\":37.8,\"recortado\":false,\"reutilizados_de_la_cache\":0,\"revisiones_gcc\":{\"archivos\":0,\"pendientes\":0},\"siguiente\":\"fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo\",\"sospechas\":{\"Elegancia\":4893,\"Rendimiento\":0,\"Seguridad\":32,\"a_proposito\":0},\"version\":1}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "analisis_ms": 1223,
+    "archivos_indexados": 209145,
+    "archivos_leidos": 5179,
+    "cabeceras_exportadas": null,
+    "carpeta": "/var/tmp/ultra-main-work/motores/servo",
+    "ciclos": {
+      "archivos": 0,
+      "dependen_de_un_if": 0,
+      "total": 0
+    },
+    "compile_commands": null,
+    "dependencias": 9803,
+    "diagnosticos_gcc": 0,
+    "fallo_conectado": {
+      "archivos_que_fallan": 25,
+      "causas": 25,
+      "se_pueden_romper": 892
+    },
+    "guardianes": null,
+    "megabytes": 37.8,
+    "recortado": false,
+    "reutilizados_de_la_cache": 0,
+    "revisiones_gcc": {
+      "archivos": 0,
+      "pendientes": 0
+    },
+    "siguiente": "fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo",
+    "sospechas": {
+      "Elegancia": 4893,
+      "Rendimiento": 0,
+      "Seguridad": 32,
+      "a_proposito": 0
+    },
+    "version": 1
+  }
+}

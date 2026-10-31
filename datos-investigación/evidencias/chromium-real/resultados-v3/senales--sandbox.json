@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"sandbox/linux/seccomp-bpf/die.cc\",\"control_valido\":\"int x = 0; int *p = &x; *p = 4;\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-015\",\"linea\":43,\"texto\":\"se lee o escribe a traves de un puntero nulo convertido\",\"titulo\":\"NULL no designa un int\",\"visto\":\"*(volatile char*)0\"},{\"archivo\":\"sandbox/linux/services/credentials_unittest.cc\",\"control_valido\":\"Proteger todo acceso al estado compartido mediante el mismo mutex, o demostrar un protocolo atomico adecuado.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-004\",\"linea\":266,\"texto\":\"volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex\",\"titulo\":\"Una carrera de datos no se arregla con volatile\",\"visto\":\"volatile sig_atomic_t signal_handler_called\"},{\"archivo\":\"sandbox/win/src/ipc_unittest.cc\",\"control_valido\":\"Proteger todo acceso al estado compartido mediante el mismo mutex, o demostrar un protocolo atomico adecuado.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-004\",\"linea\":388,\"texto\":\"volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex\",\"titulo\":\"Una carrera de datos no se arregla con volatile\",\"visto\":\"volatile LONG*state\"},{\"archivo\":\"sandbox/win/tests/integration_tests/cfi_unittest.cc\",\"control_valido\":\"/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-014\",\"linea\":66,\"texto\":\"tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas\",\"titulo\":\"longjmp vuelve a un valor indeterminado\",\"visto\":\"setjmp(buf)\"},{\"archivo\":\"sandbox/linux/syscall_broker/remote_syscall_arg_handler_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":49,\"texto\":\"str se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string str\"},{\"archivo\":\"sandbox/mac/sandbox_serializer_fuzztest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":13,\"texto\":\"input se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string input\"},{\"archivo\":\"sandbox/mac/sandbox_serializer_fuzztest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":36,\"texto\":\"input se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string input\"},{\"archivo\":\"sandbox/mac/sandbox_serializer_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":183,\"texto\":\"serialized_truncated se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string serialized_truncated\"},{\"archivo\":\"sandbox/win/src/startup_information_helper.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":33,\"texto\":\"desktop se copia entero en cada llamada: const std::wstring& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::wstring desktop\"},{\"archivo\":\"sandbox/win/tests/validation_tests/commands.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":49,\"texto\":\"path se copia entero en cada llamada: const std::wstring& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::wstring path\"},{\"archivo\":\"sandbox/win/tests/validation_tests/commands.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":169,\"texto\":\"subkey se copia entero en cada llamada: const std::wstring& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::wstring subkey\"},{\"archivo\":\"sandbox/linux/bpf_dsl/policy_compiler.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":313,\"texto\":\"la funcion ocupa 110 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::Node failed){\"},{\"archivo\":\"sandbox/linux/bpf_dsl/verifier.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":204,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"switch(r&SECCOMP_RET_ACTION){\"},{\"archivo\":\"sandbox/linux/integration_tests/bpf_dsl_seccomp_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1340,\"texto\":\"la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"AllBitTests, AllBitTestPolicy){\"},{\"archivo\":\"sandbox/linux/integration_tests/bpf_dsl_seccomp_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1506,\"texto\":\"la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"AnyBitTests, AnyBitTestPolicy){\"},{\"archivo\":\"sandbox/linux/integration_tests/seccomp_broker_process_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":883,\"texto\":\"la funcion ocupa 115 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"*syscaller)override{\"},{\"archivo\":\"sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":109,\"texto\":\"la funcion ocupa 293 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int sysno){\"},{\"archivo\":\"sandbox/linux/seccomp-bpf-helpers/baseline_policy_android.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":217,\"texto\":\"la funcion ocupa 119 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"int sysno)const{\"},{\"archivo\":\"sandbox/linux/seccomp-bpf-helpers/sigsys_handlers_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":247,\"texto\":\"la funcion ocupa 159 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"DirectSocketSyscallArgsMatch, RewriteSocketcallPolicy){\"},{\"archivo\":\"sandbox/linux/seccomp-bpf/trap.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":152,\"texto\":\"la funcion ocupa 114 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"ucontext_t*ctx){\"},{\"archivo\":\"sandbox/linux/services/init_process_reaper.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":75,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"reaped_child_info.si_code == CLD_EXITED){\"},{\"archivo\":\"sandbox/linux/suid/sandbox.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":96,\"texto\":\"la funcion ocupa 118 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"bool SpawnChrootHelper(){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_file_permission_unittest.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":194,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(access_flags == O_RDONLY){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_file_permission_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":353,\"texto\":\"la funcion ocupa 154 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BrokerFilePermission, AllPermissions){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_host.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":451,\"texto\":\"la funcion ocupa 140 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"ScopedFD*opened_file){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_process_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":105,\"texto\":\"la funcion ocupa 165 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int denied_errno){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_process_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":857,\"texto\":\"la funcion ocupa 101 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BrokerProcess, CreateFile){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_process_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":959,\"texto\":\"la funcion ocupa 202 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", bool follow_links){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_process_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1172,\"texto\":\"la funcion ocupa 136 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"(bool fast_check_in_client){\"},{\"archivo\":\"sandbox/linux/syscall_broker/broker_process_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1317,\"texto\":\"la funcion ocupa 108 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"(bool fast_check_in_client){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":34,\"total\":64}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "sandbox/linux/seccomp-bpf/die.cc",
+        "control_valido": "int x = 0; int *p = &x; *p = 4;",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-015",
+        "linea": 43,
+        "texto": "se lee o escribe a traves de un puntero nulo convertido",
+        "titulo": "NULL no designa un int",
+        "visto": "*(volatile char*)0"
+      },
+      {
+        "archivo": "sandbox/linux/services/credentials_unittest.cc",
+        "control_valido": "Proteger todo acceso al estado compartido mediante el mismo mutex, o demostrar un protocolo atomico adecuado.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-004",
+        "linea": 266,
+        "texto": "volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex",
+        "titulo": "Una carrera de datos no se arregla con volatile",
+        "visto": "volatile sig_atomic_t signal_handler_called"
+      },
+      {
+        "archivo": "sandbox/win/src/ipc_unittest.cc",
+        "control_valido": "Proteger todo acceso al estado compartido mediante el mismo mutex, o demostrar un protocolo atomico adecuado.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-004",
+        "linea": 388,
+        "texto": "volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex",
+        "titulo": "Una carrera de datos no se arregla con volatile",
+        "visto": "volatile LONG*state"
+      },
+      {
+        "archivo": "sandbox/win/tests/integration_tests/cfi_unittest.cc",
+        "control_valido": "/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-014",
+        "linea": 66,
+        "texto": "tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas",
+        "titulo": "longjmp vuelve a un valor indeterminado",
+        "visto": "setjmp(buf)"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/remote_syscall_arg_handler_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 49,
+        "texto": "str se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string str"
+      },
+      {
+        "archivo": "sandbox/mac/sandbox_serializer_fuzztest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 13,
+        "texto": "input se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string input"
+      },
+      {
+        "archivo": "sandbox/mac/sandbox_serializer_fuzztest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 36,
+        "texto": "input se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string input"
+      },
+      {
+        "archivo": "sandbox/mac/sandbox_serializer_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 183,
+        "texto": "serialized_truncated se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string serialized_truncated"
+      },
+      {
+        "archivo": "sandbox/win/src/startup_information_helper.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 33,
+        "texto": "desktop se copia entero en cada llamada: const std::wstring& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::wstring desktop"
+      },
+      {
+        "archivo": "sandbox/win/tests/validation_tests/commands.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 49,
+        "texto": "path se copia entero en cada llamada: const std::wstring& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::wstring path"
+      },
+      {
+        "archivo": "sandbox/win/tests/validation_tests/commands.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 169,
+        "texto": "subkey se copia entero en cada llamada: const std::wstring& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::wstring subkey"
+      },
+      {
+        "archivo": "sandbox/linux/bpf_dsl/policy_compiler.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 313,
+        "texto": "la funcion ocupa 110 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::Node failed){"
+      },
+      {
+        "archivo": "sandbox/linux/bpf_dsl/verifier.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 204,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "switch(r&SECCOMP_RET_ACTION){"
+      },
+      {
+        "archivo": "sandbox/linux/integration_tests/bpf_dsl_seccomp_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1340,
+        "texto": "la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "AllBitTests, AllBitTestPolicy){"
+      },
+      {
+        "archivo": "sandbox/linux/integration_tests/bpf_dsl_seccomp_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1506,
+        "texto": "la funcion ocupa 104 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "AnyBitTests, AnyBitTestPolicy){"
+      },
+      {
+        "archivo": "sandbox/linux/integration_tests/seccomp_broker_process_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 883,
+        "texto": "la funcion ocupa 115 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "*syscaller)override{"
+      },
+      {
+        "archivo": "sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 109,
+        "texto": "la funcion ocupa 293 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int sysno){"
+      },
+      {
+        "archivo": "sandbox/linux/seccomp-bpf-helpers/baseline_policy_android.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 217,
+        "texto": "la funcion ocupa 119 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "int sysno)const{"
+      },
+      {
+        "archivo": "sandbox/linux/seccomp-bpf-helpers/sigsys_handlers_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 247,
+        "texto": "la funcion ocupa 159 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "DirectSocketSyscallArgsMatch, RewriteSocketcallPolicy){"
+      },
+      {
+        "archivo": "sandbox/linux/seccomp-bpf/trap.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 152,
+        "texto": "la funcion ocupa 114 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "ucontext_t*ctx){"
+      },
+      {
+        "archivo": "sandbox/linux/services/init_process_reaper.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 75,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "reaped_child_info.si_code == CLD_EXITED){"
+      },
+      {
+        "archivo": "sandbox/linux/suid/sandbox.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 96,
+        "texto": "la funcion ocupa 118 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "bool SpawnChrootHelper(){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_file_permission_unittest.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 194,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(access_flags == O_RDONLY){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_file_permission_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 353,
+        "texto": "la funcion ocupa 154 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BrokerFilePermission, AllPermissions){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_host.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 451,
+        "texto": "la funcion ocupa 140 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "ScopedFD*opened_file){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_process_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 105,
+        "texto": "la funcion ocupa 165 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int denied_errno){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_process_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 857,
+        "texto": "la funcion ocupa 101 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BrokerProcess, CreateFile){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_process_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 959,
+        "texto": "la funcion ocupa 202 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", bool follow_links){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_process_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1172,
+        "texto": "la funcion ocupa 136 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "(bool fast_check_in_client){"
+      },
+      {
+        "archivo": "sandbox/linux/syscall_broker/broker_process_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1317,
+        "texto": "la funcion ocupa 108 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "(bool fast_check_in_client){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 34,
+    "total": 64
+  }
+}

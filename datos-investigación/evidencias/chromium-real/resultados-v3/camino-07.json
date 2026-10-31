@@ -1,0 +1,43 @@
+{
+  "content": [
+    {
+      "text": "{\"a\":\"sandbox/policy/sandbox.h\",\"b\":\"base/memory/raw_ptr.h\",\"ciclo\":false,\"igual_de_cortos\":1,\"pasos\":[{\"desde\":\"sandbox/policy/sandbox.h\",\"hasta\":\"sandbox/policy/linux/sandbox_linux.h\",\"lo_usan\":50,\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_LINUX) || BUILDFLAG(IS_CHROMEOS)\",\"escrito\":\"#include \\\"sandbox/policy/linux/sandbox_linux.h\\\"\",\"linea\":12},\"sin_este_paso\":\"se separan: imprescindible\"},{\"desde\":\"sandbox/policy/linux/sandbox_linux.h\",\"hasta\":\"base/memory/raw_ptr.h\",\"lo_usan\":17601,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"sin_este_paso\":\"otro camino de 5 saltos\"}],\"por_que\":\"sandbox.h usa a raw_ptr.h a traves de 1 archivo: si cambia raw_ptr.h, sandbox.h se recompila. Es el unico tan corto. Un paso es imprescindible: ahi se cortaria la union.\",\"punto_de_encuentro\":null,\"saltos\":2,\"union\":\"A usa B\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "a": "sandbox/policy/sandbox.h",
+    "b": "base/memory/raw_ptr.h",
+    "ciclo": false,
+    "igual_de_cortos": 1,
+    "pasos": [
+      {
+        "desde": "sandbox/policy/sandbox.h",
+        "hasta": "sandbox/policy/linux/sandbox_linux.h",
+        "lo_usan": 50,
+        "motivo": {
+          "condicion": "#if BUILDFLAG(IS_LINUX) || BUILDFLAG(IS_CHROMEOS)",
+          "escrito": "#include \"sandbox/policy/linux/sandbox_linux.h\"",
+          "linea": 12
+        },
+        "sin_este_paso": "se separan: imprescindible"
+      },
+      {
+        "desde": "sandbox/policy/linux/sandbox_linux.h",
+        "hasta": "base/memory/raw_ptr.h",
+        "lo_usan": 17601,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 13
+        },
+        "sin_este_paso": "otro camino de 5 saltos"
+      }
+    ],
+    "por_que": "sandbox.h usa a raw_ptr.h a traves de 1 archivo: si cambia raw_ptr.h, sandbox.h se recompila. Es el unico tan corto. Un paso es imprescindible: ahi se cortaria la union.",
+    "punto_de_encuentro": null,
+    "saltos": 2,
+    "union": "A usa B"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":1154,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":1577,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":42},\"ruta\":\"third_party/blink/renderer/core/layout/layout_object.h\"},{\"arrastra\":1064,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":33},\"ruta\":\"third_party/blink/renderer/core/frame/window_event_handlers.h\"},{\"arrastra\":1015,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/core/editing/suggestion/text_suggestion_controller.h\"},{\"arrastra\":1014,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":43},\"ruta\":\"third_party/blink/renderer/core/frame/local_dom_window.h\"},{\"arrastra\":723,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":46},\"ruta\":\"third_party/blink/renderer/core/page/chrome_client.h\"},{\"arrastra\":537,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":37},\"ruta\":\"third_party/blink/renderer/core/probe/core_probes.h\"},{\"arrastra\":506,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":31},\"ruta\":\"third_party/blink/renderer/core/dom/range_boundary_point.h\"},{\"arrastra\":275,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":63},\"ruta\":\"third_party/blink/renderer/core/css/style_engine.h\"},{\"arrastra\":251,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":13},\"ruta\":\"third_party/blink/renderer/core/testing/core_unit_test_helper.h\"},{\"arrastra\":226,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":38},\"ruta\":\"third_party/blink/renderer/core/css/resolver/style_resolver_state.h\"},{\"arrastra\":144,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":14},\"ruta\":\"third_party/blink/renderer/core/frame/performance_monitor.h\"},{\"arrastra\":120,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":41},\"ruta\":\"third_party/blink/renderer/core/frame/visual_viewport.h\"},{\"arrastra\":108,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":27},\"ruta\":\"third_party/blink/renderer/core/html/html_document.h\"},{\"arrastra\":108,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":36},\"ruta\":\"third_party/blink/renderer/core/accessibility/ax_object_cache.h\"},{\"arrastra\":97,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":38},\"ruta\":\"third_party/blink/renderer/core/html/canvas/html_canvas_element.h\"},{\"arrastra\":75,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":28},\"ruta\":\"third_party/blink/renderer/core/html/html_body_element.h\"},{\"arrastra\":71,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":29},\"ruta\":\"third_party/blink/renderer/core/html/html_anchor_element.h\"},{\"arrastra\":66,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":46},\"ruta\":\"third_party/blink/renderer/core/animation/css/css_animations.h\"},{\"arrastra\":61,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":9},\"ruta\":\"third_party/blink/renderer/core/accessibility/ax_context.h\"},{\"arrastra\":57,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/dom/document.h\\\"\",\"linea\":36},\"ruta\":\"third_party/blink/renderer/core/fullscreen/fullscreen.h\"}],\"recortado\":false,\"ruta\":\"third_party/blink/renderer/core/dom/document.h\",\"se_recompilan\":3616}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 1154,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 1577,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 42
+        },
+        "ruta": "third_party/blink/renderer/core/layout/layout_object.h"
+      },
+      {
+        "arrastra": 1064,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 33
+        },
+        "ruta": "third_party/blink/renderer/core/frame/window_event_handlers.h"
+      },
+      {
+        "arrastra": 1015,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/blink/renderer/core/editing/suggestion/text_suggestion_controller.h"
+      },
+      {
+        "arrastra": 1014,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 43
+        },
+        "ruta": "third_party/blink/renderer/core/frame/local_dom_window.h"
+      },
+      {
+        "arrastra": 723,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 46
+        },
+        "ruta": "third_party/blink/renderer/core/page/chrome_client.h"
+      },
+      {
+        "arrastra": 537,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 37
+        },
+        "ruta": "third_party/blink/renderer/core/probe/core_probes.h"
+      },
+      {
+        "arrastra": 506,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 31
+        },
+        "ruta": "third_party/blink/renderer/core/dom/range_boundary_point.h"
+      },
+      {
+        "arrastra": 275,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 63
+        },
+        "ruta": "third_party/blink/renderer/core/css/style_engine.h"
+      },
+      {
+        "arrastra": 251,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 13
+        },
+        "ruta": "third_party/blink/renderer/core/testing/core_unit_test_helper.h"
+      },
+      {
+        "arrastra": 226,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 38
+        },
+        "ruta": "third_party/blink/renderer/core/css/resolver/style_resolver_state.h"
+      },
+      {
+        "arrastra": 144,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 14
+        },
+        "ruta": "third_party/blink/renderer/core/frame/performance_monitor.h"
+      },
+      {
+        "arrastra": 120,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 41
+        },
+        "ruta": "third_party/blink/renderer/core/frame/visual_viewport.h"
+      },
+      {
+        "arrastra": 108,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 27
+        },
+        "ruta": "third_party/blink/renderer/core/html/html_document.h"
+      },
+      {
+        "arrastra": 108,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 36
+        },
+        "ruta": "third_party/blink/renderer/core/accessibility/ax_object_cache.h"
+      },
+      {
+        "arrastra": 97,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 38
+        },
+        "ruta": "third_party/blink/renderer/core/html/canvas/html_canvas_element.h"
+      },
+      {
+        "arrastra": 75,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 28
+        },
+        "ruta": "third_party/blink/renderer/core/html/html_body_element.h"
+      },
+      {
+        "arrastra": 71,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 29
+        },
+        "ruta": "third_party/blink/renderer/core/html/html_anchor_element.h"
+      },
+      {
+        "arrastra": 66,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 46
+        },
+        "ruta": "third_party/blink/renderer/core/animation/css/css_animations.h"
+      },
+      {
+        "arrastra": 61,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 9
+        },
+        "ruta": "third_party/blink/renderer/core/accessibility/ax_context.h"
+      },
+      {
+        "arrastra": 57,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/core/dom/document.h\"",
+          "linea": 36
+        },
+        "ruta": "third_party/blink/renderer/core/fullscreen/fullscreen.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "third_party/blink/renderer/core/dom/document.h",
+    "se_recompilan": 3616
+  }
+}

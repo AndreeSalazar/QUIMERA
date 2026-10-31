@@ -1,0 +1,74 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"components/web_package\"},{\"carpeta\":true,\"ruta\":\"components/test/data/web_package\"},{\"carpeta\":false,\"ruta\":\"components/web_package/rust/web_package_rust_unittests.rs\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_DESCRIPTION.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_ALLOW_RADIO_LABEL.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_BLOCK_RADIO_LABEL.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_BLOCK_RADIO_SUB_LABEL.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_ADD_ALLOW_EXCEPTION_DESCRIPTION.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_BLOCK_RADIO_SUB_LABEL_RWS_DISABLED.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_LOOPBACK_NETWORK_PAGE_DESCRIPTION.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_SITE_DATA_PAGE_BLOCK_CONFIRM_DIALOG_DESCRIPTION.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_SITE_DATA_PAGE_BLOCK_CONFIRM_DIALOG_TITLE.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_SITE_DATA_PAGE_BLOCK_CONFIRM_DIALOG_CANCEL_BUTTON.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/wallet_strings_grdp/IDS_WALLET_WALLETABLE_PASS_SAVE_EVENT_TICKET_DIALOG_TITLE.png.sha1\"},{\"carpeta\":false,\"ruta\":\"components/wallet_strings_grdp/IDS_WALLET_WALLETABLE_PASS_SAVE_TRANSPORT_TICKET_DIALOG_TITLE.png.sha1\"}],\"texto\":\"components/web_package\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "components/web_package"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/test/data/web_package"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/web_package/rust/web_package_rust_unittests.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_DESCRIPTION.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_ALLOW_RADIO_LABEL.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_BLOCK_RADIO_LABEL.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_BLOCK_RADIO_SUB_LABEL.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_ADD_ALLOW_EXCEPTION_DESCRIPTION.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_THIRD_PARTY_COOKIES_PAGE_BLOCK_RADIO_SUB_LABEL_RWS_DISABLED.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_LOOPBACK_NETWORK_PAGE_DESCRIPTION.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_SITE_DATA_PAGE_BLOCK_CONFIRM_DIALOG_DESCRIPTION.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_SITE_DATA_PAGE_BLOCK_CONFIRM_DIALOG_TITLE.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/browser_ui/strings/android/site_settings_grdp/IDS_WEBSITE_SETTINGS_SITE_DATA_PAGE_BLOCK_CONFIRM_DIALOG_CANCEL_BUTTON.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/wallet_strings_grdp/IDS_WALLET_WALLETABLE_PASS_SAVE_EVENT_TICKET_DIALOG_TITLE.png.sha1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/wallet_strings_grdp/IDS_WALLET_WALLETABLE_PASS_SAVE_TRANSPORT_TICKET_DIALOG_TITLE.png.sha1"
+      }
+    ],
+    "texto": "components/web_package"
+  }
+}

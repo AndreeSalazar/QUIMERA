@@ -1,0 +1,237 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/backtrace-v0_3/src/dbghelp.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":47,\"texto\":\"DBGHELP es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut DBGHELP\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/backtrace-v0_3/src/dbghelp.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":325,\"texto\":\"INITIALIZED es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut INITIALIZED\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/backtrace-v0_3/src/symbolize/gimli.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":374,\"texto\":\"MAPPINGS_CACHE es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut MAPPINGS_CACHE\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/ctor-v1/examples/ctor-statics.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":28,\"texto\":\"GLOBAL es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut GLOBAL\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/unix_signals.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":420,\"texto\":\"SIGNAL_STACK_PTR es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut SIGNAL_STACK_PTR\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/unix_signals.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":424,\"texto\":\"SIGNAL_HANDLERS es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut SIGNAL_HANDLERS\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/windows_exceptions.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":445,\"texto\":\"EXCEPTION_HANDLERS es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut EXCEPTION_HANDLERS\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/windows_exceptions.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":601,\"texto\":\"CTRL_HANDLER es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut CTRL_HANDLER\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/iana-time-zone-v0_1/src/tz_android.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":17,\"texto\":\"PROPERTIES es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut PROPERTIES\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/events/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":66,\"texto\":\"EVENTMGR_SIGHANDLER_STATE es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut EVENTMGR_SIGHANDLER_STATE\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/events/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":741,\"texto\":\"MAP es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut MAP\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/executors/hooks/inprocess.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":535,\"texto\":\"GLOBAL_STATE es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut GLOBAL_STATE\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/executors/hooks/inprocess_fork.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":141,\"texto\":\"FORK_EXECUTOR_GLOBAL_DATA es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut FORK_EXECUTOR_GLOBAL_DATA\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/observers/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":353,\"texto\":\"MAP es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut MAP\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":330,\"texto\":\"CLOSURE_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut CLOSURE_STAGE_ID\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/mutational.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":134,\"texto\":\"MUTATIONAL_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut MUTATIONAL_STAGE_ID\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/mutational.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":302,\"texto\":\"MULTI_MUTATIONAL_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut MULTI_MUTATIONAL_STAGE_ID\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/power.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":30,\"texto\":\"POWER_MUTATIONAL_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut POWER_MUTATIONAL_STAGE_ID\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/push/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":235,\"texto\":\"PUSH_STAGE_ADAPTER_ID es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut PUSH_STAGE_ADAPTER_ID\"},{\"archivo\":\"third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/replay.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":107,\"texto\":\"REPLAY_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut REPLAY_STAGE_ID\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":12117,\"total\":12137}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/backtrace-v0_3/src/dbghelp.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 47,
+        "texto": "DBGHELP es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut DBGHELP"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/backtrace-v0_3/src/dbghelp.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 325,
+        "texto": "INITIALIZED es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut INITIALIZED"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/backtrace-v0_3/src/symbolize/gimli.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 374,
+        "texto": "MAPPINGS_CACHE es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut MAPPINGS_CACHE"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/ctor-v1/examples/ctor-statics.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 28,
+        "texto": "GLOBAL es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut GLOBAL"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/unix_signals.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 420,
+        "texto": "SIGNAL_STACK_PTR es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut SIGNAL_STACK_PTR"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/unix_signals.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 424,
+        "texto": "SIGNAL_HANDLERS es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut SIGNAL_HANDLERS"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/windows_exceptions.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 445,
+        "texto": "EXCEPTION_HANDLERS es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut EXCEPTION_HANDLERS"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/exceptional-v0_16/src/windows_exceptions.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 601,
+        "texto": "CTRL_HANDLER es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut CTRL_HANDLER"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/iana-time-zone-v0_1/src/tz_android.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 17,
+        "texto": "PROPERTIES es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut PROPERTIES"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/events/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 66,
+        "texto": "EVENTMGR_SIGHANDLER_STATE es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut EVENTMGR_SIGHANDLER_STATE"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/events/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 741,
+        "texto": "MAP es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut MAP"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/executors/hooks/inprocess.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 535,
+        "texto": "GLOBAL_STATE es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut GLOBAL_STATE"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/executors/hooks/inprocess_fork.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 141,
+        "texto": "FORK_EXECUTOR_GLOBAL_DATA es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut FORK_EXECUTOR_GLOBAL_DATA"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/observers/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 353,
+        "texto": "MAP es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut MAP"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 330,
+        "texto": "CLOSURE_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut CLOSURE_STAGE_ID"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/mutational.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 134,
+        "texto": "MUTATIONAL_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut MUTATIONAL_STAGE_ID"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/mutational.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 302,
+        "texto": "MULTI_MUTATIONAL_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut MULTI_MUTATIONAL_STAGE_ID"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/power.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 30,
+        "texto": "POWER_MUTATIONAL_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut POWER_MUTATIONAL_STAGE_ID"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/push/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 235,
+        "texto": "PUSH_STAGE_ADAPTER_ID es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut PUSH_STAGE_ADAPTER_ID"
+      },
+      {
+        "archivo": "third_party/rust/chromium_crates_io/vendor/libafl-v0_16/src/stages/replay.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 107,
+        "texto": "REPLAY_STAGE_ID es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut REPLAY_STAGE_ID"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 12117,
+    "total": 12137
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/ffmpeg/fftools/ffmpeg_mux_init.c\",\"control_valido\":\"int i = 0; int a = i++; int b = i++; int x = a + b;\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-009\",\"linea\":2892,\"texto\":\"arg se modifica dos veces sin un punto de secuencia entre medias\",\"titulo\":\"Dos modificaciones sin secuenciar\",\"visto\":\"case'c' : case'p' : if(*(++arg) == ':')*index = strtol(++arg, NULL, 0)\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/aac/aacdec_float.c\",\"control_valido\":\"int x = ULTRA_SHL_INT(1, 3);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-003\",\"linea\":122,\"texto\":\"1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)\",\"titulo\":\"Desplazar fuera del ancho\",\"visto\":\"1 << 31\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/aac/aacdec_usac_mps212.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":248,\"texto\":\"data[2] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"data[2]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/ffv1enc_template.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":180,\"texto\":\"sample[4] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"sample[4]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/ffv1enc_template.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":249,\"texto\":\"sample[3] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"sample[3]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/motion_est.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":139,\"texto\":\"ref[8] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"ref[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/motion_est.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":142,\"texto\":\"ref[8] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"ref[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/motion_est.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":158,\"texto\":\"ref[8] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"ref[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/motion_est.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":159,\"texto\":\"ref[8] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"ref[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/motion_est.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":160,\"texto\":\"ref[8] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"ref[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/motion_est.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":161,\"texto\":\"ref[8] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"ref[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/motion_est.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":173,\"texto\":\"ref[8] con 3 elementos: el ultimo indice valido es 2\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"ref[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/mv30.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":321,\"texto\":\"block[8] con 6 elementos: el ultimo indice valido es 5\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"block[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/mv30.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":322,\"texto\":\"block[9] con 6 elementos: el ultimo indice valido es 5\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"block[9]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/mv30.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":362,\"texto\":\"block[8] con 6 elementos: el ultimo indice valido es 5\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"block[8]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/mv30.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":363,\"texto\":\"block[9] con 6 elementos: el ultimo indice valido es 5\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"block[9]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/qcelpdec.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":227,\"texto\":\"gain[7] con 4 elementos: el ultimo indice valido es 3\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"gain[7]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/qcelpdec.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":228,\"texto\":\"gain[6] con 4 elementos: el ultimo indice valido es 3\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"gain[6]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/qcelpdec.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":229,\"texto\":\"gain[5] con 4 elementos: el ultimo indice valido es 3\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"gain[5]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/qcelpdec.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":230,\"texto\":\"gain[4] con 4 elementos: el ultimo indice valido es 3\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"gain[4]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/rka.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":72,\"texto\":\"bprob[2] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"bprob[2]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/sgidec.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":117,\"texto\":\"out[4] con 4 elementos: el ultimo indice valido es 3\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"out[4]\"},{\"archivo\":\"third_party/ffmpeg/libavcodec/sgidec.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":183,\"texto\":\"out[4] con 4 elementos: el ultimo indice valido es 3\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"out[4]\"},{\"archivo\":\"third_party/ffmpeg/libavfilter/af_arnndn.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":714,\"texto\":\"mem[2] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"mem[2]\"},{\"archivo\":\"third_party/ffmpeg/libavfilter/af_arnndn.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":715,\"texto\":\"mem[3] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"mem[3]\"},{\"archivo\":\"third_party/ffmpeg/libavfilter/af_arnndn.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":716,\"texto\":\"mem[4] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"mem[4]\"},{\"archivo\":\"third_party/ffmpeg/libavfilter/af_arnndn.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":736,\"texto\":\"mem[2] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"mem[2]\"},{\"archivo\":\"third_party/ffmpeg/libavfilter/af_arnndn.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":737,\"texto\":\"mem[3] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"mem[3]\"},{\"archivo\":\"third_party/ffmpeg/libavfilter/af_arnndn.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":738,\"texto\":\"mem[4] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"mem[4]\"},{\"archivo\":\"third_party/ffmpeg/libavfilter/vf_colormap.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":327,\"texto\":\"icoeff[4] con 4 elementos: el ultimo indice valido es 3\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"icoeff[4]\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":4638,\"total\":4668}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/ffmpeg/fftools/ffmpeg_mux_init.c",
+        "control_valido": "int i = 0; int a = i++; int b = i++; int x = a + b;",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-009",
+        "linea": 2892,
+        "texto": "arg se modifica dos veces sin un punto de secuencia entre medias",
+        "titulo": "Dos modificaciones sin secuenciar",
+        "visto": "case'c' : case'p' : if(*(++arg) == ':')*index = strtol(++arg, NULL, 0)"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/aac/aacdec_float.c",
+        "control_valido": "int x = ULTRA_SHL_INT(1, 3);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-003",
+        "linea": 122,
+        "texto": "1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)",
+        "titulo": "Desplazar fuera del ancho",
+        "visto": "1 << 31"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/aac/aacdec_usac_mps212.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 248,
+        "texto": "data[2] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "data[2]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/ffv1enc_template.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 180,
+        "texto": "sample[4] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "sample[4]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/ffv1enc_template.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 249,
+        "texto": "sample[3] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "sample[3]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/motion_est.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 139,
+        "texto": "ref[8] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "ref[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/motion_est.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 142,
+        "texto": "ref[8] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "ref[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/motion_est.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 158,
+        "texto": "ref[8] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "ref[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/motion_est.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 159,
+        "texto": "ref[8] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "ref[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/motion_est.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 160,
+        "texto": "ref[8] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "ref[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/motion_est.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 161,
+        "texto": "ref[8] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "ref[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/motion_est.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 173,
+        "texto": "ref[8] con 3 elementos: el ultimo indice valido es 2",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "ref[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/mv30.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 321,
+        "texto": "block[8] con 6 elementos: el ultimo indice valido es 5",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "block[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/mv30.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 322,
+        "texto": "block[9] con 6 elementos: el ultimo indice valido es 5",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "block[9]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/mv30.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 362,
+        "texto": "block[8] con 6 elementos: el ultimo indice valido es 5",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "block[8]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/mv30.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 363,
+        "texto": "block[9] con 6 elementos: el ultimo indice valido es 5",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "block[9]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/qcelpdec.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 227,
+        "texto": "gain[7] con 4 elementos: el ultimo indice valido es 3",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "gain[7]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/qcelpdec.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 228,
+        "texto": "gain[6] con 4 elementos: el ultimo indice valido es 3",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "gain[6]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/qcelpdec.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 229,
+        "texto": "gain[5] con 4 elementos: el ultimo indice valido es 3",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "gain[5]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/qcelpdec.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 230,
+        "texto": "gain[4] con 4 elementos: el ultimo indice valido es 3",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "gain[4]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/rka.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 72,
+        "texto": "bprob[2] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "bprob[2]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/sgidec.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 117,
+        "texto": "out[4] con 4 elementos: el ultimo indice valido es 3",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "out[4]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavcodec/sgidec.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 183,
+        "texto": "out[4] con 4 elementos: el ultimo indice valido es 3",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "out[4]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavfilter/af_arnndn.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 714,
+        "texto": "mem[2] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "mem[2]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavfilter/af_arnndn.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 715,
+        "texto": "mem[3] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "mem[3]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavfilter/af_arnndn.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 716,
+        "texto": "mem[4] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "mem[4]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavfilter/af_arnndn.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 736,
+        "texto": "mem[2] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "mem[2]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavfilter/af_arnndn.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 737,
+        "texto": "mem[3] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "mem[3]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavfilter/af_arnndn.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 738,
+        "texto": "mem[4] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "mem[4]"
+      },
+      {
+        "archivo": "third_party/ffmpeg/libavfilter/vf_colormap.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 327,
+        "texto": "icoeff[4] con 4 elementos: el ultimo indice valido es 3",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "icoeff[4]"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 4638,
+    "total": 4668
+  }
+}

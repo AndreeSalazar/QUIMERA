@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"build/rust\"},{\"carpeta\":false,\"ruta\":\"build/config/rust.gni\"},{\"carpeta\":false,\"ruta\":\"build/config/siso/rust.star\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_macro.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_bindgen.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_unit_test.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_executable.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_api_from_cpp.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_shared_library.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_static_library.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_unit_tests_group.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/rust_bindgen_generator.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/gni_impl/rust_target.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/gni_impl/rustc_wrapper.py\"},{\"carpeta\":false,\"ruta\":\"build/rust/gni_impl/rustc_print_cfg.py\"},{\"carpeta\":false,\"ruta\":\"build/rust/gni_impl/rustc_print_cfg.gni\"},{\"carpeta\":false,\"ruta\":\"build/rust/gni_impl/rustc_wrapper_unittest.py\"},{\"carpeta\":false,\"ruta\":\"build/rust/gni_impl/rust_api_from_cpp_wrapper.py\"},{\"carpeta\":true,\"ruta\":\"third_party/perfetto/buildtools/rustc-demangle-capi\"},{\"carpeta\":false,\"ruta\":\"build/rust/tests/test_rust_calling_cpp/rust_calling_cpp_rlib.rs\"}],\"texto\":\"build/rust\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "build/rust"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/config/rust.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/config/siso/rust.star"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_macro.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_bindgen.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_unit_test.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_executable.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_api_from_cpp.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_shared_library.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_static_library.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_unit_tests_group.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/rust_bindgen_generator.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/gni_impl/rust_target.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/gni_impl/rustc_wrapper.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/gni_impl/rustc_print_cfg.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/gni_impl/rustc_print_cfg.gni"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/gni_impl/rustc_wrapper_unittest.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/gni_impl/rust_api_from_cpp_wrapper.py"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/perfetto/buildtools/rustc-demangle-capi"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/rust/tests/test_rust_calling_cpp/rust_calling_cpp_rlib.rs"
+      }
+    ],
+    "texto": "build/rust"
+  }
+}

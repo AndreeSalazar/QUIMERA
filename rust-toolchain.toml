@@ -1,0 +1,4 @@
+[toolchain]
+# La misma versión en Windows y en el taller QEMU (ya instalada en los dos).
+channel = "1.97.0"
+components = ["clippy", "rustfmt"]

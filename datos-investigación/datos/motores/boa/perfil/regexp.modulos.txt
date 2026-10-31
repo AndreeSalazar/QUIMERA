@@ -1,0 +1,40 @@
+ 46.15% <regress::classicalbacktrack::MatchAttempter<regress
+  6.90% boa_engine::object::internal_methods
+  6.39% <hashbrown::map::HashMap<boa_engine
+  3.25% <boa_engine::builtins::regexp
+  2.55% boa_engine::native_function::native_function_call - -
+  2.36% <boa_engine::object::jsobject
+  2.01% boa_string::vtable::static
+  1.89% <regress::exec::Matches<regress
+  1.89% <boa_engine::object::property_map
+  1.68% <boa_engine::property::PropertyKey as core
+  1.59% _rjem_malloc - -
+  1.30% _rjem_sdallocx - -
+  1.25% core::ptr::drop_glue
+  1.09% <boa_engine::vm::code_block
+  1.07% boa_engine::vm::opcode
+  1.02% _rjem_je_arena_ptr_array_flush - -
+  0.87% <boa_engine::property::PropertyDescriptorBuilder>
+  0.78% boa_string::vtable::sequence
+  0.73% <boa_gc::Collector>::mark_heap - -
+  0.69% <boa_string::str::JsStr>
+  0.64% 0x0000000000176391 - -
+  0.60% <regress::ir::MutWalker<<regress
+  0.58% boa_engine::property::parse_u32_index
+  0.56% <boa_engine::object::shape
+  0.55% 0x0000000000175f23 - -
+  0.54% do_rallocx - -
+  0.51% boa_engine::builtins::array
+  0.47% <boa_engine::value::JsValue>
+  0.44% regress::optimizer::contains_capture_groups - -
+  0.44% _rjem_je_arena_ralloc - -
+  0.43% <boa_gc::Collector>::collect - -
+  0.36% <boa_engine::context::Context>
+  0.32% <regress::parse::Parser<core
+  0.31% 0x0000000000175f19 - -
+  0.30% <alloc::vec::Vec<u16>>
+  0.30% 0x0000000000175f1d - -
+  0.29% <boa_engine::builtins::array
+  0.28% <std::thread::local
+  0.27% _rjem_je_bin_slab_reg_alloc_batch - -
+  0.25% _rjem_je_arena_ralloc_no_move - -

@@ -1,0 +1,40 @@
+ 51.80% boa_engine::vm::opcode
+ 13.74% <boa_engine::context::Context>
+ 13.03% boa_engine::object::internal_methods
+  5.31% <boa_engine::object::property_map
+  3.17% <boa_engine::value::JsValue>
+  3.04% boa_engine::builtins::array
+  2.10% <hashbrown::map::HashMap<boa_engine
+  1.31% <boa_engine::property::PropertyDescriptorBuilder>
+  0.89% ryu_js::pretty::format64 - -
+  0.76% <boa_engine::property::PropertyKey as core
+  0.57% core::ptr::drop_glue
+  0.54% <boa_engine::vm::inline_cache
+  0.50% boa_string::vtable::static
+  0.29% boa_engine::builtins::function
+  0.28% <hashbrown::map::HashMap<u32, boa_engine
+  0.23% <boa_engine::vm::Stack>
+  0.23% 0x0000000000175f23 - -
+  0.21% <boa_engine::vm::Vm>
+  0.20% boa_string::vtable::sequence
+  0.20% boa_engine::property::parse_u32_index
+  0.15% 0x0000000000175f1d - -
+  0.14% _rjem_malloc - -
+  0.13% _rjem_sdallocx - -
+  0.13% <boa_gc::cell::BorrowGcRef as core
+  0.13% 0x0000000000175f19 - -
+  0.08% <boa_string::JsString>::from_slice_skip_interning - -
+  0.06% boa_engine::native_function::native_function_call - -
+  0.05% <boa_engine::object::shape
+  0.05% 0x0000000000175c20 - -
+  0.04% <boa_engine::vm::code_block
+  0.04% 0x0000000000176380 - -
+  0.04% 0x0000000000175f2e - -
+  0.04% 0x0000000000175f28 - -
+  0.03% <u32 as itoa::Unsigned>::fmt - -
+  0.03% 0x0000000000176391 - -
+  0.03% 0x0000000000175c24 - -
+  0.02% ryu::pretty::mantissa
+  0.02% rustls_pki_types::base64::decode_public - -
+  0.02% _rjem_je_arena_ptr_array_flush - -
+  0.02% <core::result::Result<boa_engine

@@ -1,0 +1,299 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":19},\"ruta\":\"android_webview/browser/android_protocol_handler.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":12},\"ruta\":\"content/public/browser/ssl_host_state_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":13},\"ruta\":\"android_webview/browser/aw_ssl_host_state_delegate.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":35},\"ruta\":\"content/public/browser/navigation_handle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":16},\"ruta\":\"content/public/browser/navigation_throttle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":15},\"ruta\":\"net/ssl/ssl_private_key.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":12},\"ruta\":\"net/base/data_url.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":17},\"ruta\":\"android_webview/browser/aw_cookie_access_policy.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":20},\"ruta\":\"android_webview/browser/aw_devtools_server.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":29},\"ruta\":\"android_webview/browser/aw_pac_processor.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":9},\"ruta\":\"android_webview/browser/aw_ssl_host_state_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":16},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_navigation_throttle.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":37},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":30},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":23},\"ruta\":\"android_webview/browser/network_service/aw_proxying_url_loader_factory_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":20},\"ruta\":\"components/page_load_metrics/browser/page_load_metrics_observer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":12},\"ruta\":\"components/page_load_metrics/browser/observers/abandoned_page_load_metrics_observer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":20},\"ruta\":\"content/public/test/url_loader_interceptor.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":34},\"ruta\":\"android_webview/browser/safe_browsing/aw_safe_browsing_blocking_page.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":36},\"ruta\":\"net/socket/socket_test_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":41},\"ruta\":\"ash/ambient/backdrop/ambient_backend_controller_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":7},\"ruta\":\"ash/quick_pair/common/fast_pair/fast_pair_http_result.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":13},\"ruta\":\"ash/quick_pair/repository/fake_device_metadata_http_fetcher.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":18},\"ruta\":\"ash/quick_pair/repository/oauth_http_fetcher.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":20},\"ruta\":\"google_apis/gaia/google_service_auth_error.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":25},\"ruta\":\"ash/quick_pair/repository/fast_pair/device_metadata_fetcher_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":22},\"ruta\":\"google_apis/gaia/gaia_auth_fetcher.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":21},\"ruta\":\"ash/webui/projector_app/projector_xhr_sender.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":17},\"ruta\":\"ash/webui/projector_app/test/projector_xhr_sender_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":17},\"ruta\":\"content/public/test/test_navigation_observer.h\"}],\"total\":1606},\"papel\":null,\"ruta\":\"net/base/net_errors.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/logging.h\\\"\",\"linea\":11},\"ruta\":\"base/logging.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/files/file.h\\\"\",\"linea\":10},\"ruta\":\"base/files/file.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_error_list.h\\\"\",\"linea\":22},\"ruta\":\"net/base/net_error_list.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_export.h\\\"\",\"linea\":12},\"ruta\":\"net/base/net_export.h\"}],\"total\":4}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 19
+          },
+          "ruta": "android_webview/browser/android_protocol_handler.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 12
+          },
+          "ruta": "content/public/browser/ssl_host_state_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 13
+          },
+          "ruta": "android_webview/browser/aw_ssl_host_state_delegate.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 35
+          },
+          "ruta": "content/public/browser/navigation_handle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 16
+          },
+          "ruta": "content/public/browser/navigation_throttle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 15
+          },
+          "ruta": "net/ssl/ssl_private_key.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 12
+          },
+          "ruta": "net/base/data_url.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 17
+          },
+          "ruta": "android_webview/browser/aw_cookie_access_policy.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 20
+          },
+          "ruta": "android_webview/browser/aw_devtools_server.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 29
+          },
+          "ruta": "android_webview/browser/aw_pac_processor.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 9
+          },
+          "ruta": "android_webview/browser/aw_ssl_host_state_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 16
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_navigation_throttle.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 37
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 30
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_url_loader_throttle_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 23
+          },
+          "ruta": "android_webview/browser/network_service/aw_proxying_url_loader_factory_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 20
+          },
+          "ruta": "components/page_load_metrics/browser/page_load_metrics_observer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 12
+          },
+          "ruta": "components/page_load_metrics/browser/observers/abandoned_page_load_metrics_observer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 20
+          },
+          "ruta": "content/public/test/url_loader_interceptor.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 34
+          },
+          "ruta": "android_webview/browser/safe_browsing/aw_safe_browsing_blocking_page.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 36
+          },
+          "ruta": "net/socket/socket_test_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 41
+          },
+          "ruta": "ash/ambient/backdrop/ambient_backend_controller_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 7
+          },
+          "ruta": "ash/quick_pair/common/fast_pair/fast_pair_http_result.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 13
+          },
+          "ruta": "ash/quick_pair/repository/fake_device_metadata_http_fetcher.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 18
+          },
+          "ruta": "ash/quick_pair/repository/oauth_http_fetcher.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 20
+          },
+          "ruta": "google_apis/gaia/google_service_auth_error.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 25
+          },
+          "ruta": "ash/quick_pair/repository/fast_pair/device_metadata_fetcher_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 22
+          },
+          "ruta": "google_apis/gaia/gaia_auth_fetcher.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 21
+          },
+          "ruta": "ash/webui/projector_app/projector_xhr_sender.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 17
+          },
+          "ruta": "ash/webui/projector_app/test/projector_xhr_sender_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_errors.h\"",
+            "linea": 17
+          },
+          "ruta": "content/public/test/test_navigation_observer.h"
+        }
+      ],
+      "total": 1606
+    },
+    "papel": null,
+    "ruta": "net/base/net_errors.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/logging.h\"",
+            "linea": 11
+          },
+          "ruta": "base/logging.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/files/file.h\"",
+            "linea": 10
+          },
+          "ruta": "base/files/file.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_error_list.h\"",
+            "linea": 22
+          },
+          "ruta": "net/base/net_error_list.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/net_export.h\"",
+            "linea": 12
+          },
+          "ruta": "net/base/net_export.h"
+        }
+      ],
+      "total": 4
+    }
+  }
+}

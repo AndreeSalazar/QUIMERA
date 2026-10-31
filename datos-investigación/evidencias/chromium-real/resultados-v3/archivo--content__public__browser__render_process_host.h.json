@@ -1,0 +1,443 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":92},\"ruta\":\"android_webview/browser/aw_browser_context.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":34},\"ruta\":\"android_webview/browser/aw_browser_context_store.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":66},\"ruta\":\"android_webview/browser/aw_browser_main_parts.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":21},\"ruta\":\"components/crash/content/browser/child_exit_observer_android.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":20},\"ruta\":\"components/metrics/content/subprocess_metrics_provider.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":28},\"ruta\":\"android_webview/browser/aw_browser_terminator.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":119},\"ruta\":\"android_webview/browser/aw_content_browser_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":26},\"ruta\":\"android_webview/browser/aw_content_browser_client_receiver_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":114},\"ruta\":\"android_webview/browser/aw_contents.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":27},\"ruta\":\"android_webview/browser/aw_contents_client_bridge.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":44},\"ruta\":\"android_webview/browser/aw_contents_io_thread_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":29},\"ruta\":\"android_webview/browser/aw_contents_statics.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":35},\"ruta\":\"android_webview/browser/aw_permission_manager.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":13},\"ruta\":\"android_webview/browser/aw_render_process.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/aw_render_process_keep_alive.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":10},\"ruta\":\"android_webview/browser/aw_render_process_lifecycle.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":17},\"ruta\":\"android_webview/browser/aw_speech_recognition_manager_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":32},\"ruta\":\"android_webview/browser/aw_web_contents_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":23},\"ruta\":\"android_webview/browser/state_serializer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":30},\"ruta\":\"android_webview/browser/gfx/browser_view_renderer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":24},\"ruta\":\"android_webview/browser/metrics/memory_metrics_logger.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":21},\"ruta\":\"android_webview/browser/renderer_host/aw_render_view_host_ext.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":28},\"ruta\":\"apps/launcher.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":43},\"ruta\":\"content/public/test/browser_test_utils.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":33},\"ruta\":\"chrome/browser/extensions/extension_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":11},\"ruta\":\"chrome/browser/bad_message.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":152},\"ruta\":\"chrome/browser/browser_process_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":9},\"ruta\":\"content/public/browser/network_quality_observer_factory.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":38},\"ruta\":\"chrome/browser/metrics/chrome_metrics_service_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/render_process_host.h\\\"\",\"linea\":63},\"ruta\":\"chrome/browser/chrome_browser_interface_binders.cc\"}],\"total\":843},\"papel\":null,\"ruta\":\"content/public/browser/render_process_host.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":24},\"ruta\":\"build/build_config.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback_helpers.h\\\"\",\"linea\":18},\"ruta\":\"base/functional/callback_helpers.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_receiver.h\\\"\",\"linea\":33},\"ruta\":\"mojo/public/cpp/bindings/pending_receiver.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/common/child_process_id.h\\\"\",\"linea\":28},\"ruta\":\"content/public/common/child_process_id.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_remote.h\\\"\",\"linea\":34},\"ruta\":\"mojo/public/cpp/bindings/pending_remote.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/supports_user_data.h\\\"\",\"linea\":23},\"ruta\":\"base/supports_user_data.h\"},{\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_ANDROID)\",\"escrito\":\"#include \\\"content/public/browser/android/child_process_importance.h\\\"\",\"linea\":58},\"ruta\":\"content/public/browser/android/child_process_importance.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/containers/id_map.h\\\"\",\"linea\":17},\"ruta\":\"base/containers/id_map.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/tokens/tokens.h\\\"\",\"linea\":42},\"ruta\":\"third_party/blink/public/common/tokens/tokens.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/network_isolation_key.h\\\"\",\"linea\":35},\"ruta\":\"net/base/network_isolation_key.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/callback_list.h\\\"\",\"linea\":14},\"ruta\":\"base/callback_list.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/function_ref.h\\\"\",\"linea\":19},\"ruta\":\"base/functional/function_ref.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/sanitized_object.h\\\"\",\"linea\":20},\"ruta\":\"base/memory/sanitized_object.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/process/process.h\\\"\",\"linea\":22},\"ruta\":\"base/process/process.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/containers/heap_array.h\\\"\",\"linea\":16},\"ruta\":\"base/containers/heap_array.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/process/kill.h\\\"\",\"linea\":21},\"ruta\":\"base/process/kill.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/perfetto/include/perfetto/tracing/traced_value_forward.h\\\"\",\"linea\":55},\"ruta\":\"third_party/perfetto/include/perfetto/tracing/traced_value_forward.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/generic_pending_receiver.h\\\"\",\"linea\":32},\"ruta\":\"mojo/public/cpp/bindings/generic_pending_receiver.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/oom_intervention/oom_intervention_types.h\\\"\",\"linea\":41},\"ruta\":\"third_party/blink/public/common/oom_intervention/oom_intervention_types.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_exposed_isolation_level.h\\\"\",\"linea\":27},\"ruta\":\"content/public/browser/web_exposed_isolation_level.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_listener.h\\\"\",\"linea\":29},\"ruta\":\"ipc/ipc_listener.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/common/content_export.h\\\"\",\"linea\":26},\"ruta\":\"content/common/content_export.h\"}],\"total\":22}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 92
+          },
+          "ruta": "android_webview/browser/aw_browser_context.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 34
+          },
+          "ruta": "android_webview/browser/aw_browser_context_store.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 66
+          },
+          "ruta": "android_webview/browser/aw_browser_main_parts.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 21
+          },
+          "ruta": "components/crash/content/browser/child_exit_observer_android.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 20
+          },
+          "ruta": "components/metrics/content/subprocess_metrics_provider.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 28
+          },
+          "ruta": "android_webview/browser/aw_browser_terminator.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 119
+          },
+          "ruta": "android_webview/browser/aw_content_browser_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 26
+          },
+          "ruta": "android_webview/browser/aw_content_browser_client_receiver_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 114
+          },
+          "ruta": "android_webview/browser/aw_contents.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 27
+          },
+          "ruta": "android_webview/browser/aw_contents_client_bridge.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 44
+          },
+          "ruta": "android_webview/browser/aw_contents_io_thread_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 29
+          },
+          "ruta": "android_webview/browser/aw_contents_statics.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 35
+          },
+          "ruta": "android_webview/browser/aw_permission_manager.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 13
+          },
+          "ruta": "android_webview/browser/aw_render_process.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/aw_render_process_keep_alive.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 10
+          },
+          "ruta": "android_webview/browser/aw_render_process_lifecycle.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 17
+          },
+          "ruta": "android_webview/browser/aw_speech_recognition_manager_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 32
+          },
+          "ruta": "android_webview/browser/aw_web_contents_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 23
+          },
+          "ruta": "android_webview/browser/state_serializer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 30
+          },
+          "ruta": "android_webview/browser/gfx/browser_view_renderer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 24
+          },
+          "ruta": "android_webview/browser/metrics/memory_metrics_logger.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 21
+          },
+          "ruta": "android_webview/browser/renderer_host/aw_render_view_host_ext.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 28
+          },
+          "ruta": "apps/launcher.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 43
+          },
+          "ruta": "content/public/test/browser_test_utils.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 33
+          },
+          "ruta": "chrome/browser/extensions/extension_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 11
+          },
+          "ruta": "chrome/browser/bad_message.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 152
+          },
+          "ruta": "chrome/browser/browser_process_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 9
+          },
+          "ruta": "content/public/browser/network_quality_observer_factory.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 38
+          },
+          "ruta": "chrome/browser/metrics/chrome_metrics_service_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/render_process_host.h\"",
+            "linea": 63
+          },
+          "ruta": "chrome/browser/chrome_browser_interface_binders.cc"
+        }
+      ],
+      "total": 843
+    },
+    "papel": null,
+    "ruta": "content/public/browser/render_process_host.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 24
+          },
+          "ruta": "build/build_config.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback_helpers.h\"",
+            "linea": 18
+          },
+          "ruta": "base/functional/callback_helpers.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/pending_receiver.h\"",
+            "linea": 33
+          },
+          "ruta": "mojo/public/cpp/bindings/pending_receiver.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/common/child_process_id.h\"",
+            "linea": 28
+          },
+          "ruta": "content/public/common/child_process_id.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/pending_remote.h\"",
+            "linea": 34
+          },
+          "ruta": "mojo/public/cpp/bindings/pending_remote.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/supports_user_data.h\"",
+            "linea": 23
+          },
+          "ruta": "base/supports_user_data.h"
+        },
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(IS_ANDROID)",
+            "escrito": "#include \"content/public/browser/android/child_process_importance.h\"",
+            "linea": 58
+          },
+          "ruta": "content/public/browser/android/child_process_importance.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/containers/id_map.h\"",
+            "linea": 17
+          },
+          "ruta": "base/containers/id_map.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/tokens/tokens.h\"",
+            "linea": 42
+          },
+          "ruta": "third_party/blink/public/common/tokens/tokens.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"net/base/network_isolation_key.h\"",
+            "linea": 35
+          },
+          "ruta": "net/base/network_isolation_key.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/callback_list.h\"",
+            "linea": 14
+          },
+          "ruta": "base/callback_list.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/function_ref.h\"",
+            "linea": 19
+          },
+          "ruta": "base/functional/function_ref.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/sanitized_object.h\"",
+            "linea": 20
+          },
+          "ruta": "base/memory/sanitized_object.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/process/process.h\"",
+            "linea": 22
+          },
+          "ruta": "base/process/process.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/containers/heap_array.h\"",
+            "linea": 16
+          },
+          "ruta": "base/containers/heap_array.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/process/kill.h\"",
+            "linea": 21
+          },
+          "ruta": "base/process/kill.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/perfetto/include/perfetto/tracing/traced_value_forward.h\"",
+            "linea": 55
+          },
+          "ruta": "third_party/perfetto/include/perfetto/tracing/traced_value_forward.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"mojo/public/cpp/bindings/generic_pending_receiver.h\"",
+            "linea": 32
+          },
+          "ruta": "mojo/public/cpp/bindings/generic_pending_receiver.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/oom_intervention/oom_intervention_types.h\"",
+            "linea": 41
+          },
+          "ruta": "third_party/blink/public/common/oom_intervention/oom_intervention_types.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/web_exposed_isolation_level.h\"",
+            "linea": 27
+          },
+          "ruta": "content/public/browser/web_exposed_isolation_level.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ipc/ipc_listener.h\"",
+            "linea": 29
+          },
+          "ruta": "ipc/ipc_listener.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/common/content_export.h\"",
+            "linea": 26
+          },
+          "ruta": "content/common/content_export.h"
+        }
+      ],
+      "total": 22
+    }
+  }
+}

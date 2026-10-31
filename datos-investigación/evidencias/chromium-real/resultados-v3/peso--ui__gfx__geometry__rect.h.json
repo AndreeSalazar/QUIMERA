@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":2077,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":17},\"ruta\":\"ui/gfx/geometry/rect_f.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":15},\"ruta\":\"ui/views/window/frame_view.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":46},\"ruta\":\"ui/aura/window.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":17},\"ruta\":\"ui/display/display.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":54},\"ruta\":\"ui/views/view.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":22},\"ruta\":\"cc/paint/filter_operation.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":11},\"ruta\":\"ui/compositor/paint_context.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":16},\"ruta\":\"ui/events/gesture_event_details.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":15},\"ruta\":\"cc/base/region.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":9},\"ruta\":\"cc/paint/node_id.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":14},\"ruta\":\"components/viz/common/surfaces/region_capture_bounds.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":17},\"ruta\":\"components/viz/common/surfaces/tracked_element_rects.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":28},\"ruta\":\"cc/paint/paint_image.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":42},\"ruta\":\"ui/base/metadata/base_type_conversion.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":15},\"ruta\":\"ui/display/screen_info.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":11},\"ruta\":\"ui/views/paint_info.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":12},\"ruta\":\"ui/compositor/paint_cache.h\"},{\"arrastra\":4937,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":11},\"ruta\":\"cc/input/hit_test_opaqueness.h\"},{\"arrastra\":4830,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":9},\"ruta\":\"cc/layers/scroll_hit_test_rect.h\"},{\"arrastra\":4814,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/gfx/geometry/rect.h\\\"\",\"linea\":39},\"ruta\":\"cc/layers/layer.h\"}],\"recortado\":false,\"ruta\":\"ui/gfx/geometry/rect.h\",\"se_recompilan\":37404}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 2077,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 17
+        },
+        "ruta": "ui/gfx/geometry/rect_f.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 15
+        },
+        "ruta": "ui/views/window/frame_view.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 46
+        },
+        "ruta": "ui/aura/window.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 17
+        },
+        "ruta": "ui/display/display.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 54
+        },
+        "ruta": "ui/views/view.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 22
+        },
+        "ruta": "cc/paint/filter_operation.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 11
+        },
+        "ruta": "ui/compositor/paint_context.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 16
+        },
+        "ruta": "ui/events/gesture_event_details.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 15
+        },
+        "ruta": "cc/base/region.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 9
+        },
+        "ruta": "cc/paint/node_id.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 14
+        },
+        "ruta": "components/viz/common/surfaces/region_capture_bounds.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 17
+        },
+        "ruta": "components/viz/common/surfaces/tracked_element_rects.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 28
+        },
+        "ruta": "cc/paint/paint_image.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 42
+        },
+        "ruta": "ui/base/metadata/base_type_conversion.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 15
+        },
+        "ruta": "ui/display/screen_info.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 11
+        },
+        "ruta": "ui/views/paint_info.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 12
+        },
+        "ruta": "ui/compositor/paint_cache.h"
+      },
+      {
+        "arrastra": 4937,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 11
+        },
+        "ruta": "cc/input/hit_test_opaqueness.h"
+      },
+      {
+        "arrastra": 4830,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 9
+        },
+        "ruta": "cc/layers/scroll_hit_test_rect.h"
+      },
+      {
+        "arrastra": 4814,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"ui/gfx/geometry/rect.h\"",
+          "linea": 39
+        },
+        "ruta": "cc/layers/layer.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "ui/gfx/geometry/rect.h",
+    "se_recompilan": 37404
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":243,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":38},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/v8_binding_for_core.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":35},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_function.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":16},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/native_value_traits_impl.h\"},{\"arrastra\":1243,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":9},\"ruta\":\"third_party/blink/renderer/core/dom/abort_signal.h\"},{\"arrastra\":1014,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":40},\"ruta\":\"third_party/blink/renderer/core/frame/local_dom_window.h\"},{\"arrastra\":330,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":9},\"ruta\":\"third_party/blink/renderer/core/script/module_import_meta.h\"},{\"arrastra\":141,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/core/streams/readable_byte_stream_controller.h\"},{\"arrastra\":123,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/core/streams/readable_stream_generic_reader.h\"},{\"arrastra\":118,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":14},\"ruta\":\"third_party/blink/renderer/core/streams/readable_stream.h\"},{\"arrastra\":102,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/core/streams/underlying_source_base.h\"},{\"arrastra\":100,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":36},\"ruta\":\"third_party/blink/renderer/core/animation/keyframe_effect.h\"},{\"arrastra\":97,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":35},\"ruta\":\"third_party/blink/renderer/core/html/canvas/html_canvas_element.h\"},{\"arrastra\":95,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/core/streams/underlying_sink_base.h\"},{\"arrastra\":89,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":43},\"ruta\":\"third_party/blink/renderer/modules/webgl/webgl_rendering_context_base.h\"},{\"arrastra\":87,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":8},\"ruta\":\"third_party/blink/renderer/core/streams/readable_stream_default_controller_with_script_scope.h\"},{\"arrastra\":84,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_promise_tester.h\"},{\"arrastra\":84,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/core/streams/writable_stream.h\"},{\"arrastra\":68,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":9},\"ruta\":\"third_party/blink/renderer/modules/webgpu/dawn_object.h\"},{\"arrastra\":64,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":33},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/dictionary.h\"},{\"arrastra\":63,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_value.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/core/fetch/fetch_data_loader.h\"}],\"recortado\":false,\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_value.h\",\"se_recompilan\":5530}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 243,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 38
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/v8_binding_for_core.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 35
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/script_function.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 16
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/native_value_traits_impl.h"
+      },
+      {
+        "arrastra": 1243,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 9
+        },
+        "ruta": "third_party/blink/renderer/core/dom/abort_signal.h"
+      },
+      {
+        "arrastra": 1014,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 40
+        },
+        "ruta": "third_party/blink/renderer/core/frame/local_dom_window.h"
+      },
+      {
+        "arrastra": 330,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 9
+        },
+        "ruta": "third_party/blink/renderer/core/script/module_import_meta.h"
+      },
+      {
+        "arrastra": 141,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/blink/renderer/core/streams/readable_byte_stream_controller.h"
+      },
+      {
+        "arrastra": 123,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/blink/renderer/core/streams/readable_stream_generic_reader.h"
+      },
+      {
+        "arrastra": 118,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 14
+        },
+        "ruta": "third_party/blink/renderer/core/streams/readable_stream.h"
+      },
+      {
+        "arrastra": 102,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/blink/renderer/core/streams/underlying_source_base.h"
+      },
+      {
+        "arrastra": 100,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 36
+        },
+        "ruta": "third_party/blink/renderer/core/animation/keyframe_effect.h"
+      },
+      {
+        "arrastra": 97,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 35
+        },
+        "ruta": "third_party/blink/renderer/core/html/canvas/html_canvas_element.h"
+      },
+      {
+        "arrastra": 95,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/blink/renderer/core/streams/underlying_sink_base.h"
+      },
+      {
+        "arrastra": 89,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 43
+        },
+        "ruta": "third_party/blink/renderer/modules/webgl/webgl_rendering_context_base.h"
+      },
+      {
+        "arrastra": 87,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 8
+        },
+        "ruta": "third_party/blink/renderer/core/streams/readable_stream_default_controller_with_script_scope.h"
+      },
+      {
+        "arrastra": 84,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/script_promise_tester.h"
+      },
+      {
+        "arrastra": 84,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/blink/renderer/core/streams/writable_stream.h"
+      },
+      {
+        "arrastra": 68,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 9
+        },
+        "ruta": "third_party/blink/renderer/modules/webgpu/dawn_object.h"
+      },
+      {
+        "arrastra": 64,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 33
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/dictionary.h"
+      },
+      {
+        "arrastra": 63,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_value.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/blink/renderer/core/fetch/fetch_data_loader.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "third_party/blink/renderer/bindings/core/v8/script_value.h",
+    "se_recompilan": 5530
+  }
+}

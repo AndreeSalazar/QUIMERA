@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":2318,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":39},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_function.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/platform/heap/collection_support/heap_deque.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":16},\"ruta\":\"third_party/blink/renderer/platform/bindings/script_state.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":45},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_promise.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":37},\"ruta\":\"third_party/blink/renderer/platform/bindings/script_wrappable.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/platform/instrumentation/use_counter.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":40},\"ruta\":\"third_party/blink/renderer/platform/bindings/v8_per_isolate_data.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":39},\"ruta\":\"third_party/blink/renderer/platform/bindings/dom_wrapper_world.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":41},\"ruta\":\"third_party/blink/renderer/core/dom/events/event_target.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":13},\"ruta\":\"third_party/blink/renderer/platform/heap/collection_support/heap_vector.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":12},\"ruta\":\"third_party/blink/renderer/core/typed_arrays/array_buffer_view_helpers.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/script_iterator.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/bindings/core/v8/world_safe_v8_reference.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":9},\"ruta\":\"third_party/blink/renderer/platform/bindings/union_base.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":9},\"ruta\":\"third_party/blink/renderer/platform/context_lifecycle_observer.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":34},\"ruta\":\"third_party/blink/renderer/platform/supplementable.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":11},\"ruta\":\"third_party/blink/renderer/platform/heap/collection_support/heap_hash_map.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":10},\"ruta\":\"third_party/blink/renderer/platform/heap/collection_support/heap_hash_set.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":40},\"ruta\":\"third_party/blink/renderer/core/execution_context/security_context.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/heap/garbage_collected.h\\\"\",\"linea\":31},\"ruta\":\"third_party/blink/renderer/core/css/css_value.h\"}],\"recortado\":false,\"ruta\":\"third_party/blink/renderer/platform/heap/garbage_collected.h\",\"se_recompilan\":10082}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 2318,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 39
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/script_function.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/blink/renderer/platform/heap/collection_support/heap_deque.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 16
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/script_state.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 45
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/script_promise.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 37
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/script_wrappable.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/blink/renderer/platform/instrumentation/use_counter.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 40
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/v8_per_isolate_data.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 39
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/dom_wrapper_world.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 41
+        },
+        "ruta": "third_party/blink/renderer/core/dom/events/event_target.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 13
+        },
+        "ruta": "third_party/blink/renderer/platform/heap/collection_support/heap_vector.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 12
+        },
+        "ruta": "third_party/blink/renderer/core/typed_arrays/array_buffer_view_helpers.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/script_iterator.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/blink/renderer/bindings/core/v8/world_safe_v8_reference.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 9
+        },
+        "ruta": "third_party/blink/renderer/platform/bindings/union_base.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 9
+        },
+        "ruta": "third_party/blink/renderer/platform/context_lifecycle_observer.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 34
+        },
+        "ruta": "third_party/blink/renderer/platform/supplementable.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 11
+        },
+        "ruta": "third_party/blink/renderer/platform/heap/collection_support/heap_hash_map.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 10
+        },
+        "ruta": "third_party/blink/renderer/platform/heap/collection_support/heap_hash_set.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 40
+        },
+        "ruta": "third_party/blink/renderer/core/execution_context/security_context.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/platform/heap/garbage_collected.h\"",
+          "linea": 31
+        },
+        "ruta": "third_party/blink/renderer/core/css/css_value.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "third_party/blink/renderer/platform/heap/garbage_collected.h",
+    "se_recompilan": 10082
+  }
+}

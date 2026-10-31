@@ -1,0 +1,292 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"jit/MoveResolver.cpp\",\"control_valido\":\"Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-002\",\"linea\":349,\"texto\":\"existing apunta dentro de orderedMoves_, que cambio en la linea 345: puede haber realocado\",\"titulo\":\"Referencia invalidada por crecimiento de vector\",\"visto\":\"existing\"},{\"archivo\":\"jit/arm64/vixl/Debugger-vixl.cpp\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":950,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isalpha(arg[0])\"},{\"archivo\":\"jit/arm64/vixl/Debugger-vixl.cpp\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":955,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isalnum(*cursor)\"},{\"archivo\":\"jit/arm64/vixl/MacroAssembler-vixl.cpp\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":1890,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isprint(marker_name[0])\"},{\"archivo\":\"jit/AliasAnalysis.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":54,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"def->dependency()){\"},{\"archivo\":\"jit/AliasAnalysis.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":85,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"src->id()){\"},{\"archivo\":\"jit/AliasAnalysis.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":142,\"texto\":\"la funcion ocupa 193 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::analyze(){\"},{\"archivo\":\"jit/AliasAnalysis.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":226,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\";iter;iter++){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1603,\"texto\":\"la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::init(){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1782,\"texto\":\"la funcion ocupa 293 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::buildLivenessInfo(){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1811,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"id()])){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2138,\"texto\":\"la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"LiveBundle*bundle1){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2183,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\")->output()){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2263,\"texto\":\"la funcion ocupa 141 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"VirtualRegister&input){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2405,\"texto\":\"la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::mergeAndQueueRegisters(){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2432,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"();i++){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2555,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"newRange->to()){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2796,\"texto\":\"la funcion ocupa 170 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"SplitPositionVector&splitPositions){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2828,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"->to())){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":3059,\"texto\":\"la funcion ocupa 122 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"bool*success){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3137,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\";if(!preBundle){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3212,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\", ins, true)){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3284,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\", ins, true)){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":3413,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"output()))){\"},{\"archivo\":\"jit/BacktrackingAllocator.cpp\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":3469,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"LiveBundleVector&conflicting){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":592,\"total\":617}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "jit/MoveResolver.cpp",
+        "control_valido": "Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-002",
+        "linea": 349,
+        "texto": "existing apunta dentro de orderedMoves_, que cambio en la linea 345: puede haber realocado",
+        "titulo": "Referencia invalidada por crecimiento de vector",
+        "visto": "existing"
+      },
+      {
+        "archivo": "jit/arm64/vixl/Debugger-vixl.cpp",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 950,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isalpha(arg[0])"
+      },
+      {
+        "archivo": "jit/arm64/vixl/Debugger-vixl.cpp",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 955,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isalnum(*cursor)"
+      },
+      {
+        "archivo": "jit/arm64/vixl/MacroAssembler-vixl.cpp",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 1890,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isprint(marker_name[0])"
+      },
+      {
+        "archivo": "jit/AliasAnalysis.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 54,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "def->dependency()){"
+      },
+      {
+        "archivo": "jit/AliasAnalysis.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 85,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "src->id()){"
+      },
+      {
+        "archivo": "jit/AliasAnalysis.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 142,
+        "texto": "la funcion ocupa 193 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::analyze(){"
+      },
+      {
+        "archivo": "jit/AliasAnalysis.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 226,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ";iter;iter++){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1603,
+        "texto": "la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::init(){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1782,
+        "texto": "la funcion ocupa 293 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::buildLivenessInfo(){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1811,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "id()])){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2138,
+        "texto": "la funcion ocupa 102 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "LiveBundle*bundle1){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2183,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ")->output()){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2263,
+        "texto": "la funcion ocupa 141 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "VirtualRegister&input){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2405,
+        "texto": "la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::mergeAndQueueRegisters(){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2432,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "();i++){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2555,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "newRange->to()){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2796,
+        "texto": "la funcion ocupa 170 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "SplitPositionVector&splitPositions){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2828,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "->to())){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 3059,
+        "texto": "la funcion ocupa 122 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "bool*success){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3137,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ";if(!preBundle){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3212,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ", ins, true)){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3284,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ", ins, true)){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 3413,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "output()))){"
+      },
+      {
+        "archivo": "jit/BacktrackingAllocator.cpp",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 3469,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "LiveBundleVector&conflicting){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 592,
+    "total": 617
+  }
+}

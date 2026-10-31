@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"net/http/broken_alternative_services.cc\",\"control_valido\":\"Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-002\",\"linea\":296,\"texto\":\"list_it apunta dentro de broken_alternative_service_list_, que cambio en la linea 295: puede haber realocado\",\"titulo\":\"Referencia invalidada por crecimiento de vector\",\"visto\":\"list_it\"},{\"archivo\":\"net/http/http_response_headers.cc\",\"control_valido\":\"Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-005\",\"linea\":1179,\"texto\":\"i se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\",\"titulo\":\"f(i++, i++): fijar el dialecto cambia la clasificacion\",\"visto\":\"i = FindHeader(++i, \\\"location\\\")\"},{\"archivo\":\"net/http/http_stream_pool_attempt_manager_unittest.cc\",\"control_valido\":\"Conservar un std::string propietario durante todos los usos de la vista, o devolver el propietario.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-001\",\"linea\":605,\"texto\":\"close_error_details mira un std::string temporal que se destruye al terminar esta linea\",\"titulo\":\"string_view conserva la vista, no el string\",\"visto\":\"string_view close_error_details = \\\"net error\\\"){auto client_maker = std::make_unique<Qui…\"},{\"archivo\":\"net/http/http_stream_pool_attempt_manager_unittest.cc\",\"control_valido\":\"Conservar un std::string propietario durante todos los usos de la vista, o devolver el propietario.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-001\",\"linea\":639,\"texto\":\"host mira un std::string temporal que se destruye al terminar esta linea\",\"titulo\":\"string_view conserva la vista, no el string\",\"visto\":\"string_view host = kDefaultServerName){auto client_maker = std::make_unique<QuicTestPac…\"},{\"archivo\":\"net/http/transport_security_state.cc\",\"control_valido\":\"Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"CXX-002\",\"linea\":435,\"texto\":\"sts_iterator apunta dentro de enabled_sts_hosts_, que cambio en la linea 431: puede haber realocado\",\"titulo\":\"Referencia invalidada por crecimiento de vector\",\"visto\":\"sts_iterator\"},{\"archivo\":\"net/http/bidirectional_stream_multinetwork_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":67,\"texto\":\"expected_networks_for_sockets se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<handles::NetworkHandle>expected_networks_for_sockets\"},{\"archivo\":\"net/http/bidirectional_stream_multinetwork_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":68,\"texto\":\"expected_networks_for_dns se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<handles::NetworkHandle>expected_networks_for_dns\"},{\"archivo\":\"net/http/bidirectional_stream_multinetwork_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":69,\"texto\":\"expected_networks_for_proxies se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<handles::NetworkHandle>expected_networks_for_proxies\"},{\"archivo\":\"net/http/http_auth_sspi_win.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":458,\"texto\":\"spn se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string spn\"},{\"archivo\":\"net/http/http_auth_sspi_win.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":459,\"texto\":\"channel_bindings se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string channel_bindings\"},{\"archivo\":\"net/http/http_auth_sspi_win.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":460,\"texto\":\"decoded_server_auth_token se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string decoded_server_auth_token\"},{\"archivo\":\"net/http/http_cache_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":648,\"texto\":\"raw_headers se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string raw_headers\"},{\"archivo\":\"net/http/http_response_headers.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":496,\"texto\":\"raw_headers se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string raw_headers\"},{\"archivo\":\"net/http/http_stream_factory_job_controller_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":4146,\"texto\":\"alternate_host se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string alternate_host\"},{\"archivo\":\"net/http/http_stream_factory_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":2292,\"texto\":\"authority se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string authority\"},{\"archivo\":\"net/http/http_stream_factory_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":2293,\"texto\":\"path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string path\"},{\"archivo\":\"net/http/http_stream_factory_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":2350,\"texto\":\"packets se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<std::unique_ptr<quic::QuicEncryptedPacket >> packets\"},{\"archivo\":\"net/http/http_util_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1520,\"texto\":\"expected_name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string expected_name\"},{\"archivo\":\"net/http/http_util_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1521,\"texto\":\"expected_value se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string expected_value\"},{\"archivo\":\"net/http/http_util_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1543,\"texto\":\"expected_name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string expected_name\"},{\"archivo\":\"net/http/http_util_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1544,\"texto\":\"expected_value se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string expected_value\"},{\"archivo\":\"net/http/http_util_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1557,\"texto\":\"valid_part se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string valid_part\"},{\"archivo\":\"net/http/http_util_unittest.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":1558,\"texto\":\"invalid_part se copia entero en cada llamada: const std::string& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::string invalid_part\"},{\"archivo\":\"net/http/transport_security_state.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":216,\"texto\":\"hsts_host_bypass_list se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<std::string>hsts_host_bypass_list\"},{\"archivo\":\"net/http/bidirectional_stream_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":754,\"texto\":\"la funcion ocupa 136 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BidirectionalStreamTest, TestNetLogContainEntries){\"},{\"archivo\":\"net/http/bidirectional_stream_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":891,\"texto\":\"la funcion ocupa 101 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BidirectionalStreamTest, TestInterleaveReadDataAndSendData){\"},{\"archivo\":\"net/http/broken_alternative_services_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":736,\"texto\":\"la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"BrokenAlternativeServicesTest, RemoveExpiredBrokenAltSvc){\"},{\"archivo\":\"net/http/http_auth_cache_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":61,\"texto\":\"la funcion ocupa 191 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"HttpAuthCacheTest, Basic){\"},{\"archivo\":\"net/http/http_auth_cache_unittest.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":350,\"texto\":\"la funcion ocupa 105 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"HttpAuthCacheTest, SeparateServersByNetworkAnonymizationKey){\"},{\"archivo\":\"net/http/http_auth_controller.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":230,\"texto\":\"la funcion ocupa 131 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"NetLogWithSource&caller_net_log){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":168,\"total\":198}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "net/http/broken_alternative_services.cc",
+        "control_valido": "Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-002",
+        "linea": 296,
+        "texto": "list_it apunta dentro de broken_alternative_service_list_, que cambio en la linea 295: puede haber realocado",
+        "titulo": "Referencia invalidada por crecimiento de vector",
+        "visto": "list_it"
+      },
+      {
+        "archivo": "net/http/http_response_headers.cc",
+        "control_valido": "Separar ambos incrementos en sentencias si importa que f reciba primero cero y despues uno.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-005",
+        "linea": 1179,
+        "texto": "i se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++",
+        "titulo": "f(i++, i++): fijar el dialecto cambia la clasificacion",
+        "visto": "i = FindHeader(++i, \"location\")"
+      },
+      {
+        "archivo": "net/http/http_stream_pool_attempt_manager_unittest.cc",
+        "control_valido": "Conservar un std::string propietario durante todos los usos de la vista, o devolver el propietario.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-001",
+        "linea": 605,
+        "texto": "close_error_details mira un std::string temporal que se destruye al terminar esta linea",
+        "titulo": "string_view conserva la vista, no el string",
+        "visto": "string_view close_error_details = \"net error\"){auto client_maker = std::make_unique<Qui…"
+      },
+      {
+        "archivo": "net/http/http_stream_pool_attempt_manager_unittest.cc",
+        "control_valido": "Conservar un std::string propietario durante todos los usos de la vista, o devolver el propietario.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-001",
+        "linea": 639,
+        "texto": "host mira un std::string temporal que se destruye al terminar esta linea",
+        "titulo": "string_view conserva la vista, no el string",
+        "visto": "string_view host = kDefaultServerName){auto client_maker = std::make_unique<QuicTestPac…"
+      },
+      {
+        "archivo": "net/http/transport_security_state.cc",
+        "control_valido": "Guardar un indice y recuperar la referencia despues del cambio; validar que el indice siga designando el elemento requerido.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "CXX-002",
+        "linea": 435,
+        "texto": "sts_iterator apunta dentro de enabled_sts_hosts_, que cambio en la linea 431: puede haber realocado",
+        "titulo": "Referencia invalidada por crecimiento de vector",
+        "visto": "sts_iterator"
+      },
+      {
+        "archivo": "net/http/bidirectional_stream_multinetwork_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 67,
+        "texto": "expected_networks_for_sockets se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<handles::NetworkHandle>expected_networks_for_sockets"
+      },
+      {
+        "archivo": "net/http/bidirectional_stream_multinetwork_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 68,
+        "texto": "expected_networks_for_dns se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<handles::NetworkHandle>expected_networks_for_dns"
+      },
+      {
+        "archivo": "net/http/bidirectional_stream_multinetwork_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 69,
+        "texto": "expected_networks_for_proxies se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<handles::NetworkHandle>expected_networks_for_proxies"
+      },
+      {
+        "archivo": "net/http/http_auth_sspi_win.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 458,
+        "texto": "spn se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string spn"
+      },
+      {
+        "archivo": "net/http/http_auth_sspi_win.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 459,
+        "texto": "channel_bindings se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string channel_bindings"
+      },
+      {
+        "archivo": "net/http/http_auth_sspi_win.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 460,
+        "texto": "decoded_server_auth_token se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string decoded_server_auth_token"
+      },
+      {
+        "archivo": "net/http/http_cache_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 648,
+        "texto": "raw_headers se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string raw_headers"
+      },
+      {
+        "archivo": "net/http/http_response_headers.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 496,
+        "texto": "raw_headers se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string raw_headers"
+      },
+      {
+        "archivo": "net/http/http_stream_factory_job_controller_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 4146,
+        "texto": "alternate_host se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string alternate_host"
+      },
+      {
+        "archivo": "net/http/http_stream_factory_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 2292,
+        "texto": "authority se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string authority"
+      },
+      {
+        "archivo": "net/http/http_stream_factory_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 2293,
+        "texto": "path se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string path"
+      },
+      {
+        "archivo": "net/http/http_stream_factory_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 2350,
+        "texto": "packets se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<std::unique_ptr<quic::QuicEncryptedPacket >> packets"
+      },
+      {
+        "archivo": "net/http/http_util_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1520,
+        "texto": "expected_name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string expected_name"
+      },
+      {
+        "archivo": "net/http/http_util_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1521,
+        "texto": "expected_value se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string expected_value"
+      },
+      {
+        "archivo": "net/http/http_util_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1543,
+        "texto": "expected_name se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string expected_name"
+      },
+      {
+        "archivo": "net/http/http_util_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1544,
+        "texto": "expected_value se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string expected_value"
+      },
+      {
+        "archivo": "net/http/http_util_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1557,
+        "texto": "valid_part se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string valid_part"
+      },
+      {
+        "archivo": "net/http/http_util_unittest.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 1558,
+        "texto": "invalid_part se copia entero en cada llamada: const std::string& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::string invalid_part"
+      },
+      {
+        "archivo": "net/http/transport_security_state.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 216,
+        "texto": "hsts_host_bypass_list se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<std::string>hsts_host_bypass_list"
+      },
+      {
+        "archivo": "net/http/bidirectional_stream_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 754,
+        "texto": "la funcion ocupa 136 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BidirectionalStreamTest, TestNetLogContainEntries){"
+      },
+      {
+        "archivo": "net/http/bidirectional_stream_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 891,
+        "texto": "la funcion ocupa 101 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BidirectionalStreamTest, TestInterleaveReadDataAndSendData){"
+      },
+      {
+        "archivo": "net/http/broken_alternative_services_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 736,
+        "texto": "la funcion ocupa 106 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "BrokenAlternativeServicesTest, RemoveExpiredBrokenAltSvc){"
+      },
+      {
+        "archivo": "net/http/http_auth_cache_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 61,
+        "texto": "la funcion ocupa 191 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "HttpAuthCacheTest, Basic){"
+      },
+      {
+        "archivo": "net/http/http_auth_cache_unittest.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 350,
+        "texto": "la funcion ocupa 105 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "HttpAuthCacheTest, SeparateServersByNetworkAnonymizationKey){"
+      },
+      {
+        "archivo": "net/http/http_auth_controller.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 230,
+        "texto": "la funcion ocupa 131 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "NetLogWithSource&caller_net_log){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 168,
+    "total": 198
+  }
+}

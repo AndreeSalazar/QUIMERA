@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/sqlite/src/ext/wasm/mkwasmbuilds.c\",\"control_valido\":\"int x = ULTRA_SHL_INT(1, 3);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-003\",\"linea\":91,\"texto\":\"1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)\",\"titulo\":\"Desplazar fuera del ancho\",\"visto\":\"1 << 31\"},{\"archivo\":\"third_party/sqlite/src/mptest/mptest.c\",\"control_valido\":\"int i = 0; int a = i++; int b = i++; int x = a + b;\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-009\",\"linea\":921,\"texto\":\"j se modifica dos veces sin un punto de secuencia entre medias\",\"titulo\":\"Dos modificaciones sin secuenciar\",\"visto\":\"j++)azArg[j++][0] = 0\"},{\"archivo\":\"third_party/sqlite/src/tool/showdb.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":1001,\"texto\":\"a[20] con 16 elementos: el ultimo indice valido es 15\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"a[20]\"},{\"archivo\":\"third_party/sqlite/src/tool/showdb.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":1097,\"texto\":\"a[20] con 16 elementos: el ultimo indice valido es 15\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"a[20]\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5965,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5967,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5971,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5972,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5975,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5977,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":9449,\"texto\":\"origen y destino salen de p->aOp: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(&p->aOp[p->nState], &p->aOp[iStart], N*sizeof(p->aOp[0]))\"},{\"archivo\":\"third_party/sqlite/src/amalgamation/shell/shell.c\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":9450,\"texto\":\"origen y destino salen de p->aArg: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(&p->aArg[p->nState], &p->aArg[iStart], N*sizeof(p->aArg[0]))\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5965,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5967,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5971,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5972,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5975,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":5977,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j + k])\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":9449,\"texto\":\"origen y destino salen de p->aOp: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(&p->aOp[p->nState], &p->aOp[iStart], N*sizeof(p->aOp[0]))\"},{\"archivo\":\"third_party/sqlite/src/amalgamation_dev/shell/shell.c\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":9450,\"texto\":\"origen y destino salen de p->aArg: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(&p->aArg[p->nState], &p->aArg[iStart], N*sizeof(p->aArg[0]))\"},{\"archivo\":\"third_party/sqlite/src/autosetup/jimsh0.c\",\"control_valido\":\"/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-014\",\"linea\":13428,\"texto\":\"tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas\",\"titulo\":\"longjmp vuelve a un valor indeterminado\",\"visto\":\"setjmp(info->jmpbuf)\"},{\"archivo\":\"third_party/sqlite/src/ext/fts3/fts3_snippet.c\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":198,\"texto\":\"origen y destino salen de p->aMI: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(&p->aMI[2 + p->nElem], &p->aMI[1], p->nElem*sizeof(u32))\"},{\"archivo\":\"third_party/sqlite/src/ext/fts3/tool/fts3view.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":650,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isprint(aData[i + j])\"},{\"archivo\":\"third_party/sqlite/src/ext/misc/regexp.c\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":393,\"texto\":\"origen y destino salen de p->aOp: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(&p->aOp[p->nState], &p->aOp[iStart], N*sizeof(p->aOp[0]))\"},{\"archivo\":\"third_party/sqlite/src/ext/misc/regexp.c\",\"control_valido\":\"char s[8] = \\\"abcde\\\"; memmove(s + 1, s, 3);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-018\",\"linea\":394,\"texto\":\"origen y destino salen de p->aArg: si se solapan es UB; memmove si permite solapamiento\",\"titulo\":\"memcpy no permite solapamiento\",\"visto\":\"memcpy(&p->aArg[p->nState], &p->aArg[iStart], N*sizeof(p->aArg[0]))\"},{\"archivo\":\"third_party/sqlite/src/ext/misc/spellfix.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":2033,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isspace(zOut[i - 1])\"},{\"archivo\":\"third_party/sqlite/src/ext/misc/uint.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":51,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i])\"},{\"archivo\":\"third_party/sqlite/src/ext/misc/uint.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":53,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j])\"},{\"archivo\":\"third_party/sqlite/src/ext/misc/uint.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":57,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zA[i + k])\"},{\"archivo\":\"third_party/sqlite/src/ext/misc/uint.c\",\"control_valido\":\"char c = 'A'; int x = isalpha((unsigned char)c);\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-011\",\"linea\":58,\"texto\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\",\"titulo\":\"El char negativo de ctype\",\"visto\":\"isdigit(zB[j + k])\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":1548,\"total\":1578}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/sqlite/src/ext/wasm/mkwasmbuilds.c",
+        "control_valido": "int x = ULTRA_SHL_INT(1, 3);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-003",
+        "linea": 91,
+        "texto": "1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)",
+        "titulo": "Desplazar fuera del ancho",
+        "visto": "1 << 31"
+      },
+      {
+        "archivo": "third_party/sqlite/src/mptest/mptest.c",
+        "control_valido": "int i = 0; int a = i++; int b = i++; int x = a + b;",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-009",
+        "linea": 921,
+        "texto": "j se modifica dos veces sin un punto de secuencia entre medias",
+        "titulo": "Dos modificaciones sin secuenciar",
+        "visto": "j++)azArg[j++][0] = 0"
+      },
+      {
+        "archivo": "third_party/sqlite/src/tool/showdb.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 1001,
+        "texto": "a[20] con 16 elementos: el ultimo indice valido es 15",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "a[20]"
+      },
+      {
+        "archivo": "third_party/sqlite/src/tool/showdb.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 1097,
+        "texto": "a[20] con 16 elementos: el ultimo indice valido es 15",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "a[20]"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5965,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5967,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5971,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5972,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5975,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5977,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 9449,
+        "texto": "origen y destino salen de p->aOp: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(&p->aOp[p->nState], &p->aOp[iStart], N*sizeof(p->aOp[0]))"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation/shell/shell.c",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 9450,
+        "texto": "origen y destino salen de p->aArg: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(&p->aArg[p->nState], &p->aArg[iStart], N*sizeof(p->aArg[0]))"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5965,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5967,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5971,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5972,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5975,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 5977,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 9449,
+        "texto": "origen y destino salen de p->aOp: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(&p->aOp[p->nState], &p->aOp[iStart], N*sizeof(p->aOp[0]))"
+      },
+      {
+        "archivo": "third_party/sqlite/src/amalgamation_dev/shell/shell.c",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 9450,
+        "texto": "origen y destino salen de p->aArg: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(&p->aArg[p->nState], &p->aArg[iStart], N*sizeof(p->aArg[0]))"
+      },
+      {
+        "archivo": "third_party/sqlite/src/autosetup/jimsh0.c",
+        "control_valido": "/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-014",
+        "linea": 13428,
+        "texto": "tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas",
+        "titulo": "longjmp vuelve a un valor indeterminado",
+        "visto": "setjmp(info->jmpbuf)"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/fts3/fts3_snippet.c",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 198,
+        "texto": "origen y destino salen de p->aMI: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(&p->aMI[2 + p->nElem], &p->aMI[1], p->nElem*sizeof(u32))"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/fts3/tool/fts3view.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 650,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isprint(aData[i + j])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/misc/regexp.c",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 393,
+        "texto": "origen y destino salen de p->aOp: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(&p->aOp[p->nState], &p->aOp[iStart], N*sizeof(p->aOp[0]))"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/misc/regexp.c",
+        "control_valido": "char s[8] = \"abcde\"; memmove(s + 1, s, 3);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-018",
+        "linea": 394,
+        "texto": "origen y destino salen de p->aArg: si se solapan es UB; memmove si permite solapamiento",
+        "titulo": "memcpy no permite solapamiento",
+        "visto": "memcpy(&p->aArg[p->nState], &p->aArg[iStart], N*sizeof(p->aArg[0]))"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/misc/spellfix.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 2033,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isspace(zOut[i - 1])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/misc/uint.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 51,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/misc/uint.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 53,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/misc/uint.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 57,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zA[i + k])"
+      },
+      {
+        "archivo": "third_party/sqlite/src/ext/misc/uint.c",
+        "control_valido": "char c = 'A'; int x = isalpha((unsigned char)c);",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-011",
+        "linea": 58,
+        "texto": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)",
+        "titulo": "El char negativo de ctype",
+        "visto": "isdigit(zB[j + k])"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 1548,
+    "total": 1578
+  }
+}

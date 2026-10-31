@@ -1,0 +1,610 @@
+{
+  "content": [
+    {
+      "text": "{\"comparten\":{\"lista\":[{\"lo_usan\":[\"base\",\"mojo\",\"ipc\",\"content\",\"third_party/blink\",\"v8\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"sandbox\",\"ui\",\"chrome\",\"url\"],\"ruta\":\"build/build_config.h\"},{\"lo_usan\":[\"base\",\"mojo\",\"ipc\",\"content\",\"third_party/blink\",\"v8\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"sandbox\",\"ui\",\"chrome\",\"url\"],\"ruta\":\"testing/gtest/include/gtest/gtest.h\"},{\"lo_usan\":[\"base\",\"mojo\",\"content\",\"third_party/blink\",\"v8\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"sandbox\",\"ui\",\"chrome\",\"url\"],\"ruta\":\"testing/gmock/include/gmock/gmock.h\"},{\"lo_usan\":[\"base\",\"mojo\",\"ipc\",\"content\",\"third_party/blink\",\"v8\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"ui\",\"chrome\"],\"ruta\":\"third_party/abseil-cpp/absl/functional/overload.h\"},{\"lo_usan\":[\"base\",\"mojo\",\"ipc\",\"content\",\"third_party/blink\",\"v8\",\"components/viz\",\"third_party/skia\",\"net\",\"services\",\"sandbox\",\"ui\",\"chrome\"],\"ruta\":\"third_party/crashpad/crashpad/compat/win/sys/types.h\"},{\"lo_usan\":[\"base\",\"mojo\",\"content\",\"third_party/blink\",\"v8\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"ui\",\"chrome\"],\"ruta\":\"third_party/abseil-cpp/absl/container/flat_hash_map.h\"},{\"lo_usan\":[\"base\",\"content\",\"third_party/blink\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"sandbox\",\"ui\",\"chrome\"],\"ruta\":\"third_party/abseil-cpp/absl/cleanup/cleanup.h\"},{\"lo_usan\":[\"base\",\"mojo\",\"content\",\"v8\",\"gpu\",\"third_party/skia\",\"net\",\"services\",\"sandbox\",\"ui\",\"chrome\"],\"ruta\":\"third_party/crashpad/crashpad/compat/linux/sys/mman.h\"}],\"total\":1057},\"directas\":[{\"a\":\"mojo\",\"aristas\":1897,\"usa\":\"base\"},{\"a\":\"mojo\",\"aristas\":17,\"usa\":\"ipc\"},{\"a\":\"mojo\",\"aristas\":11,\"usa\":\"third_party/blink\"},{\"a\":\"mojo\",\"aristas\":2,\"usa\":\"net\"},{\"a\":\"ipc\",\"aristas\":244,\"usa\":\"base\"},{\"a\":\"ipc\",\"aristas\":94,\"usa\":\"mojo\"},{\"a\":\"content\",\"aristas\":18954,\"usa\":\"base\"},{\"a\":\"content\",\"aristas\":2434,\"usa\":\"mojo\"},{\"a\":\"content\",\"aristas\":30,\"usa\":\"ipc\"},{\"a\":\"content\",\"aristas\":2427,\"usa\":\"third_party/blink\"},{\"a\":\"content\",\"aristas\":150,\"usa\":\"v8\"},{\"a\":\"content\",\"aristas\":184,\"usa\":\"cc\"},{\"a\":\"content\",\"aristas\":379,\"usa\":\"components/viz\"},{\"a\":\"content\",\"aristas\":257,\"usa\":\"gpu\"},{\"a\":\"content\",\"aristas\":207,\"usa\":\"third_party/skia\"},{\"a\":\"content\",\"aristas\":2385,\"usa\":\"net\"},{\"a\":\"content\",\"aristas\":1593,\"usa\":\"services\"},{\"a\":\"content\",\"aristas\":216,\"usa\":\"sandbox\"},{\"a\":\"content\",\"aristas\":2690,\"usa\":\"ui\"},{\"a\":\"content\",\"aristas\":1234,\"usa\":\"url\"},{\"a\":\"third_party/blink\",\"aristas\":12548,\"usa\":\"base\"},{\"a\":\"third_party/blink\",\"aristas\":1139,\"usa\":\"mojo\"},{\"a\":\"third_party/blink\",\"aristas\":3,\"usa\":\"ipc\"},{\"a\":\"third_party/blink\",\"aristas\":11,\"usa\":\"content\"},{\"a\":\"third_party/blink\",\"aristas\":636,\"usa\":\"v8\"},{\"a\":\"third_party/blink\",\"aristas\":843,\"usa\":\"cc\"},{\"a\":\"third_party/blink\",\"aristas\":275,\"usa\":\"components/viz\"},{\"a\":\"third_party/blink\",\"aristas\":353,\"usa\":\"gpu\"},{\"a\":\"third_party/blink\",\"aristas\":732,\"usa\":\"third_party/skia\"},{\"a\":\"third_party/blink\",\"aristas\":320,\"usa\":\"net\"},{\"a\":\"third_party/blink\",\"aristas\":516,\"usa\":\"services\"},{\"a\":\"third_party/blink\",\"aristas\":1685,\"usa\":\"ui\"},{\"a\":\"third_party/blink\",\"aristas\":165,\"usa\":\"url\"},{\"a\":\"cc\",\"aristas\":2260,\"usa\":\"base\"},{\"a\":\"cc\",\"aristas\":29,\"usa\":\"mojo\"},{\"a\":\"cc\",\"aristas\":3,\"usa\":\"third_party/blink\"},{\"a\":\"cc\",\"aristas\":696,\"usa\":\"components/viz\"},{\"a\":\"cc\",\"aristas\":155,\"usa\":\"gpu\"},{\"a\":\"cc\",\"aristas\":603,\"usa\":\"third_party/skia\"},{\"a\":\"cc\",\"aristas\":16,\"usa\":\"services\"},{\"a\":\"cc\",\"aristas\":725,\"usa\":\"ui\"},{\"a\":\"cc\",\"aristas\":6,\"usa\":\"url\"},{\"a\":\"components/viz\",\"aristas\":1885,\"usa\":\"base\"},{\"a\":\"components/viz\",\"aristas\":165,\"usa\":\"mojo\"},{\"a\":\"components/viz\",\"aristas\":1,\"usa\":\"ipc\"},{\"a\":\"components/viz\",\"aristas\":5,\"usa\":\"third_party/blink\"},{\"a\":\"components/viz\",\"aristas\":223,\"usa\":\"cc\"},{\"a\":\"components/viz\",\"aristas\":476,\"usa\":\"gpu\"},{\"a\":\"components/viz\",\"aristas\":329,\"usa\":\"third_party/skia\"},{\"a\":\"components/viz\",\"aristas\":7,\"usa\":\"services\"}],\"los_juntan\":{\"lista\":[{\"ruta\":\"android_webview/lib/aw_main_delegate.cc\",\"usa_a\":[\"base\",\"mojo\",\"content\",\"third_party/blink\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"ui\"]},{\"ruta\":\"fuchsia_web/webengine/browser/web_engine_config.cc\",\"usa_a\":[\"base\",\"content\",\"third_party/blink\",\"cc\",\"components/viz\",\"gpu\",\"services\",\"ui\",\"url\"]},{\"ruta\":\"headless/lib/headless_content_main_delegate.cc\",\"usa_a\":[\"base\",\"content\",\"third_party/blink\",\"v8\",\"cc\",\"components/viz\",\"gpu\",\"sandbox\",\"ui\"]},{\"ruta\":\"android_webview/browser/aw_contents.cc\",\"usa_a\":[\"base\",\"content\",\"third_party/blink\",\"components/viz\",\"third_party/skia\",\"net\",\"ui\",\"url\"]},{\"ruta\":\"android_webview/browser/aw_field_trials.cc\",\"usa_a\":[\"base\",\"content\",\"third_party/blink\",\"components/viz\",\"gpu\",\"net\",\"services\",\"ui\"]},{\"ruta\":\"chromecast/browser/cast_browser_main_parts.cc\",\"usa_a\":[\"base\",\"content\",\"cc\",\"components/viz\",\"gpu\",\"net\",\"services\",\"ui\"]},{\"ruta\":\"chromecast/browser/cast_web_contents_browsertest.cc\",\"usa_a\":[\"base\",\"mojo\",\"content\",\"third_party/blink\",\"net\",\"services\",\"ui\",\"url\"]},{\"ruta\":\"components/page_content_annotations/content/page_context_fetcher.cc\",\"usa_a\":[\"base\",\"content\",\"third_party/blink\",\"components/viz\",\"third_party/skia\",\"net\",\"ui\",\"url\"]}],\"total\":14733},\"miembros\":[{\"archivos\":3180,\"ruta\":\"base\",\"se_toca_con\":15},{\"archivos\":741,\"ruta\":\"mojo\",\"se_toca_con\":15},{\"archivos\":58,\"ruta\":\"ipc\",\"se_toca_con\":15},{\"archivos\":5850,\"ruta\":\"content\",\"se_toca_con\":15},{\"archivos\":14285,\"ruta\":\"third_party/blink\",\"se_toca_con\":15},{\"archivos\":4376,\"ruta\":\"v8\",\"se_toca_con\":15},{\"archivos\":1115,\"ruta\":\"cc\",\"se_toca_con\":15},{\"archivos\":749,\"ruta\":\"components/viz\",\"se_toca_con\":15},{\"archivos\":1108,\"ruta\":\"gpu\",\"se_toca_con\":15},{\"archivos\":6136,\"ruta\":\"third_party/skia\",\"se_toca_con\":15},{\"archivos\":4515,\"ruta\":\"net\",\"se_toca_con\":15},{\"archivos\":2784,\"ruta\":\"services\",\"se_toca_con\":15},{\"archivos\":481,\"ruta\":\"sandbox\",\"se_toca_con\":15},{\"archivos\":6212,\"ruta\":\"ui\",\"se_toca_con\":15},{\"archivos\":35384,\"ruta\":\"chrome\",\"se_toca_con\":15},{\"archivos\":92,\"ruta\":\"url\",\"se_toca_con\":15}],\"piezas\":1,\"sin_datos\":[],\"sueltos\":[]}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "comparten": {
+      "lista": [
+        {
+          "lo_usan": [
+            "base",
+            "mojo",
+            "ipc",
+            "content",
+            "third_party/blink",
+            "v8",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "sandbox",
+            "ui",
+            "chrome",
+            "url"
+          ],
+          "ruta": "build/build_config.h"
+        },
+        {
+          "lo_usan": [
+            "base",
+            "mojo",
+            "ipc",
+            "content",
+            "third_party/blink",
+            "v8",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "sandbox",
+            "ui",
+            "chrome",
+            "url"
+          ],
+          "ruta": "testing/gtest/include/gtest/gtest.h"
+        },
+        {
+          "lo_usan": [
+            "base",
+            "mojo",
+            "content",
+            "third_party/blink",
+            "v8",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "sandbox",
+            "ui",
+            "chrome",
+            "url"
+          ],
+          "ruta": "testing/gmock/include/gmock/gmock.h"
+        },
+        {
+          "lo_usan": [
+            "base",
+            "mojo",
+            "ipc",
+            "content",
+            "third_party/blink",
+            "v8",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "ui",
+            "chrome"
+          ],
+          "ruta": "third_party/abseil-cpp/absl/functional/overload.h"
+        },
+        {
+          "lo_usan": [
+            "base",
+            "mojo",
+            "ipc",
+            "content",
+            "third_party/blink",
+            "v8",
+            "components/viz",
+            "third_party/skia",
+            "net",
+            "services",
+            "sandbox",
+            "ui",
+            "chrome"
+          ],
+          "ruta": "third_party/crashpad/crashpad/compat/win/sys/types.h"
+        },
+        {
+          "lo_usan": [
+            "base",
+            "mojo",
+            "content",
+            "third_party/blink",
+            "v8",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "ui",
+            "chrome"
+          ],
+          "ruta": "third_party/abseil-cpp/absl/container/flat_hash_map.h"
+        },
+        {
+          "lo_usan": [
+            "base",
+            "content",
+            "third_party/blink",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "sandbox",
+            "ui",
+            "chrome"
+          ],
+          "ruta": "third_party/abseil-cpp/absl/cleanup/cleanup.h"
+        },
+        {
+          "lo_usan": [
+            "base",
+            "mojo",
+            "content",
+            "v8",
+            "gpu",
+            "third_party/skia",
+            "net",
+            "services",
+            "sandbox",
+            "ui",
+            "chrome"
+          ],
+          "ruta": "third_party/crashpad/crashpad/compat/linux/sys/mman.h"
+        }
+      ],
+      "total": 1057
+    },
+    "directas": [
+      {
+        "a": "mojo",
+        "aristas": 1897,
+        "usa": "base"
+      },
+      {
+        "a": "mojo",
+        "aristas": 17,
+        "usa": "ipc"
+      },
+      {
+        "a": "mojo",
+        "aristas": 11,
+        "usa": "third_party/blink"
+      },
+      {
+        "a": "mojo",
+        "aristas": 2,
+        "usa": "net"
+      },
+      {
+        "a": "ipc",
+        "aristas": 244,
+        "usa": "base"
+      },
+      {
+        "a": "ipc",
+        "aristas": 94,
+        "usa": "mojo"
+      },
+      {
+        "a": "content",
+        "aristas": 18954,
+        "usa": "base"
+      },
+      {
+        "a": "content",
+        "aristas": 2434,
+        "usa": "mojo"
+      },
+      {
+        "a": "content",
+        "aristas": 30,
+        "usa": "ipc"
+      },
+      {
+        "a": "content",
+        "aristas": 2427,
+        "usa": "third_party/blink"
+      },
+      {
+        "a": "content",
+        "aristas": 150,
+        "usa": "v8"
+      },
+      {
+        "a": "content",
+        "aristas": 184,
+        "usa": "cc"
+      },
+      {
+        "a": "content",
+        "aristas": 379,
+        "usa": "components/viz"
+      },
+      {
+        "a": "content",
+        "aristas": 257,
+        "usa": "gpu"
+      },
+      {
+        "a": "content",
+        "aristas": 207,
+        "usa": "third_party/skia"
+      },
+      {
+        "a": "content",
+        "aristas": 2385,
+        "usa": "net"
+      },
+      {
+        "a": "content",
+        "aristas": 1593,
+        "usa": "services"
+      },
+      {
+        "a": "content",
+        "aristas": 216,
+        "usa": "sandbox"
+      },
+      {
+        "a": "content",
+        "aristas": 2690,
+        "usa": "ui"
+      },
+      {
+        "a": "content",
+        "aristas": 1234,
+        "usa": "url"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 12548,
+        "usa": "base"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 1139,
+        "usa": "mojo"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 3,
+        "usa": "ipc"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 11,
+        "usa": "content"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 636,
+        "usa": "v8"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 843,
+        "usa": "cc"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 275,
+        "usa": "components/viz"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 353,
+        "usa": "gpu"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 732,
+        "usa": "third_party/skia"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 320,
+        "usa": "net"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 516,
+        "usa": "services"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 1685,
+        "usa": "ui"
+      },
+      {
+        "a": "third_party/blink",
+        "aristas": 165,
+        "usa": "url"
+      },
+      {
+        "a": "cc",
+        "aristas": 2260,
+        "usa": "base"
+      },
+      {
+        "a": "cc",
+        "aristas": 29,
+        "usa": "mojo"
+      },
+      {
+        "a": "cc",
+        "aristas": 3,
+        "usa": "third_party/blink"
+      },
+      {
+        "a": "cc",
+        "aristas": 696,
+        "usa": "components/viz"
+      },
+      {
+        "a": "cc",
+        "aristas": 155,
+        "usa": "gpu"
+      },
+      {
+        "a": "cc",
+        "aristas": 603,
+        "usa": "third_party/skia"
+      },
+      {
+        "a": "cc",
+        "aristas": 16,
+        "usa": "services"
+      },
+      {
+        "a": "cc",
+        "aristas": 725,
+        "usa": "ui"
+      },
+      {
+        "a": "cc",
+        "aristas": 6,
+        "usa": "url"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 1885,
+        "usa": "base"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 165,
+        "usa": "mojo"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 1,
+        "usa": "ipc"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 5,
+        "usa": "third_party/blink"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 223,
+        "usa": "cc"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 476,
+        "usa": "gpu"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 329,
+        "usa": "third_party/skia"
+      },
+      {
+        "a": "components/viz",
+        "aristas": 7,
+        "usa": "services"
+      }
+    ],
+    "los_juntan": {
+      "lista": [
+        {
+          "ruta": "android_webview/lib/aw_main_delegate.cc",
+          "usa_a": [
+            "base",
+            "mojo",
+            "content",
+            "third_party/blink",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "ui"
+          ]
+        },
+        {
+          "ruta": "fuchsia_web/webengine/browser/web_engine_config.cc",
+          "usa_a": [
+            "base",
+            "content",
+            "third_party/blink",
+            "cc",
+            "components/viz",
+            "gpu",
+            "services",
+            "ui",
+            "url"
+          ]
+        },
+        {
+          "ruta": "headless/lib/headless_content_main_delegate.cc",
+          "usa_a": [
+            "base",
+            "content",
+            "third_party/blink",
+            "v8",
+            "cc",
+            "components/viz",
+            "gpu",
+            "sandbox",
+            "ui"
+          ]
+        },
+        {
+          "ruta": "android_webview/browser/aw_contents.cc",
+          "usa_a": [
+            "base",
+            "content",
+            "third_party/blink",
+            "components/viz",
+            "third_party/skia",
+            "net",
+            "ui",
+            "url"
+          ]
+        },
+        {
+          "ruta": "android_webview/browser/aw_field_trials.cc",
+          "usa_a": [
+            "base",
+            "content",
+            "third_party/blink",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "ui"
+          ]
+        },
+        {
+          "ruta": "chromecast/browser/cast_browser_main_parts.cc",
+          "usa_a": [
+            "base",
+            "content",
+            "cc",
+            "components/viz",
+            "gpu",
+            "net",
+            "services",
+            "ui"
+          ]
+        },
+        {
+          "ruta": "chromecast/browser/cast_web_contents_browsertest.cc",
+          "usa_a": [
+            "base",
+            "mojo",
+            "content",
+            "third_party/blink",
+            "net",
+            "services",
+            "ui",
+            "url"
+          ]
+        },
+        {
+          "ruta": "components/page_content_annotations/content/page_context_fetcher.cc",
+          "usa_a": [
+            "base",
+            "content",
+            "third_party/blink",
+            "components/viz",
+            "third_party/skia",
+            "net",
+            "ui",
+            "url"
+          ]
+        }
+      ],
+      "total": 14733
+    },
+    "miembros": [
+      {
+        "archivos": 3180,
+        "ruta": "base",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 741,
+        "ruta": "mojo",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 58,
+        "ruta": "ipc",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 5850,
+        "ruta": "content",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 14285,
+        "ruta": "third_party/blink",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 4376,
+        "ruta": "v8",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 1115,
+        "ruta": "cc",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 749,
+        "ruta": "components/viz",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 1108,
+        "ruta": "gpu",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 6136,
+        "ruta": "third_party/skia",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 4515,
+        "ruta": "net",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 2784,
+        "ruta": "services",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 481,
+        "ruta": "sandbox",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 6212,
+        "ruta": "ui",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 35384,
+        "ruta": "chrome",
+        "se_toca_con": 15
+      },
+      {
+        "archivos": 92,
+        "ruta": "url",
+        "se_toca_con": 15
+      }
+    ],
+    "piezas": 1,
+    "sin_datos": [],
+    "sueltos": []
+  }
+}

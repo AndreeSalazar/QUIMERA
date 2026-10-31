@@ -1,0 +1,61 @@
+{
+  "content": [
+    {
+      "text": "{\"analisis_ms\":53962,\"archivos_indexados\":1064375,\"archivos_leidos\":319871,\"cabeceras_exportadas\":{\"nota\":\"deducidas: el #include nombra una ruta que solo existe al compilar (mozilla/x.h es mfbt/x.h); se aprenden del proyecto\",\"prefijos\":[{\"aristas\":3,\"prefijo\":\"gemmlowp/\"},{\"aristas\":20,\"prefijo\":\"temporal/\"},{\"aristas\":1,\"prefijo\":\"xprof/\"}]},\"carpeta\":\"/var/tmp/ultra-main-work/chromium-personal/src\",\"ciclos\":{\"archivos\":309,\"dependen_de_un_if\":32,\"total\":82},\"compile_commands\":null,\"dependencias\":2044874,\"diagnosticos_gcc\":0,\"fallo_conectado\":{\"archivos_que_fallan\":1519,\"causas\":1519,\"se_pueden_romper\":150179},\"guardianes\":null,\"megabytes\":3497.7,\"recortado\":false,\"reutilizados_de_la_cache\":160231,\"revisiones_gcc\":{\"archivos\":0,\"pendientes\":0},\"siguiente\":\"fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo\",\"sospechas\":{\"Elegancia\":91443,\"Rendimiento\":10199,\"Seguridad\":3718,\"a_proposito\":0},\"version\":1}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "analisis_ms": 53962,
+    "archivos_indexados": 1064375,
+    "archivos_leidos": 319871,
+    "cabeceras_exportadas": {
+      "nota": "deducidas: el #include nombra una ruta que solo existe al compilar (mozilla/x.h es mfbt/x.h); se aprenden del proyecto",
+      "prefijos": [
+        {
+          "aristas": 3,
+          "prefijo": "gemmlowp/"
+        },
+        {
+          "aristas": 20,
+          "prefijo": "temporal/"
+        },
+        {
+          "aristas": 1,
+          "prefijo": "xprof/"
+        }
+      ]
+    },
+    "carpeta": "/var/tmp/ultra-main-work/chromium-personal/src",
+    "ciclos": {
+      "archivos": 309,
+      "dependen_de_un_if": 32,
+      "total": 82
+    },
+    "compile_commands": null,
+    "dependencias": 2044874,
+    "diagnosticos_gcc": 0,
+    "fallo_conectado": {
+      "archivos_que_fallan": 1519,
+      "causas": 1519,
+      "se_pueden_romper": 150179
+    },
+    "guardianes": null,
+    "megabytes": 3497.7,
+    "recortado": false,
+    "reutilizados_de_la_cache": 160231,
+    "revisiones_gcc": {
+      "archivos": 0,
+      "pendientes": 0
+    },
+    "siguiente": "fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo",
+    "sospechas": {
+      "Elegancia": 91443,
+      "Rendimiento": 10199,
+      "Seguridad": 3718,
+      "a_proposito": 0
+    },
+    "version": 1
+  }
+}

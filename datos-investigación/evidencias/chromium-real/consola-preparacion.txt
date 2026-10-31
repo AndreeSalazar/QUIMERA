@@ -1,0 +1,63 @@
+echo ESTADO; tail -12 /tmp/hyprland-chromium.log; ultra-entrar /usr/bin
+/env XDG_RUNTIME_DIR=/run/user/1000 /usr/bin/hyprctl -i 0 -j monitors; echo ESCR
+ITORIO-OK
+ESTADO
+DEBUG ]: Creating the ConfigManager!
+DEBUG ]: [cfg] Config is either explicit or special.
+DEBUG ]: [cfg] Config is lua, loading lua mgr
+DEBUG ]: Creating the Error Overlay!
+DEBUG ]: Creating the LayoutManager!
+DEBUG ]: Creating the TokenManager!
+DEBUG ]: Creating the EventManager!
+DEBUG ]: Creating the PointerManager!
+DEBUG ]: Creating the AsyncResourceGatherer!
+dbus-daemon[331]: [session uid=1000 pid=331 pidfd=5] Activating service name='ca.desrt.dconf' requested by ':1.13' (uid=1000 pid=377 comm="Hyprland --watchdog-fd 4 --config /etc/ultra/hyprl")
+dbus-daemon[331]: [session uid=1000 pid=331 pidfd=5] Successfully activated service 'ca.desrt.dconf'
+[1;32mDEBUG [0mfrom start-hyprland ]: got an event from hyprland
+[{
+    "id": 0,
+    "name": "Virtual-1",
+    "description": "Red Hat Inc. QEMU Monitor",
+    "make": "Red Hat, Inc.",
+    "model": "QEMU Monitor",
+    "serial": "",
+    "width": 1280,
+    "height": 800,
+    "physicalWidth": 320,
+    "physicalHeight": 200,
+    "refreshRate": 74.99400,
+    "x": 0,
+    "y": 0,
+    "activeWorkspace": {
+        "id": 1,
+        "name": "1"
+    },
+    "specialWorkspace": {
+        "id": 0,
+        "name": ""
+    },
+    "reserved": [0, 0, 0, 0],
+    "scale": 1,
+    "transform": 0,
+    "focused": true,
+    "dpmsStatus": true,
+    "vrr": false,
+    "solitary": "0",
+    "solitaryBlockedBy": ["WINDOWED","CANDIDATE"],
+    "activelyTearing": false,
+    "tearingBlockedBy": ["NOT_TORN","USER","CANDIDATE"],
+    "directScanoutTo": "0",
+    "directScanoutBlockedBy": ["USER","SW","CANDIDATE"],
+    "disabled": false,
+    "currentFormat": "XRGB8888",
+    "mirrorOf": "none",
+    "availableModes": ["1280x800@74.99Hz","5120x2160@50.00Hz","4096x2160@50.00Hz","3840x2160@60.00Hz","3840x2160@59.94Hz","3840x2160@50.00Hz","1920x1440@60.00Hz","2560x1080@50.00Hz","1856x1392@59.99Hz","1792x1344@60.00Hz","2048x1152@60.00Hz","1920x1200@59.88Hz","1920x1080@60.00Hz","1920x1080@50.00Hz","1600x1200@60.00Hz","1680x1050@59.95Hz","1400x1050@59.98Hz","1280x1024@60.02Hz","1440x900@59.89Hz","1280x960@60.00Hz","1360x768@60.02Hz","1280x768@59.87Hz","1024x768@60.00Hz","800x600@60.32Hz","640x480@60.00Hz","640x480@59.94Hz"],
+    "colorManagementPreset": "srgb",
+    "sdrBrightness": 1,
+    "sdrSaturation": 1,
+    "sdrMinLuminance": 0.2,
+    "sdrMaxLuminance": 80,
+    "hardwareCursorsInUse": true
+}]
+ESCRITORIO-OK
+ultra:~# 

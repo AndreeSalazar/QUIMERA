@@ -1,0 +1,287 @@
+{
+  "content": [
+    {
+      "text": "{\"autores\":292,\"carpetas_en_orden\":[{\"carpeta\":\".vscode\",\"nace\":{\"asunto\":\"first commit\",\"autor\":\"Jason Williams\",\"commit\":\"f33c18d2\",\"fecha\":\"2018-08-08\"}},{\"carpeta\":\"src\",\"nace\":{\"asunto\":\"first commit\",\"autor\":\"Jason Williams\",\"commit\":\"f33c18d2\",\"fecha\":\"2018-08-08\"}},{\"carpeta\":\"tests\",\"nace\":{\"asunto\":\"first test added\",\"autor\":\"Jason Williams\",\"commit\":\"9a50cc11\",\"fecha\":\"2018-09-10\"}},{\"carpeta\":\"docs\",\"nace\":{\"asunto\":\"adding example\",\"autor\":\"Jason Williams\",\"commit\":\"1aa422ac\",\"fecha\":\"2018-12-03\"}},{\"carpeta\":\"assets\",\"nace\":{\"asunto\":\"web assembly demo updates\",\"autor\":\"Jason Williams\",\"commit\":\"5ea61873\",\"fecha\":\"2019-05-19\"}},{\"carpeta\":\"benches\",\"nace\":{\"asunto\":\"better unicode escape support fixes #16 (#20)\",\"autor\":\"Jason Williams\",\"commit\":\"5faef8bc\",\"fecha\":\"2019-05-31\"}},{\"carpeta\":\"dist\",\"nace\":{\"asunto\":\"adding dist\",\"autor\":\"Jason Williams\",\"commit\":\"d6412243\",\"fecha\":\"2019-05-31\"}},{\"carpeta\":\".devcontainer\",\"nace\":{\"asunto\":\"Adding object internal methods (#96)\",\"autor\":\"Jason Williams\",\"commit\":\"2df9a240\",\"fecha\":\"2019-09-03\"}},{\"carpeta\":\".github\",\"nace\":{\"asunto\":\"Update rust.yml\",\"autor\":\"Jason Williams\",\"commit\":\"0cf4bbba\",\"fecha\":\"2019-09-18\"}},{\"carpeta\":\"boa\",\"nace\":{\"asunto\":\"Moved to a workspace architecture (#247)\",\"autor\":\"Iban Eguia\",\"commit\":\"5f6e4c22\",\"fecha\":\"2020-02-14\"}},{\"carpeta\":\"boa_cli\",\"nace\":{\"asunto\":\"Moved to a workspace architecture (#247)\",\"autor\":\"Iban Eguia\",\"commit\":\"5f6e4c22\",\"fecha\":\"2020-02-14\"}},{\"carpeta\":\"boa_wasm\",\"nace\":{\"asunto\":\"create boa-wasm package (#352)\",\"autor\":\"Victor Tuekam\",\"commit\":\"55c85768\",\"fecha\":\"2020-04-28\"}},{\"carpeta\":\"tester\",\"nace\":{\"asunto\":\"Add ECMAScript test suite (test262) (#567)\",\"autor\":\"Iban Eguia\",\"commit\":\"8fde98af\",\"fecha\":\"2020-09-06\"}},{\"carpeta\":\"boa_tester\",\"nace\":{\"asunto\":\"Fix test262 result uploading in CI (#743)\",\"autor\":\"Iban Eguia\",\"commit\":\"5b74d6f8\",\"fecha\":\"2020-09-30\"}},{\"carpeta\":\"boa_unicode\",\"nace\":{\"asunto\":\"Improve Unicode support for identifier names (#1003)\",\"autor\":\"Jevan Chan\",\"commit\":\"f66a0999\",\"fecha\":\"2021-01-10\"}}],\"carpetas_total\":38,\"commits\":3939,\"cortada\":false,\"crecimiento\":[{\"archivos\":71,\"asunto\":\"weird caching happening, even when pointing to specific commit\",\"ciclos\":0,\"codigo\":43,\"commit\":\"95899e9b\",\"dependencias\":90,\"fecha\":\"2020-02-15\"},{\"archivos\":285,\"asunto\":\"Bump monaco-editor from 0.21.0 to 0.21.1 (#715)\",\"ciclos\":0,\"codigo\":209,\"commit\":\"8a241a40\",\"dependencias\":284,\"fecha\":\"2020-09-25\"},{\"archivos\":331,\"asunto\":\"Bump webpack from 5.31.0 to 5.32.0 (#1206)\",\"ciclos\":0,\"codigo\":247,\"commit\":\"1d201bfa\",\"dependencias\":350,\"fecha\":\"2021-04-13\"},{\"archivos\":368,\"asunto\":\"Implement object literals for vm (#1668)\",\"ciclos\":0,\"codigo\":284,\"commit\":\"7e6bef92\",\"dependencias\":379,\"fecha\":\"2021-10-21\"},{\"archivos\":413,\"asunto\":\"Bump indexmap from 1.8.2 to 1.9.0 (#2129)\",\"ciclos\":0,\"codigo\":320,\"commit\":\"94b2b096\",\"dependencias\":687,\"fecha\":\"2022-06-19\"},{\"archivos\":572,\"asunto\":\"Bump proc-macro2 from 1.0.49 to 1.0.50 (#2541)\",\"ciclos\":0,\"codigo\":468,\"commit\":\"20af6a7f\",\"dependencias\":1050,\"fecha\":\"2023-01-17\"},{\"archivos\":680,\"asunto\":\"Fix remaining ES5 `built-ins/RegExp` tests (#2957)\",\"ciclos\":0,\"codigo\":561,\"commit\":\"57ba9794\",\"dependencias\":1227,\"fecha\":\"2023-05-23\"},{\"archivos\":673,\"asunto\":\"Refactor compile time environment handling (#3365)\",\"ciclos\":0,\"codigo\":551,\"commit\":\"f654ad17\",\"dependencias\":1217,\"fecha\":\"2023-10-10\"},{\"archivos\":721,\"asunto\":\"Add missing environment creation in initial iteration of for loop (#3751)\",\"ciclos\":0,\"codigo\":594,\"commit\":\"7987fd8c\",\"dependencias\":714,\"fecha\":\"2024-03-25\"},{\"archivos\":795,\"asunto\":\"Bump the rust-dependencies group with 2 updates (#4278)\",\"ciclos\":0,\"codigo\":650,\"commit\":\"020bfd5c\",\"dependencias\":825,\"fecha\":\"2025-06-09\"},{\"archivos\":892,\"asunto\":\"test(vm): add sync generator regression tests (#4887)\",\"ciclos\":0,\"codigo\":712,\"commit\":\"4bed6b22\",\"dependencias\":919,\"fecha\":\"2026-03-05\"},{\"archivos\":1000,\"asunto\":\"chore(deps): bump the rust-dependencies group with 6 updates (#5626)\",\"ciclos\":0,\"codigo\":763,\"commit\":\"329e8974\",\"dependencias\":993,\"fecha\":\"2026-10-31\"}],\"desde\":\"2018-08-08\",\"hasta\":\"2026-10-31\",\"leida_ms\":2544,\"nota\":\"git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.\",\"superficial\":false,\"verificacion\":{\"coinciden\":966,\"dependencias\":{\"coinciden\":992,\"hoy\":993,\"nota\":\"solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas\",\"reconstruidas\":993,\"solo_en_git\":[\"core/engine/src/lib.rs -> ffi/wasm/src/lib.rs\"],\"solo_hoy\":[\"core/engine/src/object/builtins/jsarraybuffer.rs -> core/engine/src/builtins/array_buffer/mod.rs\"]},\"hoy\":966,\"nota\":\"hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio\",\"pct_de_lo_reconstruido\":100.0,\"reconstruidos\":966,\"solo_en_git\":[]}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "autores": 292,
+    "carpetas_en_orden": [
+      {
+        "carpeta": ".vscode",
+        "nace": {
+          "asunto": "first commit",
+          "autor": "Jason Williams",
+          "commit": "f33c18d2",
+          "fecha": "2018-08-08"
+        }
+      },
+      {
+        "carpeta": "src",
+        "nace": {
+          "asunto": "first commit",
+          "autor": "Jason Williams",
+          "commit": "f33c18d2",
+          "fecha": "2018-08-08"
+        }
+      },
+      {
+        "carpeta": "tests",
+        "nace": {
+          "asunto": "first test added",
+          "autor": "Jason Williams",
+          "commit": "9a50cc11",
+          "fecha": "2018-09-10"
+        }
+      },
+      {
+        "carpeta": "docs",
+        "nace": {
+          "asunto": "adding example",
+          "autor": "Jason Williams",
+          "commit": "1aa422ac",
+          "fecha": "2018-12-03"
+        }
+      },
+      {
+        "carpeta": "assets",
+        "nace": {
+          "asunto": "web assembly demo updates",
+          "autor": "Jason Williams",
+          "commit": "5ea61873",
+          "fecha": "2019-05-19"
+        }
+      },
+      {
+        "carpeta": "benches",
+        "nace": {
+          "asunto": "better unicode escape support fixes #16 (#20)",
+          "autor": "Jason Williams",
+          "commit": "5faef8bc",
+          "fecha": "2019-05-31"
+        }
+      },
+      {
+        "carpeta": "dist",
+        "nace": {
+          "asunto": "adding dist",
+          "autor": "Jason Williams",
+          "commit": "d6412243",
+          "fecha": "2019-05-31"
+        }
+      },
+      {
+        "carpeta": ".devcontainer",
+        "nace": {
+          "asunto": "Adding object internal methods (#96)",
+          "autor": "Jason Williams",
+          "commit": "2df9a240",
+          "fecha": "2019-09-03"
+        }
+      },
+      {
+        "carpeta": ".github",
+        "nace": {
+          "asunto": "Update rust.yml",
+          "autor": "Jason Williams",
+          "commit": "0cf4bbba",
+          "fecha": "2019-09-18"
+        }
+      },
+      {
+        "carpeta": "boa",
+        "nace": {
+          "asunto": "Moved to a workspace architecture (#247)",
+          "autor": "Iban Eguia",
+          "commit": "5f6e4c22",
+          "fecha": "2020-02-14"
+        }
+      },
+      {
+        "carpeta": "boa_cli",
+        "nace": {
+          "asunto": "Moved to a workspace architecture (#247)",
+          "autor": "Iban Eguia",
+          "commit": "5f6e4c22",
+          "fecha": "2020-02-14"
+        }
+      },
+      {
+        "carpeta": "boa_wasm",
+        "nace": {
+          "asunto": "create boa-wasm package (#352)",
+          "autor": "Victor Tuekam",
+          "commit": "55c85768",
+          "fecha": "2020-04-28"
+        }
+      },
+      {
+        "carpeta": "tester",
+        "nace": {
+          "asunto": "Add ECMAScript test suite (test262) (#567)",
+          "autor": "Iban Eguia",
+          "commit": "8fde98af",
+          "fecha": "2020-09-06"
+        }
+      },
+      {
+        "carpeta": "boa_tester",
+        "nace": {
+          "asunto": "Fix test262 result uploading in CI (#743)",
+          "autor": "Iban Eguia",
+          "commit": "5b74d6f8",
+          "fecha": "2020-09-30"
+        }
+      },
+      {
+        "carpeta": "boa_unicode",
+        "nace": {
+          "asunto": "Improve Unicode support for identifier names (#1003)",
+          "autor": "Jevan Chan",
+          "commit": "f66a0999",
+          "fecha": "2021-01-10"
+        }
+      }
+    ],
+    "carpetas_total": 38,
+    "commits": 3939,
+    "cortada": false,
+    "crecimiento": [
+      {
+        "archivos": 71,
+        "asunto": "weird caching happening, even when pointing to specific commit",
+        "ciclos": 0,
+        "codigo": 43,
+        "commit": "95899e9b",
+        "dependencias": 90,
+        "fecha": "2020-02-15"
+      },
+      {
+        "archivos": 285,
+        "asunto": "Bump monaco-editor from 0.21.0 to 0.21.1 (#715)",
+        "ciclos": 0,
+        "codigo": 209,
+        "commit": "8a241a40",
+        "dependencias": 284,
+        "fecha": "2020-09-25"
+      },
+      {
+        "archivos": 331,
+        "asunto": "Bump webpack from 5.31.0 to 5.32.0 (#1206)",
+        "ciclos": 0,
+        "codigo": 247,
+        "commit": "1d201bfa",
+        "dependencias": 350,
+        "fecha": "2021-04-13"
+      },
+      {
+        "archivos": 368,
+        "asunto": "Implement object literals for vm (#1668)",
+        "ciclos": 0,
+        "codigo": 284,
+        "commit": "7e6bef92",
+        "dependencias": 379,
+        "fecha": "2021-10-21"
+      },
+      {
+        "archivos": 413,
+        "asunto": "Bump indexmap from 1.8.2 to 1.9.0 (#2129)",
+        "ciclos": 0,
+        "codigo": 320,
+        "commit": "94b2b096",
+        "dependencias": 687,
+        "fecha": "2022-06-19"
+      },
+      {
+        "archivos": 572,
+        "asunto": "Bump proc-macro2 from 1.0.49 to 1.0.50 (#2541)",
+        "ciclos": 0,
+        "codigo": 468,
+        "commit": "20af6a7f",
+        "dependencias": 1050,
+        "fecha": "2023-01-17"
+      },
+      {
+        "archivos": 680,
+        "asunto": "Fix remaining ES5 `built-ins/RegExp` tests (#2957)",
+        "ciclos": 0,
+        "codigo": 561,
+        "commit": "57ba9794",
+        "dependencias": 1227,
+        "fecha": "2023-05-23"
+      },
+      {
+        "archivos": 673,
+        "asunto": "Refactor compile time environment handling (#3365)",
+        "ciclos": 0,
+        "codigo": 551,
+        "commit": "f654ad17",
+        "dependencias": 1217,
+        "fecha": "2023-10-10"
+      },
+      {
+        "archivos": 721,
+        "asunto": "Add missing environment creation in initial iteration of for loop (#3751)",
+        "ciclos": 0,
+        "codigo": 594,
+        "commit": "7987fd8c",
+        "dependencias": 714,
+        "fecha": "2024-03-25"
+      },
+      {
+        "archivos": 795,
+        "asunto": "Bump the rust-dependencies group with 2 updates (#4278)",
+        "ciclos": 0,
+        "codigo": 650,
+        "commit": "020bfd5c",
+        "dependencias": 825,
+        "fecha": "2025-06-09"
+      },
+      {
+        "archivos": 892,
+        "asunto": "test(vm): add sync generator regression tests (#4887)",
+        "ciclos": 0,
+        "codigo": 712,
+        "commit": "4bed6b22",
+        "dependencias": 919,
+        "fecha": "2026-03-05"
+      },
+      {
+        "archivos": 1000,
+        "asunto": "chore(deps): bump the rust-dependencies group with 6 updates (#5626)",
+        "ciclos": 0,
+        "codigo": 763,
+        "commit": "329e8974",
+        "dependencias": 993,
+        "fecha": "2026-10-31"
+      }
+    ],
+    "desde": "2018-08-08",
+    "hasta": "2026-10-31",
+    "leida_ms": 2544,
+    "nota": "git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.",
+    "superficial": false,
+    "verificacion": {
+      "coinciden": 966,
+      "dependencias": {
+        "coinciden": 992,
+        "hoy": 993,
+        "nota": "solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas",
+        "reconstruidas": 993,
+        "solo_en_git": [
+          "core/engine/src/lib.rs -> ffi/wasm/src/lib.rs"
+        ],
+        "solo_hoy": [
+          "core/engine/src/object/builtins/jsarraybuffer.rs -> core/engine/src/builtins/array_buffer/mod.rs"
+        ]
+      },
+      "hoy": 966,
+      "nota": "hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio",
+      "pct_de_lo_reconstruido": 100.0,
+      "reconstruidos": 966,
+      "solo_en_git": []
+    }
+  }
+}

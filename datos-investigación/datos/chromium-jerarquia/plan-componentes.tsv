@@ -1,0 +1,720 @@
+componente	capa	nivel	pieza_tamano	archivos	lenguaje_principal	rust	objetivos_prod	usa	lo_usan	seguridad	errores	elegancia	rendimiento	licencia	origen
+base/numerics	0-cimientos	0	0	0	1	27	C/C++ cabecera	0	1	0	1	0	0	0	0		
+base/third_party	0-cimientos	0	0	0	1	95	C/C++ cabecera	0	6	0	2	0	0	18	0		
+build	0-cimientos	0	0	0	1	87	Python	0	7	0	87	0	0	0	0		
+build/linux	0-cimientos	0	0	0	1	95	Python	0	3	0	1	0	0	0	0		
+build/modules	0-cimientos	0	0	8	1	67	C/C++ cabecera	0	194	0	2	0	0	0	0		
+build/private_code_test	0-cimientos	0			1	6	Python	0	1	0	0	0	0	0	0		
+build/toolchain	0-cimientos	0			1	65	Python	0	49	0	0	0	0	0	0		
+build/util	0-cimientos	0	0	0	1	61	Python	0	2	0	2	0	0	0	0		
+third_party/icu	0-cimientos	0	0	3	1	7124	C++	0	15	0	54	53	2	2268	10	MIT, BSD-2-Clause, BSD-3-Clause, HPND-sell-variant, ICU, MIT-0, NAIST-2003, Unicode-3.0	https://chromium.googlesource.com/chromium/deps/icu.git
+net/cert	2-red-servicios	0	0	0	1	207	C++	0	2	0	2	14	0	58	9		
+net/data	2-red-servicios	0	0	0	1	2718	Python	0	2	0	1	0	0	0	0		
+net/log	2-red-servicios	0			1	38	C++	0	2	0	0	0	0	3	0		
+services/strings	2-red-servicios	0	0	0	1	82		0	1	0	4	0	0	0	0		
+third_party/boringssl	2-red-servicios	0	0	3	1	8724	C++	95	9	0	46	153	1	1029	29	Apache-2.0, BSD-3-Clause	
+third_party/ffmpeg	3-motores	0	0	1	1	11352	C	0	5	0	7	454	98	4209	5	bsd-2-clause, bsd-3-clause, isc, lgpl-2.1, mit	https://chromium.googlesource.com/chromium/third_party/ffmpeg.git
+ui/resources	4-composicion	0	0	2	1	128	Python	0	5	0	16	0	0	0	0		
+ui/strings	4-composicion	0	0	1	1	489		0	5	0	20	0	0	0	0		
+content/child	6-multiproceso	0	0	0	1	69	C++	0	0	0	1	0	0	5	11		
+components/app_constants	7-producto	0	0	0	1	4	C/C++ cabecera	0	1	0	5	0	0	0	0		
+components/management	7-producto	0			1	7	TypeScript	0	1	0	0	0	0	0	0		
+components/strings	7-producto	0	0	1	1	380		0	10	0	72	0	0	0	0		
+components/ui_metrics	7-producto	0	0	0	1	4	C/C++ cabecera	0	2	0	1	0	0	0	0		
+components/webapk	7-producto	0	0	0	1	17	Java	0	2	0	1	0	0	0	0		
+extensions/buildflags	7-producto	0	0	0	1	3		0	3	0	24	0	0	0	0		
+extensions/strings	7-producto	0	0	0	1	117		0	1	0	4	0	0	0	0		
+infra	otros	0			1	3843	Python	0	5	0	0	0	0	0	0		
+third_party/aosp_dalvik	otros	0			1	7		0	1	0	0	0	0	0	0	Apache-2.0	
+third_party/apache-portable-runtime	otros	0	0	0	1	6		0	1	0	1	0	0	0	0	Apache-2.0, BSD-3-Clause, ISC, dso, Zlib	
+third_party/arcore-android-sdk-client	otros	0			1	11		0	3	0	0	0	0	0	0	Apache-2.0	
+third_party/brotli	otros	0	0	3	1	119	C/C++ cabecera	0	7	0	11	5	0	79	0	MIT	
+third_party/ced	otros	0	0	0	1	50	C/C++ cabecera	0	1	0	3	7	0	21	1	Apache-2.0	
+third_party/chromium-bidi	otros	0	0	3	1	349	TypeScript	0	12	0	0	0	0	0	0	MIT	
+third_party/compiler-rt	otros	0	0	0	1	5003	C++	0	0	0	1	210	27	217	26	NCSA, Apache-with-LLVM-Exception, MIT	
+third_party/coremltools	otros	0	0	0	1	39	Python	0	1	0	3	0	0	0	0	BSD-3-Clause	
+third_party/cpu_features	otros	0	0	1	1	130	C	0	2	0	12	4	0	5	6	BSD-2-Clause, Apache-2.0	
+third_party/cpuinfo	otros	0	0	1	1	571	C/C++ cabecera	0	4	0	5	3	0	72	13	BSD-2-Clause	
+third_party/crc32c	otros	0	0	2	1	42	C++	0	4	0	1	0	0	2	0	BSD-3-Clause	
+third_party/cros_system_api	otros	0	0	2	1	253	C/C++ cabecera	2	85	0	0	0	0	6	0		https://chromium.googlesource.com/chromiumos/platform2/system_api.git
+third_party/d3	otros	0	0	0	1	9	JavaScript	0	2	0	1	0	0	0	0	ISC	
+third_party/dav1d	otros	0	0	2	1	397	C/C++ cabecera	0	8	0	3	7	0	108	0	BSD-2-Clause	
+third_party/decklink	otros	0			1	31	C/C++ cabecera	0	1	0	0	0	0	0	0	BSL-1.0	
+third_party/devtools-frontend	otros	0	0	8	1	8759	TypeScript	0	675	0	0	1	0	5	15	BSD-3-Clause	
+third_party/disarm	otros	0	0	1	1	47	C++	0	2	0	1	0	0	2	0	BSD-3-Clause	
+third_party/dragonbox	otros	0	0	0	1	95	C++	0	1	0	2	0	0	30	0	Apache-with-LLVM-Exception, BSL-1.0	
+third_party/emoji-segmenter	otros	0	0	0	1	12	C	0	1	0	1	0	0	1	0	Apache-2.0	
+third_party/enterprise_companion	otros	0			1	20	Python	0	4	0	0	0	0	0	0	BSD-3-Clause	
+third_party/expat	otros	0	0	0	1	225	C/C++ cabecera	0	2	0	7	1	1	40	1	MIT	
+third_party/fadec	otros	0	0	1	1	29	C	0	3	0	1	0	0	8	0	BSD-3-Clause	
+third_party/farmhash	otros	0	0	0	1	74	C++	0	1	0	4	7	0	7	0	MIT	
+third_party/fast_float	otros	0	0	0	1	124	C++	0	1	0	2	2	0	32	13	MIT	
+third_party/fft2d	otros	0	0	0	1	7	C	0	1	0	2	0	0	9	0	FFT2D	
+third_party/flac	otros	0	0	0	1	94	C/C++ cabecera	0	1	0	2	0	0	78	0	BSD-3-Clause	https://chromium.googlesource.com/chromium/deps/flac.git
+third_party/flatbuffers	otros	0	0	2	1	1909	TypeScript	163	4	0	10	44	2	580	57	Apache-2.0	
+third_party/fp16	otros	0	0	0	1	36	C++	0	1	0	7	0	0	14	0	MIT	
+third_party/fuchsia-gn-sdk	otros	0	0	0	1	26	Python	0	3	0	1	0	0	0	0	BSD-2-Clause	
+third_party/fuchsia-sdk	otros	0	0	0	1	3		0	0	0	25	0	0	0	0	BSD-2-Clause	
+third_party/fxdiv	otros	0	0	0	1	25	C++	0	1	0	2	0	0	1	0	MIT	
+third_party/gemmlowp	otros	0	0	0	1	150	C/C++ cabecera	0	1	0	3	0	0	226	0	Apache-2.0	
+third_party/glslang	otros	0	0	1	1	3792	C/C++ cabecera	0	7	0	0	16	2	322	16	MIT-Khronos-old	
+third_party/gsettings-desktop-schemas	otros	0	0	1	1	5		0	3	0	1	0	0	0	0	LGPL-2.1	
+third_party/hamcrest	otros	0	0	2	1	7		0	4	0	2	0	0	0	0	BSD-3-Clause	
+third_party/highway	otros	0	0	0	1	283	C++	0	1	0	6	1	0	93	1	Apache-2.0	
+third_party/hyphenation-patterns	otros	0	0	0	1	384	Python	0	2	0	1	0	0	0	0	BSD-3-Clause, CC-BY-3.0, FSFAP, LGPL-2.1, MIT, MPL-1.1, MPL-2.0, Unicode-DFS-2015, Unlicense, zxing	
+third_party/iaccessible2	otros	0	0	0	1	7		0	1	0	4	0	0	0	0	BSD-3-Clause	
+third_party/icu4j	otros	0			1	6		0	1	0	0	0	0	0	0	Unicode-DFS-2015, NAIST-2003, BSD-3-Clause, BSD-2-Clause, ICU	
+third_party/isimpledom	otros	0	0	0	1	8		0	1	0	3	0	0	0	0	MPL-1.1	
+third_party/jacoco	otros	0	0	1	1	11	Python	0	8	0	0	0	0	0	0	EPL-1.0	
+third_party/jdk	otros	0			1	8	Python	0	1	0	0	0	0	0	0	GPL-2.0-with-classpath-exception	
+third_party/jdk11	otros	0			1	4		0	1	0	0	0	0	0	0	GPL-2.0	
+third_party/jsoncpp	otros	0	0	0	1	273	C++	0	1	0	4	0	0	15	1	JsonCPP	
+third_party/libbrlapi	otros	0	0	0	1	11	C/C++ cabecera	0	1	0	1	0	0	0	0	LGPL-2.1	
+third_party/libdisplay-info	otros	0			1	5	C	0	1	0	0	0	0	1	0	MIT	
+third_party/libdrm	otros	0	0	1	1	318	C/C++ cabecera	0	2	0	2	26	15	60	0	MIT	
+third_party/libei	otros	0	0	2	1	188	C	0	8	0	1	1	0	47	0	MIT	
+third_party/libgav1	otros	0	0	4	1	393	C++	0	5	0	5	44	20	279	0	Apache-2.0	
+third_party/libinput	otros	0	0	1	1	7	Python	0	5	0	0	0	0	0	0	MIT	
+third_party/libipp	otros	0	0	1	1	48	C++	0	5	0	0	0	0	4	2	BSD-3-Clause	
+third_party/libjpeg_turbo	otros	0	0	5	1	308	C	0	10	0	2	16	0	176	2	IJG, BSD-3-Clause	https://chromium.googlesource.com/chromium/deps/libjpeg_turbo.git
+third_party/liblouis	otros	0			1	1017	C/C++ cabecera	0	2	0	0	3	0	108	3	LGPL-3.0	
+third_party/libpfm4	otros	0			1	551	C/C++ cabecera	0	1	0	0	10	0	79	0	MIT	
+third_party/libsync	otros	0	0	0	1	14	C/C++ cabecera	0	3	0	4	0	0	0	0	Apache-2.0	
+third_party/libva-fake-driver	otros	0			1	40	C/C++ cabecera	0	8	0	0	0	0	3	2	BSD-3-Clause	
+third_party/libwebm	otros	0	0	0	1	909	C++	0	1	0	2	2	0	70	0	WebM-Project-Patent, BSD-3-Clause	
+third_party/lit	otros	0	0	4	1	10	TypeScript	0	6	0	2	0	0	0	0	BSD-3-Clause	
+third_party/llvm-libc	otros	0	0	0	1	9098	C/C++ cabecera	0	2	0	1	42	3	249	0	Apache-with-LLVM-Exception, NCSA	
+third_party/lottie	otros	0	0	1	1	10	Python	0	2	0	1	0	0	0	0	MIT	
+third_party/material_web_components	otros	0	0	3	1	766	JavaScript	0	9	0	2	0	0	0	0	Apache-2.0	
+third_party/metrics_proto	otros	0	0	1	1	43	Python	0	3	0	13	0	0	0	0	BSD-3-Clause	
+third_party/microsoft_dxheaders	otros	0	0	0	1	5	C/C++ cabecera	0	1	0	1	0	0	0	0	MIT	
+third_party/microsoft_multimedia_redirection	otros	0	0	0	1	4		0	1	0	1	0	0	0	0	MIT	
+third_party/microsoft_webauthn	otros	0	0	0	1	5		0	1	0	1	0	0	0	0	MIT	
+third_party/ml_drift	otros	0	0	2	1	888	C++	0	4	0	1	6	0	458	14	Apache-2.0	
+third_party/modp_b64	otros	0	0	0	1	8	C/C++ cabecera	0	1	0	4	0	0	1	0	BSD-3-Clause	
+third_party/nasm	otros	0			1	1356	ASM	0	1	0	0	6	0	176	0	BSD-2-Clause	https://chromium.googlesource.com/chromium/deps/nasm.git
+third_party/neon_2_sse	otros	0	0	0	1	13	C/C++ cabecera	0	1	0	2	7	3	0	0	BSD-Source-Code	
+third_party/netty4	otros	0			1	7		0	1	0	0	0	0	0	0	Apache-2.0	
+third_party/nlohmann_json	otros	0	0	1	1	1167	C++	0	2	0	0	12	0	256	4	MIT	
+third_party/node	otros	0			1	31	Python	0	1	0	0	0	0	0	0	MIT	
+third_party/omnibox_proto	otros	0	0	0	1	39		0	2	0	6	0	0	0	0	BSD-3-Clause	
+third_party/one_euro_filter	otros	0	0	0	1	9	C++	0	1	0	3	0	0	0	0	BSD-3-Clause	
+third_party/opus	otros	0	0	2	1	715	C	0	4	0	5	1	0	191	0	Opus-Patent-BSD-3-Clause	
+third_party/pefile_py3	otros	0			1	8	Python	0	1	0	0	0	0	0	0	MIT	
+third_party/pffft	otros	0	0	0	1	21	C	0	2	0	2	0	0	13	0	pffft	
+third_party/pipewire	otros	0	0	2	1	1362	C	0	14	0	0	68	1	554	3	MIT	
+third_party/polymer	otros	0	0	1	1	206	TypeScript	0	50	0	2	0	0	0	0	BSD-3-Clause	
+third_party/pywebsocket3	otros	0			1	85	Python	0	1	0	0	0	0	0	0	BSD-3-Clause	
+third_party/quic_trace	otros	0			1	68	C/C++ cabecera	0	1	0	0	1	0	10	0	Apache-2.0	
+third_party/r8	otros	0	0	1	1	21	Python	0	2	0	0	0	0	0	0	BSD-3-Clause	
+third_party/rnnoise	otros	0	0	1	1	8	C/C++ cabecera	0	2	0	1	0	0	0	0	BSD-3-Clause	
+third_party/robolectric	otros	0			1	12	Python	0	1	0	0	0	0	0	0	Apache-2.0	
+third_party/screen-ai	otros	0			1	4		0	1	0	0	0	0	0	0	Apache-2.0,Apache-with-LLVM-Exception,BSD-2-Clause,BSD-3-Clause,BSD-3-Clause-Attribution,BSD-3-Clause-Open-MPI,BSD-4-Clause,BSD-4-Clause-UC,BSD-4.3RENO,BSD-Source-Code,BSL-1.0,Beerware,CC-BY-3.0,CC-BY-4.0,CC0-1.0,GPL-2.0,GPL-3.0-with-autoconf-exception,GPL-3.0-with-bison-exception,HPND,ICU,IJG,Info-ZIP,Libpng,LicenseRef-Apple-ICC-P3,LicenseRef-BLAS,LicenseRef-CERN,LicenseRef-Caffe,LicenseRef-FFT2D,LicenseRef-OpenGLUT,LicenseRef-PngSuite,LicenseRef-Public-Domain-Gutenberg,LicenseRef-Public-Domain-MD5,LicenseRef-Punycode,LicenseRef-WebM-Project-Patent,LicenseRef-base64-cpp,LicenseRef-opensift,MIT,MIT-Khronos-old,MPL-2.0,Minpack,NAIST-2003,NCSA,SGI-B-2.0,SunPro,Unicode-3.0,Unicode-DFS-2015,Unicode-TOU,X11,Zlib,bcrypt-Solar-Designer,dtoa,libpng-2.0,libtiff	
+third_party/selenium-atoms	otros	0			1	10	C++	0	1	0	0	0	0	0	0	Apache-2.0, MIT	
+third_party/simdutf	otros	0	0	1	1	6	C++	0	2	0	3	0	0	0	0	MIT	
+third_party/smhasher	otros	0	0	0	1	52	C++	0	2	0	6	0	0	7	0	MIT	
+third_party/snappy	otros	0	0	0	1	62	C/C++ cabecera	0	1	0	6	2	0	12	0	BSD-3-Clause	
+third_party/speech-dispatcher	otros	0	0	0	1	10	C/C++ cabecera	0	1	0	1	0	0	0	0	LGPL-2.1	
+third_party/spirv-cross	otros	0	0	0	1	4345	C++	0	1	0	1	2	0	185	1	Apache-2.0	
+third_party/spirv-headers	otros	0	0	0	1	125	C/C++ cabecera	0	1	0	1	1	0	24	6	Apache-2.0	
+third_party/spirv-tools	otros	0	0	5	1	1760	C++	0	28	0	0	2	0	1291	68	Apache-2.0	
+third_party/sqlite4java	otros	0			1	6		0	1	0	0	0	0	0	0	Apache-2.0	
+third_party/swiftshader	otros	0	0	5	1	14390	C++	0	68	0	3	221	2	10212	192	Apache-2.0	https://swiftshader.googlesource.com/SwiftShader.git
+third_party/tflite_support	otros	0			1	1213	C/C++ cabecera	0	1	0	0	7	0	31	13	Apache-2.0	
+third_party/updater	otros	0			1	43	Python	0	1	0	0	0	0	0	0	BSD-3-Clause	
+third_party/vulkan-headers	otros	0	0	0	1	92	C/C++ cabecera	0	1	0	4	0	0	32	0	Apache-2.0	
+third_party/vulkan-loader	otros	0	0	1	1	293	C/C++ cabecera	0	4	0	3	3	0	151	6	Apache-2.0	
+third_party/vulkan-tools	otros	0	0	4	1	134	C/C++ cabecera	0	15	0	0	1	0	63	81	Apache-2.0	
+third_party/vulkan-utility-libraries	otros	0			1	88	C++	0	1	0	0	3	0	24	0	Apache-2.0	
+third_party/vulkan-validation-layers	otros	0			1	1033	C++	0	4	0	0	3	0	1560	16	Apache-2.0, MIT, BSL-1.0	
+third_party/vulkan_memory_allocator	otros	0	0	0	1	300	JavaScript	0	1	0	1	0	0	101	0	MIT	https://chromium.googlesource.com/external/github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
+third_party/wayland-protocols	otros	0	0	0	1	242	C	0	59	0	4	0	0	0	0	MIT	
+third_party/webgpu-cts	otros	0	0	1	1	1343	TypeScript	0	5	0	0	0	0	0	0	BSD-3-Clause, MIT	
+third_party/webview2	otros	0	0	0	1	8	Python	0	3	0	1	0	0	0	0	BSD-3-Clause	
+third_party/wtl	otros	0	0	0	1	10	Python	0	1	0	6	0	0	0	0	MS-PL	
+third_party/wuffs	otros	0	0	0	1	19	C	0	1	0	2	2	0	105	0	MIT, Apache-2.0	
+third_party/zstd	otros	0	0	2	1	659	C	0	4	0	8	33	0	268	1	BSD-3-Clause	
+buildtools	0-cimientos	1	0	12	1	84	Python	0	55	1	5	0	0	0	0		
+third_party/abseil-cpp	0-cimientos	1	0	31	1	1658	C++	0	215	1	85	27	2	194	6	Apache-2.0	
+third_party	otros	1	0	3	1	11	Python	0	3	1	5	0	0	0	0		
+third_party/junit	otros	1	3	3	1	6		0	1	1	14	0	0	0	0	CPL-1.0	
+third_party/libaom	otros	1	0	3	1	1584	C/C++ cabecera	0	16	1	6	149	4	1491	13	Alliance-for-Open-Media-Patent, BSD-2-Clause	
+third_party/libsrtp	otros	1	0	3	1	75	C/C++ cabecera	0	9	1	1	0	0	40	1	BSD-3-Clause	https://chromium.googlesource.com/chromium/deps/libsrtp.git
+third_party/libusb	otros	1	1	1	1	60	C/C++ cabecera	0	1	1	1	4	0	36	0	LGPL-2.1	
+third_party/libvpx	otros	1	0	3	1	1399	C	0	20	1	6	130	43	926	4	BSD-3-Clause, WebM-Project-Patent	
+third_party/openh264	otros	1	0	4	1	747	C/C++ cabecera	0	7	1	3	98	0	309	0	BSD-2-Clause	
+third_party/openxr	otros	1	0	2	1	439	C++	0	6	1	1	0	0	32	5	Apache-2.0, MIT	
+third_party/ruy	otros	1	0	9	1	148	C++	0	52	1	2	0	0	57	0	Apache-2.0	
+third_party/securemessage	otros	1	0	2	1	49	C++	0	4	1	1	0	0	1	0	Apache-2.0	
+third_party/sframe	otros	1	2	2	1	44	C++	0	1	1	1	0	0	0	0	BSD-2-Clause, MIT	
+third_party/wayland	otros	1	0	3	1	211	C	0	22	1	5	3	0	12	1	MIT	
+third_party/woff2	otros	1	3	3	1	39	C/C++ cabecera	0	1	1	3	0	0	14	3	MIT	
+base/allocator	0-cimientos	2	0	7	1	469	C/C++ cabecera	0	21	2	14	2	0	57	2		
+third_party/fuzztest	otros	2	0	35	1	615	C++	47	8	1	1	26	0	99	10	dtoa, BSD-3-Clause, Apache-2.0	
+third_party/google-truth	otros	2	4	4	1	5		0	1	1	1	0	0	0	0	Apache-2.0	
+third_party/iamf_tools	otros	2	31	31	1	258	C/C++ cabecera	0	1	2	1	0	0	30	2	Apache-2.0, BSD-3-Clause, BSD-3-Clause-Clear-with-Alliance-for-Open-Media-Patent	
+third_party/libyuv	otros	2	1	6	1	199	C++	0	15	1	20	28	0	130	0	BSD-3-Clause	https://chromium.googlesource.com/libyuv/libyuv.git
+third_party/material_color_utilities	otros	2	31	31	1	389	Swift	0	1	1	1	0	0	6	3	Apache-2.0	
+third_party/oak	otros	2	0	31	1	2208	Rust	755	3	2	3	62	18	1318	5	Apache-2.0	
+third_party/re2	otros	2	31	31	1	144	C++	0	1	1	58	2	0	48	1	BSD-3-Clause	
+third_party/ukey2	otros	2	1	3	1	87	Java	0	2	1	1	0	0	0	1	Apache-2.0	
+base	0-cimientos	3	0	37	13	302	C++	8	111	19	483	1	0	30	4		
+base/i18n	0-cimientos	3	0	36	13	141	C++	3	13	4	9	0	0	26	0		
+base/logging	0-cimientos	3	2	8	13	12	Rust	5	3	3	1	0	0	2	0		
+base/tracing	0-cimientos	3	0	1	13	91	Python	0	5	1	5	0	0	0	0		
+build/config	0-cimientos	3	0	5	13	264	Python	0	48	6	25	0	0	0	0		
+build/rust	0-cimientos	3	0	9	13	191	Rust	63	63	3	10	2	0	7	1		
+third_party/rust	0-cimientos	3	0	34	13	13900	Rust	7521	279	3	31	867	43	11270	0		
+third_party/zlib	0-cimientos	3	0	38	13	195	C/C++ cabecera	0	16	2	58	2	0	62	0	Zlib	
+third_party/sqlite	2-red-servicios	3	3	38	13	2374	C	0	8	3	7	84	4	1482	12	blessing	
+third_party/freetype	3-motores	3	3	3	13	784	C/C++ cabecera	0	1	1	1	6	0	465	0	FTL	
+third_party/perfetto	otros	3	0	32	13	13075	C++	118	643	5	6	57	5	648	100	blessing, BSD-3-Clause, Apache-2.0	https://chromium.googlesource.com/external/github.com/google/perfetto.git
+third_party/protobuf	otros	3	0	11	13	3518	C/C++ cabecera	109	29	2	54	28	0	769	39	BSD-3-Clause	
+third_party/protobuf-javascript	otros	3	10	10	13	226	JavaScript	0	1	1	2	0	0	5	1	BSD-3-Clause	
+third_party/tensorflow-text	otros	3	0	33	1	36	C/C++ cabecera	0	3	4	3	0	0	5	0	Apache-2.0	
+base/version_info	0-cimientos	4	0	34	1	20	C/C++ cabecera	0	3	2	11	0	0	0	0		
+net/traffic_annotation	2-red-servicios	4	33	33	1	4	C/C++ cabecera	0	1	1	14	0	0	0	0		
+sql	2-red-servicios	4	0	33	1	74	C++	0	2	2	37	0	0	8	1		
+gpu/webgpu	3-motores	4	33	33	1	4	C/C++ cabecera	0	1	1	2	0	0	0	0		
+third_party/angle	3-motores	4	0	31	1	12915	C++	46	485	6	16	91	5	8247	300	BSD-3-Clause	https://chromium.googlesource.com/angle/angle.git
+third_party/dawn	3-motores	4	0	8	1	107931	C++	0	394	1	11	316	101	5553	316	BSD-3-Clause	https://dawn.googlesource.com/dawn.git
+v8	3-motores	4	0	48	1	20593	JavaScript	0	103	12	22	34	1	3456	126		https://chromium.googlesource.com/v8/v8.git
+ui/edge_to_edge	4-composicion	4	0	8	1	25	Java	0	3	2	1	0	0	0	0		
+components/apdu	7-producto	4	33	33	1	9	C++	0	1	1	1	0	0	0	0		
+components/app_icon_loader	7-producto	4	33	33	1	5	C/C++ cabecera	0	1	1	1	0	0	0	0		
+components/app_launch_prefetch	7-producto	4	33	33	1	4	C++	0	1	1	4	0	0	0	0		
+components/application_locale_storage	7-producto	4	35	35	1	6	C++	0	1	2	3	0	0	0	1		
+components/attribution_reporting	7-producto	4	33	33	1	7	C++	0	1	1	1	0	0	0	0		
+components/base32	7-producto	4	0	34	1	11	C++	1	3	1	10	0	0	0	0		
+components/cached_flags	7-producto	4	8	9	1	18	Java	0	2	2	2	0	0	0	0		
+components/cbor	7-producto	4	0	35	1	112	C++	8	5	2	9	0	0	17	0		
+components/device_event_log	7-producto	4	38	38	1	10	C++	0	1	2	11	0	0	0	0		
+components/memory_pressure	7-producto	4	33	33	1	36	C++	0	1	2	3	0	0	1	0		
+components/named_system_lock	7-producto	4	33	33	1	8	C++	0	1	1	2	0	0	0	0		
+components/power_metrics	7-producto	4	33	33	1	31	C/C++ cabecera	0	1	2	1	0	0	1	0		
+components/prefs	7-producto	4	35	35	1	89	C++	0	1	2	119	0	0	1	3		
+components/profile_metrics	7-producto	4	33	33	1	10	C++	0	3	1	6	0	0	0	0		
+components/proto_extras	7-producto	4	0	33	1	22	C++	0	7	2	0	0	0	3	0		
+components/push_notification	7-producto	4	33	33	1	16	C/C++ cabecera	0	1	1	1	0	0	0	0		
+components/query_parser	7-producto	4	38	38	1	10	C++	0	1	2	6	0	0	1	0		
+components/sqlite_migration_vfs	7-producto	4	33	33	1	13	C++	0	1	1	0	0	0	0	0		
+components/system_cpu	7-producto	4	33	33	1	30	C++	0	1	1	1	0	0	1	0		
+components/upload_list	7-producto	4	33	33	1	13	C++	0	1	1	4	0	0	0	0		
+components/zucchini	7-producto	4	0	35	1	173	C++	0	10	1	3	0	0	19	10		
+dbus	otros	4	33	33	1	58	C++	0	1	2	17	0	0	7	1		
+device/udev_linux	otros	4	33	33	1	14	C++	0	2	1	8	0	0	1	0		
+third_party/anonymous_tokens	otros	4	1	35	1	101	C++	8	19	4	2	0	0	79	2	Apache-2.0	
+third_party/breakpad	otros	4	0	4	1	940	C/C++ cabecera	0	38	1	3	8	0	193	4	BSD-3-Clause, curl	
+third_party/catapult	otros	4	0	5	1	8210	Python	0	13	2	1	2	0	16	1		https://chromium.googlesource.com/catapult.git
+third_party/cld_3	otros	4	0	5	1	91	C/C++ cabecera	0	2	1	3	3	0	13	0	Apache-2.0	
+third_party/cloud_authenticator	otros	4	1	7	1	24	Rust	15	5	2	0	0	0	67	0	Apache-2.0	
+third_party/content_analysis_sdk	otros	4	0	6	1	65	C++	0	4	1	1	0	0	2	1	BSD-3-Clause	
+third_party/crabbyavif	otros	4	0	5	1	357	Rust	135	6	3	1	27	0	290	0	Apache-2.0	
+third_party/crashpad	otros	4	0	33	1	1172	C++	0	41	3	13	0	0	212	8	Apache-2.0	
+third_party/fdlibm	otros	4	33	33	1	10	C/C++ cabecera	0	1	1	1	0	0	9	0	SunPro	
+third_party/glib	otros	4	0	6	2	22	Python	0	16	2	3	0	0	0	0	LGPL-2.1	
+third_party/grpc	otros	4	0	34	1	2943	C/C++ cabecera	0	38	5	2	11	0	351	53	BSD-3-Clause, Apache-2.0, MPL-2.0	
+third_party/grpc-java	otros	4	10	10	1	10	C++	0	2	1	0	4	0	4	2	Apache-2.0	
+third_party/gvdb	otros	4	3	6	2	4		0	3	1	1	0	0	0	0	LGPL-2.1	
+third_party/harfbuzz	otros	4	14	15	1	3937	C++	6	5	2	8	20	1	395	0	MIT-Modern-Variant	
+third_party/inspector_protocol	otros	4	33	34	1	69	C++	0	2	1	6	0	0	9	0	BSD-3-Clause	
+third_party/ipcz	otros	4	0	36	1	185	C++	0	8	3	1	2	0	22	0	BSD-3-Clause	
+third_party/libjingle_xmpp	otros	4	33	33	1	29	C++	0	1	2	1	0	0	2	1	BSD-3-Clause	
+third_party/libphonenumber	otros	4	0	33	1	3773	Java	0	4	5	5	2	0	19	0	Apache-2.0	
+third_party/libpng	otros	4	3	4	1	47	C	0	3	1	4	9	0	126	0	Libpng-2.0, Libpng	
+third_party/libprotobuf-mutator	otros	4	6	6	1	71	C++	0	1	1	0	0	0	4	0	Apache-2.0	
+third_party/libtess2	otros	4	33	34	1	28	C/C++ cabecera	0	2	1	1	1	0	6	0	SGI-B-2.0	
+third_party/liburlpattern	otros	4	33	33	1	25	C++	0	1	3	3	1	0	9	2	MIT	
+third_party/libxml	otros	4	3	5	1	1156	C/C++ cabecera	0	4	2	8	3	0	272	3	MIT	
+third_party/libzip	otros	4	0	3	1	912	C	0	2	1	0	0	0	55	0	BSD-3-Clause	
+third_party/lzma_sdk	otros	4	0	33	1	185	C	0	5	2	7	3	0	97	0	LZMA-SDK-9.22	
+third_party/minigbm	otros	4	3	4	1	99	C/C++ cabecera	0	4	1	3	2	1	22	0	BSD-3-Clause	
+third_party/netty-tcnative	otros	4	2	7	1	5		0	2	3	0	0	0	0	0	Apache-2.0	
+third_party/ots	otros	4	4	4	1	530	C++	0	1	3	1	0	0	46	1	BSD-3-Clause	
+third_party/private-join-and-compute	otros	4	33	33	1	28	C/C++ cabecera	0	1	3	2	0	0	0	0	Apache-2.0	
+third_party/pthreadpool	otros	4	1	33	1	51	C++	0	2	2	2	0	0	198	0	BSD-2-Clause	
+third_party/rapidhash	otros	4	33	33	1	11	C/C++ cabecera	0	1	1	2	0	0	0	1	BSD-2-Clause	
+third_party/s2cellid	otros	4	33	33	1	28	C/C++ cabecera	0	1	1	1	0	0	0	0	Apache-2.0	
+third_party/search_engines_data	otros	4	0	34	1	8		0	5	1	3	0	0	0	0	BSD-3-Clause	
+third_party/sentencepiece	otros	4	0	31	1	134	C++	0	2	2	2	0	0	65	2	BSD-3-Clause, Apache-2.0, MIT	
+third_party/shell-encryption	otros	4	0	33	1	80	C/C++ cabecera	0	3	5	1	0	0	14	0	Apache-2.0	
+third_party/unrar	otros	4	33	33	1	171	C++	0	1	1	3	5	0	75	3	UnRAR	
+third_party/widevine	otros	4	0	33	1	10	C/C++ cabecera	0	6	1	9	0	0	0	0	Commercial	
+third_party/zxcvbn-cpp	otros	4	33	33	1	34	C++	0	1	2	2	0	0	15	2	MIT	
+crypto	2-red-servicios	5	0	36	1	156	C++	2	4	3	69	1	0	77	3		
+components/blocklist	7-producto	5	33	34	1	19	C++	0	2	2	2	0	0	1	0		
+components/country_codes	7-producto	5	38	38	1	8	C++	0	1	2	8	0	0	0	0		
+components/pref_registry	7-producto	5	36	36	1	7	C++	0	1	2	57	0	0	0	0		
+components/sqlite_encrypted_vfs	7-producto	5	34	34	1	8	C++	0	1	3	0	0	0	0	0		
+components/sqlite_proto	7-producto	5	34	34	1	16	C++	0	1	3	6	0	0	1	0		
+components/stability_report	7-producto	5	0	33	1	18	C++	0	2	2	1	0	0	0	0		
+components/user_prefs	7-producto	5	36	36	1	17	C++	0	1	2	24	0	0	0	0		
+components/version_info	7-producto	5	1	35	1	13	C/C++ cabecera	0	5	2	67	0	0	0	0		
+gin	otros	5	1	47	1	98	C++	0	4	4	17	0	0	3	3		
+third_party/federated_compute	otros	5	0	37	1	719	C++	2	17	8	2	7	0	88	36	Apache-2.0	
+third_party/fontconfig	otros	5	0	11	1	757	C	18	6	4	10	11	0	121	0	HPND-sell-variant, MIT, MIT-Modern-Variant, Public-Domain-MD5, Public-Domain-ftglue, Unicode-TOU	
+third_party/libdmg-hfsplus	otros	5	0	6	1	102	C	0	6	2	0	5	0	34	0	GPL-3.0	
+third_party/libgudev	otros	5	4	4	1	9	C/C++ cabecera	0	1	1	0	0	0	0	0	LGPL-2.1	
+third_party/libwebp	otros	5	0	33	1	491	C	0	23	4	4	18	0	205	2	BSD-3-Clause, WebM-Project-Patent	
+third_party/libxslt	otros	5	4	4	1	111	C/C++ cabecera	0	1	1	1	0	0	153	0	X11	
+third_party/litert	otros	5	0	35	2	7931	C++	13	42	15	2	35	0	1874	218	Apache-2.0	
+third_party/mediapipe	otros	5	0	33	1	2271	C++	0	13	8	1	11	0	309	39	Apache-2.0, dtoa	
+third_party/mutter	otros	5	0	8	1	18	Python	0	53	2	0	0	0	1	0	GPL-2.0	
+third_party/private_membership	otros	5	1	34	1	44	C++	0	2	5	1	0	0	0	0	Apache-2.0	
+third_party/puffin	otros	5	0	36	1	66	C++	0	6	3	2	0	0	13	0	BSD-3-Clause	
+third_party/tflite	otros	5	0	36	2	37693	C++	0	45	12	16	62	0	6133	971	Apache-2.0	
+third_party/utf	otros	5	0	34	1	61	C	0	2	1	2	1	0	0	0	Unicode-DFS-2015, MIT	
+third_party/xnnpack	otros	5	0	34	1	12579	C	0	2271	6	1	16	0	8034	75	BSD-3-Clause	
+third_party/skia	3-motores	6	0	24	1	12500	C++	28	321	12	0	20	4	1954	82	BSD-3-Clause	https://skia.googlesource.com/skia.git
+components/client_update_protocol	7-producto	6	34	34	1	8	C++	0	1	2	2	0	0	0	3		
+components/crx_file	7-producto	6	0	36	1	18	C++	0	4	2	17	0	0	2	0		
+components/encrypted_messages	7-producto	6	0	34	1	9	C++	0	2	2	2	0	0	0	0		
+components/glic	7-producto	6	37	37	1	5	C/C++ cabecera	0	1	1	2	0	0	0	0		
+components/minidump_uploader	7-producto	6	7	36	1	30	Java	0	2	3	2	0	0	1	0		
+components/onc	7-producto	6	37	37	1	9	C++	0	1	3	3	0	0	0	0		
+components/startup_metric_utils	7-producto	6	36	38	1	16	C++	0	5	2	3	0	0	0	0		
+third_party/hunspell	otros	6	34	34	1	104	C++	0	1	3	2	11	0	44	2	MPL-1.1	
+third_party/tensorflow_models	otros	6	37	37	1	26	C/C++ cabecera	0	1	4	2	0	0	2	1	Apache-2.0	
+third_party/test_fonts	otros	6	0	13	1	12	C++	0	4	1	0	0	0	0	0	OFL-1.1, GPL-2.0, Bitstream-Vera, Bitstream-Charter, AMSFonts-2.2, Apache-2.0, AhemFont, test_fonts	
+third_party/weston	otros	6	0	14	1	593	C	0	33	6	0	18	0	98	0	MIT	
+components/wifi	7-producto	7	38	38	1	16	C++	0	1	4	2	0	0	7	0		
+ipc	1-ipc	8	0	61	417	68	C++	0	4	3	39	0	0	0	2		
+mojo	1-ipc	8	0	76	417	9	Python	0	2	2	3	0	0	0	0		
+mojo/core	1-ipc	8	33	51	417	123	C++	0	4	7	10	0	0	28	15		
+mojo/public	1-ipc	8	0	60	417	1456	C/C++ cabecera	74	51	8	159	11	0	186	9		
+net	2-red-servicios	8	0	50	417	10	Python	0	32	32	172	0	0	0	0		
+net/base	2-red-servicios	8	0	49	417	388	C++	2	9	4	2	0	0	29	6		
+net/dns	2-red-servicios	8	0	45	417	249	C++	0	7	2	3	0	0	46	15		
+net/http	2-red-servicios	8	0	46	417	294	C++	1	3	3	1	5	0	174	19		
+net/third_party	2-red-servicios	8	0	50	417	1867	C++	0	16	8	3	14	2	366	71		
+services/accessibility	2-red-servicios	8	60	63	417	41	C++	0	2	2	4	0	0	11	1		
+services/audio	2-red-servicios	8	68	80	417	192	C++	0	3	10	8	0	0	7	2		
+services/cert_verifier	2-red-servicios	8	66	71	417	23	C++	0	3	7	6	0	0	2	1		
+services/data_decoder	2-red-servicios	8	60	112	417	51	C++	3	10	14	20	0	0	7	0		
+services/device	2-red-servicios	8	0	116	417	745	C++	0	56	28	26	0	0	39	29		
+services/image_annotation	2-red-servicios	8	0	116	417	20	C++	0	4	10	1	0	0	12	3		
+services/media_session	2-red-servicios	8	39	62	417	68	C++	0	4	5	9	0	0	0	1		
+services/metrics	2-red-servicios	8	0	57	417	42	C++	0	5	5	47	0	0	0	0		
+services/network	2-red-servicios	8	0	95	417	1271	C++	0	53	36	121	0	0	129	67		
+services/on_device_model	2-red-servicios	8	0	80	417	128	C/C++ cabecera	0	17	17	9	0	0	4	6		
+services/passage_embeddings	2-red-servicios	8	60	80	417	23	C++	0	2	6	5	0	0	1	0		
+services/preferences	2-red-servicios	8	33	65	417	69	C++	0	5	8	5	0	0	13	5		
+services/proxy_resolver	2-red-servicios	8	61	63	417	81	JavaScript	0	3	10	5	0	0	1	0		
+services/resource_coordinator	2-red-servicios	8	0	63	417	65	C++	0	5	4	5	0	0	8	3		
+services/screen_ai	2-red-servicios	8	0	105	417	42	C++	0	10	10	9	0	0	8	0		
+services/service_manager	2-red-servicios	8	0	75	417	137	C++	0	10	8	37	0	0	2	5		
+services/shape_detection	2-red-servicios	8	0	87	417	77	C/C++ cabecera	0	4	7	8	0	0	0	1		
+services/tracing	2-red-servicios	8	0	61	417	147	C++	0	7	10	20	0	0	9	10		
+services/video_capture	2-red-servicios	8	0	92	417	89	C++	0	4	8	9	0	0	1	4		
+services/viz	2-red-servicios	8	0	91	417	181	C/C++ cabecera	0	10	23	20	0	0	7	1		
+services/webnn	2-red-servicios	8	0	96	417	205	C/C++ cabecera	0	14	18	10	0	0	98	9		
+storage	2-red-servicios	8	6	98	417	355	C++	1	5	13	10	1	0	25	24		
+url	2-red-servicios	8	0	62	417	126	C++	4	12	7	194	0	0	15	0		
+gpu	3-motores	8	33	86	417	17	C++	0	6	3	2	0	0	0	0		
+gpu/command_buffer	3-motores	8	0	87	417	822	C++	0	32	15	26	0	0	298	38		
+gpu/config	3-motores	8	0	75	417	78	C++	0	6	17	19	0	0	21	0		
+gpu/ipc	3-motores	8	0	91	417	199	C/C++ cabecera	0	19	24	20	0	0	17	10		
+gpu/vulkan	3-motores	8	0	75	417	82	C++	0	6	10	10	0	0	10	2		
+media	3-motores	8	0	74	417	12	Python	0	2	9	41	0	0	0	0		
+media/base	3-motores	8	33	85	417	631	C++	0	4	24	15	0	0	52	2		
+media/capture	3-motores	8	0	86	417	356	C++	0	12	15	12	0	0	73	17		
+media/cdm	3-motores	8	0	89	417	155	C++	0	9	12	6	0	0	4	5		
+media/formats	3-motores	8	0	88	417	269	C++	6	2	11	4	3	0	104	5		
+media/gpu	3-motores	8	0	92	417	714	C++	0	16	24	10	0	0	308	22		
+media/midi	3-motores	8	0	75	417	73	C++	0	5	5	4	0	0	14	5		
+media/mojo	3-motores	8	0	96	417	374	C++	0	18	20	28	0	0	24	3		
+media/parsers	3-motores	8	0	86	417	60	C++	1	2	3	3	0	0	33	2		
+media/remoting	3-motores	8	75	80	417	45	C++	0	3	6	3	0	0	2	2		
+media/video	3-motores	8	87	87	417	38	C++	0	1	9	4	0	0	14	2		
+media/webrtc	3-motores	8	75	77	417	49	C++	0	3	7	4	0	0	4	0		
+skia	3-motores	8	0	60	417	222	C++	0	36	19	104	2	0	17	0		
+cc	4-composicion	8	0	93	417	1177	C++	0	16	20	38	7	0	323	24		
+components/viz	4-composicion	8	0	100	417	824	C++	0	17	41	28	2	0	223	53		
+ui/accessibility	4-composicion	8	0	104	417	649	C++	0	41	17	30	1	0	284	13		
+ui/actions	4-composicion	8	76	77	417	9	C++	0	2	4	3	0	0	0	3		
+ui/aura	4-composicion	8	100	100	417	155	C/C++ cabecera	0	1	17	26	1	0	21	0		
+ui/aura_extra	4-composicion	8	101	101	417	7	C/C++ cabecera	0	1	2	2	0	0	0	0		
+ui/base	4-composicion	8	0	120	417	1021	C++	0	57	37	157	1	0	62	29		
+ui/color	4-composicion	8	0	39	417	91	C++	0	8	8	22	0	0	9	0		
+ui/compositor	4-composicion	8	99	99	417	161	C++	0	1	12	19	0	0	5	0		
+ui/content_accelerators	4-composicion	8	120	120	417	5	C++	0	1	5	2	0	0	0	0		
+ui/decoration	4-composicion	8	100	100	417	23	C++	0	1	6	5	0	0	0	0		
+ui/display	4-composicion	8	0	74	417	293	C++	0	8	12	41	0	0	41	2		
+ui/events	4-composicion	8	0	96	417	679	C++	0	36	19	37	1	0	68	27		
+ui/file_manager	4-composicion	8	0	33	417	694	TypeScript	0	31	5	1	0	0	0	0		
+ui/gfx	4-composicion	8	0	68	417	829	C++	0	45	24	145	2	0	143	6		
+ui/gl	4-composicion	8	0	74	417	253	C++	0	12	12	31	0	0	44	11		
+ui/gtk	4-composicion	8	0	113	417	63	C++	0	5	19	2	0	0	12	1		
+ui/latency	4-composicion	8	0	68	417	17	C++	0	3	7	9	0	0	0	0		
+ui/linux	4-composicion	8	62	115	417	31	C/C++ cabecera	0	4	16	14	0	0	0	0		
+ui/lottie	4-composicion	8	67	67	417	9	C++	0	1	4	5	0	0	1	0		
+ui/menus	4-composicion	8	78	78	417	14	C/C++ cabecera	0	1	4	9	0	0	1	0		
+ui/message_center	4-composicion	8	0	105	417	112	C++	0	3	18	5	0	0	3	1		
+ui/native_theme	4-composicion	8	33	74	417	54	C++	0	2	8	17	0	0	7	0		
+ui/native_window_tracker	4-composicion	8	101	101	417	8	C/C++ cabecera	0	1	3	2	0	0	0	0		
+ui/ozone	4-composicion	8	0	75	417	822	C++	0	21	30	26	0	0	86	42		
+ui/platform_window	4-composicion	8	33	75	417	51	C/C++ cabecera	0	5	5	9	0	0	0	0		
+ui/qt	4-composicion	8	0	107	417	20	C++	0	4	11	2	0	0	0	0		
+ui/shell_dialogs	4-composicion	8	105	105	417	49	C++	0	1	11	10	0	0	4	3		
+ui/snapshot	4-composicion	8	0	101	417	22	C++	0	2	10	2	0	0	0	0		
+ui/touch_selection	4-composicion	8	0	101	417	34	C/C++ cabecera	0	5	12	4	0	0	2	0		
+ui/views	4-composicion	8	0	122	417	1403	C++	0	10	40	26	1	0	197	26		
+ui/web_dialogs	4-composicion	8	121	121	417	16	C++	0	1	7	2	0	0	0	2		
+ui/webui	4-composicion	8	0	123	417	1039	TypeScript	0	59	21	19	0	0	0	0		
+ui/wm	4-composicion	8	101	102	417	103	C++	0	2	13	12	0	0	4	0		
+third_party/blink	5-motor-web	8	0	114	417	215237	JavaScript	7	353	106	98	15	0	3016	105		
+content	6-multiproceso	8	0	1	417	11	Python	0	4	3	10	0	0	0	0		
+content/app	6-multiproceso	8	1	114	417	42	C++	0	3	4	1	0	0	6	0		
+content/browser	6-multiproceso	8	0	117	417	4408	C++	6	46	151	4	4	0	1129	383		
+content/common	6-multiproceso	8	0	113	417	267	C++	1	9	58	5	1	0	17	9		
+content/gpu	6-multiproceso	8	0	1	417	14	C++	0	1	1	1	0	0	1	0		
+content/public	6-multiproceso	8	0	119	417	1575	C/C++ cabecera	0	34	57	146	1	0	13	12		
+content/services	6-multiproceso	8	49	115	417	31	C++	0	6	11	2	0	0	2	0		
+content/utility	6-multiproceso	8	60	117	417	32	C++	0	5	36	1	0	0	2	0		
+sandbox	6-multiproceso	8	0	48	417	576	C++	0	13	5	41	4	1	53	7		
+chrome	7-producto	8	0	203	417	15	Python	0	76	53	8	0	0	0	0		
+chrome/app	7-producto	8	0	67	417	11652	C++	0	20	9	6	0	0	7	0		
+chrome/app_shim	7-producto	8	0	121	417	21	Objective-C	0	5	11	2	0	0	0	0		
+chrome/browser	7-producto	8	0	197	417	53747	C++	0	2662	435	5	20	0	3161	2296		
+chrome/child	7-producto	8	117	117	417	7	C++	0	1	7	1	0	0	0	0		
+chrome/chrome_elf	7-producto	8	0	40	417	66	C++	0	14	6	4	2	0	3	1		
+chrome/common	7-producto	8	0	120	417	614	C++	0	61	106	13	0	0	31	3		
+chrome/credential_provider	7-producto	8	0	123	417	293	C++	0	29	20	1	0	0	36	11		
+chrome/elevation_service	7-producto	8	0	41	417	26	C++	0	6	8	1	0	0	2	0		
+chrome/enterprise_companion	7-producto	8	0	119	417	112	C++	0	23	16	2	0	0	0	2		
+chrome/gpu	7-producto	8	118	118	417	7	C++	0	1	12	1	0	0	0	0		
+chrome/install_static	7-producto	8	0	34	417	36	C++	0	4	4	7	0	0	2	0		
+chrome/installer	7-producto	8	0	206	417	483	C++	0	59	34	7	0	0	29	4		
+chrome/notification_helper	7-producto	8	0	39	417	23	C++	0	4	5	1	0	0	0	0		
+chrome/renderer	7-producto	8	0	123	417	398	C++	0	12	90	1	1	0	38	13		
+chrome/services	7-producto	8	0	122	417	515	C++	1	32	53	4	0	0	14	25		
+chrome/updater	7-producto	8	0	122	417	653	C++	0	24	27	4	0	0	85	31		
+chrome/utility	7-producto	8	86	123	417	100	C++	8	3	42	2	2	0	19	0		
+components/account_id	7-producto	8	68	68	417	11	C/C++ cabecera	0	2	2	12	0	0	0	0		
+components/account_manager_core	7-producto	8	0	68	417	27	C++	0	2	6	2	0	0	0	0		
+components/account_settings	7-producto	8	97	97	417	18	C/C++ cabecera	0	1	3	3	0	0	0	0		
+components/activity_reporter	7-producto	8	0	82	417	20	C++	0	3	7	2	0	0	0	0		
+components/actor	7-producto	8	0	123	417	73	C++	0	11	12	7	0	0	3	4		
+components/affiliations	7-producto	8	0	96	417	72	C++	0	5	11	4	0	0	3	14		
+components/allocation_recorder	7-producto	8	0	38	417	38	C++	0	4	4	2	0	0	0	0		
+components/app_restore	7-producto	8	105	105	417	41	C++	0	1	8	4	0	0	4	2		
+components/apps	7-producto	8	74	74	417	5	C++	0	1	2	1	0	0	0	0		
+components/autofill	7-producto	8	0	125	417	2454	C++	0	35	79	22	5	0	293	153		
+components/back_forward_cache	7-producto	8	0	120	417	6	C/C++ cabecera	0	2	1	11	0	0	0	0		
+components/background_fetch	7-producto	8	120	120	417	11	C++	0	1	8	1	0	0	0	1		
+components/background_sync	7-producto	8	128	128	417	13	C++	0	1	7	2	0	0	1	1		
+components/background_task_scheduler	7-producto	8	0	41	417	48	Java	0	10	2	3	0	0	0	0		
+components/blocked_content	7-producto	8	128	128	417	39	C++	0	1	16	1	0	0	0	0		
+components/bookmarks	7-producto	8	33	82	417	109	C++	0	3	18	13	0	0	5	7		
+components/breadcrumbs	7-producto	8	0	105	417	35	C++	0	3	10	1	0	0	0	1		
+components/browser_actuator	7-producto	8	0	117	417	129	C++	3	23	11	2	0	0	1	2		
+components/browser_apis	7-producto	8	0	126	417	190	C/C++ cabecera	0	32	12	1	0	0	2	3		
+components/browser_sync	7-producto	8	33	130	417	21	C++	0	2	33	1	0	0	4	1		
+components/browsing_data	7-producto	8	0	125	417	81	C++	0	6	21	7	0	0	6	4		
+components/captive_portal	7-producto	8	0	120	417	33	C++	0	4	8	3	0	0	0	0		
+components/capture_mode	7-producto	8	100	100	417	13	C++	0	1	10	1	0	0	0	0		
+components/cdm	7-producto	8	0	120	417	35	C++	0	4	8	5	0	0	0	2		
+components/certificate_matching	7-producto	8	48	48	417	7	C++	0	1	2	3	0	0	0	0		
+components/certificate_model	7-producto	8	74	74	417	7	C/C++ cabecera	0	1	6	1	0	0	0	0		
+components/certificate_transparency	7-producto	8	0	70	417	28	C++	0	3	9	3	0	0	3	1		
+components/client_hints	7-producto	8	92	120	417	19	C++	0	3	7	3	0	0	0	0		
+components/cloud_devices	7-producto	8	34	34	417	13	C/C++ cabecera	0	1	2	3	0	0	3	0		
+components/collaboration	7-producto	8	0	107	417	144	C++	0	29	16	2	3	0	12	9		
+components/color	7-producto	8	37	40	417	8	C/C++ cabecera	0	2	3	3	0	0	0	0		
+components/commerce	7-producto	8	0	122	417	184	C++	0	31	35	9	0	0	14	62		
+components/component_updater	7-producto	8	33	137	417	83	C++	0	5	19	10	0	0	1	0		
+components/compose	7-producto	8	0	118	417	26	C/C++ cabecera	0	5	6	4	0	0	2	1		
+components/consent_auditor	7-producto	8	0	100	417	15	C/C++ cabecera	0	2	2	4	0	0	0	0		
+components/constrained_window	7-producto	8	122	122	417	14	C++	0	1	12	1	0	0	0	0		
+components/content_capture	7-producto	8	34	120	417	70	Java	0	5	5	2	0	0	1	1		
+components/content_extraction	7-producto	8	120	120	417	7	C++	0	1	5	2	0	0	0	0		
+components/content_relationship_verification	7-producto	8	120	120	417	20	Java	0	3	5	1	0	0	0	2		
+components/content_settings	7-producto	8	0	129	417	158	C++	0	11	30	32	0	0	17	0		
+components/contextual_cueing	7-producto	8	39	39	417	15	C++	0	1	3	1	0	0	0	0		
+components/contextual_search	7-producto	8	0	131	417	80	C++	0	14	26	3	0	0	41	14		
+components/contextual_tasks	7-producto	8	2	130	417	84	C++	0	5	21	5	0	0	22	2		
+components/continuous_search	7-producto	8	33	120	417	28	C++	0	5	8	3	0	0	0	0		
+components/cookie_config	7-producto	8	65	65	417	7	C++	0	1	3	3	0	0	0	0		
+components/crash	7-producto	8	0	120	417	159	C++	0	21	14	52	0	0	11	6		
+components/credential_management	7-producto	8	124	124	417	28	C++	0	1	4	2	0	0	0	0		
+components/critical_actions	7-producto	8	115	115	417	19	C++	0	1	6	2	0	0	3	0		
+components/cross_device	7-producto	8	33	35	417	15	C++	0	3	3	2	0	0	0	0		
+components/custom_handlers	7-producto	8	128	128	417	24	C++	0	1	11	3	0	0	0	0		
+components/data_sharing	7-producto	8	0	114	417	175	C++	0	23	17	4	0	0	2	1		
+components/database_utils	7-producto	8	39	39	417	7	C++	0	1	1	6	0	0	0	0		
+components/dbus	7-producto	8	34	79	417	71	C++	0	6	8	14	0	0	6	6		
+components/desks_storage	7-producto	8	106	106	417	48	C++	0	1	12	2	0	0	3	15		
+components/desktop_to_mobile_promos	7-producto	8	34	34	417	12	C/C++ cabecera	0	1	3	3	0	0	0	0		
+components/device_reauth	7-producto	8	0	38	417	15	C/C++ cabecera	0	3	2	3	0	0	0	0		
+components/device_signals	7-producto	8	33	120	417	184	C++	0	8	18	6	0	0	4	10		
+components/devtools	7-producto	8	120	120	417	10	C++	0	2	2	3	0	0	0	0		
+components/digital_goods	7-producto	8	1	1	417	6		0	1	2	1	0	0	0	0		
+components/discardable_memory	7-producto	8	33	61	417	20	C++	0	4	4	10	0	0	1	0		
+components/dom_distiller	7-producto	8	0	121	417	158	C++	0	10	23	10	0	0	1	8		
+components/domain_reliability	7-producto	8	0	48	417	64	C++	0	3	5	2	0	0	2	3		
+components/download	7-producto	8	0	122	417	394	C++	0	25	20	12	0	0	15	6		
+components/drive	7-producto	8	0	80	417	40	C++	0	3	8	1	0	0	5	0		
+components/embedder_support	7-producto	8	92	129	417	247	Java	0	4	14	8	0	0	2	5		
+components/endpoint_fetcher	7-producto	8	113	113	417	10	C++	0	1	7	11	0	0	0	0		
+components/enterprise	7-producto	8	0	130	417	792	C++	0	73	42	15	0	0	32	41		
+components/error_page	7-producto	8	74	120	417	26	C++	0	2	9	3	0	0	2	0		
+components/exo	7-producto	8	0	115	417	443	C++	0	25	35	4	0	0	45	5		
+components/eye_dropper	7-producto	8	39	120	417	13	C++	0	2	10	2	0	0	1	0		
+components/facilitated_payments	7-producto	8	0	122	417	143	C++	2	14	16	3	0	0	1	5		
+components/favicon	7-producto	8	75	120	417	78	C++	0	4	14	12	0	0	4	0		
+components/favicon_base	7-producto	8	74	74	417	20	C++	0	2	6	14	0	0	0	0		
+components/fcm	7-producto	8	33	70	417	45	C++	0	4	9	2	0	0	0	0		
+components/feature_engagement	7-producto	8	0	80	417	170	C++	0	11	11	7	0	0	8	22		
+components/feed	7-producto	8	0	116	417	247	C++	0	12	17	4	0	0	12	27		
+components/feedback	7-producto	8	0	121	417	72	C++	0	5	10	2	0	0	6	5		
+components/file_access	7-producto	8	39	39	417	16	C++	0	1	2	6	0	0	0	0		
+components/filename_generation	7-producto	8	68	68	417	7	C++	0	1	4	4	0	0	0	1		
+components/find_in_page	7-producto	8	120	120	417	21	C/C++ cabecera	0	1	4	1	0	0	0	0		
+components/fullscreen_control	7-producto	8	39	105	417	17	C++	0	2	13	3	0	0	0	0		
+components/gapis	7-producto	8	0	120	417	15	C++	0	2	9	1	0	0	0	0		
+components/gcm_driver	7-producto	8	0	71	417	122	C++	0	8	16	6	0	0	6	2		
+components/global_media_controls	7-producto	8	62	106	417	85	C++	0	2	13	1	0	0	7	1		
+components/google	7-producto	8	68	68	417	10	C++	0	1	5	23	0	0	0	0		
+components/guest_contents	7-producto	8	61	120	417	20	C++	0	4	4	3	0	0	0	0		
+components/guest_view	7-producto	8	0	123	417	148	C/C++ cabecera	0	10	14	8	0	0	0	0		
+components/gwp_asan	7-producto	8	0	37	417	84	C++	0	9	5	2	0	0	4	0		
+components/handoff	7-producto	8	48	48	417	10	C/C++ cabecera	0	1	4	1	0	0	0	0		
+components/headless	7-producto	8	0	123	417	242	JavaScript	0	11	12	5	0	0	2	2		
+components/heap_profiling	7-producto	8	60	75	417	19	C++	0	2	7	6	0	0	3	0		
+components/heavy_ad_intervention	7-producto	8	120	120	417	14	C++	0	1	8	2	0	0	0	0		
+components/history	7-producto	8	33	121	417	217	C++	0	5	31	28	1	0	60	7		
+components/history_clusters	7-producto	8	0	121	417	118	C++	0	6	20	5	0	0	18	36		
+components/history_embeddings	7-producto	8	0	125	417	35	C++	0	3	12	1	0	0	6	10		
+components/image_fetcher	7-producto	8	0	67	417	83	C++	0	8	10	9	0	0	1	14		
+components/infobars	7-producto	8	75	120	417	28	C++	0	2	9	6	0	0	1	0		
+components/input	7-producto	8	69	97	417	131	C++	0	2	6	12	1	0	17	1		
+components/invalidation	7-producto	8	72	72	417	17	C/C++ cabecera	0	1	4	2	0	0	0	1		
+components/javascript_dialogs	7-producto	8	74	121	417	125	C/C++ cabecera	0	2	14	3	0	0	1	0		
+components/keep_alive_registry	7-producto	8	33	33	417	12	C++	0	1	2	4	0	0	0	0		
+components/keyed_service	7-producto	8	0	120	417	54	C/C++ cabecera	0	3	6	109	0	0	0	0		
+components/language	7-producto	8	0	120	417	105	C++	0	9	12	13	0	0	2	4		
+components/language_detection	7-producto	8	0	117	417	62	C++	0	7	10	8	0	0	2	0		
+components/lens	7-producto	8	0	121	417	58	C/C++ cabecera	0	11	23	7	0	0	5	2		
+components/leveldb_proto	7-producto	8	0	63	417	41	C++	0	2	3	16	0	0	3	1		
+components/link_header_util	7-producto	8	48	48	417	8	C++	0	1	2	5	0	0	0	0		
+components/live_caption	7-producto	8	77	121	417	55	C++	0	4	29	3	1	0	4	9		
+components/local_state	7-producto	8	1	36	417	10	C++	0	3	5	2	0	0	0	1		
+components/lookalikes	7-producto	8	0	116	417	21	C++	0	3	14	3	0	0	8	3		
+components/manta	7-producto	8	0	114	417	44	C++	0	2	6	2	0	0	1	2		
+components/media_control	7-producto	8	0	120	417	13	C++	0	4	2	1	0	0	0	0		
+components/media_device_salt	7-producto	8	121	121	417	12	C++	0	1	6	2	0	0	0	1		
+components/media_effects	7-producto	8	121	121	417	20	C++	0	1	8	1	0	0	0	1		
+components/media_gallery_util	7-producto	8	0	120	417	18	C/C++ cabecera	0	3	9	2	0	0	0	2		
+components/media_message_center	7-producto	8	0	105	417	38	C/C++ cabecera	0	3	7	2	0	0	0	0		
+components/media_router	7-producto	8	0	121	417	292	C++	0	8	19	1	0	0	5	3		
+components/memory_system	7-producto	8	76	76	417	16	C++	0	1	9	2	0	0	0	0		
+components/metal_util	7-producto	8	67	67	417	12	C/C++ cabecera	0	1	4	1	0	0	0	0		
+components/metrics	7-producto	8	0	121	417	479	C++	0	49	38	37	0	0	19	5		
+components/metrics_services_manager	7-producto	8	100	100	417	7	C/C++ cabecera	0	1	5	2	0	0	0	0		
+components/mirroring	7-producto	8	60	120	417	66	C++	0	4	18	4	0	0	4	2		
+components/multistep_filter	7-producto	8	0	120	417	103	C++	0	15	14	2	0	0	0	25		
+components/named_mojo_ipc_server	7-producto	8	56	56	417	27	C++	0	1	2	3	0	0	0	0		
+components/navigation_interception	7-producto	8	120	120	417	12	C++	0	1	5	1	0	0	0	1		
+components/navigation_metrics	7-producto	8	0	75	417	7	C++	0	1	5	3	0	0	0	0		
+components/net_log	7-producto	8	0	66	417	19	C++	0	2	4	2	0	0	0	0		
+components/neterror	7-producto	8	0	5	417	40	TypeScript	0	6	2	1	0	0	0	0		
+components/network_hints	7-producto	8	1	120	417	15	C++	0	3	8	4	0	0	0	0		
+components/network_session_configurator	7-producto	8	33	48	417	15	C/C++ cabecera	0	2	3	9	0	0	2	0		
+components/network_time	7-producto	8	33	67	417	14	C++	0	2	6	9	0	0	0	0		
+components/no_state_prefetch	7-producto	8	1	122	417	58	C++	0	4	14	6	1	0	2	0		
+components/notebooks	7-producto	8	0	121	417	57	C++	0	5	11	2	0	0	1	0		
+components/ntp_tiles	7-producto	8	0	117	417	75	C/C++ cabecera	0	8	24	4	0	0	1	1		
+components/offline_items_collection	7-producto	8	10	100	417	64	C++	0	3	5	2	0	0	0	0		
+components/offline_pages	7-producto	8	0	120	417	247	C++	0	9	12	5	0	0	5	30		
+components/omnibox	7-producto	8	0	129	417	641	C++	0	25	59	15	0	0	143	129		
+components/on_device_ai	7-producto	8	116	116	417	6	C++	0	1	4	1	0	0	0	0		
+components/on_device_translation	7-producto	8	0	121	417	74	C++	0	12	11	4	0	0	4	0		
+components/on_load_script_injector	7-producto	8	0	120	417	13	C/C++ cabecera	0	4	5	1	0	0	0	1		
+components/one_time_tokens	7-producto	8	0	97	417	93	C++	0	6	8	2	0	0	0	0		
+components/open_from_clipboard	7-producto	8	33	74	417	20	C/C++ cabecera	0	3	5	2	0	0	1	3		
+components/openscreen_platform	7-producto	8	33	96	417	30	C++	0	4	5	2	0	0	2	1		
+components/optimization_guide	7-producto	8	0	121	417	562	C++	0	37	45	41	0	0	35	29		
+components/origin_gating	7-producto	8	48	120	417	43	C++	0	2	7	1	0	0	0	0		
+components/origin_matcher	7-producto	8	48	70	417	16	C++	0	2	5	4	0	0	0	0		
+components/origin_trials	7-producto	8	0	120	417	23	C++	0	4	8	4	0	0	3	0		
+components/os_crypt	7-producto	8	0	64	417	54	C++	0	21	8	19	0	0	7	1		
+components/page_content_annotations	7-producto	8	33	124	417	129	C++	0	8	32	5	0	0	11	29		
+components/page_image_service	7-producto	8	60	129	417	20	C++	0	2	11	1	0	0	1	1		
+components/page_info	7-producto	8	2	133	417	85	C++	0	5	32	2	0	0	11	0		
+components/page_load_metrics	7-producto	8	69	128	417	215	C++	0	6	24	7	0	0	25	15		
+components/paint_preview	7-producto	8	0	122	417	158	C++	0	9	20	8	0	0	3	2		
+components/passage_embeddings	7-producto	8	61	106	417	20	C++	0	3	7	4	0	0	0	18		
+components/password_manager	7-producto	8	0	126	417	829	C++	0	52	47	18	0	0	77	49		
+components/payments	7-producto	8	0	125	417	591	C++	0	14	31	8	1	0	18	41		
+components/pdf	7-producto	8	0	120	417	59	C++	0	5	27	9	0	0	14	3		
+components/performance_manager	7-producto	8	0	61	417	481	C++	0	3	4	6	1	0	43	17		
+components/permissions	7-producto	8	0	127	417	492	C++	0	5	42	14	1	0	39	4		
+components/persistent_cache	7-producto	8	0	61	417	47	C++	0	3	4	4	0	0	0	1		
+components/personal_context	7-producto	8	0	102	417	58	C++	0	6	11	2	0	0	1	0		
+components/plugins	7-producto	8	117	117	417	10	C++	0	1	7	1	0	0	0	0		
+components/policy	7-producto	8	0	122	417	3426	C++	0	34	37	34	0	0	46	10		
+components/power_bookmarks	7-producto	8	1	97	417	17	C++	0	3	7	2	0	0	2	0		
+components/power_monitor	7-producto	8	41	41	417	10	C++	0	1	3	1	0	0	0	0		
+components/printing	7-producto	8	63	123	417	56	C++	0	7	22	6	0	0	10	1		
+components/privacy_sandbox	7-producto	8	1	121	417	38	C++	0	9	13	3	0	0	1	1		
+components/private_ai	7-producto	8	0	120	417	203	C++	0	16	18	3	0	0	2	5		
+components/private_insights	7-producto	8	0	75	417	37	C++	0	12	13	2	0	0	1	4		
+components/private_verification_tokens	7-producto	8	0	67	417	40	C++	5	10	7	2	0	0	65	3		
+components/proxy_config	7-producto	8	83	83	417	30	C++	0	1	8	3	0	0	3	0		
+components/push_messaging	7-producto	8	94	94	417	14	C++	0	1	3	1	0	0	0	0		
+components/pwg_encoder	7-producto	8	34	34	417	9	C++	0	1	2	1	0	0	1	0		
+components/qr_code_generator	7-producto	8	0	68	417	14	C++	0	4	7	1	0	0	3	0		
+components/quirks	7-producto	8	67	67	417	11	C/C++ cabecera	0	1	5	1	0	0	0	0		
+components/reading_list	7-producto	8	0	100	417	43	C++	0	2	7	3	0	0	2	9		
+components/record_replay	7-producto	8	0	120	417	80	C++	0	6	8	2	0	0	4	13		
+components/reduce_accept_language	7-producto	8	120	120	417	13	C++	0	2	6	1	0	0	0	0		
+components/regional_capabilities	7-producto	8	33	75	417	36	C++	0	5	13	3	0	0	0	2		
+components/renderer_context_menu	7-producto	8	120	120	417	15	C/C++ cabecera	0	1	9	1	0	0	2	0		
+components/reporting	7-producto	8	0	49	417	210	C++	0	46	8	3	0	0	16	16		
+components/resources	7-producto	8	0	7	417	370	C/C++ cabecera	0	9	8	20	0	0	0	0		
+components/rlz	7-producto	8	74	74	417	15	C++	0	1	6	1	0	0	0	0		
+components/safe_browsing	7-producto	8	0	136	417	587	C++	3	106	65	22	0	0	70	60		
+components/safe_search_api	7-producto	8	69	70	417	18	C++	0	2	6	5	1	0	1	0		
+components/safety_check	7-producto	8	0	67	417	19	C++	0	4	5	3	0	0	0	0		
+components/sampling_profiler	7-producto	8	33	62	417	9	C/C++ cabecera	0	2	3	5	0	0	0	0		
+components/saved_tab_groups	7-producto	8	2	106	417	145	C++	0	17	19	6	1	0	13	5		
+components/schema_org	7-producto	8	0	60	417	8	C++	0	2	2	2	0	0	0	0		
+components/search	7-producto	8	114	114	417	11	C++	0	1	2	10	0	0	1	0		
+components/search_engines	7-producto	8	0	113	417	146	C++	0	9	36	22	0	0	39	10		
+components/search_provider_logos	7-producto	8	0	114	417	25	C++	0	2	12	2	0	0	4	1		
+components/security_interstitials	7-producto	8	0	122	417	196	C++	0	16	35	12	0	0	5	2		
+components/security_state	7-producto	8	0	120	417	25	C++	0	4	6	12	0	0	1	0		
+components/segmentation_platform	7-producto	8	0	125	417	542	C++	0	19	24	5	1	0	23	40		
+components/send_tab_to_self	7-producto	8	0	122	417	57	C++	0	5	14	4	0	0	5	3		
+components/sensitive_content	7-producto	8	7	127	417	15	C++	0	6	5	1	0	0	1	0		
+components/server_certificate_database	7-producto	8	0	48	417	13	C++	0	2	5	1	0	0	1	1		
+components/services	7-producto	8	0	120	417	547	C++	0	59	39	29	2	0	64	83		
+components/session_manager	7-producto	8	69	75	417	21	C/C++ cabecera	0	2	4	6	0	0	0	0		
+components/session_proto_db	7-producto	8	64	65	417	9	C/C++ cabecera	0	2	5	2	0	0	0	6		
+components/sessions	7-producto	8	36	120	417	96	C/C++ cabecera	0	4	14	17	0	0	19	5		
+components/shared_highlighting	7-producto	8	77	77	417	31	C++	0	1	4	3	0	0	0	4		
+components/sharing_message	7-producto	8	0	123	417	86	C++	0	7	16	4	0	0	0	5		
+components/signin	7-producto	8	0	117	417	449	C++	0	21	32	53	2	0	28	14		
+components/site_engagement	7-producto	8	0	128	417	30	C/C++ cabecera	0	3	14	5	0	0	3	1		
+components/site_isolation	7-producto	8	120	120	417	16	C++	0	1	7	3	0	0	0	0		
+components/site_token_provider	7-producto	8	0	114	417	17	C++	0	2	11	2	0	0	0	0		
+components/skills	7-producto	8	0	116	417	61	C++	1	10	15	2	0	0	1	0		
+components/soda	7-producto	8	0	79	417	21	C++	0	4	11	5	0	0	3	1		
+components/speech	7-producto	8	67	67	417	27	C++	0	1	5	2	0	0	4	0		
+components/spellcheck	7-producto	8	0	123	417	82	C++	0	8	14	2	0	0	11	3		
+components/split_tabs	7-producto	8	75	75	417	7	C/C++ cabecera	0	1	2	4	0	0	0	0		
+components/sqlite_vfs	7-producto	8	0	60	417	40	C++	0	4	4	3	0	0	11	0		
+components/ssl_errors	7-producto	8	74	74	417	9	C++	0	1	6	2	0	0	4	0		
+components/storage_monitor	7-producto	8	120	120	417	53	C++	0	1	7	2	0	0	2	2		
+components/streaming_client	7-producto	8	67	67	417	6	C++	0	1	5	2	0	0	0	0		
+components/strike_database	7-producto	8	0	115	417	24	C++	0	3	4	4	0	0	0	4		
+components/subresource_filter	7-producto	8	1	127	417	226	C++	0	8	20	6	0	0	13	13		
+components/subscription_eligibility	7-producto	8	33	39	417	20	C/C++ cabecera	0	3	5	3	0	0	0	0		
+components/supervised_user	7-producto	8	0	116	417	156	C++	0	12	29	8	0	0	6	2		
+components/surface_embed	7-producto	8	33	121	417	27	C/C++ cabecera	0	4	12	3	0	0	4	0		
+components/sync	7-producto	8	0	99	417	807	C++	0	15	28	49	0	0	32	14		
+components/sync_bookmarks	7-producto	8	100	100	417	57	C++	0	1	10	2	1	0	10	2		
+components/sync_device_info	7-producto	8	0	100	417	58	C++	0	3	9	13	0	0	1	0		
+components/sync_preferences	7-producto	8	33	129	417	66	C++	0	7	30	7	0	0	7	1		
+components/sync_sessions	7-producto	8	121	121	417	65	C++	0	1	16	6	0	0	12	0		
+components/sync_tab_context	7-producto	8	2	99	417	37	C++	0	3	10	3	0	0	0	3		
+components/sync_user_events	7-producto	8	100	100	417	19	C++	0	1	5	3	0	0	0	0		
+components/system_media_controls	7-producto	8	0	67	417	36	C/C++ cabecera	0	3	8	2	0	0	1	0		
+components/tab_groups	7-producto	8	0	74	417	26	C/C++ cabecera	0	5	6	9	0	0	0	0		
+components/tabs	7-producto	8	0	121	417	58	C++	0	4	6	8	0	0	10	2		
+components/themes	7-producto	8	0	115	417	38	C/C++ cabecera	0	7	22	1	0	0	0	0		
+components/thin_webview	7-producto	8	0	120	417	27	Java	0	6	6	1	0	0	0	0		
+components/touch_to_search	7-producto	8	0	120	417	22	C++	0	4	10	3	0	0	2	2		
+components/tracing	7-producto	8	33	122	417	52	C++	0	5	8	5	0	0	5	1		
+components/translate	7-producto	8	0	121	417	188	C++	0	12	36	11	0	0	8	11		
+components/trusted_vault	7-producto	8	0	78	417	129	C++	0	3	11	5	0	0	4	4		
+components/ttc	7-producto	8	33	117	417	25	C/C++ cabecera	0	4	4	1	0	0	1	0		
+components/ui_devtools	7-producto	8	0	121	417	81	C++	0	5	13	2	0	0	4	13		
+components/ukm	7-producto	8	0	120	417	76	C++	0	6	18	18	0	0	3	3		
+components/undo	7-producto	8	77	77	417	12	C++	0	1	5	3	0	0	0	0		
+components/unexportable_keys	7-producto	8	34	61	417	54	C++	0	3	4	4	0	0	0	0		
+components/unified_consent	7-producto	8	101	101	417	21	C++	0	1	7	9	0	0	0	0		
+components/universal_optout	7-producto	8	33	100	417	13	C++	0	2	7	1	0	0	1	0		
+components/update_client	7-producto	8	39	68	417	157	C++	0	8	15	7	0	0	21	3		
+components/url_deduplication	7-producto	8	68	68	417	13	C++	0	1	5	3	0	0	0	0		
+components/url_formatter	7-producto	8	0	117	417	66	C++	0	15	7	46	0	0	15	1		
+components/url_matcher	7-producto	8	69	69	417	20	C++	0	1	6	12	0	0	5	1		
+components/url_pattern	7-producto	8	39	39	417	10	C++	0	1	4	4	0	0	3	0		
+components/url_pattern_index	7-producto	8	0	39	417	31	C++	0	3	5	2	0	0	5	1		
+components/url_rewrite	7-producto	8	60	120	417	27	C++	0	4	7	1	0	0	1	1		
+components/user_data_importer	7-producto	8	7	123	417	61	C++	6	7	15	3	0	0	11	6		
+components/user_education	7-producto	8	0	124	417	204	C++	0	12	18	2	0	0	11	11		
+components/user_manager	7-producto	8	33	76	417	52	C++	0	3	11	7	0	0	2	0		
+components/value_store	7-producto	8	63	63	417	30	C++	0	1	3	3	0	0	0	1		
+components/variations	7-producto	8	0	99	417	192	C++	0	18	26	54	0	0	24	24		
+components/vector_icons	7-producto	8	0	67	417	527	Python	0	3	3	14	0	0	0	0		
+components/visibility_timer	7-producto	8	120	120	417	7	C++	0	1	2	1	0	0	0	0		
+components/visited_url_ranking	7-producto	8	9	126	417	100	C++	0	6	14	3	0	0	5	9		
+components/visitedlink	7-producto	8	48	120	417	33	C++	0	5	8	3	0	0	2	0		
+components/vrp_flags	7-producto	8	0	76	417	10	C++	0	3	5	4	0	0	0	0		
+components/wallet	7-producto	8	0	121	417	77	C++	0	7	18	5	0	0	0	13		
+components/web_cache	7-producto	8	0	120	417	16	C++	0	3	5	4	0	0	0	0		
+components/web_modal	7-producto	8	121	121	417	24	C/C++ cabecera	0	1	6	3	0	0	0	0		
+components/web_package	7-producto	8	0	68	417	100	C++	15	9	9	4	0	0	15	2		
+components/web_resource	7-producto	8	67	67	417	14	C++	0	1	5	3	0	0	0	0		
+components/webapps	7-producto	8	0	135	417	499	C++	0	21	39	9	0	0	6	10		
+components/webauthn	7-producto	8	0	120	417	224	Java	0	16	19	6	0	0	6	6		
+components/webdata	7-producto	8	65	65	417	28	C++	0	1	4	7	0	0	0	0		
+components/webdata_services	7-producto	8	124	124	417	10	C++	0	1	13	2	0	0	1	0		
+components/webid	7-producto	8	39	39	417	5	C++	0	1	1	2	0	0	0	0		
+components/webrtc	7-producto	8	33	128	417	36	C++	0	5	7	7	0	0	1	0		
+components/webrtc_logging	7-producto	8	33	120	417	18	C++	0	2	3	1	0	0	0	1		
+components/webui	7-producto	8	0	120	417	111	C/C++ cabecera	0	16	11	8	0	0	6	0		
+components/webxr	7-producto	8	120	120	417	59	Java	0	1	6	1	0	0	0	0		
+components/winhttp	7-producto	8	39	39	417	20	C++	0	1	3	2	0	0	1	0		
+components/zoom	7-producto	8	120	120	417	20	C/C++ cabecera	0	1	7	4	0	0	2	0		
+extensions	7-producto	8	0	34	417	10		0	4	2	5	0	0	0	0		
+extensions/browser	7-producto	8	0	142	417	1416	C++	0	91	93	4	2	0	139	75		
+extensions/common	7-producto	8	0	117	417	583	C++	0	18	31	15	0	0	52	7		
+extensions/components	7-producto	8	143	143	417	13	C++	0	2	7	1	0	0	0	0		
+extensions/renderer	7-producto	8	0	118	417	397	C++	0	6	21	2	0	0	43	3		
+apps	otros	8	143	143	417	33	C++	0	2	13	1	0	0	1	0		
+chromecast	otros	8	0	126	417	1378	C++	0	174	69	2	1	0	37	41		
+device/base	otros	8	13	68	417	19	C/C++ cabecera	1	4	5	12	0	0	0	0		
+device/bluetooth	otros	8	0	75	417	778	C++	2	13	13	13	0	0	46	130		
+device/fido	otros	8	0	114	417	393	C++	0	6	19	8	0	0	59	34		
+device/gamepad	otros	8	0	96	417	155	C++	0	7	7	6	2	0	19	1		
+device/vr	otros	8	0	96	417	327	C/C++ cabecera	0	16	22	11	0	0	50	9		
+google_apis	otros	8	0	96	417	377	C++	0	14	11	49	0	0	20	23		
+pdf	otros	8	0	114	417	664	C++	0	17	22	16	0	0	26	16		
+printing	otros	8	0	106	417	225	C++	0	15	15	20	0	0	16	0		
+remoting	otros	8	0	117	417	2143	C++	0	166	44	1	1	0	90	33		
+rlz	otros	8	0	68	417	67	C++	0	5	5	5	0	0	4	2		
+third_party/cros-components	otros	8	1	4	417	81	TypeScript	0	4	2	1	0	0	0	0	Apache-2.0	
+third_party/ink	otros	8	35	35	417	592	C++	0	1	3	1	0	0	80	6	Apache-2.0	
+third_party/lens_server_proto	otros	8	2	2	417	51		0	1	2	4	0	0	0	0	BSD-3-Clause	
+third_party/leveldatabase	otros	8	62	63	417	170	C++	0	3	5	10	7	0	35	2	BSD-3-Clause	
+third_party/libaddressinput	otros	8	0	67	417	347	C++	0	3	6	3	0	0	12	2	Apache-2.0	
+third_party/nearby	otros	8	0	47	417	3067	C/C++ cabecera	8	66	8	3	10	0	509	91	Apache-2.0	
+third_party/openscreen	otros	8	0	41	417	3286	C++	85	119	13	2	20	0	617	92	BSD-3-Clause	
+third_party/pdfium	otros	8	0	50	417	5240	C++	5	89	20	2	30	1	946	5		https://pdfium.googlesource.com/pdfium.git
+third_party/webrtc	otros	8	0	45	417	7652	C++	17	1006	26	1	27	0	960	227	BSD-3-Clause	https://webrtc.googlesource.com/src.git
+third_party/webrtc_overrides	otros	8	0	40	417	56	C/C++ cabecera	0	8	3	12	0	0	1	0	BSD-3-Clause	
+media/audio	3-motores	9	33	86	1	312	C++	0	4	7	2	0	0	40	5		
+media/capabilities	3-motores	9	0	86	1	28	C++	0	3	4	0	0	0	3	3		
+media/ffmpeg	3-motores	9	89	89	1	41	Python	0	1	4	1	0	0	3	0		
+media/gfx	3-motores	9	90	90	1	29	C++	0	1	12	1	0	0	15	0		
+media/muxers	3-motores	9	89	89	1	44	C++	0	1	7	0	0	0	15	0		
+content/shell	6-multiproceso	9	0	133	1	232	C/C++ cabecera	2	30	58	1	0	0	4	0		
+content/zygote	6-multiproceso	9	115	115	1	9	C++	0	2	5	0	0	0	1	0		
+chrome/chrome_proxy	7-producto	9	0	34	1	5	C++	0	2	3	0	0	0	0	0		
+components/accessibility	7-producto	9	120	120	1	9	Java	0	2	2	0	0	0	0	0		
+components/cronet	7-producto	9	0	49	1	504	Java	0	6	3	0	0	0	4	2		
+components/guest_os	7-producto	9	36	114	1	10	C++	0	2	4	0	0	0	0	0		
+components/js_injection	7-producto	9	0	121	1	30	C/C++ cabecera	0	4	9	0	0	0	3	3		
+components/login	7-producto	9	74	74	1	12	C/C++ cabecera	0	1	3	0	0	0	0	0		
+components/ownership	7-producto	9	82	82	1	14	C++	0	1	4	0	0	0	0	0		
+components/previous_session_info	7-producto	9	39	39	1	9	C/C++ cabecera	0	1	4	0	0	0	0	0		
+components/webcrypto	7-producto	9	96	96	1	89	C++	0	1	4	0	0	0	3	10		
+headless	7-producto	9	0	127	1	473	JavaScript	0	14	59	0	0	0	4	4		
+codelabs	otros	9	0	62	1	57	C++	5	33	4	0	0	0	0	0		
+third_party/cardboard	otros	9	0	74	1	8	C/C++ cabecera	0	4	2	0	0	0	0	0	Unity-Companion-License-1.3, Apache-2.0	
+media/device_monitors	3-motores	10	87	87	1	8	C/C++ cabecera	0	1	4	0	0	0	1	0		
+media/filters	3-motores	10	10	90	1	184	C++	4	4	19	1	2	0	98	31		
+ui/views_content_client	4-composicion	10	130	130	1	18	C++	0	1	12	0	0	0	0	0		
+media/renderers	3-motores	11	91	91	1	43	C++	0	1	9	0	0	0	9	0		

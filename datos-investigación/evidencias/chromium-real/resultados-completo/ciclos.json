@@ -1,0 +1,1598 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos\":309,\"dependen_de_un_if\":32,\"ficha\":\"E-003 (Elegancia): compila por las guardas, pero ninguno se entiende sin los otros\",\"lista\":[{\"archivos\":43,\"aristas\":90,\"cortar\":{\"desde\":\"v8/src/objects/objects-inl.h\",\"hasta\":\"v8/src/objects/contexts-inl.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"v8/src/objects/objects-inl.h\",\"hasta\":\"v8/src/objects/contexts-inl.h\",\"lo_usan\":15,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/objects/contexts-inl.h\\\"\",\"linea\":36}},{\"desde\":\"v8/src/objects/contexts-inl.h\",\"hasta\":\"v8/src/objects/objects-inl.h\",\"lo_usan\":444,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/objects/objects-inl.h\\\"\",\"linea\":19}}]},{\"archivos\":13,\"aristas\":41,\"cortar\":{\"desde\":\"third_party/harfbuzz/src/src/hb.hh\",\"hasta\":\"third_party/harfbuzz/src/src/hb-algs.hh\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/harfbuzz/src/src/hb.hh\",\"hasta\":\"third_party/harfbuzz/src/src/hb-algs.hh\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"hb-algs.hh\\\"\",\"linea\":573}},{\"desde\":\"third_party/harfbuzz/src/src/hb-algs.hh\",\"hasta\":\"third_party/harfbuzz/src/src/hb.hh\",\"lo_usan\":232,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"hb.hh\\\"\",\"linea\":32}}]},{\"archivos\":9,\"aristas\":18,\"cortar\":{\"desde\":\"third_party/harfbuzz/src/src/hb.h\",\"hasta\":\"third_party/harfbuzz/src/src/hb-draw.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/harfbuzz/src/src/hb.h\",\"hasta\":\"third_party/harfbuzz/src/src/hb-draw.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"hb-draw.h\\\"\",\"linea\":35}},{\"desde\":\"third_party/harfbuzz/src/src/hb-draw.h\",\"hasta\":\"third_party/harfbuzz/src/src/hb.h\",\"lo_usan\":47,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"hb.h\\\"\",\"linea\":32}}]},{\"archivos\":9,\"aristas\":24,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp\",\"lo_usan\":6,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ZonedDateTime.hpp\\\"\",\"linea\":30}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp\",\"lo_usan\":8,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"PlainDate.hpp\\\"\",\"linea\":28}}]},{\"archivos\":4,\"aristas\":6,\"cortar\":{\"desde\":\"content/browser/cache_storage/cache_storage_manager.h\",\"hasta\":\"content/browser/cache_storage/cache_storage.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"content/browser/cache_storage/cache_storage_manager.h\",\"hasta\":\"content/browser/cache_storage/cache_storage.h\",\"lo_usan\":8,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/browser/cache_storage/cache_storage.h\\\"\",\"linea\":21}},{\"desde\":\"content/browser/cache_storage/cache_storage.h\",\"hasta\":\"content/browser/cache_storage/cache_storage_manager.h\",\"lo_usan\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/browser/cache_storage/cache_storage_manager.h\\\"\",\"linea\":34}}]},{\"archivos\":4,\"aristas\":5,\"cortar\":{\"desde\":\"third_party/freetype/src/src/psaux/psft.h\",\"hasta\":\"third_party/freetype/src/src/psaux/psglue.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/freetype/src/src/psaux/psglue.h\",\"hasta\":\"third_party/freetype/src/src/psaux/pserror.h\",\"lo_usan\":9,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"pserror.h\\\"\",\"linea\":44}},{\"desde\":\"third_party/freetype/src/src/psaux/pserror.h\",\"hasta\":\"third_party/freetype/src/src/psaux/psft.h\",\"lo_usan\":14,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"psft.h\\\"\",\"linea\":54}},{\"desde\":\"third_party/freetype/src/src/psaux/psft.h\",\"hasta\":\"third_party/freetype/src/src/psaux/psglue.h\",\"lo_usan\":8,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"psglue.h\\\"\",\"linea\":52}}]},{\"archivos\":4,\"aristas\":4,\"cortar\":{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/context_tree.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/speed_features.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/rd.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/context_tree.h\",\"lo_usan\":12,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"av1/encoder/context_tree.h\\\"\",\"linea\":20}},{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/context_tree.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/speed_features.h\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"av1/encoder/speed_features.h\\\"\",\"linea\":19}},{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/speed_features.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/mcomp.h\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"av1/encoder/mcomp.h\\\"\",\"linea\":17}},{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/mcomp.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/rd.h\",\"lo_usan\":15,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"av1/encoder/rd.h\\\"\",\"linea\":17}}]},{\"archivos\":4,\"aristas\":6,\"cortar\":{\"desde\":\"third_party/protobuf/objectivec/GPBMessage.h\",\"hasta\":\"third_party/protobuf/objectivec/GPBCodedInputStream.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/protobuf/objectivec/GPBMessage.h\",\"hasta\":\"third_party/protobuf/objectivec/GPBCodedInputStream.h\",\"lo_usan\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"GPBCodedInputStream.h\\\"\",\"linea\":11}},{\"desde\":\"third_party/protobuf/objectivec/GPBCodedInputStream.h\",\"hasta\":\"third_party/protobuf/objectivec/GPBMessage.h\",\"lo_usan\":36,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"GPBMessage.h\\\"\",\"linea\":12}}]},{\"archivos\":3,\"aristas\":4,\"cortar\":{\"desde\":\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\",\"hasta\":\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\",\"hasta\":\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\\\"\",\"linea\":16}},{\"desde\":\"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\",\"hasta\":\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\",\"lo_usan\":8,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\\\"\",\"linea\":13}}]},{\"archivos\":3,\"aristas\":5,\"cortar\":{\"desde\":\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\",\"hasta\":\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\",\"hasta\":\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\\\"\",\"linea\":16}},{\"desde\":\"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\",\"hasta\":\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\\\"\",\"linea\":15}}]},{\"archivos\":3,\"aristas\":4,\"cortar\":{\"desde\":\"third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/Pass.h\",\"hasta\":\"third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/PassSupport.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/Pass.h\",\"hasta\":\"third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/PassSupport.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"llvm/PassSupport.h\\\"\",\"linea\":414}},{\"desde\":\"third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/PassSupport.h\",\"hasta\":\"third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/Pass.h\",\"lo_usan\":193,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"Pass.h\\\"\",\"linea\":24}}]},{\"archivos\":3,\"aristas\":4,\"cortar\":{\"desde\":\"third_party/nearby/src/internal/platform/implementation/windows/ble_medium.h\",\"hasta\":\"third_party/nearby/src/internal/platform/implementation/windows/ble.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/nearby/src/internal/platform/implementation/windows/ble.h\",\"hasta\":\"third_party/nearby/src/internal/platform/implementation/windows/ble_medium.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"internal/platform/implementation/windows/ble_medium.h\\\"\",\"linea\":19}},{\"desde\":\"third_party/nearby/src/internal/platform/implementation/windows/ble_medium.h\",\"hasta\":\"third_party/nearby/src/internal/platform/implementation/windows/ble.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"internal/platform/implementation/windows/ble.h\\\"\",\"linea\":30}}]},{\"archivos\":3,\"aristas\":4,\"cortar\":{\"desde\":\"third_party/pipewire/src/spa/plugins/alsa/acp/alsa-mixer.h\",\"hasta\":\"third_party/pipewire/src/spa/plugins/alsa/acp/alsa-ucm.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/pipewire/src/spa/plugins/alsa/acp/alsa-mixer.h\",\"hasta\":\"third_party/pipewire/src/spa/plugins/alsa/acp/alsa-ucm.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"alsa-ucm.h\\\"\",\"linea\":84}},{\"desde\":\"third_party/pipewire/src/spa/plugins/alsa/acp/alsa-ucm.h\",\"hasta\":\"third_party/pipewire/src/spa/plugins/alsa/acp/alsa-mixer.h\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"alsa-mixer.h\\\"\",\"linea\":33}}]},{\"archivos\":3,\"aristas\":4,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"TimeZoneInfo.hpp\\\"\",\"linea\":14}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"TimeZone.hpp\\\"\",\"linea\":18}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"mojo/public/cpp/bindings/pending_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_remote.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"mojo/public/cpp/bindings/pending_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_remote.h\",\"lo_usan\":1947,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_remote.h\\\"\",\"linea\":163}},{\"desde\":\"mojo/public/cpp/bindings/pending_remote.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_receiver.h\",\"lo_usan\":1993,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_receiver.h\\\"\",\"linea\":162}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"mojo/public/cpp/bindings/pending_associated_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_associated_remote.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"mojo/public/cpp/bindings/pending_associated_receiver.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_associated_remote.h\",\"lo_usan\":174,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_associated_remote.h\\\"\",\"linea\":130}},{\"desde\":\"mojo/public/cpp/bindings/pending_associated_remote.h\",\"hasta\":\"mojo/public/cpp/bindings/pending_associated_receiver.h\",\"lo_usan\":219,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/pending_associated_receiver.h\\\"\",\"linea\":127}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/boringssl/src/include/openssl/ec.h\",\"hasta\":\"third_party/boringssl/src/include/openssl/ec_key.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/boringssl/src/include/openssl/ec.h\",\"hasta\":\"third_party/boringssl/src/include/openssl/ec_key.h\",\"lo_usan\":66,\"motivo\":{\"condicion\":null,\"escrito\":\"#include <openssl/ec_key.h>\",\"linea\":479}},{\"desde\":\"third_party/boringssl/src/include/openssl/ec_key.h\",\"hasta\":\"third_party/boringssl/src/include/openssl/ec.h\",\"lo_usan\":95,\"motivo\":{\"condicion\":null,\"escrito\":\"#include <openssl/ec.h>\",\"linea\":21}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/swiftshader/include/xcb/xcb.h\",\"hasta\":\"third_party/swiftshader/include/xcb/xproto.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/swiftshader/include/xcb/xcb.h\",\"hasta\":\"third_party/swiftshader/include/xcb/xproto.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"xproto.h\\\"\",\"linea\":209}},{\"desde\":\"third_party/swiftshader/include/xcb/xproto.h\",\"hasta\":\"third_party/swiftshader/include/xcb/xcb.h\",\"lo_usan\":41,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"xcb.h\\\"\",\"linea\":15}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"android_webview/js_sandbox/service/js_sandbox_isolate.h\",\"hasta\":\"android_webview/js_sandbox/service/js_sandbox_message_port.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"android_webview/js_sandbox/service/js_sandbox_isolate.h\",\"hasta\":\"android_webview/js_sandbox/service/js_sandbox_message_port.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"android_webview/js_sandbox/service/js_sandbox_message_port.h\\\"\",\"linea\":14}},{\"desde\":\"android_webview/js_sandbox/service/js_sandbox_message_port.h\",\"hasta\":\"android_webview/js_sandbox/service/js_sandbox_isolate.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"android_webview/js_sandbox/service/js_sandbox_isolate.h\\\"\",\"linea\":10}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp\",\"lo_usan\":55,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"DataProvider.hpp\\\"\",\"linea\":15}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"LocaleFallbacker.hpp\\\"\",\"linea\":15}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"components/exo/client_controlled_shell_surface.h\",\"hasta\":\"components/exo/client_controlled_accelerators.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"components/exo/client_controlled_shell_surface.h\",\"hasta\":\"components/exo/client_controlled_accelerators.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/exo/client_controlled_accelerators.h\\\"\",\"linea\":17}},{\"desde\":\"components/exo/client_controlled_accelerators.h\",\"hasta\":\"components/exo/client_controlled_shell_surface.h\",\"lo_usan\":19,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/exo/client_controlled_shell_surface.h\\\"\",\"linea\":9}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\",\"hasta\":\"third_party/blink/renderer/platform/wtf/text/strcat.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\",\"hasta\":\"third_party/blink/renderer/platform/wtf/text/strcat.h\",\"lo_usan\":232,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/wtf/text/strcat.h\\\"\",\"linea\":756}},{\"desde\":\"third_party/blink/renderer/platform/wtf/text/strcat.h\",\"hasta\":\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\",\"lo_usan\":1362,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/platform/wtf/text/wtf_string.h\\\"\",\"linea\":12}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\",\"hasta\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\",\"hasta\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\\\"\",\"linea\":14}},{\"desde\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\",\"hasta\":\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\\\"\",\"linea\":14}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\",\"hasta\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\",\"hasta\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\\\"\",\"linea\":14}},{\"desde\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\",\"hasta\":\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\",\"lo_usan\":6,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\\\"\",\"linea\":11}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/libyuv/include/libyuv/planar_functions.h\",\"hasta\":\"third_party/libyuv/include/libyuv/convert.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libyuv/include/libyuv/convert.h\",\"hasta\":\"third_party/libyuv/include/libyuv/planar_functions.h\",\"lo_usan\":59,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libyuv/planar_functions.h\\\"\",\"linea\":24}},{\"desde\":\"third_party/libyuv/include/libyuv/planar_functions.h\",\"hasta\":\"third_party/libyuv/include/libyuv/convert.h\",\"lo_usan\":47,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libyuv/convert.h\\\"\",\"linea\":20}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/breakpad/breakpad/src/third_party/curl/curl.h\",\"hasta\":\"third_party/breakpad/breakpad/src/third_party/curl/multi.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/breakpad/breakpad/src/third_party/curl/curl.h\",\"hasta\":\"third_party/breakpad/breakpad/src/third_party/curl/multi.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"multi.h\\\"\",\"linea\":1917}},{\"desde\":\"third_party/breakpad/breakpad/src/third_party/curl/multi.h\",\"hasta\":\"third_party/breakpad/breakpad/src/third_party/curl/curl.h\",\"lo_usan\":18,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"curl.h\\\"\",\"linea\":50}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\",\"hasta\":\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\",\"hasta\":\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\\\"\",\"linea\":11}},{\"desde\":\"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\",\"hasta\":\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\\\"\",\"linea\":12}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"ui/accessibility/platform/browser_accessibility_win.h\",\"hasta\":\"ui/accessibility/platform/browser_accessibility_com_win.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"ui/accessibility/platform/browser_accessibility_win.h\",\"hasta\":\"ui/accessibility/platform/browser_accessibility_com_win.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/accessibility/platform/browser_accessibility_com_win.h\\\"\",\"linea\":17}},{\"desde\":\"ui/accessibility/platform/browser_accessibility_com_win.h\",\"hasta\":\"ui/accessibility/platform/browser_accessibility_win.h\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/accessibility/platform/browser_accessibility_win.h\\\"\",\"linea\":30}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/libdrm/src/include/drm/drm.h\",\"hasta\":\"third_party/libdrm/src/include/drm/drm_mode.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libdrm/src/include/drm/drm.h\",\"hasta\":\"third_party/libdrm/src/include/drm/drm_mode.h\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"drm_mode.h\\\"\",\"linea\":1082}},{\"desde\":\"third_party/libdrm/src/include/drm/drm_mode.h\",\"hasta\":\"third_party/libdrm/src/include/drm/drm.h\",\"lo_usan\":34,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"drm.h\\\"\",\"linea\":30}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/libsrtp/crypto/include/datatypes.h\",\"hasta\":\"third_party/libsrtp/crypto/include/alloc.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libsrtp/crypto/include/alloc.h\",\"hasta\":\"third_party/libsrtp/crypto/include/datatypes.h\",\"lo_usan\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"datatypes.h\\\"\",\"linea\":48}},{\"desde\":\"third_party/libsrtp/crypto/include/datatypes.h\",\"hasta\":\"third_party/libsrtp/crypto/include/alloc.h\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"alloc.h\\\"\",\"linea\":50}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/angle/src/libANGLE/renderer/wgpu/ContextWgpu.h\",\"hasta\":\"third_party/angle/src/libANGLE/renderer/wgpu/wgpu_helpers.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/angle/src/libANGLE/renderer/wgpu/ContextWgpu.h\",\"hasta\":\"third_party/angle/src/libANGLE/renderer/wgpu/wgpu_helpers.h\",\"lo_usan\":10,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libANGLE/renderer/wgpu/wgpu_helpers.h\\\"\",\"linea\":21}},{\"desde\":\"third_party/angle/src/libANGLE/renderer/wgpu/wgpu_helpers.h\",\"hasta\":\"third_party/angle/src/libANGLE/renderer/wgpu/ContextWgpu.h\",\"lo_usan\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libANGLE/renderer/wgpu/ContextWgpu.h\\\"\",\"linea\":17}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaUtil.hpp\",\"hasta\":\"third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaReference.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaUtil.hpp\",\"hasta\":\"third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaReference.hpp\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"vktDataGraphTosaReference.hpp\\\"\",\"linea\":31}},{\"desde\":\"third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaReference.hpp\",\"hasta\":\"third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaUtil.hpp\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"vktDataGraphTosaUtil.hpp\\\"\",\"linea\":28}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/blink/renderer/core/style/computed_style.h\",\"hasta\":\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/blink/renderer/core/style/computed_style.h\",\"hasta\":\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\\\"\",\"linea\":43}},{\"desde\":\"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\",\"hasta\":\"third_party/blink/renderer/core/style/computed_style.h\",\"lo_usan\":355,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/core/style/computed_style.h\\\"\",\"linea\":32}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/dav1d/libdav1d/src/internal.h\",\"hasta\":\"third_party/dav1d/libdav1d/src/recon.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/dav1d/libdav1d/src/internal.h\",\"hasta\":\"third_party/dav1d/libdav1d/src/recon.h\",\"lo_usan\":3,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/recon.h\\\"\",\"linea\":58}},{\"desde\":\"third_party/dav1d/libdav1d/src/recon.h\",\"hasta\":\"third_party/dav1d/libdav1d/src/internal.h\",\"lo_usan\":12,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/internal.h\\\"\",\"linea\":31}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h\",\"hasta\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\",\"hasta\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/core/tsi/alts/handshaker/alts_handshaker_client.h\\\"\",\"linea\":27}},{\"desde\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h\",\"hasta\":\"third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\\\"\",\"linea\":29}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/encoder.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/svc_layercontext.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/encoder.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/svc_layercontext.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"av1/encoder/svc_layercontext.h\\\"\",\"linea\":53}},{\"desde\":\"third_party/libaom/source/libaom/av1/encoder/svc_layercontext.h\",\"hasta\":\"third_party/libaom/source/libaom/av1/encoder/encoder.h\",\"lo_usan\":82,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"av1/encoder/encoder.h\\\"\",\"linea\":17}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/planar_functions.h\",\"hasta\":\"third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/convert.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/convert.h\",\"hasta\":\"third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/planar_functions.h\",\"lo_usan\":13,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libyuv/planar_functions.h\\\"\",\"linea\":21}},{\"desde\":\"third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/planar_functions.h\",\"hasta\":\"third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/convert.h\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libyuv/convert.h\\\"\",\"linea\":17}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/libvpx/source/libvpx/vp8/encoder/onyx_int.h\",\"hasta\":\"third_party/libvpx/source/libvpx/vp8/encoder/encodemb.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libvpx/source/libvpx/vp8/encoder/onyx_int.h\",\"hasta\":\"third_party/libvpx/source/libvpx/vp8/encoder/encodemb.h\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"encodemb.h\\\"\",\"linea\":24}},{\"desde\":\"third_party/libvpx/source/libvpx/vp8/encoder/encodemb.h\",\"hasta\":\"third_party/libvpx/source/libvpx/vp8/encoder/onyx_int.h\",\"lo_usan\":25,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"onyx_int.h\\\"\",\"linea\":14}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/planar_functions.h\",\"hasta\":\"third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/convert.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/convert.h\",\"hasta\":\"third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/planar_functions.h\",\"lo_usan\":12,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libyuv/planar_functions.h\\\"\",\"linea\":21}},{\"desde\":\"third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/planar_functions.h\",\"hasta\":\"third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/convert.h\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"libyuv/convert.h\\\"\",\"linea\":17}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/Pass.h\",\"hasta\":\"third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/PassAnalysisSupport.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/Pass.h\",\"hasta\":\"third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/PassAnalysisSupport.h\",\"lo_usan\":7,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"llvm/PassAnalysisSupport.h\\\"\",\"linea\":315}},{\"desde\":\"third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/PassAnalysisSupport.h\",\"hasta\":\"third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/Pass.h\",\"lo_usan\":398,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"Pass.h\\\"\",\"linea\":21}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/biquad_filter-inl.h\\\"\",\"linea\":257}},{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h\",\"lo_usan\":11,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/biquad_filter.h\\\"\",\"linea\":20}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/ladder_filter-inl.h\\\"\",\"linea\":270}},{\"desde\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h\",\"hasta\":\"third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"audio/linear_filters/ladder_filter.h\\\"\",\"linea\":25}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/openh264/src/codec/processing/src/common/util.h\",\"hasta\":\"third_party/openh264/src/codec/processing/src/common/memory.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/openh264/src/codec/processing/src/common/util.h\",\"hasta\":\"third_party/openh264/src/codec/processing/src/common/memory.h\",\"lo_usan\":11,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"memory.h\\\"\",\"linea\":52}},{\"desde\":\"third_party/openh264/src/codec/processing/src/common/memory.h\",\"hasta\":\"third_party/openh264/src/codec/processing/src/common/util.h\",\"lo_usan\":17,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"util.h\\\"\",\"linea\":45}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/opus/src/silk/main.h\",\"hasta\":\"third_party/opus/src/silk/PLC.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/opus/src/silk/main.h\",\"hasta\":\"third_party/opus/src/silk/PLC.h\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"PLC.h\\\"\",\"linea\":35}},{\"desde\":\"third_party/opus/src/silk/PLC.h\",\"hasta\":\"third_party/opus/src/silk/main.h\",\"lo_usan\":54,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"main.h\\\"\",\"linea\":31}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/pdfium/third_party/libopenjpeg/src/opj_includes.h\",\"hasta\":\"third_party/pdfium/third_party/libopenjpeg/src/sparse_array.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/pdfium/third_party/libopenjpeg/src/opj_includes.h\",\"hasta\":\"third_party/pdfium/third_party/libopenjpeg/src/sparse_array.h\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"sparse_array.h\\\"\",\"linea\":248}},{\"desde\":\"third_party/pdfium/third_party/libopenjpeg/src/sparse_array.h\",\"hasta\":\"third_party/pdfium/third_party/libopenjpeg/src/opj_includes.h\",\"lo_usan\":22,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"opj_includes.h\\\"\",\"linea\":32}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/protobuf/ruby/ext/google/protobuf_c/protobuf.h\",\"hasta\":\"third_party/protobuf/ruby/ext/google/protobuf_c/defs.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/protobuf/ruby/ext/google/protobuf_c/protobuf.h\",\"hasta\":\"third_party/protobuf/ruby/ext/google/protobuf_c/defs.h\",\"lo_usan\":5,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"defs.h\\\"\",\"linea\":23}},{\"desde\":\"third_party/protobuf/ruby/ext/google/protobuf_c/defs.h\",\"hasta\":\"third_party/protobuf/ruby/ext/google/protobuf_c/protobuf.h\",\"lo_usan\":11,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"protobuf.h\\\"\",\"linea\":11}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategoryGroup.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategory.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategoryGroup.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategory.hpp\",\"lo_usan\":1,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"GeneralCategory.hpp\\\"\",\"linea\":14}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategory.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategoryGroup.hpp\",\"lo_usan\":4,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"GeneralCategoryGroup.hpp\\\"\",\"linea\":14}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/IsoDate.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/Date.hpp\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/Date.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/IsoDate.hpp\",\"lo_usan\":17,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"IsoDate.hpp\\\"\",\"linea\":24}},{\"desde\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/IsoDate.hpp\",\"hasta\":\"third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/Date.hpp\",\"lo_usan\":12,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"Date.hpp\\\"\",\"linea\":17}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"v8/src/heap/spaces.h\",\"hasta\":\"v8/src/heap/normal-page.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"v8/src/heap/spaces.h\",\"hasta\":\"v8/src/heap/normal-page.h\",\"lo_usan\":12,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/heap/normal-page.h\\\"\",\"linea\":24}},{\"desde\":\"v8/src/heap/normal-page.h\",\"hasta\":\"v8/src/heap/spaces.h\",\"lo_usan\":38,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"src/heap/spaces.h\\\"\",\"linea\":11}}]},{\"archivos\":2,\"aristas\":2,\"cortar\":{\"desde\":\"v8/experimental/redline/fast/ast.h\",\"hasta\":\"v8/experimental/redline/fast/ast_visit.h\"},\"depende_de_un_if\":false,\"vuelta\":[{\"desde\":\"v8/experimental/redline/fast/ast.h\",\"hasta\":\"v8/experimental/redline/fast/ast_visit.h\",\"lo_usan\":2,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"experimental/redline/fast/ast_visit.h\\\"\",\"linea\":767}},{\"desde\":\"v8/experimental/redline/fast/ast_visit.h\",\"hasta\":\"v8/experimental/redline/fast/ast.h\",\"lo_usan\":12,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"experimental/redline/fast/ast.h\\\"\",\"linea\":8}}]}],\"quedan\":32,\"total\":82}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos": 309,
+    "dependen_de_un_if": 32,
+    "ficha": "E-003 (Elegancia): compila por las guardas, pero ninguno se entiende sin los otros",
+    "lista": [
+      {
+        "archivos": 43,
+        "aristas": 90,
+        "cortar": {
+          "desde": "v8/src/objects/objects-inl.h",
+          "hasta": "v8/src/objects/contexts-inl.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "v8/src/objects/objects-inl.h",
+            "hasta": "v8/src/objects/contexts-inl.h",
+            "lo_usan": 15,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/objects/contexts-inl.h\"",
+              "linea": 36
+            }
+          },
+          {
+            "desde": "v8/src/objects/contexts-inl.h",
+            "hasta": "v8/src/objects/objects-inl.h",
+            "lo_usan": 444,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/objects/objects-inl.h\"",
+              "linea": 19
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 13,
+        "aristas": 41,
+        "cortar": {
+          "desde": "third_party/harfbuzz/src/src/hb.hh",
+          "hasta": "third_party/harfbuzz/src/src/hb-algs.hh"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/harfbuzz/src/src/hb.hh",
+            "hasta": "third_party/harfbuzz/src/src/hb-algs.hh",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"hb-algs.hh\"",
+              "linea": 573
+            }
+          },
+          {
+            "desde": "third_party/harfbuzz/src/src/hb-algs.hh",
+            "hasta": "third_party/harfbuzz/src/src/hb.hh",
+            "lo_usan": 232,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"hb.hh\"",
+              "linea": 32
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 9,
+        "aristas": 18,
+        "cortar": {
+          "desde": "third_party/harfbuzz/src/src/hb.h",
+          "hasta": "third_party/harfbuzz/src/src/hb-draw.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/harfbuzz/src/src/hb.h",
+            "hasta": "third_party/harfbuzz/src/src/hb-draw.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"hb-draw.h\"",
+              "linea": 35
+            }
+          },
+          {
+            "desde": "third_party/harfbuzz/src/src/hb-draw.h",
+            "hasta": "third_party/harfbuzz/src/src/hb.h",
+            "lo_usan": 47,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"hb.h\"",
+              "linea": 32
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 9,
+        "aristas": 24,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp",
+            "lo_usan": 6,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"ZonedDateTime.hpp\"",
+              "linea": 30
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/ZonedDateTime.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/temporal_capi-v0_2/bindings/cpp/temporal_rs/PlainDate.hpp",
+            "lo_usan": 8,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"PlainDate.hpp\"",
+              "linea": 28
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 4,
+        "aristas": 6,
+        "cortar": {
+          "desde": "content/browser/cache_storage/cache_storage_manager.h",
+          "hasta": "content/browser/cache_storage/cache_storage.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "content/browser/cache_storage/cache_storage_manager.h",
+            "hasta": "content/browser/cache_storage/cache_storage.h",
+            "lo_usan": 8,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"content/browser/cache_storage/cache_storage.h\"",
+              "linea": 21
+            }
+          },
+          {
+            "desde": "content/browser/cache_storage/cache_storage.h",
+            "hasta": "content/browser/cache_storage/cache_storage_manager.h",
+            "lo_usan": 13,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"content/browser/cache_storage/cache_storage_manager.h\"",
+              "linea": 34
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 4,
+        "aristas": 5,
+        "cortar": {
+          "desde": "third_party/freetype/src/src/psaux/psft.h",
+          "hasta": "third_party/freetype/src/src/psaux/psglue.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/freetype/src/src/psaux/psglue.h",
+            "hasta": "third_party/freetype/src/src/psaux/pserror.h",
+            "lo_usan": 9,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"pserror.h\"",
+              "linea": 44
+            }
+          },
+          {
+            "desde": "third_party/freetype/src/src/psaux/pserror.h",
+            "hasta": "third_party/freetype/src/src/psaux/psft.h",
+            "lo_usan": 14,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"psft.h\"",
+              "linea": 54
+            }
+          },
+          {
+            "desde": "third_party/freetype/src/src/psaux/psft.h",
+            "hasta": "third_party/freetype/src/src/psaux/psglue.h",
+            "lo_usan": 8,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"psglue.h\"",
+              "linea": 52
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 4,
+        "aristas": 4,
+        "cortar": {
+          "desde": "third_party/libaom/source/libaom/av1/encoder/context_tree.h",
+          "hasta": "third_party/libaom/source/libaom/av1/encoder/speed_features.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libaom/source/libaom/av1/encoder/rd.h",
+            "hasta": "third_party/libaom/source/libaom/av1/encoder/context_tree.h",
+            "lo_usan": 12,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"av1/encoder/context_tree.h\"",
+              "linea": 20
+            }
+          },
+          {
+            "desde": "third_party/libaom/source/libaom/av1/encoder/context_tree.h",
+            "hasta": "third_party/libaom/source/libaom/av1/encoder/speed_features.h",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"av1/encoder/speed_features.h\"",
+              "linea": 19
+            }
+          },
+          {
+            "desde": "third_party/libaom/source/libaom/av1/encoder/speed_features.h",
+            "hasta": "third_party/libaom/source/libaom/av1/encoder/mcomp.h",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"av1/encoder/mcomp.h\"",
+              "linea": 17
+            }
+          },
+          {
+            "desde": "third_party/libaom/source/libaom/av1/encoder/mcomp.h",
+            "hasta": "third_party/libaom/source/libaom/av1/encoder/rd.h",
+            "lo_usan": 15,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"av1/encoder/rd.h\"",
+              "linea": 17
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 4,
+        "aristas": 6,
+        "cortar": {
+          "desde": "third_party/protobuf/objectivec/GPBMessage.h",
+          "hasta": "third_party/protobuf/objectivec/GPBCodedInputStream.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/protobuf/objectivec/GPBMessage.h",
+            "hasta": "third_party/protobuf/objectivec/GPBCodedInputStream.h",
+            "lo_usan": 13,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"GPBCodedInputStream.h\"",
+              "linea": 11
+            }
+          },
+          {
+            "desde": "third_party/protobuf/objectivec/GPBCodedInputStream.h",
+            "hasta": "third_party/protobuf/objectivec/GPBMessage.h",
+            "lo_usan": 36,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"GPBMessage.h\"",
+              "linea": 12
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 4,
+        "cortar": {
+          "desde": "device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h",
+          "hasta": "device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h",
+            "hasta": "device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h\"",
+              "linea": 16
+            }
+          },
+          {
+            "desde": "device/bluetooth/bluez/bluetooth_local_gatt_descriptor_bluez.h",
+            "hasta": "device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h",
+            "lo_usan": 8,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/bluez/bluetooth_local_gatt_characteristic_bluez.h\"",
+              "linea": 13
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 5,
+        "cortar": {
+          "desde": "device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h",
+          "hasta": "device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h",
+            "hasta": "device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h\"",
+              "linea": 16
+            }
+          },
+          {
+            "desde": "device/bluetooth/floss/bluetooth_local_gatt_descriptor_floss.h",
+            "hasta": "device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"device/bluetooth/floss/bluetooth_local_gatt_characteristic_floss.h\"",
+              "linea": 15
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 4,
+        "cortar": {
+          "desde": "third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/Pass.h",
+          "hasta": "third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/PassSupport.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/Pass.h",
+            "hasta": "third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/PassSupport.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"llvm/PassSupport.h\"",
+              "linea": 414
+            }
+          },
+          {
+            "desde": "third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/PassSupport.h",
+            "hasta": "third_party/dawn/third_party/directx-shader-compiler/src/include/llvm/Pass.h",
+            "lo_usan": 193,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"Pass.h\"",
+              "linea": 24
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 4,
+        "cortar": {
+          "desde": "third_party/nearby/src/internal/platform/implementation/windows/ble_medium.h",
+          "hasta": "third_party/nearby/src/internal/platform/implementation/windows/ble.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/nearby/src/internal/platform/implementation/windows/ble.h",
+            "hasta": "third_party/nearby/src/internal/platform/implementation/windows/ble_medium.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"internal/platform/implementation/windows/ble_medium.h\"",
+              "linea": 19
+            }
+          },
+          {
+            "desde": "third_party/nearby/src/internal/platform/implementation/windows/ble_medium.h",
+            "hasta": "third_party/nearby/src/internal/platform/implementation/windows/ble.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"internal/platform/implementation/windows/ble.h\"",
+              "linea": 30
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 4,
+        "cortar": {
+          "desde": "third_party/pipewire/src/spa/plugins/alsa/acp/alsa-mixer.h",
+          "hasta": "third_party/pipewire/src/spa/plugins/alsa/acp/alsa-ucm.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/pipewire/src/spa/plugins/alsa/acp/alsa-mixer.h",
+            "hasta": "third_party/pipewire/src/spa/plugins/alsa/acp/alsa-ucm.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"alsa-ucm.h\"",
+              "linea": 84
+            }
+          },
+          {
+            "desde": "third_party/pipewire/src/spa/plugins/alsa/acp/alsa-ucm.h",
+            "hasta": "third_party/pipewire/src/spa/plugins/alsa/acp/alsa-mixer.h",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"alsa-mixer.h\"",
+              "linea": 33
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 3,
+        "aristas": 4,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"TimeZoneInfo.hpp\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZoneInfo.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/TimeZone.hpp",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"TimeZone.hpp\"",
+              "linea": 18
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "mojo/public/cpp/bindings/pending_receiver.h",
+          "hasta": "mojo/public/cpp/bindings/pending_remote.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "mojo/public/cpp/bindings/pending_receiver.h",
+            "hasta": "mojo/public/cpp/bindings/pending_remote.h",
+            "lo_usan": 1947,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_remote.h\"",
+              "linea": 163
+            }
+          },
+          {
+            "desde": "mojo/public/cpp/bindings/pending_remote.h",
+            "hasta": "mojo/public/cpp/bindings/pending_receiver.h",
+            "lo_usan": 1993,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_receiver.h\"",
+              "linea": 162
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "mojo/public/cpp/bindings/pending_associated_receiver.h",
+          "hasta": "mojo/public/cpp/bindings/pending_associated_remote.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "mojo/public/cpp/bindings/pending_associated_receiver.h",
+            "hasta": "mojo/public/cpp/bindings/pending_associated_remote.h",
+            "lo_usan": 174,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_associated_remote.h\"",
+              "linea": 130
+            }
+          },
+          {
+            "desde": "mojo/public/cpp/bindings/pending_associated_remote.h",
+            "hasta": "mojo/public/cpp/bindings/pending_associated_receiver.h",
+            "lo_usan": 219,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"mojo/public/cpp/bindings/pending_associated_receiver.h\"",
+              "linea": 127
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/boringssl/src/include/openssl/ec.h",
+          "hasta": "third_party/boringssl/src/include/openssl/ec_key.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/boringssl/src/include/openssl/ec.h",
+            "hasta": "third_party/boringssl/src/include/openssl/ec_key.h",
+            "lo_usan": 66,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include <openssl/ec_key.h>",
+              "linea": 479
+            }
+          },
+          {
+            "desde": "third_party/boringssl/src/include/openssl/ec_key.h",
+            "hasta": "third_party/boringssl/src/include/openssl/ec.h",
+            "lo_usan": 95,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include <openssl/ec.h>",
+              "linea": 21
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/swiftshader/include/xcb/xcb.h",
+          "hasta": "third_party/swiftshader/include/xcb/xproto.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/swiftshader/include/xcb/xcb.h",
+            "hasta": "third_party/swiftshader/include/xcb/xproto.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"xproto.h\"",
+              "linea": 209
+            }
+          },
+          {
+            "desde": "third_party/swiftshader/include/xcb/xproto.h",
+            "hasta": "third_party/swiftshader/include/xcb/xcb.h",
+            "lo_usan": 41,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"xcb.h\"",
+              "linea": 15
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "android_webview/js_sandbox/service/js_sandbox_isolate.h",
+          "hasta": "android_webview/js_sandbox/service/js_sandbox_message_port.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "android_webview/js_sandbox/service/js_sandbox_isolate.h",
+            "hasta": "android_webview/js_sandbox/service/js_sandbox_message_port.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"android_webview/js_sandbox/service/js_sandbox_message_port.h\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "android_webview/js_sandbox/service/js_sandbox_message_port.h",
+            "hasta": "android_webview/js_sandbox/service/js_sandbox_isolate.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"android_webview/js_sandbox/service/js_sandbox_isolate.h\"",
+              "linea": 10
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp",
+            "lo_usan": 55,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"DataProvider.hpp\"",
+              "linea": 15
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/DataProvider.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/LocaleFallbacker.hpp",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"LocaleFallbacker.hpp\"",
+              "linea": 15
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "components/exo/client_controlled_shell_surface.h",
+          "hasta": "components/exo/client_controlled_accelerators.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "components/exo/client_controlled_shell_surface.h",
+            "hasta": "components/exo/client_controlled_accelerators.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/exo/client_controlled_accelerators.h\"",
+              "linea": 17
+            }
+          },
+          {
+            "desde": "components/exo/client_controlled_accelerators.h",
+            "hasta": "components/exo/client_controlled_shell_surface.h",
+            "lo_usan": 19,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/exo/client_controlled_shell_surface.h\"",
+              "linea": 9
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/blink/renderer/platform/wtf/text/wtf_string.h",
+          "hasta": "third_party/blink/renderer/platform/wtf/text/strcat.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/blink/renderer/platform/wtf/text/wtf_string.h",
+            "hasta": "third_party/blink/renderer/platform/wtf/text/strcat.h",
+            "lo_usan": 232,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/platform/wtf/text/strcat.h\"",
+              "linea": 756
+            }
+          },
+          {
+            "desde": "third_party/blink/renderer/platform/wtf/text/strcat.h",
+            "hasta": "third_party/blink/renderer/platform/wtf/text/wtf_string.h",
+            "lo_usan": 1362,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/platform/wtf/text/wtf_string.h\"",
+              "linea": 12
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/blink/renderer/modules/bluetooth/bluetooth_device.h",
+          "hasta": "third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/blink/renderer/modules/bluetooth/bluetooth_device.h",
+            "hasta": "third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "third_party/blink/renderer/modules/bluetooth/bluetooth_remote_gatt_server.h",
+            "hasta": "third_party/blink/renderer/modules/bluetooth/bluetooth_device.h",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/modules/bluetooth/bluetooth_device.h\"",
+              "linea": 14
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h",
+          "hasta": "chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h",
+            "hasta": "chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "chrome/browser/chromeos/extensions/telemetry/api/events/event_observation.h",
+            "hasta": "chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h",
+            "lo_usan": 6,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"chrome/browser/chromeos/extensions/telemetry/api/events/event_router.h\"",
+              "linea": 11
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/libyuv/include/libyuv/planar_functions.h",
+          "hasta": "third_party/libyuv/include/libyuv/convert.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libyuv/include/libyuv/convert.h",
+            "hasta": "third_party/libyuv/include/libyuv/planar_functions.h",
+            "lo_usan": 59,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libyuv/planar_functions.h\"",
+              "linea": 24
+            }
+          },
+          {
+            "desde": "third_party/libyuv/include/libyuv/planar_functions.h",
+            "hasta": "third_party/libyuv/include/libyuv/convert.h",
+            "lo_usan": 47,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libyuv/convert.h\"",
+              "linea": 20
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/breakpad/breakpad/src/third_party/curl/curl.h",
+          "hasta": "third_party/breakpad/breakpad/src/third_party/curl/multi.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/breakpad/breakpad/src/third_party/curl/curl.h",
+            "hasta": "third_party/breakpad/breakpad/src/third_party/curl/multi.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"multi.h\"",
+              "linea": 1917
+            }
+          },
+          {
+            "desde": "third_party/breakpad/breakpad/src/third_party/curl/multi.h",
+            "hasta": "third_party/breakpad/breakpad/src/third_party/curl/curl.h",
+            "lo_usan": 18,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"curl.h\"",
+              "linea": 50
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h",
+          "hasta": "components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h",
+            "hasta": "components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h\"",
+              "linea": 11
+            }
+          },
+          {
+            "desde": "components/javascript_dialogs/ios/tab_modal_dialog_view_ios.h",
+            "hasta": "components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"components/javascript_dialogs/ios/javascript_dialog_view_coordinator.h\"",
+              "linea": 12
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "ui/accessibility/platform/browser_accessibility_win.h",
+          "hasta": "ui/accessibility/platform/browser_accessibility_com_win.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "ui/accessibility/platform/browser_accessibility_win.h",
+            "hasta": "ui/accessibility/platform/browser_accessibility_com_win.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"ui/accessibility/platform/browser_accessibility_com_win.h\"",
+              "linea": 17
+            }
+          },
+          {
+            "desde": "ui/accessibility/platform/browser_accessibility_com_win.h",
+            "hasta": "ui/accessibility/platform/browser_accessibility_win.h",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"ui/accessibility/platform/browser_accessibility_win.h\"",
+              "linea": 30
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/libdrm/src/include/drm/drm.h",
+          "hasta": "third_party/libdrm/src/include/drm/drm_mode.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libdrm/src/include/drm/drm.h",
+            "hasta": "third_party/libdrm/src/include/drm/drm_mode.h",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"drm_mode.h\"",
+              "linea": 1082
+            }
+          },
+          {
+            "desde": "third_party/libdrm/src/include/drm/drm_mode.h",
+            "hasta": "third_party/libdrm/src/include/drm/drm.h",
+            "lo_usan": 34,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"drm.h\"",
+              "linea": 30
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/libsrtp/crypto/include/datatypes.h",
+          "hasta": "third_party/libsrtp/crypto/include/alloc.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libsrtp/crypto/include/alloc.h",
+            "hasta": "third_party/libsrtp/crypto/include/datatypes.h",
+            "lo_usan": 13,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"datatypes.h\"",
+              "linea": 48
+            }
+          },
+          {
+            "desde": "third_party/libsrtp/crypto/include/datatypes.h",
+            "hasta": "third_party/libsrtp/crypto/include/alloc.h",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"alloc.h\"",
+              "linea": 50
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/angle/src/libANGLE/renderer/wgpu/ContextWgpu.h",
+          "hasta": "third_party/angle/src/libANGLE/renderer/wgpu/wgpu_helpers.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/angle/src/libANGLE/renderer/wgpu/ContextWgpu.h",
+            "hasta": "third_party/angle/src/libANGLE/renderer/wgpu/wgpu_helpers.h",
+            "lo_usan": 10,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libANGLE/renderer/wgpu/wgpu_helpers.h\"",
+              "linea": 21
+            }
+          },
+          {
+            "desde": "third_party/angle/src/libANGLE/renderer/wgpu/wgpu_helpers.h",
+            "hasta": "third_party/angle/src/libANGLE/renderer/wgpu/ContextWgpu.h",
+            "lo_usan": 13,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libANGLE/renderer/wgpu/ContextWgpu.h\"",
+              "linea": 17
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaUtil.hpp",
+          "hasta": "third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaReference.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaUtil.hpp",
+            "hasta": "third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaReference.hpp",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"vktDataGraphTosaReference.hpp\"",
+              "linea": 31
+            }
+          },
+          {
+            "desde": "third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaReference.hpp",
+            "hasta": "third_party/angle/third_party/VK-GL-CTS/src/external/vulkancts/modules/vulkan/data_graph/tosa/vktDataGraphTosaUtil.hpp",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"vktDataGraphTosaUtil.hpp\"",
+              "linea": 28
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/blink/renderer/core/style/computed_style.h",
+          "hasta": "third_party/blink/renderer/core/css/resolver/matched_properties_cache.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/blink/renderer/core/style/computed_style.h",
+            "hasta": "third_party/blink/renderer/core/css/resolver/matched_properties_cache.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/core/css/resolver/matched_properties_cache.h\"",
+              "linea": 43
+            }
+          },
+          {
+            "desde": "third_party/blink/renderer/core/css/resolver/matched_properties_cache.h",
+            "hasta": "third_party/blink/renderer/core/style/computed_style.h",
+            "lo_usan": 355,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"third_party/blink/renderer/core/style/computed_style.h\"",
+              "linea": 32
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/dav1d/libdav1d/src/internal.h",
+          "hasta": "third_party/dav1d/libdav1d/src/recon.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/dav1d/libdav1d/src/internal.h",
+            "hasta": "third_party/dav1d/libdav1d/src/recon.h",
+            "lo_usan": 3,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/recon.h\"",
+              "linea": 58
+            }
+          },
+          {
+            "desde": "third_party/dav1d/libdav1d/src/recon.h",
+            "hasta": "third_party/dav1d/libdav1d/src/internal.h",
+            "lo_usan": 12,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/internal.h\"",
+              "linea": 31
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h",
+          "hasta": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h",
+            "hasta": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/core/tsi/alts/handshaker/alts_handshaker_client.h\"",
+              "linea": 27
+            }
+          },
+          {
+            "desde": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_handshaker_client.h",
+            "hasta": "third_party/grpc/src/src/core/tsi/alts/handshaker/alts_tsi_handshaker.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/core/tsi/alts/handshaker/alts_tsi_handshaker.h\"",
+              "linea": 29
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/libaom/source/libaom/av1/encoder/encoder.h",
+          "hasta": "third_party/libaom/source/libaom/av1/encoder/svc_layercontext.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libaom/source/libaom/av1/encoder/encoder.h",
+            "hasta": "third_party/libaom/source/libaom/av1/encoder/svc_layercontext.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"av1/encoder/svc_layercontext.h\"",
+              "linea": 53
+            }
+          },
+          {
+            "desde": "third_party/libaom/source/libaom/av1/encoder/svc_layercontext.h",
+            "hasta": "third_party/libaom/source/libaom/av1/encoder/encoder.h",
+            "lo_usan": 82,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"av1/encoder/encoder.h\"",
+              "linea": 17
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/planar_functions.h",
+          "hasta": "third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/convert.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/convert.h",
+            "hasta": "third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/planar_functions.h",
+            "lo_usan": 13,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libyuv/planar_functions.h\"",
+              "linea": 21
+            }
+          },
+          {
+            "desde": "third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/planar_functions.h",
+            "hasta": "third_party/libaom/source/libaom/third_party/libyuv/include/libyuv/convert.h",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libyuv/convert.h\"",
+              "linea": 17
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/libvpx/source/libvpx/vp8/encoder/onyx_int.h",
+          "hasta": "third_party/libvpx/source/libvpx/vp8/encoder/encodemb.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libvpx/source/libvpx/vp8/encoder/onyx_int.h",
+            "hasta": "third_party/libvpx/source/libvpx/vp8/encoder/encodemb.h",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"encodemb.h\"",
+              "linea": 24
+            }
+          },
+          {
+            "desde": "third_party/libvpx/source/libvpx/vp8/encoder/encodemb.h",
+            "hasta": "third_party/libvpx/source/libvpx/vp8/encoder/onyx_int.h",
+            "lo_usan": 25,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"onyx_int.h\"",
+              "linea": 14
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/planar_functions.h",
+          "hasta": "third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/convert.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/convert.h",
+            "hasta": "third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/planar_functions.h",
+            "lo_usan": 12,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libyuv/planar_functions.h\"",
+              "linea": 21
+            }
+          },
+          {
+            "desde": "third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/planar_functions.h",
+            "hasta": "third_party/libvpx/source/libvpx/third_party/libyuv/include/libyuv/convert.h",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"libyuv/convert.h\"",
+              "linea": 17
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/Pass.h",
+          "hasta": "third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/PassAnalysisSupport.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/Pass.h",
+            "hasta": "third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/PassAnalysisSupport.h",
+            "lo_usan": 7,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"llvm/PassAnalysisSupport.h\"",
+              "linea": 315
+            }
+          },
+          {
+            "desde": "third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/PassAnalysisSupport.h",
+            "hasta": "third_party/swiftshader/third_party/llvm-10.0/llvm/include/llvm/Pass.h",
+            "lo_usan": 398,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"Pass.h\"",
+              "linea": 21
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h",
+          "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/biquad_filter-inl.h\"",
+              "linea": 257
+            }
+          },
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter-inl.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/biquad_filter.h",
+            "lo_usan": 11,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/biquad_filter.h\"",
+              "linea": 20
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h",
+          "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/ladder_filter-inl.h\"",
+              "linea": 270
+            }
+          },
+          {
+            "desde": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter-inl.h",
+            "hasta": "third_party/mediapipe/src/third_party/com_google_audio_tools/audio/linear_filters/ladder_filter.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"audio/linear_filters/ladder_filter.h\"",
+              "linea": 25
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/openh264/src/codec/processing/src/common/util.h",
+          "hasta": "third_party/openh264/src/codec/processing/src/common/memory.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/openh264/src/codec/processing/src/common/util.h",
+            "hasta": "third_party/openh264/src/codec/processing/src/common/memory.h",
+            "lo_usan": 11,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"memory.h\"",
+              "linea": 52
+            }
+          },
+          {
+            "desde": "third_party/openh264/src/codec/processing/src/common/memory.h",
+            "hasta": "third_party/openh264/src/codec/processing/src/common/util.h",
+            "lo_usan": 17,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"util.h\"",
+              "linea": 45
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/opus/src/silk/main.h",
+          "hasta": "third_party/opus/src/silk/PLC.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/opus/src/silk/main.h",
+            "hasta": "third_party/opus/src/silk/PLC.h",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"PLC.h\"",
+              "linea": 35
+            }
+          },
+          {
+            "desde": "third_party/opus/src/silk/PLC.h",
+            "hasta": "third_party/opus/src/silk/main.h",
+            "lo_usan": 54,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"main.h\"",
+              "linea": 31
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/pdfium/third_party/libopenjpeg/src/opj_includes.h",
+          "hasta": "third_party/pdfium/third_party/libopenjpeg/src/sparse_array.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/pdfium/third_party/libopenjpeg/src/opj_includes.h",
+            "hasta": "third_party/pdfium/third_party/libopenjpeg/src/sparse_array.h",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"sparse_array.h\"",
+              "linea": 248
+            }
+          },
+          {
+            "desde": "third_party/pdfium/third_party/libopenjpeg/src/sparse_array.h",
+            "hasta": "third_party/pdfium/third_party/libopenjpeg/src/opj_includes.h",
+            "lo_usan": 22,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"opj_includes.h\"",
+              "linea": 32
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/protobuf/ruby/ext/google/protobuf_c/protobuf.h",
+          "hasta": "third_party/protobuf/ruby/ext/google/protobuf_c/defs.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/protobuf/ruby/ext/google/protobuf_c/protobuf.h",
+            "hasta": "third_party/protobuf/ruby/ext/google/protobuf_c/defs.h",
+            "lo_usan": 5,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"defs.h\"",
+              "linea": 23
+            }
+          },
+          {
+            "desde": "third_party/protobuf/ruby/ext/google/protobuf_c/defs.h",
+            "hasta": "third_party/protobuf/ruby/ext/google/protobuf_c/protobuf.h",
+            "lo_usan": 11,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"protobuf.h\"",
+              "linea": 11
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategoryGroup.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategory.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategoryGroup.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategory.hpp",
+            "lo_usan": 1,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"GeneralCategory.hpp\"",
+              "linea": 14
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategory.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/GeneralCategoryGroup.hpp",
+            "lo_usan": 4,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"GeneralCategoryGroup.hpp\"",
+              "linea": 14
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/IsoDate.hpp",
+          "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/Date.hpp"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/Date.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/IsoDate.hpp",
+            "lo_usan": 17,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"IsoDate.hpp\"",
+              "linea": 24
+            }
+          },
+          {
+            "desde": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/IsoDate.hpp",
+            "hasta": "third_party/rust/chromium_crates_io/vendor/icu_capi-v2/bindings/cpp/icu4x/Date.hpp",
+            "lo_usan": 12,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"Date.hpp\"",
+              "linea": 17
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "v8/src/heap/spaces.h",
+          "hasta": "v8/src/heap/normal-page.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "v8/src/heap/spaces.h",
+            "hasta": "v8/src/heap/normal-page.h",
+            "lo_usan": 12,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/heap/normal-page.h\"",
+              "linea": 24
+            }
+          },
+          {
+            "desde": "v8/src/heap/normal-page.h",
+            "hasta": "v8/src/heap/spaces.h",
+            "lo_usan": 38,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"src/heap/spaces.h\"",
+              "linea": 11
+            }
+          }
+        ]
+      },
+      {
+        "archivos": 2,
+        "aristas": 2,
+        "cortar": {
+          "desde": "v8/experimental/redline/fast/ast.h",
+          "hasta": "v8/experimental/redline/fast/ast_visit.h"
+        },
+        "depende_de_un_if": false,
+        "vuelta": [
+          {
+            "desde": "v8/experimental/redline/fast/ast.h",
+            "hasta": "v8/experimental/redline/fast/ast_visit.h",
+            "lo_usan": 2,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"experimental/redline/fast/ast_visit.h\"",
+              "linea": 767
+            }
+          },
+          {
+            "desde": "v8/experimental/redline/fast/ast_visit.h",
+            "hasta": "v8/experimental/redline/fast/ast.h",
+            "lo_usan": 12,
+            "motivo": {
+              "condicion": null,
+              "escrito": "#include \"experimental/redline/fast/ast.h\"",
+              "linea": 8
+            }
+          }
+        ]
+      }
+    ],
+    "quedan": 32,
+    "total": 82
+  }
+}

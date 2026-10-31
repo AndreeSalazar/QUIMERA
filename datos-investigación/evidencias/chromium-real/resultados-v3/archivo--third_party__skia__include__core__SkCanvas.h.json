@@ -1,0 +1,483 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":34},\"ruta\":\"android_webview/browser/gfx/browser_view_renderer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":16},\"ruta\":\"android_webview/browser/gfx/java_browser_view_renderer_helper.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":29},\"ruta\":\"android_webview/test/shell/src/draw_fn/context_manager.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":54},\"ruta\":\"ash/app_list/views/app_list_item_view.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":20},\"ruta\":\"cc/paint/paint_canvas.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":28},\"ruta\":\"ash/system/tray/tray_bubble_view.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":12},\"ruta\":\"cc/resources/ui_resource_bitmap.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":20},\"ruta\":\"cc/layers/nine_patch_thumb_scrollbar_layer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":21},\"ruta\":\"skia/ext/platform_canvas.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":25},\"ruta\":\"cc/paint/discardable_image_map.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/include/utils/SkNoDrawCanvas.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":37},\"ruta\":\"cc/paint/discardable_image_map_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":22},\"ruta\":\"cc/paint/display_item_list.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":9},\"ruta\":\"cc/test/test_skcanvas.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":10},\"ruta\":\"cc/paint/draw_looper.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":14},\"ruta\":\"cc/paint/draw_looper.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":37},\"ruta\":\"cc/paint/paint_op.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/include/core/SkTiledImageUtils.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkCanvas.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/src/core/SkCanvasPriv.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":50},\"ruta\":\"cc/paint/paint_op_buffer_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":20},\"ruta\":\"cc/paint/record_paint_canvas.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":25},\"ruta\":\"cc/paint/skia_paint_canvas.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":18},\"ruta\":\"cc/raster/raster_buffer_provider.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":20},\"ruta\":\"cc/raster/raster_source.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":22},\"ruta\":\"cc/raster/raster_source_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":28},\"ruta\":\"components/viz/service/display/skia_renderer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":30},\"ruta\":\"cc/test/skia_common.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":14},\"ruta\":\"chrome/browser/icon_manager.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":25},\"ruta\":\"chrome/browser/actor/actor_util.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":27},\"ruta\":\"chrome/browser/devtools/devtools_eye_dropper.cc\"}],\"total\":1205},\"papel\":null,\"ruta\":\"third_party/skia/include/core/SkCanvas.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkRefCnt.h\\\"\",\"linea\":25},\"ruta\":\"third_party/skia/include/core/SkRefCnt.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkColor.h\\\"\",\"linea\":14},\"ruta\":\"third_party/skia/include/core/SkColor.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkSurfaceProps.h\\\"\",\"linea\":31},\"ruta\":\"third_party/skia/include/core/SkSurfaceProps.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkRect.h\\\"\",\"linea\":24},\"ruta\":\"third_party/skia/include/core/SkRect.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkPaint.h\\\"\",\"linea\":20},\"ruta\":\"third_party/skia/include/core/SkPaint.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkSize.h\\\"\",\"linea\":28},\"ruta\":\"third_party/skia/include/core/SkSize.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkM44.h\\\"\",\"linea\":18},\"ruta\":\"third_party/skia/include/core/SkM44.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkBlendMode.h\\\"\",\"linea\":12},\"ruta\":\"third_party/skia/include/core/SkBlendMode.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkPoint.h\\\"\",\"linea\":21},\"ruta\":\"third_party/skia/include/core/SkPoint.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkScalar.h\\\"\",\"linea\":27},\"ruta\":\"third_party/skia/include/core/SkScalar.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkImageFilter.h\\\"\",\"linea\":16},\"ruta\":\"third_party/skia/include/core/SkImageFilter.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkClipOp.h\\\"\",\"linea\":13},\"ruta\":\"third_party/skia/include/core/SkClipOp.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkImageInfo.h\\\"\",\"linea\":17},\"ruta\":\"third_party/skia/include/core/SkImageInfo.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkMatrix.h\\\"\",\"linea\":19},\"ruta\":\"third_party/skia/include/core/SkMatrix.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkTileMode.h\\\"\",\"linea\":32},\"ruta\":\"third_party/skia/include/core/SkTileMode.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkString.h\\\"\",\"linea\":30},\"ruta\":\"third_party/skia/include/core/SkString.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkSamplingOptions.h\\\"\",\"linea\":26},\"ruta\":\"third_party/skia/include/core/SkSamplingOptions.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkTypes.h\\\"\",\"linea\":33},\"ruta\":\"third_party/skia/include/core/SkTypes.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkFontTypes.h\\\"\",\"linea\":15},\"ruta\":\"third_party/skia/include/core/SkFontTypes.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkRSXform.h\\\"\",\"linea\":22},\"ruta\":\"third_party/skia/include/core/SkRSXform.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/private/SkTArray.h\\\"\",\"linea\":37},\"ruta\":\"third_party/skia/include/private/SkTArray.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkSpan.h\\\"\",\"linea\":29},\"ruta\":\"third_party/skia/include/core/SkSpan.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/private/SkDeque.h\\\"\",\"linea\":35},\"ruta\":\"third_party/skia/include/private/SkDeque.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkRasterHandleAllocator.h\\\"\",\"linea\":23},\"ruta\":\"third_party/skia/include/core/SkRasterHandleAllocator.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/core/SkArc.h\\\"\",\"linea\":11},\"ruta\":\"third_party/skia/include/core/SkArc.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/private/SkCPUTypes.h\\\"\",\"linea\":34},\"ruta\":\"third_party/skia/include/private/SkCPUTypes.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"include/private/SkEnumBitMask.h\\\"\",\"linea\":36},\"ruta\":\"third_party/skia/include/private/SkEnumBitMask.h\"}],\"total\":27}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 34
+          },
+          "ruta": "android_webview/browser/gfx/browser_view_renderer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 16
+          },
+          "ruta": "android_webview/browser/gfx/java_browser_view_renderer_helper.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 29
+          },
+          "ruta": "android_webview/test/shell/src/draw_fn/context_manager.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 54
+          },
+          "ruta": "ash/app_list/views/app_list_item_view.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 20
+          },
+          "ruta": "cc/paint/paint_canvas.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 28
+          },
+          "ruta": "ash/system/tray/tray_bubble_view.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 12
+          },
+          "ruta": "cc/resources/ui_resource_bitmap.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 20
+          },
+          "ruta": "cc/layers/nine_patch_thumb_scrollbar_layer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 21
+          },
+          "ruta": "skia/ext/platform_canvas.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 25
+          },
+          "ruta": "cc/paint/discardable_image_map.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkCanvas.h\"",
+            "linea": 11
+          },
+          "ruta": "third_party/skia/include/utils/SkNoDrawCanvas.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 37
+          },
+          "ruta": "cc/paint/discardable_image_map_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 22
+          },
+          "ruta": "cc/paint/display_item_list.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 9
+          },
+          "ruta": "cc/test/test_skcanvas.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 10
+          },
+          "ruta": "cc/paint/draw_looper.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 14
+          },
+          "ruta": "cc/paint/draw_looper.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 37
+          },
+          "ruta": "cc/paint/paint_op.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkCanvas.h\"",
+            "linea": 11
+          },
+          "ruta": "third_party/skia/include/core/SkTiledImageUtils.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkCanvas.h\"",
+            "linea": 11
+          },
+          "ruta": "third_party/skia/src/core/SkCanvasPriv.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 50
+          },
+          "ruta": "cc/paint/paint_op_buffer_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 20
+          },
+          "ruta": "cc/paint/record_paint_canvas.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 25
+          },
+          "ruta": "cc/paint/skia_paint_canvas.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 18
+          },
+          "ruta": "cc/raster/raster_buffer_provider.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 20
+          },
+          "ruta": "cc/raster/raster_source.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 22
+          },
+          "ruta": "cc/raster/raster_source_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 28
+          },
+          "ruta": "components/viz/service/display/skia_renderer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 30
+          },
+          "ruta": "cc/test/skia_common.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 14
+          },
+          "ruta": "chrome/browser/icon_manager.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 25
+          },
+          "ruta": "chrome/browser/actor/actor_util.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+            "linea": 27
+          },
+          "ruta": "chrome/browser/devtools/devtools_eye_dropper.cc"
+        }
+      ],
+      "total": 1205
+    },
+    "papel": null,
+    "ruta": "third_party/skia/include/core/SkCanvas.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkRefCnt.h\"",
+            "linea": 25
+          },
+          "ruta": "third_party/skia/include/core/SkRefCnt.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkColor.h\"",
+            "linea": 14
+          },
+          "ruta": "third_party/skia/include/core/SkColor.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkSurfaceProps.h\"",
+            "linea": 31
+          },
+          "ruta": "third_party/skia/include/core/SkSurfaceProps.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkRect.h\"",
+            "linea": 24
+          },
+          "ruta": "third_party/skia/include/core/SkRect.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkPaint.h\"",
+            "linea": 20
+          },
+          "ruta": "third_party/skia/include/core/SkPaint.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkSize.h\"",
+            "linea": 28
+          },
+          "ruta": "third_party/skia/include/core/SkSize.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkM44.h\"",
+            "linea": 18
+          },
+          "ruta": "third_party/skia/include/core/SkM44.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkBlendMode.h\"",
+            "linea": 12
+          },
+          "ruta": "third_party/skia/include/core/SkBlendMode.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkPoint.h\"",
+            "linea": 21
+          },
+          "ruta": "third_party/skia/include/core/SkPoint.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkScalar.h\"",
+            "linea": 27
+          },
+          "ruta": "third_party/skia/include/core/SkScalar.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkImageFilter.h\"",
+            "linea": 16
+          },
+          "ruta": "third_party/skia/include/core/SkImageFilter.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkClipOp.h\"",
+            "linea": 13
+          },
+          "ruta": "third_party/skia/include/core/SkClipOp.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkImageInfo.h\"",
+            "linea": 17
+          },
+          "ruta": "third_party/skia/include/core/SkImageInfo.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkMatrix.h\"",
+            "linea": 19
+          },
+          "ruta": "third_party/skia/include/core/SkMatrix.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkTileMode.h\"",
+            "linea": 32
+          },
+          "ruta": "third_party/skia/include/core/SkTileMode.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkString.h\"",
+            "linea": 30
+          },
+          "ruta": "third_party/skia/include/core/SkString.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkSamplingOptions.h\"",
+            "linea": 26
+          },
+          "ruta": "third_party/skia/include/core/SkSamplingOptions.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkTypes.h\"",
+            "linea": 33
+          },
+          "ruta": "third_party/skia/include/core/SkTypes.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkFontTypes.h\"",
+            "linea": 15
+          },
+          "ruta": "third_party/skia/include/core/SkFontTypes.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkRSXform.h\"",
+            "linea": 22
+          },
+          "ruta": "third_party/skia/include/core/SkRSXform.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/private/SkTArray.h\"",
+            "linea": 37
+          },
+          "ruta": "third_party/skia/include/private/SkTArray.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkSpan.h\"",
+            "linea": 29
+          },
+          "ruta": "third_party/skia/include/core/SkSpan.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/private/SkDeque.h\"",
+            "linea": 35
+          },
+          "ruta": "third_party/skia/include/private/SkDeque.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkRasterHandleAllocator.h\"",
+            "linea": 23
+          },
+          "ruta": "third_party/skia/include/core/SkRasterHandleAllocator.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/core/SkArc.h\"",
+            "linea": 11
+          },
+          "ruta": "third_party/skia/include/core/SkArc.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/private/SkCPUTypes.h\"",
+            "linea": 34
+          },
+          "ruta": "third_party/skia/include/private/SkCPUTypes.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"include/private/SkEnumBitMask.h\"",
+            "linea": 36
+          },
+          "ruta": "third_party/skia/include/private/SkEnumBitMask.h"
+        }
+      ],
+      "total": 27
+    }
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":1606,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":35},\"ruta\":\"content/public/browser/navigation_handle.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":16},\"ruta\":\"content/public/browser/navigation_throttle.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":20},\"ruta\":\"google_apis/gaia/google_service_auth_error.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":8},\"ruta\":\"net/dns/public/resolve_error_info.h\"},{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":15},\"ruta\":\"net/socket/stream_socket.h\"},{\"arrastra\":1688,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":36},\"ruta\":\"net/dns/host_cache.h\"},{\"arrastra\":1353,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":34},\"ruta\":\"net/url_request/url_request.h\"},{\"arrastra\":1174,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":22},\"ruta\":\"content/browser/service_worker/service_worker_cache_writer.h\"},{\"arrastra\":1163,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":23},\"ruta\":\"content/browser/service_worker/service_worker_script_cache_map.h\"},{\"arrastra\":1145,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":14},\"ruta\":\"net/cert/cert_net_fetcher.h\"},{\"arrastra\":1044,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":34},\"ruta\":\"net/dns/mock_host_resolver.h\"},{\"arrastra\":1029,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":15},\"ruta\":\"net/ssl/ssl_private_key.h\"},{\"arrastra\":784,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":17},\"ruta\":\"content/public/test/test_navigation_observer.h\"},{\"arrastra\":762,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":12},\"ruta\":\"content/browser/ssl/ssl_error_handler.h\"},{\"arrastra\":760,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":15},\"ruta\":\"content/browser/ssl/ssl_manager.h\"},{\"arrastra\":741,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":25},\"ruta\":\"storage/browser/blob/blob_reader.h\"},{\"arrastra\":670,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":13},\"ruta\":\"net/socket/datagram_client_socket.h\"},{\"arrastra\":669,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":29},\"ruta\":\"net/disk_cache/disk_cache.h\"},{\"arrastra\":547,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":17},\"ruta\":\"chromeos/ash/components/login/auth/public/auth_failure.h\"},{\"arrastra\":538,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"net/base/net_errors.h\\\"\",\"linea\":47},\"ruta\":\"content/public/browser/download_manager.h\"}],\"recortado\":false,\"ruta\":\"net/base/net_errors.h\",\"se_recompilan\":22201}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 1606,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 35
+        },
+        "ruta": "content/public/browser/navigation_handle.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 16
+        },
+        "ruta": "content/public/browser/navigation_throttle.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 20
+        },
+        "ruta": "google_apis/gaia/google_service_auth_error.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 8
+        },
+        "ruta": "net/dns/public/resolve_error_info.h"
+      },
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 15
+        },
+        "ruta": "net/socket/stream_socket.h"
+      },
+      {
+        "arrastra": 1688,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 36
+        },
+        "ruta": "net/dns/host_cache.h"
+      },
+      {
+        "arrastra": 1353,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 34
+        },
+        "ruta": "net/url_request/url_request.h"
+      },
+      {
+        "arrastra": 1174,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 22
+        },
+        "ruta": "content/browser/service_worker/service_worker_cache_writer.h"
+      },
+      {
+        "arrastra": 1163,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 23
+        },
+        "ruta": "content/browser/service_worker/service_worker_script_cache_map.h"
+      },
+      {
+        "arrastra": 1145,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 14
+        },
+        "ruta": "net/cert/cert_net_fetcher.h"
+      },
+      {
+        "arrastra": 1044,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 34
+        },
+        "ruta": "net/dns/mock_host_resolver.h"
+      },
+      {
+        "arrastra": 1029,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 15
+        },
+        "ruta": "net/ssl/ssl_private_key.h"
+      },
+      {
+        "arrastra": 784,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 17
+        },
+        "ruta": "content/public/test/test_navigation_observer.h"
+      },
+      {
+        "arrastra": 762,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 12
+        },
+        "ruta": "content/browser/ssl/ssl_error_handler.h"
+      },
+      {
+        "arrastra": 760,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 15
+        },
+        "ruta": "content/browser/ssl/ssl_manager.h"
+      },
+      {
+        "arrastra": 741,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 25
+        },
+        "ruta": "storage/browser/blob/blob_reader.h"
+      },
+      {
+        "arrastra": 670,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 13
+        },
+        "ruta": "net/socket/datagram_client_socket.h"
+      },
+      {
+        "arrastra": 669,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 29
+        },
+        "ruta": "net/disk_cache/disk_cache.h"
+      },
+      {
+        "arrastra": 547,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 17
+        },
+        "ruta": "chromeos/ash/components/login/auth/public/auth_failure.h"
+      },
+      {
+        "arrastra": 538,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"net/base/net_errors.h\"",
+          "linea": 47
+        },
+        "ruta": "content/public/browser/download_manager.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "net/base/net_errors.h",
+    "se_recompilan": 22201
+  }
+}

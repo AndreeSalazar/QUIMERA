@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"chrome\"},{\"carpeta\":true,\"ruta\":\"ios/chrome\"},{\"carpeta\":false,\"ruta\":\"build/linux/chrome.map\"},{\"carpeta\":false,\"ruta\":\"testing/buildbot/chrome.json\"},{\"carpeta\":false,\"ruta\":\"chrome/app/chrome.dll.manifest\"},{\"carpeta\":false,\"ruta\":\"testing/buildbot/chrome.gpu.fyi.json\"},{\"carpeta\":true,\"ruta\":\"base/tracing/stdlib/chrome\"},{\"carpeta\":true,\"ruta\":\"ios/public/provider/chrome\"},{\"carpeta\":true,\"ruta\":\"chrome/test/chromedriver/chrome\"},{\"carpeta\":true,\"ruta\":\"infra/config/subprojects/chrome\"}],\"texto\":\"chrome\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "chrome"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ios/chrome"
+      },
+      {
+        "carpeta": false,
+        "ruta": "build/linux/chrome.map"
+      },
+      {
+        "carpeta": false,
+        "ruta": "testing/buildbot/chrome.json"
+      },
+      {
+        "carpeta": false,
+        "ruta": "chrome/app/chrome.dll.manifest"
+      },
+      {
+        "carpeta": false,
+        "ruta": "testing/buildbot/chrome.gpu.fyi.json"
+      },
+      {
+        "carpeta": true,
+        "ruta": "base/tracing/stdlib/chrome"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ios/public/provider/chrome"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/test/chromedriver/chrome"
+      },
+      {
+        "carpeta": true,
+        "ruta": "infra/config/subprojects/chrome"
+      }
+    ],
+    "texto": "chrome"
+  }
+}

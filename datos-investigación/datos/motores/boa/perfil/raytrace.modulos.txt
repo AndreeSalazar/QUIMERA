@@ -1,0 +1,40 @@
+ 33.37% boa_engine::vm::opcode
+ 10.19% boa_engine::object::internal_methods
+  9.98% <boa_engine::context::Context>
+  5.28% <hashbrown::map::HashMap<boa_engine
+  4.45% boa_engine::builtins::function
+  3.29% <boa_engine::object::jsobject
+  2.86% <boa_engine::vm::inline_cache
+  2.82% <boa_engine::property::PropertyKey as core
+  2.60% <boa_engine::object::shape
+  2.40% boa_string::vtable::sequence
+  1.67% boa_string::vtable::static
+  1.66% <boa_engine::value::JsValue>
+  1.65% <boa_engine::object::property_map
+  1.56% core::ptr::drop_glue
+  1.53% <boa_engine::vm::Stack>
+  1.38% boa_engine::native_function::native_function_call - -
+  1.29% <boa_engine::vm::Vm>
+  1.06% _rjem_je_arena_ptr_array_flush - -
+  0.97% <boa_engine::property::PropertyDescriptorBuilder>
+  0.92% <boa_gc::Collector>::mark_heap - -
+  0.83% _rjem_sdallocx - -
+  0.72% _rjem_malloc - -
+  0.67% boa_engine::property::parse_u32_index
+  0.66% <boa_engine::vm::code_block
+  0.52% 0x0000000000176391 - -
+  0.51% <boa_gc::Collector>::collect - -
+  0.31% <thin_vec::ThinVec<boa_engine::value
+  0.31% <std::thread::local
+  0.27% 0x0000000000175f23 - -
+  0.25% <boa_engine::builtins::function
+  0.24% _rjem_je_bin_slab_reg_alloc_batch - -
+  0.19% 0x0000000000175c24 - -
+  0.18% thin_vec::drop_non_singleton::<boa_engine
+  0.16% 0x0000000000175f1d - -
+  0.15% <boa_gc::internals::ephemeron_box
+  0.13% 0x0000000000175f19 - -
+  0.11% 0x0000000000175c20 - -
+  0.09% _rjem_je_arena_ptr_array_fill_small - -
+  0.09% <alloc::raw_vec::RawVecInner>
+  0.09% 0x000000000017645b - -

@@ -1,0 +1,148 @@
+{
+ "lenguajes": {
+  "HTML": {
+   "archivos": 76245,
+   "lineas": 3659895
+  },
+  "JS": {
+   "archivos": 63356,
+   "lineas": 3646196
+  },
+  "Rust": {
+   "archivos": 1733,
+   "lineas": 513707
+  },
+  "Python": {
+   "archivos": 3423,
+   "lineas": 429662
+  },
+  "CSS": {
+   "archivos": 630,
+   "lineas": 17521
+  },
+  "WebIDL": {
+   "archivos": 583,
+   "lineas": 16190
+  },
+  "TS": {
+   "archivos": 5,
+   "lineas": 6258
+  },
+  "C": {
+   "archivos": 5,
+   "lineas": 903
+  },
+  "TOML": {
+   "archivos": 118,
+   "lineas": 0
+  }
+ },
+ "crates": 80,
+ "niveles": 9,
+ "ciclos_entre_crates": 0,
+ "lineas_rs": 513560,
+ "lineas_unsafe": 2363,
+ "externos_distintos": 305,
+ "externos_mas_usados": [
+  [
+   "log",
+   38
+  ],
+  [
+   "malloc_size_of",
+   37
+  ],
+  [
+   "serde",
+   35
+  ],
+  [
+   "malloc_size_of_derive",
+   35
+  ],
+  [
+   "euclid",
+   29
+  ],
+  [
+   "rustc-hash",
+   25
+  ],
+  [
+   "profile_traits",
+   25
+  ],
+  [
+   "crossbeam-channel",
+   23
+  ],
+  [
+   "webrender_api",
+   23
+  ],
+  [
+   "uuid",
+   21
+  ],
+  [
+   "embedder_traits",
+   20
+  ],
+  [
+   "paint_api",
+   16
+  ],
+  [
+   "parking_lot",
+   16
+  ],
+  [
+   "pixels",
+   14
+  ],
+  [
+   "stylo",
+   14
+  ],
+  [
+   "url",
+   13
+  ],
+  [
+   "libc",
+   12
+  ],
+  [
+   "bitflags",
+   12
+  ],
+  [
+   "tracing",
+   12
+  ],
+  [
+   "ipc-channel",
+   12
+  ],
+  [
+   "net_traits",
+   12
+  ],
+  [
+   "serde_json",
+   11
+  ],
+  [
+   "stylo_traits",
+   11
+  ],
+  [
+   "http",
+   11
+  ],
+  [
+   "servo_arc",
+   11
+  ]
+ ]
+}

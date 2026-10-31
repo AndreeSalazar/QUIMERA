@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/boringssl/src/third_party/googletest/googlemock/test/gmock-internal-utils_test.cc\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":604,\"texto\":\"char[3] con 2 elementos: el ultimo indice valido es 1\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"char[3]\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":103,\"texto\":\"_bn_mul_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebx\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":104,\"texto\":\"_bn_mul_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":132,\"texto\":\"_bn_mul_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebx\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":133,\"texto\":\"_bn_mul_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":165,\"texto\":\"_bn_sqr_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebx\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":166,\"texto\":\"_bn_sqr_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":104,\"texto\":\"bn_mul_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebx\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":105,\"texto\":\"bn_mul_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":135,\"texto\":\"bn_mul_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebx\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":136,\"texto\":\"bn_mul_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":170,\"texto\":\"bn_sqr_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebx\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/bn-586-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":171,\"texto\":\"bn_sqr_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"popl %ebp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2322,\"texto\":\"_ecp_nistz256_select_w7_avx2 cambia r12 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"addq 0(%rbx), %r12\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2323,\"texto\":\"_ecp_nistz256_select_w7_avx2 cambia r13 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"adcq 8(%rbx), %r13\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-apple.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2327,\"texto\":\"_ecp_nistz256_select_w7_avx2 cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"movq %r13, %rbp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2355,\"texto\":\"ecp_nistz256_select_w7_avx2 cambia r12 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"addq 0(%rbx), %r12\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2356,\"texto\":\"ecp_nistz256_select_w7_avx2 cambia r13 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"adcq 8(%rbx), %r13\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-linux.S\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2360,\"texto\":\"ecp_nistz256_select_w7_avx2 cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"movq %r13, %rbp\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-win.asm\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2495,\"texto\":\"ecp_nistz256_select_w7_avx2 cambia r12 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"add r12, QWORD[rbx]\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-win.asm\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2496,\"texto\":\"ecp_nistz256_select_w7_avx2 cambia r13 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"adc r13, QWORD[8+rbx]\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/p256-x86_64-asm-win.asm\",\"control_valido\":\"Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-002\",\"linea\":2500,\"texto\":\"ecp_nistz256_select_w7_avx2 cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo\",\"titulo\":\"Registros que debe conservar el callee\",\"visto\":\"mov rbp, r13\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":830,\"texto\":\"en _vpaes_set_encrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_schedule_core\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":856,\"texto\":\"en _vpaes_set_decrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_schedule_core\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":875,\"texto\":\"en _vpaes_encrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_preheat\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":891,\"texto\":\"en _vpaes_decrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_preheat\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":822,\"texto\":\"en vpaes_set_encrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_schedule_core\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":847,\"texto\":\"en vpaes_set_decrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_schedule_core\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":866,\"texto\":\"en vpaes_encrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_preheat\"},{\"archivo\":\"third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S\",\"control_valido\":\"Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"ASM-001\",\"linea\":881,\"texto\":\"en vpaes_decrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16\",\"titulo\":\"Alineacion de pila en las llamadas\",\"visto\":\"call _vpaes_preheat\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":1181,\"total\":1211}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/boringssl/src/third_party/googletest/googlemock/test/gmock-internal-utils_test.cc",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 604,
+        "texto": "char[3] con 2 elementos: el ultimo indice valido es 1",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "char[3]"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 103,
+        "texto": "_bn_mul_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebx"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 104,
+        "texto": "_bn_mul_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 132,
+        "texto": "_bn_mul_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebx"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 133,
+        "texto": "_bn_mul_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 165,
+        "texto": "_bn_sqr_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebx"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 166,
+        "texto": "_bn_sqr_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 104,
+        "texto": "bn_mul_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebx"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 105,
+        "texto": "bn_mul_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 135,
+        "texto": "bn_mul_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebx"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 136,
+        "texto": "bn_mul_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 170,
+        "texto": "bn_sqr_add_words cambia rbx sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebx"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/bn-586-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 171,
+        "texto": "bn_sqr_add_words cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "popl %ebp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2322,
+        "texto": "_ecp_nistz256_select_w7_avx2 cambia r12 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "addq 0(%rbx), %r12"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2323,
+        "texto": "_ecp_nistz256_select_w7_avx2 cambia r13 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "adcq 8(%rbx), %r13"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-apple.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2327,
+        "texto": "_ecp_nistz256_select_w7_avx2 cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "movq %r13, %rbp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2355,
+        "texto": "ecp_nistz256_select_w7_avx2 cambia r12 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "addq 0(%rbx), %r12"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2356,
+        "texto": "ecp_nistz256_select_w7_avx2 cambia r13 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "adcq 8(%rbx), %r13"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-linux.S",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2360,
+        "texto": "ecp_nistz256_select_w7_avx2 cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "movq %r13, %rbp"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-win.asm",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2495,
+        "texto": "ecp_nistz256_select_w7_avx2 cambia r12 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "add r12, QWORD[rbx]"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-win.asm",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2496,
+        "texto": "ecp_nistz256_select_w7_avx2 cambia r13 sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "adc r13, QWORD[8+rbx]"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/p256-x86_64-asm-win.asm",
+        "control_valido": "Guardar y restaurar los registros no volatiles utilizados; mantener la informacion de desenrollado correspondiente.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-002",
+        "linea": 2500,
+        "texto": "ecp_nistz256_select_w7_avx2 cambia rbp sin guardarlo: en System V AMD64 la funcion llamada debe conservarlo",
+        "titulo": "Registros que debe conservar el callee",
+        "visto": "mov rbp, r13"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 830,
+        "texto": "en _vpaes_set_encrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_schedule_core"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 856,
+        "texto": "en _vpaes_set_decrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_schedule_core"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 875,
+        "texto": "en _vpaes_encrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_preheat"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-apple.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 891,
+        "texto": "en _vpaes_decrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_preheat"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 822,
+        "texto": "en vpaes_set_encrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_schedule_core"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 847,
+        "texto": "en vpaes_set_decrypt_key la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_schedule_core"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 866,
+        "texto": "en vpaes_encrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_preheat"
+      },
+      {
+        "archivo": "third_party/boringssl/src/gen/bcm/vpaes-x86_64-linux.S",
+        "control_valido": "Contabilizar pushes y reservas, respetar la alineacion de la llamada y restaurar rsp al volver.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "ASM-001",
+        "linea": 881,
+        "texto": "en vpaes_decrypt la pila llega a call movida 8 + 0 bytes desde la entrada: no es multiplo de 16",
+        "titulo": "Alineacion de pila en las llamadas",
+        "visto": "call _vpaes_preheat"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 1181,
+    "total": 1211
+  }
+}

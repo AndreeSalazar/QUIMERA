@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":4847,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":12},\"ruta\":\"content/public/browser/web_contents_user_data.h\"},{\"arrastra\":3628,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":21},\"ruta\":\"content/public/test/test_utils.h\"},{\"arrastra\":1681,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":22},\"ruta\":\"chrome/browser/ui/hats/hats_service.h\"},{\"arrastra\":1101,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":13},\"ruta\":\"chrome/browser/ui/translate/partial_translate_bubble_model.h\"},{\"arrastra\":1081,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":53},\"ruta\":\"chrome/browser/ui/views/frame/browser_view.h\"},{\"arrastra\":628,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":18},\"ruta\":\"ui/views/controls/webview/web_contents_delegate_views.h\"},{\"arrastra\":610,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":36},\"ruta\":\"components/permissions/permission_request_manager.h\"},{\"arrastra\":598,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":15},\"ruta\":\"content/public/test/web_contents_tester.h\"},{\"arrastra\":534,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":9},\"ruta\":\"content/public/browser/tracing_support.h\"},{\"arrastra\":524,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":63},\"ruta\":\"content/browser/web_contents/web_contents_impl.h\"},{\"arrastra\":476,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":24},\"ruta\":\"chrome/browser/glic/host/context/glic_tab_data.h\"},{\"arrastra\":398,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":11},\"ruta\":\"chrome/test/base/chrome_test_utils.h\"},{\"arrastra\":324,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":37},\"ruta\":\"chrome/browser/glic/public/glic_keyed_service.h\"},{\"arrastra\":322,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":22},\"ruta\":\"content/public/browser/download_manager_delegate.h\"},{\"arrastra\":322,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":16},\"ruta\":\"components/performance_manager/public/resource_attribution/page_context.h\"},{\"arrastra\":242,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":31},\"ruta\":\"chrome/browser/glic/public/service/glic_instance_coordinator.h\"},{\"arrastra\":237,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":14},\"ruta\":\"chrome/browser/ui/browser_tabstrip.h\"},{\"arrastra\":231,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":12},\"ruta\":\"chromeos/ash/components/http_auth_dialog/http_auth_dialog.h\"},{\"arrastra\":226,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":11},\"ruta\":\"components/autofill/content/browser/content_autofill_client.h\"},{\"arrastra\":222,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/web_contents.h\\\"\",\"linea\":14},\"ruta\":\"content/public/browser/url_data_source.h\"}],\"recortado\":false,\"ruta\":\"content/public/browser/web_contents.h\",\"se_recompilan\":12693}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 4847,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 12
+        },
+        "ruta": "content/public/browser/web_contents_user_data.h"
+      },
+      {
+        "arrastra": 3628,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 21
+        },
+        "ruta": "content/public/test/test_utils.h"
+      },
+      {
+        "arrastra": 1681,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 22
+        },
+        "ruta": "chrome/browser/ui/hats/hats_service.h"
+      },
+      {
+        "arrastra": 1101,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 13
+        },
+        "ruta": "chrome/browser/ui/translate/partial_translate_bubble_model.h"
+      },
+      {
+        "arrastra": 1081,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 53
+        },
+        "ruta": "chrome/browser/ui/views/frame/browser_view.h"
+      },
+      {
+        "arrastra": 628,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 18
+        },
+        "ruta": "ui/views/controls/webview/web_contents_delegate_views.h"
+      },
+      {
+        "arrastra": 610,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 36
+        },
+        "ruta": "components/permissions/permission_request_manager.h"
+      },
+      {
+        "arrastra": 598,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 15
+        },
+        "ruta": "content/public/test/web_contents_tester.h"
+      },
+      {
+        "arrastra": 534,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 9
+        },
+        "ruta": "content/public/browser/tracing_support.h"
+      },
+      {
+        "arrastra": 524,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 63
+        },
+        "ruta": "content/browser/web_contents/web_contents_impl.h"
+      },
+      {
+        "arrastra": 476,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 24
+        },
+        "ruta": "chrome/browser/glic/host/context/glic_tab_data.h"
+      },
+      {
+        "arrastra": 398,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 11
+        },
+        "ruta": "chrome/test/base/chrome_test_utils.h"
+      },
+      {
+        "arrastra": 324,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 37
+        },
+        "ruta": "chrome/browser/glic/public/glic_keyed_service.h"
+      },
+      {
+        "arrastra": 322,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 22
+        },
+        "ruta": "content/public/browser/download_manager_delegate.h"
+      },
+      {
+        "arrastra": 322,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 16
+        },
+        "ruta": "components/performance_manager/public/resource_attribution/page_context.h"
+      },
+      {
+        "arrastra": 242,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 31
+        },
+        "ruta": "chrome/browser/glic/public/service/glic_instance_coordinator.h"
+      },
+      {
+        "arrastra": 237,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 14
+        },
+        "ruta": "chrome/browser/ui/browser_tabstrip.h"
+      },
+      {
+        "arrastra": 231,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 12
+        },
+        "ruta": "chromeos/ash/components/http_auth_dialog/http_auth_dialog.h"
+      },
+      {
+        "arrastra": 226,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 11
+        },
+        "ruta": "components/autofill/content/browser/content_autofill_client.h"
+      },
+      {
+        "arrastra": 222,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"content/public/browser/web_contents.h\"",
+          "linea": 14
+        },
+        "ruta": "content/public/browser/url_data_source.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "content/public/browser/web_contents.h",
+    "se_recompilan": 12693
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/oak/src/oak_enclave_runtime_support/src/llvm_libc.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":198,\"texto\":\"ERRNO es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut ERRNO\"},{\"archivo\":\"third_party/oak/src/oak_restricted_kernel/src/args.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":24,\"texto\":\"ARGS es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut ARGS\"},{\"archivo\":\"third_party/oak/src/oak_restricted_kernel/src/syscall/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":106,\"texto\":\"GS_DATA es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut GS_DATA\"},{\"archivo\":\"third_party/oak/src/oak_restricted_kernel_sev/src/ghcb.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":52,\"texto\":\"GHCB_WRAPPER es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut GHCB_WRAPPER\"},{\"archivo\":\"third_party/oak/src/stage0/src/acpi/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":54,\"texto\":\"EBDA es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut EBDA\"},{\"archivo\":\"third_party/oak/src/stage0/src/lib.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":104,\"texto\":\"BDA es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut BDA\"},{\"archivo\":\"third_party/oak/src/stage0/src/paging.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":47,\"texto\":\"PML4 es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut PML4\"},{\"archivo\":\"third_party/oak/src/stage0/src/paging.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":50,\"texto\":\"PDPT es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut PDPT\"},{\"archivo\":\"third_party/oak/src/stage0/src/paging.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":53,\"texto\":\"PD_0 es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut PD_0\"},{\"archivo\":\"third_party/oak/src/stage0/src/paging.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":56,\"texto\":\"PD_3 es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut PD_3\"},{\"archivo\":\"third_party/oak/src/stage0_sev/src/platform/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":50,\"texto\":\"SEV_SECRETS es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut SEV_SECRETS\"},{\"archivo\":\"third_party/oak/src/stage0_sev/src/platform/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":60,\"texto\":\"SEV_HASH_TABLE es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut SEV_HASH_TABLE\"},{\"archivo\":\"third_party/oak/src/stage0_sev/src/platform/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":131,\"texto\":\"SEV_STATUS es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut SEV_STATUS\"},{\"archivo\":\"third_party/oak/src/stage0_sev/src/platform/mod.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":141,\"texto\":\"ENCRYPTED_BIT_POSITION es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut ENCRYPTED_BIT_POSITION\"},{\"archivo\":\"third_party/oak/src/stage0_tdx/src/hob.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":20,\"texto\":\"TD_HOB_START es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut TD_HOB_START\"},{\"archivo\":\"third_party/oak/src/stage0_tdx/src/platform.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":63,\"texto\":\"TD_MAILBOX es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut TD_MAILBOX\"},{\"archivo\":\"third_party/oak/src/stage0_tdx/src/platform.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":67,\"texto\":\"GPAW es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut GPAW\"},{\"archivo\":\"third_party/oak/src/stage0_tdx/src/platform.rs\",\"control_valido\":\"static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"RS-003\",\"linea\":70,\"texto\":\"AP_IN_64BIT_COUNT es un static mut: cualquier referencia a el puede ser una carrera de datos\",\"titulo\":\"static mut es estado global sin cerrojo\",\"visto\":\"static mut AP_IN_64BIT_COUNT\"},{\"archivo\":\"third_party/oak/src/oak_containers/stage1/src/attester.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":184,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts(\"},{\"archivo\":\"third_party/oak/src/oak_containers/stage1/src/attester.rs\",\"control_valido\":\"// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"RS-005\",\"linea\":195,\"texto\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\",\"titulo\":\"from_raw_parts confia en el puntero y la longitud\",\"visto\":\"from_raw_parts_mut(\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":1365,\"total\":1385}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/oak/src/oak_enclave_runtime_support/src/llvm_libc.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 198,
+        "texto": "ERRNO es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut ERRNO"
+      },
+      {
+        "archivo": "third_party/oak/src/oak_restricted_kernel/src/args.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 24,
+        "texto": "ARGS es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut ARGS"
+      },
+      {
+        "archivo": "third_party/oak/src/oak_restricted_kernel/src/syscall/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 106,
+        "texto": "GS_DATA es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut GS_DATA"
+      },
+      {
+        "archivo": "third_party/oak/src/oak_restricted_kernel_sev/src/ghcb.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 52,
+        "texto": "GHCB_WRAPPER es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut GHCB_WRAPPER"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0/src/acpi/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 54,
+        "texto": "EBDA es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut EBDA"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0/src/lib.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 104,
+        "texto": "BDA es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut BDA"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0/src/paging.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 47,
+        "texto": "PML4 es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut PML4"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0/src/paging.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 50,
+        "texto": "PDPT es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut PDPT"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0/src/paging.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 53,
+        "texto": "PD_0 es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut PD_0"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0/src/paging.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 56,
+        "texto": "PD_3 es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut PD_3"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_sev/src/platform/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 50,
+        "texto": "SEV_SECRETS es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut SEV_SECRETS"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_sev/src/platform/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 60,
+        "texto": "SEV_HASH_TABLE es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut SEV_HASH_TABLE"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_sev/src/platform/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 131,
+        "texto": "SEV_STATUS es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut SEV_STATUS"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_sev/src/platform/mod.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 141,
+        "texto": "ENCRYPTED_BIT_POSITION es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut ENCRYPTED_BIT_POSITION"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_tdx/src/hob.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 20,
+        "texto": "TD_HOB_START es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut TD_HOB_START"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_tdx/src/platform.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 63,
+        "texto": "TD_MAILBOX es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut TD_MAILBOX"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_tdx/src/platform.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 67,
+        "texto": "GPAW es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut GPAW"
+      },
+      {
+        "archivo": "third_party/oak/src/stage0_tdx/src/platform.rs",
+        "control_valido": "static CUENTA: AtomicUsize = AtomicUsize::new(0);  // o un Mutex / spin::Mutex en no_std",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "RS-003",
+        "linea": 70,
+        "texto": "AP_IN_64BIT_COUNT es un static mut: cualquier referencia a el puede ser una carrera de datos",
+        "titulo": "static mut es estado global sin cerrojo",
+        "visto": "static mut AP_IN_64BIT_COUNT"
+      },
+      {
+        "archivo": "third_party/oak/src/oak_containers/stage1/src/attester.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 184,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts("
+      },
+      {
+        "archivo": "third_party/oak/src/oak_containers/stage1/src/attester.rs",
+        "control_valido": "// SAFETY: ptr y len vienen del mismo Vec, que sigue vivo y no se toca. let s = unsafe { slice::from_raw_parts(ptr, len) };",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "RS-005",
+        "linea": 195,
+        "texto": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados",
+        "titulo": "from_raw_parts confia en el puntero y la longitud",
+        "visto": "from_raw_parts_mut("
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 1365,
+    "total": 1385
+  }
+}

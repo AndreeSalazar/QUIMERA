@@ -1,0 +1,219 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos_que_fallan\":219,\"causas\":{\"lista\":[{\"explica\":125,\"lo_usan\":112223,\"primera_senal\":{\"ficha\":\"UB-015\",\"linea\":105,\"motivo\":\"se lee o escribe a traves de un puntero nulo convertido\"},\"ruta\":\"base/allocator/partition_allocator/src/partition_alloc/partition_alloc_base/numerics/safe_conversions_impl.h\"},{\"explica\":125,\"lo_usan\":112016,\"primera_senal\":{\"ficha\":\"UB-015\",\"linea\":91,\"motivo\":\"se lee o escribe a traves de un puntero nulo convertido\"},\"ruta\":\"base/numerics/safe_conversions_impl.h\"},{\"explica\":4,\"lo_usan\":1745,\"primera_senal\":{\"ficha\":\"UB-005\",\"linea\":179,\"motivo\":\"buf es local: su vida termina al salir de la funcion y la direccion queda colgando\"},\"ruta\":\"third_party/blink/renderer/core/style/filter_operation.h\"},{\"explica\":2,\"lo_usan\":15,\"primera_senal\":{\"ficha\":\"C-002\",\"linea\":287,\"motivo\":\"buf se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila\"},\"ruta\":\"third_party/protobuf/upb/wire/internal/decoder.h\"},{\"explica\":2,\"lo_usan\":5,\"primera_senal\":{\"ficha\":\"C-002\",\"linea\":112,\"motivo\":\"buf se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila\"},\"ruta\":\"third_party/protobuf/upb/wire/internal/encoder.h\"},{\"explica\":0,\"lo_usan\":114,\"primera_senal\":{\"ficha\":\"UB-005\",\"linea\":231,\"motivo\":\"result es local: su vida termina al salir de la funcion y la direccion queda colgando\"},\"ruta\":\"components/zucchini/image_utils.h\"},{\"explica\":0,\"lo_usan\":37,\"primera_senal\":{\"ficha\":\"UB-003\",\"linea\":526,\"motivo\":\"1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)\"},\"ruta\":\"third_party/windows_app_sdk_headers/src/inc/abi/winml/winml/onnxruntime_c_api.h\"},{\"explica\":0,\"lo_usan\":30,\"primera_senal\":{\"ficha\":\"UB-004\",\"linea\":84,\"motivo\":\"line_infos_[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455\"},\"ruta\":\"third_party/blink/renderer/core/layout/inline/line_info_list.h\"},{\"explica\":0,\"lo_usan\":5,\"primera_senal\":{\"ficha\":\"UB-004\",\"linea\":320,\"motivo\":\"fpregs[32] con 32 elementos: el ultimo indice valido es 31\"},\"ruta\":\"third_party/crashpad/crashpad/snapshot/linux/signal_context.h\"},{\"explica\":0,\"lo_usan\":5,\"primera_senal\":{\"ficha\":\"UB-003\",\"linea\":510,\"motivo\":\"1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)\"},\"ruta\":\"third_party/libxml/src/include/libxml/schemasInternals.h\"},{\"explica\":0,\"lo_usan\":2,\"primera_senal\":{\"ficha\":\"UB-005\",\"linea\":40,\"motivo\":\"printer_name es local: su vida termina al salir de la funcion y la direccion queda colgando\"},\"ruta\":\"printing/printing_test.h\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":56,\"motivo\":\"fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando\"},\"ruta\":\"ash/quick_pair/fast_pair_handshake/fake_fast_pair_handshake_lookup.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":52,\"motivo\":\"fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando\"},\"ruta\":\"ash/quick_pair/fast_pair_handshake/fast_pair_handshake_lookup_impl.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-011\",\"linea\":179,\"motivo\":\"el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)\"},\"ruta\":\"ash/system/focus_mode/focus_mode_detailed_view.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":94,\"motivo\":\"menu_items_.push_back() dentro de un for que recorre menu_items_: puede realocar y dejar el recorrido colgando\"},\"ruta\":\"ash/system/ime/ime_feature_pod_controller_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-005\",\"linea\":64,\"motivo\":\"image_index_ se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++\"},\"ruta\":\"ash/wallpaper/test_wallpaper_controller_client.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-001\",\"linea\":263,\"motivo\":\"initiator_gaia_id mira un std::string temporal que se destruye al terminar esta linea\"},\"ruta\":\"ash/webui/boca_receiver_app_ui/boca_receiver_untrusted_page_handler_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-004\",\"linea\":322,\"motivo\":\"volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex\"},\"ruta\":\"base/allocator/partition_allocator/src/partition_alloc/pointers/raw_ptr_unittest.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-018\",\"linea\":176,\"motivo\":\"origen y destino salen de buf: si se solapan es UB; memmove si permite solapamiento\"},\"ruta\":\"base/android/linker/linker_jni.cc\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"CXX-002\",\"linea\":957,\"motivo\":\"old_begin apunta dentro de q, que cambio en la linea 954: puede haber realocado\"},\"ruta\":\"base/containers/circular_deque_unittest.cc\"}],\"total\":219},\"recortado\":true,\"regla\":\"Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla.\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos_que_fallan": 219,
+    "causas": {
+      "lista": [
+        {
+          "explica": 125,
+          "lo_usan": 112223,
+          "primera_senal": {
+            "ficha": "UB-015",
+            "linea": 105,
+            "motivo": "se lee o escribe a traves de un puntero nulo convertido"
+          },
+          "ruta": "base/allocator/partition_allocator/src/partition_alloc/partition_alloc_base/numerics/safe_conversions_impl.h"
+        },
+        {
+          "explica": 125,
+          "lo_usan": 112016,
+          "primera_senal": {
+            "ficha": "UB-015",
+            "linea": 91,
+            "motivo": "se lee o escribe a traves de un puntero nulo convertido"
+          },
+          "ruta": "base/numerics/safe_conversions_impl.h"
+        },
+        {
+          "explica": 4,
+          "lo_usan": 1745,
+          "primera_senal": {
+            "ficha": "UB-005",
+            "linea": 179,
+            "motivo": "buf es local: su vida termina al salir de la funcion y la direccion queda colgando"
+          },
+          "ruta": "third_party/blink/renderer/core/style/filter_operation.h"
+        },
+        {
+          "explica": 2,
+          "lo_usan": 15,
+          "primera_senal": {
+            "ficha": "C-002",
+            "linea": 287,
+            "motivo": "buf se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila"
+          },
+          "ruta": "third_party/protobuf/upb/wire/internal/decoder.h"
+        },
+        {
+          "explica": 2,
+          "lo_usan": 5,
+          "primera_senal": {
+            "ficha": "C-002",
+            "linea": 112,
+            "motivo": "buf se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila"
+          },
+          "ruta": "third_party/protobuf/upb/wire/internal/encoder.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 114,
+          "primera_senal": {
+            "ficha": "UB-005",
+            "linea": 231,
+            "motivo": "result es local: su vida termina al salir de la funcion y la direccion queda colgando"
+          },
+          "ruta": "components/zucchini/image_utils.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 37,
+          "primera_senal": {
+            "ficha": "UB-003",
+            "linea": 526,
+            "motivo": "1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)"
+          },
+          "ruta": "third_party/windows_app_sdk_headers/src/inc/abi/winml/winml/onnxruntime_c_api.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 30,
+          "primera_senal": {
+            "ficha": "UB-004",
+            "linea": 84,
+            "motivo": "line_infos_[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455"
+          },
+          "ruta": "third_party/blink/renderer/core/layout/inline/line_info_list.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 5,
+          "primera_senal": {
+            "ficha": "UB-004",
+            "linea": 320,
+            "motivo": "fpregs[32] con 32 elementos: el ultimo indice valido es 31"
+          },
+          "ruta": "third_party/crashpad/crashpad/snapshot/linux/signal_context.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 5,
+          "primera_senal": {
+            "ficha": "UB-003",
+            "linea": 510,
+            "motivo": "1 << 31 no cabe en un int con signo de 32 bits (en C17 es UB; usar 1u)"
+          },
+          "ruta": "third_party/libxml/src/include/libxml/schemasInternals.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 2,
+          "primera_senal": {
+            "ficha": "UB-005",
+            "linea": 40,
+            "motivo": "printer_name es local: su vida termina al salir de la funcion y la direccion queda colgando"
+          },
+          "ruta": "printing/printing_test.h"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 56,
+            "motivo": "fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando"
+          },
+          "ruta": "ash/quick_pair/fast_pair_handshake/fake_fast_pair_handshake_lookup.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 52,
+            "motivo": "fast_pair_handshakes_.erase() dentro de un for que recorre fast_pair_handshakes_: puede realocar y dejar el recorrido colgando"
+          },
+          "ruta": "ash/quick_pair/fast_pair_handshake/fast_pair_handshake_lookup_impl.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-011",
+            "linea": 179,
+            "motivo": "el argumento sale de un char: si es negativo (y no es EOF) el valor queda fuera del dominio; convertir con (unsigned char)"
+          },
+          "ruta": "ash/system/focus_mode/focus_mode_detailed_view.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 94,
+            "motivo": "menu_items_.push_back() dentro de un for que recorre menu_items_: puede realocar y dejar el recorrido colgando"
+          },
+          "ruta": "ash/system/ime/ime_feature_pod_controller_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-005",
+            "linea": 64,
+            "motivo": "image_index_ se modifica dos veces en una expresion: su clasificacion cambia con el dialecto de C++"
+          },
+          "ruta": "ash/wallpaper/test_wallpaper_controller_client.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-001",
+            "linea": 263,
+            "motivo": "initiator_gaia_id mira un std::string temporal que se destruye al terminar esta linea"
+          },
+          "ruta": "ash/webui/boca_receiver_app_ui/boca_receiver_untrusted_page_handler_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-004",
+            "linea": 322,
+            "motivo": "volatile no ordena ni hace atomico el acceso entre hilos: std::atomic o un mutex"
+          },
+          "ruta": "base/allocator/partition_allocator/src/partition_alloc/pointers/raw_ptr_unittest.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-018",
+            "linea": 176,
+            "motivo": "origen y destino salen de buf: si se solapan es UB; memmove si permite solapamiento"
+          },
+          "ruta": "base/android/linker/linker_jni.cc"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "CXX-002",
+            "linea": 957,
+            "motivo": "old_begin apunta dentro de q, que cambio en la linea 954: puede haber realocado"
+          },
+          "ruta": "base/containers/circular_deque_unittest.cc"
+        }
+      ],
+      "total": 219
+    },
+    "recortado": true,
+    "regla": "Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla."
+  }
+}

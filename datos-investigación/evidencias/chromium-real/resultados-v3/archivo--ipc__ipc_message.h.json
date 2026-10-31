@@ -1,0 +1,115 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":5},\"ruta\":\"ipc/ipc_message.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":5},\"ruta\":\"ipc/ipc_message_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":26},\"ruta\":\"ipc/param_traits_utils.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":20},\"ruta\":\"ipc/param_traits_utils_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message.h\\\"\",\"linea\":14},\"ruta\":\"mojo/public/cpp/bindings/lib/native_struct_serialization.h\"}],\"total\":5},\"papel\":null,\"ruta\":\"ipc/ipc_message.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":15},\"ruta\":\"build/build_config.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/scoped_refptr.h\\\"\",\"linea\":13},\"ruta\":\"base/memory/scoped_refptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":12},\"ruta\":\"base/memory/raw_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/pickle.h\\\"\",\"linea\":14},\"ruta\":\"base/pickle.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/gtest_prod_util.h\\\"\",\"linea\":11},\"ruta\":\"base/gtest_prod_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ipc/ipc_message_support_export.h\\\"\",\"linea\":16},\"ruta\":\"ipc/ipc_message_support_export.h\"}],\"total\":6}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ipc/ipc_message.h\"",
+            "linea": 5
+          },
+          "ruta": "ipc/ipc_message.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ipc/ipc_message.h\"",
+            "linea": 5
+          },
+          "ruta": "ipc/ipc_message_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ipc/ipc_message.h\"",
+            "linea": 26
+          },
+          "ruta": "ipc/param_traits_utils.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ipc/ipc_message.h\"",
+            "linea": 20
+          },
+          "ruta": "ipc/param_traits_utils_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ipc/ipc_message.h\"",
+            "linea": 14
+          },
+          "ruta": "mojo/public/cpp/bindings/lib/native_struct_serialization.h"
+        }
+      ],
+      "total": 5
+    },
+    "papel": null,
+    "ruta": "ipc/ipc_message.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 15
+          },
+          "ruta": "build/build_config.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/scoped_refptr.h\"",
+            "linea": 13
+          },
+          "ruta": "base/memory/scoped_refptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 12
+          },
+          "ruta": "base/memory/raw_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/pickle.h\"",
+            "linea": 14
+          },
+          "ruta": "base/pickle.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/gtest_prod_util.h\"",
+            "linea": 11
+          },
+          "ruta": "base/gtest_prod_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ipc/ipc_message_support_export.h\"",
+            "linea": 16
+          },
+          "ruta": "ipc/ipc_message_support_export.h"
+        }
+      ],
+      "total": 6
+    }
+  }
+}

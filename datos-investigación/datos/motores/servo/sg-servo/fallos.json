@@ -1,0 +1,269 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos_que_fallan\":25,\"causas\":{\"lista\":[{\"explica\":6,\"lo_usan\":33,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":154,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/script_bindings/conversions.rs\"},{\"explica\":6,\"lo_usan\":33,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":161,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"components/script_bindings/dom.rs\"},{\"explica\":6,\"lo_usan\":33,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":64,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/script_bindings/domstring.rs\"},{\"explica\":6,\"lo_usan\":33,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":39,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"components/script_bindings/inheritance.rs\"},{\"explica\":6,\"lo_usan\":33,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":306,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"components/script_bindings/root.rs\"},{\"explica\":6,\"lo_usan\":33,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":189,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/script_bindings/str.rs\"},{\"explica\":6,\"lo_usan\":33,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":892,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/script_bindings/utils.rs\"},{\"explica\":4,\"lo_usan\":839,\"primera_senal\":{\"ficha\":\"RS-002\",\"linea\":82,\"motivo\":\"transmute no comprueba que los bytes formen un valor valido del tipo destino\"},\"ruta\":\"components/script/dom/bindings/root.rs\"},{\"explica\":4,\"lo_usan\":839,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":700,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/script/dom/console.rs\"},{\"explica\":4,\"lo_usan\":839,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":69,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/script/layout_dom/servo_dangerous_style_document.rs\"},{\"explica\":4,\"lo_usan\":839,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":516,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/script/layout_dom/servo_dangerous_style_element.rs\"},{\"explica\":4,\"lo_usan\":839,\"primera_senal\":{\"ficha\":\"RS-004\",\"linea\":1129,\"motivo\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\"},\"ruta\":\"components/script/runtime/script_runtime.rs\"},{\"explica\":1,\"lo_usan\":6,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":49,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/media/backends/ohos/ohos_media/source.rs\"},{\"explica\":1,\"lo_usan\":2,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":81,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/webgpu/canvas_context.rs\"},{\"explica\":0,\"lo_usan\":12,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":449,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/fonts/platform/windows/font.rs\"},{\"explica\":0,\"lo_usan\":4,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":1135,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/webgl/webgl_thread.rs\"},{\"explica\":0,\"lo_usan\":4,\"primera_senal\":{\"ficha\":\"RS-004\",\"linea\":73,\"motivo\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\"},\"ruta\":\"ports/servoshell/crash_handler.rs\"},{\"explica\":0,\"lo_usan\":2,\"primera_senal\":{\"ficha\":\"RS-004\",\"linea\":114,\"motivo\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\"},\"ruta\":\"components/webxr/openxr/graphics_d3d11.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":652,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/media/backends/ohos/player.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-004\",\"linea\":82,\"motivo\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\"},\"ruta\":\"components/shared/base/cross_process_instant.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-004\",\"linea\":123,\"motivo\":\"mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero\"},\"ruta\":\"components/shared/base/threadboost.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":180,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/webgpu/wgpu_thread.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":743,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"components/webxr/glwindow/mod.rs\"},{\"explica\":0,\"lo_usan\":1,\"primera_senal\":{\"ficha\":\"RS-005\",\"linea\":654,\"motivo\":\"el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados\"},\"ruta\":\"ffi/capi/preferences.rs\"},{\"explica\":0,\"lo_usan\":0,\"primera_senal\":{\"ficha\":\"UB-008\",\"linea\":176,\"motivo\":\"se lee un uint64_t en una direccion desplazada: puede no estar alineada; copiar con memcpy\"},\"ruta\":\"tests/wpt/tests/tools/third_party/websockets/src/websockets/speedups.c\"}],\"total\":25},\"recortado\":true,\"regla\":\"Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla.\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos_que_fallan": 25,
+    "causas": {
+      "lista": [
+        {
+          "explica": 6,
+          "lo_usan": 33,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 154,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/script_bindings/conversions.rs"
+        },
+        {
+          "explica": 6,
+          "lo_usan": 33,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 161,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "components/script_bindings/dom.rs"
+        },
+        {
+          "explica": 6,
+          "lo_usan": 33,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 64,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/script_bindings/domstring.rs"
+        },
+        {
+          "explica": 6,
+          "lo_usan": 33,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 39,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "components/script_bindings/inheritance.rs"
+        },
+        {
+          "explica": 6,
+          "lo_usan": 33,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 306,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "components/script_bindings/root.rs"
+        },
+        {
+          "explica": 6,
+          "lo_usan": 33,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 189,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/script_bindings/str.rs"
+        },
+        {
+          "explica": 6,
+          "lo_usan": 33,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 892,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/script_bindings/utils.rs"
+        },
+        {
+          "explica": 4,
+          "lo_usan": 839,
+          "primera_senal": {
+            "ficha": "RS-002",
+            "linea": 82,
+            "motivo": "transmute no comprueba que los bytes formen un valor valido del tipo destino"
+          },
+          "ruta": "components/script/dom/bindings/root.rs"
+        },
+        {
+          "explica": 4,
+          "lo_usan": 839,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 700,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/script/dom/console.rs"
+        },
+        {
+          "explica": 4,
+          "lo_usan": 839,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 69,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/script/layout_dom/servo_dangerous_style_document.rs"
+        },
+        {
+          "explica": 4,
+          "lo_usan": 839,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 516,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/script/layout_dom/servo_dangerous_style_element.rs"
+        },
+        {
+          "explica": 4,
+          "lo_usan": 839,
+          "primera_senal": {
+            "ficha": "RS-004",
+            "linea": 1129,
+            "motivo": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero"
+          },
+          "ruta": "components/script/runtime/script_runtime.rs"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 6,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 49,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/media/backends/ohos/ohos_media/source.rs"
+        },
+        {
+          "explica": 1,
+          "lo_usan": 2,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 81,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/webgpu/canvas_context.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 12,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 449,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/fonts/platform/windows/font.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 4,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 1135,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/webgl/webgl_thread.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 4,
+          "primera_senal": {
+            "ficha": "RS-004",
+            "linea": 73,
+            "motivo": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero"
+          },
+          "ruta": "ports/servoshell/crash_handler.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 2,
+          "primera_senal": {
+            "ficha": "RS-004",
+            "linea": 114,
+            "motivo": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero"
+          },
+          "ruta": "components/webxr/openxr/graphics_d3d11.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 652,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/media/backends/ohos/player.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-004",
+            "linea": 82,
+            "motivo": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero"
+          },
+          "ruta": "components/shared/base/cross_process_instant.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-004",
+            "linea": 123,
+            "motivo": "mem::zeroed es UB si el tipo tiene referencias, Box, NonNull, fn o un enum sin variante cero"
+          },
+          "ruta": "components/shared/base/threadboost.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 180,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/webgpu/wgpu_thread.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 743,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "components/webxr/glwindow/mod.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 1,
+          "primera_senal": {
+            "ficha": "RS-005",
+            "linea": 654,
+            "motivo": "el slice confia en que el puntero sea valido y alineado y en que len elementos esten inicializados"
+          },
+          "ruta": "ffi/capi/preferences.rs"
+        },
+        {
+          "explica": 0,
+          "lo_usan": 0,
+          "primera_senal": {
+            "ficha": "UB-008",
+            "linea": 176,
+            "motivo": "se lee un uint64_t en una direccion desplazada: puede no estar alineada; copiar con memcpy"
+          },
+          "ruta": "tests/wpt/tests/tools/third_party/websockets/src/websockets/speedups.c"
+        }
+      ],
+      "total": 25
+    },
+    "recortado": true,
+    "regla": "Solo la Seguridad (y los errores del compilador) es fallo. Causa probable: falla y nada de lo que usa falla."
+  }
+}

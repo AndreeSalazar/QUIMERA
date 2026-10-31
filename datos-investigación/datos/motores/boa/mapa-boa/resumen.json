@@ -1,0 +1,124 @@
+{
+ "lenguajes": {
+  "Rust": {
+   "archivos": 763,
+   "lineas": 222583
+  },
+  "JS": {
+   "archivos": 93,
+   "lineas": 13802
+  },
+  "TOML": {
+   "archivos": 33,
+   "lineas": 0
+  }
+ },
+ "crates": 24,
+ "niveles": 9,
+ "ciclos_entre_crates": 0,
+ "lineas_rs": 222583,
+ "lineas_unsafe": 596,
+ "externos_distintos": 110,
+ "externos_mas_usados": [
+  [
+   "rustc-hash",
+   8
+  ],
+  [
+   "serde",
+   5
+  ],
+  [
+   "cow-utils",
+   4
+  ],
+  [
+   "serde_json",
+   4
+  ],
+  [
+   "bitflags",
+   4
+  ],
+  [
+   "futures-concurrency",
+   3
+  ],
+  [
+   "phf",
+   3
+  ],
+  [
+   "rustls",
+   3
+  ],
+  [
+   "arbitrary",
+   3
+  ],
+  [
+   "indexmap",
+   3
+  ],
+  [
+   "num-bigint",
+   3
+  ],
+  [
+   "arrayvec",
+   3
+  ],
+  [
+   "either",
+   3
+  ],
+  [
+   "fast-float2",
+   3
+  ],
+  [
+   "futures-lite",
+   3
+  ],
+  [
+   "hashbrown",
+   3
+  ],
+  [
+   "icu_calendar",
+   3
+  ],
+  [
+   "icu_casemap",
+   3
+  ],
+  [
+   "icu_collator",
+   3
+  ],
+  [
+   "icu_datetime",
+   3
+  ],
+  [
+   "icu_decimal",
+   3
+  ],
+  [
+   "icu_list",
+   3
+  ],
+  [
+   "icu_locale",
+   3
+  ],
+  [
+   "icu_normalizer",
+   3
+  ],
+  [
+   "icu_plurals",
+   3
+  ]
+ ]
+}

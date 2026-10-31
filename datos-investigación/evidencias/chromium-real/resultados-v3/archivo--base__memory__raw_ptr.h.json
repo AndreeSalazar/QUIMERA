@@ -1,0 +1,275 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"ruta\":\"android_webview/browser/aw_browser_context_store.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":20},\"ruta\":\"android_webview/browser/aw_browser_process.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":16},\"ruta\":\"android_webview/browser/aw_content_browser_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":16},\"ruta\":\"android_webview/browser/aw_quota_manager_bridge.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":14},\"ruta\":\"android_webview/browser/content_restriction/aw_content_restriction_manager_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":14},\"ruta\":\"android_webview/browser/metrics/aw_metrics_service_client.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":26},\"ruta\":\"base/feature_list.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":15},\"ruta\":\"base/functional/bind.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":18},\"ruta\":\"base/memory/scoped_refptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"ruta\":\"base/task/single_thread_task_runner.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":14},\"ruta\":\"components/cdm/browser/media_drm_storage_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":14},\"ruta\":\"components/download/public/common/in_progress_download_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":10},\"ruta\":\"components/keyed_service/core/simple_key_map.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":12},\"ruta\":\"components/policy/core/browser/browser_policy_connector_base.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":11},\"ruta\":\"components/policy/core/browser/configuration_policy_pref_store.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":17},\"ruta\":\"components/policy/core/browser/url_list/url_blocklist_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":25},\"ruta\":\"components/prefs/pref_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":17},\"ruta\":\"components/prefs/segregated_pref_store.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":8},\"ruta\":\"components/user_prefs/user_prefs.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":22},\"ruta\":\"components/visitedlink/browser/visitedlink_writer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":8},\"ruta\":\"content/public/browser/spare_render_process_host_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":21},\"ruta\":\"content/public/browser/web_contents.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":83},\"ruta\":\"base/memory/weak_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":20},\"ruta\":\"android_webview/browser/aw_browser_context_store.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"ruta\":\"base/task/sequenced_task_runner.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":14},\"ruta\":\"components/prefs/scoped_user_pref_update.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":13},\"ruta\":\"android_webview/browser/aw_browser_context_unittest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":17},\"ruta\":\"base/run_loop.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":16},\"ruta\":\"base/test/scoped_feature_list.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":12},\"ruta\":\"android_webview/browser/aw_browser_main_parts.h\"}],\"total\":17601},\"papel\":null,\"ruta\":\"base/memory/raw_ptr.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"partition_alloc/pointers/raw_ptr.h\\\"\",\"linea\":11},\"ruta\":\"base/allocator/partition_allocator/src/partition_alloc/pointers/raw_ptr.h\"}],\"total\":1}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 13
+          },
+          "ruta": "android_webview/browser/aw_browser_context_store.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 20
+          },
+          "ruta": "android_webview/browser/aw_browser_process.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 16
+          },
+          "ruta": "android_webview/browser/aw_content_browser_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 16
+          },
+          "ruta": "android_webview/browser/aw_quota_manager_bridge.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 14
+          },
+          "ruta": "android_webview/browser/content_restriction/aw_content_restriction_manager_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 14
+          },
+          "ruta": "android_webview/browser/metrics/aw_metrics_service_client.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 26
+          },
+          "ruta": "base/feature_list.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 15
+          },
+          "ruta": "base/functional/bind.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 18
+          },
+          "ruta": "base/memory/scoped_refptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 13
+          },
+          "ruta": "base/task/single_thread_task_runner.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 14
+          },
+          "ruta": "components/cdm/browser/media_drm_storage_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 14
+          },
+          "ruta": "components/download/public/common/in_progress_download_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 10
+          },
+          "ruta": "components/keyed_service/core/simple_key_map.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 12
+          },
+          "ruta": "components/policy/core/browser/browser_policy_connector_base.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 11
+          },
+          "ruta": "components/policy/core/browser/configuration_policy_pref_store.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 17
+          },
+          "ruta": "components/policy/core/browser/url_list/url_blocklist_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 25
+          },
+          "ruta": "components/prefs/pref_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 17
+          },
+          "ruta": "components/prefs/segregated_pref_store.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 8
+          },
+          "ruta": "components/user_prefs/user_prefs.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 22
+          },
+          "ruta": "components/visitedlink/browser/visitedlink_writer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 8
+          },
+          "ruta": "content/public/browser/spare_render_process_host_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 21
+          },
+          "ruta": "content/public/browser/web_contents.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 83
+          },
+          "ruta": "base/memory/weak_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 20
+          },
+          "ruta": "android_webview/browser/aw_browser_context_store.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 13
+          },
+          "ruta": "base/task/sequenced_task_runner.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 14
+          },
+          "ruta": "components/prefs/scoped_user_pref_update.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 13
+          },
+          "ruta": "android_webview/browser/aw_browser_context_unittest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 17
+          },
+          "ruta": "base/run_loop.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 16
+          },
+          "ruta": "base/test/scoped_feature_list.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 12
+          },
+          "ruta": "android_webview/browser/aw_browser_main_parts.h"
+        }
+      ],
+      "total": 17601
+    },
+    "papel": null,
+    "ruta": "base/memory/raw_ptr.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"partition_alloc/pointers/raw_ptr.h\"",
+            "linea": 11
+          },
+          "ruta": "base/allocator/partition_allocator/src/partition_alloc/pointers/raw_ptr.h"
+        }
+      ],
+      "total": 1
+    }
+  }
+}

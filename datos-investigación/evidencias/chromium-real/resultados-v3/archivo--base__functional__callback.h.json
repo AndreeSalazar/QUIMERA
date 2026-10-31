@@ -1,0 +1,331 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":53},\"ruta\":\"android_webview/browser/aw_browser_context.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":15},\"ruta\":\"android_webview/browser/aw_quota_manager_bridge.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":15},\"ruta\":\"base/android/callback_android.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":27},\"ruta\":\"base/files/file_util.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"base/task/thread_pool.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"components/cdm/browser/media_drm_storage_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"components/pref_registry/pref_registry_syncable.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":24},\"ruta\":\"components/prefs/pref_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":8},\"ruta\":\"components/prefs/pref_service_factory.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":16},\"ruta\":\"components/prefs/segregated_pref_store.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":12},\"ruta\":\"components/visitedlink/browser/partitioned_visitedlink_writer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":18},\"ruta\":\"components/visitedlink/browser/visitedlink_writer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"content/public/browser/browser_thread.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":15},\"ruta\":\"third_party/blink/public/common/origin_trials/trial_token_validator.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":11},\"ruta\":\"base/task/sequenced_task_runner.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"base/run_loop.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":9},\"ruta\":\"content/public/browser/network_service_instance.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":22},\"ruta\":\"base/functional/callback_helpers.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"components/heap_profiling/in_process/heap_profiler_controller.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":15},\"ruta\":\"components/variations/variations_ids_provider.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":12},\"ruta\":\"content/public/browser/browser_child_process_host.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":8},\"ruta\":\"ui/gl/gl_surface.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":8},\"ruta\":\"android_webview/browser/permission/permission_callback.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"components/policy/core/browser/configuration_policy_handler_list.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"android_webview/browser/lifecycle/aw_contents_lifecycle_notifier.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"android_webview/browser/metrics/visibility_metrics_logger.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":13},\"ruta\":\"base/android/pre_freeze_background_memory_trimmer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"base/synchronization/waitable_event.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":14},\"ruta\":\"components/os_crypt/async/browser/os_crypt_async.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback.h\\\"\",\"linea\":73},\"ruta\":\"base/timer/timer.h\"}],\"total\":9021},\"papel\":null,\"ruta\":\"base/functional/callback.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/bind.h\\\"\",\"linea\":19},\"ruta\":\"base/functional/bind.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/compiler_specific.h\\\"\",\"linea\":18},\"ruta\":\"base/compiler_specific.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback_forward.h\\\"\",\"linea\":20},\"ruta\":\"base/functional/callback_forward.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/notreached.h\\\"\",\"linea\":24},\"ruta\":\"base/notreached.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/check.h\\\"\",\"linea\":17},\"ruta\":\"base/check.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/function_ref.h\\\"\",\"linea\":23},\"ruta\":\"base/functional/function_ref.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback_internal.h\\\"\",\"linea\":21},\"ruta\":\"base/functional/callback_internal.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/functional/callback_tags.h\\\"\",\"linea\":22},\"ruta\":\"base/functional/callback_tags.h\"}],\"total\":8}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 53
+          },
+          "ruta": "android_webview/browser/aw_browser_context.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 15
+          },
+          "ruta": "android_webview/browser/aw_quota_manager_bridge.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 15
+          },
+          "ruta": "base/android/callback_android.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 27
+          },
+          "ruta": "base/files/file_util.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 14
+          },
+          "ruta": "base/task/thread_pool.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "components/cdm/browser/media_drm_storage_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "components/pref_registry/pref_registry_syncable.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 24
+          },
+          "ruta": "components/prefs/pref_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 8
+          },
+          "ruta": "components/prefs/pref_service_factory.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 16
+          },
+          "ruta": "components/prefs/segregated_pref_store.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 12
+          },
+          "ruta": "components/visitedlink/browser/partitioned_visitedlink_writer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 18
+          },
+          "ruta": "components/visitedlink/browser/visitedlink_writer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "content/public/browser/browser_thread.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 15
+          },
+          "ruta": "third_party/blink/public/common/origin_trials/trial_token_validator.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 11
+          },
+          "ruta": "base/task/sequenced_task_runner.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 14
+          },
+          "ruta": "base/run_loop.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 9
+          },
+          "ruta": "content/public/browser/network_service_instance.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 22
+          },
+          "ruta": "base/functional/callback_helpers.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "components/heap_profiling/in_process/heap_profiler_controller.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 15
+          },
+          "ruta": "components/variations/variations_ids_provider.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 12
+          },
+          "ruta": "content/public/browser/browser_child_process_host.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 8
+          },
+          "ruta": "ui/gl/gl_surface.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 8
+          },
+          "ruta": "android_webview/browser/permission/permission_callback.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "components/policy/core/browser/configuration_policy_handler_list.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "android_webview/browser/lifecycle/aw_contents_lifecycle_notifier.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "android_webview/browser/metrics/visibility_metrics_logger.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 13
+          },
+          "ruta": "base/android/pre_freeze_background_memory_trimmer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 14
+          },
+          "ruta": "base/synchronization/waitable_event.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 14
+          },
+          "ruta": "components/os_crypt/async/browser/os_crypt_async.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback.h\"",
+            "linea": 73
+          },
+          "ruta": "base/timer/timer.h"
+        }
+      ],
+      "total": 9021
+    },
+    "papel": null,
+    "ruta": "base/functional/callback.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/bind.h\"",
+            "linea": 19
+          },
+          "ruta": "base/functional/bind.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/compiler_specific.h\"",
+            "linea": 18
+          },
+          "ruta": "base/compiler_specific.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback_forward.h\"",
+            "linea": 20
+          },
+          "ruta": "base/functional/callback_forward.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/notreached.h\"",
+            "linea": 24
+          },
+          "ruta": "base/notreached.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/check.h\"",
+            "linea": 17
+          },
+          "ruta": "base/check.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/function_ref.h\"",
+            "linea": 23
+          },
+          "ruta": "base/functional/function_ref.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback_internal.h\"",
+            "linea": 21
+          },
+          "ruta": "base/functional/callback_internal.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/functional/callback_tags.h\"",
+            "linea": 22
+          },
+          "ruta": "base/functional/callback_tags.h"
+        }
+      ],
+      "total": 8
+    }
+  }
+}

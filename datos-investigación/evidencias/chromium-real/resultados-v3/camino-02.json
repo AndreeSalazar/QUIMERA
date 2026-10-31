@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"a\":\"third_party/blink/renderer/core/dom/document.h\",\"b\":\"v8/include/v8-isolate.h\",\"ciclo\":false,\"igual_de_cortos\":1,\"pasos\":[{\"desde\":\"third_party/blink/renderer/core/dom/document.h\",\"hasta\":\"third_party/blink/renderer/bindings/core/v8/script_promise.h\",\"lo_usan\":460,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/renderer/bindings/core/v8/script_promise.h\\\"\",\"linea\":64},\"sin_este_paso\":\"otro camino de 4 saltos\"},{\"desde\":\"third_party/blink/renderer/bindings/core/v8/script_promise.h\",\"hasta\":\"v8/include/v8.h\",\"lo_usan\":421,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8/include/v8.h\\\"\",\"linea\":48},\"sin_este_paso\":\"otro camino de 4 saltos\"},{\"desde\":\"v8/include/v8.h\",\"hasta\":\"v8/include/v8-isolate.h\",\"lo_usan\":188,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"v8-isolate.h\\\"\",\"linea\":36},\"sin_este_paso\":\"otro camino de 4 saltos\"}],\"por_que\":\"document.h usa a v8-isolate.h a traves de 2 archivos: si cambia v8-isolate.h, document.h se recompila. Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.\",\"punto_de_encuentro\":null,\"saltos\":3,\"union\":\"A usa B\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "a": "third_party/blink/renderer/core/dom/document.h",
+    "b": "v8/include/v8-isolate.h",
+    "ciclo": false,
+    "igual_de_cortos": 1,
+    "pasos": [
+      {
+        "desde": "third_party/blink/renderer/core/dom/document.h",
+        "hasta": "third_party/blink/renderer/bindings/core/v8/script_promise.h",
+        "lo_usan": 460,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/blink/renderer/bindings/core/v8/script_promise.h\"",
+          "linea": 64
+        },
+        "sin_este_paso": "otro camino de 4 saltos"
+      },
+      {
+        "desde": "third_party/blink/renderer/bindings/core/v8/script_promise.h",
+        "hasta": "v8/include/v8.h",
+        "lo_usan": 421,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8/include/v8.h\"",
+          "linea": 48
+        },
+        "sin_este_paso": "otro camino de 4 saltos"
+      },
+      {
+        "desde": "v8/include/v8.h",
+        "hasta": "v8/include/v8-isolate.h",
+        "lo_usan": 188,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"v8-isolate.h\"",
+          "linea": 36
+        },
+        "sin_este_paso": "otro camino de 4 saltos"
+      }
+    ],
+    "por_que": "document.h usa a v8-isolate.h a traves de 2 archivos: si cambia v8-isolate.h, document.h se recompila. Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.",
+    "punto_de_encuentro": null,
+    "saltos": 3,
+    "union": "A usa B"
+  }
+}

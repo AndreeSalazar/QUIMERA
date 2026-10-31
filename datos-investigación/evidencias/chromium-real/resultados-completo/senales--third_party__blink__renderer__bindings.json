@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":462,\"texto\":\"data se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<unsigned char>data\"},{\"archivo\":\"third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":481,\"texto\":\"data se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<unsigned char>data\"},{\"archivo\":\"third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":489,\"texto\":\"data se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<unsigned char>data\"},{\"archivo\":\"third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":497,\"texto\":\"message se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<unsigned char>message\"},{\"archivo\":\"third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":505,\"texto\":\"signature se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<unsigned char>signature\"},{\"archivo\":\"third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc\",\"control_valido\":\"void f(const std::string& s);  // o std::string_view si solo se lee\",\"eje\":\"Rendimiento\",\"exacta\":false,\"ficha\":\"R-002\",\"linea\":506,\"texto\":\"message se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee\",\"titulo\":\"Copiar un contenedor al pasarlo como parametro\",\"visto\":\"std::vector<unsigned char>message\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/js_based_event_listener.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":71,\"texto\":\"la funcion ocupa 150 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"Event*event){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/js_event_handler.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":56,\"texto\":\"la funcion ocupa 155 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"Value>js_event){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/js_event_handler_for_content_attribute.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":71,\"texto\":\"la funcion ocupa 189 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"EventTarget&event_target){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/native_value_traits_impl.h\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":951,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\".Matches(v8_element)){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/native_value_traits_impl.h\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1161,\"texto\":\"la funcion ocupa 112 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"ExceptionState&exception_state){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/native_value_traits_impl_test.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":58,\"texto\":\"la funcion ocupa 157 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"NativeValueTraitsImplTest, IDLRecord){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/native_value_traits_impl_test.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":216,\"texto\":\"la funcion ocupa 116 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"NativeValueTraitsImplTest, IDLSequence){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_custom_element_definition_builder.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":58,\"texto\":\"la funcion ocupa 175 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::RememberOriginalProperties(){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_iterator.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":485,\"texto\":\"la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"Value>reason){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":95,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\".EndsWithIgnoringAsciiCase(\\\".mjs\\\")){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":137,\"texto\":\"la funcion ocupa 117 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"*src)override{\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":177,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\");if(src){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":258,\"texto\":\"la funcion ocupa 117 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"GetNextChunk()override{\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":303,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\");if(client_task_runner_){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":927,\"texto\":\"la funcion ocupa 185 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::TryStartStreamingTask(){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2025,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::TryStartStreaming(){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/script_streamer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2164,\"texto\":\"la funcion ocupa 109 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"HandleSignalsState&state){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_deserializer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":470,\"texto\":\"la funcion ocupa 485 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"ExceptionState&exception_state){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_deserializer.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":525,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\": ReadFileIndex())){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_serializer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":95,\"texto\":\"la funcion ocupa 113 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"ExceptionState&exception_state){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_serializer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":407,\"texto\":\"la funcion ocupa 431 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"ExceptionState&exception_state){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/use_counter_callback.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":19,\"texto\":\"la funcion ocupa 535 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"::UseCounterFeature feature){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/use_counter_callback.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":224,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"current_execution_context->has_filed_shared_array_buffer_creation_issue()){\"},{\"archivo\":\"third_party/blink/renderer/bindings/core/v8/v8_binding_for_core.cc\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":613,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"(U16_IS_TRAIL(d)){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":21,\"total\":51}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 462,
+        "texto": "data se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<unsigned char>data"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 481,
+        "texto": "data se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<unsigned char>data"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 489,
+        "texto": "data se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<unsigned char>data"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 497,
+        "texto": "message se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<unsigned char>message"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 505,
+        "texto": "signature se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<unsigned char>signature"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/modules/v8/serialization/v8_script_value_serializer_for_modules_test.cc",
+        "control_valido": "void f(const std::string& s);  // o std::string_view si solo se lee",
+        "eje": "Rendimiento",
+        "exacta": false,
+        "ficha": "R-002",
+        "linea": 506,
+        "texto": "message se copia entero en cada llamada: const std::vector& (o una vista) si solo se lee",
+        "titulo": "Copiar un contenedor al pasarlo como parametro",
+        "visto": "std::vector<unsigned char>message"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/js_based_event_listener.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 71,
+        "texto": "la funcion ocupa 150 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "Event*event){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/js_event_handler.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 56,
+        "texto": "la funcion ocupa 155 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "Value>js_event){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/js_event_handler_for_content_attribute.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 71,
+        "texto": "la funcion ocupa 189 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "EventTarget&event_target){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/native_value_traits_impl.h",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 951,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ".Matches(v8_element)){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/native_value_traits_impl.h",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1161,
+        "texto": "la funcion ocupa 112 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "ExceptionState&exception_state){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/native_value_traits_impl_test.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 58,
+        "texto": "la funcion ocupa 157 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "NativeValueTraitsImplTest, IDLRecord){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/native_value_traits_impl_test.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 216,
+        "texto": "la funcion ocupa 116 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "NativeValueTraitsImplTest, IDLSequence){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_custom_element_definition_builder.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 58,
+        "texto": "la funcion ocupa 175 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::RememberOriginalProperties(){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_iterator.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 485,
+        "texto": "la funcion ocupa 103 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "Value>reason){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 95,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ".EndsWithIgnoringAsciiCase(\".mjs\")){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 137,
+        "texto": "la funcion ocupa 117 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "*src)override{"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 177,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ");if(src){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 258,
+        "texto": "la funcion ocupa 117 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "GetNextChunk()override{"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 303,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ");if(client_task_runner_){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 927,
+        "texto": "la funcion ocupa 185 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::TryStartStreamingTask(){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2025,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::TryStartStreaming(){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/script_streamer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2164,
+        "texto": "la funcion ocupa 109 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "HandleSignalsState&state){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_deserializer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 470,
+        "texto": "la funcion ocupa 485 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "ExceptionState&exception_state){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_deserializer.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 525,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": ": ReadFileIndex())){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_serializer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 95,
+        "texto": "la funcion ocupa 113 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "ExceptionState&exception_state){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/serialization/v8_script_value_serializer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 407,
+        "texto": "la funcion ocupa 431 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "ExceptionState&exception_state){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/use_counter_callback.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 19,
+        "texto": "la funcion ocupa 535 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "::UseCounterFeature feature){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/use_counter_callback.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 224,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "current_execution_context->has_filed_shared_array_buffer_creation_issue()){"
+      },
+      {
+        "archivo": "third_party/blink/renderer/bindings/core/v8/v8_binding_for_core.cc",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 613,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "(U16_IS_TRAIL(d)){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 21,
+    "total": 51
+  }
+}

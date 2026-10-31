@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "text": "{\"archivos\":0,\"dependen_de_un_if\":0,\"ficha\":\"E-003 (Elegancia): compila por las guardas, pero ninguno se entiende sin los otros\",\"lista\":[],\"quedan\":0,\"total\":0}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "archivos": 0,
+    "dependen_de_un_if": 0,
+    "ficha": "E-003 (Elegancia): compila por las guardas, pero ninguno se entiende sin los otros",
+    "lista": [],
+    "quedan": 0,
+    "total": 0
+  }
+}

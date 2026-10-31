@@ -1,0 +1,318 @@
+{
+ "mozjs": {
+  "ruta": "mozjs",
+  "no_std": false,
+  "version": "0.26.13",
+  "descripcion": "Rust bindings to the Mozilla SpiderMonkey JavaScript engine.",
+  "archivos_rs": 49,
+  "lineas_rs": 7708,
+  "lineas_unsafe": 345,
+  "nivel": 6,
+  "usa_internos": [
+   "mozjs_sys"
+  ],
+  "lo_usan": [],
+  "externos": [
+   "bindgen",
+   "cc",
+   "encoding_rs",
+   "libc",
+   "log",
+   "num-traits"
+  ]
+ },
+ "mozjs_collator_glue": {
+  "ruta": "mozjs-extracted-crates/collator_glue",
+  "no_std": false,
+  "version": "153.6.0",
+  "descripcion": "copy of collator_glue for mozjs-sys",
+  "archivos_rs": 2,
+  "lineas_rs": 600,
+  "lineas_unsafe": 15,
+  "nivel": 4,
+  "usa_internos": [
+   "mozjs_icu_collator"
+  ],
+  "lo_usan": [
+   "mozjs_sys"
+  ],
+  "externos": [
+   "arraystring",
+   "arrayvec",
+   "cbindgen",
+   "icu_locale_core",
+   "tinystr",
+   "writeable"
+  ]
+ },
+ "mozjs_icu_collator": {
+  "ruta": "mozjs-extracted-crates/icu_collator",
+  "no_std": true,
+  "version": "153.6.0",
+  "descripcion": "API for comparing strings according to language-dependent conventions",
+  "archivos_rs": 8,
+  "lineas_rs": 9453,
+  "lineas_unsafe": 10,
+  "nivel": 3,
+  "usa_internos": [
+   "mozjs_icu_collator_data",
+   "mozjs_icu_collections",
+   "mozjs_icu_normalizer",
+   "mozjs_utf16_iter",
+   "mozjs_utf8_iter"
+  ],
+  "lo_usan": [
+   "mozjs_collator_glue"
+  ],
+  "externos": [
+   "databake",
+   "displaydoc",
+   "icu_locale",
+   "icu_locale_core",
+   "icu_properties",
+   "icu_provider",
+   "serde",
+   "smallvec",
+   "tinystr",
+   "zerovec"
+  ]
+ },
+ "mozjs_icu_collator_data": {
+  "ruta": "mozjs-extracted-crates/icu_collator_data",
+  "no_std": true,
+  "version": "153.6.0",
+  "descripcion": "Data for the icu_collator crate",
+  "archivos_rs": 3,
+  "lineas_rs": 26,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "mozjs_icu_collator"
+  ],
+  "externos": []
+ },
+ "mozjs_icu_collections": {
+  "ruta": "mozjs-extracted-crates/icu_collections",
+  "no_std": true,
+  "version": "153.6.0",
+  "descripcion": "Collection of API for use in ICU libraries.",
+  "archivos_rs": 26,
+  "lineas_rs": 10396,
+  "lineas_unsafe": 85,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "mozjs_icu_collator",
+   "mozjs_icu_normalizer",
+   "mozjs_properties_glue",
+   "mozjs_utf16_iter",
+   "mozjs_utf8_iter"
+  ],
+  "externos": [
+   "databake",
+   "displaydoc",
+   "icu_casemap",
+   "potential_utf",
+   "serde",
+   "yoke",
+   "zerofrom",
+   "zerovec"
+  ]
+ },
+ "mozjs_icu_normalizer": {
+  "ruta": "mozjs-extracted-crates/icu_normalizer",
+  "no_std": true,
+  "version": "153.6.0",
+  "descripcion": "API for normalizing text into Unicode Normalization Forms",
+  "archivos_rs": 15,
+  "lineas_rs": 8302,
+  "lineas_unsafe": 66,
+  "nivel": 2,
+  "usa_internos": [
+   "mozjs_icu_collections",
+   "mozjs_icu_normalizer_data",
+   "mozjs_utf16_iter",
+   "mozjs_utf8_iter"
+  ],
+  "lo_usan": [
+   "mozjs_icu_collator",
+   "mozjs_normalizer_glue"
+  ],
+  "externos": [
+   "databake",
+   "displaydoc",
+   "harfbuzz-traits",
+   "icu_properties",
+   "icu_provider",
+   "serde",
+   "smallvec",
+   "write16",
+   "zerovec"
+  ]
+ },
+ "mozjs_icu_normalizer_data": {
+  "ruta": "mozjs-extracted-crates/icu_normalizer_data",
+  "no_std": true,
+  "version": "153.6.0",
+  "descripcion": "Data for the icu_normalizer crate",
+  "archivos_rs": 3,
+  "lineas_rs": 76,
+  "lineas_unsafe": 0,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "mozjs_icu_normalizer"
+  ],
+  "externos": []
+ },
+ "mozjs_locale_glue": {
+  "ruta": "mozjs-extracted-crates/locale_glue",
+  "no_std": false,
+  "version": "153.6.0",
+  "descripcion": "copy of locale_glue for mozjs-sys",
+  "archivos_rs": 2,
+  "lineas_rs": 65,
+  "lineas_unsafe": 1,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "mozjs_sys"
+  ],
+  "externos": [
+   "cbindgen",
+   "icu_locale"
+  ]
+ },
+ "mozjs_normalizer_glue": {
+  "ruta": "mozjs-extracted-crates/normalizer_glue",
+  "no_std": false,
+  "version": "153.6.0",
+  "descripcion": "copy of normalizer_glue for mozjs-sys",
+  "archivos_rs": 2,
+  "lineas_rs": 293,
+  "lineas_unsafe": 7,
+  "nivel": 3,
+  "usa_internos": [
+   "mozjs_icu_normalizer"
+  ],
+  "lo_usan": [
+   "mozjs_sys"
+  ],
+  "externos": [
+   "cbindgen",
+   "encoding_rs",
+   "smallvec",
+   "write16"
+  ]
+ },
+ "mozjs_properties_glue": {
+  "ruta": "mozjs-extracted-crates/properties_glue",
+  "no_std": false,
+  "version": "153.6.0",
+  "descripcion": "copy of properties_glue for mozjs-sys",
+  "archivos_rs": 2,
+  "lineas_rs": 73,
+  "lineas_unsafe": 1,
+  "nivel": 1,
+  "usa_internos": [
+   "mozjs_icu_collections"
+  ],
+  "lo_usan": [
+   "mozjs_sys"
+  ],
+  "externos": [
+   "cbindgen",
+   "icu_casemap",
+   "icu_properties"
+  ]
+ },
+ "mozjs_unicode_bidi_ffi": {
+  "ruta": "mozjs-extracted-crates/unicode_bidi_ffi",
+  "no_std": false,
+  "version": "153.6.0",
+  "descripcion": "copy of unicode-bidi-ffi for mozjs-sys",
+  "archivos_rs": 2,
+  "lineas_rs": 156,
+  "lineas_unsafe": 5,
+  "nivel": 0,
+  "usa_internos": [],
+  "lo_usan": [
+   "mozjs_sys"
+  ],
+  "externos": [
+   "cbindgen",
+   "icu_properties",
+   "unicode-bidi"
+  ]
+ },
+ "mozjs_utf16_iter": {
+  "ruta": "mozjs-extracted-crates/utf16_iter",
+  "no_std": true,
+  "version": "153.6.0",
+  "descripcion": "Iterator by char over potentially-invalid UTF-16 in &[u16]",
+  "archivos_rs": 5,
+  "lineas_rs": 928,
+  "lineas_unsafe": 12,
+  "nivel": 1,
+  "usa_internos": [
+   "mozjs_icu_collections"
+  ],
+  "lo_usan": [
+   "mozjs_icu_collator",
+   "mozjs_icu_normalizer"
+  ],
+  "externos": []
+ },
+ "mozjs_utf8_iter": {
+  "ruta": "mozjs-extracted-crates/utf8_iter",
+  "no_std": true,
+  "version": "153.6.0",
+  "descripcion": "Iterator by char over potentially-invalid UTF-8 in &[u8]",
+  "archivos_rs": 5,
+  "lineas_rs": 1474,
+  "lineas_unsafe": 30,
+  "nivel": 1,
+  "usa_internos": [
+   "mozjs_icu_collections"
+  ],
+  "lo_usan": [
+   "mozjs_icu_collator",
+   "mozjs_icu_normalizer"
+  ],
+  "externos": []
+ },
+ "mozjs_sys": {
+  "ruta": "mozjs-sys",
+  "no_std": false,
+  "version": "153.6.0-1",
+  "descripcion": "System crate for the Mozilla SpiderMonkey JavaScript engine.",
+  "archivos_rs": 9,
+  "lineas_rs": 3321,
+  "lineas_unsafe": 180,
+  "nivel": 5,
+  "usa_internos": [
+   "mozjs_collator_glue",
+   "mozjs_locale_glue",
+   "mozjs_normalizer_glue",
+   "mozjs_properties_glue",
+   "mozjs_unicode_bidi_ffi"
+  ],
+  "lo_usan": [
+   "mozjs"
+  ],
+  "externos": [
+   "bindgen",
+   "cc",
+   "encoding_c",
+   "encoding_c_mem",
+   "flate2",
+   "icu_capi",
+   "libc",
+   "libz-rs-sys",
+   "libz-sys",
+   "tar",
+   "walkdir"
+  ]
+ }
+}

@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"content\"},{\"carpeta\":true,\"ruta\":\"ios/web/content\"},{\"carpeta\":true,\"ruta\":\"media/capture/content\"},{\"carpeta\":true,\"ruta\":\"components/ukm/content\"},{\"carpeta\":true,\"ruta\":\"components/crash/content\"},{\"carpeta\":true,\"ruta\":\"components/policy/content\"},{\"carpeta\":true,\"ruta\":\"components/wallet/content\"},{\"carpeta\":true,\"ruta\":\"components/favicon/content\"},{\"carpeta\":true,\"ruta\":\"components/history/content\"},{\"carpeta\":true,\"ruta\":\"components/metrics/content\"}],\"texto\":\"content\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ios/web/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "media/capture/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/ukm/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/crash/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/policy/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/wallet/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/favicon/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/history/content"
+      },
+      {
+        "carpeta": true,
+        "ruta": "components/metrics/content"
+      }
+    ],
+    "texto": "content"
+  }
+}

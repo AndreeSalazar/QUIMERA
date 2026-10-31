@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"tools/crates\"},{\"carpeta\":false,\"ruta\":\"tools/crates/gnrt/lib/crates.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/oak/src/tools/analyze_crate_versions/crates_io.rs\"},{\"carpeta\":true,\"ruta\":\"v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/CrashTests\"},{\"carpeta\":false,\"ruta\":\"v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/CrashTests/crash_test.js\"},{\"carpeta\":false,\"ruta\":\"tools/binary_size/create_patched_supersize_diff.py\"},{\"carpeta\":false,\"ruta\":\"v8/tools/bigsleep/create_snapshot.py\"},{\"carpeta\":false,\"ruta\":\"tools/code_coverage/coverage_test.py\"},{\"carpeta\":false,\"ruta\":\"tools/polymer/css_to_wrapper_test.py\"},{\"carpeta\":false,\"ruta\":\"tools/perf/page_sets/data/crossbench_android_speedometer_3.0_000.wprgo.sha1\"},{\"carpeta\":true,\"ruta\":\"v8/tools/clusterfuzz/js_fuzzer/test_data/crashtests_softskipped\"},{\"carpeta\":false,\"ruta\":\"third_party/dawn/tools/create_ranlib_symlink.py\"},{\"carpeta\":false,\"ruta\":\"v8/tools/clusterfuzz/js_fuzzer/resources/cross_over_template_sloppy.js\"},{\"carpeta\":false,\"ruta\":\"v8/tools/clusterfuzz/js_fuzzer/resources/cross_over_template_strict.js\"},{\"carpeta\":false,\"ruta\":\"v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/chakra/chakra_test1.js\"},{\"carpeta\":false,\"ruta\":\"v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/chakra/chakra_test2.js\"},{\"carpeta\":false,\"ruta\":\"tools/code_coverage/measure_fuzzilli_coverage_test.py\"},{\"carpeta\":true,\"ruta\":\"tools/code_coverage/js_source_maps/create_js_source_maps\"},{\"carpeta\":false,\"ruta\":\"third_party/dawn/tools/src/cov/coverage_test.go\"},{\"carpeta\":false,\"ruta\":\"tools/clang/iterator_checker/tests/comparison-check-after-swap.cpp\"}],\"texto\":\"tools/crates\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "tools/crates"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/crates/gnrt/lib/crates.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/oak/src/tools/analyze_crate_versions/crates_io.rs"
+      },
+      {
+        "carpeta": true,
+        "ruta": "v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/CrashTests"
+      },
+      {
+        "carpeta": false,
+        "ruta": "v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/CrashTests/crash_test.js"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/binary_size/create_patched_supersize_diff.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "v8/tools/bigsleep/create_snapshot.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/code_coverage/coverage_test.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/polymer/css_to_wrapper_test.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/perf/page_sets/data/crossbench_android_speedometer_3.0_000.wprgo.sha1"
+      },
+      {
+        "carpeta": true,
+        "ruta": "v8/tools/clusterfuzz/js_fuzzer/test_data/crashtests_softskipped"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/dawn/tools/create_ranlib_symlink.py"
+      },
+      {
+        "carpeta": false,
+        "ruta": "v8/tools/clusterfuzz/js_fuzzer/resources/cross_over_template_sloppy.js"
+      },
+      {
+        "carpeta": false,
+        "ruta": "v8/tools/clusterfuzz/js_fuzzer/resources/cross_over_template_strict.js"
+      },
+      {
+        "carpeta": false,
+        "ruta": "v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/chakra/chakra_test1.js"
+      },
+      {
+        "carpeta": false,
+        "ruta": "v8/tools/clusterfuzz/js_fuzzer/test_data/input_archive/chakra/chakra_test2.js"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/code_coverage/measure_fuzzilli_coverage_test.py"
+      },
+      {
+        "carpeta": true,
+        "ruta": "tools/code_coverage/js_source_maps/create_js_source_maps"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/dawn/tools/src/cov/coverage_test.go"
+      },
+      {
+        "carpeta": false,
+        "ruta": "tools/clang/iterator_checker/tests/comparison-check-after-swap.cpp"
+      }
+    ],
+    "texto": "tools/crates"
+  }
+}

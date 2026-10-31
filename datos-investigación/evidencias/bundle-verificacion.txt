@@ -1,0 +1,11 @@
+The bundle contains these 7 refs:
+1fe1a9dee3647d08565e25fdac6898fd79320db2 refs/codex/turn-diffs/captures/1793468647611/5378f707-175b-48e4-a8eb-2da3a3c5087f/base
+1fe1a9dee3647d08565e25fdac6898fd79320db2 refs/codex/turn-diffs/captures/1793468787701/4bfe97fb-e042-4780-9197-45bf2edf08f4/base
+1fe1a9dee3647d08565e25fdac6898fd79320db2 refs/codex/turn-diffs/checkpoints/1393f49ab736e1225224ec17d2586e0d/d717d0fdd7305b8c9bd29d0ed784f67f/1793120225921/ea59b9a7-b078-4a5f-aa52-367c74f2394b
+4778c674a43511dbb5cd166f1e8859182bddc4a4 refs/heads/main
+4778c674a43511dbb5cd166f1e8859182bddc4a4 refs/remotes/origin/HEAD
+4778c674a43511dbb5cd166f1e8859182bddc4a4 refs/remotes/origin/main
+4778c674a43511dbb5cd166f1e8859182bddc4a4 HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+C:/Users/Salazar/Documents/Chromiun personal/referencia/ultra-linux.bundle is okay

@@ -1,0 +1,20 @@
+[package]
+name = "quimera-gc"
+description = "Recolector generacional de QUIMERA: guardería (nursery) + zona principal, al estilo de SpiderMonkey."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[package.metadata.quimera]
+nivel = 1
+capa = "motor-js"
+no_std = true
+externos = []
+
+[dependencies]
+quimera-valor.workspace = true
+
+[lints]
+workspace = true

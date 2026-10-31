@@ -1,0 +1,14 @@
+{
+  "content": [
+    {
+      "text": "{\"formato\":\"SARIF 2.1.0\",\"resultados\":121941,\"salida\":\"super-grafo-chromium-completo.sarif\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "formato": "SARIF 2.1.0",
+    "resultados": 121941,
+    "salida": "super-grafo-chromium-completo.sarif"
+  }
+}

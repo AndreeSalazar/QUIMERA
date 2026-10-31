@@ -1,0 +1,38 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"third_party/crabbyavif\"},{\"carpeta\":false,\"ruta\":\"third_party/crabbyavif/src/src/bin/crabbyavif.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/crabbyavif/src/src/bin/impl/crabbyavif_test.rs\"},{\"carpeta\":false,\"ruta\":\"third_party/skia/src/codec/SkCrabbyAvifCodec.h\"},{\"carpeta\":false,\"ruta\":\"third_party/skia/src/codec/SkCrabbyAvifCodec.cpp\"},{\"carpeta\":false,\"ruta\":\"third_party/crabbyavif/src/c_api_tests/sk_crabby_avif_codec_tests.cc\"}],\"texto\":\"third_party/crabbyavif\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "third_party/crabbyavif"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/crabbyavif/src/src/bin/crabbyavif.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/crabbyavif/src/src/bin/impl/crabbyavif_test.rs"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/skia/src/codec/SkCrabbyAvifCodec.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/skia/src/codec/SkCrabbyAvifCodec.cpp"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/crabbyavif/src/c_api_tests/sk_crabby_avif_codec_tests.cc"
+      }
+    ],
+    "texto": "third_party/crabbyavif"
+  }
+}

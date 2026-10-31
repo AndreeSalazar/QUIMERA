@@ -1,0 +1,36 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":2,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/browser.h\\\"\",\"linea\":5},\"ruta\":\"chrome/browser/ui/browser.cc\"},{\"arrastra\":0,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/ui/browser.h\\\"\",\"linea\":14},\"ruta\":\"chrome/browser/ui/browser_window/internal/create_browser_window_non_android.cc\"}],\"recortado\":false,\"ruta\":\"chrome/browser/ui/browser.h\",\"se_recompilan\":2}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 2,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/ui/browser.h\"",
+          "linea": 5
+        },
+        "ruta": "chrome/browser/ui/browser.cc"
+      },
+      {
+        "arrastra": 0,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"chrome/browser/ui/browser.h\"",
+          "linea": 14
+        },
+        "ruta": "chrome/browser/ui/browser_window/internal/create_browser_window_non_android.cc"
+      }
+    ],
+    "recortado": false,
+    "ruta": "chrome/browser/ui/browser.h",
+    "se_recompilan": 2
+  }
+}

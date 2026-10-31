@@ -1,0 +1,43 @@
+{
+  "content": [
+    {
+      "text": "{\"a\":\"third_party/blink/renderer/core/frame/local_frame.h\",\"b\":\"cc/trees/layer_tree_host.h\",\"ciclo\":false,\"igual_de_cortos\":1,\"pasos\":[{\"desde\":\"third_party/blink/renderer/core/frame/local_frame.h\",\"hasta\":\"base/memory/raw_ptr.h\",\"lo_usan\":17601,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":37},\"sin_este_paso\":\"otro camino de 2 saltos\"},{\"desde\":\"cc/trees/layer_tree_host.h\",\"hasta\":\"base/memory/raw_ptr.h\",\"lo_usan\":17601,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":24},\"sin_este_paso\":\"otro camino de 2 saltos\"}],\"por_que\":\"Ninguno usa al otro. Los une raw_ptr.h, que usan los dos (local_frame.h a 1 salto, layer_tree_host.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.\",\"punto_de_encuentro\":\"base/memory/raw_ptr.h\",\"saltos\":2,\"union\":\"comparten\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "a": "third_party/blink/renderer/core/frame/local_frame.h",
+    "b": "cc/trees/layer_tree_host.h",
+    "ciclo": false,
+    "igual_de_cortos": 1,
+    "pasos": [
+      {
+        "desde": "third_party/blink/renderer/core/frame/local_frame.h",
+        "hasta": "base/memory/raw_ptr.h",
+        "lo_usan": 17601,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 37
+        },
+        "sin_este_paso": "otro camino de 2 saltos"
+      },
+      {
+        "desde": "cc/trees/layer_tree_host.h",
+        "hasta": "base/memory/raw_ptr.h",
+        "lo_usan": 17601,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/raw_ptr.h\"",
+          "linea": 24
+        },
+        "sin_este_paso": "otro camino de 2 saltos"
+      }
+    ],
+    "por_que": "Ninguno usa al otro. Los une raw_ptr.h, que usan los dos (local_frame.h a 1 salto, layer_tree_host.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.",
+    "punto_de_encuentro": "base/memory/raw_ptr.h",
+    "saltos": 2,
+    "union": "comparten"
+  }
+}

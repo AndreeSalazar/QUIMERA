@@ -1,0 +1,45 @@
+{
+  "content": [
+    {
+      "text": "{\"analisis_ms\":563,\"archivos_indexados\":2232,\"archivos_leidos\":1894,\"cabeceras_exportadas\":null,\"carpeta\":\"/var/tmp/ultra-main-work/motores/mozjs/mozjs-sys/mozjs/js/src\",\"ciclos\":{\"archivos\":0,\"dependen_de_un_if\":0,\"total\":0},\"compile_commands\":null,\"dependencias\":10108,\"diagnosticos_gcc\":0,\"fallo_conectado\":{\"archivos_que_fallan\":6,\"causas\":6,\"se_pueden_romper\":4},\"guardianes\":null,\"megabytes\":43.0,\"recortado\":false,\"reutilizados_de_la_cache\":0,\"revisiones_gcc\":{\"archivos\":0,\"pendientes\":0},\"siguiente\":\"fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo\",\"sospechas\":{\"Elegancia\":1685,\"Rendimiento\":3,\"Seguridad\":18,\"a_proposito\":0},\"version\":1}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "analisis_ms": 563,
+    "archivos_indexados": 2232,
+    "archivos_leidos": 1894,
+    "cabeceras_exportadas": null,
+    "carpeta": "/var/tmp/ultra-main-work/motores/mozjs/mozjs-sys/mozjs/js/src",
+    "ciclos": {
+      "archivos": 0,
+      "dependen_de_un_if": 0,
+      "total": 0
+    },
+    "compile_commands": null,
+    "dependencias": 10108,
+    "diagnosticos_gcc": 0,
+    "fallo_conectado": {
+      "archivos_que_fallan": 6,
+      "causas": 6,
+      "se_pueden_romper": 4
+    },
+    "guardianes": null,
+    "megabytes": 43.0,
+    "recortado": false,
+    "reutilizados_de_la_cache": 0,
+    "revisiones_gcc": {
+      "archivos": 0,
+      "pendientes": 0
+    },
+    "siguiente": "fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo",
+    "sospechas": {
+      "Elegancia": 1685,
+      "Rendimiento": 3,
+      "Seguridad": 18,
+      "a_proposito": 0
+    },
+    "version": 1
+  }
+}

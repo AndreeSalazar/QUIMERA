@@ -1,0 +1,347 @@
+{
+  "content": [
+    {
+      "text": "{\"lista\":[{\"archivo\":\"third_party/libpng/pngread.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":3455,\"texto\":\"outrow[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"outrow[0]\"},{\"archivo\":\"third_party/libpng/pngread.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":3460,\"texto\":\"outrow[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"outrow[0]\"},{\"archivo\":\"third_party/libpng/pngread.c\",\"control_valido\":\"int x = ULTRA_AT(s.a, 1);\",\"eje\":\"Seguridad\",\"exacta\":true,\"ficha\":\"UB-004\",\"linea\":3500,\"texto\":\"outrow[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455\",\"titulo\":\"El vecino no pertenece al arreglo\",\"visto\":\"outrow[0]\"},{\"archivo\":\"third_party/libpng/contrib/oss-fuzz/libpng_read_fuzzer.cc\",\"control_valido\":\"/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-014\",\"linea\":154,\"texto\":\"tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas\",\"titulo\":\"longjmp vuelve a un valor indeterminado\",\"visto\":\"setjmp(png_jmpbuf(png_handler.png_ptr))\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-014\",\"linea\":314,\"texto\":\"tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas\",\"titulo\":\"longjmp vuelve a un valor indeterminado\",\"visto\":\"setjmp(create_jmp_buf)\"},{\"archivo\":\"third_party/libpng/pngerror.c\",\"control_valido\":\"Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"C-002\",\"linea\":524,\"texto\":\"msg se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila\",\"titulo\":\"Arreglo variable con longitud no positiva\",\"visto\":\"char msg[fixed_message_ln + PNG_MAX_ERROR_TEXT]\"},{\"archivo\":\"third_party/libpng/pngerror.c\",\"control_valido\":\"/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-014\",\"linea\":634,\"texto\":\"tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas\",\"titulo\":\"longjmp vuelve a un valor indeterminado\",\"visto\":\"setjmp(free_jmp_buf)\"},{\"archivo\":\"third_party/libpng/pngset.c\",\"control_valido\":\"Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"C-002\",\"linea\":690,\"texto\":\"swidth se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila\",\"titulo\":\"Arreglo variable con longitud no positiva\",\"visto\":\"char swidth[PNG_sCAL_MAX_DIGITS + 1]\"},{\"archivo\":\"third_party/libpng/pngset.c\",\"control_valido\":\"Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"C-002\",\"linea\":691,\"texto\":\"sheight se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila\",\"titulo\":\"Arreglo variable con longitud no positiva\",\"visto\":\"char sheight[PNG_sCAL_MAX_DIGITS + 1]\"},{\"archivo\":\"third_party/libpng/pngset.c\",\"control_valido\":\"Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"C-002\",\"linea\":720,\"texto\":\"swidth se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila\",\"titulo\":\"Arreglo variable con longitud no positiva\",\"visto\":\"char swidth[PNG_sCAL_MAX_DIGITS + 1]\"},{\"archivo\":\"third_party/libpng/pngset.c\",\"control_valido\":\"Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"C-002\",\"linea\":721,\"texto\":\"sheight se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila\",\"titulo\":\"Arreglo variable con longitud no positiva\",\"visto\":\"char sheight[PNG_sCAL_MAX_DIGITS + 1]\"},{\"archivo\":\"third_party/libpng/pngtest.c\",\"control_valido\":\"/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */\",\"eje\":\"Seguridad\",\"exacta\":false,\"ficha\":\"UB-014\",\"linea\":935,\"texto\":\"tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas\",\"titulo\":\"longjmp vuelve a un valor indeterminado\",\"visto\":\"setjmp(png_jmpbuf(read_ptr))\"},{\"archivo\":\"third_party/libpng/contrib/oss-fuzz/libpng_read_fuzzer.cc\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":102,\"texto\":\"la funcion ocupa 126 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", size_t size){\"},{\"archivo\":\"third_party/libpng/mips/filter_mmi_inline_assembly.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":265,\"texto\":\"la funcion ocupa 185 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", png_const_bytep prev){\"},{\"archivo\":\"third_party/libpng/mips/mips_init.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":82,\"texto\":\"la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"unsigned int bpp){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":485,\"texto\":\"la funcion ocupa 199 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int num){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1204,\"texto\":\"la funcion ocupa 293 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"png_xy*xy){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1617,\"texto\":\"la funcion ocupa 178 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int color_type){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":1927,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(add!=0){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":1965,\"texto\":\"la funcion ocupa 158 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int filter_type){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2136,\"texto\":\"la funcion ocupa 121 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"size_t*whereami){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2319,\"texto\":\"la funcion ocupa 318 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\"unsigned int precision){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2369,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(test <= DBL_MAX){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2688,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"if(first <= 5){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":2772,\"texto\":\"la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", png_int_32 divisor){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":2842,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"(--bitshift>=0){\"},{\"archivo\":\"third_party/libpng/png.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":3617,\"texto\":\"la funcion ocupa 147 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", int bit_depth){\"},{\"archivo\":\"third_party/libpng/pngerror.c\",\"control_valido\":\"Salir pronto (return, continue o un goto de limpieza) y extraer funciones.\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-002\",\"linea\":635,\"texto\":\"5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion\",\"titulo\":\"Anidamiento profundo\",\"visto\":\"!setjmp(free_jmp_buf)){\"},{\"archivo\":\"third_party/libpng/pngpread.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":182,\"texto\":\"la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", png_inforp info_ptr){\"},{\"archivo\":\"third_party/libpng/pngpread.c\",\"control_valido\":\"Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).\",\"eje\":\"Elegancia\",\"exacta\":false,\"ficha\":\"E-001\",\"linea\":499,\"texto\":\"la funcion ocupa 108 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)\",\"titulo\":\"Funcion demasiado larga\",\"visto\":\", size_t buffer_length){\"}],\"orden\":\"compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia\",\"por_donde_llega\":[],\"quedan\":121,\"total\":151}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lista": [
+      {
+        "archivo": "third_party/libpng/pngread.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 3455,
+        "texto": "outrow[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "outrow[0]"
+      },
+      {
+        "archivo": "third_party/libpng/pngread.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 3460,
+        "texto": "outrow[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "outrow[0]"
+      },
+      {
+        "archivo": "third_party/libpng/pngread.c",
+        "control_valido": "int x = ULTRA_AT(s.a, 1);",
+        "eje": "Seguridad",
+        "exacta": true,
+        "ficha": "UB-004",
+        "linea": 3500,
+        "texto": "outrow[0] con 0 elementos: el ultimo indice valido es 340282366920938463463374607431768211455",
+        "titulo": "El vecino no pertenece al arreglo",
+        "visto": "outrow[0]"
+      },
+      {
+        "archivo": "third_party/libpng/contrib/oss-fuzz/libpng_read_fuzzer.cc",
+        "control_valido": "/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-014",
+        "linea": 154,
+        "texto": "tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas",
+        "titulo": "longjmp vuelve a un valor indeterminado",
+        "visto": "setjmp(png_jmpbuf(png_handler.png_ptr))"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-014",
+        "linea": 314,
+        "texto": "tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas",
+        "titulo": "longjmp vuelve a un valor indeterminado",
+        "visto": "setjmp(create_jmp_buf)"
+      },
+      {
+        "archivo": "third_party/libpng/pngerror.c",
+        "control_valido": "Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "C-002",
+        "linea": 524,
+        "texto": "msg se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila",
+        "titulo": "Arreglo variable con longitud no positiva",
+        "visto": "char msg[fixed_message_ln + PNG_MAX_ERROR_TEXT]"
+      },
+      {
+        "archivo": "third_party/libpng/pngerror.c",
+        "control_valido": "/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-014",
+        "linea": 634,
+        "texto": "tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas",
+        "titulo": "longjmp vuelve a un valor indeterminado",
+        "visto": "setjmp(free_jmp_buf)"
+      },
+      {
+        "archivo": "third_party/libpng/pngset.c",
+        "control_valido": "Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "C-002",
+        "linea": 690,
+        "texto": "swidth se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila",
+        "titulo": "Arreglo variable con longitud no positiva",
+        "visto": "char swidth[PNG_sCAL_MAX_DIGITS + 1]"
+      },
+      {
+        "archivo": "third_party/libpng/pngset.c",
+        "control_valido": "Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "C-002",
+        "linea": 691,
+        "texto": "sheight se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila",
+        "titulo": "Arreglo variable con longitud no positiva",
+        "visto": "char sheight[PNG_sCAL_MAX_DIGITS + 1]"
+      },
+      {
+        "archivo": "third_party/libpng/pngset.c",
+        "control_valido": "Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "C-002",
+        "linea": 720,
+        "texto": "swidth se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila",
+        "titulo": "Arreglo variable con longitud no positiva",
+        "visto": "char swidth[PNG_sCAL_MAX_DIGITS + 1]"
+      },
+      {
+        "archivo": "third_party/libpng/pngset.c",
+        "control_valido": "Rechazar n <= 0 antes de declarar el VLA; imponer tambien un limite de recursos o preferir reserva comprobada.",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "C-002",
+        "linea": 721,
+        "texto": "sheight se declara con una longitud evaluada en ejecucion: comprobar que es mayor que cero y que cabe en la pila",
+        "titulo": "Arreglo variable con longitud no positiva",
+        "visto": "char sheight[PNG_sCAL_MAX_DIGITS + 1]"
+      },
+      {
+        "archivo": "third_party/libpng/pngtest.c",
+        "control_valido": "/* Guardar el estado fuera de esas locales, o redisenar el flujo sin longjmp. */",
+        "eje": "Seguridad",
+        "exacta": false,
+        "ficha": "UB-014",
+        "linea": 935,
+        "texto": "tras longjmp, las locales cambiadas despues de setjmp y no volatile quedan indeterminadas",
+        "titulo": "longjmp vuelve a un valor indeterminado",
+        "visto": "setjmp(png_jmpbuf(read_ptr))"
+      },
+      {
+        "archivo": "third_party/libpng/contrib/oss-fuzz/libpng_read_fuzzer.cc",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 102,
+        "texto": "la funcion ocupa 126 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", size_t size){"
+      },
+      {
+        "archivo": "third_party/libpng/mips/filter_mmi_inline_assembly.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 265,
+        "texto": "la funcion ocupa 185 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", png_const_bytep prev){"
+      },
+      {
+        "archivo": "third_party/libpng/mips/mips_init.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 82,
+        "texto": "la funcion ocupa 120 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "unsigned int bpp){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 485,
+        "texto": "la funcion ocupa 199 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int num){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1204,
+        "texto": "la funcion ocupa 293 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "png_xy*xy){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1617,
+        "texto": "la funcion ocupa 178 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int color_type){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 1927,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(add!=0){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 1965,
+        "texto": "la funcion ocupa 158 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int filter_type){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2136,
+        "texto": "la funcion ocupa 121 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "size_t*whereami){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2319,
+        "texto": "la funcion ocupa 318 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": "unsigned int precision){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2369,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(test <= DBL_MAX){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2688,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "if(first <= 5){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 2772,
+        "texto": "la funcion ocupa 111 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", png_int_32 divisor){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 2842,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "(--bitshift>=0){"
+      },
+      {
+        "archivo": "third_party/libpng/png.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 3617,
+        "texto": "la funcion ocupa 147 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", int bit_depth){"
+      },
+      {
+        "archivo": "third_party/libpng/pngerror.c",
+        "control_valido": "Salir pronto (return, continue o un goto de limpieza) y extraer funciones.",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-002",
+        "linea": 635,
+        "texto": "5 niveles de bloques dentro de la funcion: salir pronto o extraer una funcion",
+        "titulo": "Anidamiento profundo",
+        "visto": "!setjmp(free_jmp_buf)){"
+      },
+      {
+        "archivo": "third_party/libpng/pngpread.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 182,
+        "texto": "la funcion ocupa 107 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", png_inforp info_ptr){"
+      },
+      {
+        "archivo": "third_party/libpng/pngpread.c",
+        "control_valido": "Partirla en funciones cuyo nombre diga que hacen (static inline si importa el coste).",
+        "eje": "Elegancia",
+        "exacta": false,
+        "ficha": "E-001",
+        "linea": 499,
+        "texto": "la funcion ocupa 108 lineas (la guia del kernel pide una o dos pantallas; aqui se marca desde 100)",
+        "titulo": "Funcion demasiado larga",
+        "visto": ", size_t buffer_length){"
+      }
+    ],
+    "orden": "compilador, Seguridad exacta, Seguridad a revisar, avisos, Rendimiento, Elegancia",
+    "por_donde_llega": [],
+    "quedan": 121,
+    "total": 151
+  }
+}

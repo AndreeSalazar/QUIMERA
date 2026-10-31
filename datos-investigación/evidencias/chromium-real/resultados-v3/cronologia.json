@@ -1,0 +1,158 @@
+{
+  "content": [
+    {
+      "text": "{\"autores\":1,\"aviso\":\"repositorio superficial (clonado sin toda la historia): el primer commit no es el de verdad; git fetch --unshallow lo trae entero\",\"carpetas_en_orden\":[{\"carpeta\":\".agents\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\".claude\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\".gemini\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\".github\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"agents\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"android_webview\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"apps\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"ash\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"base\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}},{\"carpeta\":\"build\",\"nace\":{\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"autor\":\"chromium-autoroll\",\"commit\":\"e9b6e64b6f\",\"fecha\":\"2026-10-31\"}}],\"carpetas_total\":51,\"commits\":1,\"cortada\":false,\"crecimiento\":[{\"archivos\":514576,\"asunto\":\"Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35\",\"ciclos\":30,\"codigo\":160247,\"commit\":\"e9b6e64b6f\",\"dependencias\":1271125,\"fecha\":\"2026-10-31\"}],\"desde\":\"2026-10-31\",\"hasta\":\"2026-10-31\",\"leida_ms\":28711,\"nota\":\"git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.\",\"superficial\":true,\"verificacion\":{\"coinciden\":511720,\"dependencias\":{\"coinciden\":1268966,\"hoy\":2044874,\"nota\":\"solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas\",\"reconstruidas\":1271125,\"solo_en_git\":[\".gemini/commands/PRESUBMIT_test.py -> PRESUBMIT.py\",\".gemini/commands/PRESUBMIT_test.py -> PRESUBMIT_test_mocks.py\",\"android_webview/browser/gfx/scoped_app_gl_state_restore_impl_angle.cc -> third_party/weston/include/GLES2/gl2.h\",\"android_webview/browser/gfx/test/fake_hwui_gl_context.h -> third_party/weston/include/GLES2/gl2.h\",\"android_webview/test/shell/src/draw_fn/context_manager.cc -> third_party/weston/include/GLES2/gl2.h\"],\"solo_hoy\":[\"agents/shared/skills/cl-description/scripts/history_test.py -> agents/shared/skills/cl-description/scripts/history.py\",\"agents/shared/skills/cl-description/scripts/wrap_lines_test.py -> agents/shared/skills/cl-description/scripts/wrap_lines.py\",\"agents/shared/skills/gerrit-cli/scripts/gerrit_client_wrapper_test.py -> agents/shared/skills/gerrit-cli/scripts/gerrit_client_wrapper.py\",\"agents/shared/skills/git-cl-helper/scripts/git_cl_helper_test.py -> agents/shared/skills/git-cl-helper/scripts/git_cl_helper.py\",\"agents/shared/skills/json_schema_compiler/scripts/compiler_wrapper_test.py -> agents/shared/skills/json_schema_compiler/scripts/compiler_wrapper.py\"]},\"hoy\":982250,\"nota\":\"hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio\",\"pct_de_lo_reconstruido\":99.8,\"reconstruidos\":512903,\"solo_en_git\":[\"agents/internal\",\"agents/shared\",\"ash/webui/camera_app_ui/resources/cca\",\"chrome/app/theme/default_100_percent/google_chrome\",\"chrome/app/theme/default_200_percent/google_chrome\"]}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "autores": 1,
+    "aviso": "repositorio superficial (clonado sin toda la historia): el primer commit no es el de verdad; git fetch --unshallow lo trae entero",
+    "carpetas_en_orden": [
+      {
+        "carpeta": ".agents",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": ".claude",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": ".gemini",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": ".github",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "agents",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "android_webview",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "apps",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "ash",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "base",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      },
+      {
+        "carpeta": "build",
+        "nace": {
+          "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+          "autor": "chromium-autoroll",
+          "commit": "e9b6e64b6f",
+          "fecha": "2026-10-31"
+        }
+      }
+    ],
+    "carpetas_total": 51,
+    "commits": 1,
+    "cortada": false,
+    "crecimiento": [
+      {
+        "archivos": 514576,
+        "asunto": "Roll Perfetto Trace Processor Win from 522f65f0d3c9 to 4995f83afb35",
+        "ciclos": 30,
+        "codigo": 160247,
+        "commit": "e9b6e64b6f",
+        "dependencias": 1271125,
+        "fecha": "2026-10-31"
+      }
+    ],
+    "desde": "2026-10-31",
+    "hasta": "2026-10-31",
+    "leida_ms": 28711,
+    "nota": "git sin versiones viejas: archivos por --name-status y referencias por las lineas #include/mod/use/import que entran y salen (-G). El mapa de cada momento se resuelve con las reglas de hoy. No se ve lo que un #include no escribe (macros, rutas generadas) ni el #if de una linea suelta; los merges no cuentan y el orden es el de git log.",
+    "superficial": true,
+    "verificacion": {
+      "coinciden": 511720,
+      "dependencias": {
+        "coinciden": 1268966,
+        "hoy": 2044874,
+        "nota": "solo_hoy: lo que aun no esta en un commit, o un use de Rust partido en varias lineas",
+        "reconstruidas": 1271125,
+        "solo_en_git": [
+          ".gemini/commands/PRESUBMIT_test.py -> PRESUBMIT.py",
+          ".gemini/commands/PRESUBMIT_test.py -> PRESUBMIT_test_mocks.py",
+          "android_webview/browser/gfx/scoped_app_gl_state_restore_impl_angle.cc -> third_party/weston/include/GLES2/gl2.h",
+          "android_webview/browser/gfx/test/fake_hwui_gl_context.h -> third_party/weston/include/GLES2/gl2.h",
+          "android_webview/test/shell/src/draw_fn/context_manager.cc -> third_party/weston/include/GLES2/gl2.h"
+        ],
+        "solo_hoy": [
+          "agents/shared/skills/cl-description/scripts/history_test.py -> agents/shared/skills/cl-description/scripts/history.py",
+          "agents/shared/skills/cl-description/scripts/wrap_lines_test.py -> agents/shared/skills/cl-description/scripts/wrap_lines.py",
+          "agents/shared/skills/gerrit-cli/scripts/gerrit_client_wrapper_test.py -> agents/shared/skills/gerrit-cli/scripts/gerrit_client_wrapper.py",
+          "agents/shared/skills/git-cl-helper/scripts/git_cl_helper_test.py -> agents/shared/skills/git-cl-helper/scripts/git_cl_helper.py",
+          "agents/shared/skills/json_schema_compiler/scripts/compiler_wrapper_test.py -> agents/shared/skills/json_schema_compiler/scripts/compiler_wrapper.py"
+        ]
+      },
+      "hoy": 982250,
+      "nota": "hoy cuenta tambien lo que git no sigue (ignorado o generado); solo_en_git deberia estar vacio",
+      "pct_de_lo_reconstruido": 99.8,
+      "reconstruidos": 512903,
+      "solo_en_git": [
+        "agents/internal",
+        "agents/shared",
+        "ash/webui/camera_app_ui/resources/cca",
+        "chrome/app/theme/default_100_percent/google_chrome",
+        "chrome/app/theme/default_200_percent/google_chrome"
+      ]
+    }
+  }
+}

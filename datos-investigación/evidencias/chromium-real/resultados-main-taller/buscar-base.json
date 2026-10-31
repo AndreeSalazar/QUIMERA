@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"base\"},{\"carpeta\":true,\"ruta\":\"cc/base\"},{\"carpeta\":true,\"ruta\":\"ui/base\"},{\"carpeta\":true,\"ruta\":\"net/base\"},{\"carpeta\":true,\"ruta\":\"media/base\"},{\"carpeta\":true,\"ruta\":\"device/base\"},{\"carpeta\":true,\"ruta\":\"remoting/base\"},{\"carpeta\":true,\"ruta\":\"chromecast/base\"},{\"carpeta\":true,\"ruta\":\"chrome/test/base\"},{\"carpeta\":true,\"ruta\":\"chromeos/ui/base\"}],\"texto\":\"base\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "cc/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ui/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "net/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "media/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "device/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "remoting/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chromecast/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/test/base"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chromeos/ui/base"
+      }
+    ],
+    "texto": "base"
+  }
+}

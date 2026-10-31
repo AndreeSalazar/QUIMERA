@@ -1,0 +1,43 @@
+{
+  "content": [
+    {
+      "text": "{\"a\":\"content/public/browser/web_contents.h\",\"b\":\"third_party/blink/renderer/core/dom/document.h\",\"ciclo\":false,\"igual_de_cortos\":1,\"pasos\":[{\"desde\":\"content/public/browser/web_contents.h\",\"hasta\":\"base/memory/scoped_refptr.h\",\"lo_usan\":6108,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/scoped_refptr.h\\\"\",\"linea\":23},\"sin_este_paso\":\"otro camino de 2 saltos\"},{\"desde\":\"third_party/blink/renderer/core/dom/document.h\",\"hasta\":\"base/memory/scoped_refptr.h\",\"lo_usan\":6108,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/scoped_refptr.h\\\"\",\"linea\":42},\"sin_este_paso\":\"otro camino de 2 saltos\"}],\"por_que\":\"Ninguno usa al otro. Los une scoped_refptr.h, que usan los dos (web_contents.h a 1 salto, document.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.\",\"punto_de_encuentro\":\"base/memory/scoped_refptr.h\",\"saltos\":2,\"union\":\"comparten\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "a": "content/public/browser/web_contents.h",
+    "b": "third_party/blink/renderer/core/dom/document.h",
+    "ciclo": false,
+    "igual_de_cortos": 1,
+    "pasos": [
+      {
+        "desde": "content/public/browser/web_contents.h",
+        "hasta": "base/memory/scoped_refptr.h",
+        "lo_usan": 6108,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/scoped_refptr.h\"",
+          "linea": 23
+        },
+        "sin_este_paso": "otro camino de 2 saltos"
+      },
+      {
+        "desde": "third_party/blink/renderer/core/dom/document.h",
+        "hasta": "base/memory/scoped_refptr.h",
+        "lo_usan": 6108,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"base/memory/scoped_refptr.h\"",
+          "linea": 42
+        },
+        "sin_este_paso": "otro camino de 2 saltos"
+      }
+    ],
+    "por_que": "Ninguno usa al otro. Los une scoped_refptr.h, que usan los dos (web_contents.h a 1 salto, document.h a 1). Es el unico tan corto. Ningun paso es imprescindible: quitar uno solo no los separa.",
+    "punto_de_encuentro": "base/memory/scoped_refptr.h",
+    "saltos": 2,
+    "union": "comparten"
+  }
+}

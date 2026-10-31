@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan_directamente\":2318,\"nota\":\"Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.\",\"por_donde_se_reparte\":[{\"arrastra\":4999,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":27},\"ruta\":\"mojo/public/cpp/bindings/receiver_set.h\"},{\"arrastra\":4922,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":33},\"ruta\":\"content/public/test/browser_test_base.h\"},{\"arrastra\":4895,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":67},\"ruta\":\"content/public/browser/content_browser_client.h\"},{\"arrastra\":4409,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":13},\"ruta\":\"third_party/blink/renderer/platform/mojo/heap_mojo_remote.h\"},{\"arrastra\":3515,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":22},\"ruta\":\"mojo/public/cpp/bindings/remote_set.h\"},{\"arrastra\":3468,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":22},\"ruta\":\"mojo/public/cpp/bindings/shared_remote.h\"},{\"arrastra\":2514,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":13},\"ruta\":\"services/service_manager/public/cpp/interface_provider.h\"},{\"arrastra\":2348,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":14},\"ruta\":\"ios/web/public/browser_state.h\"},{\"arrastra\":2063,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":15},\"ruta\":\"third_party/blink/public/common/loader/url_loader_factory_bundle.h\"},{\"arrastra\":1611,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":18},\"ruta\":\"services/network/test/test_url_loader_factory.h\"},{\"arrastra\":1203,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":17},\"ruta\":\"third_party/blink/renderer/platform/loader/fetch/code_cache_host.h\"},{\"arrastra\":1175,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":8},\"ruta\":\"content/browser/service_worker/url_loader_client_checker.h\"},{\"arrastra\":1174,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":20},\"ruta\":\"content/browser/service_worker/service_worker_cache_writer.h\"},{\"arrastra\":1171,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":17},\"ruta\":\"content/browser/service_worker/service_worker_updated_script_loader.h\"},{\"arrastra\":1163,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":28},\"ruta\":\"content/browser/service_worker/embedded_worker_instance.h\"},{\"arrastra\":1163,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":21},\"ruta\":\"content/browser/service_worker/service_worker_script_cache_map.h\"},{\"arrastra\":1162,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":52},\"ruta\":\"content/browser/service_worker/service_worker_version.h\"},{\"arrastra\":1129,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":25},\"ruta\":\"content/browser/service_worker/service_worker_registry.h\"},{\"arrastra\":1109,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":28},\"ruta\":\"components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h\"},{\"arrastra\":1107,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"mojo/public/cpp/bindings/remote.h\\\"\",\"linea\":23},\"ruta\":\"components/viz/service/frame_sinks/compositor_frame_sink_impl.h\"}],\"recortado\":false,\"ruta\":\"mojo/public/cpp/bindings/remote.h\",\"se_recompilan\":26459}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan_directamente": 2318,
+    "nota": "Cuenta saltos de #include del mapa lexico, no tiempo de compilacion.",
+    "por_donde_se_reparte": [
+      {
+        "arrastra": 4999,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 27
+        },
+        "ruta": "mojo/public/cpp/bindings/receiver_set.h"
+      },
+      {
+        "arrastra": 4922,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 33
+        },
+        "ruta": "content/public/test/browser_test_base.h"
+      },
+      {
+        "arrastra": 4895,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 67
+        },
+        "ruta": "content/public/browser/content_browser_client.h"
+      },
+      {
+        "arrastra": 4409,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 13
+        },
+        "ruta": "third_party/blink/renderer/platform/mojo/heap_mojo_remote.h"
+      },
+      {
+        "arrastra": 3515,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 22
+        },
+        "ruta": "mojo/public/cpp/bindings/remote_set.h"
+      },
+      {
+        "arrastra": 3468,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 22
+        },
+        "ruta": "mojo/public/cpp/bindings/shared_remote.h"
+      },
+      {
+        "arrastra": 2514,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 13
+        },
+        "ruta": "services/service_manager/public/cpp/interface_provider.h"
+      },
+      {
+        "arrastra": 2348,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 14
+        },
+        "ruta": "ios/web/public/browser_state.h"
+      },
+      {
+        "arrastra": 2063,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 15
+        },
+        "ruta": "third_party/blink/public/common/loader/url_loader_factory_bundle.h"
+      },
+      {
+        "arrastra": 1611,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 18
+        },
+        "ruta": "services/network/test/test_url_loader_factory.h"
+      },
+      {
+        "arrastra": 1203,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 17
+        },
+        "ruta": "third_party/blink/renderer/platform/loader/fetch/code_cache_host.h"
+      },
+      {
+        "arrastra": 1175,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 8
+        },
+        "ruta": "content/browser/service_worker/url_loader_client_checker.h"
+      },
+      {
+        "arrastra": 1174,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 20
+        },
+        "ruta": "content/browser/service_worker/service_worker_cache_writer.h"
+      },
+      {
+        "arrastra": 1171,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 17
+        },
+        "ruta": "content/browser/service_worker/service_worker_updated_script_loader.h"
+      },
+      {
+        "arrastra": 1163,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 28
+        },
+        "ruta": "content/browser/service_worker/embedded_worker_instance.h"
+      },
+      {
+        "arrastra": 1163,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 21
+        },
+        "ruta": "content/browser/service_worker/service_worker_script_cache_map.h"
+      },
+      {
+        "arrastra": 1162,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 52
+        },
+        "ruta": "content/browser/service_worker/service_worker_version.h"
+      },
+      {
+        "arrastra": 1129,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 25
+        },
+        "ruta": "content/browser/service_worker/service_worker_registry.h"
+      },
+      {
+        "arrastra": 1109,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 28
+        },
+        "ruta": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
+      },
+      {
+        "arrastra": 1107,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"mojo/public/cpp/bindings/remote.h\"",
+          "linea": 23
+        },
+        "ruta": "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
+      }
+    ],
+    "recortado": false,
+    "ruta": "mojo/public/cpp/bindings/remote.h",
+    "se_recompilan": 26459
+  }
+}

@@ -1,0 +1,379 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":41},\"ruta\":\"android_webview/renderer/aw_content_renderer_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"components/cdm/renderer/key_system_support_update.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"android_webview/renderer/aw_content_settings_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":23},\"ruta\":\"android_webview/renderer/aw_render_frame_ext.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"android_webview/renderer/aw_render_frame_observer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"android_webview/renderer/aw_render_view_ext.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":143},\"ruta\":\"chrome/renderer/chrome_content_renderer_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"chrome/renderer/webui_browser/webui_browser_renderer_extension.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":9},\"ruta\":\"components/commerce/content/renderer/commerce_web_extractor.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"components/continuous_search/renderer/search_result_extractor_impl.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":9},\"ruta\":\"components/dom_distiller/content/renderer/distiller_js_render_frame_observer.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"chrome/renderer/media/chrome_key_systems.h\"},{\"motivo\":{\"condicion\":\"#if !BUILDFLAG(IS_ANDROID)\",\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":38},\"ruta\":\"chrome/renderer/chrome_content_renderer_client_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":17},\"ruta\":\"chrome/renderer/chrome_content_settings_agent_delegate.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":8},\"ruta\":\"chrome/renderer/chrome_content_settings_agent_delegate_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":59},\"ruta\":\"chrome/renderer/chrome_render_frame_observer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":35},\"ruta\":\"chrome/renderer/chrome_render_frame_observer_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":7},\"ruta\":\"chrome/renderer/font_prewarmer.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":10},\"ruta\":\"chrome/renderer/google_accounts_private_api_extension.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":7},\"ruta\":\"chrome/renderer/google_accounts_private_api_util.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":11},\"ruta\":\"chrome/renderer/loadtimes_bindings.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":7},\"ruta\":\"chrome/renderer/render_frame_font_family_accessor.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":16},\"ruta\":\"chrome/renderer/sandbox_status_extension_android.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":17},\"ruta\":\"chrome/renderer/tab_context_decryption_token_extension.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":21},\"ruta\":\"chrome/renderer/trusted_vault_encryption_keys_extension.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":28},\"ruta\":\"chrome/renderer/url_loader_throttle_provider_impl.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":10},\"ruta\":\"chrome/renderer/worker_content_settings_client.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":16},\"ruta\":\"chrome/renderer/accessibility/ax_tree_distiller.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":15},\"ruta\":\"chrome/renderer/accessibility/ax_tree_distiller_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/renderer/render_frame.h\\\"\",\"linea\":44},\"ruta\":\"chrome/renderer/accessibility/read_anything/read_anything_app_controller.cc\"}],\"total\":220},\"papel\":null,\"ruta\":\"content/public/renderer/render_frame.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/byte_size.h\\\"\",\"linea\":14},\"ruta\":\"base/byte_size.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/service_manager/public/cpp/binder_registry.h\\\"\",\"linea\":20},\"ruta\":\"services/service_manager/public/cpp/binder_registry.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/supports_user_data.h\\\"\",\"linea\":15},\"ruta\":\"base/supports_user_data.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/platform/web_url_request.h\\\"\",\"linea\":26},\"ruta\":\"third_party/blink/public/platform/web_url_request.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"services/network/public/cpp/url_loader_completion_status.h\\\"\",\"linea\":19},\"ruta\":\"services/network/public/cpp/url_loader_completion_status.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/common/bindings_policy.h\\\"\",\"linea\":18},\"ruta\":\"content/public/common/bindings_policy.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/accessibility/ax_mode.h\\\"\",\"linea\":29},\"ruta\":\"ui/accessibility/ax_mode.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"ui/accessibility/ax_tree_update.h\\\"\",\"linea\":30},\"ruta\":\"ui/accessibility/ax_tree_update.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/subresource_load_metrics.h\\\"\",\"linea\":21},\"ruta\":\"third_party/blink/public/common/subresource_load_metrics.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/platform/web_url_response.h\\\"\",\"linea\":27},\"ruta\":\"third_party/blink/public/platform/web_url_response.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/platform/task_type.h\\\"\",\"linea\":25},\"ruta\":\"third_party/blink/public/platform/task_type.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/common/use_counter/use_counter_feature.h\\\"\",\"linea\":22},\"ruta\":\"third_party/blink/public/common/use_counter/use_counter_feature.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/common/content_export.h\\\"\",\"linea\":17},\"ruta\":\"content/common/content_export.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/blink/public/web/web_navigation_policy.h\\\"\",\"linea\":28},\"ruta\":\"third_party/blink/public/web/web_navigation_policy.h\"}],\"total\":14}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 41
+          },
+          "ruta": "android_webview/renderer/aw_content_renderer_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 8
+          },
+          "ruta": "components/cdm/renderer/key_system_support_update.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 8
+          },
+          "ruta": "android_webview/renderer/aw_content_settings_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 23
+          },
+          "ruta": "android_webview/renderer/aw_render_frame_ext.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 11
+          },
+          "ruta": "android_webview/renderer/aw_render_frame_observer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 11
+          },
+          "ruta": "android_webview/renderer/aw_render_view_ext.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 143
+          },
+          "ruta": "chrome/renderer/chrome_content_renderer_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 11
+          },
+          "ruta": "chrome/renderer/webui_browser/webui_browser_renderer_extension.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 9
+          },
+          "ruta": "components/commerce/content/renderer/commerce_web_extractor.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 11
+          },
+          "ruta": "components/continuous_search/renderer/search_result_extractor_impl.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 9
+          },
+          "ruta": "components/dom_distiller/content/renderer/distiller_js_render_frame_observer.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 8
+          },
+          "ruta": "chrome/renderer/media/chrome_key_systems.h"
+        },
+        {
+          "motivo": {
+            "condicion": "#if !BUILDFLAG(IS_ANDROID)",
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 38
+          },
+          "ruta": "chrome/renderer/chrome_content_renderer_client_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 17
+          },
+          "ruta": "chrome/renderer/chrome_content_settings_agent_delegate.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 8
+          },
+          "ruta": "chrome/renderer/chrome_content_settings_agent_delegate_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 59
+          },
+          "ruta": "chrome/renderer/chrome_render_frame_observer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 35
+          },
+          "ruta": "chrome/renderer/chrome_render_frame_observer_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 7
+          },
+          "ruta": "chrome/renderer/font_prewarmer.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 10
+          },
+          "ruta": "chrome/renderer/google_accounts_private_api_extension.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 7
+          },
+          "ruta": "chrome/renderer/google_accounts_private_api_util.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 11
+          },
+          "ruta": "chrome/renderer/loadtimes_bindings.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 7
+          },
+          "ruta": "chrome/renderer/render_frame_font_family_accessor.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/renderer/sandbox_status_extension_android.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 17
+          },
+          "ruta": "chrome/renderer/tab_context_decryption_token_extension.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 21
+          },
+          "ruta": "chrome/renderer/trusted_vault_encryption_keys_extension.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 28
+          },
+          "ruta": "chrome/renderer/url_loader_throttle_provider_impl.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 10
+          },
+          "ruta": "chrome/renderer/worker_content_settings_client.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/renderer/accessibility/ax_tree_distiller.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 15
+          },
+          "ruta": "chrome/renderer/accessibility/ax_tree_distiller_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/renderer/render_frame.h\"",
+            "linea": 44
+          },
+          "ruta": "chrome/renderer/accessibility/read_anything/read_anything_app_controller.cc"
+        }
+      ],
+      "total": 220
+    },
+    "papel": null,
+    "ruta": "content/public/renderer/render_frame.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/byte_size.h\"",
+            "linea": 14
+          },
+          "ruta": "base/byte_size.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"services/service_manager/public/cpp/binder_registry.h\"",
+            "linea": 20
+          },
+          "ruta": "services/service_manager/public/cpp/binder_registry.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/supports_user_data.h\"",
+            "linea": 15
+          },
+          "ruta": "base/supports_user_data.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/platform/web_url_request.h\"",
+            "linea": 26
+          },
+          "ruta": "third_party/blink/public/platform/web_url_request.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"services/network/public/cpp/url_loader_completion_status.h\"",
+            "linea": 19
+          },
+          "ruta": "services/network/public/cpp/url_loader_completion_status.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/common/bindings_policy.h\"",
+            "linea": 18
+          },
+          "ruta": "content/public/common/bindings_policy.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/accessibility/ax_mode.h\"",
+            "linea": 29
+          },
+          "ruta": "ui/accessibility/ax_mode.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"ui/accessibility/ax_tree_update.h\"",
+            "linea": 30
+          },
+          "ruta": "ui/accessibility/ax_tree_update.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/subresource_load_metrics.h\"",
+            "linea": 21
+          },
+          "ruta": "third_party/blink/public/common/subresource_load_metrics.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/platform/web_url_response.h\"",
+            "linea": 27
+          },
+          "ruta": "third_party/blink/public/platform/web_url_response.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/platform/task_type.h\"",
+            "linea": 25
+          },
+          "ruta": "third_party/blink/public/platform/task_type.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/common/use_counter/use_counter_feature.h\"",
+            "linea": 22
+          },
+          "ruta": "third_party/blink/public/common/use_counter/use_counter_feature.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/common/content_export.h\"",
+            "linea": 17
+          },
+          "ruta": "content/common/content_export.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"third_party/blink/public/web/web_navigation_policy.h\"",
+            "linea": 28
+          },
+          "ruta": "third_party/blink/public/web/web_navigation_policy.h"
+        }
+      ],
+      "total": 14
+    }
+  }
+}

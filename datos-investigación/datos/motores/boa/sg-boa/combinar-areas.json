@@ -1,0 +1,102 @@
+{
+  "content": [
+    {
+      "text": "{\"comparten\":{\"lista\":[],\"total\":0},\"directas\":[{\"a\":\"core/engine\",\"aristas\":3,\"usa\":\"core/icu_provider\"},{\"a\":\"core/parser\",\"aristas\":7,\"usa\":\"core/ast\"}],\"los_juntan\":{\"lista\":[],\"total\":0},\"miembros\":[{\"archivos\":13,\"ruta\":\"cli\",\"se_toca_con\":0},{\"archivos\":72,\"ruta\":\"core/ast\",\"se_toca_con\":1},{\"archivos\":386,\"ruta\":\"core/engine\",\"se_toca_con\":1},{\"archivos\":21,\"ruta\":\"core/gc\",\"se_toca_con\":0},{\"archivos\":1,\"ruta\":\"core/icu_provider\",\"se_toca_con\":1},{\"archivos\":6,\"ruta\":\"core/interner\",\"se_toca_con\":0},{\"archivos\":6,\"ruta\":\"core/macros\",\"se_toca_con\":0},{\"archivos\":113,\"ruta\":\"core/parser\",\"se_toca_con\":1},{\"archivos\":26,\"ruta\":\"core/runtime\",\"se_toca_con\":0},{\"archivos\":13,\"ruta\":\"core/string\",\"se_toca_con\":0},{\"archivos\":19,\"ruta\":\"core/wintertc\",\"se_toca_con\":0}],\"piezas\":9,\"sin_datos\":[\"ffi\",\"tools\"],\"sueltos\":[\"cli\",\"core/gc\",\"core/interner\",\"core/macros\",\"core/runtime\",\"core/string\",\"core/wintertc\"]}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "comparten": {
+      "lista": [],
+      "total": 0
+    },
+    "directas": [
+      {
+        "a": "core/engine",
+        "aristas": 3,
+        "usa": "core/icu_provider"
+      },
+      {
+        "a": "core/parser",
+        "aristas": 7,
+        "usa": "core/ast"
+      }
+    ],
+    "los_juntan": {
+      "lista": [],
+      "total": 0
+    },
+    "miembros": [
+      {
+        "archivos": 13,
+        "ruta": "cli",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 72,
+        "ruta": "core/ast",
+        "se_toca_con": 1
+      },
+      {
+        "archivos": 386,
+        "ruta": "core/engine",
+        "se_toca_con": 1
+      },
+      {
+        "archivos": 21,
+        "ruta": "core/gc",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 1,
+        "ruta": "core/icu_provider",
+        "se_toca_con": 1
+      },
+      {
+        "archivos": 6,
+        "ruta": "core/interner",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 6,
+        "ruta": "core/macros",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 113,
+        "ruta": "core/parser",
+        "se_toca_con": 1
+      },
+      {
+        "archivos": 26,
+        "ruta": "core/runtime",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 13,
+        "ruta": "core/string",
+        "se_toca_con": 0
+      },
+      {
+        "archivos": 19,
+        "ruta": "core/wintertc",
+        "se_toca_con": 0
+      }
+    ],
+    "piezas": 9,
+    "sin_datos": [
+      "ffi",
+      "tools"
+    ],
+    "sueltos": [
+      "cli",
+      "core/gc",
+      "core/interner",
+      "core/macros",
+      "core/runtime",
+      "core/string",
+      "core/wintertc"
+    ]
+  }
+}

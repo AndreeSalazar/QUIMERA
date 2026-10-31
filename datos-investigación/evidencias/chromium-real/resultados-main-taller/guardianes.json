@@ -1,0 +1,19 @@
+{
+  "content": [
+    {
+      "text": "{\"guardia\":null,\"nota\":\"Una revision se repite sola (servidor MCP) cuando cambia su archivo o cualquiera de las cabeceras del proyecto que GCC leyo al revisarlo.\",\"perfil\":null,\"revisiones\":{\"lista\":[],\"pendientes\":0,\"total\":0}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "guardia": null,
+    "nota": "Una revision se repite sola (servidor MCP) cuando cambia su archivo o cualquiera de las cabeceras del proyecto que GCC leyo al revisarlo.",
+    "perfil": null,
+    "revisiones": {
+      "lista": [],
+      "pendientes": 0,
+      "total": 0
+    }
+  }
+}

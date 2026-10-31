@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"gpu\"},{\"carpeta\":true,\"ruta\":\"docs/gpu\"},{\"carpeta\":true,\"ruta\":\"media/gpu\"},{\"carpeta\":true,\"ruta\":\"chrome/gpu\"},{\"carpeta\":true,\"ruta\":\"content/gpu\"},{\"carpeta\":true,\"ruta\":\"chromecast/gpu\"},{\"carpeta\":true,\"ruta\":\"android_webview/gpu\"},{\"carpeta\":true,\"ruta\":\"docs/media/gpu\"},{\"carpeta\":true,\"ruta\":\"chrome/test/gpu\"},{\"carpeta\":true,\"ruta\":\"content/test/gpu\"}],\"texto\":\"gpu\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "docs/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "media/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "content/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chromecast/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "android_webview/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "docs/media/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "chrome/test/gpu"
+      },
+      {
+        "carpeta": true,
+        "ruta": "content/test/gpu"
+      }
+    ],
+    "texto": "gpu"
+  }
+}

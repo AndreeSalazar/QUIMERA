@@ -1,0 +1,323 @@
+{
+  "content": [
+    {
+      "text": "{\"lo_usan\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":13},\"ruta\":\"apps/app_restore_service_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":28},\"ruta\":\"chrome/browser/profiles/profile_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":22},\"ruta\":\"chrome/test/base/testing_profile.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":22},\"ruta\":\"ash/webui/web_applications/test/sandboxed_web_ui_test_base.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":7},\"ruta\":\"chrome/android/javatests/src/federated_identity_test_utils.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":10},\"ruta\":\"chrome/browser/ui/omnibox/omnibox_next_features.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":16},\"ruta\":\"chrome/browser/media/router/discovery/access_code/access_code_cast_sink_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":29},\"ruta\":\"chrome/browser/ash/policy/reporting/metrics_reporting/metric_reporting_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":10},\"ruta\":\"chrome/browser/ui/webui/new_tab_page/composebox/variations/composebox_fieldtrial.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":14},\"ruta\":\"chrome/test/base/android/android_browser_test.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":10},\"ruta\":\"chrome/browser/app_controller_mac.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":63},\"ruta\":\"chrome/browser/app_controller_mac.mm\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":12},\"ruta\":\"chrome/browser/sessions/session_service_factory.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":49},\"ruta\":\"chrome/browser/app_controller_mac_browsertest.mm\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":16},\"ruta\":\"chrome/browser/app_controller_mac_interactive_uitest.mm\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":16},\"ruta\":\"chrome/browser/ui/views/profiles/profile_picker_view.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":11},\"ruta\":\"chrome/test/base/profile_destruction_waiter.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":17},\"ruta\":\"chrome/browser/browser_about_handler.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":15},\"ruta\":\"chrome/browser/browser_encoding_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":24},\"ruta\":\"chrome/browser/background/extensions/background_mode_manager.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":23},\"ruta\":\"chrome/browser/safe_browsing/safe_browsing_service.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":46},\"ruta\":\"chrome/browser/browser_process_platform_part_ash.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":15},\"ruta\":\"chrome/browser/ash/system/system_clock.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":18},\"ruta\":\"chrome/browser/browser_process_platform_part_ash_browsertest.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":27},\"ruta\":\"chrome/browser/apps/app_shim/app_shim_manager_mac.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":29},\"ruta\":\"chrome/browser/chrome_browser_interface_binders.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":8},\"ruta\":\"chrome/browser/ui/webui/feedback/feedback_ui.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":10},\"ruta\":\"chrome/browser/ui/webui/settings/settings_ui.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":60},\"ruta\":\"chrome/browser/chrome_browser_main.cc\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"chrome/browser/profiles/profile.h\\\"\",\"linea\":13},\"ruta\":\"chrome/browser/performance_manager/public/chrome_browser_main_extra_parts_performance_manager.h\"}],\"total\":6013},\"papel\":null,\"ruta\":\"chrome/browser/profiles/profile.h\",\"sospechas\":{\"lista\":[],\"total\":0},\"usa\":{\"lista\":[{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"build/build_config.h\\\"\",\"linea\":19},\"ruta\":\"build/build_config.h\"},{\"motivo\":{\"condicion\":\"#if BUILDFLAG(IS_ANDROID)\",\"escrito\":\"#include \\\"base/android/scoped_java_ref.h\\\"\",\"linea\":23},\"ruta\":\"base/android/scoped_java_ref.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/scoped_refptr.h\\\"\",\"linea\":16},\"ruta\":\"base/memory/scoped_refptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/weak_ptr.h\\\"\",\"linea\":17},\"ruta\":\"base/memory/weak_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"content/public/browser/browser_context.h\\\"\",\"linea\":20},\"ruta\":\"content/public/browser/browser_context.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/memory/raw_ptr.h\\\"\",\"linea\":15},\"ruta\":\"base/memory/raw_ptr.h\"},{\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"base/observer_list.h\\\"\",\"linea\":18},\"ruta\":\"base/observer_list.h\"}],\"total\":7}}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "lo_usan": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 13
+          },
+          "ruta": "apps/app_restore_service_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 28
+          },
+          "ruta": "chrome/browser/profiles/profile_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 22
+          },
+          "ruta": "chrome/test/base/testing_profile.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 22
+          },
+          "ruta": "ash/webui/web_applications/test/sandboxed_web_ui_test_base.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 7
+          },
+          "ruta": "chrome/android/javatests/src/federated_identity_test_utils.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 10
+          },
+          "ruta": "chrome/browser/ui/omnibox/omnibox_next_features.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/browser/media/router/discovery/access_code/access_code_cast_sink_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 29
+          },
+          "ruta": "chrome/browser/ash/policy/reporting/metrics_reporting/metric_reporting_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 10
+          },
+          "ruta": "chrome/browser/ui/webui/new_tab_page/composebox/variations/composebox_fieldtrial.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 14
+          },
+          "ruta": "chrome/test/base/android/android_browser_test.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 10
+          },
+          "ruta": "chrome/browser/app_controller_mac.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 63
+          },
+          "ruta": "chrome/browser/app_controller_mac.mm"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 12
+          },
+          "ruta": "chrome/browser/sessions/session_service_factory.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 49
+          },
+          "ruta": "chrome/browser/app_controller_mac_browsertest.mm"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/browser/app_controller_mac_interactive_uitest.mm"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 16
+          },
+          "ruta": "chrome/browser/ui/views/profiles/profile_picker_view.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 11
+          },
+          "ruta": "chrome/test/base/profile_destruction_waiter.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 17
+          },
+          "ruta": "chrome/browser/browser_about_handler.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 15
+          },
+          "ruta": "chrome/browser/browser_encoding_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 24
+          },
+          "ruta": "chrome/browser/background/extensions/background_mode_manager.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 23
+          },
+          "ruta": "chrome/browser/safe_browsing/safe_browsing_service.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 46
+          },
+          "ruta": "chrome/browser/browser_process_platform_part_ash.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 15
+          },
+          "ruta": "chrome/browser/ash/system/system_clock.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 18
+          },
+          "ruta": "chrome/browser/browser_process_platform_part_ash_browsertest.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 27
+          },
+          "ruta": "chrome/browser/apps/app_shim/app_shim_manager_mac.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 29
+          },
+          "ruta": "chrome/browser/chrome_browser_interface_binders.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 8
+          },
+          "ruta": "chrome/browser/ui/webui/feedback/feedback_ui.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 10
+          },
+          "ruta": "chrome/browser/ui/webui/settings/settings_ui.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 60
+          },
+          "ruta": "chrome/browser/chrome_browser_main.cc"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"chrome/browser/profiles/profile.h\"",
+            "linea": 13
+          },
+          "ruta": "chrome/browser/performance_manager/public/chrome_browser_main_extra_parts_performance_manager.h"
+        }
+      ],
+      "total": 6013
+    },
+    "papel": null,
+    "ruta": "chrome/browser/profiles/profile.h",
+    "sospechas": {
+      "lista": [],
+      "total": 0
+    },
+    "usa": {
+      "lista": [
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"build/build_config.h\"",
+            "linea": 19
+          },
+          "ruta": "build/build_config.h"
+        },
+        {
+          "motivo": {
+            "condicion": "#if BUILDFLAG(IS_ANDROID)",
+            "escrito": "#include \"base/android/scoped_java_ref.h\"",
+            "linea": 23
+          },
+          "ruta": "base/android/scoped_java_ref.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/scoped_refptr.h\"",
+            "linea": 16
+          },
+          "ruta": "base/memory/scoped_refptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/weak_ptr.h\"",
+            "linea": 17
+          },
+          "ruta": "base/memory/weak_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"content/public/browser/browser_context.h\"",
+            "linea": 20
+          },
+          "ruta": "content/public/browser/browser_context.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/memory/raw_ptr.h\"",
+            "linea": 15
+          },
+          "ruta": "base/memory/raw_ptr.h"
+        },
+        {
+          "motivo": {
+            "condicion": null,
+            "escrito": "#include \"base/observer_list.h\"",
+            "linea": 18
+          },
+          "ruta": "base/observer_list.h"
+        }
+      ],
+      "total": 7
+    }
+  }
+}

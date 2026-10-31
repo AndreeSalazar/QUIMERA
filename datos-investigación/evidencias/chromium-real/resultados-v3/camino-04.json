@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"a\":\"cc/trees/layer_tree_host.h\",\"b\":\"third_party/skia/include/core/SkCanvas.h\",\"ciclo\":false,\"igual_de_cortos\":2,\"pasos\":[{\"desde\":\"cc/trees/layer_tree_host.h\",\"hasta\":\"cc/input/scrollbar.h\",\"lo_usan\":21,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/input/scrollbar.h\\\"\",\"linea\":42},\"sin_este_paso\":\"otro camino de 3 saltos\"},{\"desde\":\"cc/input/scrollbar.h\",\"hasta\":\"cc/paint/paint_canvas.h\",\"lo_usan\":59,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"cc/paint/paint_canvas.h\\\"\",\"linea\":11},\"sin_este_paso\":\"otro camino de 3 saltos\"},{\"desde\":\"cc/paint/paint_canvas.h\",\"hasta\":\"third_party/skia/include/core/SkCanvas.h\",\"lo_usan\":1205,\"motivo\":{\"condicion\":null,\"escrito\":\"#include \\\"third_party/skia/include/core/SkCanvas.h\\\"\",\"linea\":20},\"sin_este_paso\":\"otro camino de 3 saltos\"}],\"por_que\":\"layer_tree_host.h usa a SkCanvas.h a traves de 2 archivos: si cambia SkCanvas.h, layer_tree_host.h se recompila. Hay 2 caminos igual de cortos; este es uno. Ningun paso es imprescindible: quitar uno solo no los separa.\",\"punto_de_encuentro\":null,\"saltos\":3,\"union\":\"A usa B\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "a": "cc/trees/layer_tree_host.h",
+    "b": "third_party/skia/include/core/SkCanvas.h",
+    "ciclo": false,
+    "igual_de_cortos": 2,
+    "pasos": [
+      {
+        "desde": "cc/trees/layer_tree_host.h",
+        "hasta": "cc/input/scrollbar.h",
+        "lo_usan": 21,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/input/scrollbar.h\"",
+          "linea": 42
+        },
+        "sin_este_paso": "otro camino de 3 saltos"
+      },
+      {
+        "desde": "cc/input/scrollbar.h",
+        "hasta": "cc/paint/paint_canvas.h",
+        "lo_usan": 59,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"cc/paint/paint_canvas.h\"",
+          "linea": 11
+        },
+        "sin_este_paso": "otro camino de 3 saltos"
+      },
+      {
+        "desde": "cc/paint/paint_canvas.h",
+        "hasta": "third_party/skia/include/core/SkCanvas.h",
+        "lo_usan": 1205,
+        "motivo": {
+          "condicion": null,
+          "escrito": "#include \"third_party/skia/include/core/SkCanvas.h\"",
+          "linea": 20
+        },
+        "sin_este_paso": "otro camino de 3 saltos"
+      }
+    ],
+    "por_que": "layer_tree_host.h usa a SkCanvas.h a traves de 2 archivos: si cambia SkCanvas.h, layer_tree_host.h se recompila. Hay 2 caminos igual de cortos; este es uno. Ningun paso es imprescindible: quitar uno solo no los separa.",
+    "punto_de_encuentro": null,
+    "saltos": 3,
+    "union": "A usa B"
+  }
+}

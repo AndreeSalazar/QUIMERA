@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"third_party/blink\"},{\"carpeta\":true,\"ruta\":\"ios/third_party/blink\"},{\"carpeta\":false,\"ruta\":\"third_party/blink/public/web/blink.h\"},{\"carpeta\":false,\"ruta\":\"third_party/blink/tools/gdb/blink.py\"},{\"carpeta\":true,\"ruta\":\"third_party/blink/public/default_100_percent/blink\"},{\"carpeta\":true,\"ruta\":\"third_party/blink/public/default_200_percent/blink\"},{\"carpeta\":true,\"ruta\":\"tools/clang/plugins/tests/third_party/blink\"},{\"carpeta\":true,\"ruta\":\"tools/clang/raw_ptr_plugin/tests/third_party/blink\"},{\"carpeta\":true,\"ruta\":\"third_party/blink/tools/blinkpy\"},{\"carpeta\":false,\"ruta\":\"third_party/blink/tools/blink_tool.py\"}],\"texto\":\"third_party/blink\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "third_party/blink"
+      },
+      {
+        "carpeta": true,
+        "ruta": "ios/third_party/blink"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/blink/public/web/blink.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/blink/tools/gdb/blink.py"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/blink/public/default_100_percent/blink"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/blink/public/default_200_percent/blink"
+      },
+      {
+        "carpeta": true,
+        "ruta": "tools/clang/plugins/tests/third_party/blink"
+      },
+      {
+        "carpeta": true,
+        "ruta": "tools/clang/raw_ptr_plugin/tests/third_party/blink"
+      },
+      {
+        "carpeta": true,
+        "ruta": "third_party/blink/tools/blinkpy"
+      },
+      {
+        "carpeta": false,
+        "ruta": "third_party/blink/tools/blink_tool.py"
+      }
+    ],
+    "texto": "third_party/blink"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "content": [
+    {
+      "text": "{\"rutas\":[{\"carpeta\":true,\"ruta\":\"components/cbor\"},{\"carpeta\":false,\"ruta\":\"components/cbor/cbor_export.h\"},{\"carpeta\":false,\"ruta\":\"components/cbor/cbor_perftest.cc\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor0\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor1\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor2\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor3\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor4\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor5\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor6\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor7\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor8\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor9\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor10\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor11\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor12\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor13\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor14\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor15\"},{\"carpeta\":false,\"ruta\":\"components/cbor/reader_fuzzer_corpus/cbor16\"}],\"texto\":\"components/cbor\"}",
+      "type": "text"
+    }
+  ],
+  "isError": false,
+  "structuredContent": {
+    "rutas": [
+      {
+        "carpeta": true,
+        "ruta": "components/cbor"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/cbor_export.h"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/cbor_perftest.cc"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor0"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor1"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor2"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor3"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor4"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor5"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor6"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor7"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor8"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor9"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor10"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor11"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor12"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor13"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor14"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor15"
+      },
+      {
+        "carpeta": false,
+        "ruta": "components/cbor/reader_fuzzer_corpus/cbor16"
+      }
+    ],
+    "texto": "components/cbor"
+  }
+}
