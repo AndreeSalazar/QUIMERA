@@ -54,11 +54,7 @@ impl Ref {
 
     /// `None` si no cabe en 47 bits.
     pub const fn nueva(n: u64) -> Option<Ref> {
-        if n <= Self::MAXIMA {
-            Some(Ref(n))
-        } else {
-            None
-        }
+        if n <= Self::MAXIMA { Some(Ref(n)) } else { None }
     }
 
     /// El número que guarda.
@@ -113,11 +109,7 @@ impl Valor {
 
     /// Un número. Cualquier NaN se guarda como el NaN canónico.
     pub const fn numero(n: f64) -> Valor {
-        if n.is_nan() {
-            Valor(NAN_CANONICO)
-        } else {
-            Valor(n.to_bits())
-        }
+        if n.is_nan() { Valor(NAN_CANONICO) } else { Valor(n.to_bits()) }
     }
 
     /// Un entero de 32 bits.
@@ -215,9 +207,7 @@ impl Valor {
     /// El mismo tipo de referencia con otro destino. El GC lo usa al mover objetos.
     pub const fn con_ref(self, r: Ref) -> Valor {
         match self.tipo() {
-            Tipo::Referencia | Tipo::Cadena | Tipo::Simbolo => {
-                Valor(etiquetado(self.etiqueta(), r.0))
-            }
+            Tipo::Referencia | Tipo::Cadena | Tipo::Simbolo => Valor(etiquetado(self.etiqueta(), r.0)),
             _ => self,
         }
     }
@@ -238,11 +228,7 @@ impl Valor {
             return Some(v);
         }
         let n = f64::from_bits(bits);
-        if n.is_nan() && bits != NAN_CANONICO {
-            None
-        } else {
-            Some(v)
-        }
+        if n.is_nan() && bits != NAN_CANONICO { None } else { Some(v) }
     }
 
     /// `ToBoolean` de JavaScript para los valores que no necesitan mirar el montón.
@@ -296,18 +282,8 @@ mod pruebas {
 
     #[test]
     fn los_numeros_vuelven_iguales() {
-        for n in [
-            0.0,
-            -0.0,
-            1.5,
-            -1.0,
-            f64::MAX,
-            f64::MIN,
-            f64::MIN_POSITIVE,
-            f64::INFINITY,
-            f64::NEG_INFINITY,
-            1e-310,
-        ] {
+        for n in [0.0, -0.0, 1.5, -1.0, f64::MAX, f64::MIN, f64::MIN_POSITIVE, f64::INFINITY, f64::NEG_INFINITY, 1e-310]
+        {
             let v = Valor::numero(n);
             assert_eq!(v.tipo(), Tipo::Numero, "{n}");
             assert_eq!(v.como_numero().unwrap().to_bits(), n.to_bits(), "{n}");
@@ -316,12 +292,7 @@ mod pruebas {
 
     #[test]
     fn todos_los_nan_son_el_mismo() {
-        let raros = [
-            f64::NAN,
-            -f64::NAN,
-            f64::from_bits(0x7FF0_0000_0000_0001),
-            f64::from_bits(0xFFFF_FFFF_FFFF_FFFF),
-        ];
+        let raros = [f64::NAN, -f64::NAN, f64::from_bits(0x7FF0_0000_0000_0001), f64::from_bits(0xFFFF_FFFF_FFFF_FFFF)];
         for n in raros {
             let v = Valor::numero(n);
             assert_eq!(v.tipo(), Tipo::Numero);
@@ -360,11 +331,7 @@ mod pruebas {
             }
         }
         assert_eq!(Valor::referencia(r).como_referencia(), Some(r));
-        assert_eq!(
-            Valor::cadena(r).como_referencia(),
-            None,
-            "una cadena no es un objeto"
-        );
+        assert_eq!(Valor::cadena(r).como_referencia(), None, "una cadena no es un objeto");
         assert_eq!(Valor::cadena(r).ref_del_monton(), Some(r));
     }
 
@@ -374,34 +341,17 @@ mod pruebas {
         assert_eq!(Valor::referencia(max).como_referencia(), Some(max));
         assert!(Ref::nueva(Ref::MAXIMA + 1).is_none());
         let otra = Ref::nueva(7).unwrap();
-        assert_eq!(
-            Valor::simbolo(max).con_ref(otra),
-            Valor::simbolo(otra),
-            "mover conserva el tipo"
-        );
-        assert_eq!(
-            Valor::entero(3).con_ref(otra),
-            Valor::entero(3),
-            "un primitivo no cambia"
-        );
+        assert_eq!(Valor::simbolo(max).con_ref(otra), Valor::simbolo(otra), "mover conserva el tipo");
+        assert_eq!(Valor::entero(3).con_ref(otra), Valor::entero(3), "un primitivo no cambia");
     }
 
     #[test]
     fn desde_bits_rechaza_lo_invalido() {
-        for v in [
-            Valor::NULO,
-            Valor::numero(2.5),
-            Valor::entero(-7),
-            Valor::numero(f64::NAN),
-        ] {
+        for v in [Valor::NULO, Valor::numero(2.5), Valor::entero(-7), Valor::numero(f64::NAN)] {
             assert_eq!(Valor::desde_bits(v.bits()), Some(v));
         }
         assert_eq!(Valor::desde_bits(BASE), None, "etiqueta 0");
-        assert_eq!(
-            Valor::desde_bits(0x7FF0_0000_0000_0001),
-            None,
-            "NaN no canónico"
-        );
+        assert_eq!(Valor::desde_bits(0x7FF0_0000_0000_0001), None, "NaN no canónico");
     }
 
     #[test]
@@ -412,10 +362,7 @@ mod pruebas {
         assert_eq!(Valor::numero(f64::NAN).verdad(), Some(false));
         assert_eq!(Valor::entero(0).verdad(), Some(false));
         assert_eq!(Valor::entero(5).verdad(), Some(true));
-        assert_eq!(
-            Valor::referencia(Ref::nueva(1).unwrap()).verdad(),
-            Some(true)
-        );
+        assert_eq!(Valor::referencia(Ref::nueva(1).unwrap()).verdad(), Some(true));
         assert_eq!(Valor::cadena(Ref::nueva(1).unwrap()).verdad(), None);
     }
 }

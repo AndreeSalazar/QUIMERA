@@ -10,7 +10,8 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 |---|---:|---|---|
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
 | `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura | ✅ 7 pruebas |
-| `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ |
+| `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ 1 prueba |
+| `herramientas/guardianes` → `quimera-guardianes` | 100 | Semáforo rojo/amarillo/verde, 1000 líneas por archivo, jerarquía | ✅ 12 pruebas |
 
 Primera medida, con la misma carga estilo Splay (200.000 pasos, 5 millones de objetos, Windows, `--release`, tres corridas):
 
@@ -33,8 +34,11 @@ QUIMERA (esta carpeta)
   red/  proceso/          red, aislamiento                         (planeado)
   navegador/              navegador, ventana + interfaz VERX       (planeado)
   bancos/                 medidas contra otros motores
-  herramientas/           comprobar-niveles.py (el guardián de la jerarquía)
+  herramientas/guardianes los guardianes: semáforo, límites y jerarquía
+  guardianes.toml         amarillos revisados, cada uno con su motivo
+  .githooks/pre-commit    guardianes + formato + clippy + pruebas en cada commit
   docs/JERARQUIA.md       todos los niveles, el orden y por qué wgpu
+  docs/GUARDIANES.md      las reglas y por qué existen
   datos-investigación/    la investigación archivada: Chromium, Servo, Boa, SpiderMonkey, SUPER GRAFO
 ```
 
@@ -49,12 +53,18 @@ cargo run --release -p quimera-banco-gc
 ```
 
 ```bash
-python -I herramientas/comprobar-niveles.py
+cargo run -p quimera-guardianes -- --estricto
 ```
 
-## La regla
+Una vez por copia del repositorio, para que cada commit pase por los guardianes:
 
-Un crate solo usa crates de niveles menores, y solo los crates de fuera que declara. Ver [docs/JERARQUIA.md](docs/JERARQUIA.md).
+```bash
+git config core.hooksPath .githooks
+```
+
+## Los guardianes
+
+Ningún archivo pasa de 1000 líneas, un crate solo usa crates de niveles menores, `unsafe` solo donde se permite y siempre con `// SAFETY:`, y cada amarillo (unwrap, allow, TODO, funciones largas...) se revisa con un motivo. Un semáforo rojo/amarillo/verde lo muestra por crate y el commit no pasa con un rojo. Ver [docs/GUARDIANES.md](docs/GUARDIANES.md) y [docs/JERARQUIA.md](docs/JERARQUIA.md).
 
 ## Investigación
 

@@ -53,11 +53,7 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         // 64 Ki valores = 512 KiB de guardería, cerca de lo que cabe en la caché L2.
-        Config {
-            guarderia: 64 * 1024,
-            objeto_grande: 256,
-            umbral_mayor_minimo: 65_536,
-        }
+        Config { guarderia: 64 * 1024, objeto_grande: 256, umbral_mayor_minimo: 65_536 }
     }
 }
 
@@ -112,11 +108,7 @@ enum Sitio {
 
 fn sitio(r: Ref) -> Sitio {
     let n = r.numero();
-    if n & BIT_GUARDERIA != 0 {
-        Sitio::Guarderia((n & !BIT_GUARDERIA) as usize)
-    } else {
-        Sitio::Principal(n as usize)
-    }
+    if n & BIT_GUARDERIA != 0 { Sitio::Guarderia((n & !BIT_GUARDERIA) as usize) } else { Sitio::Principal(n as usize) }
 }
 
 fn ref_guarderia(i: usize) -> Ref {
@@ -136,10 +128,7 @@ impl Default for Monton {
 impl Monton {
     /// Un montón vacío.
     pub fn nuevo(config: Config) -> Monton {
-        let config = Config {
-            guarderia: config.guarderia.max(1),
-            ..config
-        };
+        let config = Config { guarderia: config.guarderia.max(1), ..config };
         Monton {
             arena: Vec::with_capacity(config.guarderia),
             objetos: Vec::new(),
@@ -194,15 +183,9 @@ impl Monton {
         self.est.asignados += 1;
         if campos.len() > self.config.objeto_grande {
             self.est.grandes += 1;
-            let destino = self.colocar(Celda {
-                campos: campos.to_vec(),
-                recordada: false,
-            });
+            let destino = self.colocar(Celda { campos: campos.to_vec(), recordada: false });
             // Puede apuntar ya a la guardería: anotarlo como hace la barrera.
-            if campos
-                .iter()
-                .any(|v| matches!(v.ref_del_monton().map(sitio), Some(Sitio::Guarderia(_))))
-            {
+            if campos.iter().any(|v| matches!(v.ref_del_monton().map(sitio), Some(Sitio::Guarderia(_)))) {
                 self.anotar(destino);
             }
             return Valor::referencia(ref_principal(destino));
@@ -290,23 +273,15 @@ impl Monton {
 
     /// Lo que ha hecho el recolector hasta ahora.
     pub fn estadisticas(&self) -> Estadisticas {
-        Estadisticas {
-            en_guarderia: self.objetos.len(),
-            ..self.est
-        }
+        Estadisticas { en_guarderia: self.objetos.len(), ..self.est }
     }
 
     /// Bytes aproximados que ocupan los objetos (arena reservada, campos y cabeceras). Recorre todo el montón.
     pub fn bytes_aprox(&self) -> usize {
-        let celda =
-            |c: &Celda| mem::size_of::<Celda>() + c.campos.capacity() * mem::size_of::<Valor>();
+        let celda = |c: &Celda| mem::size_of::<Celda>() + c.campos.capacity() * mem::size_of::<Valor>();
         self.arena.capacity() * mem::size_of::<Valor>()
             + self.objetos.capacity() * mem::size_of::<(u32, u32)>()
-            + self
-                .principal
-                .iter()
-                .map(|c| c.as_ref().map_or(mem::size_of::<Option<Celda>>(), celda))
-                .sum::<usize>()
+            + self.principal.iter().map(|c| c.as_ref().map_or(mem::size_of::<Option<Celda>>(), celda)).sum::<usize>()
     }
 
     // ---------------- recolección menor ----------------
@@ -371,10 +346,7 @@ impl Monton {
             return v.con_ref(ref_principal(self.reenvio[i]));
         }
         let campos = self.arena[inicio as usize..(inicio + largo) as usize].to_vec();
-        let destino = self.colocar(Celda {
-            campos,
-            recordada: false,
-        });
+        let destino = self.colocar(Celda { campos, recordada: false });
         self.reenvio[i] = destino;
         self.cola.push(destino);
         self.est.promovidos += 1;
@@ -442,11 +414,7 @@ mod pruebas {
     use super::*;
 
     fn pequeno() -> Monton {
-        Monton::nuevo(Config {
-            guarderia: 256,
-            objeto_grande: 16,
-            umbral_mayor_minimo: 256,
-        })
+        Monton::nuevo(Config { guarderia: 256, objeto_grande: 16, umbral_mayor_minimo: 256 })
     }
 
     #[test]
@@ -490,11 +458,7 @@ mod pruebas {
 
     #[test]
     fn los_campos_de_asignar_sobreviven_a_su_propia_recoleccion() {
-        let mut m = Monton::nuevo(Config {
-            guarderia: 2,
-            objeto_grande: 16,
-            umbral_mayor_minimo: 1000,
-        });
+        let mut m = Monton::nuevo(Config { guarderia: 2, objeto_grande: 16, umbral_mayor_minimo: 1000 });
         let a = m.asignar(&[Valor::entero(7)]);
         m.asignar(&[Valor::NULO]); // guardería llena
         let b = m.asignar(&[a]); // provoca una menor: `a` solo vive en los campos
@@ -529,11 +493,7 @@ mod pruebas {
         assert_eq!(m.estadisticas().vivos_principal, 2);
         m.soltar_raices(ra.0);
         m.mayor();
-        assert_eq!(
-            m.estadisticas().vivos_principal,
-            0,
-            "un contador de referencias no liberaría este ciclo"
-        );
+        assert_eq!(m.estadisticas().vivos_principal, 0, "un contador de referencias no liberaría este ciclo");
     }
 
     #[test]

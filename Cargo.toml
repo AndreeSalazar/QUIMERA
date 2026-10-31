@@ -4,6 +4,7 @@ members = [
     "cimientos/valor",
     "motor-js/gc",
     "bancos/gc",
+    "herramientas/guardianes",
 ]
 
 [workspace.package]

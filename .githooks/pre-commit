@@ -1,0 +1,12 @@
+#!/bin/sh
+# Guardianes de QUIMERA: ningún commit pasa con un rojo o con un amarillo sin revisar.
+# Se activa una vez con: git config core.hooksPath .githooks
+set -e
+echo "guardianes: semáforo (estricto)"
+cargo run -q --release -p quimera-guardianes -- --estricto
+echo "guardianes: formato"
+cargo fmt --all --check
+echo "guardianes: clippy sin avisos"
+cargo clippy -q --all-targets -- -D warnings
+echo "guardianes: pruebas"
+cargo test -q --workspace

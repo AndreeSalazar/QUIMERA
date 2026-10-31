@@ -1,0 +1,22 @@
+[package]
+name = "quimera-guardianes"
+description = "Guardianes de QUIMERA: semáforo rojo/amarillo/verde, límite de 1000 líneas por archivo y jerarquía de niveles."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[package.metadata.quimera]
+nivel = 100
+capa = "herramientas"
+no_std = false
+externos = []
+
+[[bin]]
+name = "guardianes"
+path = "src/main.rs"
+
+[lints]
+workspace = true

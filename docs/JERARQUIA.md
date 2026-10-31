@@ -2,7 +2,7 @@
 
 QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Chromium por dentro: los datos de `datos-investigación/datos/chromium-jerarquia/` muestran 207 niveles de objetivos GN. Aquí son pocos niveles y cada uno con un propósito claro.
 
-**La regla**: un crate solo usa crates de niveles **menores**. Así cada pieza se puede probar, medir y sustituir sola. La comprueba `herramientas/comprobar-niveles.py`, que también vigila que solo se usen crates de fuera permitidos y que lo marcado `no_std` lo sea de verdad.
+**La regla**: un crate solo usa crates de niveles **menores**. Así cada pieza se puede probar, medir y sustituir sola. La comprueban los guardianes (`herramientas/guardianes`, ver [GUARDIANES.md](GUARDIANES.md)), que también vigilan los crates de fuera, `no_std`, `unsafe` y el límite de 1000 líneas por archivo.
 
 ## Capas y niveles
 
@@ -34,6 +34,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 10 | `navegador` | `quimera-navegador` | Pestañas, navegación, historial, descargas | Chromium `content` | no |
 | 11 | `navegador` | `quimera-ventana` | Ventana nativa (Wayland/Hyprland en ULTRA) + interfaz VERX | `verx-desktop` | no |
 | 99 | `bancos` | ✅ `quimera-banco-gc` | Medidas contra otros motores | — | no |
+| 100 | `herramientas` | ✅ `quimera-guardianes` | Semáforo, límites y jerarquía | guardián de VERX, SUPER GRAFO | no |
 
 ## Por qué wgpu
 
@@ -58,5 +59,5 @@ Sí, **wgpu** es la API gráfica correcta para QUIMERA:
 
 - Pruebas unitarias en cada crate (`cargo test`).
 - Benchmarks en `bancos/`, siempre contra una referencia ya medida (Boa, SpiderMonkey `js140`).
-- `herramientas/comprobar-niveles.py` antes de cada commit.
+- Los guardianes en modo estricto en cada commit (`.githooks/pre-commit`).
 - SUPER GRAFO sobre el propio QUIMERA (`ultra-carpetas --mcp`), para vigilar dependencias, `unsafe` y señales.

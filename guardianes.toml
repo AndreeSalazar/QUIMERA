@@ -1,0 +1,10 @@
+# Revisiones de los guardianes de QUIMERA.
+#
+# Cada amarillo (🟡) que se acepta queda aquí con su motivo. Si el amarillo desaparece,
+# la revisión sobra y los guardianes la marcan en rojo para que se borre.
+# Ver las reglas: cargo run -p quimera-guardianes -- --reglas
+
+[[revisado]]
+regla = "A-UNWRAP"
+archivo = "motor-js/gc/src/lib.rs"
+motivo = "Tres invariantes del montón: los índices de la guardería caben en 46 bits (está limitada por Config::guarderia), los de la zona principal en u32, y pasar de 4.294 millones de objetos vivos es un límite de diseño que debe parar el programa."

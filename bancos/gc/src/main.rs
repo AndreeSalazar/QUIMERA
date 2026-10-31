@@ -7,7 +7,6 @@
 //! - y se crean 10 objetos temporales que mueren enseguida.
 //!
 //! Uso: `cargo run --release -p quimera-banco-gc [pasos] [casillas]`
-#![allow(missing_docs)]
 
 use std::time::{Duration, Instant};
 
@@ -85,10 +84,8 @@ fn quimera(pasos: usize, casillas: usize) -> Medida {
     let total = inicio.elapsed();
     // Comprobación: suma del primer número de cada raíz de subárbol.
     let tabla = m.valor(&r_tabla);
-    let comprobacion = (0..casillas)
-        .filter_map(|i| m.leer(tabla, i))
-        .filter_map(|a| m.leer(a, 0).and_then(Valor::como_numero))
-        .sum();
+    let comprobacion =
+        (0..casillas).filter_map(|i| m.leer(tabla, i)).filter_map(|a| m.leer(a, 0).and_then(Valor::como_numero)).sum();
     let e = m.estadisticas();
     Medida {
         nombre: "quimera-gc",
@@ -130,19 +127,11 @@ fn boa(pasos: usize, casillas: usize) -> Medida {
     fn subarbol(prof: u32, semilla: f64) -> Gc<Nodo> {
         let numeros = std::array::from_fn(|i| semilla + i as f64);
         if prof == 0 {
-            return Gc::new(Nodo {
-                numeros,
-                izq: None,
-                der: None,
-            });
+            return Gc::new(Nodo { numeros, izq: None, der: None });
         }
         let izq = subarbol(prof - 1, semilla * 0.5);
         let der = subarbol(prof - 1, semilla * 0.25);
-        Gc::new(Nodo {
-            numeros,
-            izq: Some(izq),
-            der: Some(der),
-        })
+        Gc::new(Nodo { numeros, izq: Some(izq), der: Some(der) })
     }
 
     let tabla: Gc<GcRefCell<Vec<Option<Gc<Nodo>>>>> = Gc::new(GcRefCell::new(vec![None; casillas]));
@@ -155,9 +144,7 @@ fn boa(pasos: usize, casillas: usize) -> Medida {
         let casilla = (azar.siguiente() % casillas as u64) as usize;
         tabla.borrow_mut()[casilla] = Some(arbol);
         for k in 0..TEMPORALES {
-            let t = Gc::new(Temporal {
-                datos: [k as i32; 3],
-            });
+            let t = Gc::new(Temporal { datos: [k as i32; 3] });
             std::hint::black_box(t.datos);
         }
         let d = t.elapsed();
@@ -166,33 +153,17 @@ fn boa(pasos: usize, casillas: usize) -> Medida {
     }
     let total = inicio.elapsed();
     let comprobacion = tabla.borrow().iter().flatten().map(|a| a.numeros[0]).sum();
-    Medida {
-        nombre: "boa_gc 0.22",
-        total,
-        peor_paso: peor,
-        pasos_lentos: lentos,
-        comprobacion,
-        extra: String::new(),
-    }
+    Medida { nombre: "boa_gc 0.22", total, peor_paso: peor, pasos_lentos: lentos, comprobacion, extra: String::new() }
 }
 
 fn main() {
     let mut args = std::env::args().skip(1);
     let pasos: usize = args.next().and_then(|a| a.parse().ok()).unwrap_or(200_000);
     let casillas: usize = args.next().and_then(|a| a.parse().ok()).unwrap_or(8_000);
-    println!(
-        "Carga: {pasos} pasos, tabla de {casillas} casillas, {} objetos por paso",
-        15 + TEMPORALES
-    );
+    println!("Carga: {pasos} pasos, tabla de {casillas} casillas, {} objetos por paso", 15 + TEMPORALES);
     let medidas = [quimera(pasos, casillas), boa(pasos, casillas)];
-    assert_eq!(
-        medidas[0].comprobacion, medidas[1].comprobacion,
-        "las dos tablas deben quedar iguales"
-    );
-    println!(
-        "{:<12} {:>10} {:>12} {:>14}  detalle",
-        "gc", "total", "peor paso", "pasos > 1 ms"
-    );
+    assert_eq!(medidas[0].comprobacion, medidas[1].comprobacion, "las dos tablas deben quedar iguales");
+    println!("{:<12} {:>10} {:>12} {:>14}  detalle", "gc", "total", "peor paso", "pasos > 1 ms");
     for m in &medidas {
         println!(
             "{:<12} {:>8.0}ms {:>10.2}ms {:>14}  {}",
@@ -208,4 +179,14 @@ fn main() {
         medidas[1].total.as_secs_f64() / medidas[0].total.as_secs_f64(),
         medidas[1].peor_paso.as_secs_f64() / medidas[0].peor_paso.as_secs_f64()
     );
+}
+
+#[cfg(test)]
+mod pruebas {
+    #[test]
+    fn los_dos_gc_dejan_la_misma_tabla() {
+        let (q, b) = (super::quimera(3_000, 200), super::boa(3_000, 200));
+        assert_eq!(q.comprobacion, b.comprobacion);
+        assert!(q.comprobacion > 0.0);
+    }
 }
