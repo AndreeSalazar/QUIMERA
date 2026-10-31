@@ -3,7 +3,9 @@ resolver = "3"
 members = [
     "cimientos/valor",
     "motor-js/gc",
+    "motor-js/frontend",
     "bancos/gc",
+    "bancos/frontend",
     "herramientas/guardianes",
 ]
 
@@ -17,6 +19,7 @@ authors = ["Eddi Salazar"]
 [workspace.dependencies]
 quimera-valor = { path = "cimientos/valor" }
 quimera-gc = { path = "motor-js/gc" }
+quimera-frontend = { path = "motor-js/frontend" }
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"

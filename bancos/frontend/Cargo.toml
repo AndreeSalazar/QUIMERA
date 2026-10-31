@@ -1,0 +1,25 @@
+[package]
+name = "quimera-banco-frontend"
+description = "Mide quimera-frontend contra el parser de Boa con el mismo JavaScript."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[package.metadata.quimera]
+nivel = 99
+capa = "bancos"
+no_std = false
+# Solo los bancos de medida pueden usar crates de fuera, para comparar.
+externos = ["boa_parser", "boa_interner", "boa_ast"]
+
+[dependencies]
+quimera-frontend.workspace = true
+boa_parser = "0.22.0"
+boa_interner = "0.22.0"
+boa_ast = "0.22.0"
+
+[lints]
+workspace = true

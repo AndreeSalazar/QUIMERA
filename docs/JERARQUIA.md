@@ -14,13 +14,13 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 0 | `cimientos` | `quimera-cadenas` | Cadenas Latin-1/UTF-16 compartidas | Boa `boa_string` | sí |
 | 0 | `cimientos` | `quimera-plataforma` | Lo que se pide al sistema (tiempo, hilos, archivos) como *traits*; Linux y ULTRA lo implementan | Chromium `base` | sí |
 | 1 | `motor-js` | ✅ `quimera-gc` | GC generacional: guardería en arena + zona principal | SpiderMonkey `gc/Nursery` | sí |
-| 2 | `motor-js` | 🔨 `quimera-frontend` | Parser y AST de JavaScript → bytecode tipo *Stencil* | Boa `boa_parser`, `boa_ast`; SpiderMonkey `frontend/Stencil` | sí |
+| 2 | `motor-js` | ✅ `quimera-frontend` | Parser y AST de JavaScript → bytecode tipo *Stencil* | Boa `boa_parser`, `boa_ast`; SpiderMonkey `frontend/Stencil` | sí |
 | 2 | `web` | `quimera-html` | Tokenizador y constructor de árbol HTML5 | html5ever (Servo) | sí |
 | 2 | `web` | `quimera-css` | Parser de CSS y selectores | Stylo (Servo) | sí |
 | 2 | `grafico` | `quimera-gpu` | GPU con **wgpu**: superficies, texturas, *pipelines* | WebRender, Servo | no (wgpu usa `std`) |
 | 2 | `grafico` | `quimera-texto` | Fuentes y *shaping* | skrifa, harfrust | sí |
 | 2 | `red` | `quimera-red` | HTTP/1.1, HTTP/2, TLS (rustls), caché | Chromium `net` | no |
-| 3 | `motor-js` | `quimera-objetos` | *Shapes*, elementos densos, propiedades | SpiderMonkey `NativeObject` | sí |
+| 3 | `motor-js` | 🔨 `quimera-objetos` | *Shapes*, elementos densos, propiedades | SpiderMonkey `NativeObject` | sí |
 | 3 | `motor-js` | `quimera-ic` | Cachés en línea con un mini-lenguaje común | SpiderMonkey CacheIR | sí |
 | 3 | `proceso` | `quimera-aislamiento` | Procesos, IPC y sandbox (seccomp en ULTRA) | Chromium `sandbox`, `mojo` | no |
 | 4 | `motor-js` | `quimera-vm` | Intérprete de registros, un único bucle | SpiderMonkey `Interpreter.cpp` | sí |
@@ -33,7 +33,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 9 | `grafico` | `quimera-pintar` | Lista de dibujo → GPU con `quimera-gpu` | WebRender | no |
 | 10 | `navegador` | `quimera-navegador` | Pestañas, navegación, historial, descargas | Chromium `content` | no |
 | 11 | `navegador` | `quimera-ventana` | Ventana nativa (Wayland/Hyprland en ULTRA) + interfaz VERX | `verx-desktop` | no |
-| 99 | `bancos` | ✅ `quimera-banco-gc` | Medidas contra otros motores | — | no |
+| 99 | `bancos` | ✅ `quimera-banco-gc`, `quimera-banco-frontend` | Medidas contra otros motores | — | no |
 | 100 | `herramientas` | ✅ `quimera-guardianes` | Semáforo, límites y jerarquía | guardián de VERX, SUPER GRAFO | no |
 
 ## Por qué wgpu

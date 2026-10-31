@@ -10,6 +10,8 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 |---|---:|---|---|
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
 | `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura | ✅ 7 pruebas |
+| `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador | ✅ 21 pruebas |
+| `bancos/frontend` → `quimera-banco-frontend` | 99 | Compara el frontend con el parser de Boa | ✅ 1 prueba |
 | `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ 1 prueba |
 | `herramientas/guardianes` → `quimera-guardianes` | 100 | Semáforo rojo/amarillo/verde, 1000 líneas por archivo, jerarquía | ✅ 12 pruebas |
 
@@ -20,7 +22,16 @@ Primera medida, con la misma carga estilo Splay (200.000 pasos, 5 millones de ob
 | `quimera-gc` | 522–571 ms | 25–48 | 14–19 ms |
 | `boa_gc` 0.22 | 667–729 ms | 79–81 | 10–22 ms |
 
-QUIMERA es **1,26–1,36× más rápido** y tiene un tercio de los pasos lentos. La peor pausa aún depende de la recolección mayor, que marca todo de una vez; marcarla por partes (como SpiderMonkey) es la siguiente mejora del GC.
+El GC de QUIMERA es **1,26–1,36× más rápido** y tiene un tercio de los pasos lentos. La peor pausa aún depende de la recolección mayor, que marca todo de una vez; marcarla por partes (como SpiderMonkey) es la siguiente mejora del GC.
+
+El frontend, con el corpus de Boa y V8 repetido hasta 1,05 MB:
+
+| | Texto → árbol | Velocidad |
+|---|---:|---:|
+| **`quimera-frontend`** | **29,5–30,0 ms** | **35 MB/s** |
+| parser de Boa 0.22 | 99–103 ms | 10,4 MB/s |
+
+**3,3–3,4× más rápido** (con la salvedad de que Boa cubre todo ECMAScript; ver [docs/FRONTEND.md](docs/FRONTEND.md)).
 
 ## Estructura
 
@@ -39,6 +50,7 @@ QUIMERA (esta carpeta)
   .githooks/pre-commit    guardianes + formato + clippy + pruebas en cada commit
   docs/JERARQUIA.md       todos los niveles, el orden y por qué wgpu
   docs/GUARDIANES.md      las reglas y por qué existen
+  docs/FRONTEND.md        cómo funciona el frontend, qué entiende y su medida
   datos-investigación/    la investigación archivada: Chromium, Servo, Boa, SpiderMonkey, SUPER GRAFO
 ```
 
@@ -50,6 +62,10 @@ cargo test
 
 ```bash
 cargo run --release -p quimera-banco-gc
+```
+
+```bash
+cargo run --release -p quimera-banco-frontend
 ```
 
 ```bash
