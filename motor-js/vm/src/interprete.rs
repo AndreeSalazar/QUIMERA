@@ -31,7 +31,6 @@ impl Motor {
                     self.cerrar_marco(Valor::INDEFINIDO);
                     break;
                 };
-                self.marcos[n].pc = pc + 1;
                 match self.paso(ins, fi, base, pc) {
                     Ok(Flujo::Sigue) => pc += 1,
                     Ok(Flujo::Salta(d)) => pc = d as usize,
@@ -77,8 +76,38 @@ impl Motor {
             FuncionActual { dst } => self.w(base, dst, self.pila(cab)),
             Mover { dst, src } => self.w(base, dst, self.r(base, src)),
             Binaria { op, dst, a, b } => {
-                let v = self.binaria(op, base, a, b)?;
+                let v = self.binaria(op, self.r(base, a), self.r(base, b), base + b as usize)?;
                 self.w(base, dst, v);
+            }
+            BinariaInm { op, dst, a, valor } => {
+                let x = self.r(base, a);
+                let v = match x.como_entero() {
+                    // El caso de los bucles: entero más entero, sin salir de i32.
+                    Some(i) if op == OpBin::Suma => i.checked_add(valor).map(Valor::entero),
+                    Some(i) if op == OpBin::Resta => i.checked_sub(valor).map(Valor::entero),
+                    _ => None,
+                };
+                let v = match v {
+                    Some(v) => v,
+                    None => self.binaria(op, x, Valor::entero(valor), usize::MAX)?,
+                };
+                self.w(base, dst, v);
+            }
+            SaltarSiNoCompara { op, a, b, destino } => {
+                let (x, y) = (self.r(base, a), self.r(base, b));
+                let cierto = match (x.como_entero(), y.como_entero(), op) {
+                    (Some(i), Some(j), OpBin::Menor) => i < j,
+                    (Some(i), Some(j), OpBin::MenorIgual) => i <= j,
+                    (Some(i), Some(j), OpBin::Mayor) => i > j,
+                    (Some(i), Some(j), OpBin::MayorIgual) => i >= j,
+                    (Some(i), Some(j), OpBin::Estricto | OpBin::Igual) => i == j,
+                    (Some(i), Some(j), OpBin::NoEstricto | OpBin::Distinto) => i != j,
+                    _ => {
+                        let v = self.binaria(op, x, y, base + b as usize)?;
+                        op::a_booleano(&self.mundo, v)
+                    }
+                };
+                return Ok(self.saltar_si(!cierto, destino));
             }
             Unaria { op, dst, a } => {
                 let v = self.unaria(op, self.r(base, a));
@@ -168,12 +197,12 @@ impl Motor {
                 let f = self.mundo.crear_funcion(indice, env, este, proto);
                 self.w(base, dst, f);
             }
-            otra => return self.paso_llamadas(otra, base),
+            otra => return self.paso_llamadas(otra, base, pc),
         }
         Ok(Flujo::Sigue)
     }
 
-    fn paso_llamadas(&mut self, ins: Instr, base: usize) -> Result<Flujo, Valor> {
+    fn paso_llamadas(&mut self, ins: Instr, base: usize, pc: usize) -> Result<Flujo, Valor> {
         use Instr::*;
         let abs = |r: Reg| base + r as usize;
         let llamada = match ins {
@@ -204,11 +233,15 @@ impl Motor {
             }
             _ => return Ok(Flujo::Sigue),
         };
+        // El contador solo hace falta guardarlo aquí: al volver, el marco sigue en la siguiente.
+        if let Some(m) = self.marcos.last_mut() {
+            m.pc = pc + 1;
+        }
         Ok(if self.llamar(llamada)? { Flujo::Recargar } else { Flujo::Sigue })
     }
 
-    fn binaria(&mut self, op: OpBin, base: usize, ra: Reg, rb: Reg) -> Result<Valor, Valor> {
-        let (a, b) = (self.r(base, ra), self.r(base, rb));
+    /// `a op b`. `b_abs` es dónde está `b` en la pila (`instanceof` lo necesita para crear `F.prototype`).
+    fn binaria(&mut self, op: OpBin, a: Valor, b: Valor, b_abs: usize) -> Result<Valor, Valor> {
         Ok(match op {
             OpBin::Suma if (self.mundo.texto(a).is_some() || self.mundo.texto(b).is_some()) || self.objetos(a, b) => {
                 let s = alloc::format!("{}{}", op::a_texto(&self.mundo, a), op::a_texto(&self.mundo, b));
@@ -222,7 +255,7 @@ impl Motor {
                 Valor::booleano(op::comparar(&self.mundo, op, a, b))
             }
             OpBin::En => Valor::booleano(self.contiene(a, b)?),
-            OpBin::Instancia => Valor::booleano(self.instancia(a, base + rb as usize)?),
+            OpBin::Instancia => Valor::booleano(self.instancia(a, b_abs)?),
             OpBin::Potencia => {
                 let (x, y) = (op::a_numero(&self.mundo, a), op::a_numero(&self.mundo, b));
                 match op::potencia(x, y) {

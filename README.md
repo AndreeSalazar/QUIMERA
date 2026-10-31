@@ -9,9 +9,12 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | Crate | Nivel | Qué es | Estado |
 |---|---:|---|---|
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
-| `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura | ✅ 7 pruebas |
-| `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador | ✅ 21 pruebas |
+| `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura | ✅ 10 pruebas |
+| `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador | ✅ 22 pruebas |
+| `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas, objetos, arreglos densos, funciones y entornos sobre el GC | ✅ 8 pruebas |
+| `motor-js/vm` → `quimera-vm` | 4 | Intérprete: registros en la pila del GC, cachés en línea, superinstrucciones | ✅ 12 pruebas |
 | `bancos/frontend` → `quimera-banco-frontend` | 99 | Compara el frontend con el parser de Boa | ✅ 1 prueba |
+| `bancos/vm` → `quimera-banco-vm` | 99 | Compara la VM con boa_engine | ✅ 1 prueba |
 | `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ 1 prueba |
 | `herramientas/guardianes` → `quimera-guardianes` | 100 | Semáforo rojo/amarillo/verde, 1000 líneas por archivo, jerarquía | ✅ 12 pruebas |
 
@@ -33,6 +36,14 @@ El frontend, con el corpus de Boa y V8 repetido hasta 1,05 MB:
 
 **3,3–3,4× más rápido** (con la salvedad de que Boa cubre todo ECMAScript; ver [docs/FRONTEND.md](docs/FRONTEND.md)).
 
+**Ejecutando JavaScript** (los benchmarks de Boa, mismos resultados en los dos motores):
+
+| | Media geométrica frente a boa_engine 0.22 |
+|---|---:|
+| **`quimera-vm`** | **2,81× más rápido** (de 1,13× en nested-loop a 5,60× en closures-create) |
+
+Ver [docs/VM.md](docs/VM.md).
+
 ## Estructura
 
 ```text
@@ -51,6 +62,7 @@ QUIMERA (esta carpeta)
   docs/JERARQUIA.md       todos los niveles, el orden y por qué wgpu
   docs/GUARDIANES.md      las reglas y por qué existen
   docs/FRONTEND.md        cómo funciona el frontend, qué entiende y su medida
+  docs/VM.md              la máquina virtual: diseño, medida y qué falta
   datos-investigación/    la investigación archivada: Chromium, Servo, Boa, SpiderMonkey, SUPER GRAFO
 ```
 
@@ -66,6 +78,10 @@ cargo run --release -p quimera-banco-gc
 
 ```bash
 cargo run --release -p quimera-banco-frontend
+```
+
+```bash
+cargo run --release -p quimera-banco-vm
 ```
 
 ```bash

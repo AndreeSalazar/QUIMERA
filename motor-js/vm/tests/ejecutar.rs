@@ -27,6 +27,19 @@ fn aritmetica_y_conversiones() {
 }
 
 #[test]
+fn superinstrucciones_respetan_javascript() {
+    // ++ convierte a número; `+ 3` con una cadena concatena; las comparaciones fusionadas con
+    // cadenas, NaN y números grandes salen por el camino general.
+    let codigo = "function resultado() {
+                    let s = '5'; s++; let t = '5'; ++t; let u = 'a'; let z = -0; z++;
+                    let r = []; if ('b' > 'a') r.push('cad'); if (NaN < 1) r.push('nan'); else r.push('no-nan');
+                    let g = 2147483647; g += 1; let k = 0; for (let i = 0; i < 3.5; i++) k++;
+                    return [s, t, u + 3, z, r, g, k]
+                  }";
+    assert_eq!(ejecutar(codigo), "6,6,a3,1,cad,no-nan,2147483648,4");
+}
+
+#[test]
 fn comparaciones_y_logica() {
     assert_eq!(
         ejecutar("function resultado() { return [1 == '1', 1 === '1', null == undefined, NaN === NaN, 'b' > 'a'] }"),

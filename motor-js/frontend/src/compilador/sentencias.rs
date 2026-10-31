@@ -105,9 +105,22 @@ impl Compilador<'_> {
         self.expr(e, t)
     }
 
-    fn si(&mut self, c: &Expr, a: &Sent, b: Option<&Sent>) -> Resultado<()> {
+    /// Salta (destino pendiente) si la condición es falsa. `a < b` y demás comparaciones
+    /// van en una sola instrucción que compara y salta.
+    fn saltar_si_falso(&mut self, c: &Expr) -> Resultado<usize> {
+        if let Expr::Binaria(op, a, b) = c {
+            let comparacion = matches!(*op, "<" | "<=" | ">" | ">=" | "===" | "!==" | "==" | "!=");
+            if let (true, Some(op)) = (comparacion, OpBin::desde(op)) {
+                let (ra, rb) = (self.operando(a)?, self.operando(b)?);
+                return Ok(self.emitir(Instr::SaltarSiNoCompara { op, a: ra, b: rb, destino: 0 }));
+            }
+        }
         let rc = self.operando(c)?;
-        let a_otro = self.emitir(Instr::SaltarSiNo { c: rc, destino: 0 });
+        Ok(self.emitir(Instr::SaltarSiNo { c: rc, destino: 0 }))
+    }
+
+    fn si(&mut self, c: &Expr, a: &Sent, b: Option<&Sent>) -> Resultado<()> {
+        let a_otro = self.saltar_si_falso(c)?;
         self.sentencia(a)?;
         match b {
             Some(b) => {
@@ -143,8 +156,7 @@ impl Compilador<'_> {
 
     fn mientras(&mut self, c: &Expr, cuerpo: &Sent) -> Resultado<()> {
         let inicio = self.pc();
-        let rc = self.operando(c)?;
-        let a_fin = self.emitir(Instr::SaltarSiNo { c: rc, destino: 0 });
+        let a_fin = self.saltar_si_falso(c)?;
         self.abrir_bucle(false);
         self.sentencia(cuerpo)?;
         self.emitir(Instr::Saltar { destino: inicio });
@@ -180,8 +192,7 @@ impl Compilador<'_> {
         let a_fin = match cond {
             Some(c) => {
                 let marca = self.marca();
-                let rc = self.operando(c)?;
-                let salto = self.emitir(Instr::SaltarSiNo { c: rc, destino: 0 });
+                let salto = self.saltar_si_falso(c)?;
                 self.soltar(marca);
                 Some(salto)
             }

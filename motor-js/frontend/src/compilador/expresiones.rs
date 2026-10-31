@@ -18,6 +18,13 @@ fn op_unaria(op: &str) -> Option<OpUn> {
     })
 }
 
+/// Un número literal que cabe exacto en un `i32` (y no es `-0`): puede ir dentro de la instrucción.
+fn entero_literal(e: &Expr) -> Option<i32> {
+    let Expr::Numero(n) = e else { return None };
+    let i = *n as i32;
+    (i as f64 == *n && !(*n == 0.0 && n.is_sign_negative())).then_some(i)
+}
+
 /// `+=` → `+`, `**=` → `**`...
 fn op_compuesta(op: &str) -> Option<OpBin> {
     OpBin::desde(op.strip_suffix('=')?)
@@ -62,6 +69,12 @@ impl Compilador<'_> {
             Expr::Actualizar { op, prefijo, destino } => self.actualizar(op, *prefijo, destino, dst)?,
             Expr::Binaria(op, a, b) => {
                 let op = OpBin::desde(op).ok_or_else(|| sin_operador(op))?;
+                // `a + 3`, `a - 1`: el entero va dentro de la instrucción.
+                if let (OpBin::Suma | OpBin::Resta, Some(valor)) = (op, entero_literal(b)) {
+                    let ra = self.operando(a)?;
+                    self.emitir(Instr::BinariaInm { op, dst, a: ra, valor });
+                    return Ok(());
+                }
                 let (ra, rb) = (self.operando(a)?, self.operando(b)?);
                 self.emitir(Instr::Binaria { op, dst, a: ra, b: rb });
             }
@@ -280,6 +293,10 @@ impl Compilador<'_> {
             return Ok(());
         }
         let binop = op_compuesta(op).ok_or_else(|| sin_operador(op))?;
+        if let (OpBin::Suma | OpBin::Resta, Some(v)) = (binop, entero_literal(valor)) {
+            self.emitir(Instr::BinariaInm { op: binop, dst, a: dst, valor: v });
+            return Ok(());
+        }
         let rv = self.operando(valor)?;
         self.emitir(Instr::Binaria { op: binop, dst, a: dst, b: rv });
         Ok(())
@@ -290,9 +307,16 @@ impl Compilador<'_> {
             // En su registro y sin copias: `x += 1` es `rX = rX Suma r1`.
             Destino::Local(r) if op == "=" && segura_sobre_variable(valor) => self.expr(valor, r)?,
             Destino::Local(r) if op_compuesta(op).is_some() => {
-                let rv = self.operando(valor)?;
                 let op = op_compuesta(op).ok_or_else(|| sin_operador(op))?;
-                self.emitir(Instr::Binaria { op, dst: r, a: r, b: rv });
+                match (op, entero_literal(valor)) {
+                    (OpBin::Suma | OpBin::Resta, Some(v)) => {
+                        _ = self.emitir(Instr::BinariaInm { op, dst: r, a: r, valor: v })
+                    }
+                    _ => {
+                        let rv = self.operando(valor)?;
+                        self.emitir(Instr::Binaria { op, dst: r, a: r, b: rv });
+                    }
+                }
             }
             _ => {
                 let t = self.temporal()?;
@@ -315,33 +339,33 @@ impl Compilador<'_> {
 
     /// `++x` / `x--` sobre una variable o una propiedad.
     fn actualizar(&mut self, op: &str, prefijo: bool, destino: &Expr, dst: Reg) -> Resultado<()> {
-        let binop = if op == "++" { OpBin::Suma } else { OpBin::Resta };
-        let uno = self.temporal()?;
-        self.emitir(Instr::Entero { dst: uno, valor: 1 });
+        // `++x` es `x - (-1)` y `--x` es `x - 1`: la resta siempre convierte a número (con
+        // `+` y un 1, `"5"` daría `"51"`) y en coma flotante el resultado es idéntico a `x + 1`.
+        let paso = if op == "++" { -1 } else { 1 };
         if let Expr::Ident(n) = destino
             && let Destino::Local(r) = self.resolver(n)
         {
             if prefijo {
-                self.emitir(Instr::Binaria { op: binop, dst: r, a: r, b: uno });
+                self.emitir(Instr::BinariaInm { op: OpBin::Resta, dst: r, a: r, valor: paso });
                 if r != dst {
                     self.emitir(Instr::Mover { dst, src: r });
                 }
             } else {
                 let viejo = if dst == r { self.temporal()? } else { dst };
                 self.emitir(Instr::Unaria { op: OpUn::ANumero, dst: viejo, a: r });
-                self.emitir(Instr::Binaria { op: binop, dst: r, a: viejo, b: uno });
+                self.emitir(Instr::BinariaInm { op: OpBin::Resta, dst: r, a: viejo, valor: paso });
                 if viejo != dst {
                     self.emitir(Instr::Mover { dst, src: viejo });
                 }
             }
             return Ok(());
         }
-        // Propiedad o variable fuera de registro: leer, convertir, sumar, escribir.
+        // Propiedad o variable fuera de registro: leer, convertir, restar, escribir.
         let viejo = self.temporal()?;
         let nuevo = self.temporal()?;
         let escribir = self.leer_destino(destino, viejo)?;
         self.emitir(Instr::Unaria { op: OpUn::ANumero, dst: viejo, a: viejo });
-        self.emitir(Instr::Binaria { op: binop, dst: nuevo, a: viejo, b: uno });
+        self.emitir(Instr::BinariaInm { op: OpBin::Resta, dst: nuevo, a: viejo, valor: paso });
         self.escribir_destino(escribir, nuevo);
         self.emitir(Instr::Mover { dst, src: if prefijo { nuevo } else { viejo } });
         Ok(())

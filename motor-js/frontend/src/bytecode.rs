@@ -142,6 +142,8 @@ pub enum Instr {
     Mover { dst: Reg, src: Reg },
     /// `dst = a op b`.
     Binaria { op: OpBin, dst: Reg, a: Reg, b: Reg },
+    /// `dst = a op valor` con un entero dentro de la instrucción (`i + 1`, `i++`, `x -= 2`).
+    BinariaInm { op: OpBin, dst: Reg, a: Reg, valor: i32 },
     /// `dst = op a`.
     Unaria { op: OpUn, dst: Reg, a: Reg },
     /// Salta a `destino`.
@@ -150,6 +152,8 @@ pub enum Instr {
     SaltarSi { c: Reg, destino: u32 },
     /// Salta si `c` es falso.
     SaltarSiNo { c: Reg, destino: u32 },
+    /// Compara y salta en una sola instrucción: salta a `destino` si `a op b` es falso (`i < n`).
+    SaltarSiNoCompara { op: OpBin, a: Reg, b: Reg, destino: u32 },
     /// Salta si `c` no es `null` ni `undefined` (para `??`).
     SaltarSiDefinido { c: Reg, destino: u32 },
     /// `dst = globalThis[nombre]`.
@@ -279,10 +283,12 @@ impl Stencil {
             FuncionActual { dst } => alloc::format!("r{dst} = función actual"),
             Mover { dst, src } => alloc::format!("r{dst} = r{src}"),
             Binaria { op, dst, a, b } => alloc::format!("r{dst} = r{a} {op:?} r{b}"),
+            BinariaInm { op, dst, a, valor } => alloc::format!("r{dst} = r{a} {op:?} {valor}"),
             Unaria { op, dst, a } => alloc::format!("r{dst} = {op:?} r{a}"),
             Saltar { destino } => alloc::format!("saltar {destino:04}"),
             SaltarSi { c, destino } => alloc::format!("si r{c} saltar {destino:04}"),
             SaltarSiNo { c, destino } => alloc::format!("si no r{c} saltar {destino:04}"),
+            SaltarSiNoCompara { op, a, b, destino } => alloc::format!("si no r{a} {op:?} r{b} saltar {destino:04}"),
             SaltarSiDefinido { c, destino } => alloc::format!("si r{c} no es null/undefined saltar {destino:04}"),
             LeerGlobal { dst, nombre } => alloc::format!("r{dst} = global {:?}", self.atomo(*nombre)),
             EscribirGlobal { nombre, src } => alloc::format!("global {:?} = r{src}", self.atomo(*nombre)),

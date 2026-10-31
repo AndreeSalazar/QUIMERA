@@ -16,8 +16,7 @@ fn una_variable_local_se_actualiza_en_su_registro() {
         c,
         [
             Instr::Mover { dst: 1, src: 0 },
-            Instr::Entero { dst: 2, valor: 1 },
-            Instr::Binaria { op: OpBin::Suma, dst: 1, a: 1, b: 2 },
+            Instr::BinariaInm { op: OpBin::Suma, dst: 1, a: 1, valor: 1 },
             Instr::Retornar { src: 1 },
             Instr::Indefinido { dst: 2 },
             Instr::Retornar { src: 2 },
