@@ -11,6 +11,7 @@ members = [
     "web/html",
     "web/css",
     "web/estilo",
+    "web/dom",
     "web/maquetacion",
     "grafico/texto",
     "grafico/imagen",
@@ -45,6 +46,7 @@ quimera-vm = { path = "motor-js/vm" }
 quimera-html = { path = "web/html" }
 quimera-css = { path = "web/css" }
 quimera-estilo = { path = "web/estilo" }
+quimera-dom = { path = "web/dom" }
 quimera-maquetacion = { path = "web/maquetacion" }
 quimera-texto = { path = "grafico/texto" }
 quimera-imagen = { path = "grafico/imagen" }

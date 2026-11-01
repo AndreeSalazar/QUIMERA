@@ -86,7 +86,10 @@ pub fn maquetar_pagina(
         .collect();
     let enlaces = enlaces
         .into_iter()
-        .map(|&(x, y, ancho, alto, i)| Enlace { x, y, ancho, alto, href: m.hrefs[i as usize].clone() })
+        .map(|&(x, y, ancho, alto, i)| {
+            let (href, nodo) = m.hrefs[i as usize].clone();
+            Enlace { x, y, ancho, alto, href, nodo }
+        })
         .collect();
     let alto_doc = hecho.alto.max(abajo_capas).max(alto);
     Maquetacion { piezas, ancho, alto: alto_doc, fondo, enlaces, anclas: m.anclas, controles }

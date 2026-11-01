@@ -2182,6 +2182,14 @@ name = "quimera-css"
 version = "0.1.0"
 
 [[package]]
+name = "quimera-dom"
+version = "0.1.0"
+dependencies = [
+ "quimera-html",
+ "quimera-vm",
+]
+
+[[package]]
 name = "quimera-estilo"
 version = "0.1.0"
 dependencies = [
@@ -2282,6 +2290,7 @@ name = "quimera-ventana"
 version = "0.1.0"
 dependencies = [
  "pollster",
+ "quimera-dom",
  "quimera-estilo",
  "quimera-gpu",
  "quimera-html",

@@ -33,6 +33,9 @@ pub enum Clase {
     Entorno = 5,
     /// Expresión regular: un objeto con el número de su programa compilado (en la máquina).
     RegExp = 6,
+    /// Objeto del anfitrión (un nodo del DOM): un objeto con un número del anfitrión. Sus
+    /// propiedades se le preguntan al anfitrión; las cachés en línea no lo guardan nunca.
+    Anfitrion = 7,
 }
 
 impl Clase {
@@ -44,6 +47,7 @@ impl Clase {
             4 => Clase::Nativa,
             5 => Clase::Entorno,
             6 => Clase::RegExp,
+            7 => Clase::Anfitrion,
             _ => return None,
         })
     }
@@ -135,6 +139,21 @@ impl Mundo {
         self.m.asignar(&[tipo, forma, proto, Valor::NULO, Valor::entero(indice as i32)])
     }
 
+    /// Un objeto del anfitrión con su número (`dato`).
+    pub fn crear_anfitrion(&mut self, dato: u32, proto: Valor) -> Valor {
+        let tipo = Valor::entero(Clase::Anfitrion as i32);
+        let forma = Valor::entero(FORMA_VACIA as i32);
+        self.m.asignar(&[tipo, forma, proto, Valor::NULO, Valor::entero(dato as i32)])
+    }
+
+    /// El número de un objeto del anfitrión.
+    pub fn anfitrion(&self, v: Valor) -> Option<u32> {
+        if self.clase(v)? != Clase::Anfitrion {
+            return None;
+        }
+        Some(entero(self.m.leer(v, C_EXTRA))? as u32)
+    }
+
     /// El número del programa de una expresión regular.
     pub fn regexp(&self, v: Valor) -> Option<u32> {
         if self.clase(v)? != Clase::RegExp {
@@ -212,8 +231,9 @@ impl Mundo {
     #[inline]
     pub fn leer_si_forma(&self, obj: Valor, forma: IdForma, hueco: u32) -> Option<Valor> {
         let c = self.m.campos(obj)?;
-        let entorno = Valor::entero(Clase::Entorno as i32);
-        if *c.get(C_TIPO)? == entorno || *c.get(C_FORMA)? != Valor::entero(forma as i32) {
+        let (entorno, anfitrion) = (Valor::entero(Clase::Entorno as i32), Valor::entero(Clase::Anfitrion as i32));
+        let tipo = *c.get(C_TIPO)?;
+        if tipo == entorno || tipo == anfitrion || *c.get(C_FORMA)? != Valor::entero(forma as i32) {
             return None;
         }
         Some(self.m.campos(*c.get(C_PROPS)?)?.get(hueco as usize).copied().unwrap_or(Valor::INDEFINIDO))
@@ -223,7 +243,8 @@ impl Mundo {
     #[inline]
     pub fn forma_de_objeto(&self, obj: Valor) -> Option<IdForma> {
         let c = self.m.campos(obj)?;
-        if *c.get(C_TIPO)? == Valor::entero(Clase::Entorno as i32) {
+        let tipo = *c.get(C_TIPO)?;
+        if tipo == Valor::entero(Clase::Entorno as i32) || tipo == Valor::entero(Clase::Anfitrion as i32) {
             return None;
         }
         Some(c.get(C_FORMA)?.como_entero()? as IdForma)

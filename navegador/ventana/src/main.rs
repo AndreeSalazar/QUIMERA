@@ -17,6 +17,7 @@
 
 mod barra;
 mod formularios;
+mod guiones;
 mod historial;
 mod imagenes;
 mod navegador;
@@ -70,6 +71,14 @@ impl ApplicationHandler<Evento> for Navegador {
 
     fn user_event(&mut self, _bucle: &ActiveEventLoop, evento: Evento) {
         self.evento(evento);
+    }
+
+    /// Antes de dormir: los temporizadores de la página que ya tocan, y despertar para el siguiente.
+    fn about_to_wait(&mut self, bucle: &ActiveEventLoop) {
+        match self.latido() {
+            Some(cuando) => bucle.set_control_flow(winit::event_loop::ControlFlow::WaitUntil(cuando)),
+            None => bucle.set_control_flow(winit::event_loop::ControlFlow::Wait),
+        }
     }
 
     fn window_event(&mut self, bucle: &ActiveEventLoop, _id: WindowId, evento: WindowEvent) {
@@ -281,7 +290,10 @@ fn maquetar_pagina(
     (ancho, alto): (f32, f32),
     imagenes: &Imagenes,
 ) -> quimera_maquetacion::Maquetacion {
-    let doc = pagina.documento();
+    // Con su JavaScript: los scripts, y los temporizadores del primer segundo.
+    let mut guion = guiones::Guion::preparar(pagina);
+    guion.adelantar(1000.0);
+    let doc = guion.dom.documento();
     let externa = |href: &str| pagina.hoja(href);
     let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
     maquetar_con_imagenes(&doc, &estilos, &pintor.medidor(), (ancho, alto), &|s| imagenes.tam(s))

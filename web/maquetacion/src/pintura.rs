@@ -95,6 +95,8 @@ pub struct Enlace {
     pub alto: f32,
     /// El `href` tal como está en la página (sin resolver).
     pub href: String,
+    /// Su `<a>` (para lanzarle el evento `click`).
+    pub nodo: quimera_html::NodoId,
 }
 
 /// El resultado de maquetar una página.
@@ -143,10 +145,12 @@ impl Maquetacion {
 
     /// El enlace que hay en el punto (x, y) del documento.
     pub fn enlace_en(&self, x: f32, y: f32) -> Option<&str> {
-        self.enlaces
-            .iter()
-            .find(|e| x >= e.x && x < e.x + e.ancho && y >= e.y && y < e.y + e.alto)
-            .map(|e| e.href.as_str())
+        self.trozo_de_enlace_en(x, y).map(|e| e.href.as_str())
+    }
+
+    /// El trozo de enlace (con su `href` y su `<a>`) que hay en el punto (x, y) del documento.
+    pub fn trozo_de_enlace_en(&self, x: f32, y: f32) -> Option<&Enlace> {
+        self.enlaces.iter().find(|e| x >= e.x && x < e.x + e.ancho && y >= e.y && y < e.y + e.alto)
     }
 
     /// La altura de un ancla (`#id`).

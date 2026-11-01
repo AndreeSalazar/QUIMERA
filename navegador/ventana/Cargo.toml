@@ -15,6 +15,7 @@ externos = ["winit", "pollster"]
 
 [dependencies]
 quimera-html.workspace = true
+quimera-dom.workspace = true
 quimera-estilo.workspace = true
 quimera-maquetacion.workspace = true
 quimera-pintar.workspace = true

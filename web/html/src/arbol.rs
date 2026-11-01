@@ -1,6 +1,6 @@
 //! El árbol del documento: nodos en un arreglo, enlazados por número (sin `Rc` ni punteros).
 //!
-//! Es el árbol que produce el analizador. `quimera-dom` lo envolverá para JavaScript; el
+//! Es el árbol que produce el analizador. `quimera-dom` lo envuelve para JavaScript; el
 //! estilo y la maquetación lo recorren directamente.
 
 use alloc::string::String;
@@ -60,7 +60,7 @@ pub struct Nodo {
 /// Un documento HTML.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Documento {
-    nodos: Vec<Nodo>,
+    pub(crate) nodos: Vec<Nodo>,
 }
 
 impl Default for Documento {

@@ -1,0 +1,41 @@
+<!doctype html>
+<!-- Una página que hace JavaScript: casi todo lo que se ve lo crean o cambian sus scripts
+     (createElement, style, classList, innerHTML, setTimeout). Se compara con Chromium. -->
+<title>JavaScript en QUIMERA</title>
+<style>
+  body { font-family: sans-serif; margin: 16px; }
+  #barras div { height: 16px; margin: 4px 0; background: rgb(107, 45, 143); }
+  #barras .alta { height: 32px; background: rgb(46, 125, 50); }
+  .ficha { display: inline-block; width: 60px; height: 40px; margin-right: 8px; background: rgb(21, 101, 192); }
+  #estado { color: rgb(198, 40, 40); }
+</style>
+<h1 id=titulo>Sin JavaScript</h1>
+<p id=estado>Si ves esto en rojo, los scripts no corrieron.</p>
+<div id=barras></div>
+<div id=fichas></div>
+<p><button id=boton onclick="contar()">Pulsar</button> <span id=cuenta>0 clics</span></p>
+<script>
+  document.getElementById('titulo').textContent = 'Hecho con JavaScript';
+  var estado = document.getElementById('estado');
+  estado.textContent = 'Los scripts corrieron: ' + document.querySelectorAll('div').length + ' divs.';
+  estado.style.color = 'rgb(46, 125, 50)';
+  var barras = document.getElementById('barras');
+  for (var i = 1; i <= 5; i++) {
+    var b = document.createElement('div');
+    b.style.width = (i * 60) + 'px';
+    if (i == 2) b.classList.add('alta');
+    barras.appendChild(b);
+  }
+  document.getElementById('fichas').innerHTML =
+    '<span class=ficha></span><span class=ficha style="background: rgb(239, 108, 0)"></span><span class=ficha></span>';
+  setTimeout(function () {
+    barras.lastChild.style.display = 'none';
+    barras.children[2].style.width = '400px';
+    document.querySelector('.ficha').remove();
+  }, 100);
+  var clics = 0;
+  function contar() {
+    clics++;
+    document.getElementById('cuenta').textContent = clics + (clics == 1 ? ' clic' : ' clics');
+  }
+</script>

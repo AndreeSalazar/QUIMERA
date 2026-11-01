@@ -34,6 +34,10 @@ La maquetación guarda **dónde está cada enlace** (un rectángulo por trozo de
 
 `--captura` con `--escribir "texto"` escribe en el primer campo de la página y envía su formulario. Así se comprobó la búsqueda en DuckDuckGo HTML: `POST https://html.duckduckgo.com/html/` con `q=lenguaje+rust&b=`, y los resultados (101 enlaces) se ven como en Chromium.
 
+## JavaScript
+
+Al llegar una página se crea su DOM y se ejecutan sus `<script>` (`guiones.rs`; ver [DOM.md](DOM.md)). Lo que escriben en la consola y sus errores salen en la terminal. Un clic lanza `click` en el enlace o control pulsado (o en `<body>`) antes de seguir el enlace; si un script llama a `preventDefault()`, no se sigue. Un `<button>` se pulsa como un control. Entre eventos, la ventana duerme hasta el siguiente temporizador. Si un script cambió el árbol, se vuelve a maquetar.
+
 ## Desplazar y redimensionar
 
 La rueda del ratón, las flechas, Re Pág/Av Pág, espacio, Inicio y Fin desplazan la página. Al redimensionar la ventana se vuelve a maquetar con el ancho nuevo (y se reevalúan los `@media`), y F5 vuelve a cargar la página (del disco o de la red). El título de la ventana es el `<title>` de la página y su sitio.

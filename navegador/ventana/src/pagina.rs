@@ -17,6 +17,8 @@ pub struct Pagina {
     pub html: String,
     /// (href tal como aparece, CSS) de cada hoja que se pudo cargar.
     pub hojas: Vec<(String, String)>,
+    /// (src tal como aparece, código) de cada `<script src>` que se pudo cargar.
+    pub scripts: Vec<(String, String)>,
     /// Lo que tardó en llegar todo, en milisegundos.
     pub ms_red: f64,
 }
@@ -92,7 +94,8 @@ impl Pagina {
                 hojas.push((String::from(href), css.texto()));
             }
         }
-        Pagina { url: url_final, base, html, hojas, ms_red: inicio.elapsed().as_secs_f64() * 1e3 }
+        let scripts = descargar_scripts(cliente, &doc, &base);
+        Pagina { url: url_final, base, html, hojas, scripts, ms_red: inicio.elapsed().as_secs_f64() * 1e3 }
     }
 
     /// El árbol del documento.
@@ -100,10 +103,30 @@ impl Pagina {
         analizar(&self.html)
     }
 
+    /// El código de un `<script src>` por su `src`.
+    pub fn script(&self, src: &str) -> Option<String> {
+        self.scripts.iter().find(|(s, _)| s == src).map(|(_, c)| c.clone())
+    }
+
     /// El CSS de una hoja por su `href`.
     pub fn hoja(&self, href: &str) -> Option<String> {
         self.hojas.iter().find(|(h, _)| h == href).map(|(_, css)| css.clone())
     }
+}
+
+/// Los `<script src>` clásicos de la página (los `type=module` todavía no se ejecutan).
+fn descargar_scripts(cliente: &Cliente, doc: &Documento, base: &Url) -> Vec<(String, String)> {
+    let mut scripts = Vec::new();
+    for id in doc.descendientes(Documento::RAIZ) {
+        let Some(e) = doc.elemento(id).filter(|e| e.nombre == "script") else { continue };
+        let clasico =
+            e.atributo("type").is_none_or(|t| t.trim().is_empty() || t.to_ascii_lowercase().contains("javascript"));
+        let Some(src) = e.atributo("src").filter(|_| clasico) else { continue };
+        if let Some(r) = base.unir(src).ok().and_then(|u| cliente.pedir(&u).ok()).filter(Respuesta::exito) {
+            scripts.push((String::from(src), r.texto()));
+        }
+    }
+    scripts
 }
 
 /// El cuerpo como HTML; si es texto plano, dentro de un `<pre>` como hacen los navegadores.

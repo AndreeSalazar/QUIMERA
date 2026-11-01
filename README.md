@@ -27,9 +27,10 @@ Misma página, ventana visible, Windows, `--release`. Edge 156 es Chromium por d
 | Wikipedia, «Cat» (51 imágenes, 278 idiomas) | **244 MB** | 515–821 MB |
 | Hacker News (todo tablas) | **113 MB** | 456 MB |
 | rust-lang.org (7 fuentes propias) | **145 MB** | 486 MB |
+| Wikipedia, «Gato» (con sus scripts) | **194 MB** | 504 MB |
 | DuckDuckGo HTML, una búsqueda | **114 MB** | 481 MB |
 
-Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** todavía no ejecuta el JavaScript de las páginas, y Edge sí. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
+Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** ya ejecuta los scripts de las páginas, pero sin `Promise`, `fetch` ni módulos las grandes se quedan en su versión sin JavaScript, y Edge las ejecuta enteras. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
 
 Lo que bajó la memoria: las fuentes de reserva (chino, japonés, coreano, emoji: 70 MB) se leen solo cuando una página las usa, y en Windows se arranca solo DirectX 12 en vez de todos los sistemas gráficos (246 → 111 MB en example.com).
 
@@ -43,7 +44,7 @@ cargo run --release -p quimera-ventana -- https://en.wikipedia.org/wiki/Cat
 - **HTML** con el mismo árbol que html5ever en 5.000 páginas reales, y 2,2× más rápido.
 - **CSS:** cascada, herencia, `@media`, bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, **tablas**, **flotantes** y **`position`/`z-index`** como Chromium (Hacker News se ve igual; en Wikipedia, la ficha a la derecha del texto).
 - **Imágenes** PNG, JPEG y GIF con decodificador propio, al píxel igual que las bibliotecas de referencia. Se descargan en segundo plano.
-- **JavaScript** propio, 3,8× más rápido que Boa en los benchmarks de V8, con cachés en línea al estilo CacheIR de SpiderMonkey. Aún no está conectado a las páginas: eso es la fase 3 del plan.
+- **JavaScript** propio, 3,8× más rápido que Boa en los benchmarks de V8, con cachés en línea al estilo CacheIR de SpiderMonkey. Ya ejecuta los scripts de las páginas sobre un DOM propio ([docs/DOM.md](docs/DOM.md)), con un solo GC para JavaScript y el árbol.
 - Dibuja con la GPU (wgpu) y fuentes del sistema.
 
 ## Qué falta: el plan
@@ -55,7 +56,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
 | 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF) · `calc()`, WOFF2, gzip, WebP | Wikipedia, documentación, blogs |
 | 2 | ✅ Formularios (GET y POST), ✅ cookies, ✅ foco y teclado · caché, selección | buscar (DuckDuckGo HTML): navegar de verdad |
-| 3 | **JavaScript ↔ DOM** (puente generado desde WebIDL, un solo GC), bucle de eventos, `fetch` | Steam y páginas con JavaScript |
+| 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores) · JavaScript moderno (`Promise`, `JSON`, módulos), `fetch` | Steam y páginas con JavaScript |
 | 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
 | 5 | `<video>` con los decodificadores del sistema, audio | **YouTube** |
 | 6 | Toque, zoom y `viewport` | **Android**, donde un navegador ligero más se nota |
@@ -76,6 +77,7 @@ En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, 
 | `web/html` → `quimera-html` | 2 | HTML5 → árbol, con la recuperación de errores de los navegadores; mismo árbol que html5ever en 5.000 páginas reales, 2,2× más rápido ([docs/HTML-CSS.md](docs/HTML-CSS.md)) | ✅ 10 pruebas |
 | `web/css` → `quimera-css` | 2 | CSS → reglas, `@media`, selectores con especificidad, colores y longitudes | ✅ 9 pruebas |
 | `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos, flexbox, tablas, `float`, `position`, modo de compatibilidad ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 13 pruebas |
+| `web/dom` → `quimera-dom` | 7 | El DOM para JavaScript: `document`, nodos, `innerHTML`, `style`, `classList`, selectores, eventos con burbujeo y temporizadores, sobre el mismo árbol que se maqueta ([docs/DOM.md](docs/DOM.md)) | ✅ 4 pruebas |
 | `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, **tablas**, **flotantes**, **`position`** y capas de `z-index`, tamaños intrínsecos, **imágenes** (proporción, `max-width`) → lista de dibujo | ✅ 30 pruebas |
 | `herramientas/ver` → `quimera-ver` | 100 | Una página → imagen SVG: [la primera página dibujada por QUIMERA](docs/ejemplos/primera.svg) | ✅ |
 | `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux) y de la página (`@font-face`, WOFF propio): medir, interletraje, rasterizar, reserva para símbolos; cada archivo se lee solo cuando hace falta ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 4 pruebas |
@@ -127,7 +129,7 @@ QUIMERA (esta carpeta)
   Cargo.toml              workspace
   cimientos/              nivel 0: el valor JS
   motor-js/               niveles 1-4: gc, regex, frontend, objetos, vm
-  web/                    html, css, estilo, maquetación         (dom: fase 3)
+  web/                    html, css, dom, estilo, maquetación
   grafico/                texto, imagen, gpu (wgpu), pintar
   red/                    HTTP y HTTPS
   navegador/              la ventana                              (+ interfaz VERX)

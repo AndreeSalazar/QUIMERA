@@ -7,6 +7,7 @@
 
 use crate::barra::{self, Barra, Vista, Zona};
 use crate::formularios;
+use crate::guiones::Guion;
 use crate::historial::Historial;
 use crate::imagenes::{self, Imagenes};
 use crate::pagina::{Pagina, direccion_escrita};
@@ -68,6 +69,8 @@ pub struct Navegador {
     pub teclas: ModifiersState,
     /// Lo escrito y marcado en los formularios de la página.
     formulario: formularios::Estado,
+    /// El JavaScript de la página: su DOM (el árbol que se maqueta) y sus temporizadores.
+    pub guion: Option<Guion>,
 }
 
 impl Navegador {
@@ -91,6 +94,7 @@ impl Navegador {
             raton: (0.0, 0.0),
             teclas: ModifiersState::empty(),
             formulario: formularios::Estado::default(),
+            guion: None,
         }
     }
 
@@ -186,6 +190,7 @@ impl Navegador {
         final_.fragmento = fragmento.clone();
         self.historial.sustituir(final_.clone());
         self.url = final_;
+        self.guion = Some(Guion::preparar(&pagina));
         self.pagina = Some(pagina);
         self.cargando = false;
         self.estado = None;
@@ -207,7 +212,8 @@ impl Navegador {
         let tam = a.ventana.inner_size();
         let escala = a.ventana.scale_factor() as f32;
         let (ancho, alto) = (tam.width as f32 / escala, (tam.height as f32 - barra_px).max(1.0) / escala);
-        let doc = pagina.documento();
+        let Some(guion) = &self.guion else { return };
+        let doc = guion.dom.documento();
         let externa = |href: &str| pagina.hoja(href);
         let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
         let imagenes = &mut self.imagenes;
@@ -234,6 +240,7 @@ impl Navegador {
             inicio.elapsed().as_secs_f64() * 1e3
         );
         a.maq = Some(m);
+        drop(doc);
         self.desplazar(0.0);
         self.pintar_barra();
     }
@@ -352,7 +359,11 @@ impl Navegador {
                 let (px, py) = (x / e, (y - barra_px + desp) / e);
                 let maq = self.abierta.as_ref().and_then(|a| a.maq.as_ref());
                 let control = maq.and_then(|m| m.control_en(px, py));
-                let href = maq.and_then(|m| m.enlace_en(px, py)).map(String::from);
+                let enlace = maq.and_then(|m| m.trozo_de_enlace_en(px, py)).map(|e| (e.href.clone(), e.nodo));
+                if self.evento_clic(control.or(enlace.as_ref().map(|e| e.1))) {
+                    return; // un script llamó a preventDefault()
+                }
+                let href = enlace.map(|e| e.0);
                 match (control, href) {
                     (Some(c), _) => self.pulsar_control(c),
                     (None, Some(h)) => {
@@ -365,10 +376,40 @@ impl Navegador {
         }
     }
 
+    /// El árbol actual de la página (con lo que hayan cambiado sus scripts), copiado.
+    fn documento(&self) -> Option<quimera_html::Documento> {
+        Some(self.guion.as_ref()?.dom.documento().clone())
+    }
+
+    /// Lanza `click` en el nodo pulsado (o en `<body>` si no es un enlace ni un control) y vuelve
+    /// a maquetar si el script cambió la página. Devuelve si llamó a `preventDefault()`.
+    fn evento_clic(&mut self, nodo: Option<quimera_html::NodoId>) -> bool {
+        let Some(g) = &mut self.guion else { return false };
+        let nodo = nodo.or_else(|| g.dom.documento().buscar("body"));
+        let Some(nodo) = nodo else { return false };
+        let prevenido = g.dom.clic(nodo);
+        g.informar();
+        self.tras_javascript();
+        prevenido
+    }
+
+    /// Si JavaScript cambió el árbol, se vuelve a maquetar.
+    pub fn tras_javascript(&mut self) {
+        if self.guion.as_ref().is_some_and(|g| g.dom.tomar_cambios()) {
+            self.maquetar();
+        }
+    }
+
+    /// Ejecuta los temporizadores de la página que ya tocan; devuelve cuándo toca el siguiente.
+    pub fn latido(&mut self) -> Option<Instant> {
+        let proximo = self.guion.as_mut()?.latido();
+        self.tras_javascript();
+        proximo
+    }
+
     /// Se pulsó un control de formulario: enfocar, marcar, elegir o enviar.
     fn pulsar_control(&mut self, control: quimera_html::NodoId) {
-        let Some(pagina) = &self.pagina else { return };
-        let doc = pagina.documento();
+        let Some(doc) = self.documento() else { return };
         match self.formulario.pulsar(&doc, control) {
             Some(boton) => self.enviar(&doc, boton),
             None => self.maquetar(),
@@ -396,8 +437,7 @@ impl Navegador {
 
     /// Una tecla con un campo de la página enfocado.
     fn tecla_en_campo(&mut self, evento: &KeyEvent) {
-        let Some(pagina) = &self.pagina else { return };
-        let doc = pagina.documento();
+        let Some(doc) = self.documento() else { return };
         match &evento.logical_key {
             Key::Named(NamedKey::Enter) => {
                 let foco = self.formulario.foco.take();

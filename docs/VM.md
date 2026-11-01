@@ -141,6 +141,14 @@ Las cadenas viven fuera del montón, así que crearlas no llenaba la guardería 
 
 Prueba: un millón de textos distintos en un bucle libera más de 900.000. Para buscar cadenas usadas sin proteger, la suite entera (los 8 de V8, y RegExp comparado con Boa) pasó con el umbral a 1 KB, es decir, con una limpieza casi en cada bucle.
 
+## Objetos y funciones del anfitrión
+
+Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias funciones y objetos (`anfitrion.rs`):
+
+- **Funciones del anfitrión:** nativas con un número del anfitrión (desde 2^24). La máquina le pasa ese número, `this` y los argumentos, leídos de la pila de raíces, así que siguen valiendo aunque se asigne memoria.
+- **Objetos del anfitrión:** una clase de celda más (`Clase::Anfitrion`) con un número dentro, el del nodo. Leer o escribir una propiedad suya pregunta primero al anfitrión. Las cachés en línea los excluyen en sus dos comprobaciones rápidas (una comparación más sobre el tipo, que ya se leía) y no los aprenden nunca. V8 pasó de 3,81× a 3,80× Boa, dentro del ruido.
+- **Raíz del anfitrión:** una raíz fija más, un objeto donde el anfitrión guarda lo que debe durar (los objetos de los nodos, prototipos, listeners, temporizadores). Como el montón mueve objetos, el anfitrión no guarda `Valor`es de objetos en Rust entre llamadas.
+
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.

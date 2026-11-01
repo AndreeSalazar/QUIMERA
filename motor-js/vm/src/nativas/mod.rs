@@ -39,7 +39,7 @@ const GRUPO_REGEXP: u32 = 500;
 pub(crate) fn preparar(m: &mut Motor) {
     let objeto = m.mundo.crear_objeto(Valor::NULO);
     m.mundo.m.pila_mut()[R_OBJETO] = objeto;
-    for r in [R_FUNCION, R_ARREGLO, R_GLOBAL, R_NUMERO, R_CADENA, R_FECHA, R_ERROR, R_REGEXP] {
+    for r in [R_FUNCION, R_ARREGLO, R_GLOBAL, R_NUMERO, R_CADENA, R_FECHA, R_ERROR, R_REGEXP, crate::R_ANFITRION] {
         let o = m.mundo.crear_objeto(m.pila(R_OBJETO));
         m.mundo.m.pila_mut()[r] = o;
     }
@@ -120,6 +120,12 @@ fn arg(m: &Motor, ll: &Llamada, i: usize) -> Valor {
 pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor> {
     if id == FUNCION_CALL {
         return llamar_call(m, ll);
+    }
+    if id >= crate::anfitrion::GRUPO_ANFITRION {
+        let args = crate::Argumentos { este: ll.este, args: ll.args, n: ll.n };
+        let v = m.llamar_anfitrion(id, &args)?;
+        m.mundo.m.pila_mut()[ll.destino] = v;
+        return Ok(false);
     }
     if id == coleccion::APPLY {
         // `apply` abre el marco de la función como una llamada más: sin recursión de Rust.

@@ -55,6 +55,12 @@ impl Motor {
 
     /// `obj.clave`.
     pub(crate) fn leer_prop(&mut self, obj: Valor, clave: u32, fi: usize, pc: usize) -> Result<Valor, Valor> {
+        if let Some(dato) = self.mundo.anfitrion(obj) {
+            if let Some(r) = self.leer_anfitrion(dato, clave) {
+                return r;
+            }
+            return Ok(self.leer_lento(obj, clave));
+        }
         if self.mundo.es_objeto(obj) {
             if let Some(forma) = self.mundo.forma(obj) {
                 let c = self.cache(fi, pc);
@@ -132,6 +138,13 @@ impl Motor {
                 return Err(self.error("TypeError", &m));
             }
             return Ok(()); // en un primitivo se ignora (modo no estricto)
+        }
+        if let Some(dato) = self.mundo.anfitrion(obj) {
+            match self.escribir_anfitrion(dato, clave, v) {
+                Some(r) => return r,
+                None if self.mundo.escribir(obj, clave, v) => return Ok(()),
+                None => {}
+            }
         }
         if let Some(forma) = self.mundo.forma(obj) {
             let c = self.cache(fi, pc);

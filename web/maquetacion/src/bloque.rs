@@ -26,8 +26,8 @@ pub(crate) struct Maquetador<'a> {
     contiene_bloque: Vec<Option<bool>>,
     /// El elemento raíz: sus márgenes no colapsan con los de sus hijos (CSS 2.1, 8.3.1).
     pub raiz: Option<NodoId>,
-    /// Los `href` de los enlaces vistos (los elementos guardan su número).
-    pub hrefs: Vec<String>,
+    /// Los `href` de los enlaces vistos y su `<a>` (los elementos guardan su número).
+    pub hrefs: Vec<(String, NodoId)>,
     /// El enlace dentro del que se está maquetando.
     enlace: Option<u32>,
     /// Los rectángulos de los enlaces dibujados.
@@ -498,7 +498,7 @@ impl<'a> Maquetador<'a> {
     fn entrar_en_enlace(&mut self, id: NodoId) -> Option<u32> {
         let previo = self.enlace;
         if let Some(href) = self.doc.elemento(id).filter(|e| e.nombre == "a").and_then(|e| e.atributo("href")) {
-            self.hrefs.push(String::from(href));
+            self.hrefs.push((String::from(href), id));
             self.enlace = Some(self.hrefs.len() as u32 - 1);
         }
         previo

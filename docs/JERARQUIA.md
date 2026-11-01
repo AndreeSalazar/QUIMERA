@@ -29,7 +29,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 4 | `motor-js` | ✅ `quimera-vm` | Intérprete de registros, un único bucle | SpiderMonkey `Interpreter.cpp` | sí |
 | 5 | `motor-js` | `quimera-builtins` | Array, Map, Promise, JSON... | Boa `builtins` | sí |
 | 6 | `motor-js` | `quimera-js` | **La interfaz del motor**: lo único que ve el resto del navegador | — (Servo no la tiene) | sí |
-| 7 | `web` | `quimera-dom` | DOM y eventos, conectados al motor por `quimera-js` | Servo `script` (mucho más pequeño) | sí |
+| 7 | `web` | ✅ `quimera-dom` | DOM y eventos, conectados al motor por `quimera-js` (por ahora, por el rasgo `Anfitrion` de `quimera-vm`) | Servo `script` (mucho más pequeño) | sí |
 | 8 | `web` | ✅ `quimera-estilo` | Cascada: qué valor tiene cada propiedad en cada elemento | Stylo | sí |
 | 9 | `web` | ✅ `quimera-maquetacion` | Bloques, línea (después flex y grid) → lista de dibujo; usa el estilo, por eso va un nivel encima | Servo `layout`, taffy | sí |
 | 10 | `grafico` | ✅ `quimera-pintar` | Lista de dibujo → GPU con `quimera-gpu` | WebRender | no |

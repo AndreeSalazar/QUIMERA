@@ -59,7 +59,9 @@ Que las páginas de lectura se vean como en Chrome.
 
 La fase más importante: lo que separa "leer páginas" de "usar aplicaciones web". Ver por qué en [qué es el DOM](#qué-es-el-dom-y-por-qué-cuesta).
 
-- **`quimera-js` (nivel 6):** la interfaz del motor, lo único que ve el resto del navegador.
+✅ **Empezada** ([detalle](DOM.md)): `quimera-dom` con un solo GC, los `<script>` de la página, `document` y los nodos, `innerHTML`, `style`, `classList`, selectores, `click` con burbujeo y `preventDefault`, y temporizadores. Las mismas salidas que Chromium en sus pruebas. Lo que sigue, por orden: JavaScript moderno en la VM, `fetch`, más eventos y medidas de la maquetación.
+
+- **`quimera-js` (nivel 6):** la interfaz del motor, lo único que ve el resto del navegador. Por ahora la hace el rasgo `Anfitrion` de la VM.
 - **`quimera-dom` (nivel 7):** `document`, `Node`, `Element`, `Text`, atributos, `classList`, `querySelector`, `innerHTML`, `textContent`, `style`, eventos (`addEventListener`, propagación, clic y teclado).
 - **El puente se genera desde WebIDL**, como hacen Chromium y Servo, con un script (Bun + `webidl2`) que lee las interfaces y escribe el Rust. Solo las interfaces que usan los sitios del examen.
 - **Un solo GC:** los nodos del DOM viven en el mismo montón que los objetos de JavaScript. Así no hay ciclos entre dos montones, el problema que a Chromium le costó años (Oilpan).

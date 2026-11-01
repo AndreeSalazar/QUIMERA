@@ -12,6 +12,7 @@
 
 extern crate alloc;
 
+pub mod anfitrion;
 mod conversion;
 mod ic;
 mod interprete;
@@ -27,9 +28,11 @@ mod propiedades;
 use alloc::rc::Rc;
 use alloc::string::String;
 use alloc::vec::Vec;
+pub use anfitrion::{Anfitrion, Argumentos};
 use quimera_frontend::Stencil;
 use quimera_frontend::bytecode::{Constante, Funcion};
-use quimera_objetos::{Config, Estadisticas, Mundo, Valor};
+pub use quimera_objetos::Valor;
+use quimera_objetos::{Config, Estadisticas, Mundo};
 
 /// Raíces fijas al fondo de la pila: el objeto global, los prototipos y la excepción en curso.
 const R_GLOBAL: usize = 0;
@@ -42,7 +45,9 @@ const R_CADENA: usize = 6;
 const R_FECHA: usize = 7;
 const R_ERROR: usize = 8;
 const R_REGEXP: usize = 9;
-const N_FIJAS: usize = 10;
+/// Lo que el anfitrión guarda para que dure (ver `anfitrion.rs`).
+const R_ANFITRION: usize = 10;
+const N_FIJAS: usize = 11;
 /// Huecos de cada marco antes de sus registros: cierre, this, entorno, objeto nuevo.
 const CABECERA: usize = 4;
 
@@ -124,6 +129,8 @@ pub struct Motor {
     sitios: Vec<ic::Sitio>,
     /// Las formas de los prototipos que vigila cada stub, seguidas.
     cadenas_ic: Vec<u32>,
+    /// El navegador (o quien use el motor), con sus funciones y objetos.
+    anfitrion: Option<Rc<dyn Anfitrion>>,
     /// Cuántas veces y cuánto tiempo se lleva cada tipo de instrucción (característica `perfil`).
     #[cfg(feature = "perfil")]
     perfil: perfil::Perfil,
@@ -160,6 +167,7 @@ impl Motor {
             memoria_regex: quimera_regex::Memoria::default(),
             sitios: Vec::new(),
             cadenas_ic: Vec::new(),
+            anfitrion: None,
             #[cfg(feature = "perfil")]
             perfil: perfil::Perfil::default(),
         };
