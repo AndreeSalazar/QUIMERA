@@ -4,7 +4,7 @@
 //! porque crear el objeto de un `new` puede mover objetos: leyendo de la pila siempre se
 //! obtiene la dirección actual.
 
-use crate::{CABECERA, Manejador, Marco, Motor, R_EXCEPCION, R_OBJETO, nativas};
+use crate::{CABECERA, Manejador, Marco, Motor, R_ARREGLO, R_EXCEPCION, R_OBJETO, nativas};
 use alloc::format;
 use quimera_objetos::{Clase, Valor};
 
@@ -78,6 +78,7 @@ impl Motor {
     fn abrir_marco(&mut self, indice: u32, ll: Llamada, nuevo: Valor) {
         let Some(c) = self.funciones.get(indice as usize) else { return };
         let (params, registros, flecha) = (c.f.params as usize, c.f.registros as usize, c.f.flecha);
+        let argumentos = c.f.argumentos;
         let f = self.pila(ll.f);
         let (_, entorno, este_lexico) = self.mundo.funcion(f).unwrap_or((indice, Valor::NULO, Valor::INDEFINIDO));
         let este = if flecha {
@@ -96,6 +97,12 @@ impl Motor {
         pila[base_marco + 3] = nuevo;
         for i in 0..ll.n.min(params) {
             pila[base + i] = pila[ll.args + i];
+        }
+        if let Some(r) = argumentos {
+            // El marco ya está en las raíces: crear el arreglo puede mover objetos sin peligro.
+            let valores: alloc::vec::Vec<Valor> = pila[ll.args..ll.args + ll.n].to_vec();
+            let a = self.mundo.crear_arreglo(&valores, self.pila(R_ARREGLO));
+            self.mundo.m.pila_mut()[base + r as usize] = a;
         }
         self.marcos.push(Marco { funcion: indice, pc: 0, base, destino: Some(ll.destino), construir: ll.construir });
     }

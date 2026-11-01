@@ -44,14 +44,24 @@ assert_eq!(motor.texto(v), "42");
 | prototypes-chain | 30,7 ms | 97,7 ms | 3,18× |
 | **Media geométrica** | | | **2,81×** |
 
-### Richards y DeltaBlue (V8, Octane)
+### V8 (Octane): 7 de 8 benchmarks
 
-Con su arnés completo: cada benchmark se mide solo durante al menos un segundo y escribe su `SCORE` (más es mejor). QUIMERA usa el reloj que le da el anfitrión (`Motor::con_reloj`). A Boa se le añaden `console.log` y `print`, que `boa_engine` no trae.
+Con su arnés completo: cada benchmark se mide solo durante al menos un segundo y escribe su `SCORE` (más es mejor). QUIMERA usa el reloj que le da el anfitrión (`Motor::con_reloj`). A Boa se le añaden `console.log` y `print`, que `boa_engine` no trae. Boa necesita una pila nativa grande (recursa en Rust): la medida corre en un hilo con 512 MB; QUIMERA no la necesita.
 
 | Benchmark | QUIMERA | Boa 0.22 | QUIMERA / Boa |
 |---|---:|---:|---:|
-| Richards | 356–369 | 127–152 | **2,5–2,8×** |
-| DeltaBlue | 379–388 | 131–134 | **2,9–3,0×** |
+| Richards | 333 | 132 | **2,52×** |
+| DeltaBlue | 327 | 105 | **3,11×** |
+| Crypto | 297 | 116 | **2,56×** |
+| RayTrace | 791 | 216 | **3,66×** |
+| EarleyBoyer | 1149 | 252 | **4,56×** |
+| NavierStokes | 563 | 229 | **2,46×** |
+| Splay | 993 | 498 | **1,99×** |
+| **Media geométrica** | | | **2,88×** |
+
+Una corrida en una máquina cargada; en corridas tranquilas Richards llega a 356–369 y DeltaBlue a 379–388, con las mismas proporciones. Falta **RegExp**: necesita un motor de expresiones regulares propio (`quimera-regex`) y escapes `\u` en identificadores.
+
+Para correr NavierStokes y Splay no hizo falta nada nuevo. Para los demás: `arguments` (RayTrace), crear al empezar las globales declaradas con `var` aunque no tengan valor (Crypto), y `parseInt` (EarleyBoyer). Para probar scripts sueltos: `cargo run --release -p quimera-banco-vm -- a.js b.js`.
 
 Las puntuaciones varían un poco entre corridas porque el arnés mide tiempo real. Los dos benchmarks se comprueban a sí mismos: lanzan un `Error` si las cuentas no salen.
 
@@ -73,11 +83,12 @@ Cómo se llegó a los 7 benchmarks de Boa:
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
-- **Biblioteca estándar, todavía parcial.** Hay `console.log`/`print`; `Object` (`create`, `keys`, `prototype.hasOwnProperty`); `Array` (`isArray`, `push`, `pop`, `shift`, `unshift`, `slice`, `concat`, `reverse`, `join`, `indexOf`, `includes`, `sort`, `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `findIndex`); `Function.prototype` (`call`, `apply`); `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`); números (`toFixed`, `toPrecision`, `toString`); `String` (`fromCharCode`, `charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`, `split`, `toUpperCase`, `toLowerCase`, `trim`, `includes`, `startsWith`, `endsWith`); `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
+- **Biblioteca estándar, todavía parcial.** Hay `console.log`/`print`; `Object` (`create`, `keys`, `prototype.hasOwnProperty`); `Array` (`isArray`, `push`, `pop`, `shift`, `unshift`, `slice`, `concat`, `reverse`, `join`, `indexOf`, `includes`, `sort`, `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `findIndex`); `Function.prototype` (`call`, `apply`); `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`); números (`Number`, `parseInt`, `parseFloat`, `isNaN`, `isFinite`, `toFixed`, `toPrecision`, `toString(base)`); `String` (`fromCharCode`, `charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`, `split`, `toUpperCase`, `toLowerCase`, `trim`, `includes`, `startsWith`, `endsWith`); `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
 - **`sort` es inserción binaria.** Estable y sin memoria extra, con pocas comparaciones (n log n), pero mueve O(n²) elementos: para arreglos grandes hará falta un *merge sort* con raíces.
 - **`apply` usa una llamada interna.** Recursión de Rust (como `ToPrimitive`); `call` en cambio deja el marco en la máquina.
 - **Matemáticas sin `std`.** `ln` y `exp` están hechas a mano (reducción de rango, ln 2 partido al estilo Cody-Waite de fdlibm), con precisión de pocos bits. Si un día se necesita la exactitud de una libm, conviene portar fdlibm entera.
 - **Errores de la máquina.** Los que lanza la máquina son cadenas (`"TypeError: ..."`); `new Error()` desde JavaScript sí crea objetos.
 - **Cadenas.** Viven fuera del GC y no se liberan; las cadenas UTF-16 de `quimera-cadenas` lo arreglarán.
 - **`for-of` solo con arreglos y cadenas.** Sin `Symbol.iterator` todavía; `for-in` y `for-of` reciben una copia de claves o valores al empezar.
-- **Más benchmarks de V8.** RayTrace, NavierStokes, Crypto, EarleyBoyer, RegExp y Splay necesitan más lenguaje y más biblioteca (expresiones regulares, clases, plantillas...).
+- **RegExp de V8.** Necesita expresiones regulares (`quimera-regex`) y escapes `\u` en identificadores.
+- **`arguments` es un arreglo.** Se crea solo en las funciones que lo usan (las demás no pagan nada), pero es una copia: no está enlazado a los parámetros como en el modo no estricto.

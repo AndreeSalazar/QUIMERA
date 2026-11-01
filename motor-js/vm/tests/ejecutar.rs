@@ -302,3 +302,38 @@ fn map_y_sort_sobreviven_al_gc() {
     assert_eq!(m.texto(v), "true");
     assert!(m.estadisticas().menores > 50);
 }
+
+/// El resto de V8 (Octane): cada uno se comprueba a sí mismo y lanza un Error si el resultado no es el esperado.
+#[test]
+fn los_demas_benchmarks_de_v8_corren_y_se_comprueban() {
+    for (archivo, llamadas) in [
+        ("v8-benches-crypto.js", &["encrypt", "decrypt"][..]),
+        ("v8-benches-raytrace.js", &["renderScene"]),
+        ("v8-benches-earley-boyer.js", &["BgL_earleyzd2benchmarkzd2", "BgL_nboyerzd2benchmarkzd2"]),
+        ("v8-benches-navier-stokes.js", &["setupNavierStokes", "runNavierStokes", "tearDownNavierStokes"]),
+        ("v8-benches-splay.js", &["SplaySetup", "SplayRun", "SplayTearDown"]),
+    ] {
+        let ruta = format!("{}/../frontend/tests/datos/{archivo}", env!("CARGO_MANIFEST_DIR"));
+        let codigo = std::fs::read_to_string(ruta).unwrap();
+        let mut m = Motor::default();
+        m.ejecutar(&codigo).unwrap_or_else(|e| panic!("{archivo}: {}", e.mensaje));
+        for f in llamadas {
+            m.llamar_global(f, &[]).unwrap_or_else(|e| panic!("{archivo} {f}: {}", e.mensaje));
+        }
+    }
+}
+
+#[test]
+fn arguments_parse_int_y_var_global() {
+    let codigo = "var sinValor; var conValor = 1;\n\
+                  function suma() { let s = 0; for (let i = 0; i < arguments.length; i++) s += arguments[i]; return s }\n\
+                  function capturado() { return () => arguments[0] }\n\
+                  function envolver() { return function () { return suma.apply(this, arguments) } }\n\
+                  function resultado() {\n\
+                    return [typeof sinValor, sinValor == null, conValor, suma(1, 2, 3), capturado('x')(), envolver()(4, 5),\n\
+                            parseInt('  42px'), parseInt('-0x1f'), parseInt('z', 36), parseInt('101', 2), isNaN(parseInt('a')),\n\
+                            parseFloat('3.5e2abc'), parseFloat('.5'), (255).toString(16), (-10).toString(2), Number('7') + 1,\n\
+                            isFinite(1 / 0)]\n\
+                  }";
+    assert_eq!(ejecutar(codigo), "undefined,true,1,6,x,9,42,-31,35,5,true,350,0.5,ff,-1010,8,false");
+}

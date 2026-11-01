@@ -190,6 +190,8 @@ pub enum Instr {
     CrearArreglo { dst: Reg, desde: Reg, n: u16 },
     /// Un registro con el valor "hueco" de los arreglos (`[a, , b]`).
     Hueco { dst: Reg },
+    /// Crea la variable global `nombre` a `undefined` si no existe (`var` del programa).
+    DeclararGlobal { nombre: u32 },
     /// Crea un cierre de la función `funcion` del Stencil con el entorno actual.
     Cierre { dst: Reg, funcion: u32 },
     /// Llama a `f` con `este` como `this` y los `n` argumentos seguidos desde `args`.
@@ -221,6 +223,8 @@ pub struct Funcion {
     pub entorno: u16,
     /// Es una flecha (`this` léxico).
     pub flecha: bool,
+    /// Registro donde la máquina deja el arreglo `arguments` al llamarla (solo si lo usa).
+    pub argumentos: Option<Reg>,
     /// Las instrucciones.
     pub codigo: Vec<Instr>,
     /// Sus constantes.
@@ -311,6 +315,7 @@ impl Stencil {
             CrearObjeto { dst } => alloc::format!("r{dst} = {{}}"),
             CrearArreglo { dst, desde, n } => alloc::format!("r{dst} = [r{desde}..+{n}]"),
             Hueco { dst } => alloc::format!("r{dst} = hueco"),
+            DeclararGlobal { nombre } => alloc::format!("var global {:?}", self.atomo(*nombre)),
             Cierre { dst, funcion } => alloc::format!("r{dst} = cierre función {funcion}"),
             Llamar { dst, f, este, args, n } => alloc::format!("r{dst} = r{f}.call(r{este}, r{args}..+{n})"),
             Construir { dst, f, args, n } => alloc::format!("r{dst} = new r{f}(r{args}..+{n})"),

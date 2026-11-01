@@ -80,6 +80,7 @@ struct Ctx {
     entorno: u16,
     bucles: Vec<Bucle>,
     regiones: Vec<Region>,
+    argumentos: Option<Reg>,
 }
 
 #[derive(Clone, Copy)]
@@ -249,6 +250,14 @@ impl Compilador<'_> {
         self.pila.push(Ctx::default());
         self.preparar_locales(params, &info, op)?;
         self.valores_por_defecto(params)?;
+        if op.global {
+            let mut vars = Vec::new();
+            ambitos::declaraciones_var(cuerpo, &mut vars);
+            for v in vars {
+                let nombre = self.atomo(&v);
+                self.emitir(Instr::DeclararGlobal { nombre });
+            }
+        }
         self.izar_funciones(cuerpo)?;
         for s in cuerpo {
             self.sentencia(s)?;
@@ -264,6 +273,7 @@ impl Compilador<'_> {
             registros: ctx.maximo,
             entorno: ctx.entorno,
             flecha: op.flecha,
+            argumentos: ctx.argumentos,
             codigo: ctx.codigo,
             constantes: ctx.constantes,
         })
@@ -304,11 +314,28 @@ impl Compilador<'_> {
                 c.tope += 1;
             }
         }
+        // `arguments`: la máquina lo deja en un registro; si está capturado, se copia al entorno.
+        let arguments_capturado = match c.lugares.get("arguments") {
+            _ if params.iter().any(|p| p.nombre == "arguments") => None,
+            Some(Lugar::Reg(r)) => {
+                c.argumentos = Some(*r);
+                None
+            }
+            Some(Lugar::Hueco(h)) => {
+                c.argumentos = Some(c.tope);
+                c.tope += 1;
+                Some((c.tope - 1, *h))
+            }
+            None => None,
+        };
         c.primer_temporal = c.tope;
         c.maximo = c.tope;
         c.entorno = huecos;
         if huecos > 0 {
             self.emitir(Instr::CrearEntorno { huecos });
+        }
+        if let Some((reg, hueco)) = arguments_capturado {
+            self.emitir(Instr::EscribirEntorno { saltos: 0, hueco, src: reg });
         }
         for (reg, hueco) in capturados_en_registro {
             self.emitir(Instr::EscribirEntorno { saltos: 0, hueco, src: reg });

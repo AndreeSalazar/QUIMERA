@@ -4,7 +4,7 @@
 //! capturada tiene que sobrevivir a su función, así que vive en el entorno. Es la misma
 //! división que hace SpiderMonkey entre *bindings* normales y *aliased*.
 
-use crate::ast::{Clave, Expr, Funcion, Sent};
+use crate::ast::{Clave, Decl, Expr, Funcion, Sent};
 use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::String;
 use alloc::vec::Vec;
@@ -31,7 +31,7 @@ pub fn analizar(programa: &[Sent]) -> Ambitos {
     let mut a = Analisis { pila: Vec::new(), out: BTreeMap::new() };
     a.out.insert(0, Info::default());
     // El programa no tiene locales: lo que declara es global.
-    a.pila.push((0, BTreeSet::new()));
+    a.pila.push((0, BTreeSet::new(), false));
     a.sentencias(programa);
     a.out
 }
@@ -45,58 +45,72 @@ fn anadir(v: &mut Vec<String>, n: &str) {
 /// Nombres declarados en un cuerpo (sin entrar en las funciones internas).
 pub fn declaraciones(cuerpo: &[Sent], v: &mut Vec<String>) {
     for s in cuerpo {
-        declaraciones_de(s, v);
+        declaraciones_de(s, v, false);
     }
 }
 
-fn declaraciones_de(s: &Sent, v: &mut Vec<String>) {
+/// Solo los nombres declarados con `var` (los que el programa crea como globales al empezar).
+pub fn declaraciones_var(cuerpo: &[Sent], v: &mut Vec<String>) {
+    for s in cuerpo {
+        declaraciones_de(s, v, true);
+    }
+}
+
+fn varias(cuerpo: &[Sent], v: &mut Vec<String>, solo_var: bool) {
+    for s in cuerpo {
+        declaraciones_de(s, v, solo_var);
+    }
+}
+
+fn declaraciones_de(s: &Sent, v: &mut Vec<String>, solo_var: bool) {
     match s {
-        Sent::Declarar(_, lista) => lista.iter().for_each(|(n, _)| anadir(v, n)),
-        Sent::Funcion(f) => {
+        Sent::Declarar(d, lista) if !solo_var || *d == Decl::Var => lista.iter().for_each(|(n, _)| anadir(v, n)),
+        Sent::Funcion(f) if !solo_var => {
             if let Some(n) = &f.nombre {
                 anadir(v, n);
             }
         }
         Sent::Si(_, a, b) => {
-            declaraciones_de(a, v);
+            declaraciones_de(a, v, solo_var);
             if let Some(b) = b {
-                declaraciones_de(b, v);
+                declaraciones_de(b, v, solo_var);
             }
         }
-        Sent::Mientras(_, c) | Sent::Hacer(c, _) => declaraciones_de(c, v),
+        Sent::Mientras(_, c) | Sent::Hacer(c, _) => declaraciones_de(c, v, solo_var),
         Sent::Para { inicio, cuerpo, .. } => {
             if let Some(i) = inicio {
-                declaraciones_de(i, v);
+                declaraciones_de(i, v, solo_var);
             }
-            declaraciones_de(cuerpo, v);
+            declaraciones_de(cuerpo, v, solo_var);
         }
         Sent::ParaEn { decl, nombre, cuerpo, .. } => {
-            if decl.is_some() {
+            if decl.is_some_and(|d| !solo_var || d == Decl::Var) {
                 anadir(v, nombre);
             }
-            declaraciones_de(cuerpo, v);
+            declaraciones_de(cuerpo, v, solo_var);
         }
         Sent::Intentar { cuerpo, captura, final_ } => {
-            declaraciones(cuerpo, v);
+            varias(cuerpo, v, solo_var);
             if let Some((nombre, bloque)) = captura {
-                if let Some(n) = nombre {
+                if let (Some(n), false) = (nombre, solo_var) {
                     anadir(v, n);
                 }
-                declaraciones(bloque, v);
+                varias(bloque, v, solo_var);
             }
             if let Some(f) = final_ {
-                declaraciones(f, v);
+                varias(f, v, solo_var);
             }
         }
-        Sent::Elegir(_, casos) => casos.iter().for_each(|(_, c)| declaraciones(c, v)),
-        Sent::Bloque(b) => declaraciones(b, v),
+        Sent::Elegir(_, casos) => casos.iter().for_each(|(_, c)| varias(c, v, solo_var)),
+        Sent::Bloque(b) => varias(b, v, solo_var),
         _ => {}
     }
 }
 
 struct Analisis {
     /// Funciones abiertas, de fuera hacia dentro: (clave, nombres locales).
-    pila: Vec<(usize, BTreeSet<String>)>,
+    /// El `bool` dice si es una flecha (no tiene `arguments` propio).
+    pila: Vec<(usize, BTreeSet<String>, bool)>,
     out: Ambitos,
 }
 
@@ -113,7 +127,7 @@ impl Analisis {
         }
         let conjunto = locales.iter().cloned().collect();
         self.out.insert(clave(f), Info { locales, capturadas: BTreeSet::new() });
-        self.pila.push((clave(f), conjunto));
+        self.pila.push((clave(f), conjunto, f.flecha));
         for p in &f.params {
             if let Some(d) = &p.defecto {
                 self.expr(d);
@@ -125,14 +139,30 @@ impl Analisis {
 
     /// Un uso de `nombre`: si es de una función de fuera, esa función lo tiene capturado.
     fn referencia(&mut self, nombre: &str) {
-        let Some(((_, propios), fuera)) = self.pila.split_last() else { return };
+        if nombre == "arguments" {
+            self.declarar_arguments();
+        }
+        let Some(((_, propios, _), fuera)) = self.pila.split_last() else { return };
         if propios.contains(nombre) {
             return;
         }
-        if let Some((k, _)) = fuera.iter().rev().find(|(_, nombres)| nombres.contains(nombre))
+        if let Some((k, _, _)) = fuera.iter().rev().find(|(_, nombres, _)| nombres.contains(nombre))
             && let Some(info) = self.out.get_mut(k)
         {
             info.capturadas.insert(String::from(nombre));
+        }
+    }
+
+    /// `arguments` es una variable local de la función normal (no flecha) más cercana, que
+    /// solo existe si se usa: así las demás funciones no pagan nada.
+    fn declarar_arguments(&mut self) {
+        let Some((k, nombres, _)) = self.pila.iter_mut().rev().find(|(_, _, flecha)| !flecha) else { return };
+        if *k == 0 || nombres.contains("arguments") {
+            return;
+        }
+        nombres.insert(String::from("arguments"));
+        if let Some(info) = self.out.get_mut(k) {
+            anadir(&mut info.locales, "arguments");
         }
     }
 

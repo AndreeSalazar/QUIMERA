@@ -199,6 +199,12 @@ impl Motor {
                 let v = self.iterar_valores(self.r(base, obj))?;
                 self.w(base, dst, v);
             }
+            DeclararGlobal { nombre } => {
+                let (clave, global) = (self.clave(fi, nombre), self.pila(crate::R_GLOBAL));
+                if self.mundo.leer_propia(global, clave).is_none() {
+                    self.mundo.escribir(global, clave, Valor::INDEFINIDO);
+                }
+            }
             CrearObjeto { dst } => {
                 let o = self.mundo.crear_objeto(self.pila(R_OBJETO));
                 self.w(base, dst, o);

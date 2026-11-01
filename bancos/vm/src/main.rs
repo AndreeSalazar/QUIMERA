@@ -4,13 +4,22 @@
 //! tres. Los dos motores tienen que devolver lo mismo.
 //!
 //! Uso: `cargo run --release -p quimera-banco-vm`
+//! Probar scripts sueltos en QUIMERA: `cargo run --release -p quimera-banco-vm -- a.js b.js`
 
 use std::cell::RefCell;
 use std::sync::OnceLock;
 use std::time::{Duration, Instant};
 
 /// Los benchmarks de V8 (Octane) con su arnés completo: se miden solos y escriben `SCORE`.
-const V8: &[&str] = &["v8-benches-richards.js", "v8-benches-deltablue.js"];
+const V8: &[&str] = &[
+    "v8-benches-richards.js",
+    "v8-benches-deltablue.js",
+    "v8-benches-crypto.js",
+    "v8-benches-raytrace.js",
+    "v8-benches-earley-boyer.js",
+    "v8-benches-navier-stokes.js",
+    "v8-benches-splay.js",
+];
 
 /// Reloj del anfitrión para el `Date` de QUIMERA, en milisegundos.
 fn reloj() -> f64 {
@@ -110,7 +119,34 @@ fn boa(codigo: &str) -> (Duration, String) {
     (mejor, texto)
 }
 
+/// Ejecuta cada script con su `main()` y dice si funciona, su puntuación o el primer error.
+fn probar(rutas: &[String]) {
+    for ruta in rutas {
+        let Ok(codigo) = std::fs::read_to_string(ruta) else {
+            println!("{ruta}: no se puede leer");
+            continue;
+        };
+        let mut m = quimera_vm::Motor::default();
+        m.con_reloj(reloj);
+        let r = m.ejecutar(&codigo).and_then(|_| m.llamar_global("main", &[]));
+        match r {
+            Ok(_) => println!("{ruta}: SCORE {}", puntuacion(m.salida())),
+            Err(e) => println!("{ruta}: {}", e.mensaje),
+        }
+    }
+}
+
 fn main() {
+    // Boa recursa en la pila nativa: EarleyBoyer no cabe en el 1 MB del hilo principal de Windows.
+    let hilo = std::thread::Builder::new().stack_size(512 << 20).spawn(medir).expect("hilo de medida");
+    hilo.join().expect("la medida termina");
+}
+
+fn medir() {
+    let rutas: Vec<String> = std::env::args().skip(1).collect();
+    if !rutas.is_empty() {
+        return probar(&rutas);
+    }
     println!("{:<24} {:>12} {:>12} {:>9}  resultado", "script", "QUIMERA", "Boa 0.22", "QUIMERA/Boa");
     let mut log_suma = 0.0;
     for nombre in SCRIPTS {
@@ -130,12 +166,19 @@ fn main() {
     println!("\nMedia geométrica: QUIMERA {:.2}x más rápido que Boa", (log_suma / SCRIPTS.len() as f64).exp());
 
     println!("\nV8 (Octane) con su arnés completo; puntuación, más es mejor:");
-    println!("{:<26} {:>10} {:>10} {:>9}", "benchmark", "QUIMERA", "Boa 0.22", "QUIMERA/Boa");
+    println!("{:<30} {:>10} {:>10} {:>9}", "benchmark", "QUIMERA", "Boa 0.22", "QUIMERA/Boa");
+    let mut log_v8 = 0.0;
     for nombre in V8 {
         let codigo = leer(nombre);
         let (q, b) = (quimera_v8(&codigo), boa_v8(&codigo));
-        println!("{nombre:<26} {q:>10.0} {b:>10.0} {:>8.2}x", q / b);
+        log_v8 += (q / b).ln();
+        println!("{nombre:<30} {q:>10.0} {b:>10.0} {:>8.2}x", q / b);
     }
+    println!(
+        "
+Media geométrica V8: QUIMERA {:.2}x la puntuación de Boa",
+        (log_v8 / V8.len() as f64).exp()
+    );
 }
 
 #[cfg(test)]

@@ -53,6 +53,12 @@ fn boa(codigo: &str) -> usize {
 }
 
 fn main() {
+    // Boa recursa en la pila nativa: EarleyBoyer no cabe en el 1 MB del hilo principal de Windows.
+    let hilo = std::thread::Builder::new().stack_size(512 << 20).spawn(medir).expect("hilo de medida");
+    hilo.join().expect("la medida termina");
+}
+
+fn medir() {
     let copias: usize = std::env::args().nth(1).and_then(|a| a.parse().ok()).unwrap_or(16);
     let texto = corpus(copias);
     let mb = texto.len() as f64 / 1e6;
@@ -83,8 +89,12 @@ mod pruebas {
     #[test]
     fn los_dos_parsers_ven_las_mismas_sentencias() {
         let texto = super::corpus(1);
+        // QUIMERA en la pila normal de una prueba (2 MB); Boa recursa en Rust y con
+        // EarleyBoyer necesita más, así que va en un hilo con pila grande.
         let quimera = quimera_frontend::analizar(&texto).unwrap();
-        assert_eq!(super::boa(&texto), quimera.len());
+        let copia = texto.clone();
+        let boa = std::thread::Builder::new().stack_size(256 << 20).spawn(move || super::boa(&copia)).unwrap();
+        assert_eq!(boa.join().unwrap(), quimera.len());
         assert!(quimera_frontend::compilar(&texto).unwrap().instrucciones() > 1000);
     }
 }

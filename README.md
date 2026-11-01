@@ -27,22 +27,21 @@ Primera medida, con la misma carga estilo Splay (200.000 pasos, 5 millones de ob
 
 El GC de QUIMERA es **1,26–1,36× más rápido** y tiene un tercio de los pasos lentos. La peor pausa aún depende de la recolección mayor, que marca todo de una vez; marcarla por partes (como SpiderMonkey) es la siguiente mejora del GC.
 
-El frontend, con el corpus de Boa y V8 repetido hasta 1,05 MB:
+El frontend, con el corpus de Boa y V8 (7 benchmarks de Octane) repetido hasta 6,25 MB:
 
 | | Texto → árbol | Velocidad |
 |---|---:|---:|
-| **`quimera-frontend`** | **29,5–30,0 ms** | **35 MB/s** |
-| parser de Boa 0.22 | 99–103 ms | 10,4 MB/s |
+| **`quimera-frontend`** | **260 ms** | **24 MB/s** |
+| parser de Boa 0.22 | 1.098 ms | 5,7 MB/s |
 
-**3,3–3,4× más rápido** (con la salvedad de que Boa cubre todo ECMAScript; ver [docs/FRONTEND.md](docs/FRONTEND.md)).
+**4,2× más rápido** (con la salvedad de que Boa cubre todo ECMAScript; ver [docs/FRONTEND.md](docs/FRONTEND.md)).
 
 **Ejecutando JavaScript** (los benchmarks de Boa, mismos resultados en los dos motores):
 
 | | Media geométrica frente a boa_engine 0.22 |
 |---|---:|
 | **`quimera-vm`** | **2,81× más rápido** (de 1,13× en nested-loop a 5,60× en closures-create) |
-| Richards (V8, arnés completo) | **2,5–2,8× más rápido** |
-| DeltaBlue (V8, arnés completo) | **2,9–3,0× más rápido** |
+| **V8 (Octane), 7 benchmarks con su arnés completo** | **2,88× la puntuación de Boa** (de 1,99× en Splay a 4,56× en EarleyBoyer; gana en los 7) |
 
 Ver [docs/VM.md](docs/VM.md).
 

@@ -50,19 +50,19 @@ función 4 main: 0 parámetros, 4 registros, entorno 0
 
 **Avisa con un error claro**: plantillas `` ` ``, expresiones regulares, clases, `...spread`, desestructuración, `?.`, generadores, `async`/`await`, etiquetas y BigInt.
 
-Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y Richards y DeltaBlue de V8. Los 9 se analizan y compilan.
+Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y 7 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay). Los 14 se analizan, compilan y ejecutan.
 
 ## Medida
 
-`cargo run --release -p quimera-banco-frontend`: el corpus repetido 16 veces (1,05 MB), cada copia en su función, el mejor de cinco intentos. Windows, misma máquina para los dos:
+`cargo run --release -p quimera-banco-frontend`: el corpus repetido 16 veces (6,25 MB, con los 7 benchmarks de V8), cada copia en su función, el mejor de cinco intentos. Windows, misma máquina para los dos:
 
 | | Tiempo | Velocidad |
 |---|---:|---:|
-| Boa 0.22: texto → árbol | 99–103 ms | 10,2–10,6 MB/s |
-| **QUIMERA: texto → árbol** | **29,5–30,0 ms** | **35,0–35,5 MB/s** |
-| QUIMERA: texto → bytecode (todo el frontend) | 39–42 ms | 25–27 MB/s |
+| Boa 0.22: texto → árbol | 1.098 ms | 5,7 MB/s |
+| **QUIMERA: texto → árbol** | **260 ms** | **24,0 MB/s** |
+| QUIMERA: texto → bytecode (todo el frontend) | 375 ms | 16,7 MB/s |
 
-QUIMERA analiza **3,3–3,4× más rápido**, e incluso con todo el camino hasta el bytecode es 2,5× más rápido que Boa produciendo solo su árbol.
+QUIMERA analiza **4,2× más rápido** (con el corpus anterior de 1,05 MB eran 3,3–3,4×: EarleyBoyer, con su código Scheme muy anidado, castiga más al parser recursivo de Boa, que además necesita una pila nativa grande para no desbordarse). Con todo el camino hasta el bytecode es 2,9× más rápido que Boa produciendo solo su árbol.
 
 **Para ser justos**: el parser de Boa hace más por el camino. Cubre todo ECMAScript (las partes que aquí dan error), comprueba los errores tempranos de la especificación y guarda posiciones en cada nodo. La comparación es honesta para este corpus, pero parte de la diferencia se irá cerrando a medida que QUIMERA cubra más del lenguaje. La meta es mantener la ventaja: léxico en un solo paso, sin interner global y sin GC en el frontend.
 
