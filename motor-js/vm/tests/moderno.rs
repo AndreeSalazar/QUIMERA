@@ -178,3 +178,48 @@ fn sintaxis_moderna() {
         ]
     );
 }
+
+/// `get`/`set` en objetos y clases, `defineProperty` y `getOwnPropertyDescriptor`
+/// (`tests/accesores.js`), con la salida de Chromium.
+#[test]
+fn accesores() {
+    let r = salida(include_str!("accesores.js"));
+    assert_eq!(
+        r,
+        [
+            "40 4 fijo 5 din true true",
+            r#"_x,x,soloLectura,calculada,dinamico {"_x":4,"x":40,"soloLectura":"fijo","calculada":5,"dinamico":"din"}"#,
+            "100 212 C  true false",
+            "283 50",
+            "definido function undefined 1",
+            "datos true",
+            "5 6",
+            "70 true 40",
+        ]
+    );
+}
+
+/// `let`/`const`/`catch` de bloque que tapan a una variable de fuera (`tests/bloques.js`).
+#[test]
+fn ambitos_de_bloque() {
+    let r = salida(include_str!("bloques.js"));
+    assert_eq!(r, [r#"param fuera fuera fuera fuera 1,2 fuera {"a":1,"extra":"b"}"#]);
+}
+
+/// `Symbol`, `Symbol.for` y el protocolo de iteración con `Symbol.iterator`
+/// (`tests/simbolos.js`), con la salida de Chromium.
+#[test]
+fn simbolos() {
+    let r = salida(include_str!("simbolos.js"));
+    assert_eq!(
+        r,
+        [
+            r#"symbol false clave Symbol(clave) oculto undefined true a {"a":1}"#,
+            "true app undefined symbol",
+            "0,1,2 0,1 4 4",
+            "10 20 true function function",
+            "x y",
+            "new Symbol falla",
+        ]
+    );
+}

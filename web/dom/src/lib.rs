@@ -40,6 +40,8 @@ pub(crate) const VENTANA: u32 = u32::MAX;
 pub(crate) const BIT_ESTILO: u32 = 1 << 30;
 /// Bit de los objetos `classList`.
 pub(crate) const BIT_CLASES: u32 = 1 << 29;
+/// Bit de los objetos `dataset` (los atributos `data-*`).
+pub(crate) const BIT_DATOS: u32 = 1 << 28;
 
 /// Lo que comparten el [`Dom`] y su puente con la VM.
 pub(crate) struct Estado {

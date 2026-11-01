@@ -65,7 +65,11 @@ función 4 main: 0 parámetros, 4 registros, entorno 0
 
 Los temporales se llaman `\u{1}t3`: no se pueden escribir desde JavaScript y no salen en `for-in`. Los campos `#privados` son propiedades normales con ese nombre (no se enumeran, pero no son privados de verdad).
 
-**Avisa con un error claro**: `get`/`set` (la máquina aún no tiene accesores), generadores, `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
+**Ámbitos de bloque** (`bloques.rs`): el compilador reparte las variables por función, así que un `let`/`const`/`catch (e)` de bloque que tapa a otra variable con el mismo nombre se renombra antes de compilar (`n` → `n\u{1}1`), con sus usos dentro del bloque. Antes, `let n = 1; { const n = 2; } n` daba 2: el código minificado lo hace a menudo (highlight.js reutiliza `n` así). Falta una variable nueva por vuelta en `for (let i...)` cuando la capturan funciones.
+
+**`get`/`set`** en objetos y clases: `Object.defineProperty` tras crear el objeto o la clase. **`{__proto__: p}`**: `Object.setPrototypeOf`.
+
+**Avisa con un error claro**: generadores, `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
 
 Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y los 8 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay, RegExp). Los 15 se analizan, compilan y ejecutan.
 

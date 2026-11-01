@@ -2,7 +2,7 @@
 //! preparación de `window`, `document` y los prototipos con sus métodos (`metodos.rs`).
 
 use crate::metodos::{self, TABLA};
-use crate::{BIT_CLASES, BIT_ESTILO, Estado, envolver, envolver_o_nulo, lista};
+use crate::{BIT_CLASES, BIT_DATOS, BIT_ESTILO, Estado, envolver, envolver_o_nulo, lista};
 use alloc::rc::Rc;
 use alloc::string::{String, ToString};
 use alloc::vec::Vec;
@@ -42,6 +42,7 @@ pub(crate) fn preparar(m: &mut Motor, est: &Estado) {
         ("p_evento", None),
         ("p_clases", None),
         ("p_estilo", None),
+        ("p_datos", None),
     ] {
         let raiz = m.raiz_anfitrion();
         let p = match padre {
@@ -253,6 +254,7 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
         "value" if el.is_some() => Leido::Texto(valor_de_control(&doc, id)),
         "style" if el.is_some() => Leido::Objeto(id.0 | BIT_ESTILO, "p_estilo"),
         "classList" if el.is_some() => Leido::Objeto(id.0 | BIT_CLASES, "p_clases"),
+        "dataset" if el.is_some() => Leido::Objeto(id.0 | BIT_DATOS, "p_datos"),
         "title" => Leido::Texto(el.and_then(|e| e.atributo("title")).unwrap_or("").to_string()),
         _ => {
             let e = el?;
@@ -280,6 +282,23 @@ fn nombre_css(js: &str) -> String {
         }
     }
     s
+}
+
+/// `dataset.miClave` → el atributo `data-mi-clave`. `None` para las claves internas.
+fn atributo_de_dato(nombre: &str) -> Option<String> {
+    if nombre.starts_with(['\u{1}', '\u{2}']) {
+        return None;
+    }
+    let mut s = String::from("data-");
+    for c in nombre.chars() {
+        if c.is_ascii_uppercase() {
+            s.push('-');
+            s.push(c.to_ascii_lowercase());
+        } else {
+            s.push(c);
+        }
+    }
+    Some(s)
 }
 
 /// Las declaraciones del atributo `style`: (propiedad, valor).
@@ -385,6 +404,13 @@ impl Anfitrion for Puente {
         let nombre = m.mundo.cadenas.texto(clave).to_string();
         let leido = if dato & BIT_ESTILO != 0 {
             self.leer_estilo(NodoId(dato & !BIT_ESTILO), &nombre)?
+        } else if dato & BIT_DATOS != 0 {
+            let atributo = atributo_de_dato(&nombre)?;
+            let doc = self.0.doc.borrow();
+            match doc.elemento(NodoId(dato & !BIT_DATOS))?.atributo(&atributo) {
+                Some(v) => Leido::Texto(String::from(v)),
+                None => Leido::Indefinido,
+            }
         } else if dato & BIT_CLASES != 0 {
             let doc = self.0.doc.borrow();
             let clases = doc.elemento(NodoId(dato & !BIT_CLASES))?.atributo("class").unwrap_or("");
@@ -403,6 +429,13 @@ impl Anfitrion for Puente {
         let nombre = m.mundo.cadenas.texto(clave).to_string();
         if dato & BIT_CLASES != 0 {
             return None;
+        }
+        if dato & BIT_DATOS != 0 {
+            let atributo = atributo_de_dato(&nombre)?;
+            let valor = m.texto(v);
+            self.0.doc.borrow_mut().poner_atributo(NodoId(dato & !BIT_DATOS), &atributo, &valor);
+            self.0.cambiado.set(true);
+            return Some(Ok(()));
         }
         if dato & BIT_ESTILO != 0 {
             let id = NodoId(dato & !BIT_ESTILO);

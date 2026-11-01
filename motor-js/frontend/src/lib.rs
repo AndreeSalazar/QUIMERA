@@ -16,6 +16,7 @@ extern crate alloc;
 
 pub mod ambitos;
 pub mod ast;
+pub mod bloques;
 pub mod bytecode;
 pub mod compilador;
 pub mod fuente;
@@ -28,6 +29,7 @@ pub use parser::analizar;
 
 /// Analiza y compila un programa: texto → Stencil.
 pub fn compilar(fuente: &str) -> Resultado<Stencil> {
-    let programa = parser::analizar(fuente)?;
+    let mut programa = parser::analizar(fuente)?;
+    bloques::renombrar(&mut programa);
     compilador::compilar(&programa)
 }

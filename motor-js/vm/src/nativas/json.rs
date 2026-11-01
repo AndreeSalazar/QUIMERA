@@ -389,7 +389,7 @@ impl Escritor {
             if self.permitidas.as_ref().is_some_and(|p| !p.contains(&nombre)) {
                 continue;
             }
-            let v = m.mundo.leer(m.pila(pos), k).unwrap_or(Valor::INDEFINIDO);
+            let v = m.leer_valor(m.pila(pos), k)?;
             m.mundo.m.raiz(v);
             let p = m.mundo.m.marca_raices() - 1;
             let antes = self.salida.len();

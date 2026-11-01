@@ -101,7 +101,8 @@ impl Cadenas {
     /// escribirlas hace falta [`Cadenas::clave_para_escribir`].
     pub fn id_de_valor(v: Valor) -> Option<u32> {
         match v.tipo() {
-            quimera_valor::Tipo::Cadena => Some(v.ref_del_monton()?.numero() as u32),
+            // Un símbolo es una cadena interna única (empieza por U+0002): también es una clave.
+            quimera_valor::Tipo::Cadena | quimera_valor::Tipo::Simbolo => Some(v.ref_del_monton()?.numero() as u32),
             _ => None,
         }
     }

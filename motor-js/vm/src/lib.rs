@@ -12,6 +12,7 @@
 
 extern crate alloc;
 
+mod accesores;
 pub mod anfitrion;
 mod conversion;
 mod ic;
@@ -133,6 +134,10 @@ pub struct Motor {
     cadenas_ic: Vec<u32>,
     /// El navegador (o quien use el motor), con sus funciones y objetos.
     anfitrion: Option<Rc<dyn Anfitrion>>,
+    /// Ya se definió algún accesor (`get`/`set`): hasta entonces no se buscan.
+    hay_accesores: bool,
+    /// Cuántos símbolos se han creado (para que cada uno sea único).
+    simbolos: u32,
     /// Cuántas veces y cuánto tiempo se lleva cada tipo de instrucción (característica `perfil`).
     #[cfg(feature = "perfil")]
     perfil: perfil::Perfil,
@@ -171,6 +176,8 @@ impl Motor {
             sitios: Vec::new(),
             cadenas_ic: Vec::new(),
             anfitrion: None,
+            hay_accesores: false,
+            simbolos: 0,
             #[cfg(feature = "perfil")]
             perfil: perfil::Perfil::default(),
         };

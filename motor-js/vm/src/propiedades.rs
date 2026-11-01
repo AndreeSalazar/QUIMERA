@@ -59,6 +59,9 @@ impl Motor {
             if let Some(r) = self.leer_anfitrion(dato, clave) {
                 return r;
             }
+            if let Some(par) = self.buscar_accesor(obj, clave) {
+                return self.llamar_get(par, obj);
+            }
             return Ok(self.leer_lento(obj, clave));
         }
         if self.mundo.es_objeto(obj) {
@@ -67,10 +70,16 @@ impl Motor {
                 if c.forma == forma {
                     return Ok(self.mundo.leer_hueco(obj, c.hueco).unwrap_or(Valor::INDEFINIDO));
                 }
+                if pc != SIN_CACHE
+                    && let Some(v) = self.ic_leer(obj, forma, fi, pc)
+                {
+                    return Ok(v);
+                }
+                // Un accesor se mira antes de aprender nada: las cachés no los guardan nunca.
+                if let Some(par) = self.buscar_accesor(obj, clave) {
+                    return self.llamar_get(par, obj);
+                }
                 if pc != SIN_CACHE {
-                    if let Some(v) = self.ic_leer(obj, forma, fi, pc) {
-                        return Ok(v);
-                    }
                     if let Some(hueco) = self.mundo.formas.buscar(forma, clave)
                         && self.guardar_cache(fi, pc, forma, hueco)
                     {
@@ -115,6 +124,14 @@ impl Motor {
             }
             // Los métodos de un primitivo están en su prototipo (`(1.5).toFixed`, `"a".charAt`).
             Tipo::Cadena => Ok(self.mundo.leer(self.pila(crate::R_CADENA), clave).unwrap_or(Valor::INDEFINIDO)),
+            Tipo::Simbolo => {
+                let interno = obj.ref_del_monton().map_or("", |r| self.mundo.cadenas.texto(r.numero() as u32));
+                if self.mundo.cadenas.texto(clave) == "description" {
+                    let d = alloc::string::String::from(operaciones::descripcion_de_simbolo(interno));
+                    return Ok(self.mundo.cadena(&d));
+                }
+                Ok(self.mundo.leer(self.pila(crate::R_OBJETO), clave).unwrap_or(Valor::INDEFINIDO))
+            }
             Tipo::Numero | Tipo::Entero => {
                 Ok(self.mundo.leer(self.pila(crate::R_NUMERO), clave).unwrap_or(Valor::INDEFINIDO))
             }
@@ -145,6 +162,9 @@ impl Motor {
                 None if self.mundo.escribir(obj, clave, v) => return Ok(()),
                 None => {}
             }
+        }
+        if let Some(par) = self.buscar_accesor(obj, clave) {
+            return self.llamar_set(par, obj, v);
         }
         if let Some(forma) = self.mundo.forma(obj) {
             let c = self.cache(fi, pc);
@@ -285,7 +305,7 @@ impl Motor {
             return Ok(i < self.mundo.longitud(obj).unwrap_or(0));
         }
         let clave = self.clave_de(k);
-        Ok(self.mundo.leer(obj, clave).is_some())
+        Ok(self.mundo.leer(obj, clave).is_some() || self.buscar_accesor(obj, clave).is_some())
     }
 
     /// `a instanceof F`: ¿está `F.prototype` en la cadena de prototipos de `a`?

@@ -288,7 +288,37 @@ impl Motor {
         if let Some(m) = self.marcos.last_mut() {
             m.pc = pc + 1;
         }
+        if !matches!(self.clase_en(llamada.f), Some(quimera_objetos::Clase::Funcion | quimera_objetos::Clase::Nativa)) {
+            return Err(self.no_es_funcion(llamada.f, pc));
+        }
         Ok(if self.llamar(llamada)? { Flujo::Recargar } else { Flujo::Sigue })
+    }
+
+    /// El error de llamar a algo que no es una función, con el nombre de lo que se llamó si se
+    /// sabe (`o.metodo`, `nombre`): mira hacia atrás qué instrucción llenó ese registro.
+    #[cold]
+    fn no_es_funcion(&mut self, f_abs: usize, pc: usize) -> Valor {
+        let que = self.texto(self.pila(f_abs));
+        let Some(m) = self.marcos.last().copied() else {
+            return self.error("TypeError", &alloc::format!("{que} no es una función"));
+        };
+        let (fi, reg) = (m.funcion as usize, f_abs.wrapping_sub(m.base));
+        let mut nombre = None;
+        for i in (pc.saturating_sub(24)..pc).rev() {
+            match self.funciones[fi].f.codigo.get(i).copied() {
+                Some(Instr::LeerProp { dst, nombre: n, .. } | Instr::LeerGlobal { dst, nombre: n })
+                    if dst as usize == reg =>
+                {
+                    nombre = Some(alloc::string::String::from(self.mundo.cadenas.texto(self.clave(fi, n))));
+                    break;
+                }
+                _ => {}
+            }
+        }
+        match nombre {
+            Some(n) => self.error("TypeError", &alloc::format!("{n} no es una función (vale {que})")),
+            None => self.error("TypeError", &alloc::format!("{que} no es una función")),
+        }
     }
 
     /// `a op b`. `b_abs` es dónde está `b` en la pila (`instanceof` lo necesita para crear `F.prototype`).

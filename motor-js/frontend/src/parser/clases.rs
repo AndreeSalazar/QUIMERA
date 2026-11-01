@@ -16,11 +16,11 @@
 //! })()
 //! ```
 //!
-//! Falta: `get`/`set` (la máquina aún no tiene accesores), métodos `async` y generadores, bloques
+//! Los `get`/`set` son `Object.defineProperty` tras los métodos. Falta: métodos `async` y generadores, bloques
 //! `static {}`. Los campos `#privados` son propiedades normales con ese nombre.
 
 use super::Parser;
-use super::azucar::{Firma, Piezas, indefinido, lista_de, llamar, miembro, sin_esparcir};
+use super::azucar::{Firma, Piezas, definir_accesor, indefinido, lista_de, llamar, miembro, sin_esparcir};
 use crate::ast::{Clave, Decl, Expr, Funcion, Sent};
 use crate::fuente::{Resultado, error};
 use crate::lexico::Tipo;
@@ -43,6 +43,7 @@ pub(super) struct InfoClase {
 enum Miembro {
     Metodo { estatico: bool, clave: Clave, funcion: Funcion },
     Campo { estatico: bool, clave: Clave, valor: Option<Expr> },
+    Accesor { estatico: bool, clave: Clave, es_get: bool, funcion: Funcion },
 }
 
 fn este_campo(clave: Clave, valor: Option<Expr>, dueno: Expr) -> Sent {
@@ -93,18 +94,18 @@ impl Parser {
             )));
         }
         for m in miembros {
-            let (estatico, clave, valor) = match m {
+            let dueno = |estatico: bool| {
+                if estatico { Expr::Ident(interno.clone()) } else { miembro(Expr::Ident(interno.clone()), "prototype") }
+            };
+            match m {
                 Miembro::Metodo { estatico, clave, funcion } => {
-                    (estatico, clave, Some(Expr::Funcion(Box::new(funcion))))
+                    cuerpo.push(este_campo(clave, Some(Expr::Funcion(Box::new(funcion))), dueno(estatico)));
                 }
-                Miembro::Campo { estatico, clave, valor } => (estatico, clave, valor),
-            };
-            let dueno = if estatico {
-                Expr::Ident(interno.clone())
-            } else {
-                miembro(Expr::Ident(interno.clone()), "prototype")
-            };
-            cuerpo.push(este_campo(clave, valor, dueno));
+                Miembro::Campo { estatico, clave, valor } => cuerpo.push(este_campo(clave, valor, dueno(estatico))),
+                Miembro::Accesor { estatico, clave, es_get, funcion } => {
+                    cuerpo.push(Sent::Expr(definir_accesor(dueno(estatico), clave, es_get, funcion)));
+                }
+            }
         }
         cuerpo.push(Sent::Expr(llamar(
             "__quimera_no_enumerar",
@@ -170,7 +171,15 @@ impl Parser {
                 self.avanzar();
             }
             if (self.es_palabra("get") || self.es_palabra("set")) && modificador(self) {
-                return error(pos, "get/set en clases todavía no están en QUIMERA (la máquina aún no tiene accesores)");
+                let es_get = self.es_palabra("get");
+                self.avanzar();
+                let clave = self.clave_de_propiedad()?;
+                if let Some(c) = self.clases.last_mut() {
+                    c.estatico = estatico;
+                }
+                let funcion = self.funcion_de_metodo(None, pos)?;
+                miembros.push(Miembro::Accesor { estatico, clave, es_get, funcion });
+                continue;
             }
             if (self.es_palabra("async") && modificador(self)) || self.es("*") {
                 return error(pos, "los métodos async y los generadores todavía no están en QUIMERA");

@@ -122,7 +122,7 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
 
 /// El nodo de un valor (un objeto de nodo que existe), si lo es.
 fn nodo_de(m: &Motor, est: &Estado, v: Valor) -> Option<NodoId> {
-    let d = m.dato_anfitrion(v).filter(|d| d & (BIT_ESTILO | BIT_CLASES) == 0)?;
+    let d = m.dato_anfitrion(v).filter(|d| d & (BIT_ESTILO | BIT_CLASES | crate::BIT_DATOS) == 0)?;
     est.doc.borrow().existe(NodoId(d)).then_some(NodoId(d))
 }
 

@@ -39,7 +39,7 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 
 ## Falta (por orden, para llegar a YouTube)
 
-1. **JavaScript moderno en la VM:** ✅ `JSON`, `Promise` y microtareas (se vacían tras cada script, evento y temporizador), `Map`/`Set`, clases, plantillas, desestructuración, `...spread`, `?.`, y `localStorage` en memoria ([VM.md](VM.md#la-biblioteca-en-javascript-preludio), [FRONTEND.md](FRONTEND.md#qué-entiende-hoy)). Falta: accesores `get`/`set` (lo primero que falla en rust-lang.org), `async`/`await`, generadores y módulos (`<script type=module>`).
+1. **JavaScript moderno en la VM:** ✅ `JSON`, `Promise` y microtareas (se vacían tras cada script, evento y temporizador), `Map`/`Set`, clases, plantillas, desestructuración, `...spread`, `?.`, y `localStorage` en memoria ([VM.md](VM.md#la-biblioteca-en-javascript-preludio), [FRONTEND.md](FRONTEND.md#qué-entiende-hoy)). ✅ Accesores `get`/`set`, `Symbol`, `dataset`. rust-lang.org y MDN ya ejecutan todos sus scripts sin errores. Falta: `async`/`await`, generadores y módulos (`<script type=module>`).
 2. **`fetch` y `XMLHttpRequest`**, y `localStorage`.
 3. **Más eventos:** `input`, `change`, `keydown`, `submit`, `focus`; y que `input.value` y lo escrito en la ventana sean lo mismo (hoy JavaScript lee el atributo `value`, no lo que tecleó la persona).
 4. **Medidas de la maquetación:** `getBoundingClientRect`, `offsetWidth`, `scrollTop`, `getComputedStyle`.

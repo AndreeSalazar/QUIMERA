@@ -17,6 +17,10 @@ const HAS_OWN: u32 = 401;
 const IS_ARRAY: u32 = 402;
 /// `f.apply(este, [args])`.
 pub(super) const APPLY: u32 = 403;
+const DEFINE_PROPERTY: u32 = 404;
+const DESCRIPTOR: u32 = 405;
+const GET_PROTOTYPE_OF: u32 = 406;
+const SET_PROTOTYPE_OF: u32 = 407;
 const SLICE: u32 = 410;
 const CONCAT: u32 = 411;
 const REVERSE: u32 = 412;
@@ -37,6 +41,10 @@ const FIND_INDEX: u32 = 437;
 /// `objeto` y `arreglo`: posiciones en la pila de los constructores `Object` y `Array`.
 pub(super) fn preparar(m: &mut Motor, objeto: usize, arreglo: usize) {
     definir_nativa(m, objeto, "keys", OBJECT_KEYS);
+    definir_nativa(m, objeto, "defineProperty", DEFINE_PROPERTY);
+    definir_nativa(m, objeto, "getOwnPropertyDescriptor", DESCRIPTOR);
+    definir_nativa(m, objeto, "getPrototypeOf", GET_PROTOTYPE_OF);
+    definir_nativa(m, objeto, "setPrototypeOf", SET_PROTOTYPE_OF);
     definir_nativa(m, R_OBJETO, "hasOwnProperty", HAS_OWN);
     definir_nativa(m, arreglo, "isArray", IS_ARRAY);
     definir_nativa(m, R_FUNCION, "apply", APPLY);
@@ -66,8 +74,14 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
     match id {
         OBJECT_KEYS => {
             let o = arg(m, ll, 0);
-            if !m.mundo.es_objeto(o) {
+            if matches!(o.tipo(), Tipo::Indefinido | Tipo::Nulo) {
                 return Err(m.error("TypeError", "Object.keys necesita un objeto"));
+            }
+            if !m.mundo.es_objeto(o) {
+                // Un primitivo se convierte en objeto: una cadena da sus índices; lo demás, nada.
+                let n = m.mundo.texto(o).map_or(0, |s| s.chars().count());
+                let claves: Vec<Valor> = (0..n).map(|i| m.mundo.cadena(&alloc::format!("{i}"))).collect();
+                return Ok(m.mundo.crear_arreglo(&claves, m.pila(R_ARREGLO)));
             }
             let mut claves: Vec<Valor> = indices(m, o);
             claves.extend(m.claves_enumerables(o).into_iter().map(|k| Valor::cadena(Ref::desde_u32(k))));
@@ -79,9 +93,34 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
             let indice = k.como_entero().and_then(|i| u32::try_from(i).ok());
             let es_indice = m.mundo.clase(o) == Some(Clase::Arreglo)
                 && indice.is_some_and(|i| i < m.mundo.longitud(o).unwrap_or(0));
-            return Ok(Valor::booleano(es_indice || m.mundo.es_objeto(o) && m.mundo.leer_propia(o, clave).is_some()));
+            let propia = m.mundo.es_objeto(o)
+                && (m.mundo.leer_propia(o, clave).is_some()
+                    || (clave != u32::MAX && m.accesor_propio(o, clave).is_some()));
+            return Ok(Valor::booleano(es_indice || propia));
         }
         IS_ARRAY => return Ok(Valor::booleano(m.mundo.clase(arg(m, ll, 0)) == Some(Clase::Arreglo))),
+        DEFINE_PROPERTY => return definir_propiedad(m, ll),
+        DESCRIPTOR => return descriptor(m, ll),
+        SET_PROTOTYPE_OF => {
+            let (o, p) = (arg(m, ll, 0), arg(m, ll, 1));
+            if !(m.mundo.es_objeto(p) || p == Valor::NULO) {
+                return Err(m.error("TypeError", "el prototipo debe ser un objeto o null"));
+            }
+            // En un ciclo (`o` en la cadena de `p`) no se cambia.
+            let mut actual = p;
+            while m.mundo.es_objeto(actual) {
+                if actual == o {
+                    return Err(m.error("TypeError", "setPrototypeOf haría un ciclo de prototipos"));
+                }
+                actual = m.mundo.prototipo(actual);
+            }
+            m.mundo.poner_prototipo(o, p);
+            return Ok(o);
+        }
+        GET_PROTOTYPE_OF => {
+            let o = arg(m, ll, 0);
+            return Ok(if m.mundo.es_objeto(o) { m.mundo.prototipo(o) } else { Valor::NULO });
+        }
         // `apply` no llega aquí: `nativas::llamar` lo lleva a `aplicar`, que abre un marco.
         APPLY => return Err(m.error("InternalError", "apply va por su propio camino")),
         _ => {}
@@ -99,6 +138,79 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
 fn indices(m: &mut Motor, o: Valor) -> Vec<Valor> {
     let n = if m.mundo.clase(o) == Some(Clase::Arreglo) { m.mundo.longitud(o).unwrap_or(0) } else { 0 };
     (0..n).map(|i| m.mundo.cadena(&alloc::format!("{i}"))).collect()
+}
+
+/// La clave para escribir (un átomo: las formas guardan su número).
+fn clave_atomo(m: &mut Motor, k: Valor) -> u32 {
+    match m.mundo.cadenas.clave_para_escribir(k) {
+        Some(id) => id,
+        None => {
+            let s = m.texto(k);
+            m.mundo.cadenas.internar(&s)
+        }
+    }
+}
+
+/// `Object.defineProperty(o, k, {get, set})` o `{value}`. Sin atributos de propiedad: todo es
+/// escribible, enumerable y configurable.
+fn definir_propiedad(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
+    let (o, d) = (arg(m, ll, 0), arg(m, ll, 2));
+    if !m.mundo.es_objeto(o) || !m.mundo.es_objeto(d) {
+        return Err(m.error("TypeError", "Object.defineProperty necesita un objeto y un descriptor"));
+    }
+    let k = arg(m, ll, 1);
+    let clave = clave_atomo(m, k);
+    let leer = |m: &mut Motor, nombre: &str| {
+        let c = m.mundo.cadenas.internar(nombre);
+        let d = arg(m, ll, 2);
+        m.mundo.leer(d, c)
+    };
+    let (get, set, valor) = (leer(m, "get"), leer(m, "set"), leer(m, "value"));
+    if get.is_some() || set.is_some() {
+        let o = arg(m, ll, 0);
+        m.definir_accesor(o, clave, get.unwrap_or(Valor::INDEFINIDO), set.unwrap_or(Valor::INDEFINIDO));
+    } else if let Some(v) = valor {
+        let o = arg(m, ll, 0);
+        m.mundo.borrar(o, clave | crate::accesores::ACCESOR);
+        let o = arg(m, ll, 0);
+        m.mundo.escribir(o, clave, v);
+    }
+    Ok(arg(m, ll, 0))
+}
+
+/// `Object.getOwnPropertyDescriptor(o, k)`.
+fn descriptor(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
+    let (o, k) = (arg(m, ll, 0), arg(m, ll, 1));
+    if !m.mundo.es_objeto(o) {
+        return Ok(Valor::INDEFINIDO);
+    }
+    let clave = clave_atomo(m, k);
+    let o = arg(m, ll, 0);
+    let campos: Vec<(&str, Valor)> = if let Some(par) = m.accesor_propio(o, clave) {
+        let g = m.mundo.leer_elemento(par, 0).unwrap_or(Valor::INDEFINIDO);
+        let s = m.mundo.leer_elemento(par, 1).unwrap_or(Valor::INDEFINIDO);
+        alloc::vec![("get", g), ("set", s)]
+    } else if let Some(v) = m.mundo.leer_propia(o, clave) {
+        alloc::vec![("value", v), ("writable", Valor::VERDADERO)]
+    } else {
+        return Ok(Valor::INDEFINIDO);
+    };
+    let marca = m.mundo.m.marca_raices();
+    for (_, v) in &campos {
+        m.mundo.m.raiz(*v);
+    }
+    let d = m.mundo.crear_objeto(m.pila(R_OBJETO));
+    m.mundo.m.raiz(d);
+    let pos = marca + campos.len();
+    let todos = campos.iter().map(|(n, _)| *n).chain(["enumerable", "configurable"]);
+    for (i, nombre) in todos.enumerate() {
+        let v = if i < campos.len() { m.pila(marca + i) } else { Valor::VERDADERO };
+        let c = m.mundo.cadenas.internar(nombre);
+        m.mundo.escribir(m.pila(pos), c, v);
+    }
+    let d = m.pila(pos);
+    m.mundo.m.soltar_raices(marca);
+    Ok(d)
 }
 
 fn clave_de(m: &mut Motor, k: Valor) -> u32 {

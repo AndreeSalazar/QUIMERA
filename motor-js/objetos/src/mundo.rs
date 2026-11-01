@@ -370,6 +370,25 @@ impl Mundo {
         self.m.escribir(obj, C_FORMA, Valor::entero(nueva as i32))
     }
 
+    /// Cambia la clave propia `clave` por `nueva` en el mismo sitio (el orden de las claves no
+    /// cambia) y pone `v` en su hueco. `false` si `obj` no tiene `clave`.
+    pub fn cambiar_clave(&mut self, obj: Valor, clave: u32, nueva: u32, v: Valor) -> bool {
+        let Some(forma) = self.forma(obj) else { return false };
+        let Some(hueco) = self.formas.buscar(forma, clave) else { return false };
+        let claves: alloc::vec::Vec<u32> = self.formas.claves(forma).to_vec();
+        let mut f = FORMA_VACIA;
+        for &k in &claves {
+            f = self.formas.anadir(f, if k == clave { nueva } else { k });
+        }
+        self.escribir_hueco(obj, hueco, v) && self.m.escribir(obj, C_FORMA, Valor::entero(f as i32))
+    }
+
+    /// Cambia el prototipo de un objeto (`Object.setPrototypeOf`). Las cachés en línea siguen
+    /// valiendo: guardan formas y recorren la cadena de verdad en cada uso.
+    pub fn poner_prototipo(&mut self, obj: Valor, proto: Valor) -> bool {
+        self.es_objeto(obj) && (self.es_objeto(proto) || proto == Valor::NULO) && self.m.escribir(obj, C_PROTO, proto)
+    }
+
     /// Las claves propias en orden de creación.
     pub fn claves(&self, obj: Valor) -> &[u32] {
         self.forma(obj).map_or(&[], |f| self.formas.claves(f))

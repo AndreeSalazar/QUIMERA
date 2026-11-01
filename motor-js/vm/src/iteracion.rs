@@ -10,9 +10,9 @@ use alloc::string::ToString;
 use alloc::vec::Vec;
 use quimera_objetos::{Cadenas, Clase, Valor};
 
-/// Las ranuras internas (U+0001) y los campos `#privados` de las clases no se enumeran.
+/// Las ranuras internas (U+0001), los símbolos (U+0002) y los campos `#privados` no se enumeran.
 fn oculta(clave: &str) -> bool {
-    clave.starts_with('\u{1}') || clave.starts_with('#')
+    clave.starts_with('\u{1}') || clave.starts_with('\u{2}') || clave.starts_with('#')
 }
 
 impl Motor {
@@ -27,7 +27,8 @@ impl Motor {
     /// la biblioteca ni las ranuras internas (las que empiezan por U+0001).
     pub(crate) fn claves_enumerables(&self, obj: Valor) -> Vec<u32> {
         let saltar = self.ocultas_de(obj);
-        self.mundo.claves(obj).iter().skip(saltar).copied().filter(|&k| self.enumerable(obj, k)).collect()
+        let claves = self.mundo.claves(obj).iter().skip(saltar);
+        claves.map(|&k| k & !crate::accesores::ACCESOR).filter(|&k| self.enumerable(obj, k)).collect()
     }
 
     /// Si la clave `k` de `obj` se enumera: no las ranuras internas, ni los `#privados`, ni el
@@ -67,7 +68,7 @@ impl Motor {
             if saltar == 0 && self.mundo.claves(actual).first() == Some(&constructor) {
                 saltar = 1;
             }
-            for &k in self.mundo.claves(actual).iter().skip(saltar) {
+            for k in self.mundo.claves(actual).iter().skip(saltar).map(|&k| k & !crate::accesores::ACCESOR) {
                 // Las claves que empiezan por U+0001 son ranuras internas de la biblioteca.
                 if !claves.contains(&k) && self.enumerable(actual, k) {
                     claves.push(k);
@@ -127,6 +128,9 @@ impl Motor {
             }
         };
         self.mundo.borrar(obj, clave);
+        if clave & crate::accesores::ACCESOR == 0 {
+            self.mundo.borrar(obj, clave | crate::accesores::ACCESOR);
+        }
         Ok(Valor::VERDADERO)
     }
 }

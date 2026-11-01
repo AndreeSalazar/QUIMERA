@@ -98,7 +98,10 @@ pub fn a_texto(w: &Mundo, v: Valor) -> String {
         Tipo::Nulo => String::from("null"),
         Tipo::Booleano => String::from(if v.como_booleano() == Some(true) { "true" } else { "false" }),
         Tipo::Cadena => String::from(w.texto(v).unwrap_or("")),
-        Tipo::Simbolo => String::from("Symbol()"),
+        Tipo::Simbolo => {
+            let interno = v.ref_del_monton().map_or("", |r| w.cadenas.texto(r.numero() as u32));
+            alloc::format!("Symbol({})", descripcion_de_simbolo(interno))
+        }
         Tipo::Referencia => match w.clase(v) {
             Some(Clase::Arreglo) => unir(w, v),
             Some(Clase::Funcion | Clase::Nativa) => String::from("function () { [código] }"),
@@ -133,6 +136,11 @@ fn unir(w: &Mundo, arr: Valor) -> String {
         }
     }
     s
+}
+
+/// La descripción de un símbolo a partir de su cadena interna (`\u{2}número\u{2}descripción`).
+pub fn descripcion_de_simbolo(interno: &str) -> &str {
+    interno.trim_start_matches('\u{2}').split_once('\u{2}').map_or("", |(_, d)| d)
 }
 
 /// `typeof`.

@@ -157,6 +157,18 @@ pub(super) fn expr_a_patron(e: Expr) -> Option<Patron> {
     })
 }
 
+/// `Object.defineProperty(dueno, clave, {get: f})` (o `set`): un accesor de un objeto o clase.
+pub(super) fn definir_accesor(dueno: Expr, clave: Clave, es_get: bool, f: crate::ast::Funcion) -> Expr {
+    let k = match clave {
+        Clave::Nombre(n) => Expr::Cadena(n),
+        Clave::Calculada(e) => e,
+    };
+    let campo = String::from(if es_get { "get" } else { "set" });
+    let desc = Expr::Objeto(vec![(Clave::Nombre(campo), Expr::Funcion(Box::new(f)))]);
+    let define = miembro(Expr::Ident(String::from("Object")), "defineProperty");
+    Expr::Llamar(Box::new(define), vec![dueno, k, desc])
+}
+
 /// `valor === undefined ? defecto : valor`.
 fn con_defecto(valor: Expr, defecto: Option<Expr>) -> Expr {
     match defecto {

@@ -1,8 +1,8 @@
 //! Expresiones, de la de menor a la de mayor precedencia.
 
 use super::azucar::{
-    Firma, Piezas, expr_a_patron, indefinido, lista_de, llamada_esparcida, llamar, miembro, objeto_esparcido,
-    sin_esparcir,
+    Firma, Piezas, definir_accesor, expr_a_patron, indefinido, lista_de, llamada_esparcida, llamar, miembro,
+    objeto_esparcido, sin_esparcir,
 };
 use super::{Parser, describir};
 use crate::ast::{Clave, Expr, Funcion, Param, Sent};
@@ -386,34 +386,70 @@ impl Parser {
         let mut props = Vec::new();
         // Solo si aparece `...`: los trozos de propiedades y lo esparcido, en orden.
         let mut segmentos: Vec<Result<Vec<(Clave, Expr)>, Expr>> = Vec::new();
+        // `get x() {}` / `set x(v) {}`: se definen sobre el objeto ya creado.
+        let mut accesores: Vec<(Clave, bool, Funcion)> = Vec::new();
+        let mut proto: Option<Expr> = None;
         while !self.tomar("}") {
-            if self.tomar("...") {
+            let es_accesor = (self.es_palabra("get") || self.es_palabra("set"))
+                && !(self.es_en(1, ":") || self.es_en(1, "(") || self.es_en(1, ",") || self.es_en(1, "}"));
+            if es_accesor {
+                let pos = self.pos();
+                let es_get = self.es_palabra("get");
+                self.avanzar();
+                let clave = self.clave_de_propiedad()?;
+                let f = self.funcion_de_metodo(None, pos)?;
+                // Un hueco en su sitio (si el nombre se conoce): el accesor lo ocupará y las
+                // claves quedan en el orden del código.
+                if let Clave::Nombre(n) = &clave
+                    && !props.iter().any(|(k, _)| matches!(k, Clave::Nombre(x) if x == n))
+                {
+                    props.push((clave.clone(), indefinido()));
+                }
+                accesores.push((clave, es_get, f));
+            } else if self.tomar("...") {
                 if !props.is_empty() {
                     segmentos.push(Ok(core::mem::take(&mut props)));
                 }
                 segmentos.push(Err(self.asignacion()?));
             } else {
-                props.push(self.propiedad()?);
+                let es_proto = self.es_palabra("__proto__") && self.es_en(1, ":")
+                    || matches!(self.ver(), Tipo::Cadena(c) if c == "__proto__") && self.es_en(1, ":");
+                let p = self.propiedad()?;
+                if es_proto {
+                    // `{__proto__: P}` no crea una propiedad: fija el prototipo.
+                    proto = Some(p.1);
+                } else {
+                    props.push(p);
+                }
             }
             if !self.es("}") {
                 self.esperar(",")?;
             }
         }
-        if segmentos.is_empty() {
-            return Ok(Expr::Objeto(props));
+        let mut objeto = if segmentos.is_empty() {
+            Expr::Objeto(props)
+        } else {
+            if !props.is_empty() {
+                segmentos.push(Ok(props));
+            }
+            objeto_esparcido(segmentos)
+        };
+        // `Object.defineProperty` devuelve el objeto: se encadenan.
+        for (clave, es_get, f) in accesores {
+            objeto = definir_accesor(objeto, clave, es_get, f);
         }
-        if !props.is_empty() {
-            segmentos.push(Ok(props));
+        if let Some(p) = proto {
+            let poner = miembro(Expr::Ident(String::from("Object")), "setPrototypeOf");
+            objeto = Expr::Llamar(Box::new(poner), vec![objeto, p]);
         }
-        Ok(objeto_esparcido(segmentos))
+        Ok(objeto)
     }
 
     /// `a: 1`, `a` (abreviada), `[k]: 1`, `"a": 1`, `1: x` o un método `f() {}`.
     fn propiedad(&mut self) -> Resultado<(Clave, Expr)> {
         let pos = self.pos();
-        let accesor = (self.es_palabra("get") || self.es_palabra("set")) && !self.es_en(1, ":") && !self.es_en(1, "(");
         let asincrona = self.es_palabra("async") && !self.es_en(1, ":") && !self.es_en(1, "(");
-        if accesor || asincrona || self.es("*") {
+        if asincrona || self.es("*") {
             return error(pos, "get/set, async y * en objetos todavía no están en QUIMERA");
         }
         let abreviable = matches!(self.ver(), Tipo::Ident(_));

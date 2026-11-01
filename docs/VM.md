@@ -154,6 +154,18 @@ En Rust, aparte: **`JSON.parse` y `JSON.stringify`** (YouTube trae megas de JSON
 
 Coste: crear un motor tarda unos 2 ms más (compila el preludio). Se podría guardar su Stencil compilado una vez.
 
+## Accesores y símbolos
+
+**Accesores** (`accesores.rs`): `get`/`set` en clases y objetos, `Object.defineProperty` y `getOwnPropertyDescriptor`. Un accesor va en la forma del objeto con la clave marcada (bit 31) y un par `[get, set]` en su hueco:
+
+- **Las cachés nunca los guardan.** La de primer nivel solo encuentra claves sin marcar. Leer o escribir mira si hay un accesor en la cadena *antes* de aprender nada, y definir uno vacía todas las cachés una vez (un stub antiguo de «añadir propiedad» se saltaría el `set`).
+- **Sin coste hasta el primero**: mientras ninguna página defina uno, no se busca nada. Con alguno definido, solo pagan los accesos que no acierta la caché.
+- Al definir un accesor sobre una clave que ya existe (o sobre el hueco que deja un objeto literal), ocupa su sitio: las claves salen en el orden del código, como en Chromium.
+
+**Símbolos**: `Symbol()`, `Symbol.for`, `keyFor`, `description` y los conocidos (`Symbol.iterator`...). Un símbolo es una cadena interna única que empieza por U+0002: ya es un número de clave, así que `o[s]` funciona sin tocar nada más. Estas claves no se enumeran. `Symbol.iterator` conecta `for-of`, el spread y `Array.from` con cualquier objeto iterable, y los arreglos, cadenas, `Map`, `Set` y sus iteradores lo tienen.
+
+También: `Object.setPrototypeOf` y `getPrototypeOf`, `{__proto__: p}` en un literal, `console.warn/error/info`, y el error de llamar a algo que no es una función dice su nombre (`forEach no es una función (vale undefined)`), que es lo que más ayuda a ver qué falta en una página real.
+
 ## Objetos y funciones del anfitrión
 
 Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias funciones y objetos (`anfitrion.rs`):
@@ -165,7 +177,6 @@ Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias fu
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
-- **Accesores (`get`/`set`)**: es lo siguiente que bloquea páginas reales (highlight.js en rust-lang.org lo usa en sus clases). Hay que añadirlos sin frenar las cachés en línea.
 - **Generadores y `async`/`await`**: necesitan que la máquina guarde un marco a medias y lo reanude.
 - **Errores de la máquina como objetos**: los que lanza la máquina son cadenas (`"TypeError: ..."`), así que `e.message` da `undefined` en un `catch`.
 - **Biblioteca estándar, todavía parcial.** Hay `console.log`/`print`; `Object` (`create`, `keys`, `prototype.hasOwnProperty`); `Array` (`isArray`, `push`, `pop`, `shift`, `unshift`, `slice`, `concat`, `reverse`, `join`, `indexOf`, `includes`, `sort`, `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `findIndex`); `Function.prototype` (`call`, `apply`); `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`); números (`Number`, `parseInt`, `parseFloat`, `isNaN`, `isFinite`, `toFixed`, `toPrecision`, `toString(base)`); `String` (`fromCharCode`, `charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`, `split`, `toUpperCase`, `toLowerCase`, `trim`, `includes`, `startsWith`, `endsWith`); `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.

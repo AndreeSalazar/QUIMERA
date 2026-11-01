@@ -29,6 +29,10 @@ const ARREGLO: u32 = 12;
 const FUNCION: u32 = 13;
 /// `__quimera_no_enumerar(o)`: las claves que tiene ahora `o` no salen en `for-in` (métodos de clase).
 const NO_ENUMERAR: u32 = 14;
+/// `Symbol(descripción)`, `Symbol.for(clave)` y `Symbol.keyFor(s)`.
+const SIMBOLO: u32 = 15;
+const SIMBOLO_FOR: u32 = 16;
+const SIMBOLO_KEY_FOR: u32 = 17;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -64,12 +68,15 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, R_ARREGLO, "push", ARREGLO_EMPUJAR);
     definir_nativa(m, R_ARREGLO, "pop", ARREGLO_SACAR);
     let console = nuevo_objeto(m, R_GLOBAL, "console");
-    definir_nativa(m, console, "log", IMPRIMIR);
+    for nombre in ["log", "info", "warn", "error", "debug", "trace"] {
+        definir_nativa(m, console, nombre, IMPRIMIR);
+    }
     let objeto = constructor(m, "Object", OBJETO, R_OBJETO);
     definir_nativa(m, objeto, "create", OBJETO_CREAR);
     let arreglo = constructor(m, "Array", ARREGLO, R_ARREGLO);
     constructor(m, "Function", FUNCION, R_FUNCION);
     definir_nativa(m, R_GLOBAL, "__quimera_no_enumerar", NO_ENUMERAR);
+    simbolos(m);
     coleccion::preparar(m, objeto, arreglo);
     numeros::preparar(m);
     texto::preparar(m);
@@ -78,6 +85,32 @@ pub(crate) fn preparar(m: &mut Motor) {
     json::preparar(m);
     m.fijar_claves_ocultas();
     m.mundo.m.soltar_raices(crate::N_FIJAS);
+}
+
+/// `Symbol` y los símbolos conocidos (`Symbol.iterator`...).
+fn simbolos(m: &mut Motor) {
+    let f = m.mundo.crear_nativa(SIMBOLO, m.pila(R_FUNCION));
+    m.mundo.m.raiz(f);
+    let pos = m.mundo.m.marca_raices() - 1;
+    definir_valor(m, R_GLOBAL, "Symbol", Some(m.pila(pos)));
+    definir_nativa(m, pos, "for", SIMBOLO_FOR);
+    definir_nativa(m, pos, "keyFor", SIMBOLO_KEY_FOR);
+    for nombre in ["iterator", "asyncIterator", "hasInstance", "toPrimitive", "toStringTag", "species", "unscopables"] {
+        let id = m.mundo.cadenas.internar(&alloc::format!("\u{2}@@\u{2}Symbol.{nombre}"));
+        definir_valor(m, pos, nombre, Some(Valor::simbolo(quimera_objetos::Ref::desde_u32(id))));
+    }
+}
+
+/// Un símbolo nuevo: una cadena interna única que nadie puede escribir (`\u{2}n\u{2}desc`).
+fn nuevo_simbolo(m: &mut Motor, descripcion: &str, global: bool) -> Valor {
+    let interno = if global {
+        alloc::format!("\u{2}for\u{2}{descripcion}")
+    } else {
+        m.simbolos += 1;
+        alloc::format!("\u{2}{}\u{2}{descripcion}", m.simbolos)
+    };
+    let id = m.mundo.cadenas.internar(&interno);
+    Valor::simbolo(quimera_objetos::Ref::desde_u32(id))
 }
 
 /// Ejecuta el preludio en JavaScript (`preludio.js`) y oculta a `for-in` lo que creó.
@@ -217,6 +250,25 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         }
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
+        SIMBOLO | SIMBOLO_FOR => {
+            let d = arg(m, ll, 0);
+            let texto = if d == Valor::INDEFINIDO && id == SIMBOLO { String::new() } else { m.texto(d) };
+            nuevo_simbolo(m, &texto, id == SIMBOLO_FOR)
+        }
+        SIMBOLO_KEY_FOR => {
+            let s = arg(m, ll, 0);
+            let interno = s
+                .ref_del_monton()
+                .filter(|_| s.tipo() == quimera_objetos::Tipo::Simbolo)
+                .map(|r| String::from(m.mundo.cadenas.texto(r.numero() as u32)));
+            match interno.as_deref().and_then(|i| i.strip_prefix("\u{2}for\u{2}")) {
+                Some(k) => {
+                    let k = String::from(k);
+                    m.mundo.cadena(&k)
+                }
+                None => Valor::INDEFINIDO,
+            }
+        }
         NO_ENUMERAR => {
             let o = arg(m, ll, 0);
             if let Some(forma) = m.mundo.forma(o).filter(|_| m.mundo.es_objeto(o)) {

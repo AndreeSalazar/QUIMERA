@@ -76,20 +76,9 @@
       if (a === b) return a !== 0 || 1 / a === 1 / b;
       return a !== a && b !== b;
     },
-    // Sin accesores en la VM: un `get` se llama una vez al definir y se guarda su valor.
-    defineProperty: function (o, k, d) {
-      if (d == null) throw new TypeError('defineProperty necesita un descriptor');
-      if ('value' in d) o[k] = d.value;
-      else if (typeof d.get === 'function') o[k] = d.get.call(o);
-      return o;
-    },
     defineProperties: function (o, ds) {
       Object.keys(ds).forEach(function (k) { Object.defineProperty(o, k, ds[k]); });
       return o;
-    },
-    getOwnPropertyDescriptor: function (o, k) {
-      if (!Object.prototype.hasOwnProperty.call(o, k)) return undefined;
-      return { value: o[k], writable: true, enumerable: true, configurable: true };
     }
   });
 
@@ -103,6 +92,8 @@
     if (typeof x === 'string') return x.split('');
     var lista = x['\u0001lista'];
     if (typeof lista === 'function') return lista.call(x);
+    var iterar = x[Symbol.iterator];
+    if (typeof iterar === 'function') x = iterar.call(x);
     if (typeof x.next === 'function') {
       var r = [], paso;
       while (!(paso = x.next()).done) r.push(paso.value);
@@ -127,6 +118,7 @@
     },
     '\u0001lista': function () { return this['\u0001elementos'].slice(this['\u0001i']); }
   });
+  Iterador.prototype[Symbol.iterator] = function () { return this; };
   ocultar.push(Iterador.prototype);
 
   definir(Array, {
@@ -399,6 +391,11 @@
     }
   });
   Set.prototype.keys = Set.prototype.values;
+  // Lo iterable lo dice Symbol.iterator (las librerías lo miran para saber si algo se recorre).
+  Map.prototype[Symbol.iterator] = Map.prototype.entries;
+  Set.prototype[Symbol.iterator] = Set.prototype.values;
+  Array.prototype[Symbol.iterator] = Array.prototype.values;
+  String.prototype[Symbol.iterator] = function () { return new Iterador(String(this).split('')); };
 
   // Débiles solo de nombre: guardan sus claves vivas (falta un GC con efemérides).
   function WeakMap() {
