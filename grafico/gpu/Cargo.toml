@@ -1,0 +1,20 @@
+[package]
+name = "quimera-gpu"
+description = "GPU de QUIMERA con wgpu: una sola tubería que dibuja cuadros de color y letras desde un atlas."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[package.metadata.quimera]
+nivel = 2
+capa = "grafico"
+no_std = false
+externos = ["wgpu"]
+
+[dependencies]
+wgpu = "=24.0.5"
+
+[lints]
+workspace = true

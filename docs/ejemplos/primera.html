@@ -27,8 +27,9 @@
   propias piezas: el <i>analizador de HTML</i>, el de <i>CSS</i>, la <i>cascada de estilos</i>
   y la <i>maquetación</i>. Ninguna es de Chromium, Firefox ni Servo.</p>
 
-  <div class="nota">Por ahora el texto se mide con anchos aproximados: las fuentes de verdad
-  llegarán con <code>quimera-texto</code>, y la ventana con <b>wgpu</b>.</div>
+  <div class="nota">En la ventana, esta página se pinta con <b>wgpu</b> y las letras salen de
+  las fuentes del sistema con <code>quimera-texto</code>: la maquetación las mide con las
+  mismas medidas con que se dibujan.</div>
 
   <h2>Lo que ya funciona</h2>
   <ul>
@@ -36,13 +37,14 @@
     <li>HTML: el mismo árbol que html5ever en 5.000 páginas reales.</li>
     <li>CSS: selectores, especificidad, colores, <code>@media</code>.</li>
     <li>Maquetación: bloques, márgenes que colapsan y texto en líneas.</li>
+    <li>Ventana: wgpu, fuentes de verdad, desplazamiento y redimensionado.</li>
   </ul>
 
   <h2>Siguiente</h2>
   <ol>
-    <li>Fuentes de verdad.</li>
-    <li>Una ventana con wgpu.</li>
-    <li>Red, pestañas e interfaz con VERX.</li>
+    <li>Red: abrir páginas por HTTP y HTTPS.</li>
+    <li><code>float</code> y <code>flex</code>, lo que más usan las páginas reales.</li>
+    <li>Pestañas e interfaz con VERX.</li>
   </ol>
 
   <pre>let doc = quimera_html::analizar(html);

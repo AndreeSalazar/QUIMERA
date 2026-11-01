@@ -1,0 +1,26 @@
+[package]
+name = "quimera-pintar"
+description = "Pintado de QUIMERA: la lista de dibujo de la maquetación → cuadros para la GPU, con el atlas de letras."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[package.metadata.quimera]
+nivel = 10
+capa = "grafico"
+no_std = false
+externos = []
+
+[dependencies]
+quimera-estilo.workspace = true
+quimera-maquetacion.workspace = true
+quimera-texto.workspace = true
+quimera-gpu.workspace = true
+
+[dev-dependencies]
+quimera-html.workspace = true
+
+[lints]
+workspace = true

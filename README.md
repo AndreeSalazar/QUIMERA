@@ -19,6 +19,10 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 8 pruebas |
 | `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas → lista de dibujo | ✅ 6 pruebas |
 | `herramientas/ver` → `quimera-ver` | 100 | Una página → imagen SVG: [la primera página dibujada por QUIMERA](docs/ejemplos/primera.svg) | ✅ |
+| `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux): medir, interletraje, rasterizar, reserva para símbolos ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 1 prueba |
+| `grafico/gpu` → `quimera-gpu` | 2 | wgpu: una tubería que dibuja cuadros de color y letras del atlas en una pasada; captura sin ventana | ✅ 1 prueba |
+| `grafico/pintar` → `quimera-pintar` | 10 | Lista de dibujo → cuadros, atlas de letras, medidas reales para la maquetación | ✅ 2 pruebas |
+| `navegador/ventana` → `quimera-ventana` | 12 | La ventana (winit): abre una página, la dibuja con wgpu, se desplaza y se redimensiona | ✅ 1 prueba |
 | `bancos/frontend` → `quimera-banco-frontend` | 99 | Compara el frontend con el parser de Boa | ✅ 1 prueba |
 | `bancos/web` → `quimera-banco-web` | 99 | Compara `quimera-html` con html5ever en páginas reales | ✅ |
 | `bancos/vm` → `quimera-banco-vm` | 99 | Compara la VM con boa_engine y comprueba RegExp contra Boa | ✅ 1 prueba |
