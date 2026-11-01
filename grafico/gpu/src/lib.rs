@@ -8,7 +8,12 @@
 //! No conoce la ventana: recibe cualquier cosa que wgpu acepte como superficie
 //! (`Arc<winit::window::Window>`, por ejemplo).
 
+mod imagen;
+
+use imagen::{disposicion_imagen, premultiplicar, reducir, textura_imagen};
 use std::borrow::Cow;
+use std::collections::HashMap;
+use std::ops::Range;
 use wgpu::util::DeviceExt;
 
 /// Un rectángulo que dibujar, en píxeles de la superficie.
@@ -26,6 +31,8 @@ pub struct Cuadro {
     pub color: [f32; 4],
     /// Si es una letra: su rectángulo en el atlas (u0, v0, u1, v1, de 0 a 1).
     pub letra: Option<[f32; 4]>,
+    /// Si es una imagen: su número ([`Gpu::subir_imagen`]); se dibuja entera en el cuadro.
+    pub imagen: Option<u32>,
 }
 
 /// Un vértice tal como lo lee el sombreador.
@@ -55,11 +62,12 @@ impl Vertice {
 /// Los seis vértices (dos triángulos) de un cuadro; los `fijos` no se desplazan.
 fn vertices(c: &Cuadro, v: &mut Vec<Vertice>, fijo: bool) {
     let (x0, y0, x1, y1) = (c.x, c.y, c.x + c.ancho, c.y + c.alto);
-    let ([u0, v0, u1, v1], modo) = match c.letra {
-        Some(uv) => (uv, 1.0),
-        None => ([0.0; 4], 0.0),
+    let ([u0, v0, u1, v1], modo) = match (c.letra, c.imagen) {
+        (Some(uv), _) => (uv, 1.0),
+        (None, Some(_)) => ([0.0, 0.0, 1.0, 1.0], 2.0),
+        (None, None) => ([0.0; 4], 0.0),
     };
-    let modo = if fijo { modo + 2.0 } else { modo };
+    let modo = if fijo { modo + 4.0 } else { modo };
     let p = |x, y, u, w| Vertice { pos: [x, y], uv: [u, w], color: c.color, modo };
     v.extend_from_slice(&[
         p(x0, y0, u0, v0),
@@ -83,8 +91,15 @@ pub struct Gpu {
     grupo: wgpu::BindGroup,
     atlas: wgpu::Texture,
     tam_atlas: u32,
+    disposicion_imagen: wgpu::BindGroupLayout,
+    muestreo_imagen: wgpu::Sampler,
+    /// Una textura blanca de 1×1 para lo que no es imagen.
+    blanca: wgpu::BindGroup,
+    /// Las imágenes subidas, por su número.
+    imagenes: HashMap<u32, (wgpu::Texture, wgpu::BindGroup)>,
     vertices: Option<wgpu::Buffer>,
-    cuantos: u32,
+    /// Trozos seguidos de vértices con la misma imagen (o ninguna): se cambia de textura entre ellos.
+    tramos: Vec<(Option<u32>, Range<u32>)>,
     /// Lo que no se desplaza (la barra del navegador), dibujado encima.
     fijos: Option<wgpu::Buffer>,
     cuantos_fijos: u32,
@@ -138,23 +153,7 @@ impl Gpu {
             desired_maximum_frame_latency: 2,
         };
         superficie.configure(&dispositivo, &config);
-        let (tuberia, uniforme, grupo, atlas) = Self::tuberia(&dispositivo, formato, tam_atlas);
-        let superficie = Some(superficie);
-        Ok(Gpu {
-            superficie,
-            dispositivo,
-            cola,
-            config,
-            tuberia,
-            uniforme,
-            grupo,
-            atlas,
-            tam_atlas,
-            vertices: None,
-            cuantos: 0,
-            fijos: None,
-            cuantos_fijos: 0,
-        })
+        Ok(Self::armar(Some(superficie), dispositivo, cola, config, tam_atlas))
     }
 
     /// Una GPU sin ventana que dibuja en una imagen de `ancho × alto` ([`Gpu::capturar`]).
@@ -185,9 +184,39 @@ impl Gpu {
             view_formats: Vec::new(),
             desired_maximum_frame_latency: 2,
         };
-        let (tuberia, uniforme, grupo, atlas) = Self::tuberia(&dispositivo, formato, tam_atlas);
-        Ok(Gpu {
-            superficie: None,
+        Ok(Self::armar(None, dispositivo, cola, config, tam_atlas))
+    }
+
+    /// Todo lo que dibuja: la tubería, el atlas, las texturas de imagen.
+    fn armar(
+        superficie: Option<wgpu::Surface<'static>>,
+        dispositivo: wgpu::Device,
+        cola: wgpu::Queue,
+        config: wgpu::SurfaceConfiguration,
+        tam_atlas: u32,
+    ) -> Gpu {
+        let d = &dispositivo;
+        let (uniforme, atlas, disposicion, grupo) = Self::recursos(d, tam_atlas);
+        let disposicion_imagen = disposicion_imagen(d);
+        let muestreo_imagen = d.create_sampler(&wgpu::SamplerDescriptor {
+            label: Some("imágenes"),
+            mag_filter: wgpu::FilterMode::Linear,
+            min_filter: wgpu::FilterMode::Linear,
+            ..Default::default()
+        });
+        let sombreador = d.create_shader_module(wgpu::ShaderModuleDescriptor {
+            label: Some("cuadros"),
+            source: wgpu::ShaderSource::Wgsl(Cow::Borrowed(include_str!("cuadros.wgsl"))),
+        });
+        let diseno = d.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
+            label: Some("cuadros"),
+            bind_group_layouts: &[&disposicion, &disposicion_imagen],
+            push_constant_ranges: &[],
+        });
+        let tuberia = Self::crear_tuberia(d, &sombreador, &diseno, config.format);
+        let blanca = textura_imagen(d, &cola, (&disposicion_imagen, &muestreo_imagen), (1, 1), &[255; 4]).1;
+        Gpu {
+            superficie,
             dispositivo,
             cola,
             config,
@@ -196,30 +225,15 @@ impl Gpu {
             grupo,
             atlas,
             tam_atlas,
+            disposicion_imagen,
+            muestreo_imagen,
+            blanca,
+            imagenes: HashMap::new(),
             vertices: None,
-            cuantos: 0,
+            tramos: Vec::new(),
             fijos: None,
             cuantos_fijos: 0,
-        })
-    }
-
-    fn tuberia(
-        d: &wgpu::Device,
-        formato: wgpu::TextureFormat,
-        tam_atlas: u32,
-    ) -> (wgpu::RenderPipeline, wgpu::Buffer, wgpu::BindGroup, wgpu::Texture) {
-        let (uniforme, atlas, disposicion, grupo) = Self::recursos(d, tam_atlas);
-        let sombreador = d.create_shader_module(wgpu::ShaderModuleDescriptor {
-            label: Some("cuadros"),
-            source: wgpu::ShaderSource::Wgsl(Cow::Borrowed(include_str!("cuadros.wgsl"))),
-        });
-        let diseno = d.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
-            label: Some("cuadros"),
-            bind_group_layouts: &[&disposicion],
-            push_constant_ranges: &[],
-        });
-        let tuberia = Self::crear_tuberia(d, &sombreador, &diseno, formato);
-        (tuberia, uniforme, grupo, atlas)
+        }
     }
 
     /// El uniforme, el atlas y cómo los ve el sombreador.
@@ -360,8 +374,31 @@ impl Gpu {
 
     /// Carga los cuadros de la página (una vez por maquetación).
     pub fn cargar(&mut self, cuadros: &[Cuadro]) {
-        let (b, n) = self.bufer(cuadros, false);
-        (self.vertices, self.cuantos) = (b, n);
+        self.vertices = self.bufer(cuadros, false).0;
+        self.tramos = tramos(cuadros);
+    }
+
+    /// Sube una imagen RGBA (sin premultiplicar) con el número `id`. Si es más grande de lo que
+    /// admite la GPU, se reduce antes.
+    pub fn subir_imagen(&mut self, id: u32, ancho: u32, alto: u32, rgba: &[u8]) {
+        if ancho == 0 || alto == 0 || rgba.len() < (ancho as usize * alto as usize * 4) {
+            return;
+        }
+        let max = self.dispositivo.limits().max_texture_dimension_2d.max(1);
+        let ((w, h), mut pixeles) = if ancho > max || alto > max {
+            reducir(ancho, alto, rgba, max)
+        } else {
+            ((ancho, alto), rgba[..ancho as usize * alto as usize * 4].to_vec())
+        };
+        premultiplicar(&mut pixeles);
+        let par = (&self.disposicion_imagen, &self.muestreo_imagen);
+        let t = textura_imagen(&self.dispositivo, &self.cola, par, (w, h), &pixeles);
+        self.imagenes.insert(id, t);
+    }
+
+    /// Olvida todas las imágenes (otra página).
+    pub fn olvidar_imagenes(&mut self) {
+        self.imagenes.clear();
     }
 
     /// Carga los cuadros fijos (la barra), que no se desplazan y van encima.
@@ -430,11 +467,24 @@ impl Gpu {
             });
             pasada.set_pipeline(&self.tuberia);
             pasada.set_bind_group(0, &self.grupo, &[]);
-            for (b, n) in [(&self.vertices, self.cuantos), (&self.fijos, self.cuantos_fijos)] {
-                if let Some(b) = b {
-                    pasada.set_vertex_buffer(0, b.slice(..));
-                    pasada.draw(0..n, 0..1);
+            if let Some(b) = &self.vertices {
+                pasada.set_vertex_buffer(0, b.slice(..));
+                for (imagen, rango) in &self.tramos {
+                    let grupo = match imagen {
+                        None => &self.blanca,
+                        Some(id) => match self.imagenes.get(id) {
+                            Some((_, g)) => g,
+                            None => continue, // aún no subida: no se dibuja
+                        },
+                    };
+                    pasada.set_bind_group(1, grupo, &[]);
+                    pasada.draw(rango.clone(), 0..1);
                 }
+            }
+            if let Some(b) = &self.fijos {
+                pasada.set_bind_group(1, &self.blanca, &[]);
+                pasada.set_vertex_buffer(0, b.slice(..));
+                pasada.draw(0..self.cuantos_fijos, 0..1);
             }
         }
         orden.finish()
@@ -504,6 +554,19 @@ impl Gpu {
     }
 }
 
+/// Los trozos de cuadros seguidos con la misma imagen, en vértices.
+fn tramos(cuadros: &[Cuadro]) -> Vec<(Option<u32>, Range<u32>)> {
+    let mut v: Vec<(Option<u32>, Range<u32>)> = Vec::new();
+    for (i, c) in cuadros.iter().enumerate() {
+        let i = i as u32 * 6;
+        match v.last_mut() {
+            Some((img, r)) if *img == c.imagen => r.end = i + 6,
+            _ => v.push((c.imagen, i..i + 6)),
+        }
+    }
+    v
+}
+
 #[cfg(test)]
 mod pruebas {
     use super::*;
@@ -512,7 +575,15 @@ mod pruebas {
     fn un_cuadro_son_dos_triangulos() {
         let mut v = Vec::new();
         vertices(
-            &Cuadro { x: 10.0, y: 20.0, ancho: 30.0, alto: 40.0, color: [1.0, 0.0, 0.0, 1.0], letra: None },
+            &Cuadro {
+                x: 10.0,
+                y: 20.0,
+                ancho: 30.0,
+                alto: 40.0,
+                color: [1.0, 0.0, 0.0, 1.0],
+                letra: None,
+                imagen: None,
+            },
             &mut v,
             false,
         );
@@ -521,10 +592,25 @@ mod pruebas {
         assert_eq!(Vertice::bytes(&v).len(), 6 * TAM_VERTICE);
         let mut l = Vec::new();
         vertices(
-            &Cuadro { x: 0.0, y: 0.0, ancho: 1.0, alto: 1.0, color: [0.0; 4], letra: Some([0.1, 0.2, 0.3, 0.4]) },
+            &Cuadro {
+                x: 0.0,
+                y: 0.0,
+                ancho: 1.0,
+                alto: 1.0,
+                color: [0.0; 4],
+                letra: Some([0.1, 0.2, 0.3, 0.4]),
+                imagen: None,
+            },
             &mut l,
             true,
         );
-        assert_eq!((l[0].uv, l[4].uv, l[0].modo), ([0.1, 0.2], [0.3, 0.4], 3.0), "letra fija: 1 + 2");
+        assert_eq!((l[0].uv, l[4].uv, l[0].modo), ([0.1, 0.2], [0.3, 0.4], 5.0), "letra fija: 1 + 4");
+    }
+
+    #[test]
+    fn tramos_por_imagen() {
+        let c = |imagen| Cuadro { x: 0.0, y: 0.0, ancho: 1.0, alto: 1.0, color: [0.0; 4], letra: None, imagen };
+        let t = tramos(&[c(None), c(None), c(Some(3)), c(Some(3)), c(None), c(Some(4))]);
+        assert_eq!(t, vec![(None, 0..12), (Some(3), 12..24), (None, 24..30), (Some(4), 30..36)]);
     }
 }

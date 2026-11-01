@@ -140,18 +140,19 @@ impl Pintor {
     }
 
     /// Los cuadros de una maquetación, en píxeles de pantalla (`escala` = píxeles por píxel CSS).
-    pub fn escena(&mut self, m: &Maquetacion, escala: f32) -> Vec<Cuadro> {
-        let cuadros = self.intentar(m, escala);
+    /// `imagen` da el número de textura de cada imagen ya cargada, por su `src`.
+    pub fn escena(&mut self, m: &Maquetacion, escala: f32, imagen: &dyn Fn(&str) -> Option<u32>) -> Vec<Cuadro> {
+        let cuadros = self.intentar(m, escala, imagen);
         if !self.atlas.lleno {
             return cuadros;
         }
         // El atlas se llenó a medias: se vacía y se pinta todo otra vez desde cero.
         self.letras.clear();
         self.atlas.vaciar();
-        self.intentar(m, escala)
+        self.intentar(m, escala, imagen)
     }
 
-    fn intentar(&mut self, m: &Maquetacion, e: f32) -> Vec<Cuadro> {
+    fn intentar(&mut self, m: &Maquetacion, e: f32, imagen: &dyn Fn(&str) -> Option<u32>) -> Vec<Cuadro> {
         let mut v = Vec::with_capacity(m.piezas.len() * 4);
         for p in &m.piezas {
             match p {
@@ -163,26 +164,22 @@ impl Pintor {
                         alto: alto * e,
                         color: rgba(*color),
                         letra: None,
+                        imagen: None,
                     });
                 }
-                Pieza::Imagen { x, y, ancho, alto, .. } => {
-                    // Hasta que se carguen imágenes: un recuadro gris con su borde.
-                    v.push(Cuadro {
-                        x: x * e,
-                        y: y * e,
-                        ancho: ancho * e,
-                        alto: alto * e,
-                        color: [0.6, 0.6, 0.6, 1.0],
-                        letra: None,
-                    });
-                    v.push(Cuadro {
-                        x: x * e + 1.0,
-                        y: y * e + 1.0,
-                        ancho: ancho * e - 2.0,
-                        alto: alto * e - 2.0,
-                        color: [0.93, 0.93, 0.93, 1.0],
-                        letra: None,
-                    });
+                // Una imagen que aún no llegó no se pinta (como en los navegadores: su hueco queda).
+                Pieza::Imagen { x, y, ancho, alto, src } => {
+                    if let Some(id) = imagen(src) {
+                        v.push(Cuadro {
+                            x: x * e,
+                            y: y * e,
+                            ancho: ancho * e,
+                            alto: alto * e,
+                            color: [1.0; 4],
+                            letra: None,
+                            imagen: Some(id),
+                        });
+                    }
                 }
                 // La familia con nombre aún no se carga: se usa la genérica.
                 Pieza::Texto { x, base, texto, tam, color, negrita, cursiva, generica, .. } => {
@@ -234,6 +231,7 @@ impl Pintor {
                 alto: h.alto as f32,
                 color,
                 letra: Some([h.x as f32 / t, h.y as f32 / t, (h.x + h.ancho) as f32 / t, (h.y + h.alto) as f32 / t]),
+                imagen: None,
             });
         }
     }

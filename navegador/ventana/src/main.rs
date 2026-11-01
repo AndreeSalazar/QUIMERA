@@ -16,15 +16,17 @@
 
 mod barra;
 mod historial;
+mod imagenes;
 mod navegador;
 mod pagina;
 mod png;
 
-use navegador::{Llegada, Navegador};
+use imagenes::Imagenes;
+use navegador::{Evento, Navegador};
 use pagina::{Pagina, direccion};
 use quimera_estilo::Opciones;
 use quimera_gpu::Gpu;
-use quimera_maquetacion::maquetar;
+use quimera_maquetacion::maquetar_con_imagenes;
 use quimera_pintar::{Pintor, color_gpu};
 use quimera_red::{Cliente, Url};
 use quimera_texto::Fuentes;
@@ -37,7 +39,7 @@ use winit::window::{Window, WindowId};
 
 const TAM_ATLAS: u32 = 2048;
 
-impl ApplicationHandler<Llegada> for Navegador {
+impl ApplicationHandler<Evento> for Navegador {
     fn resumed(&mut self, bucle: &ActiveEventLoop) {
         if self.abierta.is_some() {
             return;
@@ -62,8 +64,8 @@ impl ApplicationHandler<Llegada> for Navegador {
         }
     }
 
-    fn user_event(&mut self, _bucle: &ActiveEventLoop, llegada: Llegada) {
-        self.llegada(llegada);
+    fn user_event(&mut self, _bucle: &ActiveEventLoop, evento: Evento) {
+        self.evento(evento);
     }
 
     fn window_event(&mut self, bucle: &ActiveEventLoop, _id: WindowId, evento: WindowEvent) {
@@ -105,18 +107,23 @@ impl ApplicationHandler<Llegada> for Navegador {
 fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<usize>) -> Result<(), String> {
     let mut pintor = Pintor::nuevo(Fuentes::del_sistema(), TAM_ATLAS);
     let mut gpu = pollster::block_on(Gpu::sin_ventana(ancho, alto, TAM_ATLAS))?;
-    let cliente = Cliente::nuevo();
+    let cliente = Arc::new(Cliente::nuevo());
     let mut pagina = Pagina::cargar(&cliente, url);
     let (w, h) = (ancho as f32, alto as f32 - barra::ALTO);
-    let mut m = maquetar_pagina(&pagina, &pintor, w, h);
+    let mut imagenes = cargar_imagenes(&cliente, &pagina);
+    let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes);
     if let Some(n) = seguir {
         let enlace = m.enlaces.get(n).ok_or_else(|| format!("la página tiene {} enlaces", m.enlaces.len()))?;
         let destino = pagina.base.unir(&enlace.href).map_err(|e| e.to_string())?;
         eprintln!("enlace {n}: {} → {destino}", enlace.href);
         pagina = Pagina::cargar(&cliente, &destino);
-        m = maquetar_pagina(&pagina, &pintor, w, h);
+        imagenes = cargar_imagenes(&cliente, &pagina);
+        m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes);
     }
-    gpu.cargar(&pintor.escena(&m, 1.0));
+    gpu.cargar(&pintor.escena(&m, 1.0, &|s| imagenes.id(s)));
+    for (id, w, h, rgba) in imagenes.por_subir() {
+        gpu.subir_imagen(id, w, h, &rgba);
+    }
     let url_texto = pagina.url.to_string();
     let vista = barra::Vista {
         ancho: w,
@@ -133,15 +140,47 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<u
     }
     let rgba = gpu.capturar(color_gpu(m.fondo), -barra::ALTO)?;
     std::fs::write(salida, png::codificar(ancho, alto, &rgba)).map_err(|e| format!("{salida}: {e}"))?;
-    eprintln!("{}: red {:.0} ms · {} enlaces → {salida} ({ancho}×{alto})", pagina.url, pagina.ms_red, m.enlaces.len());
+    eprintln!(
+        "{}: red {:.0} ms · {} enlaces, {} imágenes → {salida} ({ancho}×{alto})",
+        pagina.url,
+        pagina.ms_red,
+        m.enlaces.len(),
+        imagenes.total()
+    );
     Ok(())
 }
 
-fn maquetar_pagina(pagina: &Pagina, pintor: &Pintor, ancho: f32, alto: f32) -> quimera_maquetacion::Maquetacion {
+/// Todas las imágenes de la página, esperando a que lleguen (para capturar).
+fn cargar_imagenes(cliente: &Arc<Cliente>, pagina: &Pagina) -> Imagenes {
+    let fuentes = imagenes::fuentes(&pagina.documento());
+    let total = fuentes.len();
+    let (tx, rx) = std::sync::mpsc::channel();
+    let tx = std::sync::Mutex::new(tx);
+    imagenes::descargar_todas(cliente.clone(), pagina.base.clone(), fuentes, move |src, r| {
+        if let Ok(tx) = tx.lock() {
+            let _ = tx.send((src, r));
+        }
+    });
+    let mut imagenes = Imagenes::default();
+    for (src, r) in rx.iter().take(total) {
+        match r {
+            Ok(i) => imagenes.llegada(src, i),
+            Err(e) => eprintln!("imagen {src}: {e}"),
+        }
+    }
+    imagenes
+}
+
+fn maquetar_pagina(
+    pagina: &Pagina,
+    pintor: &Pintor,
+    (ancho, alto): (f32, f32),
+    imagenes: &Imagenes,
+) -> quimera_maquetacion::Maquetacion {
     let doc = pagina.documento();
     let externa = |href: &str| pagina.hoja(href);
     let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
-    maquetar(&doc, &estilos, &pintor.medidor(), ancho, alto)
+    maquetar_con_imagenes(&doc, &estilos, &pintor.medidor(), (ancho, alto), &|s| imagenes.tam(s))
 }
 
 fn main() {
@@ -164,7 +203,7 @@ fn main() {
     if fuentes.total() == 0 {
         eprintln!("aviso: no se encontraron fuentes del sistema; el texto no se verá");
     }
-    let bucle = match EventLoop::<Llegada>::with_user_event().build() {
+    let bucle = match EventLoop::<Evento>::with_user_event().build() {
         Ok(b) => b,
         Err(e) => {
             eprintln!("no se puede crear el bucle de eventos: {e}");

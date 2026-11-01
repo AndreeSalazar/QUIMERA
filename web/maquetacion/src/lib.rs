@@ -25,6 +25,7 @@ mod flex;
 mod intrinseco;
 mod linea;
 mod pintura;
+mod reemplazado;
 mod texto;
 
 pub use pintura::{Enlace, Maquetacion, Pieza};
@@ -33,9 +34,20 @@ pub use texto::{Aproximado, Fuente, MedirTexto};
 use quimera_estilo::{Color, Estilos};
 use quimera_html::Documento;
 
-/// Maqueta el documento en una ventana de `ancho` × `alto` píxeles CSS.
+/// Maqueta el documento en una ventana de `ancho` × `alto` píxeles CSS (sin imágenes cargadas).
 pub fn maquetar(doc: &Documento, estilos: &Estilos, medir: &dyn MedirTexto, ancho: f32, alto: f32) -> Maquetacion {
-    let mut m = bloque::Maquetador::nuevo(doc, estilos, medir);
+    maquetar_con_imagenes(doc, estilos, medir, (ancho, alto), &|_| None)
+}
+
+/// Como [`maquetar`], sabiendo el tamaño propio de las imágenes ya descargadas (por su `src`).
+pub fn maquetar_con_imagenes(
+    doc: &Documento,
+    estilos: &Estilos,
+    medir: &dyn MedirTexto,
+    (ancho, alto): (f32, f32),
+    imagenes: &dyn Fn(&str) -> Option<(u32, u32)>,
+) -> Maquetacion {
+    let mut m = bloque::Maquetador::nuevo(doc, estilos, medir, imagenes);
     let Some(html) = doc.buscar("html") else {
         return Maquetacion { ancho, alto, fondo: Color::BLANCO, ..Maquetacion::default() };
     };

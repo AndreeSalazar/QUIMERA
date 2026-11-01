@@ -159,7 +159,12 @@ fn estilo_de(doc: &Documento, id: NodoId, padre: &Estilo, ind: &Indice<'_>, op: 
     // (fuerza, declaración): la fuerza ordena orígenes e !important; el orden estable hace el resto.
     let en_linea =
         doc.elemento(id).and_then(|e| e.atributo("style")).map(quimera_css::declaraciones).unwrap_or_default();
+    let pistas = pistas_de_atributos(doc, id);
     let mut todas: Vec<(u8, &Declaracion)> = Vec::new();
+    // Las pistas de los atributos van primero entre las de la página: cualquier regla les gana.
+    for d in &pistas {
+        todas.push((1, d));
+    }
     for en in &entradas {
         for d in en.declaraciones {
             todas.push((fuerza(en.origen, d.importante), d));
@@ -178,6 +183,34 @@ fn estilo_de(doc: &Documento, id: NodoId, padre: &Estilo, ind: &Indice<'_>, op: 
         }
     }
     calcular_valores(padre, &ganadoras, op, letra_raiz)
+}
+
+/// Las «pistas de presentación» del estándar de HTML: los atributos `width` y `height` de
+/// `<img>` (y de otros reemplazados) y de las tablas cuentan como declaraciones de la página
+/// con la menor fuerza. Así `img { height: auto }` gana al atributo y la imagen no se deforma.
+fn pistas_de_atributos(doc: &Documento, id: NodoId) -> Vec<Declaracion> {
+    let Some(e) = doc.elemento(id) else { return Vec::new() };
+    if !matches!(
+        e.nombre.as_str(),
+        "img" | "video" | "canvas" | "iframe" | "embed" | "object" | "table" | "td" | "th" | "col"
+    ) {
+        return Vec::new();
+    }
+    let mut v = Vec::new();
+    for prop in ["width", "height"] {
+        let Some(t) = e.atributo(prop).map(str::trim) else { continue };
+        let (numero, por_ciento) = match t.strip_suffix('%') {
+            Some(n) => (n, true),
+            None => (t.trim_end_matches("px"), false),
+        };
+        let Ok(n) = numero.trim().parse::<f64>() else { continue };
+        if n < 0.0 {
+            continue;
+        }
+        let valor = if por_ciento { Token::Porcentaje(n) } else { Token::Dimension(n, String::from("px")) };
+        v.push(Declaracion { propiedad: String::from(prop), valor: alloc::vec![valor], importante: false });
+    }
+    v
 }
 
 /// 0 navegador, 1 página, 2 página !important, 3 navegador !important.

@@ -38,6 +38,10 @@ pub(crate) struct Maquetador<'a> {
     pub ancho_libre: Option<NodoId>,
     /// Alto de la caja con borde impuesto a este elemento (`align-items: stretch`, columnas).
     pub alto_forzado: Option<(NodoId, f32)>,
+    /// El tamaño propio de cada imagen por su `src` (si ya se descargó).
+    pub imagenes: &'a dyn Fn(&str) -> Option<(u32, u32)>,
+    /// Ancho del contenido del bloque que se está llenando (para los `%` de las imágenes en línea).
+    pub ancho_actual: f32,
 }
 
 /// Lo que un bloque maquetado devuelve a su padre.
@@ -58,7 +62,12 @@ pub(crate) enum Clase {
 }
 
 impl<'a> Maquetador<'a> {
-    pub(crate) fn nuevo(doc: &'a Documento, estilos: &'a Estilos, medir: &'a dyn MedirTexto) -> Maquetador<'a> {
+    pub(crate) fn nuevo(
+        doc: &'a Documento,
+        estilos: &'a Estilos,
+        medir: &'a dyn MedirTexto,
+        imagenes: &'a dyn Fn(&str) -> Option<(u32, u32)>,
+    ) -> Maquetador<'a> {
         Maquetador {
             doc,
             estilos,
@@ -73,6 +82,8 @@ impl<'a> Maquetador<'a> {
             intrinsecos: alloc::vec![None; doc.total()],
             ancho_libre: None,
             alto_forzado: None,
+            imagenes,
+            ancho_actual: 0.0,
         }
     }
 
@@ -147,6 +158,9 @@ impl<'a> Maquetador<'a> {
     /// `ancho_contenedor`. Su margen superior ya lo ha puesto quien llama.
     pub(crate) fn bloque(&mut self, id: NodoId, x: f32, y: f32, ancho_contenedor: f32) -> Hecho {
         let Some(e) = self.estilo(id) else { return Hecho { alto: 0.0, margen_inferior: 0.0, primera_base: None } };
+        if crate::reemplazado::es_imagen(self, id) {
+            return self.bloque_imagen(id, e, (x, y), ancho_contenedor);
+        }
         let px = |m: Medida| m.px(ancho_contenedor, 0.0);
         let (bt, br, bb, bl) = (e.borde[0].ocupa(), e.borde[1].ocupa(), e.borde[2].ocupa(), e.borde[3].ocupa());
         let (pt, pr, pb, pl) = (px(e.relleno[0]), px(e.relleno[1]), px(e.relleno[2]), px(e.relleno[3]));
@@ -231,6 +245,7 @@ impl<'a> Maquetador<'a> {
         colapsa_arriba: bool,
     ) -> (f32, f32, Option<f32>) {
         let hijos = self.doc.nodo(id).hijos.clone();
+        let ancho_previo = core::mem::replace(&mut self.ancho_actual, ancho);
         let mut cursor = cy;
         let mut abierto: Option<f32> = None; // margen inferior del último bloque, aún sin poner
         let mut primero = true;
@@ -268,6 +283,7 @@ impl<'a> Maquetador<'a> {
             primera_base = primera_base.or(base);
             cursor += alto;
         }
+        self.ancho_actual = ancho_previo;
         (cursor - cy, abierto.unwrap_or(0.0), primera_base)
     }
 
@@ -304,12 +320,7 @@ impl<'a> Maquetador<'a> {
                         *ultimo_espacio = true;
                     }
                     "img" => {
-                        let tam = |atributo: &str, m: Medida| match m {
-                            Medida::Px(v) => Some(v),
-                            _ => el.atributo(atributo).and_then(|v| v.trim_end_matches("px").parse().ok()),
-                        };
-                        let (ancho, alto) =
-                            (tam("width", e.ancho).unwrap_or(0.0), tam("height", e.alto).unwrap_or(0.0));
+                        let (ancho, alto) = self.tam_imagen(id, e, self.ancho_actual);
                         let src = String::from(el.atributo("src").unwrap_or(""));
                         if ancho > 0.0 && alto > 0.0 {
                             items.push(Item::Imagen { ancho, alto, src, estilo: e, enlace: self.enlace });

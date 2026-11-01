@@ -21,6 +21,7 @@ quimera-pintar.workspace = true
 quimera-texto.workspace = true
 quimera-red.workspace = true
 quimera-gpu.workspace = true
+quimera-imagen.workspace = true
 winit = "=0.30.12"
 pollster = "=0.4.0"
 

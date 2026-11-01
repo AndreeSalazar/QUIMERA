@@ -73,6 +73,10 @@ impl<'a> Maquetador<'a> {
             return (0.0, 0.0);
         }
         let extras = extras_horizontales(e);
+        if crate::reemplazado::es_imagen(self, id) {
+            let w = self.tam_imagen(id, e, 0.0).0 + extras;
+            return (w, w);
+        }
         if let Medida::Px(w) = e.ancho {
             return (w + extras, w + extras);
         }

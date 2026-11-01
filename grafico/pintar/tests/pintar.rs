@@ -19,16 +19,18 @@ fn la_pagina_se_vuelve_cuadros_y_letras() {
     let doc = quimera_html::analizar(pagina());
     let estilos = calcular(&doc, &Opciones { ancho: 800.0, alto: 600.0 });
     let m = maquetar(&doc, &estilos, &pintor.medidor(), 800.0, 600.0);
-    let cuadros = pintor.escena(&m, 2.0);
+    let cuadros = pintor.escena(&m, 2.0, &|_| Some(7));
     let letras = cuadros.iter().filter(|c| c.letra.is_some()).count();
     assert_eq!(letras, "Holamundomundo".len(), "una letra por carácter visible (los espacios no tienen píxeles)");
     assert!(cuadros.iter().any(|c| c.letra.is_some() && c.color == [0.8, 0.0, 0.0, 1.0]), "el texto rojo");
-    assert!(cuadros.iter().any(|c| c.letra.is_none() && c.ancho == 40.0 && c.alto == 20.0), "la imagen escalada ×2");
+    assert!(cuadros.iter().any(|c| c.imagen == Some(7) && c.ancho == 40.0 && c.alto == 20.0), "la imagen escalada ×2");
+    let sin_cargar = pintor.escena(&m, 2.0, &|_| None);
+    assert!(sin_cargar.iter().all(|c| c.imagen.is_none()), "una imagen que no llegó no se pinta");
     let (_, desde, hasta) = pintor.atlas_cambiado().expect("el atlas tiene letras nuevas");
     assert!(hasta > desde);
     assert!(pintor.atlas_cambiado().is_none(), "ya se entregó");
     // La misma página otra vez: las letras ya están en el atlas.
-    let otra = pintor.escena(&m, 2.0);
+    let otra = pintor.escena(&m, 2.0, &|_| Some(7));
     assert_eq!(otra.len(), cuadros.len());
     assert!(pintor.atlas_cambiado().is_none(), "nada nuevo que subir");
 }
@@ -43,6 +45,6 @@ fn un_atlas_diminuto_se_vacia_y_vuelve_a_llenar() {
     let doc = quimera_html::analizar("<p style='font-size:30px'>abcdefghijklmnopqrstuvwxyz</p>");
     let estilos = calcular(&doc, &Opciones { ancho: 800.0, alto: 600.0 });
     let m = maquetar(&doc, &estilos, &pintor.medidor(), 800.0, 600.0);
-    let cuadros = pintor.escena(&m, 1.0);
+    let cuadros = pintor.escena(&m, 1.0, &|_| None);
     assert!(!cuadros.is_empty(), "no se rompe aunque no quepa todo");
 }

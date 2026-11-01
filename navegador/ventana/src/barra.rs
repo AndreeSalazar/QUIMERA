@@ -107,7 +107,7 @@ impl Barra {
         let e = v.escala;
         let mut c = Vec::new();
         let rect = |c: &mut Vec<Cuadro>, x: f32, y: f32, w: f32, h: f32, color: [f32; 4]| {
-            c.push(Cuadro { x: x * e, y: y * e, ancho: w * e, alto: h * e, color, letra: None });
+            c.push(Cuadro { x: x * e, y: y * e, ancho: w * e, alto: h * e, color, letra: None, imagen: None });
         };
         rect(&mut c, 0.0, 0.0, v.ancho / e, ALTO, FONDO);
         rect(&mut c, 0.0, ALTO - 1.0, v.ancho / e, 1.0, LINEA);
@@ -132,7 +132,7 @@ impl Barra {
         let e = v.escala;
         let (x, y, w, h) = (CAMPO_X * e, 7.0 * e, v.ancho - (CAMPO_X + 12.0) * e, 30.0 * e);
         let borde = if self.editando { ACENTO } else { LINEA };
-        c.push(Cuadro { x, y, ancho: w, alto: h, color: borde, letra: None });
+        c.push(Cuadro { x, y, ancho: w, alto: h, color: borde, letra: None, imagen: None });
         let grosor = if self.editando { 2.0 * e } else { e };
         c.push(Cuadro {
             x: x + grosor,
@@ -141,6 +141,7 @@ impl Barra {
             alto: h - 2.0 * grosor,
             color: [1.0; 4],
             letra: None,
+            imagen: None,
         });
         let tam = 14.0 * e;
         let margen = 10.0 * e;
@@ -157,6 +158,7 @@ impl Barra {
                 alto: h - 12.0 * e,
                 color: [0.8, 0.72, 0.9, 1.0],
                 letra: None,
+                imagen: None,
             });
         }
         p.rotulo(c, &visible, tam, false, (x + margen, y + 20.0 * e), TEXTO);
@@ -169,6 +171,7 @@ impl Barra {
                 alto: h - 12.0 * e,
                 color: ACENTO,
                 letra: None,
+                imagen: None,
             });
         }
     }
@@ -182,8 +185,8 @@ fn estado_abajo(p: &mut Pintor, v: &Vista<'_>, c: &mut Vec<Cuadro>, estado: &str
     let w = p.ancho_rotulo(&texto, tam, false) + 16.0 * e;
     let h = 22.0 * e;
     let y = v.alto - h;
-    c.push(Cuadro { x: 0.0, y: y - e, ancho: w + e, alto: h + e, color: LINEA, letra: None });
-    c.push(Cuadro { x: 0.0, y, ancho: w, alto: h, color: [0.97, 0.97, 0.98, 1.0], letra: None });
+    c.push(Cuadro { x: 0.0, y: y - e, ancho: w + e, alto: h + e, color: LINEA, letra: None, imagen: None });
+    c.push(Cuadro { x: 0.0, y, ancho: w, alto: h, color: [0.97, 0.97, 0.98, 1.0], letra: None, imagen: None });
     p.rotulo(c, &texto, tam, false, (8.0 * e, y + 15.0 * e), TEXTO);
 }
 

@@ -12,6 +12,7 @@ members = [
     "web/estilo",
     "web/maquetacion",
     "grafico/texto",
+    "grafico/imagen",
     "grafico/gpu",
     "grafico/pintar",
     "navegador/ventana",
@@ -20,6 +21,7 @@ members = [
     "bancos/frontend",
     "bancos/vm",
     "bancos/web",
+    "bancos/imagen",
     "herramientas/guardianes",
     "herramientas/ver",
 ]
@@ -43,6 +45,7 @@ quimera-css = { path = "web/css" }
 quimera-estilo = { path = "web/estilo" }
 quimera-maquetacion = { path = "web/maquetacion" }
 quimera-texto = { path = "grafico/texto" }
+quimera-imagen = { path = "grafico/imagen" }
 quimera-gpu = { path = "grafico/gpu" }
 quimera-pintar = { path = "grafico/pintar" }
 quimera-red = { path = "red/red" }

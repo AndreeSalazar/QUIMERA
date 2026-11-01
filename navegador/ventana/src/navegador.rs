@@ -7,10 +7,12 @@
 
 use crate::barra::{self, Barra, Vista, Zona};
 use crate::historial::Historial;
+use crate::imagenes::{self, Imagenes};
 use crate::pagina::{Pagina, direccion_escrita};
 use quimera_estilo::Opciones;
 use quimera_gpu::Gpu;
-use quimera_maquetacion::{Maquetacion, maquetar};
+use quimera_imagen::Imagen;
+use quimera_maquetacion::{Maquetacion, maquetar_con_imagenes};
 use quimera_pintar::{Pintor, color_gpu};
 use quimera_red::{Cliente, Url};
 use std::sync::Arc;
@@ -20,10 +22,12 @@ use winit::event_loop::EventLoopProxy;
 use winit::keyboard::{Key, ModifiersState, NamedKey};
 use winit::window::{CursorIcon, Window};
 
-/// Una página que terminó de cargar en su hilo.
-pub struct Llegada {
-    id: u64,
-    pagina: Pagina,
+/// Lo que llega de los hilos de red al bucle de eventos.
+pub enum Evento {
+    /// Una página que terminó de cargar.
+    Pagina { id: u64, pagina: Box<Pagina> },
+    /// Una imagen de la página `id` (descargada y decodificada, o por qué no).
+    Imagen { id: u64, src: String, imagen: Result<Imagen, String> },
 }
 
 /// Lo que existe mientras la ventana está abierta.
@@ -39,7 +43,11 @@ pub struct Abierta {
 
 pub struct Navegador {
     cliente: Arc<Cliente>,
-    proxy: EventLoopProxy<Llegada>,
+    proxy: EventLoopProxy<Evento>,
+    /// Las imágenes de la página actual.
+    imagenes: Imagenes,
+    /// Llegaron imágenes desde la última maquetación: se maqueta otra vez antes de dibujar.
+    imagenes_nuevas: bool,
     /// La página que se ve o se está pidiendo.
     pub url: Url,
     pagina: Option<Pagina>,
@@ -57,10 +65,12 @@ pub struct Navegador {
 }
 
 impl Navegador {
-    pub fn nuevo(url: Url, pintor: Pintor, proxy: EventLoopProxy<Llegada>) -> Navegador {
+    pub fn nuevo(url: Url, pintor: Pintor, proxy: EventLoopProxy<Evento>) -> Navegador {
         Navegador {
             cliente: Arc::new(Cliente::nuevo()),
             proxy,
+            imagenes: Imagenes::default(),
+            imagenes_nuevas: false,
             url,
             pagina: None,
             historial: Historial::default(),
@@ -102,22 +112,47 @@ impl Navegador {
         let (id, cliente, proxy) = (self.id_carga, self.cliente.clone(), self.proxy.clone());
         std::thread::spawn(move || {
             let pagina = Pagina::cargar(&cliente, &url);
-            let _ = proxy.send_event(Llegada { id, pagina });
+            let _ = proxy.send_event(Evento::Pagina { id, pagina: Box::new(pagina) });
         });
         self.pintar_barra();
     }
 
-    /// Llegó una página: si es la última pedida, se muestra (y se va a su `#ancla`).
-    pub fn llegada(&mut self, l: Llegada) {
-        if l.id != self.id_carga {
-            return;
+    /// Llegó algo de la red.
+    pub fn evento(&mut self, e: Evento) {
+        match e {
+            Evento::Pagina { id, pagina } if id == self.id_carga => self.llegada(*pagina),
+            Evento::Imagen { id, src, imagen } if id == self.id_carga => match imagen {
+                Ok(i) => {
+                    self.imagenes.llegada(src, i);
+                    self.imagenes_nuevas = true;
+                    if let Some(a) = &self.abierta {
+                        a.ventana.request_redraw();
+                    }
+                }
+                Err(e) => eprintln!("imagen {src}: {e}"),
+            },
+            _ => {} // de una carga anterior
         }
+    }
+
+    /// Llegó la página pedida: se muestra (y se va a su `#ancla`), y se piden sus imágenes.
+    fn llegada(&mut self, pagina: Pagina) {
+        self.imagenes.vaciar();
+        self.imagenes_nuevas = false;
+        if let Some(a) = &mut self.abierta {
+            a.gpu.olvidar_imagenes();
+        }
+        let (id, proxy) = (self.id_carga, self.proxy.clone());
+        let fuentes = imagenes::fuentes(&pagina.documento());
+        imagenes::descargar_todas(self.cliente.clone(), pagina.base.clone(), fuentes, move |src, imagen| {
+            let _ = proxy.send_event(Evento::Imagen { id, src, imagen });
+        });
         let fragmento = self.url.fragmento.clone();
-        let mut final_ = l.pagina.url.clone();
+        let mut final_ = pagina.url.clone();
         final_.fragmento = fragmento.clone();
         self.historial.sustituir(final_.clone());
         self.url = final_;
-        self.pagina = Some(l.pagina);
+        self.pagina = Some(pagina);
         self.cargando = false;
         self.estado = None;
         if let Some(a) = &mut self.abierta {
@@ -141,8 +176,12 @@ impl Navegador {
         let doc = pagina.documento();
         let externa = |href: &str| pagina.hoja(href);
         let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
-        let m = maquetar(&doc, &estilos, &self.pintor.medidor(), ancho, alto);
-        let cuadros = self.pintor.escena(&m, escala);
+        let imagenes = &mut self.imagenes;
+        let m = maquetar_con_imagenes(&doc, &estilos, &self.pintor.medidor(), (ancho, alto), &|s| imagenes.tam(s));
+        let cuadros = self.pintor.escena(&m, escala, &|s| imagenes.id(s));
+        for (id, w, h, rgba) in imagenes.por_subir() {
+            a.gpu.subir_imagen(id, w, h, &rgba);
+        }
         a.gpu.cargar(&cuadros);
         a.fondo = color_gpu(m.fondo);
         let titulo = doc.buscar("title").map(|t| doc.texto(t).trim().to_string()).filter(|t| !t.is_empty());
@@ -150,12 +189,13 @@ impl Navegador {
             if pagina.url.anfitrion.is_empty() { String::new() } else { format!(" · {}", pagina.url.anfitrion) };
         a.ventana.set_title(&format!("{}{sitio} — QUIMERA", titulo.as_deref().unwrap_or("sin título")));
         eprintln!(
-            "{}: red {:.0} ms · {} nodos, {} cuadros, {} enlaces, maquetado en {:.1} ms",
+            "{}: red {:.0} ms · {} nodos, {} cuadros, {} enlaces, {} imágenes, maquetado en {:.1} ms",
             pagina.url,
             pagina.ms_red,
             doc.total(),
             cuadros.len(),
             m.enlaces.len(),
+            imagenes.total(),
             inicio.elapsed().as_secs_f64() * 1e3
         );
         a.maq = Some(m);
@@ -187,6 +227,10 @@ impl Navegador {
 
     /// Dibuja (la página va debajo de la barra).
     pub fn dibujar(&mut self) {
+        if std::mem::take(&mut self.imagenes_nuevas) {
+            // Todas las que llegaron desde el último cuadro, en una sola maquetación.
+            self.maquetar();
+        }
         let barra_px = self.alto_barra();
         if let Some(a) = &mut self.abierta
             && let Err(e) = a.gpu.dibujar(a.fondo, a.desp - barra_px)
