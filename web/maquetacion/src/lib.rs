@@ -21,6 +21,8 @@
 extern crate alloc;
 
 mod bloque;
+mod flex;
+mod intrinseco;
 mod linea;
 mod pintura;
 mod texto;

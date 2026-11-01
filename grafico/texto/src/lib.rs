@@ -156,6 +156,12 @@ const RESERVA: &[&str] = &[
     "C:/Windows/Fonts/seguisym.ttf",
     "C:/Windows/Fonts/arial.ttf",
     "C:/Windows/Fonts/seguiemj.ttf",
+    // Chino, japonés y coreano (las `.ttc` traen varias fuentes: se usa la primera).
+    "C:/Windows/Fonts/msyh.ttc",
+    "C:/Windows/Fonts/YuGothR.ttc",
+    "C:/Windows/Fonts/malgun.ttf",
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     "/usr/share/fonts/TTF/DejaVuSans.ttf",
     "/usr/share/fonts/noto/NotoSansSymbols2-Regular.ttf",
@@ -176,7 +182,13 @@ impl Fuentes {
 
     /// Carga una fuente desde sus bytes (TrueType u OpenType); devuelve su número.
     pub fn anadir(&mut self, nombre: &str, bytes: Vec<u8>) -> Option<IdCara> {
-        let fuente = FontVec::try_from_vec(bytes).ok()?;
+        // Una colección (`.ttc`) empieza por `ttcf`: se toma su primera fuente.
+        let fuente = if bytes.starts_with(b"ttcf") {
+            FontVec::try_from_vec_and_index(bytes, 0)
+        } else {
+            FontVec::try_from_vec(bytes)
+        }
+        .ok()?;
         self.caras.push(Cara { fuente, nombre: String::from(nombre) });
         Some(self.caras.len() - 1)
     }
@@ -318,5 +330,16 @@ mod pruebas {
         assert!(m.pixeles.iter().any(|&p| p > 200), "tiene píxeles llenos");
         let mono = f.cara(Familia::Mono, false, false).expect("una cara");
         assert!((f.ancho(mono, "iiii", 16.0) - f.ancho(mono, "MMMM", 16.0)).abs() < 0.01, "monoespaciada");
+    }
+
+    #[test]
+    fn caracteres_de_otras_escrituras_con_fuentes_de_reserva() {
+        let Some(f) = fuentes() else { return };
+        let sans = f.cara(Familia::SinSerif, false, false).expect("una cara");
+        let cjk = f.colocar(sans, "中文日本語", 16.0, 0.0);
+        // Si el sistema tiene una fuente CJK, cada carácter tiene glifo (no el 0, la caja vacía).
+        if cjk.iter().any(|l| l.cara != sans) {
+            assert!(cjk.iter().all(|l| l.glifo != 0), "{cjk:?}");
+        }
     }
 }

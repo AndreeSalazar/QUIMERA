@@ -140,3 +140,39 @@ fn hojas_externas_en_orden_de_documento() {
     let p = de(&doc, &e, "p");
     assert_eq!((p.color, p.tam_letra), (AZUL, 20.0), "el <style> va después del <link>: gana en color");
 }
+
+#[test]
+fn propiedades_de_flexbox() {
+    use quimera_estilo::{AlinearFlex, Direccion, Justificar};
+    let (doc, e) = estilos(
+        "<style>
+           #c { display: flex; flex-flow: column-reverse wrap; justify-content: space-between; align-items: center; gap: 8px 2em }
+           #a { flex: 2 3 10%; align-self: flex-end; order: -1 }
+           #b { flex: auto } #n { flex: none } #u { flex: 1 } #l { flex: 100px }
+         </style>
+         <div id=c><p id=a>a</p><p id=b>b</p><p id=n>n</p><p id=u>u</p><p id=l>l</p></div>",
+    );
+    let c = de(&doc, &e, "c");
+    assert_eq!(c.display, Display::Flex);
+    assert_eq!(
+        (c.flex.direccion, c.flex.envolver, c.flex.justificar),
+        (Direccion::ColumnaInversa, true, Justificar::Entre)
+    );
+    assert_eq!(
+        (c.flex.alinear_items, c.flex.hueco_filas, c.flex.hueco_columnas),
+        (AlinearFlex::Centro, Medida::Px(8.0), Medida::Px(32.0))
+    );
+    let a = de(&doc, &e, "a");
+    assert_eq!(
+        (a.flex.crecer, a.flex.encoger, a.flex.base, a.flex.alinear_propio, a.flex.orden),
+        (2.0, 3.0, Medida::Porcentaje(10.0), Some(AlinearFlex::Fin), -1)
+    );
+    let f = |id: &str| {
+        let x = de(&doc, &e, id).flex;
+        (x.crecer, x.encoger, x.base)
+    };
+    assert_eq!(f("b"), (1.0, 1.0, Medida::Auto));
+    assert_eq!(f("n"), (0.0, 0.0, Medida::Auto));
+    assert_eq!(f("u"), (1.0, 1.0, Medida::Porcentaje(0.0)));
+    assert_eq!(f("l"), (1.0, 1.0, Medida::Px(100.0)));
+}

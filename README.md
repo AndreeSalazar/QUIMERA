@@ -16,8 +16,8 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones | ✅ 29 pruebas |
 | `web/html` → `quimera-html` | 2 | HTML5 → árbol, con la recuperación de errores de los navegadores; mismo árbol que html5ever en 5.000 páginas reales, 2,2× más rápido ([docs/HTML-CSS.md](docs/HTML-CSS.md)) | ✅ 10 pruebas |
 | `web/css` → `quimera-css` | 2 | CSS → reglas, `@media`, selectores con especificidad, colores y longitudes | ✅ 9 pruebas |
-| `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 8 pruebas |
-| `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas → lista de dibujo | ✅ 6 pruebas |
+| `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos, flexbox ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 9 pruebas |
+| `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, tamaños intrínsecos → lista de dibujo | ✅ 11 pruebas |
 | `herramientas/ver` → `quimera-ver` | 100 | Una página → imagen SVG: [la primera página dibujada por QUIMERA](docs/ejemplos/primera.svg) | ✅ |
 | `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux): medir, interletraje, rasterizar, reserva para símbolos ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 1 prueba |
 | `grafico/gpu` → `quimera-gpu` | 2 | wgpu: una tubería que dibuja cuadros de color y letras del atlas en una pasada; captura sin ventana | ✅ 1 prueba |

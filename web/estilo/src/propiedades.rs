@@ -44,6 +44,9 @@ fn cuatro<'a>(p: &[&'a [Token]]) -> Option<[&'a [Token]; 4]> {
 
 /// Un atajo → sus propiedades largas, en orden. Una propiedad larga se devuelve tal cual.
 pub(crate) fn expandir(propiedad: &str, valor: &[Token]) -> Vec<(String, Vec<Token>)> {
+    if let Some(v) = crate::flex::expandir(propiedad, valor) {
+        return v;
+    }
     let p = piezas(valor);
     let largo = |n: String, v: &[Token]| (n, v.to_vec());
     let mut r = Vec::new();
@@ -240,6 +243,7 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
         "list-style-type" => e.lista = de.lista,
         "visibility" => e.visible = de.visible,
         "text-transform" => e.transformar = de.transformar,
+        p if crate::flex::es_propia(p) => crate::flex::copiar(&mut e.flex, &de.flex, p),
         p => {
             if let Some((i, campo)) = lado_de(p) {
                 match campo {
@@ -312,6 +316,9 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
                 _ => None,
             }
         }
+        p if crate::flex::es_propia(p) => {
+            crate::flex::aplicar(&mut e.flex, p, v, c);
+        }
         p => aplicar_lado(e, p, v, c),
     }
 }
@@ -370,6 +377,7 @@ pub(crate) fn valida(prop: &str, v: &[Token]) -> bool {
         "list-style-type" => n.and_then(tipo_lista).is_some(),
         "visibility" => matches!(n, Some("visible" | "hidden" | "collapse")),
         "text-transform" => matches!(n, Some("none" | "uppercase" | "lowercase" | "capitalize")),
+        p if crate::flex::es_propia(p) => crate::flex::aplicar(&mut crate::flex::Flex::default(), p, v, &c),
         p => match lado_de(p) {
             Some((_, "margin")) => medida(v, &c).is_some(),
             Some((_, "padding")) => medida(v, &c).is_some_and(|m| m != Medida::Auto),
@@ -393,7 +401,8 @@ fn valor_color(v: &[Token], actual: Color) -> Option<Color> {
 
 fn display(n: &str) -> Option<Display> {
     Some(match n {
-        "block" | "table" | "flex" | "grid" | "flow-root" | "table-row" | "table-cell" | "table-row-group"
+        "flex" => Display::Flex,
+        "block" | "table" | "grid" | "flow-root" | "table-row" | "table-cell" | "table-row-group"
         | "table-header-group" | "table-footer-group" | "table-caption" => Display::Bloque,
         "inline" | "contents" => Display::EnLinea,
         "inline-block" | "inline-flex" | "inline-grid" | "inline-table" => Display::BloqueEnLinea,

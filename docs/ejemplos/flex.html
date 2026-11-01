@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Flexbox en QUIMERA</title>
+<style>
+  body { margin: 0; font-family: "Segoe UI", sans-serif; color: #222; background: #f6f4fa }
+  nav { display: flex; align-items: center; gap: 24px; padding: 14px 32px; background: #2d1b3d }
+  nav .logo { color: white; font-weight: bold; font-size: 20px; margin-right: auto }
+  nav a { color: #d9c8f0; text-decoration: none }
+  .hero { display: flex; flex-direction: column; align-items: center; padding: 56px 24px 40px; text-align: center }
+  .hero h1 { font-size: 40px; margin: 0 0 8px; color: #6b2d8f }
+  .hero p { margin: 0; color: #666; font-size: 18px }
+  .botones { display: flex; gap: 12px; margin-top: 24px }
+  .boton { background: #6b2d8f; color: white; padding: 10px 20px }
+  .boton.claro { background: white; color: #6b2d8f; border: 2px solid #6b2d8f; padding: 8px 18px }
+  .tarjetas { display: flex; gap: 20px; padding: 0 32px 32px }
+  .tarjeta { flex: 1; background: white; border: 1px solid #e3dceb; padding: 20px }
+  .tarjeta h3 { margin: 0 0 8px; color: #2d5f8f }
+  .tarjeta p { margin: 0; color: #555; line-height: 1.5 }
+  .tarjeta.ancha { flex: 2 }
+  footer { display: flex; justify-content: space-between; padding: 16px 32px; background: #ece7f3; color: #777; font-size: 13px }
+</style>
+</head>
+<body>
+  <nav>
+    <span class="logo">QUIMERA</span>
+    <a href="#motor">Motor</a>
+    <a href="#web">Web</a>
+    <a href="#ventana">Ventana</a>
+  </nav>
+  <div class="hero">
+    <h1>Flexbox, por fin</h1>
+    <p>Menús, botones y tarjetas colocados con display: flex.</p>
+    <div class="botones"><span class="boton">Probar</span><span class="boton claro">Leer más</span></div>
+  </div>
+  <div class="tarjetas">
+    <div class="tarjeta" id="motor"><h3>Motor</h3><p>JavaScript propio: 3,3 veces Boa en los benchmarks de V8.</p></div>
+    <div class="tarjeta ancha" id="web"><h3>Web</h3><p>HTML con el mismo árbol que html5ever, CSS con cascada, y ahora flexbox: crecer, encoger, alinear, envolver y huecos.</p></div>
+    <div class="tarjeta" id="ventana"><h3>Ventana</h3><p>wgpu, fuentes de verdad, red HTTPS, enlaces e historial.</p></div>
+  </div>
+  <footer><span>QUIMERA · un navegador en Rust</span><span>nivel por nivel</span></footer>
+</body>
+</html>

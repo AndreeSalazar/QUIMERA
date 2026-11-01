@@ -19,12 +19,14 @@ extern crate alloc;
 
 mod cascada;
 mod elemento;
+mod flex;
 mod medios;
 mod propiedades;
 mod valores;
 
 use alloc::vec::Vec;
 pub use elemento::Nodo;
+pub use flex::{AlinearFlex, Direccion, Flex, Justificar};
 pub use propiedades::borde_solido;
 pub use quimera_html::NodoId;
 pub use valores::{

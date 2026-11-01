@@ -128,7 +128,7 @@ struct Linea {
     salto: Option<usize>,
 }
 
-fn ancho_item(m: &dyn MedirTexto, it: &Item<'_>) -> f32 {
+pub(crate) fn ancho_item(m: &dyn MedirTexto, it: &Item<'_>) -> f32 {
     match it {
         Item::Palabra { texto, estilo, .. } | Item::Espacio { texto, estilo, .. } => m.ancho(texto, &fuente(estilo)),
         Item::Imagen { ancho, .. } => *ancho,
@@ -291,7 +291,9 @@ impl EnLinea<'_> {
     fn trozo(&self, e: &Estilo, x: f32, base: f32, ancho: f32, texto: String, piezas: &mut Vec<Pieza>) {
         let f = fuente(e);
         let (asc, desc) = (self.medir.ascenso(&f), self.medir.descenso(&f));
-        if e.fondo.a > 0 {
+        // El texto que es del propio bloque no pinta fondo (ya lo pintó el bloque); solo los
+        // elementos en línea (`<span>`, `<mark>`...) pintan el suyo detrás de su texto.
+        if e.fondo.a > 0 && !core::ptr::eq(e, self.bloque) {
             piezas.push(Pieza::Rect { x, y: base - asc, ancho, alto: asc + desc, color: e.fondo });
         }
         piezas.push(Pieza::Texto {

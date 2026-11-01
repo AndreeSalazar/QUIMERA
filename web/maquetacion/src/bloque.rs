@@ -32,6 +32,12 @@ pub(crate) struct Maquetador<'a> {
     pub enlaces: Vec<EnlaceBruto>,
     /// (id, y) de cada bloque con `id`: a dónde llevan los `#ancla`.
     pub anclas: Vec<(String, f32)>,
+    /// Tamaños intrínsecos ya calculados, por nodo.
+    pub intrinsecos: Vec<Option<(f32, f32)>>,
+    /// Este elemento ignora su `width`: ocupa el ancho que se le da (elementos flexibles).
+    pub ancho_libre: Option<NodoId>,
+    /// Alto de la caja con borde impuesto a este elemento (`align-items: stretch`, columnas).
+    pub alto_forzado: Option<(NodoId, f32)>,
 }
 
 /// Lo que un bloque maquetado devuelve a su padre.
@@ -45,7 +51,7 @@ pub(crate) struct Hecho {
 }
 
 /// Qué es un hijo para su bloque.
-enum Clase {
+pub(crate) enum Clase {
     Bloque,
     EnLinea,
     Nada,
@@ -64,6 +70,9 @@ impl<'a> Maquetador<'a> {
             enlace: None,
             enlaces: Vec::new(),
             anclas: Vec::new(),
+            intrinsecos: alloc::vec![None; doc.total()],
+            ancho_libre: None,
+            alto_forzado: None,
         }
     }
 
@@ -71,7 +80,7 @@ impl<'a> Maquetador<'a> {
         self.estilos.de(id)
     }
 
-    fn clase(&mut self, id: NodoId) -> Clase {
+    pub(crate) fn clase(&mut self, id: NodoId) -> Clase {
         match &self.doc.nodo(id).dato {
             Dato::Texto(_) => return Clase::EnLinea,
             Dato::Elemento(_) => {}
@@ -79,7 +88,7 @@ impl<'a> Maquetador<'a> {
         }
         match self.estilo(id).map(|e| e.display) {
             None | Some(Display::Ninguno) => Clase::Nada,
-            Some(Display::Bloque | Display::ElementoDeLista) => Clase::Bloque,
+            Some(Display::Bloque | Display::ElementoDeLista | Display::Flex) => Clase::Bloque,
             // Un elemento en línea con bloques dentro se maqueta como un bloque (los
             // navegadores lo parten en trozos; el resultado visible es casi el mismo).
             Some(_) if self.tiene_bloques(id) => Clase::Bloque,
@@ -101,7 +110,8 @@ impl<'a> Maquetador<'a> {
     fn margen_superior(&mut self, id: NodoId, ancho_contenedor: f32) -> f32 {
         let Some(e) = self.estilo(id) else { return 0.0 };
         let propio = e.margen[0].px(ancho_contenedor, 0.0);
-        if e.borde[0].ocupa() > 0.0 || e.relleno[0].px(ancho_contenedor, 0.0) > 0.0 {
+        // Un contenedor flex no deja salir los márgenes de sus hijos.
+        if e.display == Display::Flex || e.borde[0].ocupa() > 0.0 || e.relleno[0].px(ancho_contenedor, 0.0) > 0.0 {
             return propio;
         }
         let primero = self
@@ -120,7 +130,7 @@ impl<'a> Maquetador<'a> {
     }
 
     /// Un texto de solo blancos en modo normal (no crea líneas entre bloques).
-    fn es_blanco(&self, id: NodoId) -> bool {
+    pub(crate) fn es_blanco(&self, id: NodoId) -> bool {
         match &self.doc.nodo(id).dato {
             Dato::Texto(t) => {
                 let normal = self.doc.nodo(id).padre.and_then(|p| self.estilo(p)).is_none_or(|e| {
@@ -140,7 +150,12 @@ impl<'a> Maquetador<'a> {
         let px = |m: Medida| m.px(ancho_contenedor, 0.0);
         let (bt, br, bb, bl) = (e.borde[0].ocupa(), e.borde[1].ocupa(), e.borde[2].ocupa(), e.borde[3].ocupa());
         let (pt, pr, pb, pl) = (px(e.relleno[0]), px(e.relleno[1]), px(e.relleno[2]), px(e.relleno[3]));
-        let (ml, mr) = self.margenes_horizontales(e, ancho_contenedor, bl + br + pl + pr);
+        let (ml, mr) = if self.ancho_libre == Some(id) {
+            (px(e.margen[3]), px(e.margen[1]))
+        } else {
+            self.margenes_horizontales(e, ancho_contenedor, bl + br + pl + pr)
+        };
+        let forzado = self.alto_forzado.filter(|(n, _)| *n == id).map(|(_, a)| a);
         let ancho_borde = (ancho_contenedor - ml - mr).max(0.0);
         let ancho_contenido = (ancho_borde - bl - br - pl - pr).max(0.0);
         let (cx, cy) = (x + ml + bl + pl, y + bt + pt);
@@ -151,7 +166,17 @@ impl<'a> Maquetador<'a> {
         let enlace_previo = self.entrar_en_enlace(id);
         let es_raiz = self.raiz == Some(id);
         let colapsa_arriba = bt + pt == 0.0 && !es_raiz;
-        let (alto_contenido, abierto, primera_base) = self.contenido(id, e, cx, cy, ancho_contenido, colapsa_arriba);
+        let (alto_contenido, abierto, primera_base) = if e.display == Display::Flex {
+            let alto_conocido = match (forzado, e.alto) {
+                (Some(f), _) => Some((f - bt - pt - pb - bb).max(0.0)),
+                (None, Medida::Px(h)) => Some(h),
+                _ => None,
+            };
+            let (alto, base) = self.flex(id, e, (cx, cy), ancho_contenido, alto_conocido);
+            (alto, 0.0, base)
+        } else {
+            self.contenido(id, e, cx, cy, ancho_contenido, colapsa_arriba)
+        };
         self.enlace = enlace_previo;
         let colapsa_abajo = bb + pb == 0.0 && e.alto == Medida::Auto && !es_raiz;
         let mut alto_contenido = match e.alto {
@@ -159,7 +184,7 @@ impl<'a> Maquetador<'a> {
             _ => alto_contenido + if colapsa_abajo { 0.0 } else { abierto },
         };
         alto_contenido = alto_contenido.max(e.alto_min.px(0.0, 0.0));
-        let alto = bt + pt + alto_contenido + pb + bb;
+        let alto = forzado.unwrap_or(bt + pt + alto_contenido + pb + bb);
         self.fondo_y_bordes(inicio_piezas, e, x + ml, y, ancho_borde, alto);
         if e.display == Display::ElementoDeLista {
             self.marcador(id, e, cx, primera_base.unwrap_or(cy + e.tam_letra * 0.8));
@@ -246,13 +271,26 @@ impl<'a> Maquetador<'a> {
         (cursor - cy, abierto.unwrap_or(0.0), primera_base)
     }
 
-    fn lineas(&mut self, items: &[Item<'a>], e: &'a Estilo, x: f32, y: f32, ancho: f32) -> (f32, Option<f32>) {
+    pub(crate) fn lineas(
+        &mut self,
+        items: &[Item<'a>],
+        e: &'a Estilo,
+        x: f32,
+        y: f32,
+        ancho: f32,
+    ) -> (f32, Option<f32>) {
         let l = EnLinea { medir: self.medir, bloque: e, x, y, ancho };
         l.maquetar(items, &mut self.piezas, &mut self.enlaces)
     }
 
     /// El contenido en línea de `id` (un texto o un elemento en línea) como elementos.
-    fn recoger(&mut self, id: NodoId, padre: &'a Estilo, items: &mut Vec<Item<'a>>, ultimo_espacio: &mut bool) {
+    pub(crate) fn recoger(
+        &mut self,
+        id: NodoId,
+        padre: &'a Estilo,
+        items: &mut Vec<Item<'a>>,
+        ultimo_espacio: &mut bool,
+    ) {
         match &self.doc.nodo(id).dato {
             Dato::Texto(t) => texto_a_items(t, padre, self.enlace, ultimo_espacio, items),
             Dato::Elemento(el) => {

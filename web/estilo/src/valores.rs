@@ -11,8 +11,10 @@ pub use quimera_css::Color;
 /// `display`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Display {
-    /// `block` (y por ahora `table`, `flex`, `grid`... se maquetan como bloques).
+    /// `block` (y por ahora `table`, `grid`... se maquetan como bloques).
     Bloque,
+    /// `flex`: un bloque que coloca a sus hijos con flexbox.
+    Flex,
     /// `inline`.
     EnLinea,
     /// `inline-block` (por ahora se maqueta como `inline`).
@@ -199,6 +201,8 @@ pub struct Estilo {
     pub visible: bool,
     /// `text-transform: uppercase/lowercase`: `Some(true)` mayúsculas, `Some(false)` minúsculas.
     pub transformar: Option<bool>,
+    /// Flexbox (como contenedor y como elemento flexible).
+    pub flex: crate::flex::Flex,
 }
 
 impl Default for Estilo {
@@ -228,6 +232,7 @@ impl Default for Estilo {
             lista: TipoLista::Disco,
             visible: true,
             transformar: None,
+            flex: crate::flex::Flex::default(),
         }
     }
 }
