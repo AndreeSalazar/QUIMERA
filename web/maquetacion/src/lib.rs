@@ -21,6 +21,7 @@
 extern crate alloc;
 
 mod bloque;
+mod control;
 mod flex;
 mod flotante;
 mod intrinseco;
@@ -31,7 +32,8 @@ mod reemplazado;
 mod tabla;
 mod texto;
 
-pub use pintura::{Enlace, Maquetacion, Pieza};
+pub use control::{Formulario, SinFormulario};
+pub use pintura::{Control, Enlace, Maquetacion, Pieza};
 pub use texto::{Aproximado, Fuente, MedirTexto};
 
 use quimera_estilo::{Color, Estilos};
@@ -50,7 +52,20 @@ pub fn maquetar_con_imagenes(
     (ancho, alto): (f32, f32),
     imagenes: &dyn Fn(&str) -> Option<(u32, u32)>,
 ) -> Maquetacion {
+    maquetar_pagina(doc, estilos, medir, (ancho, alto), imagenes, &SinFormulario)
+}
+
+/// Como [`maquetar_con_imagenes`], con lo escrito en los controles y el foco (`formulario`).
+pub fn maquetar_pagina(
+    doc: &Documento,
+    estilos: &Estilos,
+    medir: &dyn MedirTexto,
+    (ancho, alto): (f32, f32),
+    imagenes: &dyn Fn(&str) -> Option<(u32, u32)>,
+    formulario: &dyn Formulario,
+) -> Maquetacion {
     let mut m = bloque::Maquetador::nuevo(doc, estilos, medir, imagenes);
+    m.formulario = formulario;
     let Some(html) = doc.buscar("html") else {
         return Maquetacion { ancho, alto, fondo: Color::BLANCO, ..Maquetacion::default() };
     };
@@ -62,11 +77,17 @@ pub fn maquetar_con_imagenes(
     // El fondo de <html> (o, si no tiene, el de <body>) pinta todo el lienzo.
     let fondo_de = |n: &str| doc.buscar(n).and_then(|id| estilos.de(id)).map(|e| e.fondo).filter(|c| c.a > 0);
     let fondo = fondo_de("html").or_else(|| fondo_de("body")).unwrap_or(Color::BLANCO);
-    let enlaces = m
-        .enlaces
-        .iter()
+    // Los rectángulos de los controles van en la misma lista que los de los enlaces, marcados.
+    let (controles, enlaces): (alloc::vec::Vec<_>, alloc::vec::Vec<_>) =
+        m.enlaces.iter().partition(|e| e.4 & control::CONTROL != 0);
+    let controles = controles
+        .into_iter()
+        .map(|&(x, y, ancho, alto, n)| Control { x, y, ancho, alto, nodo: quimera_html::NodoId(n & !control::CONTROL) })
+        .collect();
+    let enlaces = enlaces
+        .into_iter()
         .map(|&(x, y, ancho, alto, i)| Enlace { x, y, ancho, alto, href: m.hrefs[i as usize].clone() })
         .collect();
     let alto_doc = hecho.alto.max(abajo_capas).max(alto);
-    Maquetacion { piezas, ancho, alto: alto_doc, fondo, enlaces, anclas: m.anclas }
+    Maquetacion { piezas, ancho, alto: alto_doc, fondo, enlaces, anclas: m.anclas, controles }
 }

@@ -54,7 +54,7 @@ El texto se mide a través del rasgo `MedirTexto`. Por ahora `Aproximado` da anc
 
 Las pruebas usan un medidor exacto (cada carácter mide medio `em`) y comprueban posiciones calculadas a mano con las reglas de CSS.
 
-**Falta**: `float`, `position` (absoluta, fija, relativa), `grid`, tablas de verdad (hoy cada celda es un bloque), `inline-block` con su caja (hoy se maqueta como `inline`), fondos y bordes de los elementos en línea que ocupan varias líneas, `overflow`, `text-align: justify`, partir palabras largas, texto bidireccional y las imágenes de verdad (hoy un recuadro gris).
+**Falta**: `float`, `position` (absoluta, fija, relativa), `grid`, tablas de verdad (hoy cada celda es un bloque), fondos y bordes de los elementos en línea que ocupan varias líneas, `overflow`, `text-align: justify`, partir palabras largas, texto bidireccional y las imágenes de verdad (hoy un recuadro gris).
 
 ## Flexbox
 
@@ -188,6 +188,16 @@ Wikipedia destapó además un fallo de capas: un flotante dentro de un elemento 
 `QUIMERA_DEPURAR=clase` en el modo captura imprime el estilo calculado del primer elemento con esa clase y de sus antepasados.
 
 **Falta:** `calc()`, `min()`, `max()` y `clamp()` (con `var()` dentro son muy comunes), y `inherit`/`initial` en las propias variables.
+
+## Cajas en línea y controles
+
+`display: inline-block` y los controles de formulario (`control.rs`) se maquetan aparte, como un bloque con el ancho de su contenido (o el suyo), y entran en la línea como una palabra grande, con su ancho, su alto y su línea base: la de su primera línea de texto o, si no tiene, su borde de abajo. Si no caben, bajan a la línea siguiente.
+
+**Controles:** `<input>` (texto, contraseña con puntos, casillas, botones de opción, botones), `<textarea>` y `<select>`, con los estilos que Chromium les da por defecto, medidos en el navegador (`navegador.css`): bordes, rellenos, letra de 13,333 px, casillas de 13 px con sus márgenes. El ancho natural también es el de Chromium: `size` (20) por el ancho del «0» en un campo, `cols` en un área, el texto en un botón, la opción más larga más la flecha en una lista. El texto de ayuda (`placeholder`) va en gris.
+
+**`box-sizing: border-box`**: `width` y `height` incluyen relleno y borde. Las medidas en px se pasan a medidas de contenido al calcular el estilo; los porcentajes, al maquetar, que es cuando se conoce el contenedor. Los botones, las listas y las casillas son `border-box` por defecto, como en Chromium.
+
+**Comprobado** (`docs/ejemplos/controles.html`, sin texto): tres cajas de alto distinto sobre la misma línea base, una que se encoge a su contenido, una que baja de línea, controles con medidas fijas y casillas con sus márgenes. Las mismas posiciones que Chromium en 13 cajas y 2 casillas.
 
 ## Siguiente
 

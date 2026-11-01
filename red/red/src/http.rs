@@ -8,18 +8,29 @@
 use crate::Error;
 use crate::url::Url;
 
-/// La petición GET para `url`.
-pub(crate) fn peticion(url: &Url, agente: &str) -> Vec<u8> {
+/// La petición para `url`: GET, o POST de un formulario si hay `formulario` (ya codificado como
+/// `application/x-www-form-urlencoded`). Con `galletas`, la cabecera `Cookie`.
+pub(crate) fn peticion(url: &Url, agente: &str, galletas: Option<&str>, formulario: Option<&[u8]>) -> Vec<u8> {
     let mut anfitrion = url.anfitrion.clone();
     let por_defecto = if url.esquema == "https" { 443 } else { 80 };
     if let Some(p) = url.puerto.filter(|p| *p != por_defecto) {
         anfitrion.push_str(&format!(":{p}"));
     }
-    format!(
-        "GET {} HTTP/1.1\r\nHost: {anfitrion}\r\nUser-Agent: {agente}\r\nAccept: text/html,application/xhtml+xml,text/css,*/*;q=0.8\r\nAccept-Language: es,en;q=0.8\r\nAccept-Encoding: identity\r\nConnection: close\r\n\r\n",
+    let metodo = if formulario.is_some() { "POST" } else { "GET" };
+    let mut s = format!(
+        "{metodo} {} HTTP/1.1\r\nHost: {anfitrion}\r\nUser-Agent: {agente}\r\nAccept: text/html,application/xhtml+xml,text/css,*/*;q=0.8\r\nAccept-Language: es,en;q=0.8\r\nAccept-Encoding: identity\r\nConnection: close\r\n",
         url.ruta_y_consulta()
-    )
-    .into_bytes()
+    );
+    if let Some(g) = galletas {
+        s.push_str(&format!("Cookie: {g}\r\n"));
+    }
+    if let Some(cuerpo) = formulario {
+        s.push_str(&format!("Content-Type: application/x-www-form-urlencoded\r\nContent-Length: {}\r\n", cuerpo.len()));
+    }
+    s.push_str("\r\n");
+    let mut bytes = s.into_bytes();
+    bytes.extend_from_slice(formulario.unwrap_or_default());
+    bytes
 }
 
 /// Una respuesta leída: estado, cabeceras (nombres en minúsculas) y cuerpo.

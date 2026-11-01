@@ -12,13 +12,16 @@
 //!
 //! Sin ventana: `-- pagina.html --captura salida.png [ancho] [alto]` dibuja con la misma GPU en
 //! una imagen (para comprobar el pintado sin mirar la pantalla). Con `--seguir N`, antes sigue
-//! el enlace número N de la página.
+//! el enlace número N de la página; con `--escribir "texto"`, escribe en el primer campo de la
+//! página y envía su formulario (una búsqueda, por ejemplo).
 
 mod barra;
+mod formularios;
 mod historial;
 mod imagenes;
 mod navegador;
 mod pagina;
+mod perfil;
 mod png;
 mod tipografias;
 
@@ -103,13 +106,54 @@ impl ApplicationHandler<Evento> for Navegador {
     }
 }
 
+/// Lo que se hace en la página antes de capturar.
+enum Antes {
+    /// Seguir el enlace número `n` de su lista de enlaces.
+    Seguir(usize),
+    /// Escribir en el primer campo de texto y enviar su formulario.
+    Escribir(String),
+}
+
+/// A dónde lleva `antes` desde la página: la dirección y, si es un POST, su cuerpo.
+fn destino_previo(
+    pagina: &Pagina,
+    m: &quimera_maquetacion::Maquetacion,
+    antes: &Antes,
+) -> Result<(Url, Option<Vec<u8>>), String> {
+    match antes {
+        Antes::Seguir(n) => {
+            let enlace = m.enlaces.get(*n).ok_or_else(|| format!("la página tiene {} enlaces", m.enlaces.len()))?;
+            let destino = pagina.base.unir(&enlace.href).map_err(|e| e.to_string())?;
+            eprintln!("enlace {n}: {} → {destino}", enlace.href);
+            Ok((destino, None))
+        }
+        Antes::Escribir(texto) => {
+            let doc = pagina.documento();
+            let campo = m
+                .controles
+                .iter()
+                .map(|c| c.nodo)
+                .find(|&c| formularios::es_campo(&doc, c))
+                .ok_or("la página no tiene campos donde escribir")?;
+            let mut f = formularios::Estado::default();
+            f.pulsar(&doc, campo);
+            f.escribir(&doc, texto);
+            let (url, cuerpo) = f.envio(&doc, campo, &pagina.base).ok_or("el campo no está en un formulario")?;
+            let metodo = if cuerpo.is_some() { "POST" } else { "GET" };
+            let enviado = cuerpo.as_deref().map(String::from_utf8_lossy).unwrap_or_default();
+            eprintln!("formulario: {metodo} {url} {enviado}");
+            Ok((url, cuerpo))
+        }
+    }
+}
+
 /// Dibuja la página con la GPU, sin ventana y con la barra, y la guarda como PNG. Con
-/// `seguir`, antes sigue ese enlace de la página (el número `n` de su lista de enlaces).
-fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<usize>) -> Result<(), String> {
+/// `antes`, primero sigue un enlace o envía un formulario.
+fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<Antes>) -> Result<(), String> {
     let mut pintor = Pintor::nuevo(Fuentes::del_sistema(), TAM_ATLAS);
     let mut gpu = pollster::block_on(Gpu::sin_ventana(ancho, alto, TAM_ATLAS))?;
     let cliente = Arc::new(Cliente::nuevo());
-    let mut pagina = Pagina::cargar(&cliente, url);
+    let mut pagina = Pagina::cargar(&cliente, url, None);
     let (w, h) = (ancho as f32, alto as f32 - barra::ALTO);
     let mut imagenes = cargar_imagenes(&cliente, &pagina);
     cargar_fuentes(&cliente, &pagina, &mut pintor);
@@ -117,11 +161,9 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<u
         depurar(&pagina, &clase, (w, h));
     }
     let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes);
-    if let Some(n) = seguir {
-        let enlace = m.enlaces.get(n).ok_or_else(|| format!("la página tiene {} enlaces", m.enlaces.len()))?;
-        let destino = pagina.base.unir(&enlace.href).map_err(|e| e.to_string())?;
-        eprintln!("enlace {n}: {} → {destino}", enlace.href);
-        pagina = Pagina::cargar(&cliente, &destino);
+    if let Some(a) = &antes {
+        let (destino, cuerpo) = destino_previo(&pagina, &m, a)?;
+        pagina = Pagina::cargar(&cliente, &destino, cuerpo.as_deref());
         imagenes = cargar_imagenes(&cliente, &pagina);
         pintor.olvidar_fuentes();
         cargar_fuentes(&cliente, &pagina, &mut pintor);
@@ -137,7 +179,7 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<u
         alto: alto as f32,
         escala: 1.0,
         url: &url_texto,
-        atras: seguir.is_some(),
+        atras: antes.is_some(),
         adelante: false,
         estado: None,
     };
@@ -251,9 +293,12 @@ fn main() {
         let url = direccion(args.get(1).filter(|a| *a != "--captura").map_or("", String::as_str));
         let salida = args.get(i + 1).cloned().unwrap_or_else(|| String::from("captura.png"));
         let numero = |k: usize, d: u32| args.get(i + k).and_then(|a| a.parse().ok()).unwrap_or(d);
-        let seguir =
-            args.iter().position(|a| a == "--seguir").and_then(|k| args.get(k + 1)).and_then(|n| n.parse().ok());
-        if let Err(e) = capturar(&url, &salida, (numero(2, 1024), numero(3, 768)), seguir) {
+        let tras = |k: &str| args.iter().position(|a| a == k).and_then(|k| args.get(k + 1));
+        let antes = tras("--seguir")
+            .and_then(|n| n.parse().ok())
+            .map(Antes::Seguir)
+            .or_else(|| tras("--escribir").map(|t| Antes::Escribir(t.clone())));
+        if let Err(e) = capturar(&url, &salida, (numero(2, 1024), numero(3, 768)), antes) {
             eprintln!("no se pudo capturar: {e}");
             std::process::exit(1);
         }

@@ -70,10 +70,11 @@ fn error(url: &Url, motivo: &str) -> String {
 }
 
 impl Pagina {
-    /// Descarga (o lee) la página y sus hojas de estilo.
-    pub fn cargar(cliente: &Cliente, url: &Url) -> Pagina {
+    /// Descarga (o lee) la página y sus hojas de estilo. Con `formulario`, la pide por POST con
+    /// ese cuerpo (un formulario enviado).
+    pub fn cargar(cliente: &Cliente, url: &Url, formulario: Option<&[u8]>) -> Pagina {
         let inicio = Instant::now();
-        let (url_final, html) = match cliente.pedir(url) {
+        let (url_final, html) = match cliente.enviar(url, formulario) {
             Ok(r) if r.exito() || !r.cuerpo.is_empty() => (r.url.clone(), texto_html(&r)),
             Ok(r) => (r.url.clone(), error(url, &format!("el servidor respondió {}", r.estado))),
             Err(e) => (url.clone(), error(url, &e.to_string())),

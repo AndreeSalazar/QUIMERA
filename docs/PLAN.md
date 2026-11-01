@@ -37,7 +37,7 @@ Que las páginas de lectura se vean como en Chrome.
 - ✅ **Tablas:** el algoritmo automático, `colspan`/`rowspan`, bordes que colapsan, atributos antiguos y modo de compatibilidad. Las mismas posiciones que Chromium en 39 cajas; Hacker News se ve igual ([detalle](ESTILO-MAQUETACION.md#tablas)).
 - ✅ **`float` y `clear`**, `display: flow-root` y `overflow` como contexto propio. Las mismas posiciones que Chromium en 39 casos; en Wikipedia, la ficha a la derecha del texto ([detalle](ESTILO-MAQUETACION.md#flotantes)).
 - ✅ **`position` y `z-index`**: `relative`, `absolute`, capas y contextos de apilamiento. Las mismas posiciones que Chromium en 19 cajas, y la misma caja encima en 7 puntos ([detalle](ESTILO-MAQUETACION.md#posición-y-z-index)). Falta que `fixed` y `sticky` se queden quietos al desplazar.
-- `overflow` con desplazamiento propio, `inline-block`.
+- ✅ **`inline-block`** y **`box-sizing`** ([detalle](ESTILO-MAQUETACION.md#cajas-en-línea-y-controles)). Falta `overflow` con desplazamiento propio.
 - ✅ **Variables de CSS** (`--x`, `var()` con reserva, anidadas, heredadas) y `unset` correcto ([detalle](ESTILO-MAQUETACION.md#variables-de-css)). Falta `calc()`, `min()`/`max()`.
 - ✅ **`@font-face`** con TrueType, OpenType y WOFF (rust-lang.org sale con sus fuentes; [detalle](VENTANA.md#fuentes-de-la-página-font-face)). Falta WOFF2 (Brotli).
 - Respuestas comprimidas: `gzip` y `deflate` (el descompresor de PNG ya sirve).
@@ -47,13 +47,13 @@ Que las páginas de lectura se vean como en Chrome.
 
 ## Fase 2: navegar de verdad (todavía sin JavaScript)
 
-- **Formularios:** `<input>`, `<textarea>`, `<select>`, `<button>`, envío GET y POST, codificación del formulario.
-- Foco, cursor de texto, selección, copiar y pegar.
-- **Cookies** (con sus reglas de dominio, ruta, `Secure`, `SameSite`), guardadas en disco.
+- ✅ **Formularios:** `<input>` (texto, contraseña, casillas, opciones, botones), `<textarea>` y `<select>` dibujados con las medidas de Chromium (13 cajas iguales); foco con clic, escribir y borrar, Enter para enviar; envío GET y POST con la codificación del formulario ([detalle](VENTANA.md#formularios)). Falta la lista desplegable de `<select>` (hoy cada clic pasa a la opción siguiente) y `<button>` con contenido.
+- Cursor de texto que se mueve, selección, copiar y pegar.
+- ✅ **Cookies** con sus reglas de dominio, ruta, `Secure` y caducidad, guardadas en disco ([detalle](RED.md#cookies)). Falta `SameSite` (sin JavaScript ni peticiones de otros sitios aún no hace falta).
 - Caché HTTP, HTTP/2 (opcional), descargas.
 - Pestañas (en `quimera-ventana`, o ya con VERX).
 
-**Hito:** buscar en DuckDuckGo HTML, leer los resultados y abrirlos. Es decir, navegar.
+**Hito:** buscar en DuckDuckGo HTML, leer los resultados y abrirlos. Es decir, navegar. ✅ La búsqueda va por POST y los resultados se ven como en Chromium (114 MB frente a 481 MB de Edge); la cabecera de DuckDuckGo todavía no (falta el logotipo y las dos listas de región y fecha quedan tapadas).
 
 ## Fase 3: JavaScript y DOM
 

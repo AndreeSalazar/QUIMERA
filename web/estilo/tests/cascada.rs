@@ -264,3 +264,16 @@ fn variables_css() {
     let s = de(&doc, &e, "s");
     assert_eq!((s.display, s.relleno[0]), (Display::EnLinea, Medida::Px(0.0)));
 }
+
+#[test]
+fn box_sizing() {
+    let (doc, e) = estilos(
+        "<style>* { box-sizing: border-box }</style>
+         <div id=a style='width:100px;height:50px;padding:10px;border:5px solid'></div>
+         <div id=b style='width:50%;padding:10px;box-sizing:content-box'></div><button id=c></button>",
+    );
+    let (a, b, c) = (de(&doc, &e, "a"), de(&doc, &e, "b"), de(&doc, &e, "c"));
+    assert_eq!((a.ancho, a.alto), (Medida::Px(70.0), Medida::Px(20.0)), "100 - 2×10 - 2×5");
+    assert!(a.caja_borde && !b.caja_borde && c.caja_borde, "los botones, border-box por defecto");
+    assert_eq!(b.ancho, Medida::Porcentaje(50.0));
+}

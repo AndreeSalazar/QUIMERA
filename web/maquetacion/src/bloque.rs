@@ -59,6 +59,8 @@ pub(crate) struct Maquetador<'a> {
     pub orden: usize,
     /// El elemento posicionado que se está maquetando ahora (para no volver a posicionarlo).
     pub guardia: Option<NodoId>,
+    /// Lo escrito en los controles y cuál tiene el foco (lo sabe la ventana).
+    pub formulario: &'a dyn crate::control::Formulario,
     /// El tamaño propio de cada imagen por su `src` (si ya se descargó).
     pub imagenes: &'a dyn Fn(&str) -> Option<(u32, u32)>,
     /// Ancho del contenido del bloque que se está llenando (para los `%` de las imágenes en línea).
@@ -119,6 +121,7 @@ impl<'a> Maquetador<'a> {
             orden: 0,
             guardia: None,
             imagenes,
+            formulario: &crate::control::SinFormulario,
             ancho_actual: 0.0,
         }
     }
@@ -157,6 +160,7 @@ impl<'a> Maquetador<'a> {
             ) => Clase::Bloque,
             // Un elemento en línea con bloques dentro se maqueta como un bloque (los
             // navegadores lo parten en trozos; el resultado visible es casi el mismo).
+            Some(Display::BloqueEnLinea) => Clase::EnLinea,
             Some(_) if self.tiene_bloques(id) => Clase::Bloque,
             Some(_) => Clase::EnLinea,
         }
@@ -218,6 +222,9 @@ impl<'a> Maquetador<'a> {
         }
         if crate::reemplazado::es_imagen(self, id) {
             return Some(self.bloque_imagen(id, e, (x, y), ancho));
+        }
+        if let Some(tipo) = crate::control::tipo_control(self, id) {
+            return Some(self.control(id, tipo, e, (x, y), ancho));
         }
         (e.display == Display::Tabla).then(|| self.tabla(id, e, (x, y), ancho))
     }
@@ -328,10 +335,14 @@ impl<'a> Maquetador<'a> {
         let mr = e.margen[1].px(contenedor, 0.0);
         let mut ancho = match e.ancho {
             Medida::Auto => return self.limitar(e, contenedor, extras, ml, mr),
+            Medida::Porcentaje(_) => {
+                (e.ancho.px(contenedor, 0.0) - e.extras_si_caja_borde(contenedor)).max(0.0) + extras
+            }
             m => m.px(contenedor, 0.0) + extras,
         };
         if let Medida::Px(_) | Medida::Porcentaje(_) = e.ancho_max {
-            ancho = ancho.min(e.ancho_max.px(contenedor, f32::MAX) + extras);
+            let resta = if let Medida::Porcentaje(_) = e.ancho_max { e.extras_si_caja_borde(contenedor) } else { 0.0 };
+            ancho = ancho.min(e.ancho_max.px(contenedor, f32::MAX) - resta + extras);
         }
         repartir(e, contenedor, ancho, ml, mr)
     }
@@ -448,6 +459,13 @@ impl<'a> Maquetador<'a> {
                 if Self::fuera_del_flujo(e) {
                     let estatico = (f32::NAN, f32::NAN);
                     self.absolutos.push(Pendiente { id, estatico, apilado: self.apilado.clone() });
+                    return;
+                }
+                // Una caja en línea (y los controles): se maqueta aparte y va como una palabra.
+                let control = crate::control::tipo_control(self, id).is_some();
+                if (e.display == Display::BloqueEnLinea || control) && el.nombre != "img" {
+                    items.push(self.caja_en_linea(id, e));
+                    *ultimo_espacio = false;
                     return;
                 }
                 match el.nombre.as_str() {

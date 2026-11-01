@@ -391,6 +391,7 @@ fn calcular_valores(
             propiedades::aplicar(&mut e, padre, prop, v, &c);
         }
     }
+    e.resolver_caja_borde();
     // `absolute` y `fixed` no flotan (CSS 2.1, 9.7).
     if e.colocacion.posicion.fuera_del_flujo() {
         e.flotar = crate::valores::Flotar::No;

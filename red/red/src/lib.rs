@@ -13,6 +13,7 @@
 //! println!("{} {}", r.estado, r.texto());
 //! ```
 
+pub mod galletas;
 mod http;
 mod url;
 
@@ -94,6 +95,13 @@ pub struct Cliente {
     pub agente: String,
     /// Tiempo máximo para conectar y para cada lectura.
     pub espera: Duration,
+    /// Las cookies (compartidas por los hilos que piden con este cliente).
+    galletas: std::sync::Mutex<galletas::Tarro>,
+}
+
+/// Segundos desde 1970 (para la caducidad de las cookies).
+fn ahora() -> u64 {
+    std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_secs())
 }
 
 impl Default for Cliente {
@@ -123,28 +131,60 @@ impl Cliente {
             tls,
             agente: format!("QUIMERA/{} (+navegador personal en Rust)", env!("CARGO_PKG_VERSION")),
             espera: Duration::from_secs(15),
+            galletas: std::sync::Mutex::new(galletas::Tarro::default()),
         }
     }
 
     /// Pide una URL siguiendo las redirecciones.
     pub fn pedir(&self, url: &Url) -> Result<Respuesta, Error> {
+        self.enviar(url, None)
+    }
+
+    /// Pide una URL, o envía un formulario por POST si hay `formulario` (codificado como
+    /// `application/x-www-form-urlencoded`), siguiendo las redirecciones: tras un POST, una 301,
+    /// 302 o 303 se pide por GET; una 307 o 308 vuelve a enviar el formulario.
+    pub fn enviar(&self, url: &Url, formulario: Option<&[u8]>) -> Result<Respuesta, Error> {
         let mut actual = url.clone();
+        let mut cuerpo = formulario;
         for _ in 0..=REDIRECCIONES {
-            let r = self.pedir_una(&actual)?;
+            let r = self.pedir_una(&actual, cuerpo)?;
             let destino = r.cabecera("location").filter(|_| matches!(r.estado, 301 | 302 | 303 | 307 | 308));
             match destino {
-                Some(d) => actual = actual.unir(d)?,
+                Some(d) => {
+                    actual = actual.unir(d)?;
+                    if !matches!(r.estado, 307 | 308) {
+                        cuerpo = None;
+                    }
+                }
                 None => return Ok(r),
             }
         }
         Err(Error::Http(format!("más de {REDIRECCIONES} redirecciones desde {url}")))
     }
 
-    fn pedir_una(&self, url: &Url) -> Result<Respuesta, Error> {
+    /// Las cookies que duran más que la sesión, como texto (para guardarlas en disco).
+    pub fn galletas_texto(&self) -> String {
+        self.galletas.lock().map(|t| t.a_texto(ahora())).unwrap_or_default()
+    }
+
+    /// Recupera las cookies guardadas con [`Cliente::galletas_texto`].
+    pub fn cargar_galletas(&self, texto: &str) {
+        if let Ok(mut t) = self.galletas.lock() {
+            *t = galletas::Tarro::desde_texto(texto, ahora());
+        }
+    }
+
+    fn pedir_una(&self, url: &Url, formulario: Option<&[u8]>) -> Result<Respuesta, Error> {
         match url.esquema.as_str() {
             "http" | "https" => {
-                let bruto = self.intercambio(url)?;
+                let galleta = self.galletas.lock().ok().and_then(|t| t.cabecera(url, ahora()));
+                let bruto = self.intercambio(url, galleta.as_deref(), formulario)?;
                 let l = http::leer(&bruto)?;
+                if let Ok(mut t) = self.galletas.lock() {
+                    for (_, v) in l.cabeceras.iter().filter(|(k, _)| k == "set-cookie") {
+                        t.recibir(url, v, ahora());
+                    }
+                }
                 let mut sin_fragmento = url.clone();
                 sin_fragmento.fragmento = None;
                 Ok(Respuesta { url: sin_fragmento, estado: l.estado, cabeceras: l.cabeceras, cuerpo: l.cuerpo })
@@ -160,7 +200,7 @@ impl Cliente {
     }
 
     /// Conecta, envía la petición y lee todo hasta que el servidor cierra.
-    fn intercambio(&self, url: &Url) -> Result<Vec<u8>, Error> {
+    fn intercambio(&self, url: &Url, galletas: Option<&str>, formulario: Option<&[u8]>) -> Result<Vec<u8>, Error> {
         let anfitrion = url.anfitrion.trim_start_matches('[').trim_end_matches(']');
         let direcciones = (anfitrion, url.puerto_efectivo())
             .to_socket_addrs()
@@ -179,7 +219,7 @@ impl Cliente {
         let tcp = tcp.ok_or(ultimo)?;
         tcp.set_read_timeout(Some(self.espera)).map_err(|e| Error::Red(e.to_string()))?;
         tcp.set_write_timeout(Some(self.espera)).map_err(|e| Error::Red(e.to_string()))?;
-        let peticion = http::peticion(url, &self.agente);
+        let peticion = http::peticion(url, &self.agente, galletas, formulario);
         if url.esquema == "https" {
             let nombre = rustls::pki_types::ServerName::try_from(anfitrion.to_string())
                 .map_err(|e| Error::Tls(e.to_string()))?;

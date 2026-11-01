@@ -10,8 +10,9 @@ cargo run --release -p quimera-ventana -- http://info.cern.ch/hypertext/WWW/TheP
 | Parte | Qué hace | De quién |
 |---|---|---|
 | `url.rs` | URLs: análisis (esquema y anfitrión en minúsculas, `\` como `/`, IPv6, puertos, `usuario@`), resolución de relativas con el RFC 3986 (sección 5.2) y codificación `%XX` para la petición | propio |
-| `http.rs` | HTTP/1.1: petición GET, respuesta con `Content-Length`, por trozos (`chunked`) o hasta el cierre, `1xx` previos, `charset` de la cabecera o del `<meta>` (UTF-8, Windows-1252/Latin-1, BOM) | propio |
-| `lib.rs` | El `Cliente`: `http`, `https`, `file:` y `data:` (texto o base64); hasta 10 redirecciones; tiempos de espera; 64 MB como máximo | propio |
+| `http.rs` | HTTP/1.1: petición GET o POST (con la cabecera `Cookie`), respuesta con `Content-Length`, por trozos (`chunked`) o hasta el cierre, `1xx` previos, `charset` de la cabecera o del `<meta>` (UTF-8, Windows-1252/Latin-1, BOM) | propio |
+| `lib.rs` | El `Cliente`: `http`, `https`, `file:` y `data:` (texto o base64); hasta 10 redirecciones (tras un POST, 301/302/303 siguen por GET y 307/308 reenvían el formulario); tiempos de espera; 64 MB como máximo | propio |
+| `galletas.rs` | Las cookies: el tarro, `Set-Cookie` y `Cookie`, fechas HTTP | propio |
 | TLS | TLS 1.2 y 1.3, comprobación del certificado y del nombre del servidor | `rustls` 0.23.20 con `ring`, `webpki-roots` 0.26.7 (raíces de Mozilla) |
 
 TLS es lo único de fuera, a propósito: la criptografía no se escribe a mano (un error ahí es un agujero de seguridad), y rustls es Rust, auditado, y lo usan Servo, Cloudflare y AWS.
@@ -24,6 +25,18 @@ TLS es lo único de fuera, a propósito: la criptografía no se escribe a mano (
 - Si algo falla (DNS, conexión, certificado, estado HTTP sin contenido), se muestra una página de error de QUIMERA con el motivo.
 - El texto plano, CSS, JSON y JavaScript se muestran como texto dentro de un `<pre>`, como hacen los navegadores.
 
+## Cookies
+
+El `Cliente` lleva un tarro (`Mutex<Tarro>`, lo comparten los hilos que descargan imágenes y fuentes). Cada respuesta HTTP deja sus `Set-Cookie` y cada petición lleva su `Cookie`, también en las redirecciones (así funciona un inicio de sesión que pone la cookie y redirige).
+
+- **Dominio:** sin `Domain`, solo para ese anfitrión. Con `Domain`, también sus subdominios, pero solo si la respuesta viene de ese dominio y el dominio tiene un punto: `ejemplo.com` no puede poner cookies a `otro.com` ni a todo `com`. La regla completa usa la lista de sufijos públicos (`co.uk`); QUIMERA todavía no la tiene.
+- **Ruta:** sin `Path`, la carpeta de la dirección. `/a` vale para `/a/b`, no para `/ab`. Se mandan primero las de ruta más larga, como pide el RFC 6265.
+- **`Secure`:** solo por HTTPS, y solo una respuesta HTTPS puede ponerla.
+- **Caducidad:** `Max-Age` gana a `Expires`; `Max-Age=0` o una fecha pasada borra la cookie. Las fechas se leen en sus dos formas (`21 Oct 2015` y `21-Oct-15`).
+- **En disco:** las que no son de sesión se guardan tras cada página en `%APPDATA%\QUIMERA\galletas.txt` (o `~/.local/share/quimera/`). Es **texto sin cifrar**, como el perfil de Firefox sin contraseña maestra: quien pueda leer la carpeta del usuario ve las sesiones. El modo captura no las lee ni las guarda.
+
+Falta `SameSite`, `HttpOnly` (sin JavaScript da igual: nadie puede leerlas desde la página) y la lista de sufijos públicos.
+
 ## Comprobado
 
 - **Sin internet** (en el hook): un servidor HTTP de verdad en `127.0.0.1` dentro de la prueba, con respuesta por trozos, redirección relativa con consulta, bucle de redirecciones (se corta en 10), 404, Latin-1, espacios codificados y conexión rechazada. Además, los ejemplos de resolución de relativas del RFC 3986.
@@ -35,7 +48,7 @@ TLS es lo único de fuera, a propósito: la criptografía no se escribe a mano (
 ## Falta
 
 - Conexiones reutilizadas (*keep-alive*) y varias peticiones a la vez: hoy cada recurso abre su conexión, una tras otra.
-- HTTP/2, compresión (`gzip`, `br`; hoy se pide `identity`), caché, cookies, formularios (`POST`).
+- HTTP/2, compresión (`gzip`, `br`; hoy se pide `identity`), caché.
 - Descargar en segundo plano: hoy la ventana espera a que llegue la página.
 - Enlaces que se puedan pulsar y una barra de direcciones (`quimera-navegador`).
 - Imágenes.

@@ -58,3 +58,22 @@ a:link { color: #0000ee; text-decoration: underline }
 hr { border-width: 1px; border-style: inset; border-color: gray; margin: .5em auto; color: gray }
 td, th { padding: 1px }
 fieldset { margin: 0 2px; padding: .35em .75em .625em; border: 2px groove ThreeDFace }
+
+/* Controles de formulario: cajas en línea con la letra, los bordes y los márgenes de Chromium. */
+input, button, select, textarea {
+  display: inline-block; font-size: 13.333px; font-family: sans-serif; font-weight: normal;
+  color: black; line-height: normal; text-align: start; text-transform: none; white-space: nowrap
+}
+input { background-color: white; border: 2px inset rgb(118, 118, 118); padding: 1px 2px }
+select { background-color: white; border: 1px solid rgb(118, 118, 118); padding: 0 }
+textarea {
+  background-color: white; border: 1px solid rgb(118, 118, 118); padding: 2px;
+  font-family: monospace; white-space: pre-wrap
+}
+button, input[type=submit], input[type=button], input[type=reset] {
+  background-color: rgb(240, 240, 240); border: 2px outset black; padding: 1px 6px; text-align: center
+}
+button, select, input[type=submit], input[type=button], input[type=reset], input[type=checkbox],
+input[type=radio] { box-sizing: border-box }
+input[type=checkbox] { border: 0; padding: 0; margin: 3px 3px 3px 4px; background-color: transparent }
+input[type=radio] { border: 0; padding: 0; margin: 3px 3px 0 5px; background-color: transparent }

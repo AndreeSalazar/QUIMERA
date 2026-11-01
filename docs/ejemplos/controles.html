@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- Cajas en línea (inline-block) y controles de formulario sin texto (font-size: 0): cada caja
+     con fondo rgb(k, 60, 120) se compara con la posición que le da Chromium
+     (web/maquetacion/tests/controles.rs). -->
+<style>
+  body { margin: 8px }
+  .c { font-size: 0; margin-bottom: 20px; background: rgb(99, 60, 120) }
+  .c * { vertical-align: baseline }
+</style>
+
+<!-- 1: tres cajas en línea de alto distinto: se apoyan en la línea base (su borde de abajo) -->
+<div class=c><span style="display:inline-block;width:50px;height:20px;background:rgb(1,60,120)"></span><span style="display:inline-block;width:30px;height:40px;margin:0 5px;background:rgb(2,60,120)"></span><span style="display:inline-block;width:40px;height:10px;background:rgb(3,60,120)"></span></div>
+
+<!-- 2: con relleno, borde y un bloque dentro; se encoge a su contenido -->
+<div class=c><span style="display:inline-block;padding:4px;border:3px solid black;background:rgb(4,60,120)"><div style="width:60px;height:15px;background:rgb(5,60,120)"></div></span><span style="display:inline-block;width:20px;height:5px;background:rgb(6,60,120)"></span></div>
+
+<!-- 3: no caben en una línea: la tercera baja -->
+<div class=c style="width:200px"><span style="display:inline-block;width:90px;height:10px;background:rgb(7,60,120)"></span><span style="display:inline-block;width:90px;height:10px;background:rgb(8,60,120)"></span><span style="display:inline-block;width:90px;height:10px;background:rgb(9,60,120)"></span></div>
+
+<!-- 4: controles con medidas fijas como bloques -->
+<div class=c><input style="display:block;width:100px;height:20px;padding:3px;border:2px solid black;background:rgb(10,60,120)">
+  <button style="display:block;width:60px;height:24px;padding:0;margin-top:4px;background:rgb(11,60,120)"></button>
+  <textarea style="display:block;width:80px;height:30px;padding:0;background:rgb(12,60,120)"></textarea></div>
+
+<!-- 5: casillas con su tamaño y márgenes por defecto, en línea -->
+<div class=c><span style="display:inline-block;width:10px;height:30px;background:rgb(13,60,120)"></span><input type=checkbox><input type=radio checked></div>

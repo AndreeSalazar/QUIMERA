@@ -235,6 +235,10 @@ pub struct Estilo {
     pub alto: Medida,
     /// `max-width` (`Auto` = sin límite).
     pub ancho_max: Medida,
+    /// `box-sizing: border-box`: `width`/`height` incluyen relleno y borde. Las medidas en px ya
+    /// vienen pasadas a contenido; un porcentaje se resuelve en la maquetación (que conoce el
+    /// contenedor) restándoles relleno y borde.
+    pub caja_borde: bool,
     /// `min-height`
     pub alto_min: Medida,
     /// `list-style-type`
@@ -285,6 +289,7 @@ impl Default for Estilo {
             ancho: Medida::Auto,
             alto: Medida::Auto,
             ancho_max: Medida::Auto,
+            caja_borde: false,
             alto_min: Medida::Px(0.0),
             lista: TipoLista::Disco,
             visible: true,
@@ -324,6 +329,38 @@ impl Estilo {
             variables: padre.variables.clone(),
             ..Estilo::default()
         }
+    }
+
+    /// Con `box-sizing: border-box`, pasa `width`, `height`, `max-width` y `min-height` en px a
+    /// medidas de contenido (restando relleno y borde; un relleno en `%` cuenta 0 aquí).
+    pub(crate) fn resolver_caja_borde(&mut self) {
+        if !self.caja_borde {
+            return;
+        }
+        let px = |m: Medida| if let Medida::Px(v) = m { v } else { 0.0 };
+        let horizontal = px(self.relleno[1]) + px(self.relleno[3]) + self.borde[1].ocupa() + self.borde[3].ocupa();
+        let vertical = px(self.relleno[0]) + px(self.relleno[2]) + self.borde[0].ocupa() + self.borde[2].ocupa();
+        let menos = |m: &mut Medida, extras: f32| {
+            if let Medida::Px(v) = m {
+                *v = (*v - extras).max(0.0);
+            }
+        };
+        menos(&mut self.ancho, horizontal);
+        menos(&mut self.ancho_max, horizontal);
+        menos(&mut self.alto, vertical);
+        menos(&mut self.alto_min, vertical);
+    }
+
+    /// Lo que restar a un `width` en porcentaje ya resuelto para tener el ancho del contenido:
+    /// relleno y borde con `border-box`; nada con `content-box`.
+    pub fn extras_si_caja_borde(&self, contenedor: f32) -> f32 {
+        if !self.caja_borde {
+            return 0.0;
+        }
+        self.relleno[1].px(contenedor, 0.0)
+            + self.relleno[3].px(contenedor, 0.0)
+            + self.borde[1].ocupa()
+            + self.borde[3].ocupa()
     }
 
     /// El alto de línea en píxeles.

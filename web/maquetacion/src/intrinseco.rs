@@ -83,6 +83,10 @@ impl<'a> Maquetador<'a> {
         if let Medida::Px(w) = e.ancho {
             return (w + extras, w + extras);
         }
+        if let Some(tipo) = crate::control::tipo_control(self, id) {
+            let w = self.ancho_natural_control(id, tipo, e) + extras;
+            return (w, w);
+        }
         let (mut minimo, mut maximo) = self.contenido_intrinseco(id, e);
         if let Medida::Px(tope) = e.ancho_max {
             (minimo, maximo) = (minimo.min(tope), maximo.min(tope));

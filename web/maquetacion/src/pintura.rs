@@ -112,9 +112,35 @@ pub struct Maquetacion {
     pub enlaces: Vec<Enlace>,
     /// (id, y) de cada bloque con `id`, para ir a `#ancla`.
     pub anclas: Vec<(String, f32)>,
+    /// Dónde están los controles de formulario (para saber qué se pulsa).
+    pub controles: Vec<Control>,
+}
+
+/// El rectángulo de un control de formulario.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct Control {
+    /// Izquierda.
+    pub x: f32,
+    /// Arriba.
+    pub y: f32,
+    /// Ancho.
+    pub ancho: f32,
+    /// Alto.
+    pub alto: f32,
+    /// El elemento (`<input>`, `<select>`, `<textarea>`).
+    pub nodo: quimera_html::NodoId,
 }
 
 impl Maquetacion {
+    /// El control que hay en el punto (x, y) del documento (el último dibujado: el de encima).
+    pub fn control_en(&self, x: f32, y: f32) -> Option<quimera_html::NodoId> {
+        self.controles
+            .iter()
+            .rev()
+            .find(|c| x >= c.x && x < c.x + c.ancho && y >= c.y && y < c.y + c.alto)
+            .map(|c| c.nodo)
+    }
+
     /// El enlace que hay en el punto (x, y) del documento.
     pub fn enlace_en(&self, x: f32, y: f32) -> Option<&str> {
         self.enlaces

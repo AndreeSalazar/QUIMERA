@@ -6,6 +6,7 @@
 //! se descarta.
 
 use crate::barra::{self, Barra, Vista, Zona};
+use crate::formularios;
 use crate::historial::Historial;
 use crate::imagenes::{self, Imagenes};
 use crate::pagina::{Pagina, direccion_escrita};
@@ -13,7 +14,7 @@ use crate::tipografias;
 use quimera_estilo::Opciones;
 use quimera_gpu::Gpu;
 use quimera_imagen::Imagen;
-use quimera_maquetacion::{Maquetacion, maquetar_con_imagenes};
+use quimera_maquetacion::{Maquetacion, maquetar_pagina};
 use quimera_pintar::{Pintor, color_gpu};
 use quimera_red::{Cliente, Url};
 use std::sync::Arc;
@@ -65,12 +66,16 @@ pub struct Navegador {
     estado: Option<String>,
     raton: (f32, f32),
     pub teclas: ModifiersState,
+    /// Lo escrito y marcado en los formularios de la página.
+    formulario: formularios::Estado,
 }
 
 impl Navegador {
     pub fn nuevo(url: Url, pintor: Pintor, proxy: EventLoopProxy<Evento>) -> Navegador {
+        let cliente = Arc::new(Cliente::nuevo());
+        crate::perfil::cargar_galletas(&cliente);
         Navegador {
-            cliente: Arc::new(Cliente::nuevo()),
+            cliente,
             proxy,
             imagenes: Imagenes::default(),
             imagenes_nuevas: false,
@@ -85,6 +90,7 @@ impl Navegador {
             estado: None,
             raton: (0.0, 0.0),
             teclas: ModifiersState::empty(),
+            formulario: formularios::Estado::default(),
         }
     }
 
@@ -104,6 +110,11 @@ impl Navegador {
 
     /// Pide `url` en otro hilo. `nueva`: entra en el historial (no al ir atrás/adelante ni al recargar).
     pub fn navegar(&mut self, url: Url, nueva: bool) {
+        self.navegar_con(url, nueva, None);
+    }
+
+    /// Como [`Navegador::navegar`], con el cuerpo de un formulario enviado por POST.
+    fn navegar_con(&mut self, url: Url, nueva: bool, formulario: Option<Vec<u8>>) {
         if nueva {
             self.historial.ir(url.clone());
         }
@@ -114,7 +125,8 @@ impl Navegador {
         self.barra.editando = false;
         let (id, cliente, proxy) = (self.id_carga, self.cliente.clone(), self.proxy.clone());
         std::thread::spawn(move || {
-            let pagina = Pagina::cargar(&cliente, &url);
+            let pagina = Pagina::cargar(&cliente, &url, formulario.as_deref());
+            crate::perfil::guardar_galletas(&cliente);
             let _ = proxy.send_event(Evento::Pagina { id, pagina: Box::new(pagina) });
         });
         self.pintar_barra();
@@ -155,6 +167,7 @@ impl Navegador {
     fn llegada(&mut self, pagina: Pagina) {
         self.imagenes.vaciar();
         self.imagenes_nuevas = false;
+        self.formulario = formularios::Estado::default();
         if let Some(a) = &mut self.abierta {
             a.gpu.olvidar_imagenes();
         }
@@ -198,7 +211,8 @@ impl Navegador {
         let externa = |href: &str| pagina.hoja(href);
         let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
         let imagenes = &mut self.imagenes;
-        let m = maquetar_con_imagenes(&doc, &estilos, &self.pintor.medidor(), (ancho, alto), &|s| imagenes.tam(s));
+        let medidor = self.pintor.medidor();
+        let m = maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario);
         let cuadros = self.pintor.escena(&m, escala, &|s| imagenes.id(s));
         for (id, w, h, rgba) in imagenes.por_subir() {
             a.gpu.subir_imagen(id, w, h, &rgba);
@@ -335,17 +349,70 @@ impl Navegador {
             }
             None => {
                 let desp = self.abierta.as_ref().map_or(0.0, |a| a.desp);
-                let href = self
-                    .abierta
-                    .as_ref()
-                    .and_then(|a| a.maq.as_ref())
-                    .and_then(|m| m.enlace_en(x / e, (y - barra_px + desp) / e))
-                    .map(String::from);
-                if let Some(h) = href {
-                    self.seguir(&h);
+                let (px, py) = (x / e, (y - barra_px + desp) / e);
+                let maq = self.abierta.as_ref().and_then(|a| a.maq.as_ref());
+                let control = maq.and_then(|m| m.control_en(px, py));
+                let href = maq.and_then(|m| m.enlace_en(px, py)).map(String::from);
+                match (control, href) {
+                    (Some(c), _) => self.pulsar_control(c),
+                    (None, Some(h)) => {
+                        self.soltar_foco();
+                        self.seguir(&h);
+                    }
+                    (None, None) => self.soltar_foco(),
                 }
             }
         }
+    }
+
+    /// Se pulsó un control de formulario: enfocar, marcar, elegir o enviar.
+    fn pulsar_control(&mut self, control: quimera_html::NodoId) {
+        let Some(pagina) = &self.pagina else { return };
+        let doc = pagina.documento();
+        match self.formulario.pulsar(&doc, control) {
+            Some(boton) => self.enviar(&doc, boton),
+            None => self.maquetar(),
+        }
+    }
+
+    /// Quita el foco del campo que lo tenga.
+    fn soltar_foco(&mut self) {
+        if self.formulario.foco.take().is_some() {
+            self.maquetar();
+        }
+    }
+
+    /// Envía el formulario de `control` (un botón, o el campo donde se dio Enter).
+    fn enviar(&mut self, doc: &quimera_html::Documento, control: quimera_html::NodoId) {
+        let Some(base) = self.pagina.as_ref().map(|p| p.base.clone()) else { return };
+        match self.formulario.envio(doc, control, &base) {
+            Some((url, cuerpo)) => self.navegar_con(url, true, cuerpo),
+            None => {
+                self.estado = Some(String::from("Ese control no está dentro de un formulario"));
+                self.pintar_barra();
+            }
+        }
+    }
+
+    /// Una tecla con un campo de la página enfocado.
+    fn tecla_en_campo(&mut self, evento: &KeyEvent) {
+        let Some(pagina) = &self.pagina else { return };
+        let doc = pagina.documento();
+        match &evento.logical_key {
+            Key::Named(NamedKey::Enter) => {
+                let foco = self.formulario.foco.take();
+                if let Some(c) = foco {
+                    return self.enviar(&doc, c);
+                }
+            }
+            Key::Named(NamedKey::Escape | NamedKey::Tab) => self.formulario.foco = None,
+            Key::Named(NamedKey::Backspace) => self.formulario.borrar(&doc),
+            _ => match evento.text.as_deref().filter(|_| !self.teclas.control_key() && !self.teclas.alt_key()) {
+                Some(t) if !t.chars().any(char::is_control) => self.formulario.escribir(&doc, t),
+                _ => return,
+            },
+        }
+        self.maquetar();
     }
 
     /// Seguir un enlace: otra página, o un `#ancla` de esta (sin volver a cargar).
@@ -386,6 +453,9 @@ impl Navegador {
     pub fn tecla(&mut self, evento: &KeyEvent) {
         if self.barra.editando {
             return self.tecla_en_barra(evento);
+        }
+        if self.formulario.foco.is_some() {
+            return self.tecla_en_campo(evento);
         }
         let (ctrl, alt) = (self.teclas.control_key(), self.teclas.alt_key());
         let alto = self.abierta.as_ref().map_or(600.0, |a| a.ventana.inner_size().height as f32) - self.alto_barra();

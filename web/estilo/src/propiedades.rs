@@ -272,6 +272,7 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
         "text-transform" => e.transformar = de.transformar,
         "float" => e.flotar = de.flotar,
         "clear" => e.limpiar = de.limpiar,
+        "box-sizing" => e.caja_borde = de.caja_borde,
         "overflow" | "overflow-x" | "overflow-y" => e.recorta = de.recorta,
         p if crate::flex::es_propia(p) => crate::flex::copiar(&mut e.flex, &de.flex, p),
         p if crate::tabla::es_propia(p) => crate::tabla::copiar(&mut e.tabla, &de.tabla, p),
@@ -355,6 +356,11 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
             }
         }
         "float" => e.flotar = n.as_deref().and_then(flotar).unwrap_or(e.flotar),
+        "box-sizing" => match n.as_deref() {
+            Some("border-box") => e.caja_borde = true,
+            Some("content-box") => e.caja_borde = false,
+            _ => {}
+        },
         "overflow" | "overflow-x" | "overflow-y" => {
             let valores: Vec<bool> = piezas(v).iter().filter_map(|p| ident(p).as_deref().and_then(recorta)).collect();
             if !valores.is_empty() {
@@ -430,6 +436,7 @@ pub(crate) fn valida(prop: &str, v: &[Token]) -> bool {
         "visibility" => matches!(n, Some("visible" | "hidden" | "collapse")),
         "text-transform" => matches!(n, Some("none" | "uppercase" | "lowercase" | "capitalize")),
         "float" => n.and_then(flotar).is_some(),
+        "box-sizing" => matches!(n, Some("border-box" | "content-box")),
         "overflow-x" | "overflow-y" => n.and_then(recorta).is_some(),
         "overflow" => piezas(v).iter().all(|p| ident(p).as_deref().and_then(recorta).is_some()),
         "clear" => n.and_then(limpiar).is_some(),

@@ -132,7 +132,7 @@ impl Maquetador<'_> {
                 max.min((cw - izq.unwrap_or(0.0) - der.unwrap_or(0.0) - ml - mr).max(min))
             }
             m if e.display == Display::Tabla => m.px(cw, 0.0).max(self.intrinseco(p.id).0),
-            m => m.px(cw, 0.0) + extras_horizontales(e),
+            m => m.px(cw, 0.0) - e.extras_si_caja_borde(cw) + extras_horizontales(e),
         };
         // Con los dos lados y el ancho fijados, `margin: auto` lo centra.
         if let (Some(i), Some(d)) = (izq, der)

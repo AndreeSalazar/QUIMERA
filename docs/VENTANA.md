@@ -17,12 +17,22 @@ cargo run --release -p quimera-ventana -- pagina.html --captura salida.png 1024 
 | Escribir una dirección | Clic en el campo, Ctrl+L o F6; Enter para ir, Esc para salir. `example.com/x` → `https://`; `localhost:8080` → `http://`; también rutas locales. Lo que no es una dirección no se envía a ningún buscador |
 | Atrás / adelante | Botones ← →, Alt+← / Alt+→, o los botones laterales del ratón |
 | Recargar | ⟳, F5 o Ctrl+R |
+| Formularios | Clic en un campo para escribir (Retroceso borra, Esc o Tab sueltan el foco, Enter envía); clic en una casilla la marca; clic en un botón de enviar envía su formulario |
 
 Las páginas se cargan en **otro hilo**: la ventana sigue respondiendo y la línea de estado dice «Cargando...». Si mientras tanto se pide otra página, la primera se descarta al llegar. El historial guarda la URL final, tras las redirecciones.
 
 La barra se dibuja con los mismos cuadros y letras que la página, en una **capa fija** de la GPU: el sombreador no le aplica el desplazamiento (los vértices fijos llevan +2 en su modo), y la página se dibuja debajo, corrida el alto de la barra.
 
 La maquetación guarda **dónde está cada enlace** (un rectángulo por trozo de línea, también para los `<a>` que envuelven bloques o imágenes) y **dónde está cada `id`**, que es a donde llevan los `#ancla`.
+
+## Formularios
+
+`formularios.rs` guarda lo que cambió la persona: lo escrito en cada campo, las casillas marcadas, la opción de cada lista y el campo con el foco. La maquetación lo lee a través del rasgo `Formulario` para dibujar el texto, el cursor y las marcas, y devuelve dónde está cada control (`Maquetacion::control_en`). Al cambiar de página se vacía.
+
+- **Pulsar:** un campo toma el foco; una casilla se marca o desmarca; un botón de opción desmarca los de su grupo (mismo `name` en el mismo `<form>`); una lista pasa a su opción siguiente (aún no hay lista desplegable); `reset` deshace lo cambiado.
+- **Enviar** (como manda HTML): se juntan los controles con `name` y sin `disabled` del `<form>`. Las casillas, solo si están marcadas (`on` si no tienen `value`); los botones, solo el que se pulsó; con Enter, el primer botón de enviar. Se codifica como `application/x-www-form-urlencoded` (UTF-8, espacio como `+`). `action` y `method` del formulario, o `formaction` y `formmethod` del botón. Por GET la consulta sustituye a la de `action`; por POST va en el cuerpo.
+
+`--captura` con `--escribir "texto"` escribe en el primer campo de la página y envía su formulario. Así se comprobó la búsqueda en DuckDuckGo HTML: `POST https://html.duckduckgo.com/html/` con `q=lenguaje+rust&b=`, y los resultados (101 enlaces) se ven como en Chromium.
 
 ## Desplazar y redimensionar
 
@@ -56,7 +66,8 @@ La página de ejemplo, en una ventana de 1024×768: leer, analizar, estilo, maqu
 
 - Las familias con nombre (`font-family: "Fira Sans"`) aún caen en su genérica; hace falta buscar fuentes por nombre.
 - Imágenes (hoy un recuadro gris), selección de texto, barra de desplazamiento, mover el cursor dentro del campo de dirección, pestañas.
-- La interacción en vivo (pasar el ratón, pulsar, escribir) se prueba a mano en la ventana; su lógica (historial, edición del campo, direcciones escritas) tiene pruebas.
+- La interacción en vivo (pasar el ratón, pulsar, escribir) se prueba a mano en la ventana; su lógica (historial, edición del campo, direcciones escritas, formularios y su envío) tiene pruebas.
+- En los campos de la página no se mueve el cursor, ni se selecciona, ni se copia y pega.
 - Pestañas, historial y barra de direcciones (`quimera-navegador`), y la interfaz con VERX. La red ya está (`quimera-red`, ver [RED.md](RED.md)).
 - Texto complejo: ligaduras, árabe, índico (*shaping* con harfrust).
 

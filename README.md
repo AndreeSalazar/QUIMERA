@@ -27,6 +27,7 @@ Misma página, ventana visible, Windows, `--release`. Edge 156 es Chromium por d
 | Wikipedia, «Cat» (51 imágenes, 278 idiomas) | **244 MB** | 515–821 MB |
 | Hacker News (todo tablas) | **113 MB** | 456 MB |
 | rust-lang.org (7 fuentes propias) | **145 MB** | 486 MB |
+| DuckDuckGo HTML, una búsqueda | **114 MB** | 481 MB |
 
 Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** todavía no ejecuta el JavaScript de las páginas, y Edge sí. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
 
@@ -53,7 +54,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 |---|---|---|
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
 | 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF) · `calc()`, WOFF2, gzip, WebP | Wikipedia, documentación, blogs |
-| 2 | Formularios, cookies, foco y teclado, caché | buscar (DuckDuckGo HTML): navegar de verdad |
+| 2 | ✅ Formularios (GET y POST), ✅ cookies, ✅ foco y teclado · caché, selección | buscar (DuckDuckGo HTML): navegar de verdad |
 | 3 | **JavaScript ↔ DOM** (puente generado desde WebIDL, un solo GC), bucle de eventos, `fetch` | Steam y páginas con JavaScript |
 | 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
 | 5 | `<video>` con los decodificadores del sistema, audio | **YouTube** |

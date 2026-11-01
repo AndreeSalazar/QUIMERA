@@ -39,6 +39,16 @@ pub(crate) enum Item<'e> {
         estilo: &'e Estilo,
         enlace: Option<u32>,
     },
+    /// Una caja de bloque en la línea (`inline-block`, un control): sus piezas ya maquetadas con
+    /// su esquina en (0, 0) y su línea base a `base` de arriba.
+    Caja {
+        ancho: f32,
+        alto: f32,
+        base: f32,
+        piezas: Vec<Pieza>,
+        enlaces: Vec<EnlaceBruto>,
+        estilo: &'e Estilo,
+    },
 }
 
 /// Una línea con dónde empieza la próxima, su espacio (izquierda, derecha) y su alto (sobre, bajo).
@@ -53,7 +63,8 @@ impl<'e> Item<'e> {
             Item::Palabra { estilo, .. }
             | Item::Espacio { estilo, .. }
             | Item::Salto { estilo }
-            | Item::Imagen { estilo, .. } => estilo,
+            | Item::Imagen { estilo, .. }
+            | Item::Caja { estilo, .. } => estilo,
         }
     }
 
@@ -61,7 +72,7 @@ impl<'e> Item<'e> {
     fn enlace(&self) -> Option<u32> {
         match self {
             Item::Palabra { enlace, .. } | Item::Espacio { enlace, .. } | Item::Imagen { enlace, .. } => *enlace,
-            Item::Salto { .. } => None,
+            Item::Salto { .. } | Item::Caja { .. } => None,
         }
     }
 }
@@ -136,7 +147,7 @@ struct Linea {
 pub(crate) fn ancho_item(m: &dyn MedirTexto, it: &Item<'_>) -> f32 {
     match it {
         Item::Palabra { texto, estilo, .. } | Item::Espacio { texto, estilo, .. } => m.ancho(texto, &fuente(estilo)),
-        Item::Imagen { ancho, .. } => *ancho,
+        Item::Imagen { ancho, .. } | Item::Caja { ancho, .. } => *ancho,
         Item::Salto { .. } => 0.0,
     }
 }
@@ -261,6 +272,7 @@ impl EnLinea<'_> {
         for &(i, _, _) in &l.puestos {
             let (s, b) = match &items[i] {
                 Item::Imagen { alto, .. } => (*alto, 0.0),
+                Item::Caja { alto, base, .. } => (*base, (alto - base).max(0.0)),
                 it => medidas(self.medir, it.estilo()),
             };
             sobre = sobre.max(s);
@@ -286,6 +298,17 @@ impl EnLinea<'_> {
         let mut k = 0;
         while k < puestos.len() {
             let (i, x, _) = puestos[k];
+            if let Item::Caja { base: b, piezas: suyas, enlaces: suyos, .. } = &items[i] {
+                // La caja ya está maquetada en (0, 0): se mueve a su sitio en la línea.
+                let (dx, dy) = (x0 + x, base - b);
+                piezas.extend(suyas.iter().cloned().map(|mut p| {
+                    p.mover(dx, dy);
+                    p
+                }));
+                enlaces.extend(suyos.iter().map(|&(ex, ey, w, h, n)| (ex + dx, ey + dy, w, h, n)));
+                k += 1;
+                continue;
+            }
             if let Item::Imagen { ancho, alto, src, estilo, enlace } = &items[i] {
                 if let Some(e) = enlace {
                     enlaces.push((x0 + x, base - alto, *ancho, *alto, *e));
@@ -306,7 +329,7 @@ impl EnLinea<'_> {
             let mut texto = String::new();
             let mut ancho = 0.0;
             while k < puestos.len()
-                && !matches!(items[puestos[k].0], Item::Imagen { .. })
+                && !matches!(items[puestos[k].0], Item::Imagen { .. } | Item::Caja { .. })
                 && core::ptr::eq(items[puestos[k].0].estilo(), estilo)
                 && items[puestos[k].0].enlace() == enlace
             {

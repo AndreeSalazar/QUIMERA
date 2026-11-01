@@ -92,7 +92,7 @@ impl Maquetador<'_> {
             }
             // Una tabla nunca es más estrecha que su contenido (y su `width` ya incluye el borde).
             m if e.display == Display::Tabla => m.px(ancho, 0.0).max(self.intrinseco(id).0),
-            m => m.px(ancho, 0.0) + extras_horizontales(e),
+            m => m.px(ancho, 0.0) - e.extras_si_caja_borde(ancho) + extras_horizontales(e),
         };
         let exterior = ancho_borde + ml + mr;
         let alto = self.en_seco(|m| m.bloque_libre(id, 0.0, 0.0, exterior).alto) + mt + mb;
