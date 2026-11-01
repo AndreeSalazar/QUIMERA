@@ -62,9 +62,22 @@ pub enum Pieza {
 impl Pieza {
     /// La mueve `dy` píxeles hacia abajo.
     pub(crate) fn bajar(&mut self, dy: f32) {
+        self.mover(0.0, dy);
+    }
+
+    /// La mueve `dx` a la derecha y `dy` hacia abajo.
+    pub(crate) fn mover(&mut self, dx: f32, dy: f32) {
         match self {
-            Pieza::Rect { y, .. } | Pieza::Imagen { y, .. } => *y += dy,
-            Pieza::Texto { base, .. } => *base += dy,
+            Pieza::Rect { x, y, .. } | Pieza::Imagen { x, y, .. } => (*x, *y) = (*x + dx, *y + dy),
+            Pieza::Texto { x, base, .. } => (*x, *base) = (*x + dx, *base + dy),
+        }
+    }
+
+    /// Dónde acaba por abajo (más o menos, para el texto: su tamaño bajo la línea base).
+    pub(crate) fn abajo(&self) -> f32 {
+        match self {
+            Pieza::Rect { y, alto, .. } | Pieza::Imagen { y, alto, .. } => y + alto,
+            Pieza::Texto { base, tam, .. } => base + tam * 0.25,
         }
     }
 }

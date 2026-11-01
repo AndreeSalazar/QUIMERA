@@ -370,9 +370,13 @@ fn calcular_valores(
             propiedades::aplicar(&mut e, padre, prop, v, &c);
         }
     }
-    // Un flotante es siempre una caja de bloque (CSS 2.1, 9.7): lo que era en línea o parte de
+    // `absolute` y `fixed` no flotan (CSS 2.1, 9.7).
+    if e.colocacion.posicion.fuera_del_flujo() {
+        e.flotar = crate::valores::Flotar::No;
+    }
+    // Un flotante o una caja fuera del flujo es siempre de bloque: lo que era en línea o parte de
     // una tabla pasa a ser un bloque.
-    if e.flotar != crate::valores::Flotar::No
+    if (e.flotar != crate::valores::Flotar::No || e.colocacion.posicion.fuera_del_flujo())
         && matches!(
             e.display,
             Display::EnLinea

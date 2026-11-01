@@ -461,7 +461,12 @@ impl<'a> Maquetador<'a> {
         } else {
             self.fondo_y_bordes(inicio, e, tx, cy, ancho_borde, alto_caja);
         }
-        Hecho { alto: cy - y + alto_caja, margen_inferior: px(e.margen[2]), primera_base: None }
+        Hecho {
+            alto: cy - y + alto_caja,
+            margen_inferior: px(e.margen[2]),
+            primera_base: None,
+            caja: (tx, ancho_borde),
+        }
     }
 
     /// El alto de cada fila y el que necesita cada celda (medida sin dibujar).

@@ -112,6 +112,11 @@ impl<'a> Maquetador<'a> {
         for h in self.doc.nodo(id).hijos.clone() {
             match self.clase(h) {
                 Clase::Nada => {}
+                // Un `absolute` no es un elemento flexible: va dentro de su antepasado posicionado.
+                Clase::Absoluto => {
+                    let estatico = (f32::NAN, f32::NAN);
+                    self.absolutos.push(crate::posicion::Pendiente { id: h, estatico, apilado: self.apilado.clone() });
+                }
                 _ if self.es_blanco(h) => {}
                 _ => v.push(match self.estilos.de(h) {
                     Some(_) => self.elemento_nodo(h, c),
@@ -319,6 +324,7 @@ impl<'a> Maquetador<'a> {
     pub(crate) fn en_seco<R>(&mut self, f: impl FnOnce(&mut Self) -> R) -> R {
         let (p, e, a) = (self.piezas.len(), self.enlaces.len(), self.anclas.len());
         let (fl, capa, pend) = (self.flotantes.len(), self.capa_flotantes.len(), self.pendientes.len());
+        let (abs, capas) = (self.absolutos.len(), self.capas.len());
         let r = f(self);
         self.piezas.truncate(p);
         self.enlaces.truncate(e);
@@ -326,6 +332,8 @@ impl<'a> Maquetador<'a> {
         self.flotantes.truncate(fl);
         self.capa_flotantes.truncate(capa);
         self.pendientes.truncate(pend);
+        self.absolutos.truncate(abs);
+        self.capas.truncate(capas);
         r
     }
 

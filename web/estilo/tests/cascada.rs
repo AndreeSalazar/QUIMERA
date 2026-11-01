@@ -2,7 +2,7 @@
 
 use quimera_estilo::{
     Alinear, AlinearVertical, Color, Display, Espacios, Estilo, Estilos, Flotar, Generica, Limpiar, Medida, Opciones,
-    TipoLista, calcular,
+    Posicion, TipoLista, calcular,
 };
 use quimera_html::{Documento, analizar};
 
@@ -225,4 +225,19 @@ fn float_y_clear() {
     assert_eq!(de(&doc, &e, "p").limpiar, Limpiar::Ambos);
     let i = de(&doc, &e, "i");
     assert_eq!((i.flotar, i.margen[1], i.margen[3]), (Flotar::Izquierda, Medida::Px(5.0), Medida::Px(5.0)));
+}
+
+#[test]
+fn position_inset_y_z_index() {
+    let (doc, e) = estilos(
+        "<span id=a style='position:absolute;float:left;inset:1px 2px 3px;z-index:5'>1</span>\
+         <div id=r style='position:relative;left:10%;top:-4px;z-index:auto'>2</div>",
+    );
+    let a = de(&doc, &e, "a");
+    assert_eq!((a.colocacion.posicion, a.display, a.flotar), (Posicion::Absoluta, Display::Bloque, Flotar::No));
+    assert_eq!(a.colocacion.desplazar, [Medida::Px(1.0), Medida::Px(2.0), Medida::Px(3.0), Medida::Px(2.0)]);
+    assert_eq!(a.colocacion.z, Some(5));
+    let r = de(&doc, &e, "r");
+    assert_eq!((r.colocacion.posicion, r.colocacion.z), (Posicion::Relativa, None));
+    assert_eq!((r.colocacion.desplazar[0], r.colocacion.desplazar[3]), (Medida::Px(-4.0), Medida::Porcentaje(10.0)));
 }

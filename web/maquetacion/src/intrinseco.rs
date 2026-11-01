@@ -104,7 +104,7 @@ impl<'a> Maquetador<'a> {
         let (mut minimo, mut maximo) = (0.0f32, 0.0f32);
         let mut items: Vec<Item<'a>> = Vec::new();
         let mut ultimo_espacio = true;
-        let pendientes = self.pendientes.len();
+        let (pendientes, absolutos) = (self.pendientes.len(), self.absolutos.len());
         // Los flotantes van al lado de lo demás: su ancho se suma al máximo de lo que les sigue.
         let mut flotan = 0.0f32;
         let hijos = self.doc.nodo(id).hijos.clone();
@@ -120,7 +120,7 @@ impl<'a> Maquetador<'a> {
         };
         for h in hijos {
             match self.clase(h) {
-                Clase::Nada => {}
+                Clase::Nada | Clase::Absoluto => {}
                 Clase::EnLinea if !en_fila => self.recoger(h, e, &mut items, &mut ultimo_espacio),
                 Clase::Flotante if !en_fila => {
                     let (a, b) = self.intrinseco(h);
@@ -155,6 +155,7 @@ impl<'a> Maquetador<'a> {
         }
         // Medir no pone flotantes: los que `recoger` apartó no cuentan aquí.
         self.pendientes.truncate(pendientes);
+        self.absolutos.truncate(absolutos);
         if en_fila && cuantos > 1 {
             let hueco = e.flex.hueco_columnas.px(0.0, 0.0) * (cuantos - 1) as f32;
             maximo += hueco;
@@ -169,9 +170,10 @@ impl<'a> Maquetador<'a> {
     pub(crate) fn texto_intrinseco(&mut self, id: NodoId, padre: &'a Estilo) -> Intrinseco {
         let mut items: Vec<Item<'a>> = Vec::new();
         let mut ultimo_espacio = true;
-        let pendientes = self.pendientes.len();
+        let (pendientes, absolutos) = (self.pendientes.len(), self.absolutos.len());
         self.recoger(id, padre, &mut items, &mut ultimo_espacio);
         self.pendientes.truncate(pendientes);
+        self.absolutos.truncate(absolutos);
         de_items(self.medir, &items)
     }
 }

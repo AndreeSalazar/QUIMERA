@@ -49,6 +49,9 @@ pub(crate) fn expandir(propiedad: &str, valor: &[Token]) -> Vec<(String, Vec<Tok
     if let Some(v) = crate::flex::expandir(propiedad, valor) {
         return v;
     }
+    if let Some(v) = crate::posicion::expandir(propiedad, valor) {
+        return v;
+    }
     let p = piezas(valor);
     let largo = |n: String, v: &[Token]| (n, v.to_vec());
     let mut r = Vec::new();
@@ -250,6 +253,7 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
         "overflow" | "overflow-x" | "overflow-y" => e.recorta = de.recorta,
         p if crate::flex::es_propia(p) => crate::flex::copiar(&mut e.flex, &de.flex, p),
         p if crate::tabla::es_propia(p) => crate::tabla::copiar(&mut e.tabla, &de.tabla, p),
+        p if crate::posicion::es_propia(p) => crate::posicion::copiar(&mut e.colocacion, &de.colocacion, p),
         p => {
             if let Some((i, campo)) = lado_de(p) {
                 match campo {
@@ -340,6 +344,9 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
         p if crate::tabla::es_propia(p) => {
             crate::tabla::aplicar(&mut e.tabla, p, v, c);
         }
+        p if crate::posicion::es_propia(p) => {
+            crate::posicion::aplicar(&mut e.colocacion, p, v, c);
+        }
         p => aplicar_lado(e, p, v, c),
     }
 }
@@ -404,6 +411,9 @@ pub(crate) fn valida(prop: &str, v: &[Token]) -> bool {
         "clear" => n.and_then(limpiar).is_some(),
         p if crate::flex::es_propia(p) => crate::flex::aplicar(&mut crate::flex::Flex::default(), p, v, &c),
         p if crate::tabla::es_propia(p) => crate::tabla::aplicar(&mut crate::tabla::Tabla::default(), p, v, &c),
+        p if crate::posicion::es_propia(p) => {
+            crate::posicion::aplicar(&mut crate::posicion::Colocacion::default(), p, v, &c)
+        }
         p => match lado_de(p) {
             Some((_, "margin")) => medida(v, &c).is_some(),
             Some((_, "padding")) => medida(v, &c).is_some_and(|m| m != Medida::Auto),

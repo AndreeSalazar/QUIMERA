@@ -26,6 +26,7 @@ mod flotante;
 mod intrinseco;
 mod linea;
 mod pintura;
+mod posicion;
 mod reemplazado;
 mod tabla;
 mod texto;
@@ -55,6 +56,9 @@ pub fn maquetar_con_imagenes(
     };
     m.raiz = Some(html);
     let hecho = m.bloque(html, 0.0, 0.0, ancho);
+    // Lo `absolute` sin antepasado posicionado y lo `fixed`, dentro de la ventana.
+    m.poner_absolutos(0, (0.0, 0.0, ancho, alto), true);
+    let (piezas, abajo_capas) = m.apilar();
     // El fondo de <html> (o, si no tiene, el de <body>) pinta todo el lienzo.
     let fondo_de = |n: &str| doc.buscar(n).and_then(|id| estilos.de(id)).map(|e| e.fondo).filter(|c| c.a > 0);
     let fondo = fondo_de("html").or_else(|| fondo_de("body")).unwrap_or(Color::BLANCO);
@@ -63,5 +67,6 @@ pub fn maquetar_con_imagenes(
         .iter()
         .map(|&(x, y, ancho, alto, i)| Enlace { x, y, ancho, alto, href: m.hrefs[i as usize].clone() })
         .collect();
-    Maquetacion { piezas: m.piezas, ancho, alto: hecho.alto.max(alto), fondo, enlaces, anclas: m.anclas }
+    let alto_doc = hecho.alto.max(abajo_capas).max(alto);
+    Maquetacion { piezas, ancho, alto: alto_doc, fondo, enlaces, anclas: m.anclas }
 }

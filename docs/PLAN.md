@@ -36,7 +36,7 @@ Que las páginas de lectura se vean como en Chrome.
 
 - ✅ **Tablas:** el algoritmo automático, `colspan`/`rowspan`, bordes que colapsan, atributos antiguos y modo de compatibilidad. Las mismas posiciones que Chromium en 39 cajas; Hacker News se ve igual ([detalle](ESTILO-MAQUETACION.md#tablas)).
 - ✅ **`float` y `clear`**, `display: flow-root` y `overflow` como contexto propio. Las mismas posiciones que Chromium en 39 casos; en Wikipedia, la ficha a la derecha del texto ([detalle](ESTILO-MAQUETACION.md#flotantes)).
-- `position` (`relative`, `absolute`, `fixed`, `sticky`), `z-index`.
+- ✅ **`position` y `z-index`**: `relative`, `absolute`, capas y contextos de apilamiento. Las mismas posiciones que Chromium en 19 cajas, y la misma caja encima en 7 puntos ([detalle](ESTILO-MAQUETACION.md#posición-y-z-index)). Falta que `fixed` y `sticky` se queden quietos al desplazar.
 - `overflow` con desplazamiento propio, `inline-block`.
 - Variables de CSS `var(--x)`, `calc()`, `min()`/`max()`.
 - `@font-face`: cargar las fuentes de la página.

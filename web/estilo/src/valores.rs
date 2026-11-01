@@ -250,6 +250,8 @@ pub struct Estilo {
     /// `overflow` distinto de `visible` (`hidden`, `auto`, `scroll`): crea su propio contexto
     /// de formato. (El contenido todavía no se recorta.)
     pub recorta: bool,
+    /// `position`, `top`/`right`/`bottom`/`left` y `z-index`.
+    pub colocacion: crate::posicion::Colocacion,
     /// `float`
     pub flotar: Flotar,
     /// `clear`
@@ -287,6 +289,7 @@ impl Default for Estilo {
             flex: crate::flex::Flex::default(),
             tabla: crate::tabla::Tabla::default(),
             recorta: false,
+            colocacion: crate::posicion::Colocacion::default(),
             flotar: Flotar::No,
             limpiar: Limpiar::No,
         }

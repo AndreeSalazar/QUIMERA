@@ -1,0 +1,47 @@
+<!doctype html>
+<!-- Casos de position y z-index sin texto. Cada caja con fondo rgb(k, 80, 160) se compara con
+     la posición que le da Chromium, y en algunos puntos, qué caja queda encima
+     (web/maquetacion/tests/posicion.rs). -->
+<style>
+  body { margin: 8px }
+  .c { width: 300px; height: 60px; margin-bottom: 20px; background: rgb(99, 80, 160) }
+  div div { box-sizing: content-box }
+</style>
+
+<!-- 1: relative se mueve; su hermano no -->
+<div class=c><div style="position:relative;left:20px;top:10px;width:50px;height:20px;background:rgb(1,80,160)"></div>
+  <div style="width:50px;height:20px;background:rgb(2,80,160)"></div></div>
+
+<!-- 2: absolute arriba a la derecha de su contenedor relative -->
+<div class=c style="position:relative"><div style="position:absolute;top:5px;right:5px;width:50px;height:20px;background:rgb(3,80,160)"></div></div>
+
+<!-- 3: absolute estirado entre sus cuatro lados -->
+<div class=c style="position:relative;padding:4px"><div style="position:absolute;inset:10px 20px 15px 30px;background:rgb(4,80,160)"></div></div>
+
+<!-- 4: absolute sin lados: donde habría ido (posición estática); no ocupa sitio -->
+<div class=c style="position:relative"><div style="height:15px;background:rgb(5,80,160)"></div>
+  <div style="position:absolute;width:40px;height:10px;background:rgb(6,80,160)"></div>
+  <div style="height:15px;background:rgb(7,80,160)"></div></div>
+
+<!-- 5: centrado con left:0, right:0 y margin:auto -->
+<div class=c style="position:relative"><div style="position:absolute;left:0;right:0;margin:auto;width:100px;height:20px;background:rgb(8,80,160)"></div></div>
+
+<!-- 6: ancho encogido a su contenido, con relleno y bottom -->
+<div class=c style="position:relative"><div style="position:absolute;bottom:4px;left:6px;padding:3px;background:rgb(9,80,160)"><div style="width:70px;height:12px;background:rgb(10,80,160)"></div></div></div>
+
+<!-- 7: z-index: el 2 encima del 1, el -1 debajo del contenido normal -->
+<div class=c style="position:relative;background:none">
+  <div style="width:100px;height:40px;background:rgb(11,80,160)"></div>
+  <div style="position:absolute;left:20px;top:10px;width:60px;height:40px;z-index:2;background:rgb(12,80,160)"></div>
+  <div style="position:absolute;left:40px;top:20px;width:60px;height:40px;z-index:1;background:rgb(13,80,160)"></div>
+  <div style="position:absolute;left:70px;top:0;width:60px;height:30px;z-index:-1;background:rgb(14,80,160)"></div></div>
+
+<!-- 8: un relative sin z-index va encima del contenido normal que viene después -->
+<div class=c><div style="position:relative;top:20px;width:80px;height:30px;background:rgb(15,80,160)"></div>
+  <div style="width:120px;height:30px;background:rgb(16,80,160)"></div></div>
+
+<!-- 9: absolute dentro de absolute -->
+<div class=c style="position:relative"><div style="position:absolute;left:10px;top:10px;width:150px;height:40px;background:rgb(17,80,160)"><div style="position:absolute;right:10px;bottom:5px;width:30px;height:10px;background:rgb(18,80,160)"></div></div></div>
+
+<!-- 10: sin antepasado posicionado: dentro de la ventana -->
+<div class=c><div style="position:absolute;top:0;right:0;width:30px;height:30px;background:rgb(19,80,160)"></div></div>

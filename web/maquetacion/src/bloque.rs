@@ -10,6 +10,7 @@
 use crate::flotante::Flotante;
 use crate::linea::{EnLinea, EnlaceBruto, Item, texto_a_items};
 use crate::pintura::Pieza;
+use crate::posicion::{Capa, Pendiente, Ruta};
 use crate::texto::MedirTexto;
 use alloc::string::String;
 use alloc::vec::Vec;
@@ -48,6 +49,16 @@ pub(crate) struct Maquetador<'a> {
     pub capa_flotantes: Vec<Pieza>,
     /// Flotantes vistos dentro de contenido en línea, que se ponen arriba de sus líneas.
     pub pendientes: Vec<NodoId>,
+    /// Los `absolute`/`fixed` que esperan a su antepasado posicionado.
+    pub absolutos: Vec<Pendiente>,
+    /// Las piezas de los elementos posicionados, cada una con su sitio en el orden de dibujo.
+    pub capas: Vec<Capa>,
+    /// El contexto de apilamiento actual (ruta de `z-index` desde la raíz).
+    pub apilado: Ruta,
+    /// Cuántos elementos posicionados se han visto (su orden en el documento).
+    pub orden: usize,
+    /// El elemento posicionado que se está maquetando ahora (para no volver a posicionarlo).
+    pub guardia: Option<NodoId>,
     /// El tamaño propio de cada imagen por su `src` (si ya se descargó).
     pub imagenes: &'a dyn Fn(&str) -> Option<(u32, u32)>,
     /// Ancho del contenido del bloque que se está llenando (para los `%` de las imágenes en línea).
@@ -62,6 +73,8 @@ pub(crate) struct Hecho {
     pub margen_inferior: f32,
     /// Línea base de su primera línea de texto (para el marcador de una lista).
     pub primera_base: Option<f32>,
+    /// Izquierda y ancho de su caja con borde.
+    pub caja: (f32, f32),
 }
 
 /// Qué es un hijo para su bloque.
@@ -69,6 +82,8 @@ pub(crate) enum Clase {
     Bloque,
     /// `float: left | right`: fuera del flujo, a un lado.
     Flotante,
+    /// `position: absolute | fixed`: fuera del flujo, dentro de su antepasado posicionado.
+    Absoluto,
     EnLinea,
     Nada,
 }
@@ -98,6 +113,11 @@ impl<'a> Maquetador<'a> {
             flotantes: Vec::new(),
             capa_flotantes: Vec::new(),
             pendientes: Vec::new(),
+            absolutos: Vec::new(),
+            capas: Vec::new(),
+            apilado: Vec::new(),
+            orden: 0,
+            guardia: None,
             imagenes,
             ancho_actual: 0.0,
         }
@@ -112,6 +132,9 @@ impl<'a> Maquetador<'a> {
             Dato::Texto(_) => return Clase::EnLinea,
             Dato::Elemento(_) => {}
             _ => return Clase::Nada,
+        }
+        if self.estilo(id).is_some_and(Self::fuera_del_flujo) {
+            return Clase::Absoluto;
         }
         if self.estilo(id).is_some_and(|e| e.flotar != Flotar::No && e.display != Display::Ninguno) {
             return Clase::Flotante;
@@ -161,13 +184,10 @@ impl<'a> Maquetador<'a> {
         {
             return propio;
         }
-        let primero = self
-            .doc
-            .nodo(id)
-            .hijos
-            .clone()
-            .into_iter()
-            .find(|&h| !self.es_blanco(h) && !matches!(self.clase(h), Clase::Nada | Clase::Flotante));
+        let primero =
+            self.doc.nodo(id).hijos.clone().into_iter().find(|&h| {
+                !self.es_blanco(h) && !matches!(self.clase(h), Clase::Nada | Clase::Flotante | Clase::Absoluto)
+            });
         match primero {
             Some(h) if matches!(self.clase(h), Clase::Bloque) => {
                 mayor_margen(propio, self.margen_superior(h, ancho_contenedor))
@@ -190,15 +210,26 @@ impl<'a> Maquetador<'a> {
         }
     }
 
+    /// Lo que no se maqueta como un bloque normal: un elemento posicionado (que pasa a su capa),
+    /// una imagen o una tabla.
+    fn especial(&mut self, id: NodoId, e: &'a Estilo, (x, y): (f32, f32), ancho: f32) -> Option<Hecho> {
+        if e.colocacion.posicion.posicionado() && self.guardia != Some(id) {
+            return Some(self.posicionado(id, e, (x, y), ancho));
+        }
+        if crate::reemplazado::es_imagen(self, id) {
+            return Some(self.bloque_imagen(id, e, (x, y), ancho));
+        }
+        (e.display == Display::Tabla).then(|| self.tabla(id, e, (x, y), ancho))
+    }
+
     /// Maquetar el bloque `id` con su borde empezando en (x, y) dentro de un contenedor de
     /// `ancho_contenedor`. Su margen superior ya lo ha puesto quien llama.
     pub(crate) fn bloque(&mut self, id: NodoId, x: f32, y: f32, ancho_contenedor: f32) -> Hecho {
-        let Some(e) = self.estilo(id) else { return Hecho { alto: 0.0, margen_inferior: 0.0, primera_base: None } };
-        if crate::reemplazado::es_imagen(self, id) {
-            return self.bloque_imagen(id, e, (x, y), ancho_contenedor);
-        }
-        if e.display == Display::Tabla {
-            return self.tabla(id, e, (x, y), ancho_contenedor);
+        let Some(e) = self.estilo(id) else {
+            return Hecho { alto: 0.0, margen_inferior: 0.0, primera_base: None, caja: (x, 0.0) };
+        };
+        if let Some(hecho) = self.especial(id, e, (x, y), ancho_contenedor) {
+            return hecho;
         }
         let px = |m: Medida| m.px(ancho_contenedor, 0.0);
         let impuestos = self.bordes_celda.filter(|(n, _)| *n == id).map(|(_, b)| b);
@@ -266,7 +297,7 @@ impl<'a> Maquetador<'a> {
         }
         let propio = px(e.margen[2]);
         let margen_inferior = if colapsa_abajo { mayor_margen(propio, abierto) } else { propio };
-        Hecho { alto, margen_inferior, primera_base }
+        Hecho { alto, margen_inferior, primera_base, caja: (x + ml, ancho_borde) }
     }
 
     /// El fondo y los bordes de una caja, debajo de su contenido. Sin `bordes` (una celda con
@@ -342,6 +373,11 @@ impl<'a> Maquetador<'a> {
                 // Un flotante entre texto va arriba de esas líneas; si no, donde va el flujo.
                 Clase::Flotante if items_con_contenido(&items) => self.pendientes.push(h),
                 Clase::Flotante => self.flotante(h, cx, cursor + abierto.unwrap_or(0.0), ancho),
+                Clase::Absoluto => self.absolutos.push(Pendiente {
+                    id: h,
+                    estatico: (cx, cursor + abierto.unwrap_or(0.0)),
+                    apilado: self.apilado.clone(),
+                }),
                 Clase::Bloque => {
                     if items_con_contenido(&items) {
                         cursor += abierto.take().unwrap_or(0.0);
@@ -407,6 +443,11 @@ impl<'a> Maquetador<'a> {
                 }
                 if e.flotar != Flotar::No {
                     self.pendientes.push(id);
+                    return;
+                }
+                if Self::fuera_del_flujo(e) {
+                    let estatico = (f32::NAN, f32::NAN);
+                    self.absolutos.push(Pendiente { id, estatico, apilado: self.apilado.clone() });
                     return;
                 }
                 match el.nombre.as_str() {

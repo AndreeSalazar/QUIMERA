@@ -146,6 +146,33 @@ Uno de los casos tiene un flotante que sobresale por debajo de su bloque y empuj
 
 **Falta en flotantes:** `<br clear=all>`, que un flotante dentro de una línea vaya justo en esa línea (no al principio de su párrafo), las líneas más altas que el bloque que pasan junto a un flotante y empiezan antes de que acabe, y recortar el contenido con `overflow: hidden`.
 
+## Posición y z-index
+
+En la ficha de Wikipedia, la barra de periodos geológicos (hecha con `position: absolute`) sale con sus colores en fila, como en Chromium.
+
+**Comprobado contra Chromium** con [`docs/ejemplos/posicion.html`](ejemplos/posicion.html): diez casos sin texto. Las **19 cajas** van donde las pone Chromium y, en **7 puntos** donde se tapan, queda encima la misma (`elementFromPoint`; `web/maquetacion/tests/posicion.rs`). Hay una diferencia, a propósito: en una página más alta que la ventana, Chromium le quita 15 px de ancho para su barra de desplazamiento, y QUIMERA no.
+
+**Estilo** (`quimera-estilo/src/posicion.rs`):
+- `position` (`static`, `relative`, `absolute`, `fixed`, `sticky`), `top`/`right`/`bottom`/`left` (y su atajo `inset`), y `z-index`.
+- `absolute` y `fixed` no flotan y son siempre cajas de bloque.
+
+**Maquetación** (`quimera-maquetacion/src/posicion.rs`):
+1. **`relative`:** se maqueta en el flujo y después se mueve con todo lo suyo, también lo `absolute` de dentro. `left` gana a `right` y `top` a `bottom`.
+2. **`absolute`:** sale del flujo. Se anota dónde habría ido (su posición estática) y espera a su antepasado posicionado más cercano. Cuando este ya está maquetado, se coloca dentro de su caja de relleno; sin antepasado posicionado, dentro de la ventana.
+   - Con `left` y `right` (o `top` y `bottom`) el tamaño sale de ahí; si no, se encoge a su contenido.
+   - Con los dos lados y el ancho fijados, `margin: auto` lo centra.
+   - Es su propio contexto de formato.
+3. **Capas.** Cada elemento posicionado se dibuja después del contenido normal, en su orden del documento: `z-index` negativo debajo y positivo encima. Un `z-index` que no es `auto` crea un contexto de apilamiento y lo de dentro se ordena dentro de él. Cada capa lleva su ruta de (z, orden) desde la raíz, y ordenarlas por ruta da el orden de dibujo del apéndice E de CSS 2.1.
+4. **El alto del documento** llega hasta lo posicionado que se dibuja.
+
+**Falta en posición:**
+- `fixed` que se quede quieto al desplazar (hoy va como `absolute` respecto a la ventana, arriba del documento);
+- `sticky` que se pegue (hoy se queda donde está);
+- `top` en porcentaje para `relative`;
+- la posición estática exacta de un `absolute` dentro de texto o de un contenedor flex (hoy va a la esquina de su contenedor);
+- los flotantes dentro de un `relative` que se mueve (no se mueven con él);
+- `z-index` en elementos flexibles sin posición.
+
 ## Siguiente
 
 1. **Velocidad del estilo** con páginas grandes (filtro de Bloom de antepasados, estilos compartidos).

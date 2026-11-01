@@ -95,6 +95,7 @@ impl Maquetador<'_> {
         if e.visible && w > 0.0 && h > 0.0 {
             self.piezas.push(Pieza::Imagen { x: cx, y: cy, ancho: w, alto: h, src });
         }
-        Hecho { alto: h + extras_v, margen_inferior: px(e.margen[2]), primera_base: None }
+        let caja = (x + izquierda, w + extras_h);
+        Hecho { alto: h + extras_v, margen_inferior: px(e.margen[2]), primera_base: None, caja }
     }
 }
