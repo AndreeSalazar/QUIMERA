@@ -162,3 +162,63 @@ fn los_benchmarks_de_boa_dan_el_resultado_correcto() {
     }
     let _ = Valor::NULO;
 }
+
+#[test]
+fn biblioteca_minima() {
+    let codigo = "function resultado() {\n\
+                    const e = new Error('mal'); let atrapado = '';\n\
+                    try { throw new Error('dentro') } catch (x) { atrapado = x.message }\n\
+                    const d = new Date(); const d2 = new Date();\n\
+                    return [(1.23456).toFixed(2), (123456).toPrecision(3), Math.round(2.5), Math.pow(2, 0.5) > 1.414,\n\
+                            Math.log(Math.E), Math.max(1, 7, 3), 'hola'.charAt(1), 'hola'.indexOf('la'), 'abc'.charCodeAt(0),\n\
+                            'quimera'.slice(-4), [1, 2, 3].join('-'), [5, 6].indexOf(6), e + '', atrapado, d2 - d >= 0]\n\
+                  }";
+    assert_eq!(ejecutar(codigo), "1.23,1.23e+5,3,true,1,7,o,2,97,mera,1-2-3,1,Error: mal,dentro,true");
+}
+
+#[test]
+fn richards_de_v8_corre_y_se_comprueba_a_si_mismo() {
+    // runRichards() lanza un Error si las cuentas del planificador no son las esperadas.
+    let codigo =
+        std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/../frontend/tests/datos/v8-benches-richards.js"))
+            .unwrap();
+    let mut m = Motor::default();
+    m.ejecutar(&codigo).unwrap_or_else(|e| panic!("{}", e.mensaje));
+    for _ in 0..3 {
+        m.llamar_global("runRichards", &[]).unwrap_or_else(|e| panic!("{}", e.mensaje));
+    }
+}
+
+#[test]
+fn deltablue_de_v8_corre_y_se_comprueba_a_si_mismo() {
+    // deltaBlue() lanza un Error si las restricciones no se resuelven como deben.
+    let codigo = std::fs::read_to_string(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../frontend/tests/datos/v8-benches-deltablue.js"
+    ))
+    .unwrap();
+    let mut m = Motor::default();
+    m.ejecutar(&codigo).unwrap_or_else(|e| panic!("{}", e.mensaje));
+    for _ in 0..2 {
+        m.llamar_global("deltaBlue", &[]).unwrap_or_else(|e| panic!("{}", e.mensaje));
+    }
+}
+
+#[test]
+fn to_primitive_llama_a_value_of_y_to_string() {
+    let codigo = "function T(v) { this.v = v }\n\
+                  T.prototype.valueOf = function () { return this.v };\n\
+                  function N(n) { this.n = n }\n\
+                  N.prototype.toString = function () { return 'N' + this.n };\n\
+                  function Mal() {}\n\
+                  Mal.prototype.valueOf = function () { throw 'valueOf falló' };\n\
+                  let llamadas = 0; function Espia() {}\n\
+                  Espia.prototype.valueOf = function () { llamadas++; return 1 };\n\
+                  function resultado() {\n\
+                    const a = new T(10), b = new T(4);\n\
+                    let err = ''; try { new Mal() - 1 } catch (e) { err = e }\n\
+                    const espia = new Espia(); const nulos = [espia == null, espia != undefined, llamadas];\n\
+                    return [a - b, a * 2, Math.log(new T(1)), a > b, -a, 'x' + new N(7), [1, 2] + '', ({}) + '', err, nulos]\n\
+                  }";
+    assert_eq!(ejecutar(codigo), "6,20,0,true,-10,xN7,1,2,[object Object],valueOf falló,false,true,0");
+}

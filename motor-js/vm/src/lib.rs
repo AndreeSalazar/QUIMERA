@@ -12,8 +12,10 @@
 
 extern crate alloc;
 
+mod conversion;
 mod interprete;
 mod llamadas;
+pub mod matematicas;
 mod nativas;
 pub mod operaciones;
 mod propiedades;
@@ -31,7 +33,11 @@ const R_OBJETO: usize = 1;
 const R_FUNCION: usize = 2;
 const R_ARREGLO: usize = 3;
 const R_EXCEPCION: usize = 4;
-const N_FIJAS: usize = 5;
+const R_NUMERO: usize = 5;
+const R_CADENA: usize = 6;
+const R_FECHA: usize = 7;
+const R_ERROR: usize = 8;
+const N_FIJAS: usize = 9;
 /// Huecos de cada marco antes de sus registros: cierre, this, entorno, objeto nuevo.
 const CABECERA: usize = 4;
 
@@ -93,6 +99,9 @@ pub struct Motor {
     manejadores: Vec<Manejador>,
     salida: Vec<String>,
     azar: u64,
+    /// Reloj del anfitrión en milisegundos (para `Date`). Sin reloj, cada lectura avanza 1 ms.
+    reloj: Option<fn() -> f64>,
+    tiempo_falso: f64,
 }
 
 impl Default for Motor {
@@ -111,6 +120,8 @@ impl Motor {
             manejadores: Vec::new(),
             salida: Vec::new(),
             azar: 0x2545_F491_4F6C_DD1D,
+            reloj: None,
+            tiempo_falso: 0.0,
         };
         m.mundo.m.abrir_raices(N_FIJAS, Valor::INDEFINIDO);
         nativas::preparar(&mut m);
@@ -119,6 +130,22 @@ impl Motor {
 
     fn fija(&self, i: usize) -> Valor {
         self.mundo.m.pila()[i]
+    }
+
+    /// Da al motor un reloj (milisegundos) para `Date`. `no_std`: el reloj lo pone quien lo usa.
+    pub fn con_reloj(&mut self, reloj: fn() -> f64) {
+        self.reloj = Some(reloj);
+    }
+
+    /// La hora actual en milisegundos.
+    pub(crate) fn ahora(&mut self) -> f64 {
+        match self.reloj {
+            Some(r) => r(),
+            None => {
+                self.tiempo_falso += 1.0;
+                self.tiempo_falso
+            }
+        }
     }
 
     /// Lo escrito con `console.log` / `print`.

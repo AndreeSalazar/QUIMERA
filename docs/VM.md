@@ -7,7 +7,7 @@ Dos crates ejecutan el bytecode del frontend:
 | `motor-js/objetos` (`quimera-objetos`) | 3 | Formas (*shapes*), cadenas internadas, objetos, arreglos densos, funciones, nativas y entornos, sobre `quimera-gc` |
 | `motor-js/vm` (`quimera-vm`) | 4 | El intérprete: registros, llamadas, excepciones, cachés en línea y funciones nativas |
 
-Los dos son `no_std` y sin dependencias de fuera. Ocupan 1.956 líneas en 10 archivos; el mayor tiene 377.
+Los dos son `no_std` y sin dependencias de fuera.
 
 ```rust
 let mut motor = quimera_vm::Motor::default();
@@ -44,7 +44,22 @@ assert_eq!(motor.texto(v), "42");
 | prototypes-chain | 30,7 ms | 97,7 ms | 3,18× |
 | **Media geométrica** | | | **2,81×** |
 
-Cómo se llegó aquí:
+### Richards y DeltaBlue (V8, Octane)
+
+Con su arnés completo: cada benchmark se mide solo durante al menos un segundo y escribe su `SCORE` (más es mejor). QUIMERA usa el reloj que le da el anfitrión (`Motor::con_reloj`). A Boa se le añaden `console.log` y `print`, que `boa_engine` no trae.
+
+| Benchmark | QUIMERA | Boa 0.22 | QUIMERA / Boa |
+|---|---:|---:|---:|
+| Richards | 356–369 | 127–152 | **2,5–2,8×** |
+| DeltaBlue | 379–388 | 131–134 | **2,9–3,0×** |
+
+Las puntuaciones varían un poco entre corridas porque el arnés mide tiempo real. Los dos benchmarks se comprueban a sí mismos: lanzan un `Error` si las cuentas no salen.
+
+Cómo se llegó aquí, en dos sorpresas:
+1. **NaN.** El arnés promedia objetos `BenchmarkResult` con su propio `valueOf`. Faltaba `ToPrimitive`: convertir un objeto llamando a sus métodos, lo que obliga a ejecutar JavaScript desde dentro de una operación (`conversion.rs`).
+2. **Richards a 0,64×.** Un experimento midió cada patrón por separado: todos ganaban menos `x != null` con `x` objeto. El `ToPrimitive` recién añadido llamaba a `valueOf`/`toString` en `obj == null`, cuando la especificación dice que con `null`/`undefined` nunca se convierte. Además de lento, era incorrecto. Arreglado y con prueba: de 97 a 369 puntos.
+
+Cómo se llegó a los 7 benchmarks de Boa:
 - **Primera versión: 2,24×.** `nested-loop` iba a 0,60×, Boa ganaba.
 - Un experimento separó el coste: leer el `const n` global y, sobre todo, el número de instrucciones por vuelta.
 - **Con las superinstrucciones: 2,81×.** `nested-loop` pasa a ganar.
@@ -52,8 +67,9 @@ Cómo se llegó aquí:
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
-- **Biblioteca estándar.** Solo existen `console.log`/`print`, `Object`, `Object.create`, `Array`, `push`, `pop`, `Math.floor/abs/max/min/sqrt/random` y `Function.prototype.call`. Lo demás da `undefined`.
-- **Errores.** Son cadenas (`"TypeError: ..."`), todavía no objetos `Error`.
+- **Biblioteca estándar, todavía corta.** Hay `console.log`/`print`, `Object`/`Object.create`, `Array` (`push`, `pop`, `join`, `indexOf`), `Function.prototype.call`, `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`), números (`toFixed`, `toPrecision`, `toString`), cadenas (`charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`), `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
+- **Matemáticas sin `std`.** `ln` y `exp` están hechas a mano (reducción de rango, ln 2 partido al estilo Cody-Waite de fdlibm), con precisión de pocos bits. Si un día se necesita la exactitud de una libm, conviene portar fdlibm entera.
+- **Errores de la máquina.** Los que lanza la máquina son cadenas (`"TypeError: ..."`); `new Error()` desde JavaScript sí crea objetos.
 - **Cadenas.** Viven fuera del GC y no se liberan; las cadenas UTF-16 de `quimera-cadenas` lo arreglarán.
 - **Lenguaje sin compilar todavía.** `delete`, `for-in`/`for-of` y `finally`.
-- **Benchmarks de V8.** Richards y DeltaBlue compilan, pero necesitan más biblioteca estándar para ejecutarse enteros.
+- **Más benchmarks de V8.** RayTrace, NavierStokes, Crypto, EarleyBoyer, RegExp y Splay necesitan más lenguaje y más biblioteca (expresiones regulares, `String.fromCharCode`, `Array` completo...).

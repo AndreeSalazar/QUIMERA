@@ -5,7 +5,62 @@
 //!
 //! Uso: `cargo run --release -p quimera-banco-vm`
 
+use std::cell::RefCell;
+use std::sync::OnceLock;
 use std::time::{Duration, Instant};
+
+/// Los benchmarks de V8 (Octane) con su arnés completo: se miden solos y escriben `SCORE`.
+const V8: &[&str] = &["v8-benches-richards.js", "v8-benches-deltablue.js"];
+
+/// Reloj del anfitrión para el `Date` de QUIMERA, en milisegundos.
+fn reloj() -> f64 {
+    static INICIO: OnceLock<Instant> = OnceLock::new();
+    INICIO.get_or_init(Instant::now).elapsed().as_secs_f64() * 1e3
+}
+
+/// La puntuación de una salida del arnés de V8 (la línea `SCORE n`).
+fn puntuacion(lineas: &[String]) -> f64 {
+    lineas.iter().find_map(|l| l.strip_prefix("SCORE ")).and_then(|n| n.trim().parse().ok()).unwrap_or(0.0)
+}
+
+/// Ejecuta el arnés completo en QUIMERA y devuelve su puntuación.
+fn quimera_v8(codigo: &str) -> f64 {
+    let mut m = quimera_vm::Motor::default();
+    m.con_reloj(reloj);
+    m.ejecutar(codigo).expect("QUIMERA ejecuta el script");
+    m.llamar_global("main", &[]).expect("QUIMERA ejecuta main");
+    puntuacion(m.salida())
+}
+
+thread_local! {
+    static SALIDA_BOA: RefCell<Vec<String>> = const { RefCell::new(Vec::new()) };
+}
+
+/// Ejecuta el arnés completo en Boa (con `console.log` y `print` propios) y devuelve su puntuación.
+fn boa_v8(codigo: &str) -> f64 {
+    use boa_engine::object::ObjectInitializer;
+    use boa_engine::property::Attribute;
+    use boa_engine::{Context, JsResult, JsValue, NativeFunction, Source, js_string};
+    fn log(_: &JsValue, args: &[JsValue], ctx: &mut Context) -> JsResult<JsValue> {
+        let partes: Vec<String> =
+            args.iter().map(|a| a.to_string(ctx).map(|s| s.to_std_string_escaped())).collect::<JsResult<_>>()?;
+        SALIDA_BOA.with(|s| s.borrow_mut().push(partes.join(" ")));
+        Ok(JsValue::undefined())
+    }
+    SALIDA_BOA.with(|s| s.borrow_mut().clear());
+    let mut ctx = Context::default();
+    let console =
+        ObjectInitializer::new(&mut ctx).function(NativeFunction::from_fn_ptr(log), js_string!("log"), 0).build();
+    ctx.register_global_property(js_string!("console"), console, Attribute::all()).expect("console");
+    ctx.register_global_callable(js_string!("print"), 0, NativeFunction::from_fn_ptr(log)).expect("print");
+    ctx.eval(Source::from_bytes(codigo)).expect("Boa ejecuta el script");
+    let main = ctx.global_object().get(js_string!("main"), &mut ctx).expect("main existe");
+    main.as_callable()
+        .expect("main es una función")
+        .call(&JsValue::undefined(), &[], &mut ctx)
+        .expect("Boa ejecuta main");
+    SALIDA_BOA.with(|s| puntuacion(&s.borrow()))
+}
 
 const SCRIPTS: &[&str] = &[
     "basic-call-loop.js",
@@ -73,6 +128,14 @@ fn main() {
         );
     }
     println!("\nMedia geométrica: QUIMERA {:.2}x más rápido que Boa", (log_suma / SCRIPTS.len() as f64).exp());
+
+    println!("\nV8 (Octane) con su arnés completo; puntuación, más es mejor:");
+    println!("{:<26} {:>10} {:>10} {:>9}", "benchmark", "QUIMERA", "Boa 0.22", "QUIMERA/Boa");
+    for nombre in V8 {
+        let codigo = leer(nombre);
+        let (q, b) = (quimera_v8(&codigo), boa_v8(&codigo));
+        println!("{nombre:<26} {q:>10.0} {b:>10.0} {:>8.2}x", q / b);
+    }
 }
 
 #[cfg(test)]

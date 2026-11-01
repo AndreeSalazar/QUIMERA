@@ -12,7 +12,7 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura | ✅ 10 pruebas |
 | `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador | ✅ 22 pruebas |
 | `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas, objetos, arreglos densos, funciones y entornos sobre el GC | ✅ 8 pruebas |
-| `motor-js/vm` → `quimera-vm` | 4 | Intérprete: registros en la pila del GC, cachés en línea, superinstrucciones | ✅ 12 pruebas |
+| `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive y biblioteca mínima | ✅ 20 pruebas |
 | `bancos/frontend` → `quimera-banco-frontend` | 99 | Compara el frontend con el parser de Boa | ✅ 1 prueba |
 | `bancos/vm` → `quimera-banco-vm` | 99 | Compara la VM con boa_engine | ✅ 1 prueba |
 | `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ 1 prueba |
@@ -41,6 +41,8 @@ El frontend, con el corpus de Boa y V8 repetido hasta 1,05 MB:
 | | Media geométrica frente a boa_engine 0.22 |
 |---|---:|
 | **`quimera-vm`** | **2,81× más rápido** (de 1,13× en nested-loop a 5,60× en closures-create) |
+| Richards (V8, arnés completo) | **2,5–2,8× más rápido** |
+| DeltaBlue (V8, arnés completo) | **2,9–3,0× más rápido** |
 
 Ver [docs/VM.md](docs/VM.md).
 

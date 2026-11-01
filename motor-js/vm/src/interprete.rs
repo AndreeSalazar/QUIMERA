@@ -9,6 +9,10 @@ use crate::{CABECERA, Motor, R_ARREGLO, R_EXCEPCION, R_FUNCION, R_OBJETO, operac
 use quimera_frontend::bytecode::{Instr, OpBin, OpUn, Reg};
 use quimera_objetos::Valor;
 
+fn es_nulo(v: Valor) -> bool {
+    matches!(v.tipo(), quimera_objetos::Tipo::Nulo | quimera_objetos::Tipo::Indefinido)
+}
+
 /// Qué hacer después de una instrucción.
 pub(crate) enum Flujo {
     Sigue,
@@ -110,7 +114,7 @@ impl Motor {
                 return Ok(self.saltar_si(!cierto, destino));
             }
             Unaria { op, dst, a } => {
-                let v = self.unaria(op, self.r(base, a));
+                let v = self.unaria(op, self.r(base, a))?;
                 self.w(base, dst, v);
             }
             Saltar { destino } => return Ok(Flujo::Salta(destino)),
@@ -242,6 +246,14 @@ impl Motor {
 
     /// `a op b`. `b_abs` es dónde está `b` en la pila (`instanceof` lo necesita para crear `F.prototype`).
     fn binaria(&mut self, op: OpBin, a: Valor, b: Valor, b_abs: usize) -> Result<Valor, Valor> {
+        // Con un objeto de por medio, ToPrimitive (valueOf/toString) salvo donde no aplica.
+        let (a, b) = match op {
+            OpBin::Estricto | OpBin::NoEstricto | OpBin::En | OpBin::Instancia => (a, b),
+            // `==` entre dos objetos compara identidad, y con null/undefined nunca convierte (§7.2.14).
+            OpBin::Igual | OpBin::Distinto if self.mundo.es_objeto(a) && self.mundo.es_objeto(b) => (a, b),
+            OpBin::Igual | OpBin::Distinto if es_nulo(a) || es_nulo(b) => (a, b),
+            _ => self.primitivos(a, b)?,
+        };
         Ok(match op {
             OpBin::Suma if (self.mundo.texto(a).is_some() || self.mundo.texto(b).is_some()) || self.objetos(a, b) => {
                 let s = alloc::format!("{}{}", op::a_texto(&self.mundo, a), op::a_texto(&self.mundo, b));
@@ -258,12 +270,7 @@ impl Motor {
             OpBin::Instancia => Valor::booleano(self.instancia(a, b_abs)?),
             OpBin::Potencia => {
                 let (x, y) = (op::a_numero(&self.mundo, a), op::a_numero(&self.mundo, b));
-                match op::potencia(x, y) {
-                    Some(r) => op::numero(r),
-                    None => {
-                        return Err(self.error("RangeError", "** con exponente no entero todavía no está en QUIMERA"));
-                    }
-                }
+                op::numero(crate::matematicas::potencia(x, y))
             }
             _ => op::aritmetica(&self.mundo, op, a, b).unwrap_or(Valor::numero(f64::NAN)),
         })
@@ -274,8 +281,9 @@ impl Motor {
         self.mundo.es_objeto(a) || self.mundo.es_objeto(b)
     }
 
-    fn unaria(&mut self, op: OpUn, a: Valor) -> Valor {
-        match op {
+    fn unaria(&mut self, op: OpUn, a: Valor) -> Result<Valor, Valor> {
+        let a = if matches!(op, OpUn::Negar | OpUn::ANumero | OpUn::NoBits) { self.a_primitivo(a)? } else { a };
+        Ok(match op {
             OpUn::Negar => match a.como_entero() {
                 Some(i) if i != 0 && i != i32::MIN => Valor::entero(-i),
                 _ => op::numero(-op::a_numero(&self.mundo, a)),
@@ -288,6 +296,6 @@ impl Motor {
                 self.mundo.cadena(t)
             }
             OpUn::Vacio => Valor::INDEFINIDO,
-        }
+        })
     }
 }

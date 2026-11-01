@@ -16,7 +16,9 @@ pub fn a_numero(w: &Mundo, v: Valor) -> f64 {
         Tipo::Nulo => 0.0,
         Tipo::Booleano => f64::from(u8::from(v.como_booleano() == Some(true))),
         Tipo::Cadena => texto_a_numero(w.texto(v).unwrap_or("")),
-        Tipo::Simbolo | Tipo::Referencia => f64::NAN,
+        Tipo::Simbolo => f64::NAN,
+        // Un objeto con valor primitivo (`Date`) da ese valor; el resto, NaN (sin `valueOf` propio todavía).
+        Tipo::Referencia => valor_primitivo(w, v).and_then(Valor::como_numero).unwrap_or(f64::NAN),
     }
 }
 
@@ -55,6 +57,14 @@ pub fn texto_a_numero(s: &str) -> f64 {
     s.parse::<f64>().unwrap_or(f64::NAN)
 }
 
+/// El valor primitivo guardado en un objeto (`Date`), en la propiedad interna `[[Valor]]`.
+pub fn valor_primitivo(w: &Mundo, v: Valor) -> Option<Valor> {
+    w.leer_propia(v, w.cadenas.buscar(CLAVE_VALOR)?)
+}
+
+/// Clave de la propiedad interna con el valor primitivo de un objeto.
+pub const CLAVE_VALOR: &str = "[[Valor]]";
+
 /// `ToBoolean`.
 pub fn a_booleano(w: &Mundo, v: Valor) -> bool {
     match v.verdad() {
@@ -92,7 +102,20 @@ pub fn a_texto(w: &Mundo, v: Valor) -> String {
         Tipo::Referencia => match w.clase(v) {
             Some(Clase::Arreglo) => unir(w, v),
             Some(Clase::Funcion | Clase::Nativa) => String::from("function () { [código] }"),
-            _ => String::from("[object Object]"),
+            _ => match (w.cadenas.buscar("message").and_then(|k| w.leer(v, k)), valor_primitivo(w, v)) {
+                // Un error: "Nombre: mensaje", como Error.prototype.toString.
+                (Some(m), _) => {
+                    let nombre = w.cadenas.buscar("name").and_then(|k| w.leer(v, k)).map(|n| a_texto(w, n));
+                    let m = a_texto(w, m);
+                    match nombre.as_deref() {
+                        Some(n) if m.is_empty() => String::from(n),
+                        Some(n) => format!("{n}: {m}"),
+                        None => m,
+                    }
+                }
+                (None, Some(p)) => a_texto(w, p),
+                (None, None) => String::from("[object Object]"),
+            },
         },
     }
 }
@@ -204,25 +227,6 @@ impl AbsSeguro for f64 {
     fn abs_seguro(self) -> f64 {
         f64::from_bits(self.to_bits() & !(1u64 << 63))
     }
-}
-
-/// `x ** y` con exponente entero, por cuadrados (sin `std` no hay `powf`).
-pub fn potencia(x: f64, y: f64) -> Option<f64> {
-    if y.is_nan() || (x.abs_seguro() == 1.0 && y.is_infinite()) {
-        return Some(f64::NAN);
-    }
-    if !(y > -2147483648.0 && y < 2147483648.0) || (y as i32) as f64 != y {
-        return None;
-    }
-    let (mut base, mut e, mut r) = (x, (y as i64).unsigned_abs(), 1.0f64);
-    while e > 0 {
-        if e & 1 == 1 {
-            r *= base;
-        }
-        base *= base;
-        e >>= 1;
-    }
-    Some(if y < 0.0 { 1.0 / r } else { r })
 }
 
 /// Aritmética y bits: `None` significa "operador que no es de este grupo".

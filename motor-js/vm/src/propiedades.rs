@@ -72,6 +72,11 @@ impl Motor {
                 let n = self.mundo.texto(obj).map_or(0, |s| s.encode_utf16().count());
                 Ok(Valor::entero(n as i32))
             }
+            // Los métodos de un primitivo están en su prototipo (`(1.5).toFixed`, `"a".charAt`).
+            Tipo::Cadena => Ok(self.mundo.leer(self.pila(crate::R_CADENA), clave).unwrap_or(Valor::INDEFINIDO)),
+            Tipo::Numero | Tipo::Entero => {
+                Ok(self.mundo.leer(self.pila(crate::R_NUMERO), clave).unwrap_or(Valor::INDEFINIDO))
+            }
             _ => Ok(Valor::INDEFINIDO),
         }
     }
