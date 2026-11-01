@@ -67,6 +67,7 @@ impl Maquetador<'_> {
         let contexto = e.colocacion.z.is_some();
         let apilado_previo = contexto.then(|| core::mem::replace(&mut self.apilado, ruta.clone()));
         let (p0, e0, c0, a0) = (self.piezas.len(), self.enlaces.len(), self.capas.len(), self.absolutos.len());
+        let f0 = self.capa_flotantes.len();
         let guardia = self.guardia.replace(id);
         let hecho = self.bloque(id, x, y, ancho);
         self.guardia = guardia;
@@ -85,6 +86,10 @@ impl Maquetador<'_> {
                 }
             }
         }
+        // Sus flotantes van en su capa, encima de su fondo (no en la del contexto de fuera, que
+        // se dibuja antes y quedaría tapada por él).
+        let flotantes: Vec<Pieza> = self.capa_flotantes.drain(f0..).collect();
+        self.piezas.extend(flotantes);
         let piezas = self.piezas.split_off(p0);
         if contexto {
             ruta.push((0, 0)); // su contenido normal, dentro de su contexto

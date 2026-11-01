@@ -241,3 +241,26 @@ fn position_inset_y_z_index() {
     assert_eq!((r.colocacion.posicion, r.colocacion.z), (Posicion::Relativa, None));
     assert_eq!((r.colocacion.desplazar[0], r.colocacion.desplazar[3]), (Medida::Px(-4.0), Medida::Porcentaje(10.0)));
 }
+
+#[test]
+fn variables_css() {
+    let (doc, e) = estilos(
+        "<style>:root { --fondo: #00f; --hueco: 6px; --borde: 2px solid var(--fondo) }
+         .tarjeta { --hueco: 10px; padding: var(--hueco) 0; border: var(--borde); color: var(--nada, red) }
+         .mala { color: blue; color: var(--no-existe) }</style>
+         <div id=d class=tarjeta><p id=p style='margin-left: var(--hueco)'>x</p></div><p id=m class=mala>y</p>",
+    );
+    let (d, p, m) = (de(&doc, &e, "d"), de(&doc, &e, "p"), de(&doc, &e, "m"));
+    assert_eq!((d.relleno[0], d.relleno[1]), (Medida::Px(10.0), Medida::Px(0.0)), "atajo con var()");
+    assert_eq!((d.borde[3].ancho, d.borde[3].color), (2.0, Some(AZUL)), "var() dentro de una variable");
+    assert_eq!(d.color, ROJO, "valor de reserva");
+    assert_eq!(p.margen[3], Medida::Px(10.0), "se hereda la del padre más cercano");
+    // Una variable que no existe deja la propiedad en `unset` (color se hereda: negro), no en `blue`.
+    assert_eq!(m.color, Color::NEGRO);
+    // `unset` en una propiedad que no se hereda es su valor inicial, no el del padre.
+    let (doc, e) = estilos(
+        "<div style='display:flex;padding:9px'><span id=s style='display:var(--no);padding:var(--no)'>z</span></div>",
+    );
+    let s = de(&doc, &e, "s");
+    assert_eq!((s.display, s.relleno[0]), (Display::EnLinea, Medida::Px(0.0)));
+}

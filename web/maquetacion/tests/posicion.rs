@@ -108,3 +108,16 @@ fn el_documento_crece_hasta_lo_posicionado() {
     assert_eq!(m.alto, 1600.0);
     let _ = Color::NEGRO;
 }
+
+#[test]
+fn un_flotante_dentro_de_un_relative_queda_encima_de_su_fondo() {
+    // Como en Wikipedia: la ficha flota dentro de un contenedor `relative` con fondo blanco.
+    let doc = quimera_html::analizar(
+        "<div style='position:relative;background:rgb(1,1,1)'>         <div style='float:right;width:50px;height:50px;background:rgb(2,2,2)'></div>texto</div>",
+    );
+    let estilos = calcular(&doc, &Opciones { ancho: 800.0, alto: 600.0 });
+    let m = maquetar(&doc, &estilos, &Aproximado, 800.0, 600.0);
+    let pos =
+        |r: u8| m.piezas.iter().position(|p| matches!(p, Pieza::Rect { color, .. } if *color == Color::rgb(r, r, r)));
+    assert!(pos(1) < pos(2), "el fondo del contenedor, debajo del flotante: {:?} {:?}", pos(1), pos(2));
+}

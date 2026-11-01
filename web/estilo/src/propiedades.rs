@@ -220,6 +220,28 @@ pub(crate) fn tam_letra(v: &[Token], c: &Contexto) -> Option<f32> {
     }
 }
 
+/// Si una propiedad se hereda (las de la letra y el texto, `visibility`, las listas y las de
+/// las tablas que se heredan). Decide qué hace `unset`, que es lo que vale una propiedad con una
+/// `var()` que no existe.
+fn se_hereda(prop: &str) -> bool {
+    matches!(
+        prop,
+        "color"
+            | "font-size"
+            | "font-weight"
+            | "font-style"
+            | "font-family"
+            | "text-align"
+            | "line-height"
+            | "white-space"
+            | "text-transform"
+            | "visibility"
+            | "list-style-type"
+            | "border-collapse"
+            | "border-spacing"
+    )
+}
+
 /// Copia una propiedad del padre (`inherit`).
 fn heredar(e: &mut Estilo, padre: &Estilo, prop: &str) {
     aplicar_campo(e, padre, prop);
@@ -288,7 +310,9 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
     match ident(v).as_deref() {
         Some("inherit") => return heredar(e, padre, prop),
         Some("initial") => return aplicar_campo(e, &Estilo::default(), prop),
-        Some("unset") => return heredar(e, padre, prop), // las heredables; aproximación
+        // `unset`: hereda si la propiedad se hereda; si no, su valor inicial.
+        Some("unset") if se_hereda(prop) => return heredar(e, padre, prop),
+        Some("unset") => return aplicar_campo(e, &Estilo::default(), prop),
         _ => {}
     }
     let n = ident(v);

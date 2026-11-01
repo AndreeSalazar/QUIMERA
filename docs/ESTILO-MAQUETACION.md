@@ -173,6 +173,22 @@ En la ficha de Wikipedia, la barra de periodos geológicos (hecha con `position:
 - los flotantes dentro de un `relative` que se mueve (no se mueven con él);
 - `z-index` en elementos flexibles sin posición.
 
+## Variables de CSS
+
+En Wikipedia casi todos los colores van en variables (`color: var(--color-base, #202122)`). Con ellas, los enlaces salen en el azul de Wikipedia y la ficha con su borde gris fino y su fondo claro, como en Chromium.
+
+**Estilo** (`quimera-estilo/src/variables.rs`):
+- Las **propiedades personalizadas** (`--x`) se juntan en una primera pasada por la cascada, en su orden (la última gana), y se heredan. Cada elemento comparte el mapa de su padre (un `Rc`) y solo hace uno nuevo si declara alguna: casi ningún elemento paga memoria por ellas (Wikipedia, con unas 200, sigue en 244 MB).
+- Las `var()` dentro de una variable se resuelven al declararla (`--borde: 2px solid var(--fondo)`). Un ciclo deja esas variables sin valor, sin colgar nada.
+- En las demás propiedades, `var()` se sustituye **antes** de expandir atajos (`padding: var(--hueco) 0`). Si la variable no existe y no hay reserva (`var(--x, red)`), la propiedad vale `unset`.
+- **`unset` como manda la especificación:** hereda las propiedades que se heredan (color, letra, alineación…) y deja las demás en su valor inicial. Antes heredaba todas, y con `var()` eso importa: `display: var(--no-existe)` copiaba el `display` del padre.
+
+Wikipedia destapó además un fallo de capas: un flotante dentro de un elemento `relative` se dibujaba en la capa del contexto de fuera, por debajo del fondo de ese elemento. En cuanto ese fondo dejó de ser transparente (venía de una variable), tapó la ficha. Ahora los flotantes van en la capa de su elemento posicionado, encima de su fondo (con prueba).
+
+`QUIMERA_DEPURAR=clase` en el modo captura imprime el estilo calculado del primer elemento con esa clase y de sus antepasados.
+
+**Falta:** `calc()`, `min()`, `max()` y `clamp()` (con `var()` dentro son muy comunes), y `inherit`/`initial` en las propias variables.
+
 ## Siguiente
 
 1. **Velocidad del estilo** con páginas grandes (filtro de Bloom de antepasados, estilos compartidos).

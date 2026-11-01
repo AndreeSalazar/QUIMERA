@@ -25,6 +25,7 @@ mod posicion;
 mod propiedades;
 mod tabla;
 mod valores;
+mod variables;
 
 use alloc::vec::Vec;
 pub use elemento::Nodo;
@@ -37,6 +38,7 @@ pub use valores::{
     Alinear, AltoLinea, Borde, Color, Display, Espacios, Estilo, EstiloBorde, Flotar, Generica, Limpiar, Medida,
     SIN_BORDE, TipoLista,
 };
+pub use variables::Variables;
 
 /// La pantalla para la que se calcula (`@media`, `vw`, `vh`).
 #[derive(Debug, Clone, Copy, PartialEq)]

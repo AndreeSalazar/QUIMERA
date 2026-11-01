@@ -11,6 +11,7 @@ use crate::elemento::Nodo;
 use crate::medios;
 use crate::propiedades::{self, Contexto};
 use crate::valores::{Display, Estilo};
+use crate::variables;
 use crate::{Estilos, Opciones};
 use alloc::collections::BTreeMap;
 use alloc::string::String;
@@ -189,15 +190,35 @@ fn estilo_de(doc: &Documento, id: NodoId, padre: &Estilo, ind: &Indice<'_>, op: 
         todas.push((fuerza(1, d.importante), d));
     }
     todas.sort_by_key(|(f, _)| *f);
+    // Primero las propiedades personalizadas (`--x`), en orden de cascada: las demás las usan.
+    let propias: Vec<(String, Vec<Token>)> = todas
+        .iter()
+        .filter(|(_, d)| d.propiedad.starts_with("--"))
+        .map(|(_, d)| (d.propiedad.clone(), d.valor.clone()))
+        .collect();
+    let vars = variables::del_elemento(&padre.variables, propias);
     let mut ganadoras: BTreeMap<String, Vec<Token>> = BTreeMap::new();
     for (_, d) in todas {
-        for (prop, valor) in propiedades::expandir(&d.propiedad, &d.valor) {
+        if d.propiedad.starts_with("--") {
+            continue;
+        }
+        // `var()` se sustituye antes de expandir: `margin: var(--m) 0` también vale.
+        let sustituido;
+        let valor: &[Token] = if variables::tiene_var(&d.valor) {
+            sustituido = variables::valor_de(&d.valor, &vars);
+            &sustituido
+        } else {
+            &d.valor
+        };
+        for (prop, valor) in propiedades::expandir(&d.propiedad, valor) {
             if propiedades::valida(&prop, &valor) {
                 ganadoras.insert(prop, valor);
             }
         }
     }
-    calcular_valores(padre, &ganadoras, op, letra_raiz)
+    let mut e = calcular_valores(padre, &ganadoras, op, letra_raiz);
+    e.variables = vars;
+    e
 }
 
 /// Las «pistas de presentación» del estándar de HTML: atributos que cuentan como declaraciones

@@ -256,6 +256,9 @@ pub struct Estilo {
     pub flotar: Flotar,
     /// `clear`
     pub limpiar: Limpiar,
+    /// Las propiedades personalizadas (`--x`) que ve, heredadas y propias (compartidas con el
+    /// padre si no declara ninguna).
+    pub variables: alloc::rc::Rc<crate::variables::Variables>,
 }
 
 impl Default for Estilo {
@@ -292,6 +295,7 @@ impl Default for Estilo {
             colocacion: crate::posicion::Colocacion::default(),
             flotar: Flotar::No,
             limpiar: Limpiar::No,
+            variables: alloc::rc::Rc::default(),
         }
     }
 }
@@ -317,6 +321,7 @@ impl Estilo {
             subrayado: padre.subrayado,
             tachado: padre.tachado,
             tabla: padre.tabla.heredada(),
+            variables: padre.variables.clone(),
             ..Estilo::default()
         }
     }

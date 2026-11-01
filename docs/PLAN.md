@@ -38,7 +38,7 @@ Que las páginas de lectura se vean como en Chrome.
 - ✅ **`float` y `clear`**, `display: flow-root` y `overflow` como contexto propio. Las mismas posiciones que Chromium en 39 casos; en Wikipedia, la ficha a la derecha del texto ([detalle](ESTILO-MAQUETACION.md#flotantes)).
 - ✅ **`position` y `z-index`**: `relative`, `absolute`, capas y contextos de apilamiento. Las mismas posiciones que Chromium en 19 cajas, y la misma caja encima en 7 puntos ([detalle](ESTILO-MAQUETACION.md#posición-y-z-index)). Falta que `fixed` y `sticky` se queden quietos al desplazar.
 - `overflow` con desplazamiento propio, `inline-block`.
-- Variables de CSS `var(--x)`, `calc()`, `min()`/`max()`.
+- ✅ **Variables de CSS** (`--x`, `var()` con reserva, anidadas, heredadas) y `unset` correcto ([detalle](ESTILO-MAQUETACION.md#variables-de-css)). Falta `calc()`, `min()`/`max()`.
 - `@font-face`: cargar las fuentes de la página.
 - Respuestas comprimidas: `gzip` y `deflate` (el descompresor de PNG ya sirve).
 - Imágenes: `srcset`, `<picture>`, `background-image`, WebP, y mipmaps para que las fotos reducidas no salgan con dientes.

@@ -111,6 +111,9 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<u
     let mut pagina = Pagina::cargar(&cliente, url);
     let (w, h) = (ancho as f32, alto as f32 - barra::ALTO);
     let mut imagenes = cargar_imagenes(&cliente, &pagina);
+    if let Ok(clase) = std::env::var("QUIMERA_DEPURAR") {
+        depurar(&pagina, &clase, (w, h));
+    }
     let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes);
     if let Some(n) = seguir {
         let enlace = m.enlaces.get(n).ok_or_else(|| format!("la página tiene {} enlaces", m.enlaces.len()))?;
@@ -148,6 +151,40 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<u
         imagenes.total()
     );
     Ok(())
+}
+
+/// `QUIMERA_DEPURAR=clase`: el estilo calculado del primer elemento con esa clase y de sus
+/// antepasados (para entender por qué algo no se ve como en otro navegador).
+fn depurar(pagina: &Pagina, clase: &str, (ancho, alto): (f32, f32)) {
+    let doc = pagina.documento();
+    let externa = |href: &str| pagina.hoja(href);
+    let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
+    let tiene = |id| {
+        doc.elemento(id).and_then(|e| e.atributo("class")).is_some_and(|c| c.split_whitespace().any(|x| x == clase))
+    };
+    let Some(id) = doc.descendientes(quimera_html::Documento::RAIZ).find(|&id| tiene(id)) else {
+        return eprintln!("ningún elemento con la clase {clase}");
+    };
+    let mut actual = Some(id);
+    while let Some(n) = actual {
+        if let (Some(el), Some(e)) = (doc.elemento(n), estilos.de(n)) {
+            eprintln!(
+                "<{} class={:?}> display={:?} ancho={:?} alto={:?} flotar={:?} posicion={:?} visible={} fondo={:?} color={:?} letra={}",
+                el.nombre,
+                el.atributo("class").unwrap_or(""),
+                e.display,
+                e.ancho,
+                e.alto,
+                e.flotar,
+                e.colocacion.posicion,
+                e.visible,
+                e.fondo,
+                e.color,
+                e.tam_letra
+            );
+        }
+        actual = doc.nodo(n).padre;
+    }
 }
 
 /// Todas las imágenes de la página, esperando a que lleguen (para capturar).
