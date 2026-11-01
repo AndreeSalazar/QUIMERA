@@ -3,10 +3,12 @@
 //! 1. El contenido en línea de un bloque se convierte en una lista de elementos (palabras,
 //!    espacios, saltos, imágenes), aplicando las reglas de `white-space`: en modo normal los
 //!    blancos seguidos se juntan en uno y no hay blancos al principio de línea.
-//! 2. Se parte en líneas de forma voraz: cabe todo lo que cabe.
+//! 2. Se parte en líneas de forma voraz: cabe todo lo que cabe. Cada línea tiene el ancho que
+//!    le dejan los flotantes a su altura; si no cabe ni su primera palabra, baja.
 //! 3. Cada línea mide lo que su elemento más alto (como el *strut* de CSS, el propio bloque
 //!    cuenta siempre), se apoya en una línea base común y se alinea con `text-align`.
 
+use crate::flotante::{Flotante, bajar, espacio};
 use crate::pintura::Pieza;
 use crate::texto::{Fuente, MedirTexto};
 use alloc::string::String;
@@ -38,6 +40,9 @@ pub(crate) enum Item<'e> {
         enlace: Option<u32>,
     },
 }
+
+/// Una línea con dónde empieza la próxima, su espacio (izquierda, derecha) y su alto (sobre, bajo).
+type LineaPuesta = (Linea, usize, (f32, f32), (f32, f32));
 
 /// Un enlace dibujado: su rectángulo y el número de su `href` en la lista del maquetador.
 pub(crate) type EnlaceBruto = (f32, f32, f32, f32, u32);
@@ -136,12 +141,12 @@ pub(crate) fn ancho_item(m: &dyn MedirTexto, it: &Item<'_>) -> f32 {
     }
 }
 
-/// Parte los elementos en líneas de `ancho` píxeles como mucho (salvo palabras más largas).
-fn partir(m: &dyn MedirTexto, items: &[Item<'_>], ancho: f32) -> Vec<Linea> {
-    let mut lineas = Vec::new();
+/// La siguiente línea desde el elemento `desde`, de `ancho` píxeles como mucho (salvo palabras
+/// más largas). Devuelve la línea y dónde empieza la próxima (`None`: no queda nada).
+fn siguiente(m: &dyn MedirTexto, items: &[Item<'_>], desde: usize, ancho: f32) -> Option<(Linea, usize)> {
     let mut l = Linea::default();
     let mut espacio: Option<(usize, f32)> = None;
-    for (i, it) in items.iter().enumerate() {
+    for (i, it) in items.iter().enumerate().skip(desde) {
         match it {
             Item::Espacio { fijo: false, .. } => {
                 if !l.puestos.is_empty() {
@@ -150,15 +155,13 @@ fn partir(m: &dyn MedirTexto, items: &[Item<'_>], ancho: f32) -> Vec<Linea> {
             }
             Item::Salto { .. } => {
                 l.salto = Some(i);
-                lineas.push(core::mem::take(&mut l));
-                espacio = None;
+                return Some((l, i + 1));
             }
             _ => {
                 let w = ancho_item(m, it);
                 let sp = espacio.map_or(0.0, |(_, w)| w);
                 if parte_lineas(it.estilo()) && !l.puestos.is_empty() && l.ancho + sp + w > ancho + 0.01 {
-                    lineas.push(core::mem::take(&mut l));
-                    espacio = None;
+                    return Some((l, i));
                 }
                 if let Some((j, ws)) = espacio.take() {
                     l.puestos.push((j, l.ancho, ws));
@@ -169,10 +172,7 @@ fn partir(m: &dyn MedirTexto, items: &[Item<'_>], ancho: f32) -> Vec<Linea> {
             }
         }
     }
-    if !l.puestos.is_empty() {
-        lineas.push(l);
-    }
-    lineas
+    (!l.puestos.is_empty()).then_some((l, items.len()))
 }
 
 /// Lo que sube y baja sobre la línea base algo con este estilo (con su medio interlineado).
@@ -193,6 +193,8 @@ pub(crate) struct EnLinea<'a> {
     pub x: f32,
     pub y: f32,
     pub ancho: f32,
+    /// Los flotantes del contexto: acortan las líneas que pasan a su lado.
+    pub flotantes: &'a [Flotante],
 }
 
 impl EnLinea<'_> {
@@ -203,36 +205,73 @@ impl EnLinea<'_> {
         piezas: &mut Vec<Pieza>,
         enlaces: &mut Vec<EnlaceBruto>,
     ) -> (f32, Option<f32>) {
-        let lineas = partir(self.medir, items, self.ancho);
         let mut y = self.y;
         let mut primera = None;
-        for l in &lineas {
-            let (mut sobre, mut bajo) = medidas(self.medir, self.bloque);
-            for &(i, _, _) in &l.puestos {
-                let (s, b) = match &items[i] {
-                    Item::Imagen { alto, .. } => (*alto, 0.0),
-                    it => medidas(self.medir, it.estilo()),
-                };
-                sobre = sobre.max(s);
-                bajo = bajo.max(b);
+        let mut desde = 0;
+        while let Some((l, proxima, (izq, der), (sobre, bajo))) = self.linea_en(items, desde, y) {
+            // Si junto a un flotante no cabe ni la primera palabra, la línea baja.
+            let estrecha = izq > self.x || der < self.x + self.ancho;
+            if estrecha
+                && l.ancho > der - izq + 0.01
+                && let Some(abajo) = bajar(self.flotantes, y, (sobre + bajo).max(0.01))
+            {
+                y = abajo;
+                continue;
             }
-            if let Some(s) = l.salto.filter(|_| l.puestos.is_empty()) {
-                let (s2, b2) = medidas(self.medir, items[s].estilo());
-                sobre = sobre.max(s2);
-                bajo = bajo.max(b2);
-            }
+            desde = proxima;
             let base = y + sobre;
             primera.get_or_insert(base);
-            let libre = (self.ancho - l.ancho).max(0.0);
+            let libre = (der - izq - l.ancho).max(0.0);
             let dx = match self.bloque.alinear {
                 Alinear::Centro => libre / 2.0,
                 Alinear::Derecha => libre,
                 _ => 0.0,
             };
-            self.dibujar(items, &l.puestos, (self.x + dx, base), piezas, enlaces);
+            self.dibujar(items, &l.puestos, (izq + dx, base), piezas, enlaces);
             y += sobre + bajo;
         }
         (y - self.y, primera)
+    }
+
+    /// La línea que empieza en el elemento `desde` a la altura `y`, con el espacio que le dejan
+    /// los flotantes en toda su altura: (línea, próxima, (izquierda, derecha), (sobre, bajo)).
+    /// El alto depende de lo que entra y lo que entra del alto: se ajusta hasta que no cambia.
+    fn linea_en(&self, items: &[Item<'_>], desde: usize, y: f32) -> Option<LineaPuesta> {
+        let (s0, b0) = medidas(self.medir, self.bloque);
+        let mut alto = (s0 + b0).max(0.01);
+        let mut resultado = None;
+        for _ in 0..4 {
+            let lados = espacio(self.flotantes, y, alto, self.x, self.x + self.ancho);
+            let (l, proxima) = siguiente(self.medir, items, desde, lados.1 - lados.0)?;
+            let (sobre, bajo) = self.alto_de(items, &l);
+            let nuevo = (sobre + bajo).max(0.01);
+            let otra = espacio(self.flotantes, y, nuevo, self.x, self.x + self.ancho);
+            resultado = Some((l, proxima, lados, (sobre, bajo)));
+            if otra == lados {
+                break;
+            }
+            alto = nuevo;
+        }
+        resultado
+    }
+
+    /// Lo que sube y baja la línea sobre su base (el bloque cuenta siempre, como el *strut*).
+    fn alto_de(&self, items: &[Item<'_>], l: &Linea) -> (f32, f32) {
+        let (mut sobre, mut bajo) = medidas(self.medir, self.bloque);
+        for &(i, _, _) in &l.puestos {
+            let (s, b) = match &items[i] {
+                Item::Imagen { alto, .. } => (*alto, 0.0),
+                it => medidas(self.medir, it.estilo()),
+            };
+            sobre = sobre.max(s);
+            bajo = bajo.max(b);
+        }
+        if let Some(s) = l.salto.filter(|_| l.puestos.is_empty()) {
+            let (s2, b2) = medidas(self.medir, items[s].estilo());
+            sobre = sobre.max(s2);
+            bajo = bajo.max(b2);
+        }
+        (sobre, bajo)
     }
 
     /// Las piezas de una línea: los trozos seguidos con el mismo estilo van en un solo texto.

@@ -4,7 +4,9 @@
 //! Un valor que no se entiende se ignora y la propiedad conserva lo que tenía (como en CSS,
 //! donde una declaración no válida no cuenta).
 
-use crate::valores::{Alinear, AltoLinea, Borde, Display, Espacios, Estilo, EstiloBorde, Generica, Medida, TipoLista};
+use crate::valores::{
+    Alinear, AltoLinea, Borde, Display, Espacios, Estilo, EstiloBorde, Flotar, Generica, Limpiar, Medida, TipoLista,
+};
 use alloc::string::String;
 use alloc::vec::Vec;
 use quimera_css::{Color, Longitud, Token, color, longitud, piezas};
@@ -243,6 +245,9 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
         "list-style-type" => e.lista = de.lista,
         "visibility" => e.visible = de.visible,
         "text-transform" => e.transformar = de.transformar,
+        "float" => e.flotar = de.flotar,
+        "clear" => e.limpiar = de.limpiar,
+        "overflow" | "overflow-x" | "overflow-y" => e.recorta = de.recorta,
         p if crate::flex::es_propia(p) => crate::flex::copiar(&mut e.flex, &de.flex, p),
         p if crate::tabla::es_propia(p) => crate::tabla::copiar(&mut e.tabla, &de.tabla, p),
         p => {
@@ -321,6 +326,14 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
                 _ => None,
             }
         }
+        "float" => e.flotar = n.as_deref().and_then(flotar).unwrap_or(e.flotar),
+        "overflow" | "overflow-x" | "overflow-y" => {
+            let valores: Vec<bool> = piezas(v).iter().filter_map(|p| ident(p).as_deref().and_then(recorta)).collect();
+            if !valores.is_empty() {
+                e.recorta = valores.iter().any(|r| *r);
+            }
+        }
+        "clear" => e.limpiar = n.as_deref().and_then(limpiar).unwrap_or(e.limpiar),
         p if crate::flex::es_propia(p) => {
             crate::flex::aplicar(&mut e.flex, p, v, c);
         }
@@ -385,6 +398,10 @@ pub(crate) fn valida(prop: &str, v: &[Token]) -> bool {
         "list-style-type" => n.and_then(tipo_lista).is_some(),
         "visibility" => matches!(n, Some("visible" | "hidden" | "collapse")),
         "text-transform" => matches!(n, Some("none" | "uppercase" | "lowercase" | "capitalize")),
+        "float" => n.and_then(flotar).is_some(),
+        "overflow-x" | "overflow-y" => n.and_then(recorta).is_some(),
+        "overflow" => piezas(v).iter().all(|p| ident(p).as_deref().and_then(recorta).is_some()),
+        "clear" => n.and_then(limpiar).is_some(),
         p if crate::flex::es_propia(p) => crate::flex::aplicar(&mut crate::flex::Flex::default(), p, v, &c),
         p if crate::tabla::es_propia(p) => crate::tabla::aplicar(&mut crate::tabla::Tabla::default(), p, v, &c),
         p => match lado_de(p) {
@@ -411,7 +428,8 @@ fn valor_color(v: &[Token], actual: Color) -> Option<Color> {
 fn display(n: &str) -> Option<Display> {
     Some(match n {
         "flex" => Display::Flex,
-        "block" | "grid" | "flow-root" => Display::Bloque,
+        "block" | "grid" => Display::Bloque,
+        "flow-root" => Display::RaizFlujo,
         "table" | "inline-table" => Display::Tabla,
         "table-row-group" | "table-header-group" | "table-footer-group" => Display::GrupoFilas,
         "table-row" => Display::Fila,
@@ -486,6 +504,34 @@ fn alinear(n: &str) -> Option<Alinear> {
         "right" | "end" => Alinear::Derecha,
         "center" | "-webkit-center" => Alinear::Centro,
         "justify" => Alinear::Justificar,
+        _ => return None,
+    })
+}
+
+/// Si un valor de `overflow` crea contexto propio (`clip` no lo crea).
+fn recorta(n: &str) -> Option<bool> {
+    match n {
+        "visible" | "clip" => Some(false),
+        "hidden" | "auto" | "scroll" | "overlay" => Some(true),
+        _ => None,
+    }
+}
+
+fn flotar(n: &str) -> Option<Flotar> {
+    Some(match n {
+        "none" => Flotar::No,
+        "left" | "inline-start" => Flotar::Izquierda,
+        "right" | "inline-end" => Flotar::Derecha,
+        _ => return None,
+    })
+}
+
+fn limpiar(n: &str) -> Option<Limpiar> {
+    Some(match n {
+        "none" => Limpiar::No,
+        "left" | "inline-start" => Limpiar::Izquierda,
+        "right" | "inline-end" => Limpiar::Derecha,
+        "both" => Limpiar::Ambos,
         _ => return None,
     })
 }

@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- Casos de flotantes sin texto (las fuentes no influyen): las líneas son imágenes de tamaño
+     fijo con font-size: 0, así su alto es el de sus imágenes. Cada caja con fondo
+     rgb(k, 150, 50) y cada imagen (src = "iN") se compara con la posición que le da Chromium
+     (web/maquetacion/tests/flotantes.rs). -->
+<style>
+  body { margin: 8px }
+  .c { width: 300px; font-size: 0; margin-bottom: 20px; background: rgb(99, 150, 50) }
+  img { vertical-align: baseline }
+</style>
+
+<!-- 1: flotante a la izquierda; las líneas lo rodean y vuelven al ancho completo al acabar -->
+<div class=c><div style="float:left;width:100px;height:50px;background:rgb(1,150,50)"></div>
+  <img src=i1 width=60 height=20><img src=i2 width=60 height=20><img src=i3 width=60 height=20><img src=i4 width=60 height=20><img src=i5 width=60 height=20><img src=i6 width=60 height=20><img src=i7 width=60 height=20><img src=i8 width=60 height=20></div>
+
+<!-- 2: uno a cada lado -->
+<div class=c><div style="float:left;width:50px;height:30px;background:rgb(2,150,50)"></div>
+  <div style="float:right;width:70px;height:30px;background:rgb(3,150,50)"></div>
+  <img src=j1 width=100 height=10><img src=j2 width=100 height=10><img src=j3 width=100 height=10></div>
+
+<!-- 3: el segundo no cabe al lado del primero: baja -->
+<div class=c style="height:120px"><div style="float:left;width:200px;height:40px;background:rgb(4,150,50)"></div>
+  <div style="float:left;width:150px;height:30px;background:rgb(5,150,50)"></div>
+  <div style="float:right;width:90px;height:20px;background:rgb(6,150,50)"></div></div>
+
+<!-- 4: clear -->
+<div class=c><div style="float:left;width:80px;height:40px;background:rgb(7,150,50)"></div>
+  <div style="float:right;width:80px;height:60px;background:rgb(8,150,50)"></div>
+  <div style="clear:left;height:10px;background:rgb(9,150,50)"></div>
+  <div style="clear:both;height:10px;background:rgb(10,150,50)"></div></div>
+
+<!-- 5: ancho automático, encogido a su contenido, con relleno y margen -->
+<div class=c><div style="float:right;padding:5px;margin:3px;background:rgb(11,150,50)"><img src=k1 width=80 height=20></div>
+  <img src=k2 width=150 height=10></div>
+
+<!-- 6: un bloque normal no abarca sus flotantes; el siguiente lo rodea -->
+<div class=c><div style="background:rgb(12,150,50)"><div style="float:left;width:60px;height:50px;background:rgb(13,150,50)"></div><img src=l1 width=30 height=10></div>
+  <div style="height:15px;background:rgb(14,150,50)"><img src=l2 width=30 height=10></div></div>
+
+<!-- 7: una tabla no se mete debajo del flotante -->
+<div class=c><div style="float:left;width:100px;height:50px;background:rgb(15,150,50)"></div>
+  <table style="border-spacing:0;background:rgb(16,150,50)"><tr><td style="padding:0"><img src=m1 width=120 height=20></td></tr></table></div>
+
+<!-- 8: una celda (contexto propio) abarca su flotante -->
+<div class=c><table style="border-spacing:0"><tr><td style="padding:0;background:rgb(17,150,50)"><div style="float:left;width:40px;height:60px;background:rgb(18,150,50)"></div><img src=n1 width=20 height=10></td></tr></table></div>
+
+<!-- 9: si junto al flotante no cabe la primera imagen, la línea baja -->
+<div class=c><div style="float:left;width:250px;height:30px;background:rgb(19,150,50)"></div>
+  <img src=o1 width=80 height=10><img src=o2 width=40 height=10></div>
+
+<!-- 10: imagen flotante con align y hspace dentro del texto -->
+<div class=c><img src=p1 width=20 height=10><img src=p2 align=right hspace=4 width=50 height=40><img src=p3 width=200 height=10><img src=p4 width=100 height=10></div>

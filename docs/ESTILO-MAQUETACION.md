@@ -75,7 +75,7 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/flex.html
 
 Los elementos se maquetan con el mismo `bloque()` de siempre: primero «en seco» para medirlos (sus piezas se descartan) y después en su sitio, con el ancho que les toca y, si se estiran, con su alto impuesto.
 
-**Tamaños intrínsecos** (`intrinseco.rs`): el ancho mínimo (`min-content`: la palabra o imagen más ancha) y máximo (`max-content`: todo en una línea) de cualquier elemento, guardados por nodo. Los usan flexbox y las tablas, y servirán para `float` e `inline-block`.
+**Tamaños intrínsecos** (`intrinseco.rs`): el ancho mínimo (`min-content`: la palabra o imagen más ancha) y máximo (`max-content`: todo en una línea) de cualquier elemento, guardados por nodo. Los usan flexbox, las tablas y los flotantes, y servirán para `inline-block`.
 
 Por el camino: el texto de un bloque ya no pinta un fondo propio debajo de cada línea (en los navegadores solo lo pintan los elementos en línea, como `<span>`). Y las fuentes de reserva incluyen chino, japonés y coreano (Microsoft YaHei, Yu Gothic, Malgun; Noto CJK en Linux), así que `日本語` o `简体中文` ya no salen como cajas.
 
@@ -107,6 +107,44 @@ Hacker News (hecho entero con tablas) se ve **igual que en Chromium**: la tabla 
 6. **Bordes que colapsan**, como Chromium: cada borde entre dos celdas es el más ancho de los dos (y en los de fuera, también el de la tabla). Cada celda ocupa la mitad de sus bordes, la tabla la mitad de los de fuera, y los bordes se dibujan centrados en las líneas, encima de todas las celdas.
 
 **Falta en tablas:** `table-layout: fixed`, el ancho de `<col>` y `<colgroup>`, `caption-side: bottom`, la alineación de celdas por línea base (cuenta como arriba), `visibility: collapse` y meter en una tabla anónima las celdas sueltas fuera de una tabla (`display: table-cell` en un `<div>` se maqueta como bloque).
+
+## Flotantes
+
+```bash
+cargo run --release -p quimera-ventana -- https://en.wikipedia.org/wiki/Cat
+```
+
+En Wikipedia el texto del artículo va a la izquierda y la ficha del gato a la derecha, y la línea bajo cada título se corta antes de la ficha, como en Chromium.
+
+**Comprobado contra Chromium** con [`docs/ejemplos/flotantes.html`](ejemplos/flotantes.html): diez casos sin texto (las líneas son imágenes de tamaño fijo con `font-size: 0`). Las **39 posiciones** coinciden con las de Chromium (`web/maquetacion/tests/flotantes.rs`):
+- líneas que rodean un flotante;
+- uno a cada lado;
+- un flotante que no cabe y baja;
+- `clear`;
+- el ancho encogido a su contenido;
+- un bloque que no abarca su flotante;
+- una tabla que no se mete debajo;
+- una celda que sí lo abarca;
+- una línea que baja porque no cabe;
+- `<img align=right hspace=4>` dentro del texto.
+
+Uno de los casos tiene un flotante que sobresale por debajo de su bloque y empuja a los dos casos siguientes; QUIMERA lo hace igual.
+
+**Estilo:**
+- `float` y `clear`. Un flotante es siempre un bloque (CSS 2.1 §9.7).
+- `display: flow-root` y `overflow` distinto de `visible` (que crean contexto propio; el contenido todavía no se recorta).
+- Atributos antiguos: `align=left|right` en imágenes y tablas, y `hspace`/`vspace`.
+
+**Maquetación** (`quimera-maquetacion/src/flotante.rs`):
+1. **Contextos de formato.** Cada uno lleva su lista de flotantes, con su caja de margen en coordenadas del documento. Son contexto propio la raíz, cada flotante, cada celda, cada elemento flexible, `flow-root` y `overflow: hidden`. Un contexto crece hasta abarcar sus flotantes; un bloque normal no, y sus flotantes pueden salir por abajo.
+2. **Colocar un flotante.** Su ancho es el pedido o, si no tiene, «encogido para caber» (su máximo de contenido, sin pasar del sitio ni bajar de su mínimo; una tabla nunca baja de su mínimo). Se mide en seco y va lo más arriba posible: nunca por encima de un flotante anterior, y con `clear`, debajo de los de ese lado. Se pega a su lado donde quepa; si no cabe, baja hasta donde acaba el flotante que estorba.
+3. **Líneas.** Cada línea tiene el ancho que le dejan los flotantes en toda su altura. Como el alto depende de lo que entra en la línea y lo que entra depende del alto, se ajusta hasta que no cambia. Si junto a un flotante no cabe ni la primera palabra, la línea baja.
+4. **Flotantes dentro del texto** (`<img align=right>` entre palabras): van arriba de esas líneas.
+5. **Lo que es su propio contexto** (tablas, flex, `flow-root`, `overflow: hidden`) no se mete debajo de un flotante: va a su lado, o debajo si no cabe.
+6. **Orden de dibujo.** Los flotantes se dibujan al final de su contexto, encima de los fondos de los bloques normales (como manda el orden de pintado de CSS).
+7. **Anchos intrínsecos.** Los flotantes cuentan al lado de lo que les sigue, como en Chromium (una celda con un flotante de 40 px y una imagen de 20 px mide 60).
+
+**Falta en flotantes:** `<br clear=all>`, que un flotante dentro de una línea vaya justo en esa línea (no al principio de su párrafo), las líneas más altas que el bloque que pasan junto a un flotante y empiezan antes de que acabe, y recortar el contenido con `overflow: hidden`.
 
 ## Siguiente
 

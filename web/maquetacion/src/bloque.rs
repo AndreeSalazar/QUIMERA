@@ -7,12 +7,13 @@
 //! Los hijos en línea seguidos (texto, `<b>`, `<a>`, `<img>`) forman un bloque anónimo que se
 //! parte en líneas (`linea.rs`).
 
+use crate::flotante::Flotante;
 use crate::linea::{EnLinea, EnlaceBruto, Item, texto_a_items};
 use crate::pintura::Pieza;
 use crate::texto::MedirTexto;
 use alloc::string::String;
 use alloc::vec::Vec;
-use quimera_estilo::{Display, Estilo, Estilos, Medida, TipoLista};
+use quimera_estilo::{Display, Estilo, Estilos, Flotar, Medida, TipoLista};
 use quimera_html::{Dato, Documento, NodoId};
 
 pub(crate) struct Maquetador<'a> {
@@ -41,6 +42,12 @@ pub(crate) struct Maquetador<'a> {
     /// Bordes (arriba, derecha, abajo, izquierda) que ocupa este elemento en vez de los suyos, sin
     /// dibujarlos: las celdas de una tabla con bordes que colapsan (los dibuja la tabla).
     pub bordes_celda: Option<(NodoId, [f32; 4])>,
+    /// Los flotantes del contexto de formato actual.
+    pub flotantes: Vec<Flotante>,
+    /// Las piezas de los flotantes: se dibujan al final de su contexto, encima de los bloques.
+    pub capa_flotantes: Vec<Pieza>,
+    /// Flotantes vistos dentro de contenido en línea, que se ponen arriba de sus líneas.
+    pub pendientes: Vec<NodoId>,
     /// El tamaño propio de cada imagen por su `src` (si ya se descargó).
     pub imagenes: &'a dyn Fn(&str) -> Option<(u32, u32)>,
     /// Ancho del contenido del bloque que se está llenando (para los `%` de las imágenes en línea).
@@ -60,6 +67,8 @@ pub(crate) struct Hecho {
 /// Qué es un hijo para su bloque.
 pub(crate) enum Clase {
     Bloque,
+    /// `float: left | right`: fuera del flujo, a un lado.
+    Flotante,
     EnLinea,
     Nada,
 }
@@ -86,6 +95,9 @@ impl<'a> Maquetador<'a> {
             ancho_libre: None,
             alto_forzado: None,
             bordes_celda: None,
+            flotantes: Vec::new(),
+            capa_flotantes: Vec::new(),
+            pendientes: Vec::new(),
             imagenes,
             ancho_actual: 0.0,
         }
@@ -101,6 +113,9 @@ impl<'a> Maquetador<'a> {
             Dato::Elemento(_) => {}
             _ => return Clase::Nada,
         }
+        if self.estilo(id).is_some_and(|e| e.flotar != Flotar::No && e.display != Display::Ninguno) {
+            return Clase::Flotante;
+        }
         match self.estilo(id).map(|e| e.display) {
             None | Some(Display::Ninguno) => Clase::Nada,
             Some(Display::Columna) => Clase::Nada,
@@ -108,6 +123,7 @@ impl<'a> Maquetador<'a> {
             // las meten en una tabla anónima).
             Some(
                 Display::Bloque
+                | Display::RaizFlujo
                 | Display::ElementoDeLista
                 | Display::Flex
                 | Display::Tabla
@@ -138,7 +154,8 @@ impl<'a> Maquetador<'a> {
         let Some(e) = self.estilo(id) else { return 0.0 };
         let propio = e.margen[0].px(ancho_contenedor, 0.0);
         // Un contenedor flex o una tabla no dejan salir los márgenes de sus hijos.
-        if matches!(e.display, Display::Flex | Display::Tabla)
+        if matches!(e.display, Display::Flex | Display::Tabla | Display::RaizFlujo)
+            || e.recorta
             || e.borde[0].ocupa() > 0.0
             || e.relleno[0].px(ancho_contenedor, 0.0) > 0.0
         {
@@ -150,7 +167,7 @@ impl<'a> Maquetador<'a> {
             .hijos
             .clone()
             .into_iter()
-            .find(|&h| !self.es_blanco(h) && !matches!(self.clase(h), Clase::Nada));
+            .find(|&h| !self.es_blanco(h) && !matches!(self.clase(h), Clase::Nada | Clase::Flotante));
         match primero {
             Some(h) if matches!(self.clase(h), Clase::Bloque) => {
                 mayor_margen(propio, self.margen_superior(h, ancho_contenedor))
@@ -209,8 +226,10 @@ impl<'a> Maquetador<'a> {
             self.anclas.push((String::from(i), y));
         }
         let enlace_previo = self.entrar_en_enlace(id);
-        let es_raiz = self.raiz == Some(id);
-        let colapsa_arriba = bt + pt == 0.0 && !es_raiz;
+        let propio = self.contexto_propio(id, e);
+        let contexto = propio.then(|| core::mem::take(&mut self.flotantes));
+        let capa_inicio = self.capa_flotantes.len();
+        let colapsa_arriba = bt + pt == 0.0 && !propio;
         let (alto_contenido, abierto, primera_base) = if e.display == Display::Flex {
             let alto_conocido = match (forzado, e.alto) {
                 (Some(f), _) => Some((f - bt - pt - pb - bb).max(0.0)),
@@ -223,27 +242,48 @@ impl<'a> Maquetador<'a> {
             self.contenido(id, e, cx, cy, ancho_contenido, colapsa_arriba)
         };
         self.enlace = enlace_previo;
-        let colapsa_abajo = bb + pb == 0.0 && e.alto == Medida::Auto && !es_raiz;
+        let colapsa_abajo = bb + pb == 0.0 && e.alto == Medida::Auto && !propio;
         let mut alto_contenido = match e.alto {
             Medida::Px(h) => h,
             _ => alto_contenido + if colapsa_abajo { 0.0 } else { abierto },
         };
         alto_contenido = alto_contenido.max(e.alto_min.px(0.0, 0.0));
-        let alto = forzado.unwrap_or(bt + pt + alto_contenido + pb + bb);
-        if impuestos.is_some() {
-            if e.visible && e.fondo.a > 0 {
-                let fondo = Pieza::Rect { x: x + ml, y, ancho: ancho_borde, alto, color: e.fondo };
-                self.piezas.insert(inicio_piezas, fondo);
+        if let Some(fuera) = contexto {
+            // Un contexto de formato crece hasta abarcar sus flotantes.
+            if let (Some(abajo), Medida::Auto) = (self.fondo_flotantes(), e.alto) {
+                alto_contenido = alto_contenido.max(abajo - cy);
             }
-        } else {
-            self.fondo_y_bordes(inicio_piezas, e, x + ml, y, ancho_borde, alto);
+            self.flotantes = fuera;
         }
+        let alto = forzado.unwrap_or(bt + pt + alto_contenido + pb + bb);
+        self.caja(inicio_piezas, e, (x + ml, y, ancho_borde, alto), impuestos.is_none());
         if e.display == Display::ElementoDeLista {
             self.marcador(id, e, cx, primera_base.unwrap_or(cy + e.tam_letra * 0.8));
+        }
+        if propio {
+            let capa: Vec<Pieza> = self.capa_flotantes.drain(capa_inicio..).collect();
+            self.piezas.extend(capa);
         }
         let propio = px(e.margen[2]);
         let margen_inferior = if colapsa_abajo { mayor_margen(propio, abierto) } else { propio };
         Hecho { alto, margen_inferior, primera_base }
+    }
+
+    /// El fondo y los bordes de una caja, debajo de su contenido. Sin `bordes` (una celda con
+    /// bordes que colapsan, que los dibuja su tabla), solo el fondo.
+    fn caja(&mut self, en: usize, e: &Estilo, (x, y, ancho, alto): (f32, f32, f32, f32), bordes: bool) {
+        if bordes {
+            self.fondo_y_bordes(en, e, x, y, ancho, alto);
+        } else if e.visible && e.fondo.a > 0 {
+            self.piezas.insert(en, Pieza::Rect { x, y, ancho, alto, color: e.fondo });
+        }
+    }
+
+    /// Si `id` es su propio contexto de formato: la raíz, lo que se maqueta con su ancho dado
+    /// (celdas, elementos flexibles, flotantes), `display: flow-root` y `overflow` que no es
+    /// `visible`. Abarca sus flotantes y sus márgenes no se juntan con los de sus hijos.
+    pub(crate) fn contexto_propio(&self, id: NodoId, e: &Estilo) -> bool {
+        self.raiz == Some(id) || self.ancho_libre == Some(id) || e.display == Display::RaizFlujo || e.recorta
     }
 
     /// Si el padre de `id` centra sus bloques (`text-align: -webkit-center`).
@@ -299,20 +339,26 @@ impl<'a> Maquetador<'a> {
             match self.clase(h) {
                 Clase::Nada => {}
                 Clase::EnLinea => self.recoger(h, e, &mut items, &mut ultimo_espacio),
+                // Un flotante entre texto va arriba de esas líneas; si no, donde va el flujo.
+                Clase::Flotante if items_con_contenido(&items) => self.pendientes.push(h),
+                Clase::Flotante => self.flotante(h, cx, cursor + abierto.unwrap_or(0.0), ancho),
                 Clase::Bloque => {
                     if items_con_contenido(&items) {
                         cursor += abierto.take().unwrap_or(0.0);
+                        self.poner_pendientes(cx, cursor, ancho);
                         let (alto, base) = self.lineas(&items, e, cx, cursor, ancho);
                         primera_base = primera_base.or(base);
                         cursor += alto;
                         primero = false;
                     }
+                    self.poner_pendientes(cx, cursor + abierto.unwrap_or(0.0), ancho);
                     items.clear();
                     ultimo_espacio = true;
                     let mt = self.margen_superior(h, ancho);
                     let mt = if primero && colapsa_arriba { 0.0 } else { mt };
                     let arriba = cursor + abierto.map_or(mt, |a| mayor_margen(a, mt));
-                    let hecho = self.bloque(h, cx, arriba, ancho);
+                    let arriba = self.despejar(h, arriba);
+                    let hecho = self.bloque_junto(h, cx, arriba, ancho);
                     primera_base = primera_base.or(hecho.primera_base);
                     cursor = arriba + hecho.alto;
                     abierto = Some(hecho.margen_inferior);
@@ -322,10 +368,12 @@ impl<'a> Maquetador<'a> {
         }
         if items_con_contenido(&items) {
             cursor += abierto.take().unwrap_or(0.0);
+            self.poner_pendientes(cx, cursor, ancho);
             let (alto, base) = self.lineas(&items, e, cx, cursor, ancho);
             primera_base = primera_base.or(base);
             cursor += alto;
         }
+        self.poner_pendientes(cx, cursor + abierto.unwrap_or(0.0), ancho);
         self.ancho_actual = ancho_previo;
         (cursor - cy, abierto.unwrap_or(0.0), primera_base)
     }
@@ -338,7 +386,7 @@ impl<'a> Maquetador<'a> {
         y: f32,
         ancho: f32,
     ) -> (f32, Option<f32>) {
-        let l = EnLinea { medir: self.medir, bloque: e, x, y, ancho };
+        let l = EnLinea { medir: self.medir, bloque: e, x, y, ancho, flotantes: &self.flotantes };
         l.maquetar(items, &mut self.piezas, &mut self.enlaces)
     }
 
@@ -355,6 +403,10 @@ impl<'a> Maquetador<'a> {
             Dato::Elemento(el) => {
                 let Some(e) = self.estilo(id) else { return };
                 if e.display == Display::Ninguno {
+                    return;
+                }
+                if e.flotar != Flotar::No {
+                    self.pendientes.push(id);
                     return;
                 }
                 match el.nombre.as_str() {

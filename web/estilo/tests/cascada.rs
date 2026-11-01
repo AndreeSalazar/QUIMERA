@@ -1,8 +1,8 @@
 //! La cascada da los mismos valores calculados que un navegador.
 
 use quimera_estilo::{
-    Alinear, AlinearVertical, Color, Display, Espacios, Estilo, Estilos, Generica, Medida, Opciones, TipoLista,
-    calcular,
+    Alinear, AlinearVertical, Color, Display, Espacios, Estilo, Estilos, Flotar, Generica, Limpiar, Medida, Opciones,
+    TipoLista, calcular,
 };
 use quimera_html::{Documento, analizar};
 
@@ -212,4 +212,17 @@ fn modo_de_compatibilidad_sin_doctype() {
     let (doc, e) = estilos("<center id=c>1</center><div id=a align=center>2</div><p id=p style='text-align:center'>3");
     assert!(de(&doc, &e, "c").centrar_bloques && de(&doc, &e, "a").centrar_bloques);
     assert!(!de(&doc, &e, "p").centrar_bloques);
+}
+
+#[test]
+fn float_y_clear() {
+    let (doc, e) = estilos(
+        "<span id=s style='float:right'>1</span><p id=p style='clear:both'>2</p>\
+         <img id=i src=a align=left hspace=5><td id=t style='float:left'>",
+    );
+    let s = de(&doc, &e, "s");
+    assert_eq!((s.flotar, s.display), (Flotar::Derecha, Display::Bloque), "un flotante es un bloque");
+    assert_eq!(de(&doc, &e, "p").limpiar, Limpiar::Ambos);
+    let i = de(&doc, &e, "i");
+    assert_eq!((i.flotar, i.margen[1], i.margen[3]), (Flotar::Izquierda, Medida::Px(5.0), Medida::Px(5.0)));
 }

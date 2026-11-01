@@ -311,16 +311,21 @@ impl<'a> Maquetador<'a> {
         let mut items: Vec<Item<'a>> = Vec::new();
         let mut ultimo_espacio = true;
         self.recoger(h, e, &mut items, &mut ultimo_espacio);
+        self.pendientes.clear(); // un texto suelto de un contenedor flex no tiene flotantes
         self.lineas(&items, e, x, y, ancho)
     }
 
     /// Ejecuta `f` y descarta lo que haya dibujado (para medir sin dejar rastro).
     pub(crate) fn en_seco<R>(&mut self, f: impl FnOnce(&mut Self) -> R) -> R {
         let (p, e, a) = (self.piezas.len(), self.enlaces.len(), self.anclas.len());
+        let (fl, capa, pend) = (self.flotantes.len(), self.capa_flotantes.len(), self.pendientes.len());
         let r = f(self);
         self.piezas.truncate(p);
         self.enlaces.truncate(e);
         self.anclas.truncate(a);
+        self.flotantes.truncate(fl);
+        self.capa_flotantes.truncate(capa);
+        self.pendientes.truncate(pend);
         r
     }
 

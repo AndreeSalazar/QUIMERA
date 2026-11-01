@@ -22,10 +22,10 @@ Misma página, ventana visible, Windows, `--release`. Edge 156 es Chromium por d
 
 | Página | QUIMERA | Edge (Chromium) |
 |---|---:|---:|
-| example.com | **111 MB**, 1 proceso | 461 MB, 9 procesos |
+| example.com | **110 MB**, 1 proceso | 471 MB, 9 procesos |
 | The Rust Book | **115 MB** | 486 MB |
-| Wikipedia, «Cat» (51 imágenes, 278 idiomas) | **252 MB** | 542 MB |
-| Hacker News (todo tablas) | **113 MB** | 470 MB |
+| Wikipedia, «Cat» (51 imágenes, 278 idiomas) | **243 MB** | 542–821 MB |
+| Hacker News (todo tablas) | **115 MB** | 456 MB |
 
 Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** todavía no ejecuta el JavaScript de las páginas, y Edge sí. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
 
@@ -39,7 +39,7 @@ cargo run --release -p quimera-ventana -- https://en.wikipedia.org/wiki/Cat
 
 - Abre páginas por **HTTP y HTTPS**, con barra de dirección, enlaces que se pulsan, historial (Alt+← / Alt+→) y carga en otro hilo.
 - **HTML** con el mismo árbol que html5ever en 5.000 páginas reales, y 2,2× más rápido.
-- **CSS:** cascada, herencia, `@media`, bloques con márgenes que colapsan, texto en líneas, listas, **flexbox** y **tablas** como Chromium (Hacker News se ve igual).
+- **CSS:** cascada, herencia, `@media`, bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, **tablas** y **flotantes** como Chromium (Hacker News se ve igual; en Wikipedia, la ficha a la derecha del texto).
 - **Imágenes** PNG, JPEG y GIF con decodificador propio, al píxel igual que las bibliotecas de referencia. Se descargan en segundo plano.
 - **JavaScript** propio, 3,3× más rápido que Boa en los benchmarks de V8. Aún no está conectado a las páginas: eso es la fase 3 del plan.
 - Dibuja con la GPU (wgpu) y fuentes del sistema.
@@ -51,7 +51,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 | Fase | Qué | Desbloquea |
 |---|---|---|
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
-| 1 | ✅ Tablas · `float`, `position`, `var()`, `@font-face`, gzip, WebP | Wikipedia, documentación, blogs |
+| 1 | ✅ Tablas, ✅ `float` · `position`, `var()`, `@font-face`, gzip, WebP | Wikipedia, documentación, blogs |
 | 2 | Formularios, cookies, foco y teclado, caché | buscar (DuckDuckGo HTML): navegar de verdad |
 | 3 | **JavaScript ↔ DOM** (puente generado desde WebIDL, un solo GC), bucle de eventos, `fetch` | Steam y páginas con JavaScript |
 | 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
@@ -72,8 +72,8 @@ En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, 
 | `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones | ✅ 29 pruebas |
 | `web/html` → `quimera-html` | 2 | HTML5 → árbol, con la recuperación de errores de los navegadores; mismo árbol que html5ever en 5.000 páginas reales, 2,2× más rápido ([docs/HTML-CSS.md](docs/HTML-CSS.md)) | ✅ 10 pruebas |
 | `web/css` → `quimera-css` | 2 | CSS → reglas, `@media`, selectores con especificidad, colores y longitudes | ✅ 9 pruebas |
-| `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos, flexbox, tablas, modo de compatibilidad ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 11 pruebas |
-| `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, **tablas**, tamaños intrínsecos, **imágenes** (proporción, `max-width`) → lista de dibujo | ✅ 22 pruebas |
+| `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos, flexbox, tablas, `float`, modo de compatibilidad ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 12 pruebas |
+| `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, **tablas**, **flotantes**, tamaños intrínsecos, **imágenes** (proporción, `max-width`) → lista de dibujo | ✅ 27 pruebas |
 | `herramientas/ver` → `quimera-ver` | 100 | Una página → imagen SVG: [la primera página dibujada por QUIMERA](docs/ejemplos/primera.svg) | ✅ |
 | `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux): medir, interletraje, rasterizar, reserva para símbolos; cada archivo se lee solo cuando hace falta ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 3 pruebas |
 | `grafico/imagen` → `quimera-imagen` | 2 | PNG, JPEG (también progresivo) y GIF → RGBA, sin dependencias; mismos píxeles que las bibliotecas de referencia en 115 imágenes ([docs/IMAGENES.md](docs/IMAGENES.md)) | ✅ 5 pruebas |

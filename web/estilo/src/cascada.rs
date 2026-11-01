@@ -237,6 +237,9 @@ fn pistas_de_atributos(doc: &Documento, id: NodoId) -> Vec<Declaracion> {
             if e.atributo("align").is_some_and(|a| a.eq_ignore_ascii_case("center")) {
                 css.push_str("margin-left:auto;margin-right:auto;");
             }
+            if let Some(lado) = e.atributo("align").and_then(lado_html) {
+                css.push_str(&alloc::format!("float:{lado};"));
+            }
         }
         "td" | "th" | "tr" | "thead" | "tbody" | "tfoot" => {
             if let Some(a) = e.atributo("align").and_then(alinear_html) {
@@ -263,6 +266,16 @@ fn pistas_de_atributos(doc: &Documento, id: NodoId) -> Vec<Declaracion> {
                 }
             }
         }
+        "img" | "iframe" | "object" | "embed" => {
+            if let Some(lado) = e.atributo("align").and_then(lado_html) {
+                css.push_str(&alloc::format!("float:{lado};"));
+            }
+            for (atributo, lados) in [("hspace", "left:{};margin-right"), ("vspace", "top:{};margin-bottom")] {
+                if let Some(m) = e.atributo(atributo).and_then(longitud_html) {
+                    css.push_str(&alloc::format!("margin-{}:{m};", lados.replace("{}", &m)));
+                }
+            }
+        }
         "div" | "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "caption" => {
             if let Some(a) = e.atributo("align").and_then(alinear_html) {
                 css.push_str(&alloc::format!("text-align:{a};"));
@@ -283,6 +296,15 @@ fn alinear_html(a: &str) -> Option<&'static str> {
         "justify" => "justify",
         _ => return None,
     })
+}
+
+/// `align=left|right` de una imagen o una tabla: flota a ese lado.
+fn lado_html(a: &str) -> Option<&'static str> {
+    match a.trim().to_ascii_lowercase().as_str() {
+        "left" => Some("left"),
+        "right" => Some("right"),
+        _ => None,
+    }
 }
 
 /// Un número de un atributo de HTML (`100`, `50%`, `10px`) como longitud de CSS.
@@ -347,6 +369,21 @@ fn calcular_valores(
         if prop != "font-size" && prop != "color" {
             propiedades::aplicar(&mut e, padre, prop, v, &c);
         }
+    }
+    // Un flotante es siempre una caja de bloque (CSS 2.1, 9.7): lo que era en línea o parte de
+    // una tabla pasa a ser un bloque.
+    if e.flotar != crate::valores::Flotar::No
+        && matches!(
+            e.display,
+            Display::EnLinea
+                | Display::BloqueEnLinea
+                | Display::Fila
+                | Display::Celda
+                | Display::GrupoFilas
+                | Display::Titulo
+        )
+    {
+        e.display = Display::Bloque;
     }
     e
 }

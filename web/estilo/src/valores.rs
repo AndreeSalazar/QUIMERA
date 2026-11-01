@@ -11,8 +11,11 @@ pub use quimera_css::Color;
 /// `display`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Display {
-    /// `block` (y por ahora `grid` y `flow-root`, que se maquetan como bloques).
+    /// `block` (y por ahora `grid`, que se maqueta como bloque).
     Bloque,
+    /// `flow-root`: un bloque con su propio contexto (abarca sus flotantes y no se mete debajo
+    /// de los de fuera).
+    RaizFlujo,
     /// `table` (y `inline-table`, por ahora como bloque).
     Tabla,
     /// `table-row-group`, `table-header-group`, `table-footer-group`.
@@ -35,6 +38,30 @@ pub enum Display {
     ElementoDeLista,
     /// `none`: ni él ni sus hijos se dibujan.
     Ninguno,
+}
+
+/// `float`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Flotar {
+    /// `none`
+    No,
+    /// `left`
+    Izquierda,
+    /// `right`
+    Derecha,
+}
+
+/// `clear`: a qué lado de los flotantes no se puede poner.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Limpiar {
+    /// `none`
+    No,
+    /// `left`
+    Izquierda,
+    /// `right`
+    Derecha,
+    /// `both`
+    Ambos,
 }
 
 /// Una longitud calculada.
@@ -220,6 +247,13 @@ pub struct Estilo {
     pub flex: crate::flex::Flex,
     /// Tablas: `border-collapse`, `border-spacing`, `vertical-align`.
     pub tabla: crate::tabla::Tabla,
+    /// `overflow` distinto de `visible` (`hidden`, `auto`, `scroll`): crea su propio contexto
+    /// de formato. (El contenido todavía no se recorta.)
+    pub recorta: bool,
+    /// `float`
+    pub flotar: Flotar,
+    /// `clear`
+    pub limpiar: Limpiar,
 }
 
 impl Default for Estilo {
@@ -252,6 +286,9 @@ impl Default for Estilo {
             transformar: None,
             flex: crate::flex::Flex::default(),
             tabla: crate::tabla::Tabla::default(),
+            recorta: false,
+            flotar: Flotar::No,
+            limpiar: Limpiar::No,
         }
     }
 }

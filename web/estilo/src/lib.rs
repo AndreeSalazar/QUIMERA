@@ -32,7 +32,8 @@ pub use propiedades::borde_solido;
 pub use quimera_html::NodoId;
 pub use tabla::{AlinearVertical, Tabla};
 pub use valores::{
-    Alinear, AltoLinea, Borde, Color, Display, Espacios, Estilo, EstiloBorde, Generica, Medida, SIN_BORDE, TipoLista,
+    Alinear, AltoLinea, Borde, Color, Display, Espacios, Estilo, EstiloBorde, Flotar, Generica, Limpiar, Medida,
+    SIN_BORDE, TipoLista,
 };
 
 /// La pantalla para la que se calcula (`@media`, `vw`, `vh`).
