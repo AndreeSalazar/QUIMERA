@@ -11,7 +11,7 @@
 //! uno se llama su propiedad `on<tipo>` (o, si no la tiene, su atributo `on<tipo>="..."`) y
 //! después sus listeners.
 
-use crate::{Estado, VENTANA, envolver};
+use crate::{Estado, VENTANA, envolver, microtareas};
 use alloc::format;
 use alloc::vec::Vec;
 use quimera_html::NodoId;
@@ -98,6 +98,7 @@ fn llamar(m: &mut Motor, est: &Estado, f: Valor, nodo: NodoId, marca_evento: usi
         est.errores.borrow_mut().push(e.mensaje);
     }
     m.soltar_pila(marca);
+    microtareas(m, est);
 }
 
 /// El manejador del atributo `on<tipo>="..."` de un elemento, como función.
@@ -224,6 +225,7 @@ pub(crate) fn correr_temporizadores(m: &mut Motor, est: &Estado, ahora: f64) {
             est.errores.borrow_mut().push(e.mensaje);
         }
         m.soltar_pila(marca);
+        microtareas(m, est);
     }
     if vivos(m).is_empty() {
         let a = arreglo(m, "temporizadores");

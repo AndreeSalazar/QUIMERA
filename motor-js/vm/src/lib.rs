@@ -119,6 +119,8 @@ pub struct Motor {
     tiempo_falso: f64,
     /// Cuántas claves de cada raíz fija son de la biblioteca (no enumerables en `for-in`).
     ocultas: [usize; N_FIJAS],
+    /// Lo mismo para los prototipos del preludio en JavaScript, por su forma.
+    formas_ocultas: alloc::collections::BTreeMap<u32, usize>,
     /// Expresiones regulares compiladas, una por cada par distinto (patrón, banderas).
     regexes: Vec<RegexCompilada>,
     /// (cadena del patrón, cadena de las banderas) → posición en `regexes`.
@@ -162,6 +164,7 @@ impl Motor {
             reloj: None,
             tiempo_falso: 0.0,
             ocultas: [0; N_FIJAS],
+            formas_ocultas: alloc::collections::BTreeMap::new(),
             regexes: Vec::new(),
             indice_regex: alloc::collections::BTreeMap::new(),
             memoria_regex: quimera_regex::Memoria::default(),
@@ -173,7 +176,16 @@ impl Motor {
         };
         m.mundo.m.abrir_raices(N_FIJAS, Valor::INDEFINIDO);
         nativas::preparar(&mut m);
+        nativas::preludio(&mut m);
         m
+    }
+
+    /// Ejecuta las microtareas pendientes (las reacciones de las promesas, `queueMicrotask`)
+    /// hasta que no quede ninguna. Devuelve los errores que lanzaron.
+    pub fn correr_microtareas(&mut self) -> Vec<String> {
+        let Ok(errores) = self.llamar_global("__quimera_microtareas", &[]) else { return Vec::new() };
+        let n = self.mundo.longitud(errores).unwrap_or(0);
+        (0..n).map(|i| self.texto(self.mundo.leer_elemento(errores, i).unwrap_or(Valor::INDEFINIDO))).collect()
     }
 
     fn fija(&self, i: usize) -> Valor {

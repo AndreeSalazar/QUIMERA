@@ -5,6 +5,7 @@
 
 mod coleccion;
 mod fecha;
+mod json;
 mod numeros;
 mod regexp;
 mod texto;
@@ -24,6 +25,8 @@ const ARREGLO_SACAR: u32 = 3;
 const FUNCION_CALL: u32 = 10;
 const OBJETO: u32 = 11;
 const ARREGLO: u32 = 12;
+/// `Function(a, b, cuerpo)`: compila el texto.
+const FUNCION: u32 = 13;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -34,6 +37,8 @@ const GRUPO_FECHA: u32 = 300;
 const GRUPO_COLECCION: u32 = 400;
 /// Desde aquí, `RegExp` y los métodos de cadenas que la usan (`regexp.rs`).
 const GRUPO_REGEXP: u32 = 500;
+/// Desde aquí, `JSON` (`json.rs`).
+const GRUPO_JSON: u32 = 600;
 
 /// Crea el objeto global, los prototipos y las nativas.
 pub(crate) fn preparar(m: &mut Motor) {
@@ -61,13 +66,35 @@ pub(crate) fn preparar(m: &mut Motor) {
     let objeto = constructor(m, "Object", OBJETO, R_OBJETO);
     definir_nativa(m, objeto, "create", OBJETO_CREAR);
     let arreglo = constructor(m, "Array", ARREGLO, R_ARREGLO);
+    constructor(m, "Function", FUNCION, R_FUNCION);
     coleccion::preparar(m, objeto, arreglo);
     numeros::preparar(m);
     texto::preparar(m);
     fecha::preparar(m);
     regexp::preparar(m);
+    json::preparar(m);
     m.fijar_claves_ocultas();
     m.mundo.m.soltar_raices(crate::N_FIJAS);
+}
+
+/// Ejecuta el preludio en JavaScript (`preludio.js`) y oculta a `for-in` lo que creó.
+pub(crate) fn preludio(m: &mut Motor) {
+    if let Err(e) = m.ejecutar(include_str!("preludio.js")) {
+        debug_assert!(false, "el preludio falló: {}", e.mensaje);
+        return;
+    }
+    let global = m.pila(R_GLOBAL);
+    let clave = m.mundo.cadenas.internar("__quimera_ocultar");
+    let lista = m.mundo.leer(global, clave).unwrap_or(Valor::INDEFINIDO);
+    for i in 0..m.mundo.longitud(lista).unwrap_or(0) {
+        let o = m.mundo.leer_elemento(lista, i).unwrap_or(Valor::INDEFINIDO);
+        if let Some(forma) = m.mundo.forma(o) {
+            let n = m.mundo.claves(o).len();
+            m.formas_ocultas.insert(forma, n);
+        }
+    }
+    m.mundo.borrar(global, clave);
+    m.fijar_claves_ocultas();
 }
 
 /// `dueño.nombre = v` (o el propio objeto global si `v` es `None`). `dueño` es una posición de la pila.
@@ -131,11 +158,12 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
         // `apply` abre el marco de la función como una llamada más: sin recursión de Rust.
         return coleccion::aplicar(m, &ll);
     }
-    let construye = matches!(id, OBJETO | ARREGLO | regexp::REGEXP) || fecha::es_constructor(id);
+    let construye = matches!(id, OBJETO | ARREGLO | FUNCION | regexp::REGEXP) || fecha::es_constructor(id);
     if ll.construir && !construye {
         return Err(m.error("TypeError", "esta función nativa no es un constructor"));
     }
     let v = match id {
+        GRUPO_JSON.. => json::llamar(m, id, &ll)?,
         GRUPO_REGEXP.. => regexp::llamar(m, id, &ll)?,
         GRUPO_COLECCION.. => coleccion::llamar(m, id, &ll)?,
         GRUPO_FECHA.. => fecha::llamar(m, id, &ll)?,
@@ -186,6 +214,19 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         }
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
+        FUNCION => {
+            // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
+            let partes: Vec<String> = (0..ll.n).map(|i| m.texto(arg(m, ll, i))).collect();
+            let (cuerpo, parametros) = partes.split_last().map_or((String::new(), &[][..]), |(c, p)| (c.clone(), p));
+            let fuente =
+                alloc::format!("__quimera_funcion = function anonymous({}\n) {{\n{cuerpo}\n}};", parametros.join(","));
+            m.ejecutar(&fuente).map_err(|e| m.mundo.cadena(&e.mensaje))?;
+            let clave = m.mundo.cadenas.internar("__quimera_funcion");
+            let global = m.pila(R_GLOBAL);
+            let f = m.mundo.leer(global, clave).unwrap_or(Valor::INDEFINIDO);
+            m.mundo.borrar(global, clave);
+            f
+        }
         ARREGLO => {
             // `new Array(n)` crea n huecos; `new Array(a, b)`, esos elementos.
             let un_numero = ll.n == 1 && arg(m, ll, 0).como_numero().is_some();

@@ -70,7 +70,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
                 return Err(m.error("TypeError", "Object.keys necesita un objeto"));
             }
             let mut claves: Vec<Valor> = indices(m, o);
-            claves.extend(m.mundo.claves(o).iter().map(|&k| Valor::cadena(Ref::desde_u32(k))));
+            claves.extend(m.claves_enumerables(o).into_iter().map(|k| Valor::cadena(Ref::desde_u32(k))));
             return Ok(m.mundo.crear_arreglo(&claves, m.pila(R_ARREGLO)));
         }
         HAS_OWN => {

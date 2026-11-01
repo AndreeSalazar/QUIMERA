@@ -93,6 +93,25 @@ pub(crate) fn envolver(m: &mut Motor, est: &Estado, id: NodoId) -> Valor {
     w
 }
 
+/// Las microtareas (promesas, `queueMicrotask`): como en los navegadores, se vacían al terminar
+/// cada script, cada manejador de eventos y cada temporizador.
+pub(crate) fn microtareas(m: &mut Motor, est: &Estado) {
+    let errores = m.correr_microtareas();
+    est.errores.borrow_mut().extend(errores);
+}
+
+/// `localStorage` y `sessionStorage`, en memoria (se pierden al cerrar la página).
+const ALMACENES: &str = r"(function (w) {
+  function Almacen() { this['\u0001d'] = Object.create(null); this.length = 0; }
+  Almacen.prototype.getItem = function (k) { var d = this['\u0001d']; k = String(k); return k in d ? d[k] : null; };
+  Almacen.prototype.setItem = function (k, v) { var d = this['\u0001d']; k = String(k); if (!(k in d)) this.length++; d[k] = String(v); };
+  Almacen.prototype.removeItem = function (k) { var d = this['\u0001d']; k = String(k); if (k in d) { delete d[k]; this.length--; } };
+  Almacen.prototype.clear = function () { this['\u0001d'] = Object.create(null); this.length = 0; };
+  Almacen.prototype.key = function (i) { var k = Object.keys(this['\u0001d'])[i]; return k === undefined ? null : k; };
+  w.localStorage = new Almacen();
+  w.sessionStorage = new Almacen();
+})(this);";
+
 /// El objeto de un nodo, o `null`.
 pub(crate) fn envolver_o_nulo(m: &mut Motor, est: &Estado, id: Option<NodoId>) -> Valor {
     id.map_or(Valor::NULO, |id| envolver(m, est, id))
@@ -139,6 +158,10 @@ impl Dom {
         let mut motor = Motor::default();
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));
         puente::preparar(&mut motor, &estado);
+        if let Err(e) = motor.ejecutar(ALMACENES) {
+            estado.errores.borrow_mut().push(e.mensaje);
+        }
+        motor.fijar_biblioteca();
         Dom { motor, estado, consola_leida: 0 }
     }
 
@@ -202,6 +225,7 @@ impl Dom {
         if let Err(e) = self.motor.ejecutar(codigo) {
             self.estado.errores.borrow_mut().push(e.mensaje);
         }
+        microtareas(&mut self.motor, &self.estado);
     }
 
     /// Un clic en `nodo`. Devuelve `true` si un script llamó a `preventDefault()` (el navegador

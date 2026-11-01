@@ -18,9 +18,25 @@ impl Motor {
         }
     }
 
+    /// Las claves propias de `obj` que se enumeran (`Object.keys`, `JSON.stringify`): sin las de
+    /// la biblioteca ni las ranuras internas (las que empiezan por U+0001).
+    pub(crate) fn claves_enumerables(&self, obj: Valor) -> Vec<u32> {
+        let saltar = self.ocultas_de(obj);
+        self.mundo
+            .claves(obj)
+            .iter()
+            .skip(saltar)
+            .copied()
+            .filter(|&k| !self.mundo.cadenas.texto(k).starts_with('\u{1}'))
+            .collect()
+    }
+
     /// Cuántas claves de `obj` son de la biblioteca.
     fn ocultas_de(&self, obj: Valor) -> usize {
-        (0..N_FIJAS).find(|&i| self.pila(i) == obj).map_or(0, |i| self.ocultas[i])
+        match (0..N_FIJAS).find(|&i| self.pila(i) == obj) {
+            Some(i) => self.ocultas[i],
+            None => self.mundo.forma(obj).and_then(|f| self.formas_ocultas.get(&f).copied()).unwrap_or(0),
+        }
     }
 
     /// Las claves que recorre `for (k in obj)`: índices, propias y heredadas, sin repetir.
@@ -46,7 +62,8 @@ impl Motor {
                 saltar = 1;
             }
             for &k in self.mundo.claves(actual).iter().skip(saltar) {
-                if !claves.contains(&k) {
+                // Las claves que empiezan por U+0001 son ranuras internas de la biblioteca.
+                if !claves.contains(&k) && !self.mundo.cadenas.texto(k).starts_with('\u{1}') {
                     claves.push(k);
                 }
             }
@@ -57,8 +74,16 @@ impl Motor {
         self.mundo.crear_arreglo(&valores, self.pila(R_ARREGLO))
     }
 
-    /// Los valores que recorre `for (v of x)`: elementos de un arreglo o caracteres de una cadena.
+    /// Los valores que recorre `for (v of x)`: elementos de un arreglo, caracteres de una cadena,
+    /// o lo que da `__quimera_lista` del preludio (Map, Set, iteradores, objetos con `next()`).
     pub(crate) fn iterar_valores(&mut self, x: Valor) -> Result<Valor, Valor> {
+        if self.mundo.es_objeto(x) && self.mundo.clase(x) != Some(Clase::Arreglo) {
+            let clave = self.mundo.cadenas.internar("__quimera_lista");
+            let global = self.pila(crate::R_GLOBAL);
+            if let Some(f) = self.mundo.leer(global, clave).filter(|f| self.mundo.clase(*f) == Some(Clase::Funcion)) {
+                return self.llamar_interno(f, Valor::INDEFINIDO, &[x]);
+            }
+        }
         let valores: Vec<Valor> = if self.mundo.clase(x) == Some(Clase::Arreglo) {
             let n = self.mundo.longitud(x).unwrap_or(0);
             (0..n).map(|i| self.mundo.leer_elemento(x, i).unwrap_or(Valor::INDEFINIDO)).collect()

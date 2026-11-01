@@ -84,6 +84,20 @@ fn cambiar_el_arbol() {
 }
 
 #[test]
+fn promesas_tras_cada_script_y_almacen() {
+    let mut d = dom("<p id=p>a</p>");
+    let r = correr(
+        &mut d,
+        "Promise.resolve().then(function () { document.getElementById('p').textContent = 'b'; console.log('microtarea'); });
+         console.log('script', document.getElementById('p').textContent);
+         localStorage.setItem('k', 1);
+         console.log(localStorage.getItem('k'), typeof localStorage.getItem('k'), localStorage.getItem('no'), localStorage.length, 'localStorage' in window);",
+    );
+    assert_eq!(r, ["script a", "1 string null 1 true", "microtarea"]);
+    assert_eq!(d.documento().texto(d.documento().buscar("p").expect("p")), "b");
+}
+
+#[test]
 fn scripts_eventos_y_temporizadores() {
     let mut d = dom(
         "<a id=e href='/x' onclick='console.log(\"atributo\", this.id, event.type)'>enlace</a>
