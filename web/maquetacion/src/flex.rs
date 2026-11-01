@@ -315,7 +315,7 @@ impl<'a> Maquetador<'a> {
     }
 
     /// Ejecuta `f` y descarta lo que haya dibujado (para medir sin dejar rastro).
-    fn en_seco<R>(&mut self, f: impl FnOnce(&mut Self) -> R) -> R {
+    pub(crate) fn en_seco<R>(&mut self, f: impl FnOnce(&mut Self) -> R) -> R {
         let (p, e, a) = (self.piezas.len(), self.enlaces.len(), self.anclas.len());
         let r = f(self);
         self.piezas.truncate(p);
@@ -325,7 +325,7 @@ impl<'a> Maquetador<'a> {
     }
 
     /// `bloque()` sin el `width` propio del elemento: ocupa el ancho exterior que se le da.
-    fn bloque_libre(&mut self, h: NodoId, x: f32, y: f32, ancho_exterior: f32) -> crate::bloque::Hecho {
+    pub(crate) fn bloque_libre(&mut self, h: NodoId, x: f32, y: f32, ancho_exterior: f32) -> crate::bloque::Hecho {
         let previo = self.ancho_libre.replace(h);
         let hecho = self.bloque(h, x, y, ancho_exterior);
         self.ancho_libre = previo;

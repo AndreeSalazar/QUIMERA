@@ -59,6 +59,16 @@ pub enum Pieza {
     },
 }
 
+impl Pieza {
+    /// La mueve `dy` píxeles hacia abajo.
+    pub(crate) fn bajar(&mut self, dy: f32) {
+        match self {
+            Pieza::Rect { y, .. } | Pieza::Imagen { y, .. } => *y += dy,
+            Pieza::Texto { base, .. } => *base += dy,
+        }
+    }
+}
+
 /// Un trozo de enlace: un rectángulo donde pulsar y a dónde lleva.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Enlace {

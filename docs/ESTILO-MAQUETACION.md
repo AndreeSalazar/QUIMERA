@@ -75,11 +75,38 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/flex.html
 
 Los elementos se maquetan con el mismo `bloque()` de siempre: primero «en seco» para medirlos (sus piezas se descartan) y después en su sitio, con el ancho que les toca y, si se estiran, con su alto impuesto.
 
-**Tamaños intrínsecos** (`intrinseco.rs`): el ancho mínimo (`min-content`: la palabra o imagen más ancha) y máximo (`max-content`: todo en una línea) de cualquier elemento, guardados por nodo. Los usa flexbox y servirán para `float`, `inline-block` y las tablas.
+**Tamaños intrínsecos** (`intrinseco.rs`): el ancho mínimo (`min-content`: la palabra o imagen más ancha) y máximo (`max-content`: todo en una línea) de cualquier elemento, guardados por nodo. Los usan flexbox y las tablas, y servirán para `float` e `inline-block`.
 
 Por el camino: el texto de un bloque ya no pinta un fondo propio debajo de cada línea (en los navegadores solo lo pintan los elementos en línea, como `<span>`). Y las fuentes de reserva incluyen chino, japonés y coreano (Microsoft YaHei, Yu Gothic, Malgun; Noto CJK en Linux), así que `日本語` o `简体中文` ya no salen como cajas.
 
 **Falta en flex**: `align-content`, la alineación por línea base, `min-width`/`max-width` como límites del reparto, `inline-flex` como caja en línea y el mínimo automático en columnas.
+
+## Tablas
+
+```bash
+cargo run --release -p quimera-ventana -- https://news.ycombinator.com/
+```
+
+Hacker News (hecho entero con tablas) se ve **igual que en Chromium**: la tabla al 85 % centrada por `<center>`, la barra naranja, las filas numeradas y los títulos a la izquierda. En Wikipedia, la ficha de cada artículo arma su rejilla de fotos.
+
+**Comprobado contra Chromium** con [`docs/ejemplos/tablas.html`](ejemplos/tablas.html): diez casos con cajas de tamaño fijo (sin texto, así las fuentes no influyen). Las **39 cajas** quedan donde las pone Chromium, al 1/64 de píxel con que redondea: espaciado, bordes que colapsan, ancho fijo, `colspan`, `rowspan`, `vertical-align`, porcentajes, atributos antiguos, `width: 100%` y `<thead>`/`<tfoot>` desordenados (`web/maquetacion/tests/tablas.rs`).
+
+**Estilo** (`quimera-estilo/src/tabla.rs`):
+- `display: table`, `table-row-group`, `table-header-group`, `table-footer-group`, `table-row`, `table-cell`, `table-caption`, `table-column`.
+- `border-collapse` y `border-spacing` (se heredan) y `vertical-align`. La hoja del navegador hace que las celdas lo tomen de su fila (`inherit`), así que por defecto van centradas en vertical, como en los navegadores.
+- **Atributos antiguos**, como pistas de presentación: `border`, `cellspacing`, `cellpadding` (que cada celda toma de su tabla), `bgcolor`, `width`, `height`, `align`, `valign` y `nowrap`.
+- **`<center>` y `align=center`** centran también los bloques de dentro (`-webkit-center` en Chromium), no solo el texto.
+- **Modo de compatibilidad:** sin `<!doctype html>` se suma la hoja `compatibilidad.css`, como la `quirks.css` de Chromium. En ese modo las tablas no heredan la letra ni la alineación de fuera, así que en las páginas antiguas `<center><table>` centra la tabla pero no su texto.
+
+**Maquetación** (`quimera-maquetacion/src/tabla.rs`), el algoritmo automático (CSS 2.1 §17):
+1. **Rejilla:** primero las filas de `<thead>`, luego las de `<tbody>` (y las sueltas) y al final las de `<tfoot>`. Cada celda ocupa la primera casilla libre con su `colspan × rowspan` (`rowspan=0` llega al final).
+2. **Columnas:** el mínimo y el máximo de cada una salen de sus celdas (los tamaños intrínsecos de siempre). Una celda con `width` fija su columna, y una con `%` la reparte. Las de varias columnas reparten lo que les falte en proporción.
+3. **Ancho:** el pedido (en una tabla, `width` incluye borde y relleno), o el del contenedor sin pasar del máximo de las columnas, y nunca menos que el mínimo. Primero los porcentajes; lo que hay entre el mínimo y el máximo se reparte en proporción, y lo que sobra va a las columnas automáticas según su máximo.
+4. **Filas:** cada una tan alta como su celda más alta; una celda de varias filas alarga la última, y `height` en la tabla se reparte entre las filas.
+5. Cada celda se maqueta con el mismo `bloque()` de siempre: primero en seco para medirla, después en su sitio con el alto de sus filas. Su contenido se mueve arriba, en medio o abajo. Debajo van el fondo de su grupo y el de su fila.
+6. **Bordes que colapsan**, como Chromium: cada borde entre dos celdas es el más ancho de los dos (y en los de fuera, también el de la tabla). Cada celda ocupa la mitad de sus bordes, la tabla la mitad de los de fuera, y los bordes se dibujan centrados en las líneas, encima de todas las celdas.
+
+**Falta en tablas:** `table-layout: fixed`, el ancho de `<col>` y `<colgroup>`, `caption-side: bottom`, la alineación de celdas por línea base (cuenta como arriba), `visibility: collapse` y meter en una tabla anónima las celdas sueltas fuera de una tabla (`display: table-cell` en un `<div>` se maqueta como bloque).
 
 ## Siguiente
 

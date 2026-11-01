@@ -38,6 +38,9 @@ pub(crate) struct Maquetador<'a> {
     pub ancho_libre: Option<NodoId>,
     /// Alto de la caja con borde impuesto a este elemento (`align-items: stretch`, columnas).
     pub alto_forzado: Option<(NodoId, f32)>,
+    /// Bordes (arriba, derecha, abajo, izquierda) que ocupa este elemento en vez de los suyos, sin
+    /// dibujarlos: las celdas de una tabla con bordes que colapsan (los dibuja la tabla).
+    pub bordes_celda: Option<(NodoId, [f32; 4])>,
     /// El tamaño propio de cada imagen por su `src` (si ya se descargó).
     pub imagenes: &'a dyn Fn(&str) -> Option<(u32, u32)>,
     /// Ancho del contenido del bloque que se está llenando (para los `%` de las imágenes en línea).
@@ -82,6 +85,7 @@ impl<'a> Maquetador<'a> {
             intrinsecos: alloc::vec![None; doc.total()],
             ancho_libre: None,
             alto_forzado: None,
+            bordes_celda: None,
             imagenes,
             ancho_actual: 0.0,
         }
@@ -99,7 +103,19 @@ impl<'a> Maquetador<'a> {
         }
         match self.estilo(id).map(|e| e.display) {
             None | Some(Display::Ninguno) => Clase::Nada,
-            Some(Display::Bloque | Display::ElementoDeLista | Display::Flex) => Clase::Bloque,
+            Some(Display::Columna) => Clase::Nada,
+            // Las partes de una tabla fuera de una tabla se maquetan como bloques (los navegadores
+            // las meten en una tabla anónima).
+            Some(
+                Display::Bloque
+                | Display::ElementoDeLista
+                | Display::Flex
+                | Display::Tabla
+                | Display::GrupoFilas
+                | Display::Fila
+                | Display::Celda
+                | Display::Titulo,
+            ) => Clase::Bloque,
             // Un elemento en línea con bloques dentro se maqueta como un bloque (los
             // navegadores lo parten en trozos; el resultado visible es casi el mismo).
             Some(_) if self.tiene_bloques(id) => Clase::Bloque,
@@ -121,8 +137,11 @@ impl<'a> Maquetador<'a> {
     fn margen_superior(&mut self, id: NodoId, ancho_contenedor: f32) -> f32 {
         let Some(e) = self.estilo(id) else { return 0.0 };
         let propio = e.margen[0].px(ancho_contenedor, 0.0);
-        // Un contenedor flex no deja salir los márgenes de sus hijos.
-        if e.display == Display::Flex || e.borde[0].ocupa() > 0.0 || e.relleno[0].px(ancho_contenedor, 0.0) > 0.0 {
+        // Un contenedor flex o una tabla no dejan salir los márgenes de sus hijos.
+        if matches!(e.display, Display::Flex | Display::Tabla)
+            || e.borde[0].ocupa() > 0.0
+            || e.relleno[0].px(ancho_contenedor, 0.0) > 0.0
+        {
             return propio;
         }
         let primero = self
@@ -161,13 +180,25 @@ impl<'a> Maquetador<'a> {
         if crate::reemplazado::es_imagen(self, id) {
             return self.bloque_imagen(id, e, (x, y), ancho_contenedor);
         }
+        if e.display == Display::Tabla {
+            return self.tabla(id, e, (x, y), ancho_contenedor);
+        }
         let px = |m: Medida| m.px(ancho_contenedor, 0.0);
-        let (bt, br, bb, bl) = (e.borde[0].ocupa(), e.borde[1].ocupa(), e.borde[2].ocupa(), e.borde[3].ocupa());
+        let impuestos = self.bordes_celda.filter(|(n, _)| *n == id).map(|(_, b)| b);
+        let [bt, br, bb, bl] =
+            impuestos.unwrap_or([e.borde[0].ocupa(), e.borde[1].ocupa(), e.borde[2].ocupa(), e.borde[3].ocupa()]);
         let (pt, pr, pb, pl) = (px(e.relleno[0]), px(e.relleno[1]), px(e.relleno[2]), px(e.relleno[3]));
         let (ml, mr) = if self.ancho_libre == Some(id) {
             (px(e.margen[3]), px(e.margen[1]))
         } else {
-            self.margenes_horizontales(e, ancho_contenedor, bl + br + pl + pr)
+            let (ml, mr) = self.margenes_horizontales(e, ancho_contenedor, bl + br + pl + pr);
+            // Dentro de `<center>` (o `align=center`), lo que sobra se reparte a los dos lados.
+            let sobra = mr - px(e.margen[1]);
+            if self.padre_centra(id) && sobra > 0.0 && e.margen[1] != Medida::Auto && e.margen[3] != Medida::Auto {
+                (ml + sobra / 2.0, mr - sobra / 2.0)
+            } else {
+                (ml, mr)
+            }
         };
         let forzado = self.alto_forzado.filter(|(n, _)| *n == id).map(|(_, a)| a);
         let ancho_borde = (ancho_contenedor - ml - mr).max(0.0);
@@ -199,13 +230,25 @@ impl<'a> Maquetador<'a> {
         };
         alto_contenido = alto_contenido.max(e.alto_min.px(0.0, 0.0));
         let alto = forzado.unwrap_or(bt + pt + alto_contenido + pb + bb);
-        self.fondo_y_bordes(inicio_piezas, e, x + ml, y, ancho_borde, alto);
+        if impuestos.is_some() {
+            if e.visible && e.fondo.a > 0 {
+                let fondo = Pieza::Rect { x: x + ml, y, ancho: ancho_borde, alto, color: e.fondo };
+                self.piezas.insert(inicio_piezas, fondo);
+            }
+        } else {
+            self.fondo_y_bordes(inicio_piezas, e, x + ml, y, ancho_borde, alto);
+        }
         if e.display == Display::ElementoDeLista {
             self.marcador(id, e, cx, primera_base.unwrap_or(cy + e.tam_letra * 0.8));
         }
         let propio = px(e.margen[2]);
         let margen_inferior = if colapsa_abajo { mayor_margen(propio, abierto) } else { propio };
         Hecho { alto, margen_inferior, primera_base }
+    }
+
+    /// Si el padre de `id` centra sus bloques (`text-align: -webkit-center`).
+    pub(crate) fn padre_centra(&self, id: NodoId) -> bool {
+        self.doc.nodo(id).padre.and_then(|p| self.estilo(p)).is_some_and(|e| e.centrar_bloques)
     }
 
     /// Márgenes izquierdo y derecho: `auto` centra si el ancho está fijado.
@@ -351,7 +394,7 @@ impl<'a> Maquetador<'a> {
     }
 
     /// El fondo y los bordes van debajo del contenido: se insertan antes de sus piezas.
-    fn fondo_y_bordes(&mut self, en: usize, e: &Estilo, x: f32, y: f32, ancho: f32, alto: f32) {
+    pub(crate) fn fondo_y_bordes(&mut self, en: usize, e: &Estilo, x: f32, y: f32, ancho: f32, alto: f32) {
         if !e.visible {
             return;
         }

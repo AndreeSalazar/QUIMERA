@@ -69,8 +69,11 @@ impl<'a> Maquetador<'a> {
 
     fn calcular_intrinseco(&mut self, id: NodoId) -> Intrinseco {
         let Some(e) = self.estilos.de(id) else { return (0.0, 0.0) };
-        if e.display == Display::Ninguno {
+        if matches!(e.display, Display::Ninguno | Display::Columna) {
             return (0.0, 0.0);
+        }
+        if e.display == Display::Tabla {
+            return self.intrinseco_tabla(id, e);
         }
         let extras = extras_horizontales(e);
         if crate::reemplazado::es_imagen(self, id) {

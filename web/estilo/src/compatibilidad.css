@@ -1,0 +1,11 @@
+/* Modo de compatibilidad («quirks»): las páginas sin <!doctype html>. Lo que cambia en la hoja
+   del navegador, como en la quirks.css de Chromium: las tablas no heredan la letra ni la
+   alineación de fuera (en las páginas antiguas, <center><table> centra la tabla, no su texto). */
+
+table {
+  white-space: normal; line-height: normal; font-weight: normal; font-size: medium;
+  font-style: normal; text-align: start
+}
+form { margin-bottom: 1em }
+img[align=left] { margin-right: 3px }
+img[align=right] { margin-left: 3px }

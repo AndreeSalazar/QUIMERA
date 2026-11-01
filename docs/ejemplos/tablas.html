@@ -1,0 +1,89 @@
+<!doctype html>
+<!-- Casos de tablas con cajas de tamaño fijo (sin texto: las fuentes no influyen). Cada caja
+     con fondo rgb(k, 200, 100) se compara con la posición que le da Chromium
+     (web/maquetacion/tests/tablas.rs). -->
+<style>
+  body { margin: 8px }
+  div.c { margin-bottom: 10px }
+</style>
+
+<!-- 1: dos por dos, espaciado de 2px, relleno de 1px -->
+<div class=c><table style="background:rgb(1,200,100)">
+  <tr><td style="background:rgb(2,200,100)"><div style="width:50px;height:20px;background:rgb(3,200,100)"></div></td>
+      <td style="background:rgb(4,200,100)"><div style="width:100px;height:40px;background:rgb(5,200,100)"></div></td></tr>
+  <tr><td style="background:rgb(6,200,100)"><div style="width:80px;height:10px;background:rgb(7,200,100)"></div></td>
+      <td style="background:rgb(8,200,100)"></td></tr>
+</table></div>
+
+<!-- 2: bordes que colapsan -->
+<div class=c><table style="border-collapse:collapse;border:2px solid black;background:rgb(9,200,100)">
+  <tr><td style="border:2px solid black;padding:3px;background:rgb(10,200,100)"><div style="width:30px;height:30px;background:rgb(11,200,100)"></div></td>
+      <td style="border:4px solid black;padding:3px;background:rgb(12,200,100)"><div style="width:30px;height:10px;background:rgb(13,200,100)"></div></td></tr>
+</table></div>
+
+<!-- 3: ancho fijo de la tabla: lo que sobra se reparte -->
+<div class=c><table style="width:300px;background:rgb(14,200,100)">
+  <tr><td style="background:rgb(15,200,100)"><div style="width:50px;height:10px"></div></td>
+      <td style="background:rgb(16,200,100)"><div style="width:150px;height:10px"></div></td></tr>
+</table></div>
+
+<!-- 4: colspan más ancho que sus columnas -->
+<div class=c><table style="background:rgb(17,200,100)">
+  <tr><td style="background:rgb(18,200,100)"><div style="width:20px;height:10px"></div></td>
+      <td style="background:rgb(19,200,100)"><div style="width:40px;height:10px"></div></td></tr>
+  <tr><td colspan=2 style="background:rgb(20,200,100)"><div style="width:200px;height:10px"></div></td></tr>
+</table></div>
+
+<!-- 5: rowspan y contenido en medio -->
+<div class=c><table style="background:rgb(21,200,100)">
+  <tr><td rowspan=2 style="background:rgb(22,200,100)"><div style="width:30px;height:10px;background:rgb(23,200,100)"></div></td>
+      <td style="background:rgb(24,200,100)"><div style="width:30px;height:30px"></div></td></tr>
+  <tr><td style="background:rgb(25,200,100)"><div style="width:30px;height:30px"></div></td></tr>
+</table></div>
+
+<!-- 6: vertical-align arriba y abajo -->
+<div class=c><table>
+  <tr><td style="vertical-align:top;background:rgb(26,200,100)"><div style="width:20px;height:10px;background:rgb(27,200,100)"></div></td>
+      <td style="vertical-align:bottom;background:rgb(28,200,100)"><div style="width:20px;height:10px;background:rgb(29,200,100)"></div></td>
+      <td><div style="width:20px;height:50px"></div></td></tr>
+</table></div>
+
+<!-- 7: una columna en porcentaje -->
+<div class=c><table style="width:400px;border-spacing:0">
+  <tr><td style="width:25%;background:rgb(30,200,100)"><div style="width:10px;height:10px"></div></td>
+      <td style="background:rgb(31,200,100)"><div style="width:10px;height:10px"></div></td></tr>
+</table></div>
+
+<!-- 8: atributos antiguos: border, cellspacing, cellpadding, bgcolor -->
+<div class=c><table border=1 cellspacing=5 cellpadding=4 bgcolor="#010203">
+  <tr><td bgcolor="#20c864"><div style="width:40px;height:10px"></div></td>
+      <td bgcolor="#21c864"><div style="width:40px;height:10px"></div></td></tr>
+</table></div>
+
+<!-- 9: tabla al 100 % con una columna fija -->
+<div class=c><table style="width:100%;border-spacing:0">
+  <tr><td style="width:100px;background:rgb(34,200,100)"><div style="width:10px;height:10px"></div></td>
+      <td style="background:rgb(35,200,100)"><div style="width:10px;height:10px"></div></td></tr>
+</table></div>
+
+<!-- 10: centrada con margin auto y thead/tfoot fuera de orden -->
+<div class=c><table style="margin:0 auto;background:rgb(36,200,100)">
+  <tfoot><tr><td style="background:rgb(37,200,100)"><div style="width:60px;height:10px"></div></td></tr></tfoot>
+  <tbody><tr><td style="background:rgb(38,200,100)"><div style="width:60px;height:20px"></div></td></tr></tbody>
+  <thead><tr><td style="background:rgb(39,200,100)"><div style="width:60px;height:30px"></div></td></tr></thead>
+</table></div>
+
+<script>
+  // En Chromium: las cajas de colores en orden de k, como [k, x, y, ancho, alto].
+  const r = [];
+  for (const el of document.querySelectorAll('*')) {
+    const m = getComputedStyle(el).backgroundColor.match(/^rgb\((\d+), (\d+), (\d+)\)$/);
+    if (!m) continue;
+    const k = el.getAttribute('bgcolor') ? +m[1] * 1000 + +m[2] : +m[1];
+    if (el.getAttribute('bgcolor') || (m[2] === '200' && m[3] === '100')) {
+      const b = el.getBoundingClientRect();
+      r.push([k, b.x, b.y, b.width, b.height]);
+    }
+  }
+  window.CAJAS = r.sort((a, b) => a[0] - b[0]);
+</script>

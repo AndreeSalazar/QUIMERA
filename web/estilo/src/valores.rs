@@ -11,8 +11,20 @@ pub use quimera_css::Color;
 /// `display`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Display {
-    /// `block` (y por ahora `table`, `grid`... se maquetan como bloques).
+    /// `block` (y por ahora `grid` y `flow-root`, que se maquetan como bloques).
     Bloque,
+    /// `table` (y `inline-table`, por ahora como bloque).
+    Tabla,
+    /// `table-row-group`, `table-header-group`, `table-footer-group`.
+    GrupoFilas,
+    /// `table-row`
+    Fila,
+    /// `table-cell`
+    Celda,
+    /// `table-caption`
+    Titulo,
+    /// `table-column`, `table-column-group` (no se dibujan; su `width` todavía no cuenta).
+    Columna,
     /// `flex`: un bloque que coloca a sus hijos con flexbox.
     Flex,
     /// `inline`.
@@ -173,6 +185,9 @@ pub struct Estilo {
     pub generica: Generica,
     /// `text-align`
     pub alinear: Alinear,
+    /// `text-align: -webkit-center` (el de `<center>` y `align=center`): además del texto, centra
+    /// los bloques de dentro que no ocupan todo el ancho (las tablas, sobre todo). Se hereda.
+    pub centrar_bloques: bool,
     /// `line-height`
     pub alto_linea: AltoLinea,
     /// `white-space`
@@ -203,6 +218,8 @@ pub struct Estilo {
     pub transformar: Option<bool>,
     /// Flexbox (como contenedor y como elemento flexible).
     pub flex: crate::flex::Flex,
+    /// Tablas: `border-collapse`, `border-spacing`, `vertical-align`.
+    pub tabla: crate::tabla::Tabla,
 }
 
 impl Default for Estilo {
@@ -218,6 +235,7 @@ impl Default for Estilo {
             familias: Vec::new(),
             generica: Generica::Serif,
             alinear: Alinear::Izquierda,
+            centrar_bloques: false,
             alto_linea: AltoLinea::Normal,
             espacios: Espacios::Normal,
             subrayado: false,
@@ -233,6 +251,7 @@ impl Default for Estilo {
             visible: true,
             transformar: None,
             flex: crate::flex::Flex::default(),
+            tabla: crate::tabla::Tabla::default(),
         }
     }
 }
@@ -248,6 +267,7 @@ impl Estilo {
             familias: padre.familias.clone(),
             generica: padre.generica,
             alinear: padre.alinear,
+            centrar_bloques: padre.centrar_bloques,
             alto_linea: padre.alto_linea,
             espacios: padre.espacios,
             lista: padre.lista,
@@ -256,6 +276,7 @@ impl Estilo {
             // text-decoration no se hereda, pero se propaga al texto de dentro.
             subrayado: padre.subrayado,
             tachado: padre.tachado,
+            tabla: padre.tabla.heredada(),
             ..Estilo::default()
         }
     }

@@ -232,7 +232,7 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
             e.familias = de.familias.clone();
             e.generica = de.generica;
         }
-        "text-align" => e.alinear = de.alinear,
+        "text-align" => (e.alinear, e.centrar_bloques) = (de.alinear, de.centrar_bloques),
         "line-height" => e.alto_linea = de.alto_linea,
         "white-space" => e.espacios = de.espacios,
         "text-decoration" => (e.subrayado, e.tachado) = (de.subrayado, de.tachado),
@@ -244,6 +244,7 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
         "visibility" => e.visible = de.visible,
         "text-transform" => e.transformar = de.transformar,
         p if crate::flex::es_propia(p) => crate::flex::copiar(&mut e.flex, &de.flex, p),
+        p if crate::tabla::es_propia(p) => crate::tabla::copiar(&mut e.tabla, &de.tabla, p),
         p => {
             if let Some((i, campo)) = lado_de(p) {
                 match campo {
@@ -293,7 +294,11 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
         "font-weight" => e.peso = peso(v, padre.peso).unwrap_or(e.peso),
         "font-style" => e.cursiva = matches!(n.as_deref(), Some("italic" | "oblique")),
         "font-family" => familias(e, v),
-        "text-align" => e.alinear = n.as_deref().and_then(alinear).unwrap_or(e.alinear),
+        "text-align" => {
+            if let Some(a) = n.as_deref().and_then(alinear) {
+                (e.alinear, e.centrar_bloques) = (a, n.as_deref() == Some("-webkit-center"));
+            }
+        }
         "line-height" => e.alto_linea = alto_linea(v, c).unwrap_or(e.alto_linea),
         "white-space" => e.espacios = n.as_deref().and_then(espacios).unwrap_or(e.espacios),
         "text-decoration" => {
@@ -318,6 +323,9 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
         }
         p if crate::flex::es_propia(p) => {
             crate::flex::aplicar(&mut e.flex, p, v, c);
+        }
+        p if crate::tabla::es_propia(p) => {
+            crate::tabla::aplicar(&mut e.tabla, p, v, c);
         }
         p => aplicar_lado(e, p, v, c),
     }
@@ -378,6 +386,7 @@ pub(crate) fn valida(prop: &str, v: &[Token]) -> bool {
         "visibility" => matches!(n, Some("visible" | "hidden" | "collapse")),
         "text-transform" => matches!(n, Some("none" | "uppercase" | "lowercase" | "capitalize")),
         p if crate::flex::es_propia(p) => crate::flex::aplicar(&mut crate::flex::Flex::default(), p, v, &c),
+        p if crate::tabla::es_propia(p) => crate::tabla::aplicar(&mut crate::tabla::Tabla::default(), p, v, &c),
         p => match lado_de(p) {
             Some((_, "margin")) => medida(v, &c).is_some(),
             Some((_, "padding")) => medida(v, &c).is_some_and(|m| m != Medida::Auto),
@@ -402,10 +411,15 @@ fn valor_color(v: &[Token], actual: Color) -> Option<Color> {
 fn display(n: &str) -> Option<Display> {
     Some(match n {
         "flex" => Display::Flex,
-        "block" | "table" | "grid" | "flow-root" | "table-row" | "table-cell" | "table-row-group"
-        | "table-header-group" | "table-footer-group" | "table-caption" => Display::Bloque,
+        "block" | "grid" | "flow-root" => Display::Bloque,
+        "table" | "inline-table" => Display::Tabla,
+        "table-row-group" | "table-header-group" | "table-footer-group" => Display::GrupoFilas,
+        "table-row" => Display::Fila,
+        "table-cell" => Display::Celda,
+        "table-caption" => Display::Titulo,
+        "table-column" | "table-column-group" => Display::Columna,
         "inline" | "contents" => Display::EnLinea,
-        "inline-block" | "inline-flex" | "inline-grid" | "inline-table" => Display::BloqueEnLinea,
+        "inline-block" | "inline-flex" | "inline-grid" => Display::BloqueEnLinea,
         "list-item" => Display::ElementoDeLista,
         "none" => Display::Ninguno,
         _ => return None,

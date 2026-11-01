@@ -4,7 +4,19 @@
 html, address, blockquote, body, center, dialog, div, figure, figcaption, footer, form, header, hr,
 legend, listing, main, p, plaintext, pre, search, xmp, article, aside, h1, h2, h3, h4, h5, h6,
 hgroup, nav, section, dir, dd, dl, dt, menu, ol, ul, details, summary, fieldset, optgroup,
-table, caption, thead, tbody, tfoot, tr, td, th, address { display: block }
+address { display: block }
+
+table { display: table; border-spacing: 2px; border-collapse: separate; border-color: gray }
+caption { display: table-caption; text-align: center }
+thead { display: table-header-group }
+tbody { display: table-row-group }
+tfoot { display: table-footer-group }
+tr { display: table-row }
+td, th { display: table-cell }
+colgroup { display: table-column-group }
+col { display: table-column }
+thead, tbody, tfoot, table > tr { vertical-align: middle }
+tr, td, th { vertical-align: inherit }
 
 li { display: list-item }
 
@@ -37,7 +49,8 @@ pre, code, kbd, samp, tt, listing, xmp, plaintext { font-family: monospace }
 pre, listing, xmp, plaintext { white-space: pre; margin-top: 1em; margin-bottom: 1em }
 small { font-size: smaller }
 big { font-size: larger }
-center, th { text-align: center }
+center { text-align: -webkit-center }
+th { text-align: center }
 u, ins, abbr[title] { text-decoration: underline }
 s, del, strike { text-decoration: line-through }
 mark { background-color: yellow; color: black }

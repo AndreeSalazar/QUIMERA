@@ -22,6 +22,7 @@ mod elemento;
 mod flex;
 mod medios;
 mod propiedades;
+mod tabla;
 mod valores;
 
 use alloc::vec::Vec;
@@ -29,6 +30,7 @@ pub use elemento::Nodo;
 pub use flex::{AlinearFlex, Direccion, Flex, Justificar};
 pub use propiedades::borde_solido;
 pub use quimera_html::NodoId;
+pub use tabla::{AlinearVertical, Tabla};
 pub use valores::{
     Alinear, AltoLinea, Borde, Color, Display, Espacios, Estilo, EstiloBorde, Generica, Medida, SIN_BORDE, TipoLista,
 };

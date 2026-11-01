@@ -1,7 +1,8 @@
 //! La cascada da los mismos valores calculados que un navegador.
 
 use quimera_estilo::{
-    Alinear, Color, Display, Espacios, Estilo, Estilos, Generica, Medida, Opciones, TipoLista, calcular,
+    Alinear, AlinearVertical, Color, Display, Espacios, Estilo, Estilos, Generica, Medida, Opciones, TipoLista,
+    calcular,
 };
 use quimera_html::{Documento, analizar};
 
@@ -175,4 +176,40 @@ fn propiedades_de_flexbox() {
     assert_eq!(f("n"), (0.0, 0.0, Medida::Auto));
     assert_eq!(f("u"), (1.0, 1.0, Medida::Porcentaje(0.0)));
     assert_eq!(f("l"), (1.0, 1.0, Medida::Px(100.0)));
+}
+
+#[test]
+fn tablas_en_la_hoja_del_navegador() {
+    let (doc, e) = estilos(
+        "<!doctype html><table id=t><tbody id=b><tr id=r><td id=d valign=top>1<th id=h>2</table>\
+         <table id=v border=2 cellspacing=7 cellpadding=5 style='border-collapse:collapse'><tr><td id=c>3</table>",
+    );
+    assert_eq!(de(&doc, &e, "t").display, Display::Tabla);
+    assert_eq!(de(&doc, &e, "t").tabla.espaciado, (2.0, 2.0));
+    assert_eq!(de(&doc, &e, "b").display, Display::GrupoFilas);
+    assert_eq!(de(&doc, &e, "r").display, Display::Fila);
+    assert_eq!(de(&doc, &e, "h").display, Display::Celda);
+    // tbody { vertical-align: middle }; tr y td lo heredan; valign gana a la hoja.
+    assert_eq!(de(&doc, &e, "h").tabla.vertical, AlinearVertical::Medio);
+    assert_eq!(de(&doc, &e, "d").tabla.vertical, AlinearVertical::Arriba);
+    assert_eq!((de(&doc, &e, "h").peso, de(&doc, &e, "h").alinear), (700, Alinear::Centro));
+    // Atributos antiguos: border, cellspacing, cellpadding (que la celda toma de su tabla).
+    let (v, c) = (de(&doc, &e, "v"), de(&doc, &e, "c"));
+    assert_eq!((v.borde[0].ancho, v.tabla.espaciado, v.tabla.colapsar), (2.0, (7.0, 7.0), true));
+    assert_eq!((c.relleno[0], c.borde[0].ancho), (Medida::Px(5.0), 1.0));
+    assert!(c.tabla.colapsar, "border-collapse se hereda");
+}
+
+#[test]
+fn modo_de_compatibilidad_sin_doctype() {
+    // Sin doctype, <center><table> centra la tabla pero no su texto (como en Chromium).
+    let pagina = "<center><table><tr><td id=d>1</table></center>";
+    let (doc, e) = estilos(pagina);
+    assert_eq!(de(&doc, &e, "d").alinear, Alinear::Izquierda);
+    let (doc, e) = estilos(&format!("<!DOCTYPE html>{pagina}"));
+    assert_eq!(de(&doc, &e, "d").alinear, Alinear::Centro);
+    // <center> y align=center centran también los bloques de dentro; text-align: center, no.
+    let (doc, e) = estilos("<center id=c>1</center><div id=a align=center>2</div><p id=p style='text-align:center'>3");
+    assert!(de(&doc, &e, "c").centrar_bloques && de(&doc, &e, "a").centrar_bloques);
+    assert!(!de(&doc, &e, "p").centrar_bloques);
 }

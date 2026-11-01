@@ -26,6 +26,7 @@ mod intrinseco;
 mod linea;
 mod pintura;
 mod reemplazado;
+mod tabla;
 mod texto;
 
 pub use pintura::{Enlace, Maquetacion, Pieza};

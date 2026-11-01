@@ -34,7 +34,7 @@ Cada fase deja algo que ya sirve por sí solo. El orden es el que más sitios de
 
 Que las páginas de lectura se vean como en Chrome.
 
-- **Tablas** (`display: table`, `colspan`, anchos automáticos): Wikipedia las usa en cada artículo.
+- ✅ **Tablas:** el algoritmo automático, `colspan`/`rowspan`, bordes que colapsan, atributos antiguos y modo de compatibilidad. Las mismas posiciones que Chromium en 39 cajas; Hacker News se ve igual ([detalle](ESTILO-MAQUETACION.md#tablas)).
 - `float` y `clear`, `position` (`relative`, `absolute`, `fixed`, `sticky`), `z-index`.
 - `overflow` con desplazamiento propio, `inline-block`.
 - Variables de CSS `var(--x)`, `calc()`, `min()`/`max()`.

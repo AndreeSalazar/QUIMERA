@@ -86,6 +86,7 @@ impl Maquetador<'_> {
         let izquierda = match (e.margen[3] == Medida::Auto, e.margen[1] == Medida::Auto, libre) {
             (true, true, false) => sobra.max(0.0) / 2.0,
             (true, false, false) => sobra.max(0.0) + ml,
+            (_, _, false) if self.padre_centra(id) => ml + sobra.max(0.0) / 2.0,
             _ => ml,
         };
         let (cx, cy) =
