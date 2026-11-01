@@ -20,6 +20,7 @@ pub(crate) struct Llamada {
 }
 
 impl Motor {
+    #[inline(always)]
     pub(crate) fn pila(&self, i: usize) -> Valor {
         self.mundo.m.pila().get(i).copied().unwrap_or(Valor::INDEFINIDO)
     }
@@ -33,9 +34,11 @@ impl Motor {
     /// (una nativa) y el resultado está en el destino.
     pub(crate) fn llamar(&mut self, ll: Llamada) -> Result<bool, Valor> {
         let f = self.pila(ll.f);
-        if let Some((indice, _, _)) = self.mundo.funcion(f) {
-            let nuevo = if ll.construir { self.objeto_para_new(ll.f, indice)? } else { Valor::INDEFINIDO };
-            self.abrir_marco(indice, ll, nuevo);
+        if let Some(datos) = self.mundo.funcion(f) {
+            let nuevo = if ll.construir { self.objeto_para_new(ll.f, datos.0)? } else { Valor::INDEFINIDO };
+            // `new` puede haber movido la función: sus datos se vuelven a leer.
+            let datos = if ll.construir { self.mundo.funcion(self.pila(ll.f)).unwrap_or(datos) } else { datos };
+            self.abrir_marco(datos, ll, nuevo);
             return Ok(true);
         }
         if let Some(id) = self.mundo.nativa(f) {
@@ -75,12 +78,11 @@ impl Motor {
     }
 
     /// Abre el marco de la función `indice` y copia los argumentos a sus primeros registros.
-    fn abrir_marco(&mut self, indice: u32, ll: Llamada, nuevo: Valor) {
+    fn abrir_marco(&mut self, (indice, entorno, este_lexico): (u32, Valor, Valor), ll: Llamada, nuevo: Valor) {
         let Some(c) = self.funciones.get(indice as usize) else { return };
         let (params, registros, flecha) = (c.f.params as usize, c.f.registros as usize, c.f.flecha);
         let argumentos = c.f.argumentos;
         let f = self.pila(ll.f);
-        let (_, entorno, este_lexico) = self.mundo.funcion(f).unwrap_or((indice, Valor::NULO, Valor::INDEFINIDO));
         let este = if flecha {
             este_lexico
         } else if ll.construir {

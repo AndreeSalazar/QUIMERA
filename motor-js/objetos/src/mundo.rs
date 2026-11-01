@@ -198,11 +198,35 @@ impl Mundo {
 
     /// Índice de función, entorno y `this` léxico de un cierre.
     pub fn funcion(&self, f: Valor) -> Option<(u32, Valor, Valor)> {
-        if self.clase(f)? != Clase::Funcion {
+        // Los campos de una vez: una llamada no busca la función cuatro veces.
+        let c = self.m.campos(f)?;
+        if c.get(C_TIPO)?.como_entero()? != Clase::Funcion as i32 {
             return None;
         }
-        let indice = entero(self.m.leer(f, C_EXTRA))? as u32;
-        Some((indice, self.m.leer(f, C_EXTRA2)?, self.m.leer(f, C_ESTE)?))
+        let indice = c.get(C_EXTRA)?.como_entero()? as u32;
+        Some((indice, *c.get(C_EXTRA2)?, *c.get(C_ESTE)?))
+    }
+
+    /// El hueco `hueco` de `obj` **si su forma es `forma`** (el primer nivel de una caché en
+    /// línea): busca el objeto una sola vez y lee su tipo, su forma y sus propiedades de ahí.
+    #[inline]
+    pub fn leer_si_forma(&self, obj: Valor, forma: IdForma, hueco: u32) -> Option<Valor> {
+        let c = self.m.campos(obj)?;
+        let entorno = Valor::entero(Clase::Entorno as i32);
+        if *c.get(C_TIPO)? == entorno || *c.get(C_FORMA)? != Valor::entero(forma as i32) {
+            return None;
+        }
+        Some(self.m.campos(*c.get(C_PROPS)?)?.get(hueco as usize).copied().unwrap_or(Valor::INDEFINIDO))
+    }
+
+    /// La forma de `obj` si es un objeto (de cualquier clase menos entorno), buscándolo una vez.
+    #[inline]
+    pub fn forma_de_objeto(&self, obj: Valor) -> Option<IdForma> {
+        let c = self.m.campos(obj)?;
+        if *c.get(C_TIPO)? == Valor::entero(Clase::Entorno as i32) {
+            return None;
+        }
+        Some(c.get(C_FORMA)?.como_entero()? as IdForma)
     }
 
     /// Número de una función nativa.

@@ -48,19 +48,19 @@ assert_eq!(motor.texto(v), "42");
 
 Con su arnés completo: cada benchmark se mide solo durante al menos un segundo y escribe su `SCORE` (más es mejor). QUIMERA usa el reloj que le da el anfitrión (`Motor::con_reloj`). A Boa se le añaden `console.log` y `print`, que `boa_engine` no trae. Boa necesita una pila nativa grande (recursa en Rust): la medida corre en un hilo con 512 MB; QUIMERA no la necesita.
 
-La mediana de tres corridas seguidas (la media geométrica de las tres: 3,75×, 3,82× y 3,84×). Antes de las cachés al estilo CacheIR, la misma máquina daba 3,44×:
+La mediana de tres corridas seguidas (sus medias geométricas: 3,81×, 3,78× y 3,81×), con los dos motores compilados con LTO. Las columnas de la derecha son la ronda anterior (cachés al estilo CacheIR, sin LTO) y el punto de partida:
 
-| Benchmark | QUIMERA | Boa 0.22 | QUIMERA / Boa | Antes |
-|---|---:|---:|---:|---:|
-| Richards | 440 | 151 | **2,91×** | 2,47× |
-| DeltaBlue | 447 | 133 | **3,36×** | 3,03× |
-| Crypto | 535 | 165 | **3,24×** | 2,28× |
-| RayTrace | 1.047 | 266 | **3,94×** | 3,60× |
-| EarleyBoyer | 1.420 | 301 | **4,74×** | 4,95× |
-| NavierStokes | 844 | 363 | **2,30×** | 1,73× |
-| Splay | 1.266 | 466 | **2,75×** | 2,94× |
-| RegExp | 554 | 44 | **12,53×** | 12,69× |
-| **Media geométrica** | | | **3,82×** | 3,44× |
+| Benchmark | QUIMERA | Boa 0.22 | QUIMERA / Boa | Con CacheIR | Al empezar |
+|---|---:|---:|---:|---:|---:|
+| Richards | 653 | 206 | **3,17×** | 2,91× | 2,47× |
+| DeltaBlue | 634 | 183 | **3,46×** | 3,36× | 3,03× |
+| Crypto | 611 | 203 | **3,01×** | 3,24× | 2,28× |
+| RayTrace | 1.326 | 352 | **3,78×** | 3,94× | 3,60× |
+| EarleyBoyer | 1.791 | 398 | **4,49×** | 4,74× | 4,95× |
+| NavierStokes | 1.012 | 454 | **2,23×** | 2,30× | 1,73× |
+| Splay | 1.796 | 615 | **2,92×** | 2,75× | 2,94× |
+| RegExp | 601 | 50 | **11,96×** | 12,53× | 12,69× |
+| **Media geométrica** | | | **3,81×** | 3,82× | 3,44× |
 
 Las puntuaciones varían bastante entre corridas (±10 %; RegExp, que no cambió, va de 10,8× a 13,2×), porque el arnés mide tiempo real y la máquina no está quieta: por eso la mediana. EarleyBoyer, Splay y RegExp están dentro de ese ruido. RegExp usa `quimera-regex` ([REGEX.md](REGEX.md)) y no se comprueba a sí mismo, así que el banco compara una huella de sus 125.585 resultados con la de Boa: tienen que ser idénticas.
 
@@ -100,6 +100,30 @@ Cómo se llegó a los 7 benchmarks de Boa:
 
 **Dónde queda:** 3,82×, la mitad del camino hacia el 7,3× del Baseline Interpreter. El perfil dice que ahora pesa el **coste de cada instrucción** (unos 3,4 ns de media), no la búsqueda de propiedades: llamar y volver, leer y escribir registros en la pila de raíces, y despachar. Eso es lo siguiente para acercarse al Baseline.
 
+## Acelerar el intérprete
+
+Después de CacheIR, el perfil decía que pesaba el coste de cada instrucción. Un experimento con el banco (`--tiempo script.js`) lo midió por separado, con 9 millones de vueltas:
+
+| Qué | Antes | Después |
+|---|---:|---:|
+| Vuelta de bucle con 3 instrucciones simples (`n` local) | 13,7 ns | **9,9 ns** |
+| Leer una global, de más | +9,4 ns | +6,6 ns |
+| Leer `o.n` con la caché acertando, de más | +12 ns | +7,0 ns |
+| Llamar a una función y volver (la vuelta entera) | 71 ns | **52 ns** |
+
+Lo que se hizo, de más a menos efecto:
+
+1. **LTO** (`lto = "fat"`, `codegen-units = 1` en `release`). Con 16 unidades y sin LTO, funciones diminutas de otros crates (leer un registro, un campo del montón, el tipo de un valor) quedaban como llamadas de verdad en cada instrucción. Es lo que más aceleró: −23 % en los benchmarks de Boa y entre +14 % y +48 % en V8. **Pero el banco compila a los dos motores igual, así que Boa también se aceleró**: la proporción entre los dos casi no cambia. Compilar en `release` pasa a tardar unos minutos.
+2. **La zona principal del GC, seguida** (`quimera-gc`): los campos de los objetos viejos van todos en un bloque, y cada objeto es (inicio, largo). Antes cada uno era un `Vec` propio: un `malloc` al ascenderlo desde la guardería, un salto más en cada lectura y unos 32 bytes de cabecera por objeto. Lo liberado vuelve a una lista de huecos por tamaño. Splay, el benchmark que más objetos conserva, pasó de 2,75× a 2,92× Boa.
+3. **Una llamada lee los datos de la función una vez** (antes, dos, y cada una buscaba el objeto cuatro veces), y la lectura con la caché acertando busca el objeto una vez en vez de cuatro.
+4. **El paso de cada instrucción y los accesos a registros, en línea** (`#[inline(always)]`).
+5. **Bucles rotados**: la condición va al final y salta atrás si se cumple (`SaltarSiCompara`), así que cada vuelta tiene una instrucción menos. No cambió el tiempo de los bucles medidos: el coste estaba en lo que hacen algunas instrucciones, no en cuántas hay.
+6. **Lo que no sirvió:** guardar en cada marco una copia compartida (`Rc`) de su código para no buscar la función en cada instrucción. Copiarla en cada llamada costaba más que la búsqueda, que el compilador ya resolvía bien. Se deshizo.
+
+Para medir así: `--rapido` (solo QUIMERA con los benchmarks de Boa, en segundos), `--tiempo a.js` (lo que tarda `main()`) y `--bytecode a.js` (lo que genera el compilador).
+
+**Dónde queda:** cada instrucción simple cuesta unos 3,3 ns (unos 13 ciclos) y una llamada unos 22 ns. Lo siguiente sería tocar la forma del intérprete: los registros como un trozo de memoria propio del marco en vez de la pila de raíces compartida, y el despacho sin `Result` por instrucción.
+
 ## `finally`, `for-in`/`for-of` y `delete`
 
 - **`finally` sin saltos indirectos.** Cada `try` abre una *región* mientras se compila. Un `return`, `break` o `continue` que sale de ella cierra su manejador (`FinIntentar`) y ejecuta una copia del `finally` en ese mismo punto (`compilador/control.rs`). Esto arregló también un fallo latente: un `break` que salía de un `try` dejaba su manejador activo.
@@ -124,7 +148,7 @@ Prueba: un millón de textos distintos en un bucle libera más de 900.000. Para 
 - **`sort` es inserción binaria.** Estable y sin memoria extra, con pocas comparaciones (n log n), pero mueve O(n²) elementos: para arreglos grandes hará falta un *merge sort* con raíces.
 - **`ToPrimitive` usa una llamada interna** (recursión de Rust); `call` y `apply` dejan el marco en la máquina.
 - **`this` primitivo sin envolver.** En modo no estricto, `f.call(5)` debería dar un `this` objeto (`Number`); QUIMERA da el número tal cual.
-- **El coste por instrucción.** Unos 3,4 ns de media: el despacho, llamar y volver, y los registros en la pila de raíces. Es lo que separa a QUIMERA del Baseline Interpreter de SpiderMonkey (7,3× Boa).
+- **El coste por instrucción.** Unos 3,3 ns cada instrucción simple y 22 ns una llamada: el despacho, los registros en la pila de raíces y el marco de cada llamada. Es lo que separa a QUIMERA del Baseline Interpreter de SpiderMonkey (7,3× Boa).
 - **Matemáticas sin `std`.** `ln` y `exp` están hechas a mano (reducción de rango, ln 2 partido al estilo Cody-Waite de fdlibm), con precisión de pocos bits. Si un día se necesita la exactitud de una libm, conviene portar fdlibm entera.
 - **Errores de la máquina.** Los que lanza la máquina son cadenas (`"TypeError: ..."`); `new Error()` desde JavaScript sí crea objetos.
 - **Cadenas en UTF-8.** JavaScript cuenta en UTF-16; se convierte donde hace falta (`charAt`, índices de `RegExp`). `quimera-cadenas` (UTF-16/Latin-1 compartidas) lo evitará.

@@ -65,7 +65,7 @@ En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, 
 | Crate | Nivel | Qué es | Estado |
 |---|---:|---|---|
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
-| `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura; anota las cadenas vivas | ✅ 11 pruebas |
+| `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal también en un solo bloque (sin `malloc` por objeto), barrera de escritura; anota las cadenas vivas | ✅ 10 pruebas |
 | `motor-js/regex` → `quimera-regex` | 1 | Expresiones regulares: patrón → programa → máquina con vuelta atrás sin recursión ([docs/REGEX.md](docs/REGEX.md)) | ✅ 6 pruebas |
 | `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador, literales `/re/` | ✅ 24 pruebas |
 | `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas únicas que se liberan, objetos, arreglos densos, funciones y entornos sobre el GC, `delete` en su sitio | ✅ 10 pruebas |
@@ -112,8 +112,8 @@ El frontend, con el corpus de Boa y V8 (los 8 benchmarks de Octane) repetido has
 
 | | Media geométrica frente a boa_engine 0.22 |
 |---|---:|
-| **`quimera-vm`** | **2,94× más rápido** (de 1,07× en nested-loop a 6,48× en closures-create) |
-| **V8 (Octane), los 8 benchmarks con su arnés completo** | **3,82× la puntuación de Boa** (mediana de tres corridas; de 2,30× en NavierStokes a 12,5× en RegExp; gana en los 8) |
+| **`quimera-vm`** | **3,08× más rápido** (mediana de tres corridas, los dos con LTO) |
+| **V8 (Octane), los 8 benchmarks con su arnés completo** | **3,81× la puntuación de Boa** (mediana de tres corridas, los dos con LTO; de 2,23× en NavierStokes a 12× en RegExp; gana en los 8) |
 
 Ver [docs/VM.md](docs/VM.md).
 

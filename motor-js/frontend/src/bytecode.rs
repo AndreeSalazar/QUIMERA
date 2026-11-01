@@ -154,6 +154,8 @@ pub enum Instr {
     SaltarSiNo { c: Reg, destino: u32 },
     /// Compara y salta en una sola instrucción: salta a `destino` si `a op b` es falso (`i < n`).
     SaltarSiNoCompara { op: OpBin, a: Reg, b: Reg, destino: u32 },
+    /// Compara y salta si se cumple (la condición de un bucle rotado, al final de la vuelta).
+    SaltarSiCompara { op: OpBin, a: Reg, b: Reg, destino: u32 },
     /// Salta si `c` no es `null` ni `undefined` (para `??`).
     SaltarSiDefinido { c: Reg, destino: u32 },
     /// `dst = globalThis[nombre]`.
@@ -299,6 +301,7 @@ impl Stencil {
             SaltarSi { c, destino } => alloc::format!("si r{c} saltar {destino:04}"),
             SaltarSiNo { c, destino } => alloc::format!("si no r{c} saltar {destino:04}"),
             SaltarSiNoCompara { op, a, b, destino } => alloc::format!("si no r{a} {op:?} r{b} saltar {destino:04}"),
+            SaltarSiCompara { op, a, b, destino } => alloc::format!("si r{a} {op:?} r{b} saltar {destino:04}"),
             SaltarSiDefinido { c, destino } => alloc::format!("si r{c} no es null/undefined saltar {destino:04}"),
             LeerGlobal { dst, nombre } => alloc::format!("r{dst} = global {:?}", self.atomo(*nombre)),
             EscribirGlobal { nombre, src } => alloc::format!("global {:?} = r{src}", self.atomo(*nombre)),

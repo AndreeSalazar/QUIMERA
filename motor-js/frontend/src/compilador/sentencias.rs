@@ -109,6 +109,21 @@ impl Compilador<'_> {
         Ok(self.emitir(Instr::SaltarSiNo { c: rc, destino: 0 }))
     }
 
+    /// Salta a `destino` si la condición es cierta (la de un bucle rotado, al final de la vuelta).
+    fn saltar_si_cierto(&mut self, c: &Expr, destino: u32) -> Resultado<()> {
+        if let Expr::Binaria(op, a, b) = c {
+            let comparacion = matches!(*op, "<" | "<=" | ">" | ">=" | "===" | "!==" | "==" | "!=");
+            if let (true, Some(op)) = (comparacion, OpBin::desde(op)) {
+                let (ra, rb) = (self.operando(a)?, self.operando(b)?);
+                self.emitir(Instr::SaltarSiCompara { op, a: ra, b: rb, destino });
+                return Ok(());
+            }
+        }
+        let rc = self.operando(c)?;
+        self.emitir(Instr::SaltarSi { c: rc, destino });
+        Ok(())
+    }
+
     fn si(&mut self, c: &Expr, a: &Sent, b: Option<&Sent>) -> Resultado<()> {
         let a_otro = self.saltar_si_falso(c)?;
         self.sentencia(a)?;
@@ -145,15 +160,20 @@ impl Compilador<'_> {
         }
     }
 
+    /// `while` rotado: se salta a la condición, que está al final y vuelve al cuerpo si se
+    /// cumple. Cada vuelta es una instrucción más corta que con la condición arriba.
     fn mientras(&mut self, c: &Expr, cuerpo: &Sent) -> Resultado<()> {
+        let a_cond = self.emitir(Instr::Saltar { destino: 0 });
         let inicio = self.pc();
-        let a_fin = self.saltar_si_falso(c)?;
         self.abrir_bucle(false);
         self.sentencia(cuerpo)?;
-        self.emitir(Instr::Saltar { destino: inicio });
+        let cond = self.pc();
+        self.parchear(a_cond, cond);
+        let marca = self.marca();
+        self.saltar_si_cierto(c, inicio)?;
+        self.soltar(marca);
         let fin = self.pc();
-        self.parchear(a_fin, fin);
-        self.cerrar_bucle(inicio, fin);
+        self.cerrar_bucle(cond, fin);
         Ok(())
     }
 
@@ -169,6 +189,8 @@ impl Compilador<'_> {
         Ok(())
     }
 
+    /// `for` rotado: tras `inicio`, salta a la condición, que va al final (después del paso) y
+    /// vuelve al cuerpo si se cumple. Sin condición, el final salta al cuerpo sin mirar nada.
     fn para(
         &mut self,
         inicio: Option<&Sent>,
@@ -179,16 +201,8 @@ impl Compilador<'_> {
         if let Some(i) = inicio {
             self.sentencia(i)?;
         }
+        let a_cond = cond.is_some().then(|| self.emitir(Instr::Saltar { destino: 0 }));
         let vuelta = self.pc();
-        let a_fin = match cond {
-            Some(c) => {
-                let marca = self.marca();
-                let salto = self.saltar_si_falso(c)?;
-                self.soltar(marca);
-                Some(salto)
-            }
-            None => None,
-        };
         self.abrir_bucle(false);
         self.sentencia(cuerpo)?;
         let seguir = self.pc();
@@ -197,11 +211,19 @@ impl Compilador<'_> {
             self.expr_descartada(p)?;
             self.soltar(marca);
         }
-        self.emitir(Instr::Saltar { destino: vuelta });
-        let fin = self.pc();
-        if let Some(s) = a_fin {
-            self.parchear(s, fin);
+        match cond {
+            Some(c) => {
+                let aqui = self.pc();
+                if let Some(a) = a_cond {
+                    self.parchear(a, aqui);
+                }
+                let marca = self.marca();
+                self.saltar_si_cierto(c, vuelta)?;
+                self.soltar(marca);
+            }
+            None => _ = self.emitir(Instr::Saltar { destino: vuelta }),
         }
+        let fin = self.pc();
         self.cerrar_bucle(seguir, fin);
         Ok(())
     }

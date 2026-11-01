@@ -59,6 +59,8 @@ undocumented_unsafe_blocks = "deny"
 
 [profile.release]
 debug = "line-tables-only"
+lto = "fat"
+codegen-units = 1
 
 # Las pruebas ejecutan benchmarks enteros (Richards, RegExp...): un poco de optimización
 # las hace varias veces más rápidas sin perder las comprobaciones de desbordamiento.

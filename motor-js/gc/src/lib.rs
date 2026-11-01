@@ -10,8 +10,11 @@
 //!   bloque de golpe. Lo que murió no cuesta nada.
 //! - **Objetos grandes** (más de [`Config::objeto_grande`] campos) van directos a la zona
 //!   principal, como en SpiderMonkey: copiarlos en cada menor saldría caro.
-//! - **Zona principal**: lo que sobrevive. Una **recolección mayor** la marca desde las
-//!   raíces y libera lo que no se alcanzó (también los ciclos, que un contador no libera).
+//! - **Zona principal**: lo que sobrevive. Sus campos también van **seguidos en un solo bloque**
+//!   (`datos`): cada objeto es (inicio, largo) en él, sin un `malloc` ni una cabecera por objeto,
+//!   y leer un campo es un salto, no dos. Una **recolección mayor** la marca desde las raíces y
+//!   libera lo que no se alcanzó (también los ciclos, que un contador no libera); el hueco de lo
+//!   liberado vuelve a una lista por tamaño para el siguiente objeto de ese tamaño.
 //! - **Barrera de escritura**: si un objeto de la zona principal pasa a apuntar a uno de la
 //!   guardería, se anota, para que la recolección menor no tenga que recorrer la principal.
 //! - **Raíces explícitas** (como `Rooted` en SpiderMonkey): el valor que deba sobrevivir a
@@ -24,6 +27,7 @@
 
 extern crate alloc;
 
+use alloc::collections::BTreeMap;
 use alloc::vec::Vec;
 use core::mem;
 use quimera_valor::{Ref, Tipo, Valor};
@@ -35,13 +39,19 @@ const UMBRAL_EXTERNO_MINIMO: usize = 8 << 20;
 const BIT_GUARDERIA: u64 = 1 << 46;
 const SIN_DESTINO: u32 = u32::MAX;
 
-/// Un objeto de la zona principal: por ahora, una lista de campos. Las *shapes* llegarán con `quimera-objetos`.
-#[derive(Debug, Default)]
-struct Celda {
-    campos: Vec<Valor>,
+/// Un objeto de la zona principal: dónde están sus campos en `datos` y cuántos son.
+#[derive(Debug, Clone, Copy, Default)]
+struct Entrada {
+    inicio: u32,
+    largo: u32,
+    /// Hay un objeto (si no, el número está libre para el siguiente).
+    viva: bool,
     /// Ya está en la lista de recordados (apunta a la guardería).
     recordada: bool,
 }
+
+/// Tamaños con su propia lista de huecos libres (los más grandes van a un árbol).
+const CLASES: usize = 64;
 
 /// Ajustes del montón.
 #[derive(Clone, Copy, Debug)]
@@ -93,8 +103,15 @@ pub struct Monton {
     arena: Vec<Valor>,
     /// Para cada objeto de la guardería: dónde empiezan sus campos y cuántos son.
     objetos: Vec<(u32, u32)>,
-    principal: Vec<Option<Celda>>,
+    /// Los objetos de la zona principal, por su número.
+    principal: Vec<Entrada>,
+    /// Los campos de todos los objetos de la zona principal, seguidos.
+    datos: Vec<Valor>,
+    /// Números de objeto libres.
     libres: Vec<u32>,
+    /// Huecos libres en `datos`, por tamaño: dónde empieza cada uno.
+    huecos: Vec<Vec<u32>>,
+    huecos_grandes: BTreeMap<u32, Vec<u32>>,
     recordados: Vec<u32>,
     raices: Vec<Valor>,
     // Memoria de trabajo reutilizada entre recolecciones.
@@ -142,7 +159,10 @@ impl Monton {
             arena: Vec::with_capacity(config.guarderia),
             objetos: Vec::new(),
             principal: Vec::new(),
+            datos: Vec::new(),
             libres: Vec::new(),
+            huecos: alloc::vec![Vec::new(); CLASES + 1],
+            huecos_grandes: BTreeMap::new(),
             recordados: Vec::new(),
             raices: Vec::new(),
             reenvio: Vec::new(),
@@ -213,7 +233,7 @@ impl Monton {
         self.est.asignados += 1;
         if campos.len() > self.config.objeto_grande {
             self.est.grandes += 1;
-            let destino = self.colocar(Celda { campos: campos.to_vec(), recordada: false });
+            let destino = self.colocar(campos);
             // Puede apuntar ya a la guardería: anotarlo como hace la barrera.
             if campos.iter().any(|v| matches!(v.como_referencia().map(sitio), Some(Sitio::Guarderia(_)))) {
                 self.anotar(destino);
@@ -239,13 +259,18 @@ impl Monton {
         Valor::referencia(ref_guarderia(self.objetos.len() - 1))
     }
 
-    fn campos(&self, v: Valor) -> Option<&[Valor]> {
+    /// Todos los campos de un objeto de una vez: para leer varios sin buscar el objeto cada vez.
+    #[inline]
+    pub fn campos(&self, v: Valor) -> Option<&[Valor]> {
         match sitio(v.como_referencia()?) {
             Sitio::Guarderia(i) => {
                 let &(inicio, largo) = self.objetos.get(i)?;
                 self.arena.get(inicio as usize..(inicio + largo) as usize)
             }
-            Sitio::Principal(i) => Some(&self.principal.get(i)?.as_ref()?.campos),
+            Sitio::Principal(i) => {
+                let e = self.principal.get(i).filter(|e| e.viva)?;
+                self.datos.get(e.inicio as usize..(e.inicio + e.largo) as usize)
+            }
         }
     }
 
@@ -255,6 +280,7 @@ impl Monton {
     }
 
     /// Lee un campo.
+    #[inline]
     pub fn leer(&self, obj: Valor, campo: usize) -> Option<Valor> {
         self.campos(obj)?.get(campo).copied()
     }
@@ -276,13 +302,13 @@ impl Monton {
                 true
             }
             Sitio::Principal(i) => {
-                let Some(Some(celda)) = self.principal.get_mut(i) else {
+                let Some(&e) = self.principal.get(i).filter(|e| e.viva) else {
                     return false;
                 };
-                let Some(c) = celda.campos.get_mut(campo) else {
+                if campo >= e.largo as usize {
                     return false;
-                };
-                *c = v;
+                }
+                self.datos[e.inicio as usize + campo] = v;
                 // Barrera: lo viejo apunta a lo nuevo; anotarlo una sola vez.
                 if matches!(v.como_referencia().map(sitio), Some(Sitio::Guarderia(_))) {
                     self.anotar(i as u32);
@@ -293,10 +319,11 @@ impl Monton {
     }
 
     fn anotar(&mut self, i: u32) {
-        if let Some(Some(celda)) = self.principal.get_mut(i as usize)
-            && !celda.recordada
+        if let Some(e) = self.principal.get_mut(i as usize)
+            && e.viva
+            && !e.recordada
         {
-            celda.recordada = true;
+            e.recordada = true;
             self.recordados.push(i);
         }
     }
@@ -308,10 +335,9 @@ impl Monton {
 
     /// Bytes aproximados que ocupan los objetos (arena reservada, campos y cabeceras). Recorre todo el montón.
     pub fn bytes_aprox(&self) -> usize {
-        let celda = |c: &Celda| mem::size_of::<Celda>() + c.campos.capacity() * mem::size_of::<Valor>();
-        self.arena.capacity() * mem::size_of::<Valor>()
+        (self.arena.capacity() + self.datos.capacity()) * mem::size_of::<Valor>()
             + self.objetos.capacity() * mem::size_of::<(u32, u32)>()
-            + self.principal.iter().map(|c| c.as_ref().map_or(mem::size_of::<Option<Celda>>(), celda)).sum::<usize>()
+            + self.principal.capacity() * mem::size_of::<Entrada>()
     }
 
     // ---------------- recolección menor ----------------
@@ -332,8 +358,8 @@ impl Monton {
         let recordados = mem::take(&mut self.recordados);
         for &i in &recordados {
             self.recorrer_campos(i);
-            if let Some(Some(c)) = self.principal.get_mut(i as usize) {
-                c.recordada = false;
+            if let Some(e) = self.principal.get_mut(i as usize) {
+                e.recordada = false;
             }
         }
         self.recordados = recordados;
@@ -349,15 +375,13 @@ impl Monton {
 
     /// Actualiza los campos de un objeto de la zona principal, copiando lo que apunte a la guardería.
     fn recorrer_campos(&mut self, i: u32) {
-        let Some(Some(celda)) = self.principal.get_mut(i as usize) else {
+        let Some(&e) = self.principal.get(i as usize).filter(|e| e.viva) else {
             return;
         };
-        let mut campos = mem::take(&mut celda.campos);
-        for v in &mut campos {
-            *v = self.evacuar(*v);
-        }
-        if let Some(Some(celda)) = self.principal.get_mut(i as usize) {
-            celda.campos = campos;
+        // Por índice: evacuar puede hacer crecer `datos` (y moverlo en memoria).
+        for k in e.inicio as usize..(e.inicio + e.largo) as usize {
+            let v = self.evacuar(self.datos[k]);
+            self.datos[k] = v;
         }
     }
 
@@ -375,23 +399,54 @@ impl Monton {
         if self.reenvio[i] != SIN_DESTINO {
             return v.con_ref(ref_principal(self.reenvio[i]));
         }
-        let campos = self.arena[inicio as usize..(inicio + largo) as usize].to_vec();
-        let destino = self.colocar(Celda { campos, recordada: false });
+        let destino = self.colocar_desde_arena(inicio, largo);
         self.reenvio[i] = destino;
         self.cola.push(destino);
         self.est.promovidos += 1;
         v.con_ref(ref_principal(destino))
     }
 
-    fn colocar(&mut self, celda: Celda) -> u32 {
+    /// Un hueco de `largo` campos en `datos`: uno liberado de ese tamaño o uno nuevo al final.
+    fn reservar(&mut self, largo: u32) -> u32 {
+        let libre = if (largo as usize) <= CLASES {
+            self.huecos[largo as usize].pop()
+        } else {
+            self.huecos_grandes.get_mut(&largo).and_then(Vec::pop)
+        };
+        libre.unwrap_or_else(|| {
+            let inicio = self.datos.len();
+            self.datos.resize(inicio + largo as usize, Valor::INDEFINIDO);
+            u32::try_from(inicio).expect("la zona principal cabe en 4.294 millones de campos")
+        })
+    }
+
+    /// Un número de objeto para el hueco `inicio` de `largo` campos.
+    fn entrada(&mut self, inicio: u32, largo: u32) -> u32 {
         self.est.vivos_principal += 1;
+        let e = Entrada { inicio, largo, viva: true, recordada: false };
         if let Some(i) = self.libres.pop() {
-            self.principal[i as usize] = Some(celda);
+            self.principal[i as usize] = e;
             i
         } else {
-            self.principal.push(Some(celda));
+            self.principal.push(e);
             u32::try_from(self.principal.len() - 1).expect("menos de 4.294 millones de objetos")
         }
+    }
+
+    /// Un objeto nuevo en la zona principal con una copia de estos campos.
+    fn colocar(&mut self, campos: &[Valor]) -> u32 {
+        let largo = campos.len() as u32;
+        let inicio = self.reservar(largo);
+        self.datos[inicio as usize..(inicio + largo) as usize].copy_from_slice(campos);
+        self.entrada(inicio, largo)
+    }
+
+    /// Copia a la zona principal el objeto de la guardería que está en `desde` (sin copias intermedias).
+    fn colocar_desde_arena(&mut self, desde: u32, largo: u32) -> u32 {
+        let inicio = self.reservar(largo);
+        let (d, a) = (inicio as usize, desde as usize);
+        self.datos[d..d + largo as usize].copy_from_slice(&self.arena[a..a + largo as usize]);
+        self.entrada(inicio, largo)
     }
 
     // ---------------- recolección mayor ----------------
@@ -440,10 +495,10 @@ impl Monton {
             }
         }
         while let Some(i) = self.cola.pop() {
-            let Some(Some(celda)) = self.principal.get(i as usize) else {
+            let Some(&e) = self.principal.get(i as usize).filter(|e| e.viva) else {
                 continue;
             };
-            for v in &celda.campos {
+            for v in &self.datos[e.inicio as usize..(e.inicio + e.largo) as usize] {
                 anotar_cadena(&mut self.cadenas_vistas, *v);
                 if let Some(Sitio::Principal(j)) = v.como_referencia().map(sitio)
                     && j < self.marcas.len()
@@ -454,10 +509,16 @@ impl Monton {
                 }
             }
         }
-        for (i, hueco) in self.principal.iter_mut().enumerate() {
-            if hueco.is_some() && !self.marcas[i] {
-                *hueco = None;
+        for (i, e) in self.principal.iter_mut().enumerate() {
+            if e.viva && !self.marcas[i] {
+                e.viva = false;
                 self.libres.push(i as u32);
+                // Su hueco en `datos`, para el siguiente objeto de su tamaño.
+                if (e.largo as usize) <= CLASES {
+                    self.huecos[e.largo as usize].push(e.inicio);
+                } else {
+                    self.huecos_grandes.entry(e.largo).or_default().push(e.inicio);
+                }
                 self.est.vivos_principal -= 1;
                 self.est.liberados += 1;
             }
@@ -482,160 +543,4 @@ fn anotar_cadena(bits: &mut Vec<u64>, v: Valor) {
 }
 
 #[cfg(test)]
-mod pruebas {
-    use super::*;
-
-    fn pequeno() -> Monton {
-        Monton::nuevo(Config { guarderia: 256, objeto_grande: 16, umbral_mayor_minimo: 256 })
-    }
-
-    #[test]
-    fn una_lista_sobrevive_a_muchas_recolecciones() {
-        let mut m = pequeno();
-        let cabeza = m.raiz(Valor::NULO);
-        for n in 0..1000 {
-            let siguiente = m.valor(&cabeza);
-            let nodo = m.asignar(&[Valor::entero(n), siguiente]);
-            m.fijar(&cabeza, nodo);
-            for _ in 0..20 {
-                m.asignar(&[Valor::entero(-1); 4]); // basura
-            }
-        }
-        let mut v = m.valor(&cabeza);
-        for esperado in (0..1000).rev() {
-            assert_eq!(m.leer(v, 0), Some(Valor::entero(esperado)));
-            v = m.leer(v, 1).unwrap();
-        }
-        assert_eq!(v, Valor::NULO);
-        let e = m.estadisticas();
-        assert!(e.menores > 100, "{e:?}");
-        assert!(e.mayores > 0, "{e:?}");
-        assert!(e.vivos_principal <= 1000 + 64, "la basura se libera: {e:?}");
-    }
-
-    #[test]
-    fn la_barrera_protege_lo_nuevo_apuntado_desde_lo_viejo() {
-        let mut m = pequeno();
-        let viejo = m.asignar(&[Valor::NULO]);
-        let r = m.raiz(viejo);
-        m.menor(); // ahora `viejo` está en la zona principal
-        let viejo = m.valor(&r);
-        let nuevo = m.asignar(&[Valor::entero(42)]);
-        assert!(m.escribir(viejo, 0, nuevo));
-        // `nuevo` no está en ninguna raíz: solo lo alcanza la barrera.
-        m.menor();
-        let hijo = m.leer(m.valor(&r), 0).unwrap();
-        assert_eq!(m.leer(hijo, 0), Some(Valor::entero(42)));
-    }
-
-    #[test]
-    fn los_campos_de_asignar_sobreviven_a_su_propia_recoleccion() {
-        let mut m = Monton::nuevo(Config { guarderia: 2, objeto_grande: 16, umbral_mayor_minimo: 1000 });
-        let a = m.asignar(&[Valor::entero(7)]);
-        m.asignar(&[Valor::NULO]); // guardería llena
-        let b = m.asignar(&[a]); // provoca una menor: `a` solo vive en los campos
-        let r = m.raiz(b);
-        m.menor();
-        let a2 = m.leer(m.valor(&r), 0).unwrap();
-        assert_eq!(m.leer(a2, 0), Some(Valor::entero(7)));
-    }
-
-    #[test]
-    fn un_objeto_grande_va_directo_a_la_principal_y_guarda_a_sus_hijos() {
-        let mut m = pequeno();
-        let hijo = m.asignar(&[Valor::entero(5)]);
-        let mut campos = [Valor::NULO; 20];
-        campos[3] = hijo;
-        let grande = m.asignar(&campos);
-        assert_eq!(m.estadisticas().grandes, 1);
-        let r = m.raiz(grande);
-        m.menor(); // el hijo solo lo alcanza el objeto grande
-        let hijo = m.leer(m.valor(&r), 3).unwrap();
-        assert_eq!(m.leer(hijo, 0), Some(Valor::entero(5)));
-    }
-
-    #[test]
-    fn los_ciclos_sin_raiz_se_liberan() {
-        let mut m = pequeno();
-        let a = m.asignar(&[Valor::NULO]);
-        let b = m.asignar(&[a]);
-        m.escribir(a, 0, b);
-        let ra = m.raiz(a);
-        m.mayor();
-        assert_eq!(m.estadisticas().vivos_principal, 2);
-        m.soltar_raices(ra.0);
-        m.mayor();
-        assert_eq!(m.estadisticas().vivos_principal, 0, "un contador de referencias no liberaría este ciclo");
-    }
-
-    #[test]
-    fn las_raices_se_sueltan_como_un_bloque() {
-        let mut m = pequeno();
-        let marca = m.marca_raices();
-        for i in 0..10 {
-            let v = m.asignar(&[Valor::entero(i)]);
-            m.raiz(v);
-        }
-        m.mayor();
-        assert_eq!(m.estadisticas().vivos_principal, 10);
-        m.soltar_raices(marca);
-        m.mayor();
-        assert_eq!(m.estadisticas().vivos_principal, 0);
-    }
-
-    #[test]
-    fn una_referencia_invalida_no_rompe_nada() {
-        let mut m = pequeno();
-        let r = Valor::referencia(Ref::nueva(12345).unwrap());
-        assert_eq!(m.leer(r, 0), None);
-        assert!(!m.escribir(r, 0, Valor::NULO));
-        assert_eq!(m.leer(Valor::entero(3), 0), None);
-        let o = m.asignar(&[Valor::NULO]);
-        assert_eq!(m.leer(o, 5), None);
-        assert!(!m.escribir(o, 5, Valor::NULO));
-    }
-
-    #[test]
-    fn la_pila_hace_de_registros_y_el_gc_la_actualiza() {
-        let mut m = pequeno();
-        let base = m.abrir_raices(3, Valor::NULO);
-        let o = m.asignar(&[Valor::entero(9)]);
-        m.pila_mut()[base + 1] = o;
-        m.menor(); // `o` se mueve a la zona principal
-        let movido = m.pila()[base + 1];
-        assert_ne!(movido, o, "la referencia cambió al moverse");
-        assert_eq!(m.leer(movido, 0), Some(Valor::entero(9)));
-        m.soltar_raices(base);
-        assert_eq!(m.pila().len(), 0);
-    }
-
-    #[test]
-    fn una_cadena_no_es_un_objeto_del_monton() {
-        let mut m = pequeno();
-        let o = m.asignar(&[Valor::NULO]);
-        let r = m.raiz(o);
-        m.mayor(); // `o` queda en el hueco 0 de la zona principal
-        // Una cadena con el número 0 no debe mantener vivo ni tocar el objeto 0.
-        m.soltar_raices(r.0);
-        let marca = m.marca_raices();
-        m.raiz(Valor::cadena(Ref::nueva(0).unwrap()));
-        m.mayor();
-        assert_eq!(m.estadisticas().vivos_principal, 0);
-        m.soltar_raices(marca);
-    }
-
-    #[test]
-    fn la_mayor_anota_las_cadenas_que_alcanza() {
-        let mut m = pequeno();
-        let cadena = |n: u32| Valor::cadena(Ref::desde_u32(n));
-        let obj = m.asignar(&[cadena(3), Valor::entero(1)]);
-        let _raiz = m.raiz(obj);
-        m.raiz(cadena(70));
-        m.asignar(&[cadena(5)]); // basura: su cadena no cuenta
-        m.mayor();
-        let vistas = m.cadenas_vistas();
-        let vista = |n: usize| vistas.get(n / 64).is_some_and(|b| b & (1 << (n % 64)) != 0);
-        assert!(vista(3) && vista(70));
-        assert!(!vista(5));
-    }
-}
+mod pruebas;

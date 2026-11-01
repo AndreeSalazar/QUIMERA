@@ -65,10 +65,12 @@ impl Motor {
         Ok(())
     }
 
+    #[inline(always)]
     fn r(&self, base: usize, r: Reg) -> Valor {
         self.pila(base + r as usize)
     }
 
+    #[inline(always)]
     fn w(&mut self, base: usize, r: Reg, v: Valor) {
         if let Some(hueco) = self.mundo.m.pila_mut().get_mut(base + r as usize) {
             *hueco = v;
@@ -76,6 +78,7 @@ impl Motor {
     }
 
     /// Ejecuta una instrucción del marco con registros en `base`.
+    #[inline(always)]
     fn paso(&mut self, ins: Instr, fi: usize, base: usize, pc: usize) -> Result<Flujo, Valor> {
         use Instr::*;
         let cab = base - CABECERA;
@@ -104,20 +107,12 @@ impl Motor {
                 self.w(base, dst, v);
             }
             SaltarSiNoCompara { op, a, b, destino } => {
-                let (x, y) = (self.r(base, a), self.r(base, b));
-                let cierto = match (x.como_entero(), y.como_entero(), op) {
-                    (Some(i), Some(j), OpBin::Menor) => i < j,
-                    (Some(i), Some(j), OpBin::MenorIgual) => i <= j,
-                    (Some(i), Some(j), OpBin::Mayor) => i > j,
-                    (Some(i), Some(j), OpBin::MayorIgual) => i >= j,
-                    (Some(i), Some(j), OpBin::Estricto | OpBin::Igual) => i == j,
-                    (Some(i), Some(j), OpBin::NoEstricto | OpBin::Distinto) => i != j,
-                    _ => {
-                        let v = self.binaria(op, x, y, base + b as usize)?;
-                        op::a_booleano(&self.mundo, v)
-                    }
-                };
+                let cierto = self.comparar(op, base, a, b)?;
                 return Ok(self.saltar_si(!cierto, destino));
+            }
+            SaltarSiCompara { op, a, b, destino } => {
+                let cierto = self.comparar(op, base, a, b)?;
+                return Ok(self.saltar_si(cierto, destino));
             }
             Unaria { op, dst, a } => {
                 let v = self.unaria(op, self.r(base, a))?;
@@ -150,6 +145,28 @@ impl Motor {
         Ok(Flujo::Sigue)
     }
 
+    /// `ra op rb` para un salto: dos enteros sin salir de aquí; lo demás, por el camino general.
+    #[inline(always)]
+    fn comparar(&mut self, op: OpBin, base: usize, a: Reg, b: Reg) -> Result<bool, Valor> {
+        let (x, y) = (self.r(base, a), self.r(base, b));
+        Ok(match (x.como_entero(), y.como_entero(), op) {
+            (Some(i), Some(j), OpBin::Menor) => i < j,
+            (Some(i), Some(j), OpBin::MenorIgual) => i <= j,
+            (Some(i), Some(j), OpBin::Mayor) => i > j,
+            (Some(i), Some(j), OpBin::MayorIgual) => i >= j,
+            (Some(i), Some(j), OpBin::Estricto | OpBin::Igual) => i == j,
+            (Some(i), Some(j), OpBin::NoEstricto | OpBin::Distinto) => i != j,
+            _ => {
+                let v = match op::rapida(&self.mundo, op, x, y) {
+                    Some(v) => v,
+                    None => self.binaria(op, x, y, base + b as usize)?,
+                };
+                op::a_booleano(&self.mundo, v)
+            }
+        })
+    }
+
+    #[inline(always)]
     fn saltar_si(&self, condicion: bool, destino: u32) -> Flujo {
         if condicion { Flujo::Salta(destino) } else { Flujo::Sigue }
     }
@@ -277,6 +294,7 @@ impl Motor {
     /// `a op b`. `b_abs` es dónde está `b` en la pila (`instanceof` lo necesita para crear `F.prototype`).
     /// `x op 3`: entero más entero sin salir de i32 (el caso de los bucles), dos números por el
     /// camino rápido, y lo demás por el general.
+    #[inline(always)]
     fn binaria_inmediata(&mut self, op: OpBin, x: Valor, valor: i32) -> Result<Valor, Valor> {
         let v = match x.como_entero() {
             Some(i) if op == OpBin::Suma => i.checked_add(valor).map(Valor::entero),

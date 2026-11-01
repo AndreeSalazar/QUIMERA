@@ -129,6 +129,36 @@ fn boa(codigo: &str) -> (Duration, String) {
 
 /// Ejecuta cada script con su `main()` y dice si funciona, su puntuación o el primer error.
 fn probar(rutas: &[String]) {
+    // `--rapido`: solo QUIMERA con los benchmarks de Boa (para comparar cambios en segundos).
+    if rutas.first().is_some_and(|r| r == "--rapido") {
+        let mut log = 0.0;
+        for nombre in SCRIPTS {
+            let (t, _) = quimera(&leer(nombre));
+            log += t.as_secs_f64().ln();
+            println!("{nombre:<24} {:>8.2} ms", t.as_secs_f64() * 1e3);
+        }
+        println!("media geométrica {:.2} ms", (log / SCRIPTS.len() as f64).exp() * 1e3);
+        return;
+    }
+    // `--tiempo a.js b.js`: lo que tarda `main()` (el mejor de tres), solo QUIMERA.
+    if rutas.first().is_some_and(|r| r == "--tiempo") {
+        for ruta in &rutas[1..] {
+            let (t, r) = quimera(&std::fs::read_to_string(ruta).unwrap_or_default());
+            println!("{ruta:<40} {:>9.2} ms  {r}", t.as_secs_f64() * 1e3);
+        }
+        return;
+    }
+    // `--bytecode a.js`: lo que genera el compilador, sin ejecutar.
+    if rutas.first().is_some_and(|r| r == "--bytecode") {
+        for ruta in &rutas[1..] {
+            let codigo = std::fs::read_to_string(ruta).unwrap_or_default();
+            match quimera_frontend::compilar(&codigo) {
+                Ok(s) => println!("{s}"),
+                Err(e) => println!("{ruta}: {e:?}"),
+            }
+        }
+        return;
+    }
     for ruta in rutas {
         let Ok(codigo) = std::fs::read_to_string(ruta) else {
             println!("{ruta}: no se puede leer");

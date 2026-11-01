@@ -36,20 +36,20 @@ impl Motor {
     }
 
     /// `obj.x` si acierta el primer nivel de la caché (sin buscar el nombre de la clave).
+    #[inline]
     pub(crate) fn leer_cacheado(&self, obj: Valor, fi: usize, pc: usize) -> Option<Valor> {
         let c = self.cache(fi, pc);
-        if c.forma == u32::MAX || !self.mundo.es_objeto(obj) || self.mundo.forma(obj) != Some(c.forma) {
+        if c.forma == u32::MAX {
             return None;
         }
-        Some(self.mundo.leer_hueco(obj, c.hueco).unwrap_or(Valor::INDEFINIDO))
+        self.mundo.leer_si_forma(obj, c.forma, c.hueco)
     }
 
     /// `obj.x = v` si acierta el primer nivel de la caché. `false`: hay que ir por `escribir_prop`.
     pub(crate) fn escribir_cacheado(&mut self, obj: Valor, v: Valor, fi: usize, pc: usize) -> bool {
         let c = self.cache(fi, pc);
         c.forma != u32::MAX
-            && self.mundo.es_objeto(obj)
-            && self.mundo.forma(obj) == Some(c.forma)
+            && self.mundo.forma_de_objeto(obj) == Some(c.forma)
             && self.mundo.escribir_hueco(obj, c.hueco, v)
     }
 
@@ -231,6 +231,12 @@ impl Motor {
     /// Una variable global (con caché, como una propiedad del objeto global).
     pub(crate) fn leer_global(&mut self, clave: u32, fi: usize, pc: usize) -> Result<Valor, Valor> {
         let global = self.pila(R_GLOBAL);
+        let c = self.cache(fi, pc);
+        if c.forma != u32::MAX
+            && let Some(v) = self.mundo.leer_si_forma(global, c.forma, c.hueco)
+        {
+            return Ok(v);
+        }
         if let Some(forma) = self.mundo.forma(global) {
             let c = self.cache(fi, pc);
             if c.forma == forma {

@@ -17,6 +17,7 @@ externos = ["boa_engine"]
 
 [dependencies]
 quimera-vm.workspace = true
+quimera-frontend.workspace = true
 boa_engine = "0.22.0"
 
 [features]

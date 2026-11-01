@@ -136,7 +136,8 @@ impl Compilador<'_> {
             | Instr::SaltarSi { destino, .. }
             | Instr::SaltarSiNo { destino, .. }
             | Instr::SaltarSiDefinido { destino, .. }
-            | Instr::SaltarSiNoCompara { destino, .. } => *destino = a,
+            | Instr::SaltarSiNoCompara { destino, .. }
+            | Instr::SaltarSiCompara { destino, .. } => *destino = a,
             Instr::Intentar { captura } => *captura = a,
             _ => {}
         }
