@@ -16,8 +16,8 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 1 | `motor-js` | ✅ `quimera-gc` | GC generacional: guardería en arena + zona principal | SpiderMonkey `gc/Nursery` | sí |
 | 1 | `motor-js` | ✅ `quimera-regex` | Expresiones regulares compiladas (no depende de nada: la usan el frontend y la VM) | SpiderMonkey irregexp | sí |
 | 2 | `motor-js` | ✅ `quimera-frontend` | Parser y AST de JavaScript → bytecode tipo *Stencil* | Boa `boa_parser`, `boa_ast`; SpiderMonkey `frontend/Stencil` | sí |
-| 2 | `web` | `quimera-html` | Tokenizador y constructor de árbol HTML5 | html5ever (Servo) | sí |
-| 2 | `web` | `quimera-css` | Parser de CSS y selectores | Stylo (Servo) | sí |
+| 2 | `web` | ✅ `quimera-html` | Tokenizador y constructor de árbol HTML5 | html5ever (Servo) | sí |
+| 2 | `web` | ✅ `quimera-css` | Parser de CSS y selectores | Stylo (Servo) | sí |
 | 2 | `grafico` | `quimera-gpu` | GPU con **wgpu**: superficies, texturas, *pipelines* | WebRender, Servo | no (wgpu usa `std`) |
 | 2 | `grafico` | `quimera-texto` | Fuentes y *shaping* | skrifa, harfrust | sí |
 | 2 | `red` | `quimera-red` | HTTP/1.1, HTTP/2, TLS (rustls), caché | Chromium `net` | no |

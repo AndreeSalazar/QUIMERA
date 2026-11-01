@@ -7,9 +7,12 @@ members = [
     "motor-js/frontend",
     "motor-js/objetos",
     "motor-js/vm",
+    "web/html",
+    "web/css",
     "bancos/gc",
     "bancos/frontend",
     "bancos/vm",
+    "bancos/web",
     "herramientas/guardianes",
 ]
 
@@ -27,6 +30,8 @@ quimera-regex = { path = "motor-js/regex" }
 quimera-frontend = { path = "motor-js/frontend" }
 quimera-objetos = { path = "motor-js/objetos" }
 quimera-vm = { path = "motor-js/vm" }
+quimera-html = { path = "web/html" }
+quimera-css = { path = "web/css" }
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"

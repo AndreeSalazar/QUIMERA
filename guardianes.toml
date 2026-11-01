@@ -23,3 +23,8 @@ motivo = "Es un programa de medida: si el corpus no se lee o un parser falla, la
 regla = "A-UNWRAP"
 archivo = "bancos/vm/src/main.rs"
 motivo = "Programa de medida: si un motor no ejecuta el script, la medida no vale y debe pararse con el mensaje del expect."
+
+[[revisado]]
+regla = "A-UNWRAP"
+archivo = "bancos/web/src/main.rs"
+motivo = "Programa de medida: si la página pedida no se puede leer, no hay nada que comparar y debe pararse con el mensaje del expect."

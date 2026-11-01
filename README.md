@@ -14,7 +14,10 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador, literales `/re/` | ✅ 24 pruebas |
 | `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas únicas que se liberan, objetos, arreglos densos, funciones y entornos sobre el GC, `delete` en su sitio | ✅ 10 pruebas |
 | `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones | ✅ 29 pruebas |
+| `web/html` → `quimera-html` | 2 | HTML5 → árbol, con la recuperación de errores de los navegadores; mismo árbol que html5ever en 5.000 páginas reales, 2,2× más rápido ([docs/HTML-CSS.md](docs/HTML-CSS.md)) | ✅ 10 pruebas |
+| `web/css` → `quimera-css` | 2 | CSS → reglas, `@media`, selectores con especificidad, colores y longitudes | ✅ 9 pruebas |
 | `bancos/frontend` → `quimera-banco-frontend` | 99 | Compara el frontend con el parser de Boa | ✅ 1 prueba |
+| `bancos/web` → `quimera-banco-web` | 99 | Compara `quimera-html` con html5ever en páginas reales | ✅ |
 | `bancos/vm` → `quimera-banco-vm` | 99 | Compara la VM con boa_engine y comprueba RegExp contra Boa | ✅ 1 prueba |
 | `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ 1 prueba |
 | `herramientas/guardianes` → `quimera-guardianes` | 100 | Semáforo rojo/amarillo/verde, 1000 líneas por archivo, jerarquía | ✅ 12 pruebas |

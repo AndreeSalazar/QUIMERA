@@ -1,0 +1,25 @@
+[package]
+name = "quimera-banco-web"
+description = "Compara quimera-html con html5ever (el analizador de Servo) en páginas reales: mismo árbol y velocidad."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[package.metadata.quimera]
+nivel = 99
+capa = "bancos"
+no_std = false
+# Solo los bancos de medida pueden usar crates de fuera, para comparar.
+externos = ["html5ever", "markup5ever_rcdom"]
+
+[dependencies]
+quimera-html.workspace = true
+quimera-css.workspace = true
+html5ever = "=0.39.0"
+markup5ever_rcdom = "=0.39.0"
+
+[lints]
+workspace = true
