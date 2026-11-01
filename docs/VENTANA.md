@@ -59,3 +59,10 @@ La página de ejemplo, en una ventana de 1024×768: leer, analizar, estilo, maqu
 - La interacción en vivo (pasar el ratón, pulsar, escribir) se prueba a mano en la ventana; su lógica (historial, edición del campo, direcciones escritas) tiene pruebas.
 - Pestañas, historial y barra de direcciones (`quimera-navegador`), y la interfaz con VERX. La red ya está (`quimera-red`, ver [RED.md](RED.md)).
 - Texto complejo: ligaduras, árabe, índico (*shaping* con harfrust).
+
+## Memoria
+
+Medida con la ventana abierta en example.com: **111 MB** (Edge, que es Chromium, 461 MB en 9 procesos; ver la tabla del README).
+
+- **Fuentes perezosas:** al empezar solo se anota qué archivos de fuentes existen. Cada uno se lee la primera vez que se pide una letra suya, así que las de reserva (chino, japonés, coreano, emoji: unos 70 MB en Windows) no ocupan nada hasta que una página las usa.
+- **Un solo sistema gráfico:** wgpu arranca por defecto Vulkan, DirectX 12 y OpenGL a la vez, y cada uno carga su driver. QUIMERA arranca solo DirectX 12 en Windows (121 MB frente a 184 MB) y Vulkan/Metal con OpenGL de respaldo en el resto. La variable `WGPU_BACKEND` (`vulkan`, `gl`...) lo cambia.

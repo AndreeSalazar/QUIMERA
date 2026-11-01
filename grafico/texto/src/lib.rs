@@ -6,10 +6,16 @@
 //! Liberation, Noto). Si a una cara le falta un carácter (`•`, `→`, un emoji), se prueba con
 //! las fuentes de reserva.
 //!
+//! Las fuentes del sistema se cargan **cuando hacen falta**: al empezar solo se anota qué
+//! archivos existen, y cada uno se lee la primera vez que se pide una letra suya. Las de
+//! reserva (chino, japonés, coreano, emoji: unos 70 MB en Windows) no ocupan memoria hasta
+//! que una página las usa.
+//!
 //! No conoce el CSS: el pintado traduce el estilo a [`Familia`] y caras.
 
 use ab_glyph::{Font, FontVec, GlyphId, PxScale, ScaleFont, point};
 use std::path::Path;
+use std::sync::OnceLock;
 
 /// Familia genérica.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -22,10 +28,16 @@ pub enum Familia {
     Mono,
 }
 
-/// Una cara cargada.
+/// Una cara: su archivo y, cuando ya se leyó, la fuente (`None` si el archivo no sirve).
 struct Cara {
-    fuente: FontVec,
+    fuente: OnceLock<Option<FontVec>>,
     nombre: String,
+}
+
+/// Una fuente desde sus bytes (TrueType u OpenType; de una colección `.ttc`, la primera).
+fn leer_fuente(bytes: Vec<u8>) -> Option<FontVec> {
+    if bytes.starts_with(b"ttcf") { FontVec::try_from_vec_and_index(bytes, 0) } else { FontVec::try_from_vec(bytes) }
+        .ok()
 }
 
 /// Número de una cara dentro de [`Fuentes`].
@@ -182,23 +194,32 @@ impl Fuentes {
 
     /// Carga una fuente desde sus bytes (TrueType u OpenType); devuelve su número.
     pub fn anadir(&mut self, nombre: &str, bytes: Vec<u8>) -> Option<IdCara> {
-        // Una colección (`.ttc`) empieza por `ttcf`: se toma su primera fuente.
-        let fuente = if bytes.starts_with(b"ttcf") {
-            FontVec::try_from_vec_and_index(bytes, 0)
-        } else {
-            FontVec::try_from_vec(bytes)
-        }
-        .ok()?;
-        self.caras.push(Cara { fuente, nombre: String::from(nombre) });
+        let fuente = leer_fuente(bytes)?;
+        self.caras.push(Cara { fuente: OnceLock::from(Some(fuente)), nombre: String::from(nombre) });
         Some(self.caras.len() - 1)
     }
 
+    /// Anota un archivo de fuente si existe (sin leerlo todavía).
     fn cargar(&mut self, ruta: &str) -> Option<IdCara> {
         if let Some(i) = self.caras.iter().position(|c| c.nombre == ruta) {
             return Some(i);
         }
-        let bytes = std::fs::read(Path::new(ruta)).ok()?;
-        self.anadir(ruta, bytes)
+        if !Path::new(ruta).is_file() {
+            return None;
+        }
+        self.caras.push(Cara { fuente: OnceLock::new(), nombre: String::from(ruta) });
+        Some(self.caras.len() - 1)
+    }
+
+    /// La fuente de una cara, leyendo su archivo la primera vez.
+    fn fuente(&self, cara: IdCara) -> Option<&FontVec> {
+        let c = self.caras.get(cara)?;
+        c.fuente.get_or_init(|| std::fs::read(Path::new(&c.nombre)).ok().and_then(leer_fuente)).as_ref()
+    }
+
+    /// Cuántas caras se leyeron ya del disco.
+    pub fn leidas(&self) -> usize {
+        self.caras.iter().filter(|c| c.fuente.get().is_some()).count()
     }
 
     /// Cuántas caras hay cargadas.
@@ -223,9 +244,9 @@ impl Fuentes {
 
     /// Ascenso y descenso (positivos) de una cara a un tamaño en píxeles.
     pub fn metricas(&self, cara: IdCara, tam: f32) -> (f32, f32) {
-        match self.caras.get(cara) {
-            Some(c) => {
-                let s = c.fuente.as_scaled(PxScale::from(tam));
+        match self.fuente(cara) {
+            Some(f) => {
+                let s = f.as_scaled(PxScale::from(tam));
                 (s.ascent(), -s.descent())
             }
             None => (tam * 0.8, tam * 0.2),
@@ -234,7 +255,7 @@ impl Fuentes {
 
     /// La cara que tiene este carácter: la pedida o la primera de reserva que lo tenga.
     fn cara_para(&self, cara: IdCara, c: char) -> (IdCara, GlyphId) {
-        let tiene = |i: IdCara| self.caras.get(i).map(|x| x.fuente.glyph_id(c)).filter(|g| g.0 != 0);
+        let tiene = |i: IdCara| self.fuente(i).map(|f| f.glyph_id(c)).filter(|g| g.0 != 0);
         if let Some(g) = tiene(cara) {
             return (cara, g);
         }
@@ -253,7 +274,7 @@ impl Fuentes {
         let mut anterior: Option<(IdCara, GlyphId)> = None;
         for c in texto.chars() {
             let (k, g) = self.cara_para(cara, c);
-            let Some(fuente) = self.caras.get(k).map(|x| x.fuente.as_scaled(PxScale::from(tam))) else { continue };
+            let Some(fuente) = self.fuente(k).map(|f| f.as_scaled(PxScale::from(tam))) else { continue };
             // El interletraje solo entre letras de la misma cara.
             if let Some((_, ga)) = anterior.filter(|(ka, _)| *ka == k) {
                 pluma += fuente.kern(ga, g);
@@ -270,10 +291,8 @@ impl Fuentes {
         let colocadas = self.colocar(cara, texto, tam, 0.0);
         match colocadas.last() {
             Some(u) => {
-                let avance = self
-                    .caras
-                    .get(u.cara)
-                    .map_or(0.0, |c| c.fuente.as_scaled(PxScale::from(tam)).h_advance(GlyphId(u.glifo)));
+                let avance =
+                    self.fuente(u.cara).map_or(0.0, |f| f.as_scaled(PxScale::from(tam)).h_advance(GlyphId(u.glifo)));
                 u.x + avance
             }
             None => 0.0,
@@ -282,9 +301,8 @@ impl Fuentes {
 
     /// Rasteriza un glifo a un tamaño (origen en (0, 0), sobre la línea base).
     pub fn rasterizar(&self, cara: IdCara, glifo: u16, tam: f32) -> Option<Mapa> {
-        let c = self.caras.get(cara)?;
         let g = GlyphId(glifo).with_scale_and_position(PxScale::from(tam), point(0.0, 0.0));
-        let contorno = c.fuente.outline_glyph(g)?;
+        let contorno = self.fuente(cara)?.outline_glyph(g)?;
         let caja = contorno.px_bounds();
         let (ancho, alto) = (caja.width() as u32, caja.height() as u32);
         if ancho == 0 || alto == 0 {
@@ -330,6 +348,15 @@ mod pruebas {
         assert!(m.pixeles.iter().any(|&p| p > 200), "tiene píxeles llenos");
         let mono = f.cara(Familia::Mono, false, false).expect("una cara");
         assert!((f.ancho(mono, "iiii", 16.0) - f.ancho(mono, "MMMM", 16.0)).abs() < 0.01, "monoespaciada");
+    }
+
+    #[test]
+    fn solo_se_leen_las_fuentes_que_hacen_falta() {
+        let Some(f) = fuentes() else { return };
+        assert_eq!(f.leidas(), 0, "al empezar no se lee ningún archivo");
+        let sans = f.cara(Familia::SinSerif, false, false).expect("una cara");
+        f.ancho(sans, "Hola", 16.0);
+        assert_eq!(f.leidas(), 1, "solo la cara pedida, sin las de reserva");
     }
 
     #[test]

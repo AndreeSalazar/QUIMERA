@@ -1,10 +1,65 @@
 # QUIMERA
 
-Navegador personal escrito en Rust, construido desde cero y por niveles, para ULTRA-LinuX. El objetivo es **consumir poco y tener control total**, no copiar Chromium entero.
+> Quería un **Chromium personal**: por eso esta carpeta todavía se llama «Chromiun personal». Lo que salió no es Chromium. Es **QUIMERA**: un navegador propio, escrito desde cero en Rust.
 
-Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución de **SpiderMonkey**. Por eso se llama QUIMERA: una criatura hecha de varios animales (una serpiente, una araña y un mono).
+## Por qué existe
 
-## Estado
+Chrome es enorme. Son unos 35 millones de líneas, con 30 años de lastre (APIs que casi nadie usa, compatibilidades con páginas de 2005), y gasta cientos de MB por pestaña. Además decide Google, no yo.
+
+**QUIMERA no viene a reemplazar a Chrome, viene a desplazarlo.** No intenta hacer todo lo que hace Chrome: hace bien lo que yo uso (leer, buscar, Steam, Gmail, YouTube) y **manda a Chrome a la miércoles en consumo de RAM**. :3
+
+- **Consume poco:** pensado desde el diseño para gastar poca memoria y batería.
+- **Control total:** el código es mío y se entiende entero; hace lo que yo quiero y nada más.
+- **Privado:** no manda nada a nadie (ni siquiera lo escrito en la barra va a un buscador).
+- **Seguro:** Rust, sin errores de memoria; código pequeño y revisado por los guardianes.
+- **Para ULTRA-LinuX**, con interfaz VERX (Bun + Rust).
+
+Se llama QUIMERA porque es una criatura hecha de varios animales: el frontend de JavaScript viene de las ideas de **Boa**, la ejecución del diseño de **SpiderMonkey**, la arquitectura de **Servo**, y lo aprendido de **Chromium**. Ninguno se copia; de cada uno se toma lo mejor.
+
+## La memoria, medida
+
+Misma página, ventana visible, Windows, `--release`. Edge 156 es Chromium por dentro, con un perfil nuevo y sin extensiones:
+
+| Página | QUIMERA | Edge (Chromium) |
+|---|---:|---:|
+| example.com | **111 MB**, 1 proceso | 461 MB, 9 procesos |
+| The Rust Book | **115 MB** | 486 MB |
+| Wikipedia, «Cat» (51 imágenes, 278 idiomas) | **246 MB** | 563 MB |
+
+Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** todavía no ejecuta el JavaScript de las páginas ni tiene tablas, y Edge sí. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
+
+Lo que bajó la memoria: las fuentes de reserva (chino, japonés, coreano, emoji: 70 MB) se leen solo cuando una página las usa, y en Windows se arranca solo DirectX 12 en vez de todos los sistemas gráficos (246 → 111 MB en example.com).
+
+## Qué hace ya
+
+```bash
+cargo run --release -p quimera-ventana -- https://en.wikipedia.org/wiki/Cat
+```
+
+- Abre páginas por **HTTP y HTTPS**, con barra de dirección, enlaces que se pulsan, historial (Alt+← / Alt+→) y carga en otro hilo.
+- **HTML** con el mismo árbol que html5ever en 5.000 páginas reales, y 2,2× más rápido.
+- **CSS:** cascada, herencia, `@media`, bloques con márgenes que colapsan, texto en líneas, listas, **flexbox** como Chromium.
+- **Imágenes** PNG, JPEG y GIF con decodificador propio, al píxel igual que las bibliotecas de referencia. Se descargan en segundo plano.
+- **JavaScript** propio, 3,3× más rápido que Boa en los benchmarks de V8. Aún no está conectado a las páginas: eso es la fase 3 del plan.
+- Dibuja con la GPU (wgpu) y fuentes del sistema.
+
+## Qué falta: el plan
+
+Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLAN.md](docs/PLAN.md).
+
+| Fase | Qué | Desbloquea |
+|---|---|---|
+| ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
+| 1 | Tablas, `float`, `position`, `var()`, `@font-face`, gzip, WebP | Wikipedia, documentación, blogs |
+| 2 | Formularios, cookies, foco y teclado, caché | buscar (DuckDuckGo HTML): navegar de verdad |
+| 3 | **JavaScript ↔ DOM** (puente generado desde WebIDL, un solo GC), bucle de eventos, `fetch` | Steam y páginas con JavaScript |
+| 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
+| 5 | `<video>` con los decodificadores del sistema, audio | **YouTube** |
+| 6 | Toque, zoom y `viewport` | **Android**, donde un navegador ligero más se nota |
+
+En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, Discord y Spotify cargan un Chromium entero solo para dibujar sus botones; para una interfaz propia, QUIMERA sirve mucho antes que para YouTube.
+
+## Estado por crate
 
 | Crate | Nivel | Qué es | Estado |
 |---|---:|---|---|
@@ -19,7 +74,7 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos, flexbox ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 9 pruebas |
 | `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, tamaños intrínsecos, **imágenes** (proporción, `max-width`) → lista de dibujo | ✅ 19 pruebas |
 | `herramientas/ver` → `quimera-ver` | 100 | Una página → imagen SVG: [la primera página dibujada por QUIMERA](docs/ejemplos/primera.svg) | ✅ |
-| `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux): medir, interletraje, rasterizar, reserva para símbolos ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 1 prueba |
+| `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux): medir, interletraje, rasterizar, reserva para símbolos; cada archivo se lee solo cuando hace falta ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 3 pruebas |
 | `grafico/imagen` → `quimera-imagen` | 2 | PNG, JPEG (también progresivo) y GIF → RGBA, sin dependencias; mismos píxeles que las bibliotecas de referencia en 115 imágenes ([docs/IMAGENES.md](docs/IMAGENES.md)) | ✅ 5 pruebas |
 | `grafico/gpu` → `quimera-gpu` | 2 | wgpu: una tubería que dibuja cuadros de color, letras del atlas e imágenes (una textura cada una); captura sin ventana | ✅ 4 pruebas |
 | `grafico/pintar` → `quimera-pintar` | 10 | Lista de dibujo → cuadros, atlas de letras, medidas reales para la maquetación | ✅ 2 pruebas |
@@ -32,7 +87,9 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | `bancos/imagen` → `quimera-banco-imagen` | 99 | Compara `quimera-imagen` con `png`, `jpeg-decoder` y `gif` | ✅ 1 prueba |
 | `herramientas/guardianes` → `quimera-guardianes` | 100 | Semáforo rojo/amarillo/verde, 1000 líneas por archivo, jerarquía | ✅ 12 pruebas |
 
-Primera medida, con la misma carga estilo Splay (200.000 pasos, 5 millones de objetos, Windows, `--release`, tres corridas):
+## Medidas del motor JavaScript
+
+**El GC**, con la misma carga estilo Splay (200.000 pasos, 5 millones de objetos, Windows, `--release`, tres corridas):
 
 | | Total | Pasos de más de 1 ms | Peor pausa |
 |---|---:|---:|---:|
@@ -64,31 +121,50 @@ Ver [docs/VM.md](docs/VM.md).
 ```text
 QUIMERA (esta carpeta)
   Cargo.toml              workspace
-  cimientos/              nivel 0: valor, cadenas, plataforma
-  motor-js/               niveles 1-6: gc, frontend, objetos, ic, vm, regex, builtins, js
-  web/                    html, css, dom, estilo, maquetación      (planeado)
-  grafico/                gpu (wgpu), texto, pintar                (planeado)
-  red/  proceso/          red, aislamiento                         (planeado)
-  navegador/              navegador, ventana + interfaz VERX       (planeado)
-  bancos/                 medidas contra otros motores
-  herramientas/guardianes los guardianes: semáforo, límites y jerarquía
+  cimientos/              nivel 0: el valor JS
+  motor-js/               niveles 1-4: gc, regex, frontend, objetos, vm
+  web/                    html, css, estilo, maquetación         (dom: fase 3)
+  grafico/                texto, imagen, gpu (wgpu), pintar
+  red/                    HTTP y HTTPS
+  navegador/              la ventana                              (+ interfaz VERX)
+  bancos/                 comparaciones contra otros motores y bibliotecas
+  herramientas/           guardianes y quimera-ver
   guardianes.toml         amarillos revisados, cada uno con su motivo
   .githooks/pre-commit    guardianes + formato + clippy + pruebas en cada commit
-  docs/JERARQUIA.md       todos los niveles, el orden y por qué wgpu
-  docs/GUARDIANES.md      las reglas y por qué existen
-  docs/FRONTEND.md        cómo funciona el frontend, qué entiende y su medida
-  docs/VM.md              la máquina virtual: diseño, medida y qué falta
   datos-investigación/    la investigación archivada: Chromium, Servo, Boa, SpiderMonkey, SUPER GRAFO
 ```
 
+Documentos:
+
+| | |
+|---|---|
+| [docs/PLAN.md](docs/PLAN.md) | el plan por fases, los sitios del examen y qué es el DOM |
+| [docs/JERARQUIA.md](docs/JERARQUIA.md) | todos los niveles, el orden y por qué wgpu |
+| [docs/GUARDIANES.md](docs/GUARDIANES.md) | las reglas y por qué existen |
+| [docs/FRONTEND.md](docs/FRONTEND.md), [docs/VM.md](docs/VM.md), [docs/REGEX.md](docs/REGEX.md) | el motor JavaScript |
+| [docs/HTML-CSS.md](docs/HTML-CSS.md), [docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md) | HTML, CSS, cascada y maquetación |
+| [docs/RED.md](docs/RED.md), [docs/IMAGENES.md](docs/IMAGENES.md), [docs/VENTANA.md](docs/VENTANA.md) | red, imágenes, ventana y GPU |
+
 ## Comandos
+
+```bash
+cargo run --release -p quimera-ventana -- https://example.com/
+```
+
+Sin ventana, dibuja la página en un PNG:
+
+```bash
+cargo run --release -p quimera-ventana -- https://example.com/ --captura captura.png 1100 800
+```
 
 ```bash
 cargo test
 ```
 
+Las comparaciones:
+
 ```bash
-cargo run --release -p quimera-banco-gc
+cargo run --release -p quimera-banco-vm
 ```
 
 ```bash
@@ -96,7 +172,15 @@ cargo run --release -p quimera-banco-frontend
 ```
 
 ```bash
-cargo run --release -p quimera-banco-vm
+cargo run --release -p quimera-banco-gc
+```
+
+```bash
+cargo run --release -p quimera-banco-web
+```
+
+```bash
+cargo run --release -p quimera-banco-imagen
 ```
 
 ```bash

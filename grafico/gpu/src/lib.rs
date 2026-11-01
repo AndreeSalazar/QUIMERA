@@ -79,6 +79,15 @@ fn vertices(c: &Cuadro, v: &mut Vec<Vertice>, fijo: bool) {
     ]);
 }
 
+/// Solo el sistema gráfico que hace falta: cada uno que se arranca carga su driver en memoria.
+/// En Windows, DirectX 12 (121 MB frente a 184 MB arrancando todos, con example.com); en el
+/// resto, Vulkan o Metal con OpenGL de respaldo. `WGPU_BACKEND` lo cambia (`vulkan`, `gl`...).
+fn instancia() -> wgpu::Instance {
+    let backends = if cfg!(windows) { wgpu::Backends::DX12 } else { wgpu::Backends::PRIMARY | wgpu::Backends::GL };
+    let d = wgpu::InstanceDescriptor { backends, ..Default::default() };
+    wgpu::Instance::new(&d.with_env())
+}
+
 /// La GPU lista para dibujar en una superficie.
 pub struct Gpu {
     /// `None` sin ventana (para capturar imágenes).
@@ -117,7 +126,7 @@ impl Gpu {
         alto: u32,
         tam_atlas: u32,
     ) -> Result<Gpu, Error> {
-        let instancia = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let instancia = instancia();
         let superficie = instancia.create_surface(superficie).map_err(|e| format!("superficie: {e}"))?;
         let opciones = wgpu::RequestAdapterOptions {
             power_preference: wgpu::PowerPreference::LowPower,
@@ -158,7 +167,7 @@ impl Gpu {
 
     /// Una GPU sin ventana que dibuja en una imagen de `ancho × alto` ([`Gpu::capturar`]).
     pub async fn sin_ventana(ancho: u32, alto: u32, tam_atlas: u32) -> Result<Gpu, Error> {
-        let instancia = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let instancia = instancia();
         let opciones = wgpu::RequestAdapterOptions {
             power_preference: wgpu::PowerPreference::LowPower,
             compatible_surface: None,
