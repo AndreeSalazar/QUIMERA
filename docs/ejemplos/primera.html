@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>QUIMERA — primera página</title>
+<style>
+  body { background: #f4f1ea; font-family: Georgia, serif; color: #2b2b2b; margin: 0 }
+  .pagina { max-width: 640px; margin: 0 auto; background: white; padding: 24px 40px 32px;
+            border-left: 1px solid #ddd6c8; border-right: 1px solid #ddd6c8 }
+  h1 { color: #6b2d8f; font-size: 2.2em; margin-bottom: .2em }
+  .subtitulo { color: #777; font-style: italic; margin-top: 0 }
+  h2 { color: #2d5f8f; border-bottom: 2px solid #e3dccb; padding-bottom: 4px }
+  .nota { background: #fff7d6; border: 1px solid #e8d48a; padding: 10px 14px }
+  code, pre { font-family: "Fira Code", monospace }
+  pre { background: #1e1e2e; color: #cdd6f4; padding: 12px 16px; line-height: 1.4 }
+  .verde { color: #2e7d32; font-weight: bold }
+  li { margin-bottom: 4px }
+  .pie { text-align: center; color: #999; font-size: 13px; margin-top: 32px }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <h1>QUIMERA</h1>
+  <p class="subtitulo">Un navegador personal, hecho desde cero en Rust.</p>
+
+  <p>Esta es la <b>primera página</b> que dibuja QUIMERA. Todo lo que ves pasó por sus
+  propias piezas: el <i>analizador de HTML</i>, el de <i>CSS</i>, la <i>cascada de estilos</i>
+  y la <i>maquetación</i>. Ninguna es de Chromium, Firefox ni Servo.</p>
+
+  <div class="nota">Por ahora el texto se mide con anchos aproximados: las fuentes de verdad
+  llegarán con <code>quimera-texto</code>, y la ventana con <b>wgpu</b>.</div>
+
+  <h2>Lo que ya funciona</h2>
+  <ul>
+    <li>Motor de JavaScript: <span class="verde">3,3× más rápido</span> que Boa en V8.</li>
+    <li>HTML: el mismo árbol que html5ever en 5.000 páginas reales.</li>
+    <li>CSS: selectores, especificidad, colores, <code>@media</code>.</li>
+    <li>Maquetación: bloques, márgenes que colapsan y texto en líneas.</li>
+  </ul>
+
+  <h2>Siguiente</h2>
+  <ol>
+    <li>Fuentes de verdad.</li>
+    <li>Una ventana con wgpu.</li>
+    <li>Red, pestañas e interfaz con VERX.</li>
+  </ol>
+
+  <pre>let doc = quimera_html::analizar(html);
+let estilos = quimera_estilo::calcular(&amp;doc, &amp;opciones);
+let lista = quimera_maquetacion::maquetar(&amp;doc, &amp;estilos, ...);</pre>
+
+  <p class="pie">QUIMERA · nivel por nivel, sin perder el camino</p>
+</div>
+</body>
+</html>

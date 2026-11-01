@@ -1,0 +1,47 @@
+/* Hoja del navegador (origen «user agent»): lo que cada elemento HTML es sin CSS de la página.
+   Basada en la hoja de estilo por defecto del estándar de HTML (sección «Rendering»). */
+
+html, address, blockquote, body, center, dialog, div, figure, figcaption, footer, form, header, hr,
+legend, listing, main, p, plaintext, pre, search, xmp, article, aside, h1, h2, h3, h4, h5, h6,
+hgroup, nav, section, dir, dd, dl, dt, menu, ol, ul, details, summary, fieldset, optgroup,
+table, caption, thead, tbody, tfoot, tr, td, th, address { display: block }
+
+li { display: list-item }
+
+head, script, style, title, meta, link, base, template, noscript, datalist, param, rp, area,
+[hidden], input[type=hidden] { display: none }
+
+html { color: black; font-size: 16px; font-family: serif; line-height: normal }
+body { margin: 8px }
+
+p, dl, multicol { margin-top: 1em; margin-bottom: 1em }
+blockquote, figure { margin: 1em 40px }
+dd { margin-left: 40px }
+ul, ol, menu, dir { margin-top: 1em; margin-bottom: 1em; padding-left: 40px }
+ul ul, ul ol, ol ul, ol ol, ul menu, ol menu, menu ul, menu ol { margin-top: 0; margin-bottom: 0 }
+ul, menu, dir { list-style-type: disc }
+ol { list-style-type: decimal }
+ul ul, ol ul, menu ul { list-style-type: circle }
+ul ul ul, ul ol ul, ol ul ul, ol ol ul { list-style-type: square }
+
+h1 { font-size: 2em; margin-top: .67em; margin-bottom: .67em; font-weight: bold }
+h2 { font-size: 1.5em; margin-top: .83em; margin-bottom: .83em; font-weight: bold }
+h3 { font-size: 1.17em; margin-top: 1em; margin-bottom: 1em; font-weight: bold }
+h4 { font-size: 1em; margin-top: 1.33em; margin-bottom: 1.33em; font-weight: bold }
+h5 { font-size: .83em; margin-top: 1.67em; margin-bottom: 1.67em; font-weight: bold }
+h6 { font-size: .67em; margin-top: 2.33em; margin-bottom: 2.33em; font-weight: bold }
+
+b, strong, th, dt, summary { font-weight: bold }
+i, em, cite, var, dfn, address { font-style: italic }
+pre, code, kbd, samp, tt, listing, xmp, plaintext { font-family: monospace }
+pre, listing, xmp, plaintext { white-space: pre; margin-top: 1em; margin-bottom: 1em }
+small { font-size: smaller }
+big { font-size: larger }
+center, th { text-align: center }
+u, ins, abbr[title] { text-decoration: underline }
+s, del, strike { text-decoration: line-through }
+mark { background-color: yellow; color: black }
+a:link { color: #0000ee; text-decoration: underline }
+hr { border-width: 1px; border-style: inset; border-color: gray; margin: .5em auto; color: gray }
+td, th { padding: 1px }
+fieldset { margin: 0 2px; padding: .35em .75em .625em; border: 2px groove ThreeDFace }

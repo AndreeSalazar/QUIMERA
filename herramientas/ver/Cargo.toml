@@ -1,0 +1,23 @@
+[package]
+name = "quimera-ver"
+description = "Ver una página con QUIMERA antes de tener ventana: HTML → estilo → maquetación → imagen SVG."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[package.metadata.quimera]
+nivel = 100
+capa = "herramientas"
+no_std = false
+externos = []
+
+[dependencies]
+quimera-html.workspace = true
+quimera-estilo.workspace = true
+quimera-maquetacion.workspace = true
+
+[lints]
+workspace = true

@@ -9,11 +9,14 @@ members = [
     "motor-js/vm",
     "web/html",
     "web/css",
+    "web/estilo",
+    "web/maquetacion",
     "bancos/gc",
     "bancos/frontend",
     "bancos/vm",
     "bancos/web",
     "herramientas/guardianes",
+    "herramientas/ver",
 ]
 
 [workspace.package]
@@ -32,6 +35,8 @@ quimera-objetos = { path = "motor-js/objetos" }
 quimera-vm = { path = "motor-js/vm" }
 quimera-html = { path = "web/html" }
 quimera-css = { path = "web/css" }
+quimera-estilo = { path = "web/estilo" }
+quimera-maquetacion = { path = "web/maquetacion" }
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"

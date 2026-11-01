@@ -28,11 +28,11 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 5 | `motor-js` | `quimera-builtins` | Array, Map, Promise, JSON... | Boa `builtins` | sí |
 | 6 | `motor-js` | `quimera-js` | **La interfaz del motor**: lo único que ve el resto del navegador | — (Servo no la tiene) | sí |
 | 7 | `web` | `quimera-dom` | DOM y eventos, conectados al motor por `quimera-js` | Servo `script` (mucho más pequeño) | sí |
-| 8 | `web` | `quimera-estilo` | Cascada: qué reglas CSS aplica a cada nodo | Stylo | sí |
-| 8 | `web` | `quimera-maquetacion` | Bloques, línea, flex y grid | Servo `layout`, taffy | sí |
-| 9 | `grafico` | `quimera-pintar` | Lista de dibujo → GPU con `quimera-gpu` | WebRender | no |
-| 10 | `navegador` | `quimera-navegador` | Pestañas, navegación, historial, descargas | Chromium `content` | no |
-| 11 | `navegador` | `quimera-ventana` | Ventana nativa (Wayland/Hyprland en ULTRA) + interfaz VERX | `verx-desktop` | no |
+| 8 | `web` | ✅ `quimera-estilo` | Cascada: qué valor tiene cada propiedad en cada elemento | Stylo | sí |
+| 9 | `web` | ✅ `quimera-maquetacion` | Bloques, línea (después flex y grid) → lista de dibujo; usa el estilo, por eso va un nivel encima | Servo `layout`, taffy | sí |
+| 10 | `grafico` | `quimera-pintar` | Lista de dibujo → GPU con `quimera-gpu` | WebRender | no |
+| 11 | `navegador` | `quimera-navegador` | Pestañas, navegación, historial, descargas | Chromium `content` | no |
+| 12 | `navegador` | `quimera-ventana` | Ventana nativa (Wayland/Hyprland en ULTRA) + interfaz VERX | `verx-desktop` | no |
 | 99 | `bancos` | ✅ `quimera-banco-gc`, `quimera-banco-frontend` | Medidas contra otros motores | — | no |
 | 100 | `herramientas` | ✅ `quimera-guardianes` | Semáforo, límites y jerarquía | guardián de VERX, SUPER GRAFO | no |
 

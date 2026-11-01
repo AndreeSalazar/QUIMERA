@@ -1,0 +1,86 @@
+//! La lista de dibujo: lo que sale de la maquetación y entra al pintado, en orden de pintado
+//! (lo primero queda debajo).
+
+use alloc::string::String;
+use alloc::vec::Vec;
+use quimera_estilo::{Color, Generica};
+
+/// Una cosa que dibujar. Las coordenadas son píxeles CSS desde la esquina del documento.
+#[derive(Debug, Clone, PartialEq)]
+pub enum Pieza {
+    /// Un rectángulo relleno (fondos, bordes, subrayados).
+    Rect {
+        /// Izquierda.
+        x: f32,
+        /// Arriba.
+        y: f32,
+        /// Ancho.
+        ancho: f32,
+        /// Alto.
+        alto: f32,
+        /// Color.
+        color: Color,
+    },
+    /// Un trozo de texto en una línea.
+    Texto {
+        /// Izquierda.
+        x: f32,
+        /// La línea base (donde se apoyan las letras).
+        base: f32,
+        /// El ancho que ocupa (medido al maquetar).
+        ancho: f32,
+        /// El texto.
+        texto: String,
+        /// Tamaño de la letra.
+        tam: f32,
+        /// Color.
+        color: Color,
+        /// Negrita.
+        negrita: bool,
+        /// Cursiva.
+        cursiva: bool,
+        /// Familia genérica.
+        generica: Generica,
+        /// La primera familia pedida, si hay.
+        familia: Option<String>,
+    },
+    /// Una imagen (`<img>`), todavía sin cargar.
+    Imagen {
+        /// Izquierda.
+        x: f32,
+        /// Arriba.
+        y: f32,
+        /// Ancho.
+        ancho: f32,
+        /// Alto.
+        alto: f32,
+        /// Su `src`.
+        src: String,
+    },
+}
+
+/// El resultado de maquetar una página.
+#[derive(Debug, Clone, PartialEq, Default)]
+pub struct Maquetacion {
+    /// Lo que hay que dibujar, en orden.
+    pub piezas: Vec<Pieza>,
+    /// Ancho del documento.
+    pub ancho: f32,
+    /// Alto del documento (al menos el de la ventana).
+    pub alto: f32,
+    /// Color del lienzo (el fondo de `<html>`, o el de `<body>` si aquel no tiene).
+    pub fondo: Color,
+}
+
+impl Maquetacion {
+    /// Todo el texto en orden de dibujo, una pieza por línea (para pruebas).
+    pub fn textos(&self) -> Vec<&str> {
+        self.piezas
+            .iter()
+            .filter_map(|p| match p {
+                Pieza::Texto { texto, .. } => Some(texto.as_str()),
+                _ => None,
+            })
+            .collect()
+    }
+}

@@ -1044,6 +1044,14 @@ name = "quimera-css"
 version = "0.1.0"
 
 [[package]]
+name = "quimera-estilo"
+version = "0.1.0"
+dependencies = [
+ "quimera-css",
+ "quimera-html",
+]
+
+[[package]]
 name = "quimera-frontend"
 version = "0.1.0"
 dependencies = [
@@ -1066,6 +1074,15 @@ name = "quimera-html"
 version = "0.1.0"
 
 [[package]]
+name = "quimera-maquetacion"
+version = "0.1.0"
+dependencies = [
+ "quimera-css",
+ "quimera-estilo",
+ "quimera-html",
+]
+
+[[package]]
 name = "quimera-objetos"
 version = "0.1.0"
 dependencies = [
@@ -1080,6 +1097,15 @@ version = "0.1.0"
 [[package]]
 name = "quimera-valor"
 version = "0.1.0"
+
+[[package]]
+name = "quimera-ver"
+version = "0.1.0"
+dependencies = [
+ "quimera-estilo",
+ "quimera-html",
+ "quimera-maquetacion",
+]
 
 [[package]]
 name = "quimera-vm"

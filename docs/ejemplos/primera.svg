@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="769.5441" viewBox="0 0 800 769.5441">
+<rect width="100%" height="100%" fill="#f4f1ea"/>
+<rect x="0.00" y="0.00" width="800.00" height="769.54" fill="#f4f1ea"/>
+<rect x="39.00" y="0.00" width="722.00" height="769.54" fill="#ffffff"/>
+<rect x="760.00" y="0.00" width="1.00" height="769.54" fill="#ddd6c8"/>
+<rect x="39.00" y="0.00" width="1.00" height="769.54" fill="#ddd6c8"/>
+<text x="80.00" y="79.26" font-size="35.20" font-family="'Georgia', serif" font-weight="bold" font-style="normal" fill="#6b2d8f" xml:space="preserve" textLength="157.74" lengthAdjust="spacingAndGlyphs">QUIMERA</text>
+<text x="80.00" y="111.26" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="italic" fill="#777777" xml:space="preserve" textLength="339.42" lengthAdjust="spacingAndGlyphs">Un navegador personal, hecho desde cero en Rust.</text>
+<text x="80.00" y="146.46" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="71.90" lengthAdjust="spacingAndGlyphs">Esta es la </text>
+<text x="151.90" y="146.46" font-size="16.00" font-family="'Georgia', serif" font-weight="bold" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="106.02" lengthAdjust="spacingAndGlyphs">primera página</text>
+<text x="257.91" y="146.46" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="455.54" lengthAdjust="spacingAndGlyphs"> que dibuja QUIMERA. Todo lo que ves pasó por sus propias piezas:</text>
+<text x="80.00" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="16.11" lengthAdjust="spacingAndGlyphs">el </text>
+<text x="96.11" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="italic" fill="#2b2b2b" xml:space="preserve" textLength="137.10" lengthAdjust="spacingAndGlyphs">analizador de HTML</text>
+<text x="233.22" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="44.38" lengthAdjust="spacingAndGlyphs">, el de </text>
+<text x="277.60" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="italic" fill="#2b2b2b" xml:space="preserve" textLength="30.55" lengthAdjust="spacingAndGlyphs">CSS</text>
+<text x="308.15" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="24.17" lengthAdjust="spacingAndGlyphs">, la </text>
+<text x="332.32" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="italic" fill="#2b2b2b" xml:space="preserve" textLength="126.01" lengthAdjust="spacingAndGlyphs">cascada de estilos</text>
+<text x="458.33" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="32.38" lengthAdjust="spacingAndGlyphs"> y la </text>
+<text x="490.70" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="italic" fill="#2b2b2b" xml:space="preserve" textLength="86.79" lengthAdjust="spacingAndGlyphs">maquetación</text>
+<text x="577.50" y="165.66" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="102.90" lengthAdjust="spacingAndGlyphs">. Ninguna es de</text>
+<text x="80.00" y="184.86" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="189.39" lengthAdjust="spacingAndGlyphs">Chromium, Firefox ni Servo.</text>
+<rect x="80.00" y="205.66" width="640.00" height="60.40" fill="#fff7d6"/>
+<rect x="80.00" y="205.66" width="640.00" height="1.00" fill="#e8d48a"/>
+<rect x="719.00" y="205.66" width="1.00" height="60.40" fill="#e8d48a"/>
+<rect x="80.00" y="265.06" width="640.00" height="1.00" fill="#e8d48a"/>
+<rect x="80.00" y="205.66" width="1.00" height="60.40" fill="#e8d48a"/>
+<rect x="95.00" y="218.26" width="586.72" height="16.00" fill="#fff7d6"/>
+<text x="95.00" y="231.06" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="586.72" lengthAdjust="spacingAndGlyphs">Por ahora el texto se mide con anchos aproximados: las fuentes de verdad llegarán con</text>
+<text x="95.00" y="250.26" font-size="16.00" font-family="'Fira Code', monospace" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="124.80" lengthAdjust="spacingAndGlyphs">quimera-texto</text>
+<rect x="219.80" y="237.46" width="122.21" height="16.00" fill="#fff7d6"/>
+<text x="219.80" y="250.26" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="122.21" lengthAdjust="spacingAndGlyphs">, y la ventana con </text>
+<text x="342.01" y="250.26" font-size="16.00" font-family="'Georgia', serif" font-weight="bold" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="39.15" lengthAdjust="spacingAndGlyphs">wgpu</text>
+<rect x="381.16" y="237.46" width="3.95" height="16.00" fill="#fff7d6"/>
+<text x="381.16" y="250.26" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="3.95" lengthAdjust="spacingAndGlyphs">.</text>
+<rect x="80.00" y="318.78" width="640.00" height="2.00" fill="#e3dccb"/>
+<text x="80.00" y="307.58" font-size="24.00" font-family="'Georgia', serif" font-weight="bold" font-style="normal" fill="#2d5f8f" xml:space="preserve" textLength="203.98" lengthAdjust="spacingAndGlyphs">Lo que ya funciona</text>
+<text x="120.00" y="355.10" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="146.53" lengthAdjust="spacingAndGlyphs">Motor de JavaScript: </text>
+<text x="266.53" y="355.10" font-size="16.00" font-family="'Georgia', serif" font-weight="bold" font-style="normal" fill="#2e7d32" xml:space="preserve" textLength="114.40" lengthAdjust="spacingAndGlyphs">3,3× más rápido</text>
+<text x="380.92" y="355.10" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="105.18" lengthAdjust="spacingAndGlyphs"> que Boa en V8.</text>
+<text x="107.38" y="355.10" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="12.62" lengthAdjust="spacingAndGlyphs">• </text>
+<text x="120.00" y="378.30" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="417.39" lengthAdjust="spacingAndGlyphs">HTML: el mismo árbol que html5ever en 5.000 páginas reales.</text>
+<text x="107.38" y="378.30" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="12.62" lengthAdjust="spacingAndGlyphs">• </text>
+<text x="120.00" y="401.50" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="272.38" lengthAdjust="spacingAndGlyphs">CSS: selectores, especificidad, colores, </text>
+<text x="392.38" y="401.50" font-size="16.00" font-family="'Fira Code', monospace" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="57.60" lengthAdjust="spacingAndGlyphs">@media</text>
+<text x="449.98" y="401.50" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="3.95" lengthAdjust="spacingAndGlyphs">.</text>
+<text x="107.38" y="401.50" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="12.62" lengthAdjust="spacingAndGlyphs">• </text>
+<text x="120.00" y="424.70" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="438.37" lengthAdjust="spacingAndGlyphs">Maquetación: bloques, márgenes que colapsan y texto en líneas.</text>
+<text x="107.38" y="424.70" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="12.62" lengthAdjust="spacingAndGlyphs">• </text>
+<rect x="80.00" y="482.22" width="640.00" height="2.00" fill="#e3dccb"/>
+<text x="80.00" y="471.02" font-size="24.00" font-family="'Georgia', serif" font-weight="bold" font-style="normal" fill="#2d5f8f" xml:space="preserve" textLength="101.02" lengthAdjust="spacingAndGlyphs">Siguiente</text>
+<text x="120.00" y="518.54" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="129.35" lengthAdjust="spacingAndGlyphs">Fuentes de verdad.</text>
+<text x="103.89" y="518.54" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="16.11" lengthAdjust="spacingAndGlyphs">1. </text>
+<text x="120.00" y="541.74" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="157.17" lengthAdjust="spacingAndGlyphs">Una ventana con wgpu.</text>
+<text x="103.89" y="541.74" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="16.11" lengthAdjust="spacingAndGlyphs">2. </text>
+<text x="120.00" y="564.94" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="241.38" lengthAdjust="spacingAndGlyphs">Red, pestañas e interfaz con VERX.</text>
+<text x="103.89" y="564.94" font-size="16.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#2b2b2b" xml:space="preserve" textLength="16.11" lengthAdjust="spacingAndGlyphs">3. </text>
+<rect x="80.00" y="585.74" width="640.00" height="91.20" fill="#1e1e2e"/>
+<rect x="96.00" y="600.94" width="374.40" height="16.00" fill="#1e1e2e"/>
+<text x="96.00" y="613.74" font-size="16.00" font-family="'Fira Code', monospace" font-weight="normal" font-style="normal" fill="#cdd6f4" xml:space="preserve" textLength="374.40" lengthAdjust="spacingAndGlyphs">let doc = quimera_html::analizar(html);</text>
+<rect x="96.00" y="623.34" width="537.60" height="16.00" fill="#1e1e2e"/>
+<text x="96.00" y="636.14" font-size="16.00" font-family="'Fira Code', monospace" font-weight="normal" font-style="normal" fill="#cdd6f4" xml:space="preserve" textLength="537.60" lengthAdjust="spacingAndGlyphs">let estilos = quimera_estilo::calcular(&amp;doc, &amp;opciones);</text>
+<rect x="96.00" y="645.74" width="604.80" height="16.00" fill="#1e1e2e"/>
+<text x="96.00" y="658.54" font-size="16.00" font-family="'Fira Code', monospace" font-weight="normal" font-style="normal" fill="#cdd6f4" xml:space="preserve" textLength="604.80" lengthAdjust="spacingAndGlyphs">let lista = quimera_maquetacion::maquetar(&amp;doc, &amp;estilos, ...);</text>
+<text x="269.21" y="720.64" font-size="13.00" font-family="'Georgia', serif" font-weight="normal" font-style="normal" fill="#999999" xml:space="preserve" textLength="261.57" lengthAdjust="spacingAndGlyphs">QUIMERA · nivel por nivel, sin perder el camino</text>
+</svg>

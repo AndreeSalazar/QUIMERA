@@ -1,0 +1,276 @@
+//! Valores calculados: lo que queda de cada propiedad tras la cascada, listo para maquetar.
+//!
+//! Las longitudes relativas a la letra o a la ventana (`em`, `rem`, `vw`) ya están en píxeles;
+//! los porcentajes se quedan como están, porque dependen del contenedor (eso lo sabe la
+//! maquetación).
+
+use alloc::string::String;
+use alloc::vec::Vec;
+pub use quimera_css::Color;
+
+/// `display`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Display {
+    /// `block` (y por ahora `table`, `flex`, `grid`... se maquetan como bloques).
+    Bloque,
+    /// `inline`.
+    EnLinea,
+    /// `inline-block` (por ahora se maqueta como `inline`).
+    BloqueEnLinea,
+    /// `list-item`: un bloque con su marcador.
+    ElementoDeLista,
+    /// `none`: ni él ni sus hijos se dibujan.
+    Ninguno,
+}
+
+/// Una longitud calculada.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Medida {
+    /// Píxeles.
+    Px(f32),
+    /// Porcentaje del contenedor.
+    Porcentaje(f32),
+    /// `auto`.
+    Auto,
+}
+
+impl Medida {
+    /// En píxeles, con `base` como el 100 % (`auto` vale `si_auto`).
+    pub fn px(self, base: f32, si_auto: f32) -> f32 {
+        match self {
+            Medida::Px(x) => x,
+            Medida::Porcentaje(p) => base * p / 100.0,
+            Medida::Auto => si_auto,
+        }
+    }
+}
+
+/// `text-align`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Alinear {
+    /// `left` / `start`.
+    Izquierda,
+    /// `right` / `end`.
+    Derecha,
+    /// `center`.
+    Centro,
+    /// `justify` (por ahora como `left`).
+    Justificar,
+}
+
+/// `white-space`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Espacios {
+    /// `normal`: los blancos se juntan y las líneas se parten.
+    Normal,
+    /// `pre`: todo se respeta y no se parte.
+    Pre,
+    /// `nowrap`: se juntan pero no se parte.
+    SinSalto,
+    /// `pre-wrap`: se respetan y se parte.
+    PreAjustado,
+    /// `pre-line`: se juntan los espacios pero se respetan los saltos de línea.
+    PreLinea,
+}
+
+/// `line-height`.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum AltoLinea {
+    /// `normal` (1,2 veces la letra).
+    Normal,
+    /// Un factor de la letra (`1.5`).
+    Factor(f32),
+    /// Píxeles.
+    Px(f32),
+}
+
+/// Estilo de un borde.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum EstiloBorde {
+    /// `none` / `hidden`: no hay borde (y su ancho cuenta como 0).
+    Ninguno,
+    /// `solid` (y por ahora `inset`, `outset`, `groove`, `ridge`, `double`).
+    Solido,
+    /// `dashed`.
+    Discontinuo,
+    /// `dotted`.
+    Punteado,
+}
+
+/// Un lado del borde.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct Borde {
+    /// Ancho en píxeles (el que cuenta: 0 si el estilo es `none`).
+    pub ancho: f32,
+    /// Estilo.
+    pub estilo: EstiloBorde,
+    /// Color (`None`: el de `color`).
+    pub color: Option<Color>,
+}
+
+/// Lo que no tiene borde.
+pub const SIN_BORDE: Borde = Borde { ancho: 3.0, estilo: EstiloBorde::Ninguno, color: None };
+
+impl Borde {
+    /// El ancho que ocupa (0 sin estilo).
+    pub fn ocupa(&self) -> f32 {
+        if self.estilo == EstiloBorde::Ninguno { 0.0 } else { self.ancho }
+    }
+}
+
+/// `list-style-type`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TipoLista {
+    /// `disc` •
+    Disco,
+    /// `circle` ◦
+    Circulo,
+    /// `square` ▪
+    Cuadrado,
+    /// `decimal` 1.
+    Decimal,
+    /// `lower-alpha` a.
+    Letra,
+    /// `upper-alpha` A.
+    LetraMayuscula,
+    /// `lower-roman` i.
+    Romano,
+    /// `none`
+    Ninguno,
+}
+
+/// Familia genérica de la letra (la que se usa si no hay fuentes propias).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Generica {
+    /// `serif`
+    Serif,
+    /// `sans-serif` (y fuentes con nombre desconocidas que suelen serlo)
+    SinSerif,
+    /// `monospace`
+    Monoespaciada,
+}
+
+/// El estilo calculado de un elemento.
+#[derive(Debug, Clone, PartialEq)]
+pub struct Estilo {
+    /// `display`
+    pub display: Display,
+    /// `color`
+    pub color: Color,
+    /// `background-color`
+    pub fondo: Color,
+    /// `font-size` en píxeles.
+    pub tam_letra: f32,
+    /// `font-weight` (400 normal, 700 negrita).
+    pub peso: u16,
+    /// `font-style: italic`
+    pub cursiva: bool,
+    /// `font-family` tal cual (la primera que exista, cuando haya fuentes).
+    pub familias: Vec<String>,
+    /// La genérica a la que cae `font-family`.
+    pub generica: Generica,
+    /// `text-align`
+    pub alinear: Alinear,
+    /// `line-height`
+    pub alto_linea: AltoLinea,
+    /// `white-space`
+    pub espacios: Espacios,
+    /// `text-decoration: underline`
+    pub subrayado: bool,
+    /// `text-decoration: line-through`
+    pub tachado: bool,
+    /// `margin` (arriba, derecha, abajo, izquierda).
+    pub margen: [Medida; 4],
+    /// `padding` (arriba, derecha, abajo, izquierda).
+    pub relleno: [Medida; 4],
+    /// `border` (arriba, derecha, abajo, izquierda).
+    pub borde: [Borde; 4],
+    /// `width`
+    pub ancho: Medida,
+    /// `height`
+    pub alto: Medida,
+    /// `max-width` (`Auto` = sin límite).
+    pub ancho_max: Medida,
+    /// `min-height`
+    pub alto_min: Medida,
+    /// `list-style-type`
+    pub lista: TipoLista,
+    /// `visibility: hidden` lo hace invisible sin quitarle el sitio.
+    pub visible: bool,
+    /// `text-transform: uppercase/lowercase`: `Some(true)` mayúsculas, `Some(false)` minúsculas.
+    pub transformar: Option<bool>,
+}
+
+impl Default for Estilo {
+    /// Los valores iniciales de CSS (los de la raíz antes de la hoja del navegador).
+    fn default() -> Self {
+        Estilo {
+            display: Display::EnLinea,
+            color: Color::NEGRO,
+            fondo: Color::TRANSPARENTE,
+            tam_letra: 16.0,
+            peso: 400,
+            cursiva: false,
+            familias: Vec::new(),
+            generica: Generica::Serif,
+            alinear: Alinear::Izquierda,
+            alto_linea: AltoLinea::Normal,
+            espacios: Espacios::Normal,
+            subrayado: false,
+            tachado: false,
+            margen: [Medida::Px(0.0); 4],
+            relleno: [Medida::Px(0.0); 4],
+            borde: [SIN_BORDE; 4],
+            ancho: Medida::Auto,
+            alto: Medida::Auto,
+            ancho_max: Medida::Auto,
+            alto_min: Medida::Px(0.0),
+            lista: TipoLista::Disco,
+            visible: true,
+            transformar: None,
+        }
+    }
+}
+
+impl Estilo {
+    /// Un hijo nuevo: hereda lo heredable de su padre y el resto con su valor inicial.
+    pub fn heredado(padre: &Estilo) -> Estilo {
+        Estilo {
+            color: padre.color,
+            tam_letra: padre.tam_letra,
+            peso: padre.peso,
+            cursiva: padre.cursiva,
+            familias: padre.familias.clone(),
+            generica: padre.generica,
+            alinear: padre.alinear,
+            alto_linea: padre.alto_linea,
+            espacios: padre.espacios,
+            lista: padre.lista,
+            visible: padre.visible,
+            transformar: padre.transformar,
+            // text-decoration no se hereda, pero se propaga al texto de dentro.
+            subrayado: padre.subrayado,
+            tachado: padre.tachado,
+            ..Estilo::default()
+        }
+    }
+
+    /// El alto de línea en píxeles.
+    pub fn alto_linea_px(&self) -> f32 {
+        match self.alto_linea {
+            AltoLinea::Normal => self.tam_letra * 1.2,
+            AltoLinea::Factor(f) => self.tam_letra * f,
+            AltoLinea::Px(p) => p,
+        }
+    }
+
+    /// Si es negrita (peso 600 o más).
+    pub fn negrita(&self) -> bool {
+        self.peso >= 600
+    }
+
+    /// El color de un borde (el de `color` si no tiene propio).
+    pub fn color_borde(&self, lado: usize) -> Color {
+        self.borde[lado].color.unwrap_or(self.color)
+    }
+}
