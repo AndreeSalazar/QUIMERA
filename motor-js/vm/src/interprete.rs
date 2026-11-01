@@ -37,7 +37,14 @@ impl Motor {
                 };
                 match self.paso(ins, fi, base, pc) {
                     Ok(Flujo::Sigue) => pc += 1,
-                    Ok(Flujo::Salta(d)) => pc = d as usize,
+                    Ok(Flujo::Salta(d)) => {
+                        // Un salto atrás (cada vuelta de un bucle) es un punto seguro: todo lo
+                        // vivo está en los registros. Si las cadenas piden memoria, se recoge aquí.
+                        if (d as usize) <= pc && self.mundo.m.quiere_mayor() {
+                            self.mundo.m.mayor();
+                        }
+                        pc = d as usize
+                    }
                     Ok(Flujo::Recargar) => break,
                     Ok(Flujo::Retorno(v)) => {
                         self.cerrar_marco(v);

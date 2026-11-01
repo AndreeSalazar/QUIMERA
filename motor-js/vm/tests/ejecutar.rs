@@ -368,3 +368,26 @@ fn regex_mal_escrita_es_syntax_error() {
     let e = m.ejecutar("new RegExp('[a')").unwrap_err();
     assert!(e.mensaje.contains("SyntaxError"), "{}", e.mensaje);
 }
+
+#[test]
+fn las_cadenas_que_nadie_usa_se_liberan() {
+    // Un millón de textos distintos, de los que solo se guardan unos pocos: la tabla de cadenas
+    // no debe crecer con todos. Las claves escritas (o[k] = ...) sí se quedan, y siguen valiendo.
+    let mut m = Motor::default();
+    let codigo = "function resultado() {\n\
+                    const guardadas = []; const o = {};\n\
+                    for (let i = 0; i < 1000000; i++) {\n\
+                      const s = 'texto-' + i;\n\
+                      if (i % 100000 == 0) { guardadas.push(s); o['k' + i] = s.length }\n\
+                    }\n\
+                    let claves = 0; for (const k in o) claves += o[k];\n\
+                    return guardadas.join(',') + '|' + claves + '|' + o.k500000 + '|' + o['k' + 900000]\n\
+                  }";
+    m.ejecutar(codigo).unwrap();
+    let v = m.llamar_global("resultado", &[]).unwrap_or_else(|e| panic!("{}", e.mensaje));
+    let esperado = (0..10).map(|i| format!("texto-{}", i * 100000)).collect::<Vec<_>>().join(",");
+    assert_eq!(m.texto(v), format!("{esperado}|115|12|12"));
+    let (vivas, liberadas) = (m.mundo.cadenas.total(), m.mundo.cadenas.liberadas());
+    assert!(liberadas > 900_000, "liberadas: {liberadas}");
+    assert!(vivas < 200_000, "vivas: {vivas}");
+}

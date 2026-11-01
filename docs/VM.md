@@ -4,7 +4,7 @@ Dos crates ejecutan el bytecode del frontend:
 
 | Crate | Nivel | Qué hace |
 |---|---:|---|
-| `motor-js/objetos` (`quimera-objetos`) | 3 | Formas (*shapes*), cadenas internadas, objetos, arreglos densos, funciones, nativas y entornos, sobre `quimera-gc` |
+| `motor-js/objetos` (`quimera-objetos`) | 3 | Formas (*shapes*), cadenas (únicas y liberables), objetos, arreglos densos, funciones, nativas y entornos, sobre `quimera-gc` |
 | `motor-js/vm` (`quimera-vm`) | 4 | El intérprete: registros, llamadas, excepciones, cachés en línea y funciones nativas |
 
 Los dos son `no_std` y sin dependencias de fuera.
@@ -81,6 +81,17 @@ Cómo se llegó a los 7 benchmarks de Boa:
 - **`for-in`/`for-of`.** `IterarClaves`/`IterarValores` dan un arreglo nuevo que el bucle recorre por índice. Las claves que pone la biblioteca (`push`, `toString`...) y el `constructor` de `F.prototype` no son enumerables (`iteracion.rs`).
 - **`delete` sin mover el objeto.** `Mundo::borrar` rehace la forma sin esa clave y corre los huecos de detrás un sitio, en su celda: no asigna memoria. Las cachés en línea se invalidan solas porque la forma cambia.
 
+## Cadenas que se liberan
+
+Cada texto vivo tiene un número único (`quimera-objetos/src/cadenas.rs`): `===` entre cadenas y buscar una propiedad siguen siendo comparar números. Hay dos clases:
+
+- **Átomos**: claves de propiedades y textos del código. Las formas y el bytecode guardan su número, así que no se liberan. Una cadena dinámica se convierte en átomo solo al **escribirla** como clave (`o[k] = v`). Para leer basta su número: como el texto es único, una dinámica nunca coincide con una clave de una forma.
+- **Dinámicas**: lo que crea el programa (`a + b`, `replace`...). La recolección mayor anota qué cadenas ve al marcar, y las que no vio se liberan; su número se reutiliza.
+
+Las cadenas viven fuera del montón, así que crearlas no llenaba la guardería y un bucle de solo texto nunca provocaba una recolección. Ahora cuentan como **presión externa**: al pasar de 8 MB (o de lo vivo tras la última limpieza), la siguiente asignación hace una mayor. También la hace un salto atrás del intérprete, que es un punto seguro porque todo lo vivo está en los registros. Nunca se recoge dentro de `cadena()`, donde el código de Rust puede tener objetos sin proteger.
+
+Prueba: un millón de textos distintos en un bucle libera más de 900.000. Para buscar cadenas usadas sin proteger, la suite entera (los 8 de V8, y RegExp comparado con Boa) pasó con el umbral a 1 KB, es decir, con una limpieza casi en cada bucle.
+
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
@@ -89,7 +100,7 @@ Cómo se llegó a los 7 benchmarks de Boa:
 - **`apply` usa una llamada interna.** Recursión de Rust (como `ToPrimitive`); `call` en cambio deja el marco en la máquina.
 - **Matemáticas sin `std`.** `ln` y `exp` están hechas a mano (reducción de rango, ln 2 partido al estilo Cody-Waite de fdlibm), con precisión de pocos bits. Si un día se necesita la exactitud de una libm, conviene portar fdlibm entera.
 - **Errores de la máquina.** Los que lanza la máquina son cadenas (`"TypeError: ..."`); `new Error()` desde JavaScript sí crea objetos.
-- **Cadenas.** Viven fuera del GC y no se liberan; las cadenas UTF-16 de `quimera-cadenas` lo arreglarán.
+- **Cadenas en UTF-8.** JavaScript cuenta en UTF-16; se convierte donde hace falta (`charAt`, índices de `RegExp`). `quimera-cadenas` (UTF-16/Latin-1 compartidas) lo evitará.
 - **`for-of` solo con arreglos y cadenas.** Sin `Symbol.iterator` todavía; `for-in` y `for-of` reciben una copia de claves o valores al empezar.
 - **RegExp, casi completa.** Falta lo que lista [REGEX.md](REGEX.md); entre otras cosas, `replace` y `split` no llaman al `exec` del usuario. Los escapes `\u` en identificadores tampoco están todavía.
 - **`arguments` es un arreglo.** Se crea solo en las funciones que lo usan (las demás no pagan nada), pero es una copia: no está enlazado a los parámetros como en el modo no estricto.

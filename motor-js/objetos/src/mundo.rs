@@ -399,9 +399,26 @@ impl Mundo {
         self.m.escribir(arr, C_EXTRA, nueva)
     }
 
-    /// Una cadena como valor.
+    /// Una cadena como valor. Antes, si hubo una recolección mayor, libera las cadenas que
+    /// no vio: así ninguna cadena nueva (ni una vieja que se vuelve a pedir) queda en medio.
     pub fn cadena(&mut self, texto: &str) -> Valor {
-        self.cadenas.valor(texto)
+        self.barrer_cadenas();
+        let antes = self.cadenas.bytes();
+        let v = self.cadenas.valor(texto);
+        let nuevos = self.cadenas.bytes() - antes;
+        if nuevos > 0 {
+            self.m.anotar_externo(nuevos);
+        }
+        v
+    }
+
+    /// Libera las cadenas dinámicas que no vio la última recolección mayor (si hubo una nueva).
+    pub fn barrer_cadenas(&mut self) {
+        let mayores = self.m.estadisticas().mayores as u32;
+        if mayores > self.cadenas.epoca() {
+            self.cadenas.barrer(self.m.cadenas_vistas(), mayores);
+            self.m.externo_vivo(self.cadenas.bytes());
+        }
     }
 
     /// El texto de un valor de cadena.

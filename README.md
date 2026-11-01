@@ -9,11 +9,11 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 | Crate | Nivel | Qué es | Estado |
 |---|---:|---|---|
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
-| `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura | ✅ 10 pruebas |
+| `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura; anota las cadenas vivas | ✅ 11 pruebas |
 | `motor-js/regex` → `quimera-regex` | 1 | Expresiones regulares: patrón → programa → máquina con vuelta atrás sin recursión ([docs/REGEX.md](docs/REGEX.md)) | ✅ 6 pruebas |
 | `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador, literales `/re/` | ✅ 24 pruebas |
-| `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas, objetos, arreglos densos, funciones y entornos sobre el GC, `delete` en su sitio | ✅ 9 pruebas |
-| `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones | ✅ 28 pruebas |
+| `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas únicas que se liberan, objetos, arreglos densos, funciones y entornos sobre el GC, `delete` en su sitio | ✅ 10 pruebas |
+| `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones | ✅ 29 pruebas |
 | `bancos/frontend` → `quimera-banco-frontend` | 99 | Compara el frontend con el parser de Boa | ✅ 1 prueba |
 | `bancos/vm` → `quimera-banco-vm` | 99 | Compara la VM con boa_engine y comprueba RegExp contra Boa | ✅ 1 prueba |
 | `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ 1 prueba |

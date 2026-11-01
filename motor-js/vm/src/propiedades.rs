@@ -118,9 +118,21 @@ impl Motor {
         Err(self.error("TypeError", &m))
     }
 
-    /// La clave de propiedad de un valor (`o[k]`): su id de cadena.
+    /// La clave de propiedad de un valor (`o[k]`) para **leer**: su número de cadena. Un texto
+    /// que no es cadena todavía (`o[5]`) solo se busca: si no existe, ninguna forma lo tiene.
     fn clave_de(&mut self, k: Valor) -> u32 {
         match Cadenas::id_de_valor(k) {
+            Some(id) => id,
+            None => {
+                let s = operaciones::a_texto(&self.mundo, k);
+                self.mundo.cadenas.buscar(&s).unwrap_or(u32::MAX)
+            }
+        }
+    }
+
+    /// La clave para **escribir** `o[k] = v`: un átomo, porque la forma guarda su número.
+    fn clave_para_escribir(&mut self, k: Valor) -> u32 {
+        match self.mundo.cadenas.clave_para_escribir(k) {
             Some(id) => id,
             None => {
                 let s = operaciones::a_texto(&self.mundo, k);
@@ -167,7 +179,7 @@ impl Motor {
         let marca = self.mundo.m.marca_raices();
         self.mundo.m.raiz(obj);
         self.mundo.m.raiz(v);
-        let clave = self.clave_de(k);
+        let clave = self.clave_para_escribir(k);
         let (obj, v) = (self.pila(marca), self.pila(marca + 1));
         self.mundo.m.soltar_raices(marca);
         self.escribir_prop(obj, clave, v, 0, SIN_CACHE)

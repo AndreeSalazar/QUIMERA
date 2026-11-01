@@ -26,7 +26,10 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use core::mem;
-use quimera_valor::{Ref, Valor};
+use quimera_valor::{Ref, Tipo, Valor};
+
+/// Bytes de fuera del montón (cadenas) que provocan como mínimo una recolección mayor.
+const UMBRAL_EXTERNO_MINIMO: usize = 8 << 20;
 
 /// Bit de la referencia que dice que el objeto está en la guardería.
 const BIT_GUARDERIA: u64 = 1 << 46;
@@ -98,6 +101,11 @@ pub struct Monton {
     reenvio: Vec<u32>,
     cola: Vec<u32>,
     marcas: Vec<bool>,
+    /// Las cadenas que vio la última recolección mayor (un bit por número de cadena).
+    cadenas_vistas: Vec<u64>,
+    /// Bytes pedidos fuera del montón (cadenas) desde la última mayor, y cuántos la provocan.
+    externo: usize,
+    umbral_externo: usize,
     umbral_mayor: usize,
     est: Estadisticas,
 }
@@ -140,6 +148,9 @@ impl Monton {
             reenvio: Vec::new(),
             cola: Vec::new(),
             marcas: Vec::new(),
+            cadenas_vistas: Vec::new(),
+            externo: 0,
+            umbral_externo: UMBRAL_EXTERNO_MINIMO,
             umbral_mayor: config.umbral_mayor_minimo,
             est: Estadisticas::default(),
             config,
@@ -209,11 +220,11 @@ impl Monton {
             }
             return Valor::referencia(ref_principal(destino));
         }
-        if self.arena.len() + campos.len() > self.config.guarderia {
+        if self.arena.len() + campos.len() > self.config.guarderia || self.quiere_mayor() {
             let base = self.raices.len();
             self.raices.extend_from_slice(campos);
             self.menor();
-            if self.est.vivos_principal > self.umbral_mayor {
+            if self.est.vivos_principal > self.umbral_mayor || self.quiere_mayor() {
                 self.mayor();
             }
             let inicio = self.arena.len() as u32;
@@ -385,14 +396,41 @@ impl Monton {
 
     // ---------------- recolección mayor ----------------
 
+    /// Anota `bytes` pedidos fuera del montón (las cadenas). Cuando pasan del umbral, la
+    /// siguiente asignación hace una mayor, para que quien guarda esa memoria pueda liberarla.
+    pub fn anotar_externo(&mut self, bytes: usize) {
+        self.externo += bytes;
+    }
+
+    /// Lo de fuera que sigue vivo tras liberar: la siguiente mayor llega cuando se pida otro tanto.
+    pub fn externo_vivo(&mut self, bytes: usize) {
+        self.umbral_externo = bytes.max(UMBRAL_EXTERNO_MINIMO);
+    }
+
+    /// Si la memoria de fuera pide ya una recolección mayor. Quien ejecuta código puede hacerla
+    /// en un punto seguro (con todo lo vivo en las raíces) sin esperar a la siguiente asignación.
+    #[inline]
+    pub fn quiere_mayor(&self) -> bool {
+        self.externo > self.umbral_externo
+    }
+
+    /// Las cadenas que alcanzó la última recolección mayor: un bit por número de cadena.
+    /// Quien guarda las cadenas libera las demás (las cadenas viven fuera del montón).
+    pub fn cadenas_vistas(&self) -> &[u64] {
+        &self.cadenas_vistas
+    }
+
     /// Vacía la guardería, marca desde las raíces y libera lo que no se alcanzó.
     pub fn mayor(&mut self) {
         self.menor();
         self.est.mayores += 1;
+        self.externo = 0;
         self.marcas.clear();
         self.marcas.resize(self.principal.len(), false);
         self.cola.clear();
+        self.cadenas_vistas.clear();
         for v in &self.raices {
+            anotar_cadena(&mut self.cadenas_vistas, *v);
             if let Some(Sitio::Principal(i)) = v.como_referencia().map(sitio)
                 && i < self.marcas.len()
                 && !self.marcas[i]
@@ -406,6 +444,7 @@ impl Monton {
                 continue;
             };
             for v in &celda.campos {
+                anotar_cadena(&mut self.cadenas_vistas, *v);
                 if let Some(Sitio::Principal(j)) = v.como_referencia().map(sitio)
                     && j < self.marcas.len()
                     && !self.marcas[j]
@@ -426,6 +465,20 @@ impl Monton {
         // La siguiente mayor, cuando lo vivo se duplique.
         self.umbral_mayor = (self.est.vivos_principal * 2).max(self.config.umbral_mayor_minimo);
     }
+}
+
+/// Si `v` es una cadena, pone su bit.
+#[inline]
+fn anotar_cadena(bits: &mut Vec<u64>, v: Valor) {
+    if v.tipo() != Tipo::Cadena {
+        return;
+    }
+    let Some(r) = v.ref_del_monton() else { return };
+    let n = r.numero() as usize;
+    if bits.len() <= n / 64 {
+        bits.resize(n / 64 + 1, 0);
+    }
+    bits[n / 64] |= 1 << (n % 64);
 }
 
 #[cfg(test)]
@@ -569,5 +622,20 @@ mod pruebas {
         m.mayor();
         assert_eq!(m.estadisticas().vivos_principal, 0);
         m.soltar_raices(marca);
+    }
+
+    #[test]
+    fn la_mayor_anota_las_cadenas_que_alcanza() {
+        let mut m = pequeno();
+        let cadena = |n: u32| Valor::cadena(Ref::desde_u32(n));
+        let obj = m.asignar(&[cadena(3), Valor::entero(1)]);
+        let _raiz = m.raiz(obj);
+        m.raiz(cadena(70));
+        m.asignar(&[cadena(5)]); // basura: su cadena no cuenta
+        m.mayor();
+        let vistas = m.cadenas_vistas();
+        let vista = |n: usize| vistas.get(n / 64).is_some_and(|b| b & (1 << (n % 64)) != 0);
+        assert!(vista(3) && vista(70));
+        assert!(!vista(5));
     }
 }
