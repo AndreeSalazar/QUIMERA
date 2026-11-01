@@ -35,7 +35,7 @@ assert_eq!(motor.texto(v), "42");
 
 | Script | QUIMERA | Boa 0.22 | QUIMERA / Boa |
 |---|---:|---:|---:|
-| basic-call-loop | 6,1 ms | 16,4 ms | 2,7× |
+| basic-call-loop | 6,7 ms | 16,4 ms | 2,44× |
 | basic-nested-loop | 18,8 ms | 20,2 ms | 1,07× |
 | basic-closure | 839 ms | 2.390 ms | 2,85× |
 | closures-create | 13,4 ms | 86,6 ms | 6,48× |
