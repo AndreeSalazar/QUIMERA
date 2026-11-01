@@ -56,7 +56,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
 | 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF) · `calc()`, WOFF2, gzip, WebP | Wikipedia, documentación, blogs |
 | 2 | ✅ Formularios (GET y POST), ✅ cookies, ✅ foco y teclado · caché, selección | buscar (DuckDuckGo HTML): navegar de verdad |
-| 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores) · JavaScript moderno (`Promise`, `JSON`, módulos), `fetch` | Steam y páginas con JavaScript |
+| 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores), ✅ `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración · accesores, `async`/`await`, módulos, `fetch` | Steam y páginas con JavaScript |
 | 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
 | 5 | `<video>` con los decodificadores del sistema, audio | **YouTube** |
 | 6 | Toque, zoom y `viewport` | **Android**, donde un navegador ligero más se nota |

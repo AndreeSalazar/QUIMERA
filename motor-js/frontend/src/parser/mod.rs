@@ -4,6 +4,8 @@
 //! con la inserción automática de `;` de ECMAScript. La estructura sigue la gramática de
 //! la especificación, como el parser de Boa, pero sin depender de ningún crate.
 
+mod azucar;
+mod clases;
 mod expresiones;
 mod sentencias;
 
@@ -16,11 +18,21 @@ use alloc::vec::Vec;
 
 /// Analiza un programa completo.
 pub fn analizar(fuente: &str) -> Resultado<Vec<Sent>> {
-    let mut p = Parser { toks: lexico::tokens(fuente)?, i: 0, sin_in: false };
+    let mut p = Parser {
+        toks: lexico::tokens(fuente)?,
+        i: 0,
+        sin_in: false,
+        temporales: Vec::new(),
+        contador_temporales: 0,
+        clases: Vec::new(),
+        patron_pendiente: None,
+    };
+    p.abrir_temporales();
     let mut programa = Vec::new();
     while p.ver() != &Tipo::Fin {
         programa.push(p.sentencia()?);
     }
+    p.cerrar_temporales(&mut programa);
     Ok(programa)
 }
 
@@ -29,6 +41,13 @@ pub(crate) struct Parser {
     i: usize,
     /// Dentro del inicio de un `for`, `in` no es un operador (`for (x in o)`).
     sin_in: bool,
+    /// Los temporales `var` de cada función abierta (ver `azucar.rs`).
+    temporales: Vec<Vec<String>>,
+    contador_temporales: usize,
+    /// Las clases abiertas (para `super`).
+    clases: Vec<clases::InfoClase>,
+    /// El patrón de `for (const [a, b] of x)`, que se despliega dentro del cuerpo.
+    patron_pendiente: Option<azucar::Patron>,
 }
 
 impl Parser {

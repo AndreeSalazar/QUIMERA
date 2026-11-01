@@ -27,6 +27,8 @@ const OBJETO: u32 = 11;
 const ARREGLO: u32 = 12;
 /// `Function(a, b, cuerpo)`: compila el texto.
 const FUNCION: u32 = 13;
+/// `__quimera_no_enumerar(o)`: las claves que tiene ahora `o` no salen en `for-in` (métodos de clase).
+const NO_ENUMERAR: u32 = 14;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -67,6 +69,7 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, objeto, "create", OBJETO_CREAR);
     let arreglo = constructor(m, "Array", ARREGLO, R_ARREGLO);
     constructor(m, "Function", FUNCION, R_FUNCION);
+    definir_nativa(m, R_GLOBAL, "__quimera_no_enumerar", NO_ENUMERAR);
     coleccion::preparar(m, objeto, arreglo);
     numeros::preparar(m);
     texto::preparar(m);
@@ -214,6 +217,14 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         }
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
+        NO_ENUMERAR => {
+            let o = arg(m, ll, 0);
+            if let Some(forma) = m.mundo.forma(o).filter(|_| m.mundo.es_objeto(o)) {
+                let n = m.mundo.claves(o).len();
+                m.formas_ocultas.insert(forma, n);
+            }
+            Valor::INDEFINIDO
+        }
         FUNCION => {
             // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
             let partes: Vec<String> = (0..ll.n).map(|i| m.texto(arg(m, ll, i))).collect();

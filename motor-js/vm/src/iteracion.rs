@@ -10,6 +10,11 @@ use alloc::string::ToString;
 use alloc::vec::Vec;
 use quimera_objetos::{Cadenas, Clase, Valor};
 
+/// Las ranuras internas (U+0001) y los campos `#privados` de las clases no se enumeran.
+fn oculta(clave: &str) -> bool {
+    clave.starts_with('\u{1}') || clave.starts_with('#')
+}
+
 impl Motor {
     /// Apunta las claves de la biblioteca (no enumerables). Se llama al terminar de prepararla.
     pub(crate) fn fijar_claves_ocultas(&mut self) {
@@ -22,13 +27,14 @@ impl Motor {
     /// la biblioteca ni las ranuras internas (las que empiezan por U+0001).
     pub(crate) fn claves_enumerables(&self, obj: Valor) -> Vec<u32> {
         let saltar = self.ocultas_de(obj);
-        self.mundo
-            .claves(obj)
-            .iter()
-            .skip(saltar)
-            .copied()
-            .filter(|&k| !self.mundo.cadenas.texto(k).starts_with('\u{1}'))
-            .collect()
+        self.mundo.claves(obj).iter().skip(saltar).copied().filter(|&k| self.enumerable(obj, k)).collect()
+    }
+
+    /// Si la clave `k` de `obj` se enumera: no las ranuras internas, ni los `#privados`, ni el
+    /// `prototype` de una función (que en los navegadores no es enumerable).
+    fn enumerable(&self, obj: Valor, k: u32) -> bool {
+        !oculta(self.mundo.cadenas.texto(k))
+            && !(k == self.mundo.clave_prototype && self.mundo.clase(obj) == Some(Clase::Funcion))
     }
 
     /// Cuántas claves de `obj` son de la biblioteca.
@@ -63,7 +69,7 @@ impl Motor {
             }
             for &k in self.mundo.claves(actual).iter().skip(saltar) {
                 // Las claves que empiezan por U+0001 son ranuras internas de la biblioteca.
-                if !claves.contains(&k) && !self.mundo.cadenas.texto(k).starts_with('\u{1}') {
+                if !claves.contains(&k) && self.enumerable(actual, k) {
                     claves.push(k);
                 }
             }

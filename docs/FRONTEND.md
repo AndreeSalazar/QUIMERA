@@ -50,7 +50,22 @@ función 4 main: 0 parámetros, 4 registros, entorno 0
 
 **Expresiones regulares**: un `/` es una expresión regular si el token anterior no puede terminar una expresión (`x / y` divide; `= /re/` no). Cada literal se valida al analizar con `quimera-regex`, como hacen los navegadores.
 
-**Avisa con un error claro**: plantillas `` ` ``, clases, `...spread`, desestructuración, `?.`, generadores, `async`/`await`, etiquetas y BigInt.
+**Sintaxis moderna, convertida al analizar** (`parser/azucar.rs`, `parser/clases.rs`): se reescribe en construcciones que el compilador ya entiende, como hace Babel, sin tocar el compilador ni la máquina.
+
+| Escrito | Se convierte en |
+|---|---|
+| `` `a${x}b` `` (en el léxico) | `("a" + (x) + "b")`; con etiqueta, `f(["a", "b"], (x))` (sin `raw`) |
+| `f(...a)`, `o.m(...a)`, `new F(...a)` | `f.apply(undefined, lista)`, `__quimera_metodo(o, "m", lista)`, `__quimera_nuevo(F, lista)` |
+| `[a, ...b]`, `{...o, x}` | `[a].concat(__quimera_lista(b))`, `Object.assign({}, o, {x})` |
+| `let {a, b: [c] = []} = o`, `[x, y] = [y, x]` | temporales y asignaciones en orden; los valores por defecto con `=== undefined` |
+| `function f({a}, ...r)` | un parámetro temporal y un prólogo (`r` sale de `arguments`; en una flecha, función normal con `.bind(this)`) |
+| `for (const [k, v] of m)` | la desestructuración dentro del cuerpo |
+| `a?.b`, `a?.[k]`, `o.m?.()` | `(t = a) == null ? void 0 : t.b`, con toda la cadena dentro |
+| `class B extends A { x = 1; #p; m() { super.m() } static s() {} }` | función constructora y prototipo; `super(...)` es `__quimera_super`, los campos van en el constructor, los métodos no se enumeran |
+
+Los temporales se llaman `\u{1}t3`: no se pueden escribir desde JavaScript y no salen en `for-in`. Los campos `#privados` son propiedades normales con ese nombre (no se enumeran, pero no son privados de verdad).
+
+**Avisa con un error claro**: `get`/`set` (la máquina aún no tiene accesores), generadores, `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
 
 Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y los 8 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay, RegExp). Los 15 se analizan, compilan y ejecutan.
 
@@ -62,6 +77,8 @@ Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de 
 |---|---:|---:|
 | Boa 0.22: texto → árbol | 1.906 ms | 4,3 MB/s |
 | **QUIMERA: texto → árbol** | **483 ms** | **16,9 MB/s** |
+
+Con la sintaxis moderna, el análisis de este corpus (que no la usa) se hizo un 4 % más lento: 327 → 340 ms medidos seguidos en la misma máquina (frente a 1.270 ms de Boa, 3,7× en vez de 3,9×). Se probó a leer los argumentos directamente en su lista final (ganó 2/3 de lo perdido) y a apartar los caminos raros como fríos (no se notó).
 | QUIMERA: texto → bytecode (todo el frontend) | 702 ms | 11,7 MB/s |
 
 QUIMERA analiza **3,9× más rápido** (en una máquina cargada; antes de añadir RegExp eran 4,2×) (con el corpus anterior de 1,05 MB eran 3,3–3,4×: EarleyBoyer, con su código Scheme muy anidado, castiga más al parser recursivo de Boa, que además necesita una pila nativa grande para no desbordarse). Con todo el camino hasta el bytecode es 2,7× más rápido que Boa produciendo solo su árbol.
@@ -71,5 +88,5 @@ QUIMERA analiza **3,9× más rápido** (en una máquina cargada; antes de añadi
 ## Siguiente
 
 - `quimera-objetos` y `quimera-vm`: ejecutar este bytecode y medir contra Boa y SpiderMonkey (`js140`) en los mismos benchmarks.
-- Completar el lenguaje: plantillas, clases y desestructuración.
+- Completar el lenguaje: accesores (`get`/`set`), generadores y `async`/`await` (necesitan que la máquina pueda suspender un marco), etiquetas.
 - Posiciones en el bytecode, para los mensajes de error en ejecución.

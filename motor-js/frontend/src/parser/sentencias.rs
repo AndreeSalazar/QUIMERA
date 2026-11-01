@@ -1,7 +1,8 @@
 //! Sentencias: declaraciones, control de flujo, funciones, `try` y `switch`.
 
 use super::Parser;
-use crate::ast::{Caso, Decl, Expr, Funcion, Param, Sent};
+use super::azucar::nombres;
+use crate::ast::{Caso, Decl, Expr, Funcion, Sent};
 use crate::fuente::{Resultado, error};
 use crate::lexico::Tipo;
 use alloc::boxed::Box;
@@ -38,9 +39,12 @@ impl Parser {
             }
             "try" => self.intentar(),
             "switch" => self.elegir(),
-            "class" | "import" | "export" | "with" | "yield" => {
-                error(pos, alloc::format!("`{k}` todavía no está en QUIMERA"))
+            "class" => {
+                let (nombre, e) = self.clase()?;
+                let Some(nombre) = nombre else { return error(pos, "una declaración de clase necesita nombre") };
+                Ok(Sent::Declarar(Decl::Let, alloc::vec![(nombre, Some(e))]))
             }
+            "import" | "export" | "with" | "yield" => error(pos, alloc::format!("`{k}` todavía no está en QUIMERA")),
             _ => self.sentencia_expresion(),
         }
     }
@@ -77,7 +81,24 @@ impl Parser {
         let mut lista = Vec::new();
         loop {
             if self.es("[") || self.es("{") {
-                return error(self.pos(), "la desestructuración todavía no está en QUIMERA");
+                let p = self.patron()?;
+                if !self.es("=") && (self.es_palabra("of") || self.es("in")) {
+                    // `for (const [a, b] of x)`: el patrón se despliega dentro del cuerpo.
+                    self.patron_pendiente = Some(p);
+                    lista.push((self.temporal(), None));
+                    return Ok(Sent::Declarar(decl, lista));
+                }
+                self.esperar("=")?;
+                let valor = self.asignacion()?;
+                let t = self.temporal();
+                lista.push((t.clone(), Some(valor)));
+                let mut pares = Vec::new();
+                self.desplegar(p, Expr::Ident(t), true, &mut pares);
+                lista.extend(nombres(pares));
+                if !self.tomar(",") {
+                    return Ok(Sent::Declarar(decl, lista));
+                }
+                continue;
             }
             let nombre = self.ident()?;
             let valor = if self.tomar("=") { Some(self.asignacion()?) } else { None };
@@ -102,27 +123,7 @@ impl Parser {
         if declaracion && nombre.is_none() {
             return error(self.pos(), "una declaración de función necesita nombre");
         }
-        let params = self.parametros()?;
-        let cuerpo = self.bloque()?;
-        Ok(Funcion { nombre, params, cuerpo, flecha: false, pos })
-    }
-
-    /// `(a, b = 1)`.
-    pub(super) fn parametros(&mut self) -> Resultado<Vec<Param>> {
-        self.esperar("(")?;
-        let mut v = Vec::new();
-        while !self.tomar(")") {
-            if self.es("...") || self.es("[") || self.es("{") {
-                return error(self.pos(), "los parámetros ...rest y desestructurados todavía no están en QUIMERA");
-            }
-            let nombre = self.ident()?;
-            let defecto = if self.tomar("=") { Some(self.asignacion()?) } else { None };
-            v.push(Param { nombre, defecto });
-            if !self.es(")") {
-                self.esperar(",")?;
-            }
-        }
-        Ok(v)
+        self.funcion_de_metodo(nombre, pos)
     }
 
     fn condicion(&mut self) -> Resultado<Expr> {
@@ -192,9 +193,16 @@ impl Parser {
             Some(Sent::Expr(Expr::Ident(n))) => (None, n),
             _ => return error(pos, "el lado izquierdo de for-in/for-of debe ser un nombre"),
         };
+        let patron = self.patron_pendiente.take();
         let objeto = if de { self.asignacion()? } else { self.expresion()? };
         self.esperar(")")?;
-        let cuerpo = Box::new(self.sentencia()?);
+        let mut cuerpo = Box::new(self.sentencia()?);
+        if let Some(p) = patron {
+            let mut pares = Vec::new();
+            self.desplegar(p, Expr::Ident(nombre.clone()), true, &mut pares);
+            let d = Sent::Declarar(decl.unwrap_or(Decl::Let), nombres(pares));
+            cuerpo = Box::new(Sent::Bloque(alloc::vec![d, *cuerpo]));
+        }
         Ok(Sent::ParaEn { decl, nombre, de, objeto, cuerpo })
     }
 

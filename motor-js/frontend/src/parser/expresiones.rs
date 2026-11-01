@@ -1,6 +1,10 @@
 //! Expresiones, de la de menor a la de mayor precedencia.
 
-use super::{Parser, describir, numero_a_clave};
+use super::azucar::{
+    Firma, Piezas, expr_a_patron, indefinido, lista_de, llamada_esparcida, llamar, miembro, objeto_esparcido,
+    sin_esparcir,
+};
+use super::{Parser, describir};
 use crate::ast::{Clave, Expr, Funcion, Param, Sent};
 use crate::fuente::{Resultado, error};
 use crate::lexico::Tipo;
@@ -53,7 +57,7 @@ impl Parser {
     /// `a = b`, `a += b`, una flecha o una condicional.
     pub(super) fn asignacion(&mut self) -> Resultado<Expr> {
         if let Some(f) = self.flecha()? {
-            return Ok(Expr::Funcion(Box::new(f)));
+            return Ok(f);
         }
         let pos = self.pos();
         let izquierda = self.condicional()?;
@@ -61,6 +65,13 @@ impl Parser {
             Tipo::Signo(s) if ASIGNACIONES.contains(s) => *s,
             _ => return Ok(izquierda),
         };
+        if op == "=" && matches!(izquierda, Expr::Arreglo(_) | Expr::Objeto(_)) {
+            // `[a, b] = [b, a]`, `({a, b} = o)`.
+            let Some(p) = expr_a_patron(izquierda) else { return error(pos, "no se puede asignar a esto") };
+            self.avanzar();
+            let derecha = self.asignacion()?;
+            return Ok(self.asignar_patron(p, derecha));
+        }
         if !es_destino(&izquierda) {
             return error(pos, "no se puede asignar a esto");
         }
@@ -70,20 +81,23 @@ impl Parser {
     }
 
     /// Si empieza una flecha (`x =>`, `(a, b) =>`), la analiza.
-    fn flecha(&mut self) -> Resultado<Option<Funcion>> {
+    fn flecha(&mut self) -> Resultado<Option<Expr>> {
         let pos = self.pos();
-        let params = if matches!(self.ver(), Tipo::Ident(_)) && self.es_en(1, "=>") {
-            vec![Param { nombre: self.ident()?, defecto: None }]
-        } else if self.es("(") && self.cierre_desde(0).is_some_and(|c| self.es_en(c + 1, "=>")) {
-            self.parametros()?
-        } else {
+        let simple = matches!(self.ver(), Tipo::Ident(_)) && self.es_en(1, "=>");
+        if !simple && !(self.es("(") && self.cierre_desde(0).is_some_and(|c| self.es_en(c + 1, "=>"))) {
             return Ok(None);
+        }
+        self.abrir_temporales();
+        let mut firma = if simple {
+            Firma { params: vec![Param { nombre: self.ident()?, defecto: None }], prologo: Vec::new(), resto: None }
+        } else {
+            self.firma()?
         };
         if self.token(0).salto_antes {
             return error(self.pos(), "no puede haber un salto de línea antes de =>");
         }
         self.esperar("=>")?;
-        let cuerpo = if self.es("{") {
+        let mut cuerpo = if self.es("{") {
             self.bloque()?
         } else {
             let sin_in = core::mem::replace(&mut self.sin_in, false);
@@ -91,7 +105,13 @@ impl Parser {
             self.sin_in = sin_in;
             vec![Sent::Retornar(Some(e?))]
         };
-        Ok(Some(Funcion { nombre: None, params, cuerpo, flecha: true, pos }))
+        // Una flecha no tiene `arguments`: con `...rest` se hace función normal y `.bind(this)`.
+        let con_resto = firma.resto.is_some();
+        Self::prologo(&mut firma, &mut cuerpo);
+        self.cerrar_temporales(&mut cuerpo);
+        let f =
+            Expr::Funcion(Box::new(Funcion { nombre: None, params: firma.params, cuerpo, flecha: !con_resto, pos }));
+        Ok(Some(if con_resto { Expr::Llamar(Box::new(miembro(f, "bind")), vec![Expr::Este]) } else { f }))
     }
 
     fn condicional(&mut self) -> Resultado<Expr> {
@@ -167,9 +187,12 @@ impl Parser {
         Ok(e)
     }
 
-    /// `new F(x)`, `a.b`, `a[b]`, `f(x)`, encadenados.
-    fn llamada_o_miembro(&mut self) -> Resultado<Expr> {
+    /// `new F(x)`, `a.b`, `a[b]`, `f(x)`, `a?.b`, encadenados.
+    pub(super) fn llamada_o_miembro(&mut self) -> Resultado<Expr> {
         let mut e = if self.es("new") { self.nuevo()? } else { self.primaria()? };
+        // Cada `?.`: (temporal, lo que se comprueba, si se comprueba). Al final, la cadena entera
+        // queda dentro de `(t = base) == null ? undefined : ...`.
+        let mut opcionales: Vec<(String, Expr, bool)> = Vec::new();
         loop {
             if self.tomar(".") {
                 e = Expr::Miembro(Box::new(e), self.nombre_de_propiedad()?);
@@ -178,13 +201,79 @@ impl Parser {
                 self.esperar("]")?;
                 e = Expr::Indice(Box::new(e), Box::new(i));
             } else if self.es("(") {
-                e = Expr::Llamar(Box::new(e), self.argumentos()?);
-            } else if self.es("?.") {
-                return error(self.pos(), "el encadenamiento opcional (?.) todavía no está en QUIMERA");
+                let piezas = self.piezas_entre("(", ")")?;
+                e = match sin_esparcir(piezas) {
+                    Ok(args) => Expr::Llamar(Box::new(e), args),
+                    Err(p) => llamada_esparcida(e, p),
+                };
+            } else if self.tomar("?.") {
+                // Lo raro, al final y aparte: este bucle corre en cada expresión.
+                self.eslabon_opcional(&mut e, &mut opcionales)?;
             } else {
-                return Ok(e);
+                break;
             }
         }
+        for (t, base, comprobar) in opcionales.into_iter().rev() {
+            let asignar = Expr::Asignar("=", Box::new(Expr::Ident(t)), Box::new(base));
+            e = if comprobar {
+                let nulo = Expr::Binaria("==", Box::new(asignar), Box::new(Expr::Nulo));
+                Expr::Condicional(Box::new(nulo), Box::new(indefinido()), Box::new(e))
+            } else {
+                Expr::Secuencia(vec![asignar, e])
+            };
+        }
+        Ok(e)
+    }
+
+    /// Un eslabón tras `?.` (ya tomado): `.b`, `[k]` o `(args)`, que queda dentro de la
+    /// comprobación de `null`/`undefined` que se pone al final de la cadena.
+    fn eslabon_opcional(&mut self, e: &mut Expr, opcionales: &mut Vec<(String, Expr, bool)>) -> Resultado<()> {
+        let t = self.temporal_var();
+        let base = core::mem::replace(e, Expr::Ident(t.clone()));
+        if self.es("(") {
+            let piezas = self.piezas_entre("(", ")")?;
+            // `o.m?.()`: se comprueba la función y se llama con `this` = `o` (guardado
+            // en otro temporal, sin comprobar).
+            let objeto = match base {
+                Expr::Miembro(o, n) => {
+                    let t_o = self.temporal_var();
+                    opcionales.push((t_o.clone(), *o, false));
+                    opcionales.push((t.clone(), Expr::Miembro(Box::new(Expr::Ident(t_o.clone())), n), true));
+                    Some(t_o)
+                }
+                Expr::Indice(o, k) => {
+                    let t_o = self.temporal_var();
+                    opcionales.push((t_o.clone(), *o, false));
+                    opcionales.push((t.clone(), Expr::Indice(Box::new(Expr::Ident(t_o.clone())), k), true));
+                    Some(t_o)
+                }
+                b => {
+                    opcionales.push((t.clone(), b, true));
+                    None
+                }
+            };
+            let f = Expr::Ident(t);
+            *e = match (objeto, sin_esparcir(piezas)) {
+                (None, Ok(args)) => Expr::Llamar(Box::new(f), args),
+                (None, Err(p)) => llamada_esparcida(f, p),
+                (Some(o), Ok(mut args)) => {
+                    args.insert(0, Expr::Ident(o));
+                    Expr::Llamar(Box::new(miembro(f, "call")), args)
+                }
+                (Some(o), Err(p)) => Expr::Llamar(Box::new(miembro(f, "apply")), vec![Expr::Ident(o), lista_de(p)]),
+            };
+            return Ok(());
+        }
+        opcionales.push((t.clone(), base, true));
+        let objeto = core::mem::replace(e, Expr::Nulo);
+        *e = if self.tomar("[") {
+            let i = self.expresion()?;
+            self.esperar("]")?;
+            Expr::Indice(Box::new(objeto), Box::new(i))
+        } else {
+            Expr::Miembro(Box::new(objeto), self.nombre_de_propiedad()?)
+        };
+        Ok(())
     }
 
     /// `new F(args)` o `new F` (sin paréntesis no hay argumentos).
@@ -205,30 +294,23 @@ impl Parser {
                 break;
             }
         }
-        let args = if self.es("(") { self.argumentos()? } else { Vec::new() };
-        Ok(Expr::Nuevo(Box::new(f), args))
-    }
-
-    fn argumentos(&mut self) -> Resultado<Vec<Expr>> {
-        self.esperar("(")?;
-        let mut v = Vec::new();
-        while !self.tomar(")") {
-            if self.es("...") {
-                return error(self.pos(), "los argumentos ...spread todavía no están en QUIMERA");
-            }
-            v.push(self.asignacion()?);
-            if !self.es(")") {
-                self.esperar(",")?;
-            }
-        }
-        Ok(v)
+        let piezas = if self.es("(") {
+            self.piezas_entre("(", ")")?
+        } else {
+            Piezas { exprs: Vec::new(), esparcidas: Vec::new() }
+        };
+        Ok(match sin_esparcir(piezas) {
+            Ok(args) => Expr::Nuevo(Box::new(f), args),
+            Err(p) => llamar("__quimera_nuevo", vec![f, lista_de(p)]),
+        })
     }
 
     /// Tras `.`: cualquier nombre, también palabras reservadas (`a.default`, `a.new`).
-    fn nombre_de_propiedad(&mut self) -> Resultado<String> {
+    pub(super) fn nombre_de_propiedad(&mut self) -> Resultado<String> {
         match self.avanzar().tipo {
             Tipo::Ident(n) => Ok(n),
             Tipo::Clave(k) => Ok(String::from(k)),
+            Tipo::Signo("#") => Ok(format!("#{}", self.ident()?)),
             otro => error(self.pos(), format!("se esperaba un nombre de propiedad y hay {}", describir(&otro))),
         }
     }
@@ -254,7 +336,9 @@ impl Parser {
                 }
                 Expr::Regex(patron, banderas)
             }
-            Tipo::Clave(k @ ("class" | "super" | "import" | "yield")) => {
+            Tipo::Clave("class") => return Ok(self.clase()?.1),
+            Tipo::Clave("super") => return self.super_(),
+            Tipo::Clave(k @ ("import" | "yield")) => {
                 return error(pos, format!("`{k}` todavía no está en QUIMERA"));
             }
             otro => return error(pos, format!("se esperaba una expresión y hay {}", describir(&otro))),
@@ -275,63 +359,69 @@ impl Parser {
 
     fn arreglo(&mut self) -> Resultado<Expr> {
         self.avanzar();
-        let mut v = Vec::new();
+        let mut v: Vec<Option<Expr>> = Vec::new();
+        let mut esparcidas = Vec::new();
         while !self.tomar("]") {
             if self.tomar(",") {
                 v.push(None);
                 continue;
             }
-            if self.es("...") {
-                return error(self.pos(), "...spread en arreglos todavía no está en QUIMERA");
+            if self.tomar("...") {
+                esparcidas.push(v.len());
             }
             v.push(Some(self.asignacion()?));
             if !self.es("]") {
                 self.esperar(",")?;
             }
         }
-        Ok(Expr::Arreglo(v))
+        if esparcidas.is_empty() {
+            return Ok(Expr::Arreglo(v));
+        }
+        let exprs = v.into_iter().map(|e| e.unwrap_or_else(indefinido)).collect();
+        Ok(lista_de(Piezas { exprs, esparcidas }))
     }
 
     fn objeto(&mut self) -> Resultado<Expr> {
         self.avanzar();
         let mut props = Vec::new();
+        // Solo si aparece `...`: los trozos de propiedades y lo esparcido, en orden.
+        let mut segmentos: Vec<Result<Vec<(Clave, Expr)>, Expr>> = Vec::new();
         while !self.tomar("}") {
-            props.push(self.propiedad()?);
+            if self.tomar("...") {
+                if !props.is_empty() {
+                    segmentos.push(Ok(core::mem::take(&mut props)));
+                }
+                segmentos.push(Err(self.asignacion()?));
+            } else {
+                props.push(self.propiedad()?);
+            }
             if !self.es("}") {
                 self.esperar(",")?;
             }
         }
-        Ok(Expr::Objeto(props))
+        if segmentos.is_empty() {
+            return Ok(Expr::Objeto(props));
+        }
+        if !props.is_empty() {
+            segmentos.push(Ok(props));
+        }
+        Ok(objeto_esparcido(segmentos))
     }
 
     /// `a: 1`, `a` (abreviada), `[k]: 1`, `"a": 1`, `1: x` o un método `f() {}`.
     fn propiedad(&mut self) -> Resultado<(Clave, Expr)> {
         let pos = self.pos();
-        if self.es("...") {
-            return error(pos, "...spread en objetos todavía no está en QUIMERA");
-        }
         let accesor = (self.es_palabra("get") || self.es_palabra("set")) && !self.es_en(1, ":") && !self.es_en(1, "(");
         let asincrona = self.es_palabra("async") && !self.es_en(1, ":") && !self.es_en(1, "(");
         if accesor || asincrona || self.es("*") {
             return error(pos, "get/set, async y * en objetos todavía no están en QUIMERA");
         }
         let abreviable = matches!(self.ver(), Tipo::Ident(_));
-        let clave = match self.avanzar().tipo {
-            Tipo::Ident(n) | Tipo::Cadena(n) => Clave::Nombre(n),
-            Tipo::Clave(k) => Clave::Nombre(String::from(k)),
-            Tipo::Numero(n) => Clave::Nombre(numero_a_clave(n)),
-            Tipo::Signo("[") => {
-                let e = self.asignacion()?;
-                self.esperar("]")?;
-                Clave::Calculada(e)
-            }
-            otro => return error(pos, format!("se esperaba una clave de propiedad y hay {}", describir(&otro))),
-        };
+        let clave = self.clave_de_propiedad()?;
         if self.es("(") {
-            let params = self.parametros()?;
-            let cuerpo = self.bloque()?;
             let nombre = if let Clave::Nombre(n) = &clave { Some(n.clone()) } else { None };
-            return Ok((clave, Expr::Funcion(Box::new(Funcion { nombre, params, cuerpo, flecha: false, pos }))));
+            let f = self.funcion_de_metodo(nombre, pos)?;
+            return Ok((clave, Expr::Funcion(Box::new(f))));
         }
         if self.tomar(":") {
             return Ok((clave, self.asignacion()?));

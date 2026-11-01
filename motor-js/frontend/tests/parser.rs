@@ -95,10 +95,9 @@ fn sentencias_de_control() {
 #[test]
 fn lo_que_falta_avisa_con_claridad() {
     for (codigo, pista) in [
-        ("class A {}", "class"),
-        ("f(...a)", "spread"),
-        ("let [a, b] = c", "desestructuración"),
-        ("a?.b", "opcional"),
+        ("class A { get x() { return 1; } }", "get/set"),
+        ("class A { async m() {} }", "async"),
+        ("a: for (;;) break a;", "etiquetas"),
         ("function* g() {}", "generadores"),
     ] {
         let e = analizar(codigo).unwrap_err();

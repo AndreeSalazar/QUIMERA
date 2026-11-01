@@ -28,3 +28,8 @@ motivo = "Programa de medida: si un motor no ejecuta el script, la medida no val
 regla = "A-UNWRAP"
 archivo = "bancos/web/src/main.rs"
 motivo = "Programa de medida: si la página pedida no se puede leer, no hay nada que comparar y debe pararse con el mensaje del expect."
+
+[[revisado]]
+regla = "A-CRATE"
+archivo = "quimera-vm"
+motivo = "Pasó de 5000 con la biblioteca moderna (JSON en Rust y el preludio en JavaScript). La biblioteca debe irse a quimera-builtins (nivel 5, como prevé docs/JERARQUIA.md), pero sus nativas usan las tripas de la máquina (pila de raíces, Llamada): separarla pide antes una interfaz para nativas externas. Pendiente, no olvidado."

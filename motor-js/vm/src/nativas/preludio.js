@@ -581,5 +581,43 @@
   global.Promise = Promise;
   ocultar.push(Promise.prototype);
 
+  // ---------------- ayudantes de la sintaxis moderna (parser/azucar.rs y clases.rs) ----------------
+
+  // `o.m(...a)` y `o[k](...a)`: el método con su `this`.
+  global.__quimera_metodo = function (o, k, args) {
+    var f = o[k];
+    if (typeof f !== 'function') throw new TypeError(String(k) + ' no es una función');
+    return f.apply(o, args);
+  };
+  // `new F(...a)`.
+  global.__quimera_nuevo = function (F, args) {
+    if (typeof F !== 'function') throw new TypeError(F + ' no es un constructor');
+    var o = Object.create(F.prototype), r = F.apply(o, args);
+    return r !== null && (typeof r === 'object' || typeof r === 'function') ? r : o;
+  };
+  // `let {a, ...resto} = o`.
+  global.__quimera_resto = function (o, quitar) {
+    var r = {};
+    Object.keys(o).forEach(function (k) { if (quitar.indexOf(k) < 0) r[k] = o[k]; });
+    return r;
+  };
+  // `class C extends P`: el prototipo y los métodos estáticos (copiados al definir la clase).
+  global.__quimera_heredar = function (C, P) {
+    if (P !== null && typeof P !== 'function') throw new TypeError('extends necesita un constructor o null');
+    C.prototype = Object.create(P === null ? null : P.prototype);
+    C.prototype.constructor = C;
+    if (P) Object.keys(P).forEach(function (k) { if (k !== 'prototype') C[k] = P[k]; });
+  };
+  // `super(...args)`: el constructor del padre sobre `this`, y luego los campos de la clase.
+  // Si el padre devuelve otro objeto (Error, que se crea solo), se copian sus propiedades.
+  global.__quimera_super = function (P, este, args, campos) {
+    if (P === null) throw new TypeError('super() en una clase que extiende null');
+    var r = P.apply(este, args);
+    if (r !== este && r !== null && typeof r === 'object') {
+      Object.keys(r).forEach(function (k) { este[k] = r[k]; });
+    }
+    if (typeof campos === 'function') campos.call(este);
+  };
+
   global.__quimera_ocultar = ocultar;
 })(this);

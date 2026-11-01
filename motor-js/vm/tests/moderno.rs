@@ -151,3 +151,30 @@ fn biblioteca_nueva() {
         ]
     );
 }
+
+/// Plantillas, spread, rest, desestructuración, `?.`, `??` y clases (`tests/sintaxis.js`),
+/// con la salida de Chromium.
+#[test]
+fn sintaxis_moderna() {
+    let r = salida(include_str!("sintaxis.js"));
+    assert_eq!(
+        r,
+        [
+            "plantilla 3 + 6 = 9 sin nada anidada dentro 3 11",
+            "a|b|c:1,2",
+            "6 9 0,1,2,a,b,5 10",
+            "1:2-3 1: 3",
+            "1 7 99 defecto {\"q\":1,\"r\":2}",
+            "a c def",
+            "ana3089 luis123",
+            "2 1 k d",
+            "p1,q2,x,y",
+            "20 undefined undefined 10 undefined reserva 0",
+            "{\"b\":\"pisado\",\"extra\":1} 1",
+            "rex hace ruido (guau) 4 hueso perro de animal 1 true true",
+            "nombre,patas function 5",
+            "MiError fallo true true",
+            "2 0",
+        ]
+    );
+}

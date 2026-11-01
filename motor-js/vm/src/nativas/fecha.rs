@@ -48,8 +48,12 @@ fn objeto_con(m: &mut Motor, ll: &Llamada, proto: usize, clave: &str, valor: Val
 pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
     Ok(match id {
         DATE => {
-            let ahora = Valor::numero(m.ahora());
-            objeto_con(m, ll, R_FECHA, op::CLAVE_VALOR, ahora)
+            // `new Date(ms)` con un número; sin argumentos, ahora. (Fechas en texto, todavía no.)
+            let ms = match arg(m, ll, 0) {
+                v if ll.n > 0 && v.como_numero().is_some() => op::a_numero(&m.mundo, v),
+                _ => m.ahora(),
+            };
+            objeto_con(m, ll, R_FECHA, op::CLAVE_VALOR, Valor::numero(ms))
         }
         DATE_NOW => Valor::numero(m.ahora()),
         GET_TIME => match op::valor_primitivo(&m.mundo, m.pila(ll.este)) {

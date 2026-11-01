@@ -59,7 +59,7 @@ Que las páginas de lectura se vean como en Chrome.
 
 La fase más importante: lo que separa "leer páginas" de "usar aplicaciones web". Ver por qué en [qué es el DOM](#qué-es-el-dom-y-por-qué-cuesta).
 
-✅ **Empezada** ([detalle](DOM.md)): `quimera-dom` con un solo GC, los `<script>` de la página, `document` y los nodos, `innerHTML`, `style`, `classList`, selectores, `click` con burbujeo y `preventDefault`, y temporizadores. Las mismas salidas que Chromium en sus pruebas. Lo que sigue, por orden: JavaScript moderno en la VM, `fetch`, más eventos y medidas de la maquetación.
+✅ **Empezada** ([detalle](DOM.md)): `quimera-dom` con un solo GC, los `<script>` de la página, `document` y los nodos, `innerHTML`, `style`, `classList`, selectores, `click` con burbujeo y `preventDefault`, y temporizadores. Las mismas salidas que Chromium en sus pruebas. ✅ JavaScript moderno, primera parte: `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración, spread y `?.`, con las mismas salidas que Chromium. Lo que sigue, por orden: accesores (`get`/`set`), `async`/`await` y generadores, `fetch`, más eventos y medidas de la maquetación.
 
 - **`quimera-js` (nivel 6):** la interfaz del motor, lo único que ve el resto del navegador. Por ahora la hace el rasgo `Anfitrion` de la VM.
 - **`quimera-dom` (nivel 7):** `document`, `Node`, `Element`, `Text`, atributos, `classList`, `querySelector`, `innerHTML`, `textContent`, `style`, eventos (`addEventListener`, propagación, clic y teclado).

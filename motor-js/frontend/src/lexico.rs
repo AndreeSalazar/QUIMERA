@@ -4,7 +4,11 @@
 //! escapes, signos y comentarios. Anota si hubo un salto de línea antes de cada token,
 //! que es lo que necesita la inserción automática de `;`. Un `/` es una expresión regular si
 //! el token anterior no puede terminar una expresión (como hacen los navegadores con su
-//! regla del token previo). Las plantillas (`` ` ``) todavía no están: dan un error claro.
+//! regla del token previo).
+//!
+//! Las **plantillas** se convierten aquí mismo en los tokens de una suma de cadenas:
+//! `` `a${x}b` `` → `("a" + (x) + "b")`. Con etiqueta (`` f`a${x}` ``), en la llamada
+//! `f(["a", ""], (x))` (sin `raw` todavía).
 
 use crate::fuente::{Pos, Resultado, error};
 use alloc::string::String;
@@ -104,6 +108,15 @@ pub fn tokens(fuente: &str) -> Resultado<Vec<Token>> {
         let salto_antes = l.saltar_blancos()?;
         let pos = l.pos();
         let regex_posible = v.last().is_none_or(|t: &Token| puede_preceder_regex(&t.tipo));
+        if l.byte(0) == b'`' && l.i < l.b.len() {
+            let etiqueta = v.last().is_some_and(|t: &Token| termina_expresion(&t.tipo));
+            let mut t = l.plantilla(pos, etiqueta)?;
+            if let Some(primero) = t.first_mut() {
+                primero.salto_antes = salto_antes;
+            }
+            v.extend(t);
+            continue;
+        }
         let tipo = if l.i >= l.b.len() {
             Tipo::Fin
         } else if regex_posible && l.byte(0) == b'/' {
@@ -125,6 +138,16 @@ fn puede_preceder_regex(t: &Tipo) -> bool {
     match t {
         Tipo::Signo(s) => !matches!(*s, ")" | "]" | "}" | "++" | "--"),
         Tipo::Clave(k) => !matches!(*k, "this" | "super" | "null" | "true" | "false"),
+        _ => false,
+    }
+}
+
+/// Si este token puede terminar una expresión (tras él, una plantilla lleva etiqueta).
+fn termina_expresion(t: &Tipo) -> bool {
+    match t {
+        Tipo::Ident(_) => true,
+        Tipo::Signo(s) => matches!(*s, ")" | "]"),
+        Tipo::Clave(k) => matches!(*k, "this" | "super"),
         _ => false,
     }
 }
@@ -217,9 +240,115 @@ impl Lexico<'_> {
         }
         match c {
             '"' | '\'' => self.cadena(),
-            '`' => error(pos, "las plantillas (`...`) todavía no están en QUIMERA"),
             '\\' => error(pos, "los escapes \\u en identificadores todavía no están en QUIMERA"),
             _ => self.signo(),
+        }
+    }
+
+    /// Una plantilla, con el cursor en su `` ` ``: los tokens de la suma de sus trozos (o de la
+    /// llamada, con `etiqueta`). Las sustituciones `${...}` se leen como tokens normales hasta su
+    /// `}` (contando las llaves de dentro); una plantilla dentro de otra se lee igual.
+    fn plantilla(&mut self, pos: Pos, etiqueta: bool) -> Resultado<Vec<Token>> {
+        let tok = |tipo| Token { tipo, pos, salto_antes: false };
+        self.i += 1;
+        let mut trozos: Vec<String> = Vec::new();
+        let mut sustituciones: Vec<Vec<Token>> = Vec::new();
+        let mut texto = String::new();
+        loop {
+            match self.actual() {
+                None => return error(pos, "plantilla sin cerrar"),
+                Some('`') => {
+                    self.i += 1;
+                    trozos.push(texto);
+                    break;
+                }
+                Some('$') if self.byte(1) == b'{' => {
+                    self.i += 2;
+                    trozos.push(core::mem::take(&mut texto));
+                    sustituciones.push(self.sustitucion(pos)?);
+                }
+                Some('\\') => {
+                    self.i += 1;
+                    self.escape(&mut texto)?;
+                }
+                Some(c) => {
+                    self.i += c.len_utf8();
+                    if c == '\r' {
+                        if self.byte(0) == b'\n' {
+                            self.i += 1;
+                        }
+                        texto.push('\n');
+                        self.nueva_linea();
+                    } else {
+                        if es_salto(c) {
+                            self.nueva_linea();
+                        }
+                        texto.push(c);
+                    }
+                }
+            }
+        }
+        let mut v = alloc::vec![tok(Tipo::Signo("("))];
+        if etiqueta {
+            v.push(tok(Tipo::Signo("[")));
+            for (i, t) in trozos.into_iter().enumerate() {
+                if i > 0 {
+                    v.push(tok(Tipo::Signo(",")));
+                }
+                v.push(tok(Tipo::Cadena(t)));
+            }
+            v.push(tok(Tipo::Signo("]")));
+            for s in sustituciones {
+                v.push(tok(Tipo::Signo(",")));
+                v.push(tok(Tipo::Signo("(")));
+                v.extend(s);
+                v.push(tok(Tipo::Signo(")")));
+            }
+        } else {
+            let mut trozos = trozos.into_iter();
+            v.push(tok(Tipo::Cadena(trozos.next().unwrap_or_default())));
+            for (s, t) in sustituciones.into_iter().zip(trozos) {
+                v.push(tok(Tipo::Signo("+")));
+                v.push(tok(Tipo::Signo("(")));
+                v.extend(s);
+                v.push(tok(Tipo::Signo(")")));
+                v.push(tok(Tipo::Signo("+")));
+                v.push(tok(Tipo::Cadena(t)));
+            }
+        }
+        v.push(tok(Tipo::Signo(")")));
+        Ok(v)
+    }
+
+    /// Los tokens de una sustitución `${...}`, con el cursor tras `${`, hasta su `}`.
+    fn sustitucion(&mut self, pos: Pos) -> Resultado<Vec<Token>> {
+        let mut v: Vec<Token> = Vec::new();
+        let mut nivel = 0usize;
+        loop {
+            let salto_antes = self.saltar_blancos()?;
+            let p = self.pos();
+            if self.i >= self.b.len() {
+                return error(pos, "plantilla sin cerrar");
+            }
+            if self.byte(0) == b'`' {
+                let etiqueta = v.last().is_some_and(|t| termina_expresion(&t.tipo));
+                v.extend(self.plantilla(p, etiqueta)?);
+                continue;
+            }
+            let regex_posible = v.last().is_none_or(|t| puede_preceder_regex(&t.tipo));
+            let tipo = if regex_posible && self.byte(0) == b'/' { self.regex()? } else { self.token()? };
+            match tipo {
+                Tipo::Signo("{") => nivel += 1,
+                Tipo::Signo("}") if nivel == 0 => {
+                    if v.is_empty() {
+                        return error(p, "una sustitución ${} de una plantilla no puede estar vacía");
+                    }
+                    return Ok(v);
+                }
+                Tipo::Signo("}") => nivel -= 1,
+                _ => {}
+            }
+            v.push(Token { tipo, pos: p, salto_antes });
         }
     }
 

@@ -68,7 +68,7 @@ fn comentarios_y_saltos_de_linea() {
 
 #[test]
 fn errores_con_posicion() {
-    let e = tokens("let x = 1;\nlet y = `plantilla`;").unwrap_err();
+    let e = tokens("let x = 1;\nlet y = `plantilla ${x};").unwrap_err();
     assert_eq!((e.pos.linea, e.pos.columna), (2, 9));
-    assert!(e.mensaje.contains("plantillas"));
+    assert!(e.mensaje.contains("plantilla sin cerrar"), "{}", e.mensaje);
 }

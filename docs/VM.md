@@ -141,6 +141,19 @@ Las cadenas viven fuera del montón, así que crearlas no llenaba la guardería 
 
 Prueba: un millón de textos distintos en un bucle libera más de 900.000. Para buscar cadenas usadas sin proteger, la suite entera (los 8 de V8, y RegExp comparado con Boa) pasó con el umbral a 1 KB, es decir, con una limpieza casi en cada bucle.
 
+## La biblioteca en JavaScript (preludio)
+
+`nativas/preludio.js` se ejecuta al crear cada motor, como el *self-hosting* de SpiderMonkey: lo que no necesita ser rápido ni tocar el montón por dentro se escribe en JavaScript (ES5, el que la máquina ya entiende).
+
+- **`Map`, `Set`, `WeakMap`, `WeakSet`**: una tabla con un índice por clave (`"s" + texto`, `"n" + número`; un objeto recibe un número propio en una ranura la primera vez). Buscar es O(1) también con objetos de clave. Se compacta al borrar mucho. Los «débiles» lo son solo de nombre: guardan sus claves vivas (falta un GC con efemérides).
+- **`Promise`** (A+, con `then`, `catch`, `finally`, `all`, `allSettled`, `race`, `any`, `resolve`, `reject`) y **`queueMicrotask`**. Las reacciones van a una cola de microtareas que el anfitrión vacía con `Motor::correr_microtareas` tras cada script, evento y temporizador. El orden coincide con Chromium en las pruebas.
+- **El resto**: `TypeError` y los demás errores, `Function.prototype.bind`, `Object.assign/entries/values/fromEntries/is/defineProperty` (sin accesores: un `get` se llama una vez al definir), `Array.from/of`, `splice`, `flat`, `flatMap`, `at`, `fill`, iteradores de arreglos, `padStart`, `repeat`, `replaceAll`, `Number.isInteger`, `Math.sign/trunc/log2`... y los ayudantes de la sintaxis moderna del frontend.
+- **Ranuras internas**: propiedades cuyo nombre empieza por U+0001. No salen en `for-in`, `Object.keys` ni `JSON.stringify`. Los prototipos del preludio se ocultan por su forma (`formas_ocultas`), como los de la biblioteca en Rust por su raíz.
+
+En Rust, aparte: **`JSON.parse` y `JSON.stringify`** (YouTube trae megas de JSON: en JavaScript sería muchas veces más lento), con sangría, `toJSON`, ciclos y lista de claves, seguros aunque el GC mueva los objetos a mitad (probado con una guardería diminuta). También `Function(...)` y `new Date(ms)`.
+
+Coste: crear un motor tarda unos 2 ms más (compila el preludio). Se podría guardar su Stencil compilado una vez.
+
 ## Objetos y funciones del anfitrión
 
 Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias funciones y objetos (`anfitrion.rs`):
@@ -152,6 +165,9 @@ Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias fu
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
+- **Accesores (`get`/`set`)**: es lo siguiente que bloquea páginas reales (highlight.js en rust-lang.org lo usa en sus clases). Hay que añadirlos sin frenar las cachés en línea.
+- **Generadores y `async`/`await`**: necesitan que la máquina guarde un marco a medias y lo reanude.
+- **Errores de la máquina como objetos**: los que lanza la máquina son cadenas (`"TypeError: ..."`), así que `e.message` da `undefined` en un `catch`.
 - **Biblioteca estándar, todavía parcial.** Hay `console.log`/`print`; `Object` (`create`, `keys`, `prototype.hasOwnProperty`); `Array` (`isArray`, `push`, `pop`, `shift`, `unshift`, `slice`, `concat`, `reverse`, `join`, `indexOf`, `includes`, `sort`, `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `findIndex`); `Function.prototype` (`call`, `apply`); `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`); números (`Number`, `parseInt`, `parseFloat`, `isNaN`, `isFinite`, `toFixed`, `toPrecision`, `toString(base)`); `String` (`fromCharCode`, `charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`, `split`, `toUpperCase`, `toLowerCase`, `trim`, `includes`, `startsWith`, `endsWith`); `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
 - **`sort` es inserción binaria.** Estable y sin memoria extra, con pocas comparaciones (n log n), pero mueve O(n²) elementos: para arreglos grandes hará falta un *merge sort* con raíces.
 - **`ToPrimitive` usa una llamada interna** (recursión de Rust); `call` y `apply` dejan el marco en la máquina.
