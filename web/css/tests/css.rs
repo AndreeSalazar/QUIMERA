@@ -120,6 +120,8 @@ fn colores_y_longitudes() {
     assert_eq!(c("rgb(100% 50% 0% / 50%)"), Some(Color { r: 255, g: 128, b: 0, a: 128 }));
     assert_eq!(c("hsl(120deg, 100%, 25%)"), Some(Color::rgb(0, 128, 0)));
     assert_eq!(c("transparent"), Some(Color::TRANSPARENTE));
+    assert_eq!(c("light-dark(#eee, #222)"), Some(Color::rgb(0xee, 0xee, 0xee)), "modo claro");
+    assert_eq!(c("light-dark(rgb(1, 2, 3), black)"), Some(Color::rgb(1, 2, 3)));
     assert_eq!(c("notacolor"), None);
     assert_eq!(c("#12"), None);
     let l = |s: &str| longitud(&quimera_css::tokens(s)[0]);

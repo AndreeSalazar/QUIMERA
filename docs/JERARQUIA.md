@@ -20,7 +20,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 2 | `web` | ✅ `quimera-css` | Parser de CSS y selectores | Stylo (Servo) | sí |
 | 2 | `grafico` | ✅ `quimera-gpu` | GPU con **wgpu**: superficies, texturas, *pipelines* | WebRender, Servo | no (wgpu usa `std`) |
 | 2 | `grafico` | ✅ `quimera-texto` | Fuentes y *shaping* | skrifa, harfrust | sí |
-| 2 | `red` | `quimera-red` | HTTP/1.1, HTTP/2, TLS (rustls), caché | Chromium `net` | no |
+| 2 | `red` | ✅ `quimera-red` | HTTP/1.1, HTTP/2, TLS (rustls), caché | Chromium `net` | no |
 | 3 | `motor-js` | ✅ `quimera-objetos` | *Shapes*, elementos densos, propiedades | SpiderMonkey `NativeObject` | sí |
 | 3 | `motor-js` | 🔨 `quimera-ic` | Cachés en línea con un mini-lenguaje común | SpiderMonkey CacheIR | sí |
 | 3 | `proceso` | `quimera-aislamiento` | Procesos, IPC y sandbox (seccomp en ULTRA) | Chromium `sandbox`, `mojo` | no |

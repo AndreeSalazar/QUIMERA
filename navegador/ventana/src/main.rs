@@ -1,7 +1,7 @@
 //! La ventana de QUIMERA: abre una página y la dibuja con wgpu.
 //!
-//! Uso: `cargo run --release -p quimera-ventana -- [pagina.html]` (sin argumento, la primera
-//! página de ejemplo). La rueda del ratón, las flechas, Re Pág/Av Pág, Inicio y Fin desplazan;
+//! Uso: `cargo run --release -p quimera-ventana -- [https://... | pagina.html]` (sin argumento,
+//! la primera página de ejemplo). La rueda del ratón, las flechas, Re Pág/Av Pág, Inicio y Fin desplazan;
 //! al redimensionar se vuelve a maquetar con el ancho nuevo. F5 vuelve a leer la página.
 //!
 //! Sin ventana: `-- pagina.html --captura salida.png [ancho] [alto]` dibuja con la misma GPU en
@@ -10,14 +10,16 @@
 //! Todo el camino es de QUIMERA: HTML → árbol → estilo → maquetación (con las medidas de las
 //! fuentes de verdad) → cuadros → GPU.
 
+mod pagina;
 mod png;
 
+use pagina::{Pagina, direccion};
 use quimera_estilo::Opciones;
 use quimera_gpu::Gpu;
 use quimera_maquetacion::maquetar;
 use quimera_pintar::{Pintor, color_gpu};
+use quimera_red::{Cliente, Url};
 use quimera_texto::Fuentes;
-use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Instant;
 use winit::application::ApplicationHandler;
@@ -40,27 +42,12 @@ struct Abierta {
 }
 
 struct Navegador {
-    ruta: PathBuf,
+    url: Url,
+    cliente: Cliente,
+    /// La página cargada (se vuelve a cargar con F5).
+    pagina: Option<Pagina>,
     pintor: Pintor,
     abierta: Option<Abierta>,
-}
-
-/// Lee una página y sus hojas `<link>` locales.
-fn leer(ruta: &PathBuf) -> (quimera_html::Documento, Vec<(String, String)>) {
-    let html = std::fs::read_to_string(ruta)
-        .unwrap_or_else(|e| format!("<h1>No se puede abrir la página</h1><p>{}: {e}", ruta.display()));
-    let doc = quimera_html::analizar(&html);
-    let carpeta = ruta.parent().map(PathBuf::from).unwrap_or_default();
-    let mut hojas = Vec::new();
-    for id in doc.descendientes(quimera_html::Documento::RAIZ) {
-        if let Some(href) = doc.elemento(id).filter(|e| e.nombre == "link").and_then(|e| e.atributo("href")) {
-            let limpio = href.split(['?', '#']).next().unwrap_or(href);
-            if let Ok(css) = std::fs::read_to_string(carpeta.join(limpio)) {
-                hojas.push((String::from(href), css));
-            }
-        }
-    }
-    (doc, hojas)
 }
 
 impl Navegador {
@@ -71,8 +58,9 @@ impl Navegador {
         let tam = a.ventana.inner_size();
         let escala = a.ventana.scale_factor() as f32;
         let (ancho, alto) = (tam.width as f32 / escala, tam.height as f32 / escala);
-        let (doc, hojas) = leer(&self.ruta);
-        let externa = |href: &str| hojas.iter().find(|(h, _)| h == href).map(|(_, css)| css.clone());
+        let pagina = self.pagina.get_or_insert_with(|| Pagina::cargar(&self.cliente, &self.url));
+        let doc = pagina.documento();
+        let externa = |href: &str| pagina.hoja(href);
         let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
         let m = maquetar(&doc, &estilos, &self.pintor.medidor(), ancho, alto);
         let cuadros = self.pintor.escena(&m, escala);
@@ -84,10 +72,13 @@ impl Navegador {
         a.fondo = color_gpu(m.fondo);
         a.desp = a.desp.clamp(0.0, (a.alto_documento - tam.height as f32).max(0.0));
         let titulo = doc.buscar("title").map(|t| doc.texto(t).trim().to_string()).filter(|t| !t.is_empty());
-        a.ventana.set_title(&format!("{} — QUIMERA", titulo.as_deref().unwrap_or("sin título")));
+        let sitio =
+            if pagina.url.anfitrion.is_empty() { String::new() } else { format!(" · {}", pagina.url.anfitrion) };
+        a.ventana.set_title(&format!("{}{sitio} — QUIMERA", titulo.as_deref().unwrap_or("sin título")));
         eprintln!(
-            "{}: {} nodos, {} cuadros, {:.0}×{:.0} px en {:.1} ms",
-            self.ruta.display(),
+            "{}: red {:.0} ms · {} nodos, {} cuadros, {:.0}×{:.0} px en {:.1} ms",
+            pagina.url,
+            pagina.ms_red,
             doc.total(),
             cuadros.len(),
             ancho,
@@ -115,7 +106,10 @@ impl Navegador {
             Key::Named(NamedKey::PageUp) => self.desplazar(-pagina),
             Key::Named(NamedKey::Home) => self.desplazar(f32::MIN),
             Key::Named(NamedKey::End) => self.desplazar(f32::MAX),
-            Key::Named(NamedKey::F5) => self.maquetar(),
+            Key::Named(NamedKey::F5) => {
+                self.pagina = None;
+                self.maquetar();
+            }
             _ => {}
         }
     }
@@ -183,11 +177,12 @@ impl ApplicationHandler for Navegador {
 }
 
 /// Dibuja la página con la GPU, sin ventana, y la guarda como PNG.
-fn capturar(ruta: &PathBuf, salida: &str, ancho: u32, alto: u32) -> Result<(), String> {
+fn capturar(url: &Url, salida: &str, ancho: u32, alto: u32) -> Result<(), String> {
     let mut pintor = Pintor::nuevo(Fuentes::del_sistema(), TAM_ATLAS);
     let mut gpu = pollster::block_on(Gpu::sin_ventana(ancho, alto, TAM_ATLAS))?;
-    let (doc, hojas) = leer(ruta);
-    let externa = |href: &str| hojas.iter().find(|(h, _)| h == href).map(|(_, css)| css.clone());
+    let pagina = Pagina::cargar(&Cliente::nuevo(), url);
+    let doc = pagina.documento();
+    let externa = |href: &str| pagina.hoja(href);
     let (w, h) = (ancho as f32, alto as f32);
     let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho: w, alto: h }, &externa);
     let m = maquetar(&doc, &estilos, &pintor.medidor(), w, h);
@@ -198,31 +193,30 @@ fn capturar(ruta: &PathBuf, salida: &str, ancho: u32, alto: u32) -> Result<(), S
     }
     let rgba = gpu.capturar(color_gpu(m.fondo), 0.0)?;
     std::fs::write(salida, png::codificar(ancho, alto, &rgba)).map_err(|e| format!("{salida}: {e}"))?;
-    eprintln!("{}: {} cuadros → {salida} ({ancho}×{alto})", ruta.display(), cuadros.len());
+    eprintln!("{}: red {:.0} ms · {} cuadros → {salida} ({ancho}×{alto})", pagina.url, pagina.ms_red, cuadros.len());
     Ok(())
 }
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if let Some(i) = args.iter().position(|a| a == "--captura") {
-        let ruta = PathBuf::from(args.get(1).filter(|a| *a != "--captura").cloned().unwrap_or_default());
+        let url = direccion(args.get(1).filter(|a| *a != "--captura").map_or("", String::as_str));
         let salida = args.get(i + 1).cloned().unwrap_or_else(|| String::from("captura.png"));
         let numero = |k: usize, d: u32| args.get(i + k).and_then(|a| a.parse().ok()).unwrap_or(d);
-        if let Err(e) = capturar(&ruta, &salida, numero(2, 1024), numero(3, 768)) {
+        if let Err(e) = capturar(&url, &salida, numero(2, 1024), numero(3, 768)) {
             eprintln!("no se pudo capturar: {e}");
             std::process::exit(1);
         }
         return;
     }
-    let ruta = std::env::args().nth(1).map_or_else(
-        || PathBuf::from(concat!(env!("CARGO_MANIFEST_DIR"), "/../../docs/ejemplos/primera.html")),
-        PathBuf::from,
-    );
+    let ejemplo = concat!(env!("CARGO_MANIFEST_DIR"), "/../../docs/ejemplos/primera.html");
+    let url = direccion(&std::env::args().nth(1).unwrap_or_else(|| String::from(ejemplo)));
     let fuentes = Fuentes::del_sistema();
     if fuentes.total() == 0 {
         eprintln!("aviso: no se encontraron fuentes del sistema; el texto no se verá");
     }
-    let mut navegador = Navegador { ruta, pintor: Pintor::nuevo(fuentes, TAM_ATLAS), abierta: None };
+    let pintor = Pintor::nuevo(fuentes, TAM_ATLAS);
+    let mut navegador = Navegador { url, cliente: Cliente::nuevo(), pagina: None, pintor, abierta: None };
     let bucle = match EventLoop::new() {
         Ok(b) => b,
         Err(e) => {

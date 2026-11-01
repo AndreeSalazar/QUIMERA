@@ -3,10 +3,11 @@
 ```bash
 cargo run --release -p quimera-ventana                      # la página de ejemplo
 cargo run --release -p quimera-ventana -- pagina.html       # cualquier página local
+cargo run --release -p quimera-ventana -- https://example.com/   # por red (docs/RED.md)
 cargo run --release -p quimera-ventana -- pagina.html --captura salida.png 1024 768
 ```
 
-La rueda del ratón, las flechas, Re Pág/Av Pág, espacio, Inicio y Fin desplazan la página. Al redimensionar la ventana se vuelve a maquetar con el ancho nuevo (y se reevalúan los `@media`), y F5 vuelve a leer la página del disco. El título de la ventana es el `<title>` de la página.
+La rueda del ratón, las flechas, Re Pág/Av Pág, espacio, Inicio y Fin desplazan la página. Al redimensionar la ventana se vuelve a maquetar con el ancho nuevo (y se reevalúan los `@media`), y F5 vuelve a cargar la página (del disco o de la red). El título de la ventana es el `<title>` de la página y su sitio.
 
 `--captura` dibuja con la misma GPU en una imagen y la guarda como PNG. Sirve para comprobar el pintado sin mirar la pantalla, y en pruebas automáticas.
 
@@ -36,5 +37,5 @@ La página de ejemplo, en una ventana de 1024×768: leer, analizar, estilo, maqu
 
 - Las familias con nombre (`font-family: "Fira Sans"`) aún caen en su genérica; hace falta buscar fuentes por nombre.
 - Imágenes (hoy un recuadro gris), enlaces que se puedan pulsar, selección de texto, barra de desplazamiento.
-- Abrir páginas por red (`quimera-red`), pestañas e historial (`quimera-navegador`), y la interfaz con VERX.
+- Pestañas, historial y barra de direcciones (`quimera-navegador`), y la interfaz con VERX. La red ya está (`quimera-red`, ver [RED.md](RED.md)).
 - Texto complejo: ligaduras, árabe, índico (*shaping* con harfrust).

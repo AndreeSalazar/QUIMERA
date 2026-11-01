@@ -64,6 +64,20 @@ pub fn color(valor: &[Token]) -> Option<Color> {
     match t.as_slice() {
         [Token::Ident(n)] => nombrado(n),
         [Token::Almohadilla(h)] => hexadecimal(h),
+        // `light-dark(claro, oscuro)`: QUIMERA pinta en modo claro, así que vale el primero.
+        [Token::Funcion(f), ..] if f == "light-dark" => {
+            let dentro = &valor[valor.iter().position(|x| matches!(x, Token::Funcion(_)))? + 1..];
+            let mut nivel = 0i32;
+            let fin = dentro.iter().position(|x| {
+                match x {
+                    Token::Funcion(_) | Token::Abre(_) => nivel += 1,
+                    Token::Cierra(_) => nivel -= 1,
+                    _ => {}
+                }
+                *x == Token::Coma && nivel == 0
+            })?;
+            color(&dentro[..fin])
+        }
         [Token::Funcion(f), resto @ ..] if resto.last() == Some(&&Token::Cierra(')')) => {
             let args: Vec<&Token> = resto[..resto.len() - 1]
                 .iter()

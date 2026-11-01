@@ -15,6 +15,7 @@ members = [
     "grafico/gpu",
     "grafico/pintar",
     "navegador/ventana",
+    "red/red",
     "bancos/gc",
     "bancos/frontend",
     "bancos/vm",
@@ -44,6 +45,7 @@ quimera-maquetacion = { path = "web/maquetacion" }
 quimera-texto = { path = "grafico/texto" }
 quimera-gpu = { path = "grafico/gpu" }
 quimera-pintar = { path = "grafico/pintar" }
+quimera-red = { path = "red/red" }
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"
