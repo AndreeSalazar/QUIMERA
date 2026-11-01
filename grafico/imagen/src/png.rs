@@ -1,9 +1,9 @@
 //! PNG: trozos (`IHDR`, `PLTE`, `tRNS`, `IDAT`), descompresión zlib, los cinco filtros por línea,
 //! entrelazado Adam7, todas las profundidades (1 a 16 bits) y tipos de color, a RGBA de 8 bits.
 
-use crate::inflar::zlib;
 use crate::{Error, Imagen};
 use alloc::vec::Vec;
+use quimera_comprimir::zlib;
 
 struct Cabecera {
     ancho: u32,

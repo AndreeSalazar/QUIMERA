@@ -34,6 +34,11 @@ pub trait MedirTexto {
     fn descenso(&self, fuente: &Fuente<'_>) -> f32 {
         fuente.tam * 0.2
     }
+    /// La familia con nombre con la que se mide (y se dibujará) el texto: la primera de la lista
+    /// que se tenga. `None`: la genérica. Así el pintado usa la misma fuente que midió la maquetación.
+    fn familia<'f>(&self, fuente: &Fuente<'f>) -> Option<&'f String> {
+        fuente.familias.first()
+    }
 }
 
 /// Medidas aproximadas sin fuentes: un ancho por clase de carácter.

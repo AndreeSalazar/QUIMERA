@@ -42,14 +42,16 @@ pub struct Hoja {
     pub reglas: Vec<Regla>,
     /// Las de `@media`, en orden.
     pub medios: Vec<ReglaMedio>,
+    /// Las declaraciones de cada `@font-face` (`font-family`, `src`, `font-weight`...), en orden.
+    pub caras: Vec<Vec<Declaracion>>,
 }
 
 /// Analiza una hoja de estilo entera.
 pub fn analizar(texto: &str) -> Hoja {
     let t = tokens(texto);
-    let mut l = Lector { t: &t, i: 0 };
+    let mut l = Lector { t: &t, i: 0, caras: Vec::new() };
     let (reglas, medios) = l.reglas(false);
-    Hoja { reglas, medios }
+    Hoja { reglas, medios, caras: l.caras }
 }
 
 /// Analiza una lista de declaraciones sueltas (el atributo `style="..."`).
@@ -61,6 +63,8 @@ pub fn declaraciones(texto: &str) -> Vec<Declaracion> {
 struct Lector<'a> {
     t: &'a [Token],
     i: usize,
+    /// Los `@font-face` vistos.
+    caras: Vec<Vec<Declaracion>>,
 }
 
 impl<'a> Lector<'a> {
@@ -138,8 +142,13 @@ impl<'a> Lector<'a> {
                 let (reglas, _) = self.reglas(true);
                 Some(ReglaMedio { condicion: texto(preludio), reglas })
             }
+            Some(Token::Abre('{')) if nombre.eq_ignore_ascii_case("font-face") => {
+                let dentro = self.bloque();
+                self.caras.push(lista_de_declaraciones(dentro));
+                None
+            }
             Some(Token::Abre('{')) => {
-                self.bloque(); // @font-face, @keyframes...: todavía no
+                self.bloque(); // @keyframes, @supports...: todavía no
                 None
             }
             _ => {

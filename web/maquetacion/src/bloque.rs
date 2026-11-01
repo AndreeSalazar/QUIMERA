@@ -535,7 +535,7 @@ impl<'a> Maquetador<'a> {
             negrita: e.negrita(),
             cursiva: e.cursiva,
             generica: e.generica,
-            familia: e.familias.first().cloned(),
+            familia: self.medir.familia(&f).cloned(),
         });
     }
 

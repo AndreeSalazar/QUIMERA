@@ -2174,6 +2174,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "quimera-comprimir"
+version = "0.1.0"
+
+[[package]]
 name = "quimera-css"
 version = "0.1.0"
 
@@ -2217,6 +2221,9 @@ version = "0.1.0"
 [[package]]
 name = "quimera-imagen"
 version = "0.1.0"
+dependencies = [
+ "quimera-comprimir",
+]
 
 [[package]]
 name = "quimera-maquetacion"
@@ -2263,6 +2270,7 @@ name = "quimera-texto"
 version = "0.1.0"
 dependencies = [
  "ab_glyph",
+ "quimera-comprimir",
 ]
 
 [[package]]

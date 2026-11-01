@@ -14,6 +14,7 @@ no_std = false
 externos = ["ab_glyph"]
 
 [dependencies]
+quimera-comprimir.workspace = true
 ab_glyph = "=0.2.29"
 
 [lints]

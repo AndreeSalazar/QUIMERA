@@ -10,6 +10,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 
 | Nivel | Capa (carpeta) | Crate | Qué hace | Inspiración | `no_std` |
 |---:|---|---|---|---|---|
+| 0 | `cimientos` | ✅ `quimera-comprimir` | DEFLATE/zlib propios (luego Brotli); los usan imágenes, fuentes y red | zlib, `puff` | sí |
 | 0 | `cimientos` | ✅ `quimera-valor` | Valor JS de 64 bits, `Copy`, sin contador | SpiderMonkey `JS::Value` | sí |
 | 0 | `cimientos` | `quimera-cadenas` | Cadenas Latin-1/UTF-16 compartidas (hoy: UTF-8 únicas y liberables, en `quimera-objetos`) | Boa `boa_string` | sí |
 | 0 | `cimientos` | `quimera-plataforma` | Lo que se pide al sistema (tiempo, hilos, archivos) como *traits*; Linux y ULTRA lo implementan | Chromium `base` | sí |

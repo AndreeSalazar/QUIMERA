@@ -1,6 +1,6 @@
 //! Decodificadores de imágenes de QUIMERA, propios, `no_std` y sin dependencias.
 //!
-//! - **PNG** (`png.rs`), con su propio DEFLATE/zlib (`inflar.rs`): todas las profundidades y
+//! - **PNG** (`png.rs`), con DEFLATE/zlib propio (`quimera-comprimir`): todas las profundidades y
 //!   tipos de color, paleta, transparencia (`tRNS`) y entrelazado Adam7.
 //! - **JPEG** (`jpeg.rs`, `jpeg_bloques.rs`): secuencial y progresivo, submuestreo, reinicios,
 //!   gris, YCbCr, RGB y CMYK de Adobe; la misma IDCT entera que stb_image.
@@ -13,14 +13,13 @@
 extern crate alloc;
 
 mod gif;
-mod inflar;
 mod jpeg;
 mod jpeg_bloques;
 mod png;
 
 use alloc::vec::Vec;
 
-pub use inflar::{inflar, zlib};
+pub use quimera_comprimir::{inflar, zlib};
 
 /// Algo no se pudo decodificar.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -71,6 +70,15 @@ pub enum Formato {
     Webp,
     /// SVG (todavía no se dibuja)
     Svg,
+}
+
+impl From<quimera_comprimir::Error> for Error {
+    fn from(e: quimera_comprimir::Error) -> Self {
+        match e {
+            quimera_comprimir::Error::Datos(m) => Error::Datos(m),
+            quimera_comprimir::Error::NoSoportado(m) => Error::NoSoportado(m),
+        }
+    }
 }
 
 /// El formato por su firma.

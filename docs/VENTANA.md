@@ -66,3 +66,24 @@ Medida con la ventana abierta en example.com: **111 MB** (Edge, que es Chromium,
 
 - **Fuentes perezosas:** al empezar solo se anota qué archivos de fuentes existen. Cada uno se lee la primera vez que se pide una letra suya, así que las de reserva (chino, japonés, coreano, emoji: unos 70 MB en Windows) no ocupan nada hasta que una página las usa.
 - **Un solo sistema gráfico:** wgpu arranca por defecto Vulkan, DirectX 12 y OpenGL a la vez, y cada uno carga su driver. QUIMERA arranca solo DirectX 12 en Windows (121 MB frente a 184 MB) y Vulkan/Metal con OpenGL de respaldo en el resto. La variable `WGPU_BACKEND` (`vulkan`, `gl`...) lo cambia.
+
+## Fuentes de la página (`@font-face`)
+
+```bash
+cargo run --release -p quimera-ventana -- https://www.rust-lang.org/
+```
+
+rust-lang.org sale con sus fuentes: el título «Rust» en Alfa Slab One y el texto en Fira Sans, como en Chromium. Con sus 7 fuentes, la página ocupa 145 MB (Edge, 486 MB).
+
+1. **CSS** (`quimera-css`): las reglas `@font-face` se guardan con sus declaraciones (antes se saltaban).
+2. **Estilo** (`quimera-estilo/src/fuentes.rs`): de cada regla salen la familia, la negrita, la cursiva y la dirección.
+   - De `src` se elige la primera que QUIMERA lee: WOFF, TrueType u OpenType. `local()` se salta, y WOFF2 todavía no se lee: si una web solo da WOFF2, su texto va con la fuente del sistema.
+   - Con `unicode-range` solo se piden los trozos del latino básico: en rust-lang.org, 7 de unos 45. Las letras de otros alfabetos siguen saliendo con las fuentes de reserva del sistema.
+3. **Ventana** (`tipografias.rs`): las fuentes se descargan después de la página, en dos hilos, y al llegar cada una se vuelve a maquetar (hasta entonces, el texto va con la fuente del sistema, como `font-display: swap`). Las direcciones relativas se resuelven contra la hoja que las define. Al cambiar de página se sueltan las de la anterior. En el modo captura se espera a todas.
+4. **WOFF** (`quimera-texto/src/woff.rs`): cada tabla se descomprime con el DEFLATE propio y se vuelve a armar el archivo TrueType.
+5. **Medir y pintar con la misma fuente:** el medidor dice qué familia de la lista del CSS se usará de verdad (la primera que la página cargó), y esa es la que llega al pintado. Así el texto cabe donde lo midió la maquetación.
+
+El DEFLATE pasó de `quimera-imagen` a un crate propio en el nivel 0, `quimera-comprimir`, para que lo usen las imágenes, las fuentes y, más adelante, la red (gzip).
+
+**Falta:** WOFF2 (necesita un descompresor Brotli propio y reconstruir tablas transformadas), elegir el peso más cercano (hoy, 600 y 800 cuentan los dos como negrita) y usar los trozos de otros alfabetos cuando la página los necesite.
+

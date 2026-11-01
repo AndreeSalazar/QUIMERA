@@ -26,6 +26,7 @@ Misma página, ventana visible, Windows, `--release`. Edge 156 es Chromium por d
 | The Rust Book | **115 MB** | 486 MB |
 | Wikipedia, «Cat» (51 imágenes, 278 idiomas) | **244 MB** | 515–821 MB |
 | Hacker News (todo tablas) | **113 MB** | 456 MB |
+| rust-lang.org (7 fuentes propias) | **145 MB** | 486 MB |
 
 Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** todavía no ejecuta el JavaScript de las páginas, y Edge sí. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
 
@@ -51,7 +52,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 | Fase | Qué | Desbloquea |
 |---|---|---|
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
-| 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()` · `calc()`, `@font-face`, gzip, WebP | Wikipedia, documentación, blogs |
+| 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF) · `calc()`, WOFF2, gzip, WebP | Wikipedia, documentación, blogs |
 | 2 | Formularios, cookies, foco y teclado, caché | buscar (DuckDuckGo HTML): navegar de verdad |
 | 3 | **JavaScript ↔ DOM** (puente generado desde WebIDL, un solo GC), bucle de eventos, `fetch` | Steam y páginas con JavaScript |
 | 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
@@ -64,6 +65,7 @@ En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, 
 
 | Crate | Nivel | Qué es | Estado |
 |---|---:|---|---|
+| `cimientos/comprimir` → `quimera-comprimir` | 0 | DEFLATE y zlib propios (PNG, fuentes WOFF; luego gzip) | ✅ 1 prueba |
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
 | `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal también en un solo bloque (sin `malloc` por objeto), barrera de escritura; anota las cadenas vivas | ✅ 10 pruebas |
 | `motor-js/regex` → `quimera-regex` | 1 | Expresiones regulares: patrón → programa → máquina con vuelta atrás sin recursión ([docs/REGEX.md](docs/REGEX.md)) | ✅ 6 pruebas |
@@ -75,7 +77,7 @@ En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, 
 | `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos, flexbox, tablas, `float`, `position`, modo de compatibilidad ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 13 pruebas |
 | `web/maquetacion` → `quimera-maquetacion` | 9 | Bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, **tablas**, **flotantes**, **`position`** y capas de `z-index`, tamaños intrínsecos, **imágenes** (proporción, `max-width`) → lista de dibujo | ✅ 30 pruebas |
 | `herramientas/ver` → `quimera-ver` | 100 | Una página → imagen SVG: [la primera página dibujada por QUIMERA](docs/ejemplos/primera.svg) | ✅ |
-| `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux): medir, interletraje, rasterizar, reserva para símbolos; cada archivo se lee solo cuando hace falta ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 3 pruebas |
+| `grafico/texto` → `quimera-texto` | 2 | Fuentes del sistema (Windows, Linux) y de la página (`@font-face`, WOFF propio): medir, interletraje, rasterizar, reserva para símbolos; cada archivo se lee solo cuando hace falta ([docs/VENTANA.md](docs/VENTANA.md)) | ✅ 4 pruebas |
 | `grafico/imagen` → `quimera-imagen` | 2 | PNG, JPEG (también progresivo) y GIF → RGBA, sin dependencias; mismos píxeles que las bibliotecas de referencia en 115 imágenes ([docs/IMAGENES.md](docs/IMAGENES.md)) | ✅ 5 pruebas |
 | `grafico/gpu` → `quimera-gpu` | 2 | wgpu: una tubería que dibuja cuadros de color, letras del atlas e imágenes (una textura cada una); captura sin ventana | ✅ 4 pruebas |
 | `grafico/pintar` → `quimera-pintar` | 10 | Lista de dibujo → cuadros, atlas de letras, medidas reales para la maquetación | ✅ 2 pruebas |

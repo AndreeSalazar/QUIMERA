@@ -345,7 +345,7 @@ impl EnLinea<'_> {
             negrita: e.negrita(),
             cursiva: e.cursiva,
             generica: e.generica,
-            familia: e.familias.first().cloned(),
+            familia: self.medir.familia(&f).cloned(),
         });
         let grosor = (e.tam_letra / 14.0).max(1.0);
         if e.subrayado {

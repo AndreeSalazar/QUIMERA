@@ -13,6 +13,12 @@
 //!
 //! No conoce el CSS: el pintado traduce el estilo a [`Familia`] y caras.
 
+extern crate alloc;
+
+mod woff;
+
+pub use woff::{a_sfnt, es_woff};
+
 use ab_glyph::{Font, FontVec, GlyphId, PxScale, ScaleFont, point};
 use std::path::Path;
 use std::sync::OnceLock;
@@ -77,6 +83,8 @@ pub struct Fuentes {
     tabla: [[Option<IdCara>; 4]; 3],
     /// Para los caracteres que no están en la cara pedida.
     reserva: Vec<IdCara>,
+    /// Las fuentes de la página (`@font-face`): (familia en minúsculas, negrita, cursiva, cara).
+    familias: Vec<(String, bool, bool, IdCara)>,
 }
 
 /// Archivos a probar para cada familia y cara (normal, negrita, cursiva, negrita cursiva).
@@ -192,8 +200,9 @@ impl Fuentes {
         f
     }
 
-    /// Carga una fuente desde sus bytes (TrueType u OpenType); devuelve su número.
+    /// Carga una fuente desde sus bytes (TrueType, OpenType o WOFF); devuelve su número.
     pub fn anadir(&mut self, nombre: &str, bytes: Vec<u8>) -> Option<IdCara> {
+        let bytes = if es_woff(&bytes) { a_sfnt(&bytes)? } else { bytes };
         let fuente = leer_fuente(bytes)?;
         self.caras.push(Cara { fuente: OnceLock::from(Some(fuente)), nombre: String::from(nombre) });
         Some(self.caras.len() - 1)
@@ -240,6 +249,42 @@ impl Fuentes {
             .or(fila[0])
             .or_else(|| self.tabla.iter().flatten().flatten().next().copied())
             .or_else(|| self.reserva.first().copied())
+    }
+
+    /// Añade una fuente de la página (`@font-face`) con su familia y estilo.
+    pub fn anadir_familia(&mut self, familia: &str, negrita: bool, cursiva: bool, bytes: Vec<u8>) -> Option<IdCara> {
+        let cara = self.anadir(familia, bytes)?;
+        self.familias.push((familia.to_lowercase(), negrita, cursiva, cara));
+        Some(cara)
+    }
+
+    /// La cara de la primera de `nombres` que la página haya cargado: la de ese estilo si la hay
+    /// y, si no, la de esa familia más parecida (misma negrita).
+    pub fn cara_por_nombre(&self, nombres: &[String], negrita: bool, cursiva: bool) -> Option<IdCara> {
+        nombres.iter().find_map(|n| {
+            let n = n.trim().to_lowercase();
+            let de_la_familia = self.familias.iter().filter(|f| f.0 == n);
+            let exacta = de_la_familia.clone().find(|f| f.1 == negrita && f.2 == cursiva);
+            exacta
+                .or_else(|| de_la_familia.clone().find(|f| f.1 == negrita))
+                .or_else(|| de_la_familia.clone().next())
+                .map(|f| f.3)
+        })
+    }
+
+    /// Si la página cargó la familia `nombre`.
+    pub fn tiene_familia(&self, nombre: &str) -> bool {
+        let n = nombre.trim().to_lowercase();
+        self.familias.iter().any(|f| f.0 == n)
+    }
+
+    /// Otra página: se sueltan las fuentes que trajo la anterior (su memoria se libera).
+    pub fn olvidar_familias(&mut self) {
+        for (_, _, _, cara) in self.familias.drain(..) {
+            if let Some(c) = self.caras.get_mut(cara) {
+                c.fuente.take();
+            }
+        }
     }
 
     /// Ascenso y descenso (positivos) de una cara a un tamaño en píxeles.

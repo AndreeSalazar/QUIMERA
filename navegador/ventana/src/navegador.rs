@@ -9,6 +9,7 @@ use crate::barra::{self, Barra, Vista, Zona};
 use crate::historial::Historial;
 use crate::imagenes::{self, Imagenes};
 use crate::pagina::{Pagina, direccion_escrita};
+use crate::tipografias;
 use quimera_estilo::Opciones;
 use quimera_gpu::Gpu;
 use quimera_imagen::Imagen;
@@ -28,6 +29,8 @@ pub enum Evento {
     Pagina { id: u64, pagina: Box<Pagina> },
     /// Una imagen de la página `id` (descargada y decodificada, o por qué no).
     Imagen { id: u64, src: String, imagen: Result<Imagen, String> },
+    /// Una fuente (`@font-face`) de la página `id`, con sus bytes o por qué no llegó.
+    Fuente { id: u64, pedida: tipografias::Pedida, bytes: Result<Vec<u8>, String> },
 }
 
 /// Lo que existe mientras la ventana está abierta.
@@ -131,6 +134,19 @@ impl Navegador {
                 }
                 Err(e) => eprintln!("imagen {src}: {e}"),
             },
+            Evento::Fuente { id, pedida, bytes } if id == self.id_carga => {
+                let w = &pedida.web;
+                match bytes.map(|b| self.pintor.anadir_fuente(&w.familia, w.negrita, w.cursiva, b)) {
+                    Ok(true) => {
+                        self.imagenes_nuevas = true; // se vuelve a maquetar con ella
+                        if let Some(a) = &self.abierta {
+                            a.ventana.request_redraw();
+                        }
+                    }
+                    Ok(false) => eprintln!("fuente {}: formato que QUIMERA no lee", pedida.url),
+                    Err(e) => eprintln!("fuente {}: {e}", pedida.url),
+                }
+            }
             _ => {} // de una carga anterior
         }
     }
@@ -144,8 +160,13 @@ impl Navegador {
         }
         let (id, proxy) = (self.id_carga, self.proxy.clone());
         let fuentes = imagenes::fuentes(&pagina.documento());
+        let proxy_imagenes = proxy.clone();
         imagenes::descargar_todas(self.cliente.clone(), pagina.base.clone(), fuentes, move |src, imagen| {
-            let _ = proxy.send_event(Evento::Imagen { id, src, imagen });
+            let _ = proxy_imagenes.send_event(Evento::Imagen { id, src, imagen });
+        });
+        self.pintor.olvidar_fuentes();
+        tipografias::descargar_todas(self.cliente.clone(), tipografias::pedidas(&pagina), move |pedida, bytes| {
+            let _ = proxy.send_event(Evento::Fuente { id, pedida, bytes });
         });
         let fragmento = self.url.fragmento.clone();
         let mut final_ = pagina.url.clone();

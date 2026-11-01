@@ -39,7 +39,7 @@ Que las páginas de lectura se vean como en Chrome.
 - ✅ **`position` y `z-index`**: `relative`, `absolute`, capas y contextos de apilamiento. Las mismas posiciones que Chromium en 19 cajas, y la misma caja encima en 7 puntos ([detalle](ESTILO-MAQUETACION.md#posición-y-z-index)). Falta que `fixed` y `sticky` se queden quietos al desplazar.
 - `overflow` con desplazamiento propio, `inline-block`.
 - ✅ **Variables de CSS** (`--x`, `var()` con reserva, anidadas, heredadas) y `unset` correcto ([detalle](ESTILO-MAQUETACION.md#variables-de-css)). Falta `calc()`, `min()`/`max()`.
-- `@font-face`: cargar las fuentes de la página.
+- ✅ **`@font-face`** con TrueType, OpenType y WOFF (rust-lang.org sale con sus fuentes; [detalle](VENTANA.md#fuentes-de-la-página-font-face)). Falta WOFF2 (Brotli).
 - Respuestas comprimidas: `gzip` y `deflate` (el descompresor de PNG ya sirve).
 - Imágenes: `srcset`, `<picture>`, `background-image`, WebP, y mipmaps para que las fotos reducidas no salgan con dientes.
 

@@ -14,6 +14,7 @@ no_std = true
 externos = []
 
 [dependencies]
+quimera-comprimir.workspace = true
 
 [lints]
 workspace = true

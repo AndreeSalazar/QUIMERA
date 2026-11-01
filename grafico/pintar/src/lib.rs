@@ -79,8 +79,11 @@ fn familia(g: Generica) -> Familia {
     }
 }
 
+/// La cara para un texto: la primera familia con nombre que la página haya cargado
+/// (`@font-face`) y, si no, la genérica del sistema.
 fn cara(f: &Fuentes, fuente: &Fuente<'_>) -> Option<IdCara> {
-    f.cara(familia(fuente.generica), fuente.negrita, fuente.cursiva)
+    f.cara_por_nombre(fuente.familias, fuente.negrita, fuente.cursiva)
+        .or_else(|| f.cara(familia(fuente.generica), fuente.negrita, fuente.cursiva))
 }
 
 /// Las medidas de las fuentes de verdad, para la maquetación.
@@ -103,6 +106,10 @@ impl MedirTexto for Medidor<'_> {
     fn descenso(&self, f: &Fuente<'_>) -> f32 {
         cara(self.fuentes, f).map_or(f.tam * 0.2, |c| self.fuentes.metricas(c, f.tam).1)
     }
+
+    fn familia<'f>(&self, f: &Fuente<'f>) -> Option<&'f String> {
+        f.familias.iter().find(|n| self.fuentes.tiene_familia(n))
+    }
 }
 
 fn rgba(c: Color) -> [f32; 4] {
@@ -121,6 +128,17 @@ impl Pintor {
     /// Un pintor con estas fuentes y un atlas de `tam_atlas × tam_atlas`.
     pub fn nuevo(fuentes: Fuentes, tam_atlas: u32) -> Pintor {
         Pintor { fuentes, atlas: Atlas::nuevo(tam_atlas), letras: HashMap::new() }
+    }
+
+    /// Añade una fuente de la página (`@font-face`: TrueType, OpenType o WOFF). `false` si no
+    /// se pudo leer.
+    pub fn anadir_fuente(&mut self, familia: &str, negrita: bool, cursiva: bool, bytes: Vec<u8>) -> bool {
+        self.fuentes.anadir_familia(familia, negrita, cursiva, bytes).is_some()
+    }
+
+    /// Otra página: se sueltan las fuentes de la anterior.
+    pub fn olvidar_fuentes(&mut self) {
+        self.fuentes.olvidar_familias();
     }
 
     /// Las medidas para maquetar.
@@ -182,13 +200,13 @@ impl Pintor {
                     }
                 }
                 // La familia con nombre aún no se carga: se usa la genérica.
-                Pieza::Texto { x, base, texto, tam, color, negrita, cursiva, generica, .. } => {
+                Pieza::Texto { x, base, texto, tam, color, negrita, cursiva, generica, familia, .. } => {
                     let fuente = Fuente {
                         tam: tam * e,
                         negrita: *negrita,
                         cursiva: *cursiva,
                         generica: *generica,
-                        familias: &[],
+                        familias: familia.as_ref().map_or(&[], core::slice::from_ref),
                     };
                     self.texto(&mut v, texto, &fuente, x * e, base * e, rgba(*color));
                 }

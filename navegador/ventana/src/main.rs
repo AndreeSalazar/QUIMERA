@@ -20,6 +20,7 @@ mod imagenes;
 mod navegador;
 mod pagina;
 mod png;
+mod tipografias;
 
 use imagenes::Imagenes;
 use navegador::{Evento, Navegador};
@@ -111,6 +112,7 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<u
     let mut pagina = Pagina::cargar(&cliente, url);
     let (w, h) = (ancho as f32, alto as f32 - barra::ALTO);
     let mut imagenes = cargar_imagenes(&cliente, &pagina);
+    cargar_fuentes(&cliente, &pagina, &mut pintor);
     if let Ok(clase) = std::env::var("QUIMERA_DEPURAR") {
         depurar(&pagina, &clase, (w, h));
     }
@@ -121,6 +123,8 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<u
         eprintln!("enlace {n}: {} → {destino}", enlace.href);
         pagina = Pagina::cargar(&cliente, &destino);
         imagenes = cargar_imagenes(&cliente, &pagina);
+        pintor.olvidar_fuentes();
+        cargar_fuentes(&cliente, &pagina, &mut pintor);
         m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes);
     }
     gpu.cargar(&pintor.escena(&m, 1.0, &|s| imagenes.id(s)));
@@ -184,6 +188,27 @@ fn depurar(pagina: &Pagina, clase: &str, (ancho, alto): (f32, f32)) {
             );
         }
         actual = doc.nodo(n).padre;
+    }
+}
+
+/// Las fuentes de la página (`@font-face`), esperando a que lleguen (para capturar).
+fn cargar_fuentes(cliente: &Cliente, pagina: &Pagina, pintor: &mut Pintor) {
+    for p in tipografias::pedidas(pagina) {
+        let w = &p.web;
+        match tipografias::descargar(cliente, &p.url).map(|b| pintor.anadir_fuente(&w.familia, w.negrita, w.cursiva, b))
+        {
+            Ok(true) => {
+                eprintln!(
+                    "fuente {} ({}{}) ← {}",
+                    w.familia,
+                    if w.negrita { "negrita" } else { "normal" },
+                    if w.cursiva { ", cursiva" } else { "" },
+                    p.url
+                );
+            }
+            Ok(false) => eprintln!("fuente {}: formato que QUIMERA no lee", p.url),
+            Err(e) => eprintln!("fuente {}: {e}", p.url),
+        }
     }
 }
 

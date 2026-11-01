@@ -2,6 +2,7 @@
 resolver = "3"
 members = [
     "cimientos/valor",
+    "cimientos/comprimir",
     "motor-js/gc",
     "motor-js/regex",
     "motor-js/frontend",
@@ -35,6 +36,7 @@ authors = ["Eddi Salazar"]
 
 [workspace.dependencies]
 quimera-valor = { path = "cimientos/valor" }
+quimera-comprimir = { path = "cimientos/comprimir" }
 quimera-gc = { path = "motor-js/gc" }
 quimera-regex = { path = "motor-js/regex" }
 quimera-frontend = { path = "motor-js/frontend" }
