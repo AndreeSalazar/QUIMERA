@@ -3,6 +3,7 @@ resolver = "3"
 members = [
     "cimientos/valor",
     "motor-js/gc",
+    "motor-js/regex",
     "motor-js/frontend",
     "motor-js/objetos",
     "motor-js/vm",
@@ -22,6 +23,7 @@ authors = ["Eddi Salazar"]
 [workspace.dependencies]
 quimera-valor = { path = "cimientos/valor" }
 quimera-gc = { path = "motor-js/gc" }
+quimera-regex = { path = "motor-js/regex" }
 quimera-frontend = { path = "motor-js/frontend" }
 quimera-objetos = { path = "motor-js/objetos" }
 quimera-vm = { path = "motor-js/vm" }
@@ -35,3 +37,8 @@ undocumented_unsafe_blocks = "deny"
 
 [profile.release]
 debug = "line-tables-only"
+
+# Las pruebas ejecutan benchmarks enteros (Richards, RegExp...): un poco de optimización
+# las hace varias veces más rápidas sin perder las comprobaciones de desbordamiento.
+[profile.dev]
+opt-level = 1

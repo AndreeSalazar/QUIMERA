@@ -252,7 +252,7 @@ impl Analisis {
                 args.iter().for_each(|a| self.expr(a));
             }
             Expr::Secuencia(v) => v.iter().for_each(|x| self.expr(x)),
-            Expr::Numero(_) | Expr::Cadena(_) | Expr::Bool(_) | Expr::Nulo | Expr::Este => {}
+            Expr::Numero(_) | Expr::Cadena(_) | Expr::Regex(..) | Expr::Bool(_) | Expr::Nulo | Expr::Este => {}
         }
     }
 }

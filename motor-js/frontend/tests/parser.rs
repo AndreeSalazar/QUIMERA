@@ -96,7 +96,6 @@ fn sentencias_de_control() {
 fn lo_que_falta_avisa_con_claridad() {
     for (codigo, pista) in [
         ("class A {}", "class"),
-        ("x = /a+/", "expresiones regulares"),
         ("f(...a)", "spread"),
         ("let [a, b] = c", "desestructuración"),
         ("a?.b", "opcional"),
@@ -105,4 +104,18 @@ fn lo_que_falta_avisa_con_claridad() {
         let e = analizar(codigo).unwrap_err();
         assert!(e.mensaje.contains(pista), "{codigo}: {}", e.mensaje);
     }
+}
+
+#[test]
+fn barra_es_division_o_expresion_regular_segun_lo_anterior() {
+    let re = |p: &str, b: &str| Expr::Regex(p.to_string(), b.to_string());
+    assert_eq!(expr("/a[/]b/gi"), re("a[/]b", "gi"));
+    assert_eq!(expr(r"x = /\//"), Expr::Asignar("=", b(id("x")), b(re(r"\/", ""))));
+    assert!(matches!(expr("a / b / c"), Expr::Binaria("/", ..)));
+    assert!(matches!(expr("(a) / 2"), Expr::Binaria("/", ..)));
+    assert!(matches!(expr("x[0] /= 2"), Expr::Asignar("/=", ..)));
+    assert!(matches!(expr("f(/,/)"), Expr::Llamar(..)));
+    let e = analizar("x = /(/").unwrap_err();
+    assert!(e.mensaje.contains("expresión regular no válida"), "{}", e.mensaje);
+    assert!(analizar("x = /abc").unwrap_err().mensaje.contains("sin cerrar"));
 }

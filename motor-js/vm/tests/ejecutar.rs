@@ -312,6 +312,7 @@ fn los_demas_benchmarks_de_v8_corren_y_se_comprueban() {
         ("v8-benches-earley-boyer.js", &["BgL_earleyzd2benchmarkzd2", "BgL_nboyerzd2benchmarkzd2"]),
         ("v8-benches-navier-stokes.js", &["setupNavierStokes", "runNavierStokes", "tearDownNavierStokes"]),
         ("v8-benches-splay.js", &["SplaySetup", "SplayRun", "SplayTearDown"]),
+        ("v8-benches-regexp.js", &["RegExpSetup"]),
     ] {
         let ruta = format!("{}/../frontend/tests/datos/{archivo}", env!("CARGO_MANIFEST_DIR"));
         let codigo = std::fs::read_to_string(ruta).unwrap();
@@ -336,4 +337,34 @@ fn arguments_parse_int_y_var_global() {
                             isFinite(1 / 0)]\n\
                   }";
     assert_eq!(ejecutar(codigo), "undefined,true,1,6,x,9,42,-31,35,5,true,350,0.5,ff,-1010,8,false");
+}
+
+#[test]
+fn expresiones_regulares() {
+    let codigo = r#"function resultado() {
+        const m = /(\d+)-(\d+)?/.exec('ab 12- cd');
+        const g = /o/g; const posiciones = []; let r; while ((r = g.exec('foo boo')) != null) posiciones.push(r.index + ':' + g.lastIndex);
+        const fecha = '2026-10-31'.replace(/(\d+)-(\d+)-(\d+)/, '$3/$2/$1 [$&] $$ $9');
+        const mayus = 'uno dos'.replace(/\b\w/g, function (c, i) { return c.toUpperCase() + i });
+        const re = new RegExp('a+', 'gi');
+        return [m[0], m[1], m[2], m.index, m.input, m.length, posiciones.join(' '), fecha, mayus,
+                'a1b22c333'.split(/\d+/).join('|'), 'a,b;c'.split(/([,;])/).join('|'), 'abc'.split(/(?:)/).join('|'),
+                ''.split(/x/).length, 'aAbAA'.match(re).join('|'), 'xyz'.match(/q/), 'xaay'.match(/a+/)[0],
+                'hola mundo'.search(/m/), /^\s*$/.test('   '), /^\s*$/.test(' x '), 'a.b.c'.replace('.', '-'),
+                'ñandú-ñ'.replace(/ñ/g, 'n'), 'ññx'.search(/x/), String(/a\/b/g), re.lastIndex,
+                '  recorta  '.replace(/^\s*|\s*$/g, '') + '|']
+      }"#;
+    assert_eq!(
+        ejecutar(codigo),
+        "12-,12,,3,ab 12- cd,3,1:2 2:3 5:6 6:7,31/10/2026 [2026-10-31] $ $9,U0no D4os,a|b|c|,a|,|b|;|c,a|b|c,1,\
+         aA|AA,,aa,5,true,false,a-b.c,nandú-n,2,/a\\/b/g,0,recorta|"
+    );
+}
+
+#[test]
+fn regex_mal_escrita_es_syntax_error() {
+    let mut m = Motor::default();
+    assert!(m.ejecutar("let r = /(/;").unwrap_err().mensaje.contains("SyntaxError"));
+    let e = m.ejecutar("new RegExp('[a')").unwrap_err();
+    assert!(e.mensaje.contains("SyntaxError"), "{}", e.mensaje);
 }

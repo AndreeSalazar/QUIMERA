@@ -71,13 +71,19 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
     match id {
         JOIN | ARR_INDEX_OF => return arreglo(m, id, ll),
         STRING => {
-            let t = if ll.n == 0 { String::new() } else { m.texto(arg(m, ll, 0)) };
+            let t = if ll.n == 0 {
+                String::new()
+            } else {
+                let v = m.a_primitivo(arg(m, ll, 0))?;
+                m.texto(v)
+            };
             return Ok(m.mundo.cadena(&t));
         }
         FROM_CHAR_CODE => {
             let unidades: Vec<u16> = (0..ll.n).map(|i| op::a_numero(&m.mundo, arg(m, ll, i)) as i64 as u16).collect();
             return Ok(m.mundo.cadena(&String::from_utf16_lossy(&unidades)));
         }
+        SPLIT if m.mundo.regexp(arg(m, ll, 0)).is_some() => return super::regexp::dividir(m, ll),
         SPLIT..=ENDS_WITH => return mas_texto(m, id, ll),
         _ => {}
     }

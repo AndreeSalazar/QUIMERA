@@ -48,26 +48,28 @@ función 4 main: 0 parámetros, 4 registros, entorno 0
 
 **Analiza y compila**: `var`/`let`/`const`, funciones (declaradas, expresiones, flechas, métodos, parámetros por defecto, nombre propio), cierres anidados, objetos (abreviados, calculados, métodos), arreglos con huecos, todos los operadores (también `**`, `??`, `&&=`, `>>>=`...), `new`, `this`, `typeof`/`delete`/`void`, `if`, `while`, `do`, `for`, `break`/`continue`, `for-in`/`for-of`, `switch`, `try`/`catch`/`finally` (también con `return`/`break` dentro), `throw`, y el `;` automático.
 
-**Avisa con un error claro**: plantillas `` ` ``, expresiones regulares, clases, `...spread`, desestructuración, `?.`, generadores, `async`/`await`, etiquetas y BigInt.
+**Expresiones regulares**: un `/` es una expresión regular si el token anterior no puede terminar una expresión (`x / y` divide; `= /re/` no). Cada literal se valida al analizar con `quimera-regex`, como hacen los navegadores.
 
-Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y 7 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay). Los 14 se analizan, compilan y ejecutan.
+**Avisa con un error claro**: plantillas `` ` ``, clases, `...spread`, desestructuración, `?.`, generadores, `async`/`await`, etiquetas y BigInt.
+
+Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y los 8 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay, RegExp). Los 15 se analizan, compilan y ejecutan.
 
 ## Medida
 
-`cargo run --release -p quimera-banco-frontend`: el corpus repetido 16 veces (6,25 MB, con los 7 benchmarks de V8), cada copia en su función, el mejor de cinco intentos. Windows, misma máquina para los dos:
+`cargo run --release -p quimera-banco-frontend`: el corpus repetido 16 veces (8,2 MB, con los 8 benchmarks de V8), cada copia en su función, el mejor de cinco intentos. Windows, misma máquina para los dos:
 
 | | Tiempo | Velocidad |
 |---|---:|---:|
-| Boa 0.22: texto → árbol | 1.098 ms | 5,7 MB/s |
-| **QUIMERA: texto → árbol** | **260 ms** | **24,0 MB/s** |
-| QUIMERA: texto → bytecode (todo el frontend) | 375 ms | 16,7 MB/s |
+| Boa 0.22: texto → árbol | 1.906 ms | 4,3 MB/s |
+| **QUIMERA: texto → árbol** | **483 ms** | **16,9 MB/s** |
+| QUIMERA: texto → bytecode (todo el frontend) | 702 ms | 11,7 MB/s |
 
-QUIMERA analiza **4,2× más rápido** (con el corpus anterior de 1,05 MB eran 3,3–3,4×: EarleyBoyer, con su código Scheme muy anidado, castiga más al parser recursivo de Boa, que además necesita una pila nativa grande para no desbordarse). Con todo el camino hasta el bytecode es 2,9× más rápido que Boa produciendo solo su árbol.
+QUIMERA analiza **3,9× más rápido** (en una máquina cargada; antes de añadir RegExp eran 4,2×) (con el corpus anterior de 1,05 MB eran 3,3–3,4×: EarleyBoyer, con su código Scheme muy anidado, castiga más al parser recursivo de Boa, que además necesita una pila nativa grande para no desbordarse). Con todo el camino hasta el bytecode es 2,7× más rápido que Boa produciendo solo su árbol.
 
 **Para ser justos**: el parser de Boa hace más por el camino. Cubre todo ECMAScript (las partes que aquí dan error), comprueba los errores tempranos de la especificación y guarda posiciones en cada nodo. La comparación es honesta para este corpus, pero parte de la diferencia se irá cerrando a medida que QUIMERA cubra más del lenguaje. La meta es mantener la ventaja: léxico en un solo paso, sin interner global y sin GC en el frontend.
 
 ## Siguiente
 
 - `quimera-objetos` y `quimera-vm`: ejecutar este bytecode y medir contra Boa y SpiderMonkey (`js140`) en los mismos benchmarks.
-- Completar el lenguaje: plantillas, expresiones regulares (con `quimera-regex`), clases y desestructuración.
+- Completar el lenguaje: plantillas, clases y desestructuración.
 - Posiciones en el bytecode, para los mensajes de error en ejecución.

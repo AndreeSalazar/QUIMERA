@@ -31,6 +31,8 @@ pub enum Clase {
     Nativa = 4,
     /// Entorno de variables capturadas.
     Entorno = 5,
+    /// Expresión regular: un objeto con el número de su programa compilado (en la máquina).
+    RegExp = 6,
 }
 
 impl Clase {
@@ -41,6 +43,7 @@ impl Clase {
             3 => Clase::Funcion,
             4 => Clase::Nativa,
             5 => Clase::Entorno,
+            6 => Clase::RegExp,
             _ => return None,
         })
     }
@@ -120,6 +123,21 @@ impl Mundo {
         let tipo = Valor::entero(Clase::Nativa as i32);
         let forma = Valor::entero(FORMA_VACIA as i32);
         self.m.asignar(&[tipo, forma, proto, Valor::NULO, Valor::entero(id as i32)])
+    }
+
+    /// Una expresión regular: un objeto que guarda el número `indice` de su programa compilado.
+    pub fn crear_regexp(&mut self, indice: u32, proto: Valor) -> Valor {
+        let tipo = Valor::entero(Clase::RegExp as i32);
+        let forma = Valor::entero(FORMA_VACIA as i32);
+        self.m.asignar(&[tipo, forma, proto, Valor::NULO, Valor::entero(indice as i32)])
+    }
+
+    /// El número del programa de una expresión regular.
+    pub fn regexp(&self, v: Valor) -> Option<u32> {
+        if self.clase(v)? != Clase::RegExp {
+            return None;
+        }
+        Some(entero(self.m.leer(v, C_EXTRA))? as u32)
     }
 
     /// Un arreglo con estos elementos.

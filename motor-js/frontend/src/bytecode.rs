@@ -184,6 +184,8 @@ pub enum Instr {
     IterarClaves { dst: Reg, obj: Reg },
     /// `dst` = arreglo con los valores de `obj` (`for-of` sobre arreglos y cadenas).
     IterarValores { dst: Reg, obj: Reg },
+    /// `dst = /patrón/banderas` (un objeto nuevo cada vez que se evalúa).
+    CrearRegex { dst: Reg, patron: u32, banderas: u32 },
     /// `dst = {}`.
     CrearObjeto { dst: Reg },
     /// Un arreglo con los `n` registros seguidos desde `desde` (los huecos llevan un valor especial).
@@ -310,6 +312,9 @@ impl Stencil {
             EscribirIndice { obj, indice, src } => alloc::format!("r{obj}[r{indice}] = r{src}"),
             BorrarProp { dst, obj, nombre } => alloc::format!("r{dst} = delete r{obj}.{}", self.atomo(*nombre)),
             BorrarIndice { dst, obj, indice } => alloc::format!("r{dst} = delete r{obj}[r{indice}]"),
+            CrearRegex { dst, patron, banderas } => {
+                alloc::format!("r{dst} = /{}/{}", self.atomo(*patron), self.atomo(*banderas))
+            }
             IterarClaves { dst, obj } => alloc::format!("r{dst} = claves(r{obj})"),
             IterarValores { dst, obj } => alloc::format!("r{dst} = valores(r{obj})"),
             CrearObjeto { dst } => alloc::format!("r{dst} = {{}}"),

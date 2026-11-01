@@ -13,5 +13,8 @@ capa = "motor-js"
 no_std = true
 externos = []
 
+[dependencies]
+quimera-regex.workspace = true
+
 [lints]
 workspace = true

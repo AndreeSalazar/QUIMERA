@@ -10,11 +10,12 @@ Su motor JavaScript mezcla el frontend de **Boa** con el diseño de ejecución d
 |---|---:|---|---|
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
 | `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal, barrera de escritura | ✅ 10 pruebas |
-| `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador | ✅ 23 pruebas |
+| `motor-js/regex` → `quimera-regex` | 1 | Expresiones regulares: patrón → programa → máquina con vuelta atrás sin recursión ([docs/REGEX.md](docs/REGEX.md)) | ✅ 6 pruebas |
+| `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador, literales `/re/` | ✅ 24 pruebas |
 | `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas, objetos, arreglos densos, funciones y entornos sobre el GC, `delete` en su sitio | ✅ 9 pruebas |
-| `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete` y biblioteca de colecciones | ✅ 24 pruebas |
+| `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones | ✅ 28 pruebas |
 | `bancos/frontend` → `quimera-banco-frontend` | 99 | Compara el frontend con el parser de Boa | ✅ 1 prueba |
-| `bancos/vm` → `quimera-banco-vm` | 99 | Compara la VM con boa_engine | ✅ 1 prueba |
+| `bancos/vm` → `quimera-banco-vm` | 99 | Compara la VM con boa_engine y comprueba RegExp contra Boa | ✅ 1 prueba |
 | `bancos/gc` → `quimera-banco-gc` | 99 | Compara `quimera-gc` con `boa_gc` | ✅ 1 prueba |
 | `herramientas/guardianes` → `quimera-guardianes` | 100 | Semáforo rojo/amarillo/verde, 1000 líneas por archivo, jerarquía | ✅ 12 pruebas |
 
@@ -27,21 +28,21 @@ Primera medida, con la misma carga estilo Splay (200.000 pasos, 5 millones de ob
 
 El GC de QUIMERA es **1,26–1,36× más rápido** y tiene un tercio de los pasos lentos. La peor pausa aún depende de la recolección mayor, que marca todo de una vez; marcarla por partes (como SpiderMonkey) es la siguiente mejora del GC.
 
-El frontend, con el corpus de Boa y V8 (7 benchmarks de Octane) repetido hasta 6,25 MB:
+El frontend, con el corpus de Boa y V8 (los 8 benchmarks de Octane) repetido hasta 8,2 MB:
 
 | | Texto → árbol | Velocidad |
 |---|---:|---:|
-| **`quimera-frontend`** | **260 ms** | **24 MB/s** |
-| parser de Boa 0.22 | 1.098 ms | 5,7 MB/s |
+| **`quimera-frontend`** | **483 ms** | **16,9 MB/s** |
+| parser de Boa 0.22 | 1.906 ms | 4,3 MB/s |
 
-**4,2× más rápido** (con la salvedad de que Boa cubre todo ECMAScript; ver [docs/FRONTEND.md](docs/FRONTEND.md)).
+**3,9× más rápido** (con la salvedad de que Boa cubre todo ECMAScript; ver [docs/FRONTEND.md](docs/FRONTEND.md)).
 
 **Ejecutando JavaScript** (los benchmarks de Boa, mismos resultados en los dos motores):
 
 | | Media geométrica frente a boa_engine 0.22 |
 |---|---:|
 | **`quimera-vm`** | **2,81× más rápido** (de 1,13× en nested-loop a 5,60× en closures-create) |
-| **V8 (Octane), 7 benchmarks con su arnés completo** | **2,88× la puntuación de Boa** (de 1,99× en Splay a 4,56× en EarleyBoyer; gana en los 7) |
+| **V8 (Octane), los 8 benchmarks con su arnés completo** | **3,33× la puntuación de Boa** (de 1,78× en NavierStokes a 12,5× en RegExp; gana en los 8) |
 
 Ver [docs/VM.md](docs/VM.md).
 

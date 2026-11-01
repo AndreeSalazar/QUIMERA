@@ -6,10 +6,13 @@
 mod coleccion;
 mod fecha;
 mod numeros;
+mod regexp;
 mod texto;
 
 use crate::llamadas::Llamada;
-use crate::{Motor, R_ARREGLO, R_CADENA, R_ERROR, R_FECHA, R_FUNCION, R_GLOBAL, R_NUMERO, R_OBJETO, operaciones as op};
+use crate::{
+    Motor, R_ARREGLO, R_CADENA, R_ERROR, R_FECHA, R_FUNCION, R_GLOBAL, R_NUMERO, R_OBJETO, R_REGEXP, operaciones as op,
+};
 use alloc::string::String;
 use alloc::vec::Vec;
 use quimera_objetos::{Clase, Valor};
@@ -29,12 +32,14 @@ const GRUPO_TEXTO: u32 = 200;
 const GRUPO_FECHA: u32 = 300;
 /// Desde aquí, `Object.keys`, `apply` y los métodos de arreglos (`coleccion.rs`).
 const GRUPO_COLECCION: u32 = 400;
+/// Desde aquí, `RegExp` y los métodos de cadenas que la usan (`regexp.rs`).
+const GRUPO_REGEXP: u32 = 500;
 
 /// Crea el objeto global, los prototipos y las nativas.
 pub(crate) fn preparar(m: &mut Motor) {
     let objeto = m.mundo.crear_objeto(Valor::NULO);
     m.mundo.m.pila_mut()[R_OBJETO] = objeto;
-    for r in [R_FUNCION, R_ARREGLO, R_GLOBAL, R_NUMERO, R_CADENA, R_FECHA, R_ERROR] {
+    for r in [R_FUNCION, R_ARREGLO, R_GLOBAL, R_NUMERO, R_CADENA, R_FECHA, R_ERROR, R_REGEXP] {
         let o = m.mundo.crear_objeto(m.pila(R_OBJETO));
         m.mundo.m.pila_mut()[r] = o;
     }
@@ -60,6 +65,7 @@ pub(crate) fn preparar(m: &mut Motor) {
     numeros::preparar(m);
     texto::preparar(m);
     fecha::preparar(m);
+    regexp::preparar(m);
     m.fijar_claves_ocultas();
     m.mundo.m.soltar_raices(crate::N_FIJAS);
 }
@@ -121,11 +127,12 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
         m.mundo.m.pila_mut()[ll.destino] = v;
         return Ok(false);
     }
-    let construye = matches!(id, OBJETO | ARREGLO) || fecha::es_constructor(id);
+    let construye = matches!(id, OBJETO | ARREGLO | regexp::REGEXP) || fecha::es_constructor(id);
     if ll.construir && !construye {
         return Err(m.error("TypeError", "esta función nativa no es un constructor"));
     }
     let v = match id {
+        GRUPO_REGEXP.. => regexp::llamar(m, id, &ll)?,
         GRUPO_COLECCION.. => coleccion::llamar(m, id, &ll)?,
         GRUPO_FECHA.. => fecha::llamar(m, id, &ll)?,
         GRUPO_TEXTO.. => texto::llamar(m, id, &ll)?,

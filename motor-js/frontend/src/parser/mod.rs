@@ -131,6 +131,7 @@ fn describir(t: &Tipo) -> String {
         Tipo::Numero(n) => format!("el número {n}"),
         Tipo::Cadena(_) => String::from("una cadena"),
         Tipo::Signo(s) => format!("`{s}`"),
+        Tipo::Regex(p, b) => format!("la expresión regular /{p}/{b}"),
         Tipo::Fin => String::from("el final del texto"),
     }
 }

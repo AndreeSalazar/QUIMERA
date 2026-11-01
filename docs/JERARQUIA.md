@@ -14,6 +14,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 0 | `cimientos` | `quimera-cadenas` | Cadenas Latin-1/UTF-16 compartidas | Boa `boa_string` | sí |
 | 0 | `cimientos` | `quimera-plataforma` | Lo que se pide al sistema (tiempo, hilos, archivos) como *traits*; Linux y ULTRA lo implementan | Chromium `base` | sí |
 | 1 | `motor-js` | ✅ `quimera-gc` | GC generacional: guardería en arena + zona principal | SpiderMonkey `gc/Nursery` | sí |
+| 1 | `motor-js` | ✅ `quimera-regex` | Expresiones regulares compiladas (no depende de nada: la usan el frontend y la VM) | SpiderMonkey irregexp | sí |
 | 2 | `motor-js` | ✅ `quimera-frontend` | Parser y AST de JavaScript → bytecode tipo *Stencil* | Boa `boa_parser`, `boa_ast`; SpiderMonkey `frontend/Stencil` | sí |
 | 2 | `web` | `quimera-html` | Tokenizador y constructor de árbol HTML5 | html5ever (Servo) | sí |
 | 2 | `web` | `quimera-css` | Parser de CSS y selectores | Stylo (Servo) | sí |
@@ -24,7 +25,6 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 3 | `motor-js` | 🔨 `quimera-ic` | Cachés en línea con un mini-lenguaje común | SpiderMonkey CacheIR | sí |
 | 3 | `proceso` | `quimera-aislamiento` | Procesos, IPC y sandbox (seccomp en ULTRA) | Chromium `sandbox`, `mojo` | no |
 | 4 | `motor-js` | ✅ `quimera-vm` | Intérprete de registros, un único bucle | SpiderMonkey `Interpreter.cpp` | sí |
-| 4 | `motor-js` | `quimera-regex` | Expresiones regulares compiladas | SpiderMonkey irregexp | sí |
 | 5 | `motor-js` | `quimera-builtins` | Array, Map, Promise, JSON... | Boa `builtins` | sí |
 | 6 | `motor-js` | `quimera-js` | **La interfaz del motor**: lo único que ve el resto del navegador | — (Servo no la tiene) | sí |
 | 7 | `web` | `quimera-dom` | DOM y eventos, conectados al motor por `quimera-js` | Servo `script` (mucho más pequeño) | sí |

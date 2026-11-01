@@ -205,6 +205,10 @@ impl Motor {
                     self.mundo.escribir(global, clave, Valor::INDEFINIDO);
                 }
             }
+            CrearRegex { dst, patron, banderas } => {
+                let re = self.crear_regex(self.clave(fi, patron), self.clave(fi, banderas))?;
+                self.w(base, dst, re);
+            }
             CrearObjeto { dst } => {
                 let o = self.mundo.crear_objeto(self.pila(R_OBJETO));
                 self.w(base, dst, o);

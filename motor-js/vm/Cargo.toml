@@ -18,6 +18,7 @@ quimera-valor.workspace = true
 quimera-gc.workspace = true
 quimera-frontend.workspace = true
 quimera-objetos.workspace = true
+quimera-regex.workspace = true
 
 [lints]
 workspace = true

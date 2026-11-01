@@ -52,6 +52,10 @@ impl Compilador<'_> {
                 let k = self.constante(Constante::Cadena(a));
                 self.emitir(Instr::Constante { dst, k });
             }
+            Expr::Regex(patron, banderas) => {
+                let (patron, banderas) = (self.atomo(patron), self.atomo(banderas));
+                self.emitir(Instr::CrearRegex { dst, patron, banderas });
+            }
             Expr::Bool(valor) => _ = self.emitir(Instr::Booleano { dst, valor: *valor }),
             Expr::Nulo => _ = self.emitir(Instr::Nulo { dst }),
             Expr::Este => _ = self.emitir(Instr::Este { dst }),

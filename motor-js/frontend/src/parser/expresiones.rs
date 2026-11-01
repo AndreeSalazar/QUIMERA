@@ -247,7 +247,13 @@ impl Parser {
             Tipo::Signo("(") => return self.parentesis(),
             Tipo::Signo("[") => return self.arreglo(),
             Tipo::Signo("{") => return self.objeto(),
-            Tipo::Signo("/" | "/=") => return error(pos, "las expresiones regulares todavía no están en QUIMERA"),
+            Tipo::Regex(patron, banderas) => {
+                // Error temprano, como en los navegadores: un patrón mal escrito no llega a ejecutarse.
+                if let Err(e) = quimera_regex::Regex::nueva(&patron, &banderas) {
+                    return error(pos, format!("expresión regular no válida /{patron}/{banderas}: {}", e.mensaje));
+                }
+                Expr::Regex(patron, banderas)
+            }
             Tipo::Clave(k @ ("class" | "super" | "import" | "yield")) => {
                 return error(pos, format!("`{k}` todavía no está en QUIMERA"));
             }

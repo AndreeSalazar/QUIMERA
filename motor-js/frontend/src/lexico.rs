@@ -2,8 +2,9 @@
 //!
 //! Sigue ECMAScript 2024 para identificadores, números (con separadores `_`), cadenas con
 //! escapes, signos y comentarios. Anota si hubo un salto de línea antes de cada token,
-//! que es lo que necesita la inserción automática de `;`. Las expresiones regulares y las
-//! plantillas (`` ` ``) todavía no están: dan un error claro.
+//! que es lo que necesita la inserción automática de `;`. Un `/` es una expresión regular si
+//! el token anterior no puede terminar una expresión (como hacen los navegadores con su
+//! regla del token previo). Las plantillas (`` ` ``) todavía no están: dan un error claro.
 
 use crate::fuente::{Pos, Resultado, error};
 use alloc::string::String;
@@ -22,6 +23,8 @@ pub enum Tipo {
     Cadena(String),
     /// Un signo de puntuación.
     Signo(&'static str),
+    /// Una expresión regular `/patrón/banderas`, sin validar todavía.
+    Regex(String, String),
     /// El final del texto.
     Fin,
 }
@@ -100,12 +103,29 @@ pub fn tokens(fuente: &str) -> Resultado<Vec<Token>> {
     loop {
         let salto_antes = l.saltar_blancos()?;
         let pos = l.pos();
-        let tipo = if l.i >= l.b.len() { Tipo::Fin } else { l.token()? };
+        let regex_posible = v.last().is_none_or(|t: &Token| puede_preceder_regex(&t.tipo));
+        let tipo = if l.i >= l.b.len() {
+            Tipo::Fin
+        } else if regex_posible && l.byte(0) == b'/' {
+            l.regex()?
+        } else {
+            l.token()?
+        };
         let fin = tipo == Tipo::Fin;
         v.push(Token { tipo, pos, salto_antes });
         if fin {
             return Ok(v);
         }
+    }
+}
+
+/// Si tras este token un `/` empieza una expresión regular (y no es una división): no lo es
+/// tras algo que termina una expresión (`x /`, `) /`, `] /`, `this /`...).
+fn puede_preceder_regex(t: &Tipo) -> bool {
+    match t {
+        Tipo::Signo(s) => !matches!(*s, ")" | "]" | "}" | "++" | "--"),
+        Tipo::Clave(k) => !matches!(*k, "this" | "super" | "null" | "true" | "false"),
+        _ => false,
     }
 }
 
@@ -201,6 +221,36 @@ impl Lexico<'_> {
             '\\' => error(pos, "los escapes \\u en identificadores todavía no están en QUIMERA"),
             _ => self.signo(),
         }
+    }
+
+    /// `/patrón/banderas`, con el cursor en el primer `/`.
+    fn regex(&mut self) -> Resultado<Tipo> {
+        let pos = self.pos();
+        self.i += 1;
+        let inicio = self.i;
+        let mut en_clase = false;
+        loop {
+            let Some(c) = self.actual().filter(|c| !es_salto(*c)) else {
+                return error(pos, "expresión regular sin cerrar");
+            };
+            self.i += c.len_utf8();
+            match c {
+                '\\' => match self.actual().filter(|c| !es_salto(*c)) {
+                    Some(e) => self.i += e.len_utf8(),
+                    None => return error(pos, "expresión regular sin cerrar"),
+                },
+                '[' => en_clase = true,
+                ']' => en_clase = false,
+                '/' if !en_clase => break,
+                _ => {}
+            }
+        }
+        let patron = String::from(&self.s[inicio..self.i - 1]);
+        let desde = self.i;
+        while let Some(c) = self.actual().filter(|c| es_parte_ident(*c)) {
+            self.i += c.len_utf8();
+        }
+        Ok(Tipo::Regex(patron, String::from(&self.s[desde..self.i])))
     }
 
     fn identificador(&mut self) -> Tipo {

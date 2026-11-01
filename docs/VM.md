@@ -44,26 +44,27 @@ assert_eq!(motor.texto(v), "42");
 | prototypes-chain | 30,7 ms | 97,7 ms | 3,18× |
 | **Media geométrica** | | | **2,81×** |
 
-### V8 (Octane): 7 de 8 benchmarks
+### V8 (Octane): los 8 benchmarks
 
 Con su arnés completo: cada benchmark se mide solo durante al menos un segundo y escribe su `SCORE` (más es mejor). QUIMERA usa el reloj que le da el anfitrión (`Motor::con_reloj`). A Boa se le añaden `console.log` y `print`, que `boa_engine` no trae. Boa necesita una pila nativa grande (recursa en Rust): la medida corre en un hilo con 512 MB; QUIMERA no la necesita.
 
 | Benchmark | QUIMERA | Boa 0.22 | QUIMERA / Boa |
 |---|---:|---:|---:|
-| Richards | 333 | 132 | **2,52×** |
-| DeltaBlue | 327 | 105 | **3,11×** |
-| Crypto | 297 | 116 | **2,56×** |
-| RayTrace | 791 | 216 | **3,66×** |
-| EarleyBoyer | 1149 | 252 | **4,56×** |
-| NavierStokes | 563 | 229 | **2,46×** |
-| Splay | 993 | 498 | **1,99×** |
-| **Media geométrica** | | | **2,88×** |
+| Richards | 267 | 106 | **2,52×** |
+| DeltaBlue | 292 | 99 | **2,95×** |
+| Crypto | 263 | 125 | **2,10×** |
+| RayTrace | 728 | 171 | **4,26×** |
+| EarleyBoyer | 976 | 184 | **5,30×** |
+| NavierStokes | 494 | 277 | **1,78×** |
+| Splay | 774 | 398 | **1,94×** |
+| RegExp | 382 | 31 | **12,48×** |
+| **Media geométrica** | | | **3,33×** |
 
-Una corrida en una máquina cargada; en corridas tranquilas Richards llega a 356–369 y DeltaBlue a 379–388, con las mismas proporciones. Falta **RegExp**: necesita un motor de expresiones regulares propio (`quimera-regex`) y escapes `\u` en identificadores.
+Una corrida en una máquina cargada: las puntuaciones absolutas bajan, pero las proporciones se mantienen. En corridas tranquilas, Richards llega a 356–369 y DeltaBlue a 379–388. RegExp usa `quimera-regex` ([REGEX.md](REGEX.md)) y no se comprueba a sí mismo, así que el banco compara una huella de sus 125.585 resultados con la de Boa: tienen que ser idénticas.
 
 Para correr NavierStokes y Splay no hizo falta nada nuevo. Para los demás: `arguments` (RayTrace), crear al empezar las globales declaradas con `var` aunque no tengan valor (Crypto), y `parseInt` (EarleyBoyer). Para probar scripts sueltos: `cargo run --release -p quimera-banco-vm -- a.js b.js`.
 
-Las puntuaciones varían un poco entre corridas porque el arnés mide tiempo real. Los dos benchmarks se comprueban a sí mismos: lanzan un `Error` si las cuentas no salen.
+Las puntuaciones varían entre corridas porque el arnés mide tiempo real. Los demás benchmarks se comprueban a sí mismos: lanzan un `Error` si las cuentas no salen.
 
 Cómo se llegó aquí, en dos sorpresas:
 1. **NaN.** El arnés promedia objetos `BenchmarkResult` con su propio `valueOf`. Faltaba `ToPrimitive`: convertir un objeto llamando a sus métodos, lo que obliga a ejecutar JavaScript desde dentro de una operación (`conversion.rs`).
@@ -90,5 +91,5 @@ Cómo se llegó a los 7 benchmarks de Boa:
 - **Errores de la máquina.** Los que lanza la máquina son cadenas (`"TypeError: ..."`); `new Error()` desde JavaScript sí crea objetos.
 - **Cadenas.** Viven fuera del GC y no se liberan; las cadenas UTF-16 de `quimera-cadenas` lo arreglarán.
 - **`for-of` solo con arreglos y cadenas.** Sin `Symbol.iterator` todavía; `for-in` y `for-of` reciben una copia de claves o valores al empezar.
-- **RegExp de V8.** Necesita expresiones regulares (`quimera-regex`) y escapes `\u` en identificadores.
+- **RegExp, casi completa.** Falta lo que lista [REGEX.md](REGEX.md); entre otras cosas, `replace` y `split` no llaman al `exec` del usuario. Los escapes `\u` en identificadores tampoco están todavía.
 - **`arguments` es un arreglo.** Se crea solo en las funciones que lo usan (las demás no pagan nada), pero es una copia: no está enlazado a los parámetros como en el modo no estricto.

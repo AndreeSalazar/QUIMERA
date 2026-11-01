@@ -56,6 +56,8 @@ pub enum Expr {
     Numero(f64),
     /// `"texto"`.
     Cadena(String),
+    /// `/patrón/banderas`.
+    Regex(String, String),
     /// `true` / `false`.
     Bool(bool),
     /// `null`.

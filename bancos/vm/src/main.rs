@@ -19,6 +19,7 @@ const V8: &[&str] = &[
     "v8-benches-earley-boyer.js",
     "v8-benches-navier-stokes.js",
     "v8-benches-splay.js",
+    "v8-benches-regexp.js",
 ];
 
 /// Reloj del anfitrión para el `Date` de QUIMERA, en milisegundos.
@@ -45,11 +46,11 @@ thread_local! {
     static SALIDA_BOA: RefCell<Vec<String>> = const { RefCell::new(Vec::new()) };
 }
 
-/// Ejecuta el arnés completo en Boa (con `console.log` y `print` propios) y devuelve su puntuación.
-fn boa_v8(codigo: &str) -> f64 {
+/// Un contexto de Boa con `console.log` y `print` propios (escriben en `SALIDA_BOA`).
+fn contexto_boa() -> boa_engine::Context {
     use boa_engine::object::ObjectInitializer;
     use boa_engine::property::Attribute;
-    use boa_engine::{Context, JsResult, JsValue, NativeFunction, Source, js_string};
+    use boa_engine::{Context, JsResult, JsValue, NativeFunction, js_string};
     fn log(_: &JsValue, args: &[JsValue], ctx: &mut Context) -> JsResult<JsValue> {
         let partes: Vec<String> =
             args.iter().map(|a| a.to_string(ctx).map(|s| s.to_std_string_escaped())).collect::<JsResult<_>>()?;
@@ -62,6 +63,13 @@ fn boa_v8(codigo: &str) -> f64 {
         ObjectInitializer::new(&mut ctx).function(NativeFunction::from_fn_ptr(log), js_string!("log"), 0).build();
     ctx.register_global_property(js_string!("console"), console, Attribute::all()).expect("console");
     ctx.register_global_callable(js_string!("print"), 0, NativeFunction::from_fn_ptr(log)).expect("print");
+    ctx
+}
+
+/// Ejecuta el arnés completo en Boa y devuelve su puntuación.
+fn boa_v8(codigo: &str) -> f64 {
+    use boa_engine::{JsValue, Source, js_string};
+    let mut ctx = contexto_boa();
     ctx.eval(Source::from_bytes(codigo)).expect("Boa ejecuta el script");
     let main = ctx.global_object().get(js_string!("main"), &mut ctx).expect("main existe");
     main.as_callable()
@@ -179,6 +187,51 @@ fn medir() {
 Media geométrica V8: QUIMERA {:.2}x la puntuación de Boa",
         (log_v8 / V8.len() as f64).exp()
     );
+    let (q, b) = comprobar_regexp();
+    assert_eq!(q, b, "RegExp: los dos motores deben dar los mismos resultados");
+    println!("RegExp comprobado: los dos motores dan la misma huella de todos sus resultados ({q})");
+}
+
+/// Espía para RegExp de V8, que no se comprueba a sí mismo: envuelve `exec`, `test`, `replace`,
+/// `split` y `match` y resume todos sus resultados en una huella. Va antes del script, porque
+/// el script tapa la global `RegExp` con su `BenchmarkSuite`.
+const ESPIA: &str = r#"
+var __huella = 0, __quien = '', __dentro = 0;
+function __anotar(v) {
+  var s = v === null ? 'null' : (typeof v === 'object' ? v.length + ':' + v.join('|') + '@' + v.index : String(v));
+  for (var i = 0; i < s.length; i++) __huella = (__huella * 31 + s.charCodeAt(i)) % 1000000007;
+}
+// Solo cuentan las llamadas del script: en Boa, replace/split/match llaman a `exec` por dentro.
+function __espiar(dueno, nombre) {
+  var original = dueno[nombre];
+  dueno[nombre] = function (a, b) {
+    __dentro++;
+    var r = original.call(this, a, b);
+    __dentro--;
+    if (__dentro == 0) { __quien = nombre + ' ' + (nombre == 'exec' || nombre == 'test' ? '' : '' + this) + ' ' + (typeof a === 'string' ? a : ''); __anotar(r); }
+    return r;
+  };
+}
+var __pr = /a/.constructor.prototype, __ps = ''.constructor.prototype;
+__espiar(__pr, 'exec'); __espiar(__pr, 'test');
+__espiar(__ps, 'replace'); __espiar(__ps, 'split'); __espiar(__ps, 'match');
+"#;
+
+/// Ejecuta una vuelta de RegExp con el espía en los dos motores y devuelve las dos huellas.
+fn comprobar_regexp() -> (String, String) {
+    let codigo =
+        format!("{ESPIA}{}\nfunction __main() {{ RegExpSetup(); return __huella; }}", leer("v8-benches-regexp.js"));
+    let mut m = quimera_vm::Motor::default();
+    m.ejecutar(&codigo).expect("QUIMERA ejecuta RegExp");
+    let v = m.llamar_global("__main", &[]).expect("QUIMERA ejecuta la vuelta");
+    let q = m.texto(v);
+    use boa_engine::{JsValue, Source, js_string};
+    let mut ctx = contexto_boa();
+    ctx.eval(Source::from_bytes(&codigo)).expect("Boa ejecuta RegExp");
+    let f = ctx.global_object().get(js_string!("__main"), &mut ctx).expect("__main existe");
+    let r = f.as_callable().expect("__main es una función").call(&JsValue::undefined(), &[], &mut ctx);
+    let b = r.expect("Boa ejecuta la vuelta").to_string(&mut ctx).expect("texto").to_std_string_escaped();
+    (q, b)
 }
 
 #[cfg(test)]
@@ -187,5 +240,37 @@ mod pruebas {
     fn los_dos_motores_devuelven_lo_mismo() {
         let codigo = super::leer("closures-invoke.js");
         assert_eq!(super::quimera(&codigo).1, super::boa(&codigo).1);
+    }
+}
+
+#[cfg(test)]
+mod diagnostico {
+    /// Primer resultado de RegExp en que difieren los dos motores (`--ignored`, para depurar).
+    #[test]
+    #[ignore]
+    fn primera_diferencia_de_regexp() {
+        let espia = super::ESPIA
+            .replace("for (var i = 0; i < s.length; i++)", "__lista.push(s + '  <= ' + __quien); if (false)");
+        let codigo = format!(
+            "var __lista = [], __quien = '';\n{espia}{}\nfunction __main() {{ RegExpSetup(); return __lista.join('\\n'); }}",
+            super::leer("v8-benches-regexp.js")
+        );
+        let mut m = quimera_vm::Motor::default();
+        m.ejecutar(&codigo).unwrap();
+        let v = m.llamar_global("__main", &[]).unwrap();
+        let q = m.texto(v);
+        use boa_engine::{JsValue, Source, js_string};
+        let mut ctx = super::contexto_boa();
+        ctx.eval(Source::from_bytes(&codigo)).unwrap();
+        let f = ctx.global_object().get(js_string!("__main"), &mut ctx).unwrap();
+        let r = f.as_callable().unwrap().call(&JsValue::undefined(), &[], &mut ctx).unwrap();
+        let b = r.to_string(&mut ctx).unwrap().to_std_string_escaped();
+        let (lq, lb): (Vec<&str>, Vec<&str>) = (q.lines().collect(), b.lines().collect());
+        let i = (0..lq.len().min(lb.len())).find(|&i| lq[i] != lb[i]);
+        println!("resultados: QUIMERA {} Boa {}", lq.len(), lb.len());
+        if let Some(i) = i {
+            println!("primera diferencia en {i}:\n  QUIMERA: {:?}\n  Boa:     {:?}", lq[i], lb[i]);
+            println!("anterior: {:?}", lq.get(i.wrapping_sub(1)));
+        }
     }
 }

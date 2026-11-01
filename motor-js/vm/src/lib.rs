@@ -38,7 +38,8 @@ const R_NUMERO: usize = 5;
 const R_CADENA: usize = 6;
 const R_FECHA: usize = 7;
 const R_ERROR: usize = 8;
-const N_FIJAS: usize = 9;
+const R_REGEXP: usize = 9;
+const N_FIJAS: usize = 10;
 /// Huecos de cada marco antes de sus registros: cierre, this, entorno, objeto nuevo.
 const CABECERA: usize = 4;
 
@@ -105,6 +106,19 @@ pub struct Motor {
     tiempo_falso: f64,
     /// Cuántas claves de cada raíz fija son de la biblioteca (no enumerables en `for-in`).
     ocultas: [usize; N_FIJAS],
+    /// Expresiones regulares compiladas, una por cada par distinto (patrón, banderas).
+    regexes: Vec<RegexCompilada>,
+    /// (cadena del patrón, cadena de las banderas) → posición en `regexes`.
+    indice_regex: alloc::collections::BTreeMap<(u32, u32), u32>,
+    /// Memoria de trabajo del motor de expresiones regulares, reutilizada.
+    memoria_regex: quimera_regex::Memoria,
+}
+
+/// Una expresión regular compilada con su texto original.
+struct RegexCompilada {
+    re: quimera_regex::Regex,
+    fuente: String,
+    banderas: String,
 }
 
 impl Default for Motor {
@@ -126,6 +140,9 @@ impl Motor {
             reloj: None,
             tiempo_falso: 0.0,
             ocultas: [0; N_FIJAS],
+            regexes: Vec::new(),
+            indice_regex: alloc::collections::BTreeMap::new(),
+            memoria_regex: quimera_regex::Memoria::default(),
         };
         m.mundo.m.abrir_raices(N_FIJAS, Valor::INDEFINIDO);
         nativas::preparar(&mut m);
