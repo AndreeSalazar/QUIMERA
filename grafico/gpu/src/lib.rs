@@ -52,13 +52,14 @@ impl Vertice {
     }
 }
 
-/// Los seis vértices (dos triángulos) de un cuadro.
-fn vertices(c: &Cuadro, v: &mut Vec<Vertice>) {
+/// Los seis vértices (dos triángulos) de un cuadro; los `fijos` no se desplazan.
+fn vertices(c: &Cuadro, v: &mut Vec<Vertice>, fijo: bool) {
     let (x0, y0, x1, y1) = (c.x, c.y, c.x + c.ancho, c.y + c.alto);
     let ([u0, v0, u1, v1], modo) = match c.letra {
         Some(uv) => (uv, 1.0),
         None => ([0.0; 4], 0.0),
     };
+    let modo = if fijo { modo + 2.0 } else { modo };
     let p = |x, y, u, w| Vertice { pos: [x, y], uv: [u, w], color: c.color, modo };
     v.extend_from_slice(&[
         p(x0, y0, u0, v0),
@@ -84,6 +85,9 @@ pub struct Gpu {
     tam_atlas: u32,
     vertices: Option<wgpu::Buffer>,
     cuantos: u32,
+    /// Lo que no se desplaza (la barra del navegador), dibujado encima.
+    fijos: Option<wgpu::Buffer>,
+    cuantos_fijos: u32,
 }
 
 /// Un error al preparar o usar la GPU, como texto para quien lo muestre.
@@ -148,6 +152,8 @@ impl Gpu {
             tam_atlas,
             vertices: None,
             cuantos: 0,
+            fijos: None,
+            cuantos_fijos: 0,
         })
     }
 
@@ -192,6 +198,8 @@ impl Gpu {
             tam_atlas,
             vertices: None,
             cuantos: 0,
+            fijos: None,
+            cuantos_fijos: 0,
         })
     }
 
@@ -350,20 +358,31 @@ impl Gpu {
         );
     }
 
-    /// Carga los cuadros que dibujar (una vez por maquetación).
+    /// Carga los cuadros de la página (una vez por maquetación).
     pub fn cargar(&mut self, cuadros: &[Cuadro]) {
+        let (b, n) = self.bufer(cuadros, false);
+        (self.vertices, self.cuantos) = (b, n);
+    }
+
+    /// Carga los cuadros fijos (la barra), que no se desplazan y van encima.
+    pub fn cargar_fijos(&mut self, cuadros: &[Cuadro]) {
+        let (b, n) = self.bufer(cuadros, true);
+        (self.fijos, self.cuantos_fijos) = (b, n);
+    }
+
+    fn bufer(&self, cuadros: &[Cuadro], fijo: bool) -> (Option<wgpu::Buffer>, u32) {
         let mut v = Vec::with_capacity(cuadros.len() * 6);
         for c in cuadros {
-            vertices(c, &mut v);
+            vertices(c, &mut v, fijo);
         }
-        self.cuantos = v.len() as u32;
-        self.vertices = (!v.is_empty()).then(|| {
+        let b = (!v.is_empty()).then(|| {
             self.dispositivo.create_buffer_init(&wgpu::util::BufferInitDescriptor {
                 label: Some("cuadros"),
                 contents: &Vertice::bytes(&v),
                 usage: wgpu::BufferUsages::VERTEX,
             })
         });
+        (b, v.len() as u32)
     }
 
     /// Dibuja los cuadros cargados sobre `fondo`, con el documento desplazado `desp_y` píxeles.
@@ -409,11 +428,13 @@ impl Gpu {
                 timestamp_writes: None,
                 occlusion_query_set: None,
             });
-            if let Some(v) = &self.vertices {
-                pasada.set_pipeline(&self.tuberia);
-                pasada.set_bind_group(0, &self.grupo, &[]);
-                pasada.set_vertex_buffer(0, v.slice(..));
-                pasada.draw(0..self.cuantos, 0..1);
+            pasada.set_pipeline(&self.tuberia);
+            pasada.set_bind_group(0, &self.grupo, &[]);
+            for (b, n) in [(&self.vertices, self.cuantos), (&self.fijos, self.cuantos_fijos)] {
+                if let Some(b) = b {
+                    pasada.set_vertex_buffer(0, b.slice(..));
+                    pasada.draw(0..n, 0..1);
+                }
             }
         }
         orden.finish()
@@ -493,6 +514,7 @@ mod pruebas {
         vertices(
             &Cuadro { x: 10.0, y: 20.0, ancho: 30.0, alto: 40.0, color: [1.0, 0.0, 0.0, 1.0], letra: None },
             &mut v,
+            false,
         );
         assert_eq!(v.len(), 6);
         assert_eq!((v[0].pos, v[4].pos, v[0].modo), ([10.0, 20.0], [40.0, 60.0], 0.0));
@@ -501,7 +523,8 @@ mod pruebas {
         vertices(
             &Cuadro { x: 0.0, y: 0.0, ancho: 1.0, alto: 1.0, color: [0.0; 4], letra: Some([0.1, 0.2, 0.3, 0.4]) },
             &mut l,
+            true,
         );
-        assert_eq!((l[0].uv, l[4].uv, l[0].modo), ([0.1, 0.2], [0.3, 0.4], 1.0));
+        assert_eq!((l[0].uv, l[4].uv, l[0].modo), ([0.1, 0.2], [0.3, 0.4], 3.0), "letra fija: 1 + 2");
     }
 }

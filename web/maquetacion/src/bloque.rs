@@ -7,7 +7,7 @@
 //! Los hijos en línea seguidos (texto, `<b>`, `<a>`, `<img>`) forman un bloque anónimo que se
 //! parte en líneas (`linea.rs`).
 
-use crate::linea::{EnLinea, Item, texto_a_items};
+use crate::linea::{EnLinea, EnlaceBruto, Item, texto_a_items};
 use crate::pintura::Pieza;
 use crate::texto::MedirTexto;
 use alloc::string::String;
@@ -24,6 +24,14 @@ pub(crate) struct Maquetador<'a> {
     contiene_bloque: Vec<Option<bool>>,
     /// El elemento raíz: sus márgenes no colapsan con los de sus hijos (CSS 2.1, 8.3.1).
     pub raiz: Option<NodoId>,
+    /// Los `href` de los enlaces vistos (los elementos guardan su número).
+    pub hrefs: Vec<String>,
+    /// El enlace dentro del que se está maquetando.
+    enlace: Option<u32>,
+    /// Los rectángulos de los enlaces dibujados.
+    pub enlaces: Vec<EnlaceBruto>,
+    /// (id, y) de cada bloque con `id`: a dónde llevan los `#ancla`.
+    pub anclas: Vec<(String, f32)>,
 }
 
 /// Lo que un bloque maquetado devuelve a su padre.
@@ -52,6 +60,10 @@ impl<'a> Maquetador<'a> {
             piezas: Vec::new(),
             contiene_bloque: alloc::vec![None; doc.total()],
             raiz: None,
+            hrefs: Vec::new(),
+            enlace: None,
+            enlaces: Vec::new(),
+            anclas: Vec::new(),
         }
     }
 
@@ -133,9 +145,14 @@ impl<'a> Maquetador<'a> {
         let ancho_contenido = (ancho_borde - bl - br - pl - pr).max(0.0);
         let (cx, cy) = (x + ml + bl + pl, y + bt + pt);
         let inicio_piezas = self.piezas.len();
+        if let Some(i) = self.doc.elemento(id).and_then(|el| el.atributo("id")) {
+            self.anclas.push((String::from(i), y));
+        }
+        let enlace_previo = self.entrar_en_enlace(id);
         let es_raiz = self.raiz == Some(id);
         let colapsa_arriba = bt + pt == 0.0 && !es_raiz;
         let (alto_contenido, abierto, primera_base) = self.contenido(id, e, cx, cy, ancho_contenido, colapsa_arriba);
+        self.enlace = enlace_previo;
         let colapsa_abajo = bb + pb == 0.0 && e.alto == Medida::Auto && !es_raiz;
         let mut alto_contenido = match e.alto {
             Medida::Px(h) => h,
@@ -231,13 +248,13 @@ impl<'a> Maquetador<'a> {
 
     fn lineas(&mut self, items: &[Item<'a>], e: &'a Estilo, x: f32, y: f32, ancho: f32) -> (f32, Option<f32>) {
         let l = EnLinea { medir: self.medir, bloque: e, x, y, ancho };
-        l.maquetar(items, &mut self.piezas)
+        l.maquetar(items, &mut self.piezas, &mut self.enlaces)
     }
 
     /// El contenido en línea de `id` (un texto o un elemento en línea) como elementos.
     fn recoger(&mut self, id: NodoId, padre: &'a Estilo, items: &mut Vec<Item<'a>>, ultimo_espacio: &mut bool) {
         match &self.doc.nodo(id).dato {
-            Dato::Texto(t) => texto_a_items(t, padre, ultimo_espacio, items),
+            Dato::Texto(t) => texto_a_items(t, padre, self.enlace, ultimo_espacio, items),
             Dato::Elemento(el) => {
                 let Some(e) = self.estilo(id) else { return };
                 if e.display == Display::Ninguno {
@@ -257,19 +274,31 @@ impl<'a> Maquetador<'a> {
                             (tam("width", e.ancho).unwrap_or(0.0), tam("height", e.alto).unwrap_or(0.0));
                         let src = String::from(el.atributo("src").unwrap_or(""));
                         if ancho > 0.0 && alto > 0.0 {
-                            items.push(Item::Imagen { ancho, alto, src, estilo: e });
+                            items.push(Item::Imagen { ancho, alto, src, estilo: e, enlace: self.enlace });
                             *ultimo_espacio = false;
                         }
                     }
                     _ => {
+                        let previo = self.entrar_en_enlace(id);
                         for h in self.doc.nodo(id).hijos.clone() {
                             self.recoger(h, e, items, ultimo_espacio);
                         }
+                        self.enlace = previo;
                     }
                 }
             }
             _ => {}
         }
+    }
+
+    /// Si `id` es un `<a href>`, lo marca como el enlace actual; devuelve el que había.
+    fn entrar_en_enlace(&mut self, id: NodoId) -> Option<u32> {
+        let previo = self.enlace;
+        if let Some(href) = self.doc.elemento(id).filter(|e| e.nombre == "a").and_then(|e| e.atributo("href")) {
+            self.hrefs.push(String::from(href));
+            self.enlace = Some(self.hrefs.len() as u32 - 1);
+        }
+        previo
     }
 
     /// El fondo y los bordes van debajo del contenido: se insertan antes de sus piezas.

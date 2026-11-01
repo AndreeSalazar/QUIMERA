@@ -59,6 +59,21 @@ pub enum Pieza {
     },
 }
 
+/// Un trozo de enlace: un rectángulo donde pulsar y a dónde lleva.
+#[derive(Debug, Clone, PartialEq)]
+pub struct Enlace {
+    /// Izquierda.
+    pub x: f32,
+    /// Arriba.
+    pub y: f32,
+    /// Ancho.
+    pub ancho: f32,
+    /// Alto.
+    pub alto: f32,
+    /// El `href` tal como está en la página (sin resolver).
+    pub href: String,
+}
+
 /// El resultado de maquetar una página.
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct Maquetacion {
@@ -70,6 +85,25 @@ pub struct Maquetacion {
     pub alto: f32,
     /// Color del lienzo (el fondo de `<html>`, o el de `<body>` si aquel no tiene).
     pub fondo: Color,
+    /// Dónde están los enlaces (un rectángulo por trozo de línea).
+    pub enlaces: Vec<Enlace>,
+    /// (id, y) de cada bloque con `id`, para ir a `#ancla`.
+    pub anclas: Vec<(String, f32)>,
+}
+
+impl Maquetacion {
+    /// El enlace que hay en el punto (x, y) del documento.
+    pub fn enlace_en(&self, x: f32, y: f32) -> Option<&str> {
+        self.enlaces
+            .iter()
+            .find(|e| x >= e.x && x < e.x + e.ancho && y >= e.y && y < e.y + e.alto)
+            .map(|e| e.href.as_str())
+    }
+
+    /// La altura de un ancla (`#id`).
+    pub fn ancla(&self, id: &str) -> Option<f32> {
+        self.anclas.iter().find(|(i, _)| i == id).map(|(_, y)| *y)
+    }
 }
 
 impl Maquetacion {

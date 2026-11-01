@@ -200,6 +200,27 @@ impl Pintor {
         v
     }
 
+    /// Un texto suelto (la interfaz del navegador: botones, la dirección), ya en píxeles de
+    /// pantalla, con su origen en `(x, línea base)`.
+    pub fn rotulo(
+        &mut self,
+        v: &mut Vec<Cuadro>,
+        texto: &str,
+        tam: f32,
+        negrita: bool,
+        (x, base): (f32, f32),
+        color: [f32; 4],
+    ) {
+        let fuente = Fuente { tam, negrita, cursiva: false, generica: Generica::SinSerif, familias: &[] };
+        self.texto(v, texto, &fuente, x, base, color);
+    }
+
+    /// El ancho de un texto suelto (sin serifa) en píxeles de pantalla.
+    pub fn ancho_rotulo(&self, texto: &str, tam: f32, negrita: bool) -> f32 {
+        let fuente = Fuente { tam, negrita, cursiva: false, generica: Generica::SinSerif, familias: &[] };
+        self.medidor().ancho(texto, &fuente)
+    }
+
     fn texto(&mut self, v: &mut Vec<Cuadro>, texto: &str, fuente: &Fuente<'_>, x: f32, base: f32, color: [f32; 4]) {
         let Some(c) = cara(&self.fuentes, fuente) else { return };
         let base = base.round();

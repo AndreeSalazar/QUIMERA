@@ -114,3 +114,22 @@ fn listas_ocultos_fondos_e_imagenes() {
     let m = maquetar_html("<style>body { background: #102030 }</style>");
     assert_eq!(m.fondo, Color::rgb(0x10, 0x20, 0x30), "el fondo de body pinta el lienzo");
 }
+
+#[test]
+fn enlaces_y_anclas() {
+    // "ir " mide 24px (3 × 8); el enlace "aqui" empieza en 8 + 24 = 32 y mide 32.
+    let m = maquetar_html(
+        "<p>ir <a href='/x?a=1'>aqui</a> y <a href=#fin><b>fin</b></a></p><h2 id=fin>Fin</h2><a href=bloque.html><div>bloque</div></a>",
+    );
+    let e: Vec<(&str, f32, f32)> = m.enlaces.iter().map(|e| (e.href.as_str(), e.x, e.ancho)).collect();
+    assert_eq!(e.len(), 3, "{e:?}");
+    assert!(e[0].0 == "/x?a=1" && cerca(e[0].1, 32.0) && cerca(e[0].2, 32.0), "{e:?}");
+    assert_eq!(e[1].0, "#fin", "el <b> dentro del enlace sigue siendo enlace");
+    assert_eq!(e[2].0, "bloque.html", "un <a> que envuelve un bloque");
+    let (x, base) = texto_en(&m, "aqui");
+    assert_eq!(m.enlace_en(x + 1.0, base - 5.0), Some("/x?a=1"));
+    assert_eq!(m.enlace_en(x - 20.0, base - 5.0), None, "en 'ir' no hay enlace");
+    let fin = m.ancla("fin").expect("el h2 con id");
+    let (_, base_fin) = texto_en(&m, "Fin");
+    assert!(fin < base_fin && base_fin - fin < 60.0, "el ancla está en la caja del h2: {fin} {base_fin}");
+}

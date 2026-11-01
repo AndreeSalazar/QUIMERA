@@ -25,7 +25,7 @@ mod linea;
 mod pintura;
 mod texto;
 
-pub use pintura::{Maquetacion, Pieza};
+pub use pintura::{Enlace, Maquetacion, Pieza};
 pub use texto::{Aproximado, Fuente, MedirTexto};
 
 use quimera_estilo::{Color, Estilos};
@@ -35,12 +35,17 @@ use quimera_html::Documento;
 pub fn maquetar(doc: &Documento, estilos: &Estilos, medir: &dyn MedirTexto, ancho: f32, alto: f32) -> Maquetacion {
     let mut m = bloque::Maquetador::nuevo(doc, estilos, medir);
     let Some(html) = doc.buscar("html") else {
-        return Maquetacion { piezas: alloc::vec::Vec::new(), ancho, alto, fondo: Color::BLANCO };
+        return Maquetacion { ancho, alto, fondo: Color::BLANCO, ..Maquetacion::default() };
     };
     m.raiz = Some(html);
     let hecho = m.bloque(html, 0.0, 0.0, ancho);
     // El fondo de <html> (o, si no tiene, el de <body>) pinta todo el lienzo.
     let fondo_de = |n: &str| doc.buscar(n).and_then(|id| estilos.de(id)).map(|e| e.fondo).filter(|c| c.a > 0);
     let fondo = fondo_de("html").or_else(|| fondo_de("body")).unwrap_or(Color::BLANCO);
-    Maquetacion { piezas: m.piezas, ancho, alto: hecho.alto.max(alto), fondo }
+    let enlaces = m
+        .enlaces
+        .iter()
+        .map(|&(x, y, ancho, alto, i)| Enlace { x, y, ancho, alto, href: m.hrefs[i as usize].clone() })
+        .collect();
+    Maquetacion { piezas: m.piezas, ancho, alto: hecho.alto.max(alto), fondo, enlaces, anclas: m.anclas }
 }

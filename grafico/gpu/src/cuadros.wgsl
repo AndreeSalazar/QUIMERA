@@ -14,7 +14,7 @@ struct Entrada {
     @location(0) pos: vec2<f32>,
     @location(1) uv: vec2<f32>,
     @location(2) color: vec4<f32>,
-    @location(3) modo: f32,       // 0: color liso; 1: letra (la cobertura sale del atlas)
+    @location(3) modo: f32,       // 0: color liso; 1: letra (cobertura del atlas); +2: fijo (no se desplaza)
 };
 
 struct Salida {
@@ -26,12 +26,14 @@ struct Salida {
 
 @vertex
 fn vs(e: Entrada) -> Salida {
-    let p = e.pos - u.desp;
+    // Lo fijo (la barra del navegador) no se mueve al desplazar la página.
+    let fijo = e.modo > 1.5;
+    let p = e.pos - select(u.desp, vec2<f32>(0.0, 0.0), fijo);
     var s: Salida;
     s.pos = vec4<f32>(p.x / u.tam.x * 2.0 - 1.0, 1.0 - p.y / u.tam.y * 2.0, 0.0, 1.0);
     s.uv = e.uv;
     s.color = e.color;
-    s.modo = e.modo;
+    s.modo = select(e.modo, e.modo - 2.0, fijo);
     return s;
 }
 

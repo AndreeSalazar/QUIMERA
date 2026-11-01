@@ -11,6 +11,8 @@ use std::time::Instant;
 pub struct Pagina {
     /// La URL final.
     pub url: Url,
+    /// Contra qué se resuelven los enlaces (`<base href>` o la URL final).
+    pub base: Url,
     /// El HTML como texto.
     pub html: String,
     /// (href tal como aparece, CSS) de cada hoja que se pudo cargar.
@@ -30,6 +32,29 @@ pub fn direccion(texto: &str) -> Url {
             Url::de_archivo(ruta.trim_start_matches(r"\\?\"))
         }
     }
+}
+
+/// Lo escrito en la barra como dirección: una URL completa, una ruta local, o un nombre de sitio
+/// (`example.com/x` → `https://example.com/x`; `localhost:8080` → `http://`). `None` si no lo es
+/// (QUIMERA no envía lo escrito a ningún buscador).
+pub fn direccion_escrita(texto: &str) -> Option<Url> {
+    let t = texto.trim();
+    if t.is_empty() {
+        return None;
+    }
+    if t.contains("://") || ["file:", "data:", "about:"].iter().any(|p| t.starts_with(p)) {
+        return Url::analizar(t).ok();
+    }
+    let b = t.as_bytes();
+    let unidad = b.len() > 2 && b[0].is_ascii_alphabetic() && b[1] == b':' && matches!(b[2], b'\\' | b'/');
+    if unidad || t.starts_with('/') || t.starts_with('.') {
+        return Some(direccion(t));
+    }
+    let local = t.starts_with("localhost") || t.starts_with("127.");
+    if t.contains(char::is_whitespace) || !(t.contains('.') || local) {
+        return None;
+    }
+    Url::analizar(&format!("{}://{t}", if local { "http" } else { "https" })).ok()
 }
 
 /// Una página de error, con el estilo de QUIMERA.
@@ -66,7 +91,7 @@ impl Pagina {
                 hojas.push((String::from(href), css.texto()));
             }
         }
-        Pagina { url: url_final, html, hojas, ms_red: inicio.elapsed().as_secs_f64() * 1e3 }
+        Pagina { url: url_final, base, html, hojas, ms_red: inicio.elapsed().as_secs_f64() * 1e3 }
     }
 
     /// El árbol del documento.
@@ -102,4 +127,21 @@ fn base_de(doc: &Documento, url: &Url) -> Url {
         .and_then(|e| e.atributo("href"))
         .and_then(|h| url.unir(h).ok())
         .unwrap_or_else(|| url.clone())
+}
+
+#[cfg(test)]
+mod pruebas {
+    use super::*;
+
+    #[test]
+    fn lo_escrito_en_la_barra() {
+        let d = |t: &str| direccion_escrita(t).map(|u| u.to_string());
+        assert_eq!(d("example.com"), Some(String::from("https://example.com/")));
+        assert_eq!(d("  info.cern.ch/hypertext  "), Some(String::from("https://info.cern.ch/hypertext")));
+        assert_eq!(d("localhost:8080/x"), Some(String::from("http://localhost:8080/x")));
+        assert_eq!(d("http://info.cern.ch"), Some(String::from("http://info.cern.ch/")));
+        assert_eq!(d("hola mundo"), None, "no se manda a un buscador");
+        assert_eq!(d("palabra"), None);
+        assert!(d("C:/Windows/win.ini").is_some_and(|u| u.starts_with("file:///C:/")));
+    }
 }

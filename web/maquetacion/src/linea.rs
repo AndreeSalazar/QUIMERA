@@ -18,12 +18,14 @@ pub(crate) enum Item<'e> {
     Palabra {
         texto: String,
         estilo: &'e Estilo,
+        enlace: Option<u32>,
     },
     /// Un espacio que se puede juntar o quitar (modo normal) o uno que se respeta (`pre`).
     Espacio {
         texto: String,
         estilo: &'e Estilo,
         fijo: bool,
+        enlace: Option<u32>,
     },
     Salto {
         estilo: &'e Estilo,
@@ -33,8 +35,12 @@ pub(crate) enum Item<'e> {
         alto: f32,
         src: String,
         estilo: &'e Estilo,
+        enlace: Option<u32>,
     },
 }
+
+/// Un enlace dibujado: su rectángulo y el número de su `href` en la lista del maquetador.
+pub(crate) type EnlaceBruto = (f32, f32, f32, f32, u32);
 
 impl<'e> Item<'e> {
     fn estilo(&self) -> &'e Estilo {
@@ -43,6 +49,14 @@ impl<'e> Item<'e> {
             | Item::Espacio { estilo, .. }
             | Item::Salto { estilo }
             | Item::Imagen { estilo, .. } => estilo,
+        }
+    }
+
+    /// El enlace (`<a href>`) dentro del que está, si lo hay.
+    fn enlace(&self) -> Option<u32> {
+        match self {
+            Item::Palabra { enlace, .. } | Item::Espacio { enlace, .. } | Item::Imagen { enlace, .. } => *enlace,
+            Item::Salto { .. } => None,
         }
     }
 }
@@ -57,7 +71,13 @@ fn parte_lineas(e: &Estilo) -> bool {
 
 /// Junta los elementos de un texto. `ultimo_espacio`: si lo anterior acabó en blanco (para no
 /// repetirlo en modo normal); empieza en `true` al principio del bloque.
-pub(crate) fn texto_a_items<'e>(texto: &str, estilo: &'e Estilo, ultimo_espacio: &mut bool, v: &mut Vec<Item<'e>>) {
+pub(crate) fn texto_a_items<'e>(
+    texto: &str,
+    estilo: &'e Estilo,
+    enlace: Option<u32>,
+    ultimo_espacio: &mut bool,
+    v: &mut Vec<Item<'e>>,
+) {
     let texto: String = match estilo.transformar {
         Some(true) => texto.to_uppercase(),
         Some(false) => texto.to_lowercase(),
@@ -68,7 +88,7 @@ pub(crate) fn texto_a_items<'e>(texto: &str, estilo: &'e Estilo, ultimo_espacio:
     let mut palabra = String::new();
     let soltar = |p: &mut String, v: &mut Vec<Item<'e>>| {
         if !p.is_empty() {
-            v.push(Item::Palabra { texto: core::mem::take(p), estilo });
+            v.push(Item::Palabra { texto: core::mem::take(p), estilo, enlace });
         }
     };
     for c in texto.chars() {
@@ -81,12 +101,12 @@ pub(crate) fn texto_a_items<'e>(texto: &str, estilo: &'e Estilo, ultimo_espacio:
             ' ' | '\t' | '\n' | '\r' | '\u{c}' if respeta => {
                 soltar(&mut palabra, v);
                 let texto = if c == '\t' { String::from("        ") } else { String::from(" ") };
-                v.push(Item::Espacio { texto, estilo, fijo: true });
+                v.push(Item::Espacio { texto, estilo, fijo: true, enlace });
             }
             ' ' | '\t' | '\n' | '\r' | '\u{c}' => {
                 soltar(&mut palabra, v);
                 if !*ultimo_espacio {
-                    v.push(Item::Espacio { texto: String::from(" "), estilo, fijo: false });
+                    v.push(Item::Espacio { texto: String::from(" "), estilo, fijo: false, enlace });
                     *ultimo_espacio = true;
                 }
             }
@@ -110,7 +130,7 @@ struct Linea {
 
 fn ancho_item(m: &dyn MedirTexto, it: &Item<'_>) -> f32 {
     match it {
-        Item::Palabra { texto, estilo } | Item::Espacio { texto, estilo, .. } => m.ancho(texto, &fuente(estilo)),
+        Item::Palabra { texto, estilo, .. } | Item::Espacio { texto, estilo, .. } => m.ancho(texto, &fuente(estilo)),
         Item::Imagen { ancho, .. } => *ancho,
         Item::Salto { .. } => 0.0,
     }
@@ -177,7 +197,12 @@ pub(crate) struct EnLinea<'a> {
 
 impl EnLinea<'_> {
     /// Coloca los elementos y devuelve (alto total, línea base de la primera línea).
-    pub(crate) fn maquetar(&self, items: &[Item<'_>], piezas: &mut Vec<Pieza>) -> (f32, Option<f32>) {
+    pub(crate) fn maquetar(
+        &self,
+        items: &[Item<'_>],
+        piezas: &mut Vec<Pieza>,
+        enlaces: &mut Vec<EnlaceBruto>,
+    ) -> (f32, Option<f32>) {
         let lineas = partir(self.medir, items, self.ancho);
         let mut y = self.y;
         let mut primera = None;
@@ -204,18 +229,28 @@ impl EnLinea<'_> {
                 Alinear::Derecha => libre,
                 _ => 0.0,
             };
-            self.dibujar(items, &l.puestos, self.x + dx, base, piezas);
+            self.dibujar(items, &l.puestos, (self.x + dx, base), piezas, enlaces);
             y += sobre + bajo;
         }
         (y - self.y, primera)
     }
 
     /// Las piezas de una línea: los trozos seguidos con el mismo estilo van en un solo texto.
-    fn dibujar(&self, items: &[Item<'_>], puestos: &[(usize, f32, f32)], x0: f32, base: f32, piezas: &mut Vec<Pieza>) {
+    fn dibujar(
+        &self,
+        items: &[Item<'_>],
+        puestos: &[(usize, f32, f32)],
+        (x0, base): (f32, f32),
+        piezas: &mut Vec<Pieza>,
+        enlaces: &mut Vec<EnlaceBruto>,
+    ) {
         let mut k = 0;
         while k < puestos.len() {
             let (i, x, _) = puestos[k];
-            if let Item::Imagen { ancho, alto, src, estilo } = &items[i] {
+            if let Item::Imagen { ancho, alto, src, estilo, enlace } = &items[i] {
+                if let Some(e) = enlace {
+                    enlaces.push((x0 + x, base - alto, *ancho, *alto, *e));
+                }
                 if estilo.visible {
                     piezas.push(Pieza::Imagen {
                         x: x0 + x,
@@ -228,18 +263,24 @@ impl EnLinea<'_> {
                 k += 1;
                 continue;
             }
-            let estilo = items[i].estilo();
+            let (estilo, enlace) = (items[i].estilo(), items[i].enlace());
             let mut texto = String::new();
             let mut ancho = 0.0;
             while k < puestos.len()
                 && !matches!(items[puestos[k].0], Item::Imagen { .. })
                 && core::ptr::eq(items[puestos[k].0].estilo(), estilo)
+                && items[puestos[k].0].enlace() == enlace
             {
                 if let Item::Palabra { texto: t, .. } | Item::Espacio { texto: t, .. } = &items[puestos[k].0] {
                     texto.push_str(t);
                 }
                 ancho += puestos[k].2;
                 k += 1;
+            }
+            if let Some(e) = enlace {
+                let f = fuente(estilo);
+                let (asc, desc) = (self.medir.ascenso(&f), self.medir.descenso(&f));
+                enlaces.push((x0 + x, base - asc, ancho, asc + desc, e));
             }
             if estilo.visible {
                 self.trozo(estilo, x0 + x, base, ancho, texto, piezas);

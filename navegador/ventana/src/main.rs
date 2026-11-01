@@ -1,18 +1,26 @@
-//! La ventana de QUIMERA: abre una página y la dibuja con wgpu.
+//! La ventana de QUIMERA: un navegador con barra de dirección, enlaces e historial.
 //!
 //! Uso: `cargo run --release -p quimera-ventana -- [https://... | pagina.html]` (sin argumento,
-//! la primera página de ejemplo). La rueda del ratón, las flechas, Re Pág/Av Pág, Inicio y Fin desplazan;
-//! al redimensionar se vuelve a maquetar con el ancho nuevo. F5 vuelve a leer la página.
+//! la primera página de ejemplo).
+//!
+//! - **Enlaces**: el cursor cambia sobre ellos, abajo a la izquierda se ve a dónde llevan, y un
+//!   clic los sigue (los `#ancla` de la misma página desplazan sin recargar).
+//! - **Barra**: ← → ⟳ y el campo de dirección (clic, Ctrl+L o F6; Enter para ir, Esc para salir).
+//! - **Historial**: Alt+← / Alt+→ y los botones laterales del ratón.
+//! - **Desplazar**: rueda, flechas, Re Pág/Av Pág, espacio, Inicio, Fin. F5 o Ctrl+R recargan.
+//! - Las páginas se cargan en otro hilo: la ventana no se congela mientras llegan.
 //!
 //! Sin ventana: `-- pagina.html --captura salida.png [ancho] [alto]` dibuja con la misma GPU en
-//! una imagen y la guarda (para comprobar el pintado sin mirar la pantalla).
-//!
-//! Todo el camino es de QUIMERA: HTML → árbol → estilo → maquetación (con las medidas de las
-//! fuentes de verdad) → cuadros → GPU.
+//! una imagen (para comprobar el pintado sin mirar la pantalla). Con `--seguir N`, antes sigue
+//! el enlace número N de la página.
 
+mod barra;
+mod historial;
+mod navegador;
 mod pagina;
 mod png;
 
+use navegador::{Llegada, Navegador};
 use pagina::{Pagina, direccion};
 use quimera_estilo::Opciones;
 use quimera_gpu::Gpu;
@@ -21,107 +29,21 @@ use quimera_pintar::{Pintor, color_gpu};
 use quimera_red::{Cliente, Url};
 use quimera_texto::Fuentes;
 use std::sync::Arc;
-use std::time::Instant;
 use winit::application::ApplicationHandler;
 use winit::dpi::LogicalSize;
-use winit::event::{ElementState, MouseScrollDelta, WindowEvent};
+use winit::event::{ElementState, MouseButton, MouseScrollDelta, WindowEvent};
 use winit::event_loop::{ActiveEventLoop, EventLoop};
-use winit::keyboard::{Key, NamedKey};
 use winit::window::{Window, WindowId};
 
 const TAM_ATLAS: u32 = 2048;
 
-/// Lo que existe mientras la ventana está abierta.
-struct Abierta {
-    ventana: Arc<Window>,
-    gpu: Gpu,
-    /// Alto del documento y desplazamiento actual, en píxeles de pantalla.
-    alto_documento: f32,
-    desp: f32,
-    fondo: [f32; 4],
-}
-
-struct Navegador {
-    url: Url,
-    cliente: Cliente,
-    /// La página cargada (se vuelve a cargar con F5).
-    pagina: Option<Pagina>,
-    pintor: Pintor,
-    abierta: Option<Abierta>,
-}
-
-impl Navegador {
-    /// Lee, calcula estilos, maqueta y carga los cuadros en la GPU para el tamaño actual.
-    fn maquetar(&mut self) {
-        let Some(a) = &mut self.abierta else { return };
-        let inicio = Instant::now();
-        let tam = a.ventana.inner_size();
-        let escala = a.ventana.scale_factor() as f32;
-        let (ancho, alto) = (tam.width as f32 / escala, tam.height as f32 / escala);
-        let pagina = self.pagina.get_or_insert_with(|| Pagina::cargar(&self.cliente, &self.url));
-        let doc = pagina.documento();
-        let externa = |href: &str| pagina.hoja(href);
-        let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
-        let m = maquetar(&doc, &estilos, &self.pintor.medidor(), ancho, alto);
-        let cuadros = self.pintor.escena(&m, escala);
-        a.gpu.cargar(&cuadros);
-        if let Some((pixeles, desde, hasta)) = self.pintor.atlas_cambiado() {
-            a.gpu.subir_atlas(pixeles, desde, hasta);
-        }
-        a.alto_documento = m.alto * escala;
-        a.fondo = color_gpu(m.fondo);
-        a.desp = a.desp.clamp(0.0, (a.alto_documento - tam.height as f32).max(0.0));
-        let titulo = doc.buscar("title").map(|t| doc.texto(t).trim().to_string()).filter(|t| !t.is_empty());
-        let sitio =
-            if pagina.url.anfitrion.is_empty() { String::new() } else { format!(" · {}", pagina.url.anfitrion) };
-        a.ventana.set_title(&format!("{}{sitio} — QUIMERA", titulo.as_deref().unwrap_or("sin título")));
-        eprintln!(
-            "{}: red {:.0} ms · {} nodos, {} cuadros, {:.0}×{:.0} px en {:.1} ms",
-            pagina.url,
-            pagina.ms_red,
-            doc.total(),
-            cuadros.len(),
-            ancho,
-            m.alto,
-            inicio.elapsed().as_secs_f64() * 1e3
-        );
-        a.ventana.request_redraw();
-    }
-
-    fn desplazar(&mut self, cuanto: f32) {
-        let Some(a) = &mut self.abierta else { return };
-        let maximo = (a.alto_documento - a.ventana.inner_size().height as f32).max(0.0);
-        a.desp = (a.desp + cuanto).clamp(0.0, maximo);
-        a.ventana.request_redraw();
-    }
-
-    fn tecla(&mut self, tecla: &Key) {
-        let Some(a) = &self.abierta else { return };
-        let pagina = a.ventana.inner_size().height as f32 * 0.9;
-        let linea = 40.0 * a.ventana.scale_factor() as f32;
-        match tecla {
-            Key::Named(NamedKey::ArrowDown) => self.desplazar(linea),
-            Key::Named(NamedKey::ArrowUp) => self.desplazar(-linea),
-            Key::Named(NamedKey::PageDown | NamedKey::Space) => self.desplazar(pagina),
-            Key::Named(NamedKey::PageUp) => self.desplazar(-pagina),
-            Key::Named(NamedKey::Home) => self.desplazar(f32::MIN),
-            Key::Named(NamedKey::End) => self.desplazar(f32::MAX),
-            Key::Named(NamedKey::F5) => {
-                self.pagina = None;
-                self.maquetar();
-            }
-            _ => {}
-        }
-    }
-}
-
-impl ApplicationHandler for Navegador {
+impl ApplicationHandler<Llegada> for Navegador {
     fn resumed(&mut self, bucle: &ActiveEventLoop) {
         if self.abierta.is_some() {
             return;
         }
         let atributos =
-            Window::default_attributes().with_title("QUIMERA").with_inner_size(LogicalSize::new(1024.0, 768.0));
+            Window::default_attributes().with_title("QUIMERA").with_inner_size(LogicalSize::new(1100.0, 800.0));
         let ventana = match bucle.create_window(atributos) {
             Ok(v) => Arc::new(v),
             Err(e) => {
@@ -132,15 +54,16 @@ impl ApplicationHandler for Navegador {
         };
         let tam = ventana.inner_size();
         match pollster::block_on(Gpu::nueva(ventana.clone(), tam.width, tam.height, TAM_ATLAS)) {
-            Ok(gpu) => {
-                self.abierta = Some(Abierta { ventana, gpu, alto_documento: 0.0, desp: 0.0, fondo: [1.0; 4] });
-                self.maquetar();
-            }
+            Ok(gpu) => self.abrir(ventana, gpu),
             Err(e) => {
                 eprintln!("no se puede usar la GPU: {e}");
                 bucle.exit();
             }
         }
+    }
+
+    fn user_event(&mut self, _bucle: &ActiveEventLoop, llegada: Llegada) {
+        self.llegada(llegada);
     }
 
     fn window_event(&mut self, bucle: &ActiveEventLoop, _id: WindowId, evento: WindowEvent) {
@@ -151,6 +74,7 @@ impl ApplicationHandler for Navegador {
                     a.gpu.redimensionar(tam.width, tam.height);
                 }
                 self.maquetar();
+                self.pintar_barra();
             }
             WindowEvent::ScaleFactorChanged { .. } => self.maquetar(),
             WindowEvent::MouseWheel { delta, .. } => {
@@ -161,40 +85,63 @@ impl ApplicationHandler for Navegador {
                 };
                 self.desplazar(cuanto);
             }
-            WindowEvent::KeyboardInput { event, .. } if event.state == ElementState::Pressed => {
-                self.tecla(&event.logical_key)
-            }
-            WindowEvent::RedrawRequested => {
-                if let Some(a) = &mut self.abierta
-                    && let Err(e) = a.gpu.dibujar(a.fondo, a.desp)
-                {
-                    eprintln!("no se pudo dibujar: {e}");
-                }
-            }
+            WindowEvent::CursorMoved { position, .. } => self.raton(position.x as f32, position.y as f32),
+            WindowEvent::MouseInput { state: ElementState::Released, button, .. } => match button {
+                MouseButton::Left => self.clic(),
+                MouseButton::Back => self.atras(),
+                MouseButton::Forward => self.adelante(),
+                _ => {}
+            },
+            WindowEvent::ModifiersChanged(m) => self.teclas = m.state(),
+            WindowEvent::KeyboardInput { event, .. } if event.state == ElementState::Pressed => self.tecla(&event),
+            WindowEvent::RedrawRequested => self.dibujar(),
             _ => {}
         }
     }
 }
 
-/// Dibuja la página con la GPU, sin ventana, y la guarda como PNG.
-fn capturar(url: &Url, salida: &str, ancho: u32, alto: u32) -> Result<(), String> {
+/// Dibuja la página con la GPU, sin ventana y con la barra, y la guarda como PNG. Con
+/// `seguir`, antes sigue ese enlace de la página (el número `n` de su lista de enlaces).
+fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), seguir: Option<usize>) -> Result<(), String> {
     let mut pintor = Pintor::nuevo(Fuentes::del_sistema(), TAM_ATLAS);
     let mut gpu = pollster::block_on(Gpu::sin_ventana(ancho, alto, TAM_ATLAS))?;
-    let pagina = Pagina::cargar(&Cliente::nuevo(), url);
-    let doc = pagina.documento();
-    let externa = |href: &str| pagina.hoja(href);
-    let (w, h) = (ancho as f32, alto as f32);
-    let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho: w, alto: h }, &externa);
-    let m = maquetar(&doc, &estilos, &pintor.medidor(), w, h);
-    let cuadros = pintor.escena(&m, 1.0);
-    gpu.cargar(&cuadros);
+    let cliente = Cliente::nuevo();
+    let mut pagina = Pagina::cargar(&cliente, url);
+    let (w, h) = (ancho as f32, alto as f32 - barra::ALTO);
+    let mut m = maquetar_pagina(&pagina, &pintor, w, h);
+    if let Some(n) = seguir {
+        let enlace = m.enlaces.get(n).ok_or_else(|| format!("la página tiene {} enlaces", m.enlaces.len()))?;
+        let destino = pagina.base.unir(&enlace.href).map_err(|e| e.to_string())?;
+        eprintln!("enlace {n}: {} → {destino}", enlace.href);
+        pagina = Pagina::cargar(&cliente, &destino);
+        m = maquetar_pagina(&pagina, &pintor, w, h);
+    }
+    gpu.cargar(&pintor.escena(&m, 1.0));
+    let url_texto = pagina.url.to_string();
+    let vista = barra::Vista {
+        ancho: w,
+        alto: alto as f32,
+        escala: 1.0,
+        url: &url_texto,
+        atras: seguir.is_some(),
+        adelante: false,
+        estado: None,
+    };
+    gpu.cargar_fijos(&barra::Barra::default().cuadros(&mut pintor, &vista));
     if let Some((pixeles, desde, hasta)) = pintor.atlas_cambiado() {
         gpu.subir_atlas(pixeles, desde, hasta);
     }
-    let rgba = gpu.capturar(color_gpu(m.fondo), 0.0)?;
+    let rgba = gpu.capturar(color_gpu(m.fondo), -barra::ALTO)?;
     std::fs::write(salida, png::codificar(ancho, alto, &rgba)).map_err(|e| format!("{salida}: {e}"))?;
-    eprintln!("{}: red {:.0} ms · {} cuadros → {salida} ({ancho}×{alto})", pagina.url, pagina.ms_red, cuadros.len());
+    eprintln!("{}: red {:.0} ms · {} enlaces → {salida} ({ancho}×{alto})", pagina.url, pagina.ms_red, m.enlaces.len());
     Ok(())
+}
+
+fn maquetar_pagina(pagina: &Pagina, pintor: &Pintor, ancho: f32, alto: f32) -> quimera_maquetacion::Maquetacion {
+    let doc = pagina.documento();
+    let externa = |href: &str| pagina.hoja(href);
+    let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
+    maquetar(&doc, &estilos, &pintor.medidor(), ancho, alto)
 }
 
 fn main() {
@@ -203,27 +150,28 @@ fn main() {
         let url = direccion(args.get(1).filter(|a| *a != "--captura").map_or("", String::as_str));
         let salida = args.get(i + 1).cloned().unwrap_or_else(|| String::from("captura.png"));
         let numero = |k: usize, d: u32| args.get(i + k).and_then(|a| a.parse().ok()).unwrap_or(d);
-        if let Err(e) = capturar(&url, &salida, numero(2, 1024), numero(3, 768)) {
+        let seguir =
+            args.iter().position(|a| a == "--seguir").and_then(|k| args.get(k + 1)).and_then(|n| n.parse().ok());
+        if let Err(e) = capturar(&url, &salida, (numero(2, 1024), numero(3, 768)), seguir) {
             eprintln!("no se pudo capturar: {e}");
             std::process::exit(1);
         }
         return;
     }
     let ejemplo = concat!(env!("CARGO_MANIFEST_DIR"), "/../../docs/ejemplos/primera.html");
-    let url = direccion(&std::env::args().nth(1).unwrap_or_else(|| String::from(ejemplo)));
+    let url = direccion(&args.get(1).cloned().unwrap_or_else(|| String::from(ejemplo)));
     let fuentes = Fuentes::del_sistema();
     if fuentes.total() == 0 {
         eprintln!("aviso: no se encontraron fuentes del sistema; el texto no se verá");
     }
-    let pintor = Pintor::nuevo(fuentes, TAM_ATLAS);
-    let mut navegador = Navegador { url, cliente: Cliente::nuevo(), pagina: None, pintor, abierta: None };
-    let bucle = match EventLoop::new() {
+    let bucle = match EventLoop::<Llegada>::with_user_event().build() {
         Ok(b) => b,
         Err(e) => {
             eprintln!("no se puede crear el bucle de eventos: {e}");
             std::process::exit(1);
         }
     };
+    let mut navegador = Navegador::nuevo(url, Pintor::nuevo(fuentes, TAM_ATLAS), bucle.create_proxy());
     if let Err(e) = bucle.run_app(&mut navegador) {
         eprintln!("la ventana terminó con un error: {e}");
         std::process::exit(1);

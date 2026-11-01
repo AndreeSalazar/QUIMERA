@@ -1,5 +1,7 @@
 # La ventana: QUIMERA en pantalla con wgpu
 
+![](ejemplos/primera.svg)
+
 ```bash
 cargo run --release -p quimera-ventana                      # la página de ejemplo
 cargo run --release -p quimera-ventana -- pagina.html       # cualquier página local
@@ -7,9 +9,26 @@ cargo run --release -p quimera-ventana -- https://example.com/   # por red (docs
 cargo run --release -p quimera-ventana -- pagina.html --captura salida.png 1024 768
 ```
 
+## Navegar
+
+| Qué | Cómo |
+|---|---|
+| Seguir un enlace | Clic. Sobre un enlace el cursor es una mano, y abajo a la izquierda se ve a dónde lleva (ya resuelto). Un `#ancla` de la misma página desplaza hasta su `id` sin recargar |
+| Escribir una dirección | Clic en el campo, Ctrl+L o F6; Enter para ir, Esc para salir. `example.com/x` → `https://`; `localhost:8080` → `http://`; también rutas locales. Lo que no es una dirección no se envía a ningún buscador |
+| Atrás / adelante | Botones ← →, Alt+← / Alt+→, o los botones laterales del ratón |
+| Recargar | ⟳, F5 o Ctrl+R |
+
+Las páginas se cargan en **otro hilo**: la ventana sigue respondiendo y la línea de estado dice «Cargando...». Si mientras tanto se pide otra página, la primera se descarta al llegar. El historial guarda la URL final, tras las redirecciones.
+
+La barra se dibuja con los mismos cuadros y letras que la página, en una **capa fija** de la GPU: el sombreador no le aplica el desplazamiento (los vértices fijos llevan +2 en su modo), y la página se dibuja debajo, corrida el alto de la barra.
+
+La maquetación guarda **dónde está cada enlace** (un rectángulo por trozo de línea, también para los `<a>` que envuelven bloques o imágenes) y **dónde está cada `id`**, que es a donde llevan los `#ancla`.
+
+## Desplazar y redimensionar
+
 La rueda del ratón, las flechas, Re Pág/Av Pág, espacio, Inicio y Fin desplazan la página. Al redimensionar la ventana se vuelve a maquetar con el ancho nuevo (y se reevalúan los `@media`), y F5 vuelve a cargar la página (del disco o de la red). El título de la ventana es el `<title>` de la página y su sitio.
 
-`--captura` dibuja con la misma GPU en una imagen y la guarda como PNG. Sirve para comprobar el pintado sin mirar la pantalla, y en pruebas automáticas.
+`--captura` dibuja con la misma GPU, con la barra, en una imagen y la guarda como PNG. Sirve para comprobar el pintado sin mirar la pantalla. Con `--seguir N`, antes sigue el enlace número N de la página: así se comprobó que de `info.cern.ch/hypertext/WWW/TheProject.html` el enlace `../DataSources/Top.html` lleva a `/hypertext/DataSources/Top.html` y se dibuja.
 
 ## Las piezas
 
@@ -36,6 +55,7 @@ La página de ejemplo, en una ventana de 1024×768: leer, analizar, estilo, maqu
 ## Falta
 
 - Las familias con nombre (`font-family: "Fira Sans"`) aún caen en su genérica; hace falta buscar fuentes por nombre.
-- Imágenes (hoy un recuadro gris), enlaces que se puedan pulsar, selección de texto, barra de desplazamiento.
+- Imágenes (hoy un recuadro gris), selección de texto, barra de desplazamiento, mover el cursor dentro del campo de dirección, pestañas.
+- La interacción en vivo (pasar el ratón, pulsar, escribir) se prueba a mano en la ventana; su lógica (historial, edición del campo, direcciones escritas) tiene pruebas.
 - Pestañas, historial y barra de direcciones (`quimera-navegador`), y la interfaz con VERX. La red ya está (`quimera-red`, ver [RED.md](RED.md)).
 - Texto complejo: ligaduras, árabe, índico (*shaping* con harfrust).
