@@ -278,6 +278,25 @@ impl Mundo {
         self.m.escribir(obj, C_PROPS, nueva)
     }
 
+    /// `delete obj[clave]` de una propiedad propia. La forma se rehace sin la clave y los
+    /// huecos de detrás se corren uno a la izquierda, en su sitio: no asigna memoria.
+    pub fn borrar(&mut self, obj: Valor, clave: u32) -> bool {
+        let Some(forma) = self.forma(obj) else { return true };
+        let Some(hueco) = self.formas.buscar(forma, clave) else { return true };
+        let claves: alloc::vec::Vec<u32> = self.formas.claves(forma).to_vec();
+        let mut nueva = FORMA_VACIA;
+        for &k in claves.iter().filter(|&&k| k != clave) {
+            nueva = self.formas.anadir(nueva, k);
+        }
+        let Some(props) = self.m.leer(obj, C_PROPS) else { return false };
+        for i in hueco as usize..claves.len() - 1 {
+            let siguiente = self.m.leer(props, i + 1).unwrap_or(Valor::INDEFINIDO);
+            self.m.escribir(props, i, siguiente);
+        }
+        self.m.escribir(props, claves.len() - 1, Valor::INDEFINIDO);
+        self.m.escribir(obj, C_FORMA, Valor::entero(nueva as i32))
+    }
+
     /// Las claves propias en orden de creación.
     pub fn claves(&self, obj: Valor) -> &[u32] {
         self.forma(obj).map_or(&[], |f| self.formas.claves(f))

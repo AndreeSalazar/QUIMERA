@@ -84,10 +84,22 @@ fn typeof_de_una_global_inexistente_no_falla() {
 }
 
 #[test]
-fn lo_que_no_compila_todavia_lo_dice() {
-    assert!(compilar("for (const k in o) {}").unwrap_err().mensaje.contains("for-in"));
-    assert!(compilar("try {} finally {}").unwrap_err().mensaje.contains("finally"));
+fn break_fuera_de_un_bucle_es_un_error() {
     assert!(compilar("break").unwrap_err().mensaje.contains("fuera de un bucle"));
+    assert!(compilar("switch (1) { default: continue }").unwrap_err().mensaje.contains("fuera de un bucle"));
+}
+
+#[test]
+fn salir_de_un_try_cierra_su_manejador_y_ejecuta_su_finally() {
+    // `break` dentro del try: FinIntentar, luego el finally (f()), luego el salto.
+    let s = compilar("while (1) { try { break } finally { f() } }").unwrap().to_string();
+    let fin = s.find("fin try").expect("FinIntentar");
+    assert!(
+        s[fin..].contains("global \"f\""),
+        "finally en línea tras FinIntentar:
+{s}"
+    );
+    assert!(compilar("for (const k in o) {} for (const v of a) {}").is_ok());
 }
 
 #[test]

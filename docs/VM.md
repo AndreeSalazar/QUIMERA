@@ -64,12 +64,20 @@ Cómo se llegó a los 7 benchmarks de Boa:
 - Un experimento separó el coste: leer el `const n` global y, sobre todo, el número de instrucciones por vuelta.
 - **Con las superinstrucciones: 2,81×.** `nested-loop` pasa a ganar.
 
+## `finally`, `for-in`/`for-of` y `delete`
+
+- **`finally` sin saltos indirectos.** Cada `try` abre una *región* mientras se compila. Un `return`, `break` o `continue` que sale de ella cierra su manejador (`FinIntentar`) y ejecuta una copia del `finally` en ese mismo punto (`compilador/control.rs`). Esto arregló también un fallo latente: un `break` que salía de un `try` dejaba su manejador activo.
+- **`for-in`/`for-of`.** `IterarClaves`/`IterarValores` dan un arreglo nuevo que el bucle recorre por índice. Las claves que pone la biblioteca (`push`, `toString`...) y el `constructor` de `F.prototype` no son enumerables (`iteracion.rs`).
+- **`delete` sin mover el objeto.** `Mundo::borrar` rehace la forma sin esa clave y corre los huecos de detrás un sitio, en su celda: no asigna memoria. Las cachés en línea se invalidan solas porque la forma cambia.
+
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
-- **Biblioteca estándar, todavía corta.** Hay `console.log`/`print`, `Object`/`Object.create`, `Array` (`push`, `pop`, `join`, `indexOf`), `Function.prototype.call`, `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`), números (`toFixed`, `toPrecision`, `toString`), cadenas (`charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`), `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
+- **Biblioteca estándar, todavía parcial.** Hay `console.log`/`print`; `Object` (`create`, `keys`, `prototype.hasOwnProperty`); `Array` (`isArray`, `push`, `pop`, `shift`, `unshift`, `slice`, `concat`, `reverse`, `join`, `indexOf`, `includes`, `sort`, `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `findIndex`); `Function.prototype` (`call`, `apply`); `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`); números (`toFixed`, `toPrecision`, `toString`); `String` (`fromCharCode`, `charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`, `split`, `toUpperCase`, `toLowerCase`, `trim`, `includes`, `startsWith`, `endsWith`); `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
+- **`sort` es inserción binaria.** Estable y sin memoria extra, con pocas comparaciones (n log n), pero mueve O(n²) elementos: para arreglos grandes hará falta un *merge sort* con raíces.
+- **`apply` usa una llamada interna.** Recursión de Rust (como `ToPrimitive`); `call` en cambio deja el marco en la máquina.
 - **Matemáticas sin `std`.** `ln` y `exp` están hechas a mano (reducción de rango, ln 2 partido al estilo Cody-Waite de fdlibm), con precisión de pocos bits. Si un día se necesita la exactitud de una libm, conviene portar fdlibm entera.
 - **Errores de la máquina.** Los que lanza la máquina son cadenas (`"TypeError: ..."`); `new Error()` desde JavaScript sí crea objetos.
 - **Cadenas.** Viven fuera del GC y no se liberan; las cadenas UTF-16 de `quimera-cadenas` lo arreglarán.
-- **Lenguaje sin compilar todavía.** `delete`, `for-in`/`for-of` y `finally`.
-- **Más benchmarks de V8.** RayTrace, NavierStokes, Crypto, EarleyBoyer, RegExp y Splay necesitan más lenguaje y más biblioteca (expresiones regulares, `String.fromCharCode`, `Array` completo...).
+- **`for-of` solo con arreglos y cadenas.** Sin `Symbol.iterator` todavía; `for-in` y `for-of` reciben una copia de claves o valores al empezar.
+- **Más benchmarks de V8.** RayTrace, NavierStokes, Crypto, EarleyBoyer, RegExp y Splay necesitan más lenguaje y más biblioteca (expresiones regulares, clases, plantillas...).

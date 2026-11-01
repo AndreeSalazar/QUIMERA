@@ -130,7 +130,7 @@ impl Motor {
     }
 
     /// Índice de arreglo: un entero (o número entero) entre 0 y 2^32 - 2.
-    fn indice(k: Valor) -> Option<u32> {
+    pub(crate) fn indice(k: Valor) -> Option<u32> {
         if let Some(i) = k.como_entero() {
             return u32::try_from(i).ok();
         }

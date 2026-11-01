@@ -222,3 +222,83 @@ fn to_primitive_llama_a_value_of_y_to_string() {
                   }";
     assert_eq!(ejecutar(codigo), "6,20,0,true,-10,xN7,1,2,[object Object],valueOf falló,false,true,0");
 }
+
+#[test]
+fn finally_se_ejecuta_siempre() {
+    let codigo = "let log = [];\n\
+                  function conReturn() { try { return 'r' } finally { log.push('f1') } }\n\
+                  function conThrow() { try { throw 'x' } finally { log.push('f2') } }\n\
+                  function capturaYFinal() { try { throw 'y' } catch (e) { log.push('c:' + e); return 'cr' } finally { log.push('f3') } }\n\
+                  function relanza() { try { try { throw 'z' } catch (e) { throw e + '!' } finally { log.push('f4') } } catch (e) { return e } }\n\
+                  function anidados() { try { try { return 1 } finally { log.push('in') } } finally { log.push('out') } }\n\
+                  function resultado() {\n\
+                    let t = ''; try { conThrow() } catch (e) { t = e }\n\
+                    let s = 0; for (let i = 0; i < 5; i++) { try { if (i == 3) break; if (i == 1) continue; s += i } finally { log.push('b' + i) } }\n\
+                    let k = 0; for (let i = 0; i < 3; i++) { try { if (i == 0) break } catch (e) {} } try { throw 'tras-break' } catch (e) { k = e }\n\
+                    return [conReturn(), t, capturaYFinal(), relanza(), anidados(), s, k, log.join(' ')]\n\
+                  }";
+    assert_eq!(ejecutar(codigo), "r,x,cr,z!,1,2,tras-break,f2 b0 b1 b2 b3 f1 c:y f3 f4 in out");
+}
+
+#[test]
+fn for_in_for_of_y_delete() {
+    let codigo = "function P() { this.a = 1; this.b = 2 }\n\
+                  P.prototype.heredada = 3;\n\
+                  function resultado() {\n\
+                    const claves = []; for (const k in new P()) claves.push(k);\n\
+                    const indices = []; for (let i in ['x', 'y']) indices.push(i);\n\
+                    let suma = 0; for (const v of [1, 2, 3]) suma += v;\n\
+                    let letras = ''; for (const c of 'hola') letras = c + letras;\n\
+                    const o = { a: 1, b: 2, c: 3 }; const borrado = delete o.b; delete o['zz'];\n\
+                    const resto = []; for (const k in o) resto.push(k + '=' + o[k]);\n\
+                    const arr = [1, 2, 3]; delete arr[1];\n\
+                    let hasta = 0; for (const v of [5, 6, 7, 8]) { if (v == 7) break; hasta += v }\n\
+                    let err = ''; try { for (const x of 5) {} } catch (e) { err = e }\n\
+                    return [claves.join(''), indices.join(''), suma, letras, borrado, 'b' in o, resto.join(';'),\n\
+                            arr[1], arr.length, hasta, err]\n\
+                  }";
+    assert_eq!(ejecutar(codigo), "abheredada,01,6,aloh,true,false,a=1;c=3,,3,11,TypeError: 5 no es iterable");
+}
+
+#[test]
+fn biblioteca_de_colecciones_y_cadenas() {
+    let codigo = "function resultado() {\n\
+                    const o = { x: 1, y: 2 }; const a = [3, 1, 2];\n\
+                    const dobles = a.map(function (v, i) { return v * 2 + i });\n\
+                    const pares = [1, 2, 3, 4, 5, 6].filter(v => v % 2 == 0);\n\
+                    let visto = 0; a.forEach(function (v) { visto += v });\n\
+                    const suma = a.reduce((s, v) => s + v, 10); const sinInicial = a.reduce((s, v) => s * v);\n\
+                    const orden = [10, 9, 1, 100].sort(); const num = [10, 9, 1, 100].sort((p, q) => q - p);\n\
+                    const q = [1, 2, 3, 4]; const cola = q.shift(); q.unshift(0, 0.5);\n\
+                    const max = Math.max.apply(null, [4, 8, 2]);\n\
+                    return [Object.keys(o), o.hasOwnProperty('x'), o.hasOwnProperty('toString'), Array.isArray(a),\n\
+                            Array.isArray(o), dobles, pares, visto, suma, sinInicial, orden, num, [1, 2, 3, 4].slice(1, -1),\n\
+                            [1].concat([2, 3], 4), [1, 2, 3].reverse(), cola, q, [NaN].includes(NaN), a.some(v => v > 2),\n\
+                            a.every(v => v > 2), a.find(v => v < 3), a.findIndex(v => v == 9), max,\n\
+                            'a,b,,c'.split(',').length, 'Hola'.toUpperCase(), 'Hola'.toLowerCase(), '  x '.trim() + '|',\n\
+                            'quimera'.includes('mer'), 'quimera'.startsWith('qui'), 'quimera'.endsWith('x'),\n\
+                            String.fromCharCode(72, 105), String(12) + 1, 'abc'.split('').join('-')].join(' ')\n\
+                  }";
+    assert_eq!(
+        ejecutar(codigo),
+        "x,y true false true false 6,3,6 2,4,6 6 16 6 1,10,100,9 100,10,9,1 2,3 1,2,3,4 3,2,1 1 0,0.5,2,3,4 \
+         true true false 1 -1 8 4 HOLA hola x| true true false Hi 121 a-b-c"
+    );
+}
+
+#[test]
+fn map_y_sort_sobreviven_al_gc() {
+    // Guardería diminuta: cada llamada a la función crea objetos y mueve el arreglo.
+    let mut m = Motor::nuevo(Config { guarderia: 32, objeto_grande: 64, umbral_mayor_minimo: 128 });
+    let codigo = "function resultado() {\n\
+                    const base = []; for (let i = 0; i < 300; i++) base.push({ v: (i * 37) % 300 });\n\
+                    const copia = base.map(o => ({ v: o.v, basura: [o.v, { w: 1 }] }));\n\
+                    copia.sort((a, b) => { const t = { x: a.v }; return t.x - b.v });\n\
+                    let ok = copia.length == 300; for (let i = 0; i < 300; i++) ok = ok && copia[i].v == i;\n\
+                    return ok && copia.filter(o => o.basura[1].w == 1).length == 300\n\
+                  }";
+    m.ejecutar(codigo).unwrap();
+    let v = m.llamar_global("resultado", &[]).unwrap_or_else(|e| panic!("{}", e.mensaje));
+    assert_eq!(m.texto(v), "true");
+    assert!(m.estadisticas().menores > 50);
+}

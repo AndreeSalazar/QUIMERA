@@ -182,8 +182,22 @@ impl Motor {
             EscribirIndice { obj, indice, src } => {
                 self.escribir_indice(self.r(base, obj), self.r(base, indice), self.r(base, src))?
             }
-            BorrarProp { .. } | BorrarIndice { .. } => {
-                return Err(self.error("TypeError", "delete todavía no está en QUIMERA"));
+            BorrarProp { dst, obj, nombre } => {
+                let k = Valor::cadena(quimera_objetos::Ref::desde_u32(self.clave(fi, nombre)));
+                let v = self.borrar(self.r(base, obj), k)?;
+                self.w(base, dst, v);
+            }
+            BorrarIndice { dst, obj, indice } => {
+                let v = self.borrar(self.r(base, obj), self.r(base, indice))?;
+                self.w(base, dst, v);
+            }
+            IterarClaves { dst, obj } => {
+                let v = self.iterar_claves(self.r(base, obj));
+                self.w(base, dst, v);
+            }
+            IterarValores { dst, obj } => {
+                let v = self.iterar_valores(self.r(base, obj))?;
+                self.w(base, dst, v);
             }
             CrearObjeto { dst } => {
                 let o = self.mundo.crear_objeto(self.pila(R_OBJETO));

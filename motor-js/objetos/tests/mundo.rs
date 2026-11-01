@@ -108,3 +108,23 @@ fn funciones_y_nativas() {
     assert_eq!((w.nativa(n), w.funcion(n)), (Some(9), None));
     assert!(w.es_objeto(f) && w.es_objeto(n) && !w.es_objeto(env));
 }
+
+#[test]
+fn borrar_quita_la_clave_y_corre_los_huecos() {
+    let mut w = apretado();
+    let o = w.crear_objeto(Valor::NULO);
+    let r = w.m.raiz(o);
+    let [a, b, c] = ["a", "b", "c"].map(|k| w.cadenas.internar(k));
+    for (i, k) in [a, b, c].into_iter().enumerate() {
+        let o = w.m.valor(&r);
+        w.escribir(o, k, Valor::entero(i as i32));
+    }
+    let o = w.m.valor(&r);
+    assert!(w.borrar(o, b));
+    assert!(w.borrar(o, 12345), "borrar lo que no existe también es true");
+    assert_eq!((w.leer(o, a), w.leer(o, b), w.leer(o, c)), (Some(Valor::entero(0)), None, Some(Valor::entero(2))));
+    assert_eq!(w.claves(o), [a, c]);
+    w.escribir(o, b, Valor::entero(9));
+    assert_eq!(w.claves(o), [a, c, b], "vuelve al final, como en JavaScript");
+    assert_eq!(w.leer(o, b), Some(Valor::entero(9)));
+}

@@ -14,6 +14,7 @@ extern crate alloc;
 
 mod conversion;
 mod interprete;
+mod iteracion;
 mod llamadas;
 pub mod matematicas;
 mod nativas;
@@ -102,6 +103,8 @@ pub struct Motor {
     /// Reloj del anfitrión en milisegundos (para `Date`). Sin reloj, cada lectura avanza 1 ms.
     reloj: Option<fn() -> f64>,
     tiempo_falso: f64,
+    /// Cuántas claves de cada raíz fija son de la biblioteca (no enumerables en `for-in`).
+    ocultas: [usize; N_FIJAS],
 }
 
 impl Default for Motor {
@@ -122,6 +125,7 @@ impl Motor {
             azar: 0x2545_F491_4F6C_DD1D,
             reloj: None,
             tiempo_falso: 0.0,
+            ocultas: [0; N_FIJAS],
         };
         m.mundo.m.abrir_raices(N_FIJAS, Valor::INDEFINIDO);
         nativas::preparar(&mut m);

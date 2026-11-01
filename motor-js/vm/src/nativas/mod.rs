@@ -3,6 +3,7 @@
 //! Cada nativa es un número; `llamar` las reparte por grupos (un archivo por grupo). Lo
 //! que aún no existe da `undefined` al leerlo.
 
+mod coleccion;
 mod fecha;
 mod numeros;
 mod texto;
@@ -26,6 +27,8 @@ const GRUPO_NUMEROS: u32 = 100;
 const GRUPO_TEXTO: u32 = 200;
 /// Desde aquí, `Date` y `Error` (`fecha.rs`).
 const GRUPO_FECHA: u32 = 300;
+/// Desde aquí, `Object.keys`, `apply` y los métodos de arreglos (`coleccion.rs`).
+const GRUPO_COLECCION: u32 = 400;
 
 /// Crea el objeto global, los prototipos y las nativas.
 pub(crate) fn preparar(m: &mut Motor) {
@@ -52,10 +55,12 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, console, "log", IMPRIMIR);
     let objeto = constructor(m, "Object", OBJETO, R_OBJETO);
     definir_nativa(m, objeto, "create", OBJETO_CREAR);
-    constructor(m, "Array", ARREGLO, R_ARREGLO);
+    let arreglo = constructor(m, "Array", ARREGLO, R_ARREGLO);
+    coleccion::preparar(m, objeto, arreglo);
     numeros::preparar(m);
     texto::preparar(m);
     fecha::preparar(m);
+    m.fijar_claves_ocultas();
     m.mundo.m.soltar_raices(crate::N_FIJAS);
 }
 
@@ -110,11 +115,18 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
     if id == FUNCION_CALL {
         return llamar_call(m, ll);
     }
+    if id == coleccion::APPLY {
+        // `apply` ejecuta la función hasta el final (llamada interna) y deja su resultado.
+        let v = coleccion::llamar(m, id, &ll)?;
+        m.mundo.m.pila_mut()[ll.destino] = v;
+        return Ok(false);
+    }
     let construye = matches!(id, OBJETO | ARREGLO) || fecha::es_constructor(id);
     if ll.construir && !construye {
         return Err(m.error("TypeError", "esta función nativa no es un constructor"));
     }
     let v = match id {
+        GRUPO_COLECCION.. => coleccion::llamar(m, id, &ll)?,
         GRUPO_FECHA.. => fecha::llamar(m, id, &ll)?,
         GRUPO_TEXTO.. => texto::llamar(m, id, &ll)?,
         GRUPO_NUMEROS.. => numeros::llamar(m, id, &ll)?,

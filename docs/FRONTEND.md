@@ -46,9 +46,7 @@ función 4 main: 0 parámetros, 4 registros, entorno 0
 
 ## Qué entiende hoy
 
-**Analiza y compila**: `var`/`let`/`const`, funciones (declaradas, expresiones, flechas, métodos, parámetros por defecto, nombre propio), cierres anidados, objetos (abreviados, calculados, métodos), arreglos con huecos, todos los operadores (también `**`, `??`, `&&=`, `>>>=`...), `new`, `this`, `typeof`/`delete`/`void`, `if`, `while`, `do`, `for`, `break`/`continue`, `switch`, `try`/`catch`, `throw`, y el `;` automático.
-
-**Analiza pero aún no compila**: `for-in`/`for-of` y `finally`.
+**Analiza y compila**: `var`/`let`/`const`, funciones (declaradas, expresiones, flechas, métodos, parámetros por defecto, nombre propio), cierres anidados, objetos (abreviados, calculados, métodos), arreglos con huecos, todos los operadores (también `**`, `??`, `&&=`, `>>>=`...), `new`, `this`, `typeof`/`delete`/`void`, `if`, `while`, `do`, `for`, `break`/`continue`, `for-in`/`for-of`, `switch`, `try`/`catch`/`finally` (también con `return`/`break` dentro), `throw`, y el `;` automático.
 
 **Avisa con un error claro**: plantillas `` ` ``, expresiones regulares, clases, `...spread`, desestructuración, `?.`, generadores, `async`/`await`, etiquetas y BigInt.
 
@@ -71,5 +69,5 @@ QUIMERA analiza **3,3–3,4× más rápido**, e incluso con todo el camino hasta
 ## Siguiente
 
 - `quimera-objetos` y `quimera-vm`: ejecutar este bytecode y medir contra Boa y SpiderMonkey (`js140`) en los mismos benchmarks.
-- Completar el lenguaje: `for-in`/`for-of`, `finally`, plantillas, expresiones regulares (con `quimera-regex`), clases y desestructuración.
+- Completar el lenguaje: plantillas, expresiones regulares (con `quimera-regex`), clases y desestructuración.
 - Posiciones en el bytecode, para los mensajes de error en ejecución.

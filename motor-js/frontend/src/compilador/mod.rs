@@ -5,6 +5,7 @@
 //! sin capturar se leen y escriben en su registro sin copias: `x = x + 1` es una sola
 //! instrucción `rX = rX Suma r1`.
 
+mod control;
 mod expresiones;
 mod sentencias;
 
@@ -54,6 +55,17 @@ struct Bucle {
     romper: Vec<usize>,
     continuar: Vec<usize>,
     es_switch: bool,
+    /// Regiones `try` abiertas al empezar el bucle: `break` cierra las de dentro.
+    regiones: usize,
+}
+
+/// Un `try` abierto mientras se compila su cuerpo (o su `catch`).
+#[derive(Clone)]
+struct Region {
+    /// Si hay un manejador activo que `FinIntentar` debe quitar al salir.
+    manejador: bool,
+    /// El `finally` que hay que ejecutar al salir.
+    final_: Option<Vec<Sent>>,
 }
 
 #[derive(Default)]
@@ -67,6 +79,7 @@ struct Ctx {
     maximo: Reg,
     entorno: u16,
     bucles: Vec<Bucle>,
+    regiones: Vec<Region>,
 }
 
 #[derive(Clone, Copy)]

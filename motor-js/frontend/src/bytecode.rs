@@ -180,6 +180,10 @@ pub enum Instr {
     BorrarProp { dst: Reg, obj: Reg, nombre: u32 },
     /// `dst = delete obj[indice]`.
     BorrarIndice { dst: Reg, obj: Reg, indice: Reg },
+    /// `dst` = arreglo con las claves enumerables de `obj` (`for-in`).
+    IterarClaves { dst: Reg, obj: Reg },
+    /// `dst` = arreglo con los valores de `obj` (`for-of` sobre arreglos y cadenas).
+    IterarValores { dst: Reg, obj: Reg },
     /// `dst = {}`.
     CrearObjeto { dst: Reg },
     /// Un arreglo con los `n` registros seguidos desde `desde` (los huecos llevan un valor especial).
@@ -302,6 +306,8 @@ impl Stencil {
             EscribirIndice { obj, indice, src } => alloc::format!("r{obj}[r{indice}] = r{src}"),
             BorrarProp { dst, obj, nombre } => alloc::format!("r{dst} = delete r{obj}.{}", self.atomo(*nombre)),
             BorrarIndice { dst, obj, indice } => alloc::format!("r{dst} = delete r{obj}[r{indice}]"),
+            IterarClaves { dst, obj } => alloc::format!("r{dst} = claves(r{obj})"),
+            IterarValores { dst, obj } => alloc::format!("r{dst} = valores(r{obj})"),
             CrearObjeto { dst } => alloc::format!("r{dst} = {{}}"),
             CrearArreglo { dst, desde, n } => alloc::format!("r{dst} = [r{desde}..+{n}]"),
             Hueco { dst } => alloc::format!("r{dst} = hueco"),

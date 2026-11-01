@@ -3,7 +3,7 @@
 use super::{Bucle, Compilador, Destino, segura_sobre_variable};
 use crate::ast::{Caso, Decl, Expr, Sent};
 use crate::bytecode::{Instr, OpBin};
-use crate::fuente::{Pos, Resultado, error};
+use crate::fuente::Resultado;
 
 impl Compilador<'_> {
     pub(super) fn sentencia(&mut self, s: &Sent) -> Resultado<()> {
@@ -31,24 +31,14 @@ impl Compilador<'_> {
             Sent::Para { inicio, cond, paso, cuerpo } => {
                 self.para(inicio.as_deref(), cond.as_ref(), paso.as_ref(), cuerpo)?
             }
-            Sent::ParaEn { .. } => return error(Pos::default(), "for-in y for-of todavía no se compilan en QUIMERA"),
-            Sent::Retornar(v) => {
-                let r = match v {
-                    Some(e) => self.operando(e)?,
-                    None => {
-                        let t = self.temporal()?;
-                        self.emitir(Instr::Indefinido { dst: t });
-                        t
-                    }
-                };
-                self.emitir(Instr::Retornar { src: r });
-            }
+            Sent::ParaEn { decl, nombre, de, objeto, cuerpo } => self.para_en(*decl, nombre, *de, objeto, cuerpo)?,
+            Sent::Retornar(v) => self.retornar(v.as_ref())?,
             Sent::Romper | Sent::Continuar => self.romper_o_continuar(matches!(s, Sent::Romper))?,
             Sent::Lanzar(e) => {
                 let r = self.operando(e)?;
                 self.emitir(Instr::Lanzar { src: r });
             }
-            Sent::Intentar { cuerpo, captura, final_ } => self.intentar(cuerpo, captura.as_ref(), final_.is_some())?,
+            Sent::Intentar { cuerpo, captura, final_ } => self.intentar(cuerpo, captura.as_ref(), final_.as_ref())?,
             Sent::Elegir(x, casos) => self.elegir(x, casos)?,
             Sent::Bloque(b) => {
                 for s in b {
@@ -139,12 +129,13 @@ impl Compilador<'_> {
         Ok(())
     }
 
-    fn abrir_bucle(&mut self, es_switch: bool) {
-        self.ctx().bucles.push(Bucle { es_switch, ..Bucle::default() });
+    pub(super) fn abrir_bucle(&mut self, es_switch: bool) {
+        let regiones = self.ctx().regiones.len();
+        self.ctx().bucles.push(Bucle { es_switch, regiones, ..Bucle::default() });
     }
 
     /// Cierra el bucle actual: los `break` van a `fin` y los `continue` a `seguir`.
-    fn cerrar_bucle(&mut self, seguir: u32, fin: u32) {
+    pub(super) fn cerrar_bucle(&mut self, seguir: u32, fin: u32) {
         let Some(b) = self.ctx().bucles.pop() else { return };
         for i in b.romper {
             self.parchear(i, fin);
@@ -212,54 +203,6 @@ impl Compilador<'_> {
             self.parchear(s, fin);
         }
         self.cerrar_bucle(seguir, fin);
-        Ok(())
-    }
-
-    fn romper_o_continuar(&mut self, romper: bool) -> Resultado<()> {
-        let salto = self.emitir(Instr::Saltar { destino: 0 });
-        let bucles = &mut self.ctx().bucles;
-        // `continue` salta al bucle más cercano que no sea un switch.
-        let bucle = if romper { bucles.last_mut() } else { bucles.iter_mut().rev().find(|b| !b.es_switch) };
-        match bucle {
-            Some(b) if romper => b.romper.push(salto),
-            Some(b) => b.continuar.push(salto),
-            None => {
-                let que = if romper { "break" } else { "continue" };
-                return error(Pos::default(), alloc::format!("{que} fuera de un bucle"));
-            }
-        }
-        Ok(())
-    }
-
-    fn intentar(
-        &mut self,
-        cuerpo: &[Sent],
-        captura: Option<&(Option<alloc::string::String>, alloc::vec::Vec<Sent>)>,
-        con_final: bool,
-    ) -> Resultado<()> {
-        if con_final {
-            return error(Pos::default(), "finally todavía no se compila en QUIMERA");
-        }
-        let proteger = self.emitir(Instr::Intentar { captura: 0 });
-        for s in cuerpo {
-            self.sentencia(s)?;
-        }
-        self.emitir(Instr::FinIntentar);
-        let a_fin = self.emitir(Instr::Saltar { destino: 0 });
-        let en_captura = self.pc();
-        self.parchear(proteger, en_captura);
-        if let Some((nombre, bloque)) = captura {
-            let t = self.temporal()?;
-            self.emitir(Instr::Excepcion { dst: t });
-            if let Some(n) = nombre {
-                self.guardar(n, t);
-            }
-            for s in bloque {
-                self.sentencia(s)?;
-            }
-        }
-        let fin = self.pc();
-        self.parchear(a_fin, fin);
         Ok(())
     }
 
