@@ -82,7 +82,8 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
             return Ok(Valor::booleano(es_indice || m.mundo.es_objeto(o) && m.mundo.leer_propia(o, clave).is_some()));
         }
         IS_ARRAY => return Ok(Valor::booleano(m.mundo.clase(arg(m, ll, 0)) == Some(Clase::Arreglo))),
-        APPLY => return aplicar(m, ll),
+        // `apply` no llega aquí: `nativas::llamar` lo lleva a `aplicar`, que abre un marco.
+        APPLY => return Err(m.error("InternalError", "apply va por su propio camino")),
         _ => {}
     }
     if m.clase_en(ll.este) != Some(Clase::Arreglo) {
@@ -115,15 +116,16 @@ fn elementos(m: &Motor, a: Valor) -> Vec<Valor> {
     (0..n).map(|i| m.mundo.leer_elemento(a, i).unwrap_or(Valor::INDEFINIDO)).collect()
 }
 
-/// `f.apply(este, args)`: llama a `f` con los elementos de `args` como argumentos.
-fn aplicar(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
+/// `f.apply(este, args)`: llama a `f` con los elementos de `args` como argumentos, abriendo su
+/// marco como una llamada más (sin recursión de Rust). `Ok(true)`: hay un marco que ejecutar.
+pub(crate) fn aplicar(m: &mut Motor, ll: &Llamada) -> Result<bool, Valor> {
     let (f, este, lista) = (m.pila(ll.este), arg(m, ll, 0), arg(m, ll, 1));
     let args = match m.mundo.clase(lista) {
         Some(Clase::Arreglo) => elementos(m, lista),
         _ if matches!(lista.tipo(), Tipo::Indefinido | Tipo::Nulo) => Vec::new(),
         _ => return Err(m.error("TypeError", "apply necesita un arreglo de argumentos")),
     };
-    m.llamar_interno(f, este, &args)
+    m.llamar_con(f, este, &args, ll.destino)
 }
 
 /// Métodos sin función: el arreglo está en `marca`.

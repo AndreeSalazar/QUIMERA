@@ -13,12 +13,15 @@
 extern crate alloc;
 
 mod conversion;
+mod ic;
 mod interprete;
 mod iteracion;
 mod llamadas;
 pub mod matematicas;
 mod nativas;
 pub mod operaciones;
+#[cfg(feature = "perfil")]
+mod perfil;
 mod propiedades;
 
 use alloc::rc::Rc;
@@ -50,14 +53,16 @@ pub struct ErrorJs {
     pub mensaje: String,
 }
 
-/// Lo que recuerda una caché en línea: la forma vista y el hueco de la propiedad.
+/// El primer nivel de la caché en línea de una instrucción: la forma vista y el hueco de una
+/// propiedad propia. Si no basta, `sitio` apunta a sus stubs (`ic.rs`).
 #[derive(Debug, Clone, Copy)]
 struct Cache {
     forma: u32,
     hueco: u32,
+    sitio: u32,
 }
 
-const CACHE_VACIA: Cache = Cache { forma: u32::MAX, hueco: 0 };
+const CACHE_VACIA: Cache = Cache { forma: u32::MAX, hueco: 0, sitio: u32::MAX };
 
 /// Una función del Stencil, lista para ejecutar.
 struct Cargada {
@@ -83,6 +88,9 @@ struct Marco {
     destino: Option<usize>,
     /// Es un `new`: si la función no devuelve un objeto, el resultado es el objeto nuevo.
     construir: bool,
+    /// Desde dónde se sueltan las raíces al cerrarlo: el principio de su marco o, si una llamada
+    /// sin recursión (`apply`) puso antes los argumentos en la pila, el principio de esos.
+    soltar: usize,
 }
 
 /// Un `try` activo.
@@ -112,6 +120,13 @@ pub struct Motor {
     indice_regex: alloc::collections::BTreeMap<(u32, u32), u32>,
     /// Memoria de trabajo del motor de expresiones regulares, reutilizada.
     memoria_regex: quimera_regex::Memoria,
+    /// Los stubs de las cachés en línea (cada instrucción que los necesita apunta a uno).
+    sitios: Vec<ic::Sitio>,
+    /// Las formas de los prototipos que vigila cada stub, seguidas.
+    cadenas_ic: Vec<u32>,
+    /// Cuántas veces y cuánto tiempo se lleva cada tipo de instrucción (característica `perfil`).
+    #[cfg(feature = "perfil")]
+    perfil: perfil::Perfil,
 }
 
 /// Una expresión regular compilada con su texto original.
@@ -143,6 +158,10 @@ impl Motor {
             regexes: Vec::new(),
             indice_regex: alloc::collections::BTreeMap::new(),
             memoria_regex: quimera_regex::Memoria::default(),
+            sitios: Vec::new(),
+            cadenas_ic: Vec::new(),
+            #[cfg(feature = "perfil")]
+            perfil: perfil::Perfil::default(),
         };
         m.mundo.m.abrir_raices(N_FIJAS, Valor::INDEFINIDO);
         nativas::preparar(&mut m);

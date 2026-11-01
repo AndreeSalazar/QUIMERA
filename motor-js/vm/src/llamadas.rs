@@ -104,7 +104,9 @@ impl Motor {
             let a = self.mundo.crear_arreglo(&valores, self.pila(R_ARREGLO));
             self.mundo.m.pila_mut()[base + r as usize] = a;
         }
-        self.marcos.push(Marco { funcion: indice, pc: 0, base, destino: Some(ll.destino), construir: ll.construir });
+        let destino = Some(ll.destino);
+        let soltar = base_marco;
+        self.marcos.push(Marco { funcion: indice, pc: 0, base, destino, construir: ll.construir, soltar });
     }
 
     /// Cierra el marco actual con el valor `v` y lo escribe en el destino de quien llamó.
@@ -112,7 +114,7 @@ impl Motor {
         let Some(marco) = self.marcos.pop() else { return };
         let base_marco = marco.base - CABECERA;
         let v = if marco.construir && !self.mundo.es_objeto(v) { self.pila(base_marco + 3) } else { v };
-        self.mundo.m.soltar_raices(base_marco);
+        self.mundo.m.soltar_raices(marco.soltar);
         if let Some(d) = marco.destino
             && let Some(hueco) = self.mundo.m.pila_mut().get_mut(d)
         {
@@ -151,9 +153,31 @@ impl Motor {
     fn deshacer_hasta(&mut self, n: usize) {
         while self.marcos.len() > n {
             if let Some(m) = self.marcos.pop() {
-                self.mundo.m.soltar_raices(m.base - CABECERA);
+                self.mundo.m.soltar_raices(m.soltar);
             }
         }
+    }
+
+    /// Llama a `f` con `este` y `args` **sin recursión de Rust** (`apply`): los pone en la pila,
+    /// abre su marco como cualquier llamada y el marco suelta también esos valores al cerrarse.
+    /// `Ok(true)`: hay un marco nuevo que ejecutar; `Ok(false)`: era una nativa y ya terminó.
+    pub(crate) fn llamar_con(&mut self, f: Valor, este: Valor, args: &[Valor], destino: usize) -> Result<bool, Valor> {
+        let base = self.mundo.m.abrir_raices(2 + args.len(), Valor::INDEFINIDO);
+        let pila = self.mundo.m.pila_mut();
+        pila[base] = f;
+        pila[base + 1] = este;
+        pila[base + 2..base + 2 + args.len()].copy_from_slice(args);
+        let ll = Llamada { f: base, este: base + 1, args: base + 2, n: args.len(), destino, construir: false };
+        let r = self.llamar(ll);
+        match r {
+            Ok(true) => {
+                if let Some(m) = self.marcos.last_mut() {
+                    m.soltar = base;
+                }
+            }
+            _ => self.mundo.m.soltar_raices(base),
+        }
+        r
     }
 
     /// La clase de lo que hay en una posición de la pila.

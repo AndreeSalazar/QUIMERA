@@ -136,11 +136,38 @@ fn probar(rutas: &[String]) {
         };
         let mut m = quimera_vm::Motor::default();
         m.con_reloj(reloj);
+        #[cfg(feature = "perfil")]
+        m.perfilar(nanos);
         let r = m.ejecutar(&codigo).and_then(|_| m.llamar_global("main", &[]));
         match r {
             Ok(_) => println!("{ruta}: SCORE {}", puntuacion(m.salida())),
             Err(e) => println!("{ruta}: {}", e.mensaje),
         }
+        #[cfg(feature = "perfil")]
+        informe(&m);
+    }
+}
+
+/// Nanosegundos desde el arranque (el cronómetro del perfil).
+#[cfg(feature = "perfil")]
+fn nanos() -> u64 {
+    static INICIO: std::sync::OnceLock<Instant> = std::sync::OnceLock::new();
+    INICIO.get_or_init(Instant::now).elapsed().as_nanos() as u64
+}
+
+/// Las instrucciones que más tiempo se llevan.
+#[cfg(feature = "perfil")]
+fn informe(m: &quimera_vm::Motor) {
+    let v = m.informe_perfil();
+    let total: u64 = v.iter().map(|x| x.2).sum::<u64>().max(1);
+    let veces: u64 = v.iter().map(|x| x.1).sum();
+    println!("  {veces} instrucciones; tiempo medido {:.0} ms", total as f64 / 1e6);
+    for (nombre, n, t) in v.iter().take(18) {
+        println!(
+            "  {nombre:<22} {n:>12} veces {:>6.1} % {:>7.1} ns/vez",
+            *t as f64 * 100.0 / total as f64,
+            *t as f64 / (*n).max(1) as f64
+        );
     }
 }
 

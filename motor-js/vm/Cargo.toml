@@ -20,5 +20,9 @@ quimera-frontend.workspace = true
 quimera-objetos.workspace = true
 quimera-regex.workspace = true
 
+[features]
+# Cuenta y cronometra cada tipo de instrucción (para saber qué acelerar). Apagada, no cuesta nada.
+perfil = []
+
 [lints]
 workspace = true

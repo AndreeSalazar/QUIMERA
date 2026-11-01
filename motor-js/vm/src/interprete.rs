@@ -35,7 +35,12 @@ impl Motor {
                     self.cerrar_marco(Valor::INDEFINIDO);
                     break;
                 };
-                match self.paso(ins, fi, base, pc) {
+                #[cfg(feature = "perfil")]
+                let inicio = self.perfil.ahora();
+                let resultado = self.paso(ins, fi, base, pc);
+                #[cfg(feature = "perfil")]
+                self.perfil.anotar(&ins, inicio);
+                match resultado {
                     Ok(Flujo::Sigue) => pc += 1,
                     Ok(Flujo::Salta(d)) => {
                         // Un salto atrás (cada vuelta de un bucle) es un punto seguro: todo lo
@@ -87,21 +92,15 @@ impl Motor {
             FuncionActual { dst } => self.w(base, dst, self.pila(cab)),
             Mover { dst, src } => self.w(base, dst, self.r(base, src)),
             Binaria { op, dst, a, b } => {
-                let v = self.binaria(op, self.r(base, a), self.r(base, b), base + b as usize)?;
+                let (x, y) = (self.r(base, a), self.r(base, b));
+                let v = match op::rapida(&self.mundo, op, x, y) {
+                    Some(v) => v,
+                    None => self.binaria(op, x, y, base + b as usize)?,
+                };
                 self.w(base, dst, v);
             }
             BinariaInm { op, dst, a, valor } => {
-                let x = self.r(base, a);
-                let v = match x.como_entero() {
-                    // El caso de los bucles: entero más entero, sin salir de i32.
-                    Some(i) if op == OpBin::Suma => i.checked_add(valor).map(Valor::entero),
-                    Some(i) if op == OpBin::Resta => i.checked_sub(valor).map(Valor::entero),
-                    _ => None,
-                };
-                let v = match v {
-                    Some(v) => v,
-                    None => self.binaria(op, x, Valor::entero(valor), usize::MAX)?,
-                };
+                let v = self.binaria_inmediata(op, self.r(base, a), valor)?;
                 self.w(base, dst, v);
             }
             SaltarSiNoCompara { op, a, b, destino } => {
@@ -176,11 +175,11 @@ impl Motor {
                 }
             }
             LeerProp { dst, obj, nombre } => {
-                let v = self.leer_prop(self.r(base, obj), self.clave(fi, nombre), fi, pc)?;
+                let v = self.leer_prop_ins(self.r(base, obj), nombre, (fi, pc))?;
                 self.w(base, dst, v);
             }
             EscribirProp { obj, nombre, src } => {
-                self.escribir_prop(self.r(base, obj), self.clave(fi, nombre), self.r(base, src), fi, pc)?;
+                self.escribir_prop_ins(self.r(base, obj), nombre, self.r(base, src), (fi, pc))?
             }
             LeerIndice { dst, obj, indice } => {
                 let v = self.leer_indice(self.r(base, obj), self.r(base, indice))?;
@@ -276,6 +275,36 @@ impl Motor {
     }
 
     /// `a op b`. `b_abs` es dónde está `b` en la pila (`instanceof` lo necesita para crear `F.prototype`).
+    /// `x op 3`: entero más entero sin salir de i32 (el caso de los bucles), dos números por el
+    /// camino rápido, y lo demás por el general.
+    fn binaria_inmediata(&mut self, op: OpBin, x: Valor, valor: i32) -> Result<Valor, Valor> {
+        let v = match x.como_entero() {
+            Some(i) if op == OpBin::Suma => i.checked_add(valor).map(Valor::entero),
+            Some(i) if op == OpBin::Resta => i.checked_sub(valor).map(Valor::entero),
+            _ => None,
+        };
+        match v.or_else(|| op::rapida(&self.mundo, op, x, Valor::entero(valor))) {
+            Some(v) => Ok(v),
+            None => self.binaria(op, x, Valor::entero(valor), usize::MAX),
+        }
+    }
+
+    /// `o.nombre`: el primer nivel de la caché sin buscar la clave; si falla, el camino completo.
+    fn leer_prop_ins(&mut self, o: Valor, nombre: u32, (fi, pc): (usize, usize)) -> Result<Valor, Valor> {
+        match self.leer_cacheado(o, fi, pc) {
+            Some(v) => Ok(v),
+            None => self.leer_prop(o, self.clave(fi, nombre), fi, pc),
+        }
+    }
+
+    /// `o.nombre = v`: el primer nivel de la caché sin buscar la clave; si falla, el camino completo.
+    fn escribir_prop_ins(&mut self, o: Valor, nombre: u32, v: Valor, (fi, pc): (usize, usize)) -> Result<(), Valor> {
+        if self.escribir_cacheado(o, v, fi, pc) {
+            return Ok(());
+        }
+        self.escribir_prop(o, self.clave(fi, nombre), v, fi, pc)
+    }
+
     fn binaria(&mut self, op: OpBin, a: Valor, b: Valor, b_abs: usize) -> Result<Valor, Valor> {
         // Con un objeto de por medio, ToPrimitive (valueOf/toString) salvo donde no aplica.
         let (a, b) = match op {

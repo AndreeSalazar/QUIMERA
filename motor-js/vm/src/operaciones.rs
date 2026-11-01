@@ -229,6 +229,34 @@ impl AbsSeguro for f64 {
     }
 }
 
+/// Una operación entre **dos números**, sin las comprobaciones de objetos (`valueOf`) ni de
+/// textos (`+` que concatena): el caso de casi toda la aritmética. `None` si no son dos números
+/// o el operador no es aritmético, de bits o de comparación.
+pub fn rapida(w: &Mundo, op: OpBin, a: Valor, b: Valor) -> Option<Valor> {
+    let (x, y) = (a.como_numero()?, b.como_numero()?);
+    let comparar = |r: bool| Some(Valor::booleano(r));
+    match op {
+        OpBin::Menor => comparar(x < y),
+        OpBin::MenorIgual => comparar(x <= y),
+        OpBin::Mayor => comparar(x > y),
+        OpBin::MayorIgual => comparar(x >= y),
+        OpBin::Estricto | OpBin::Igual => comparar(x == y),
+        OpBin::NoEstricto | OpBin::Distinto => comparar(x != y),
+        OpBin::Suma
+        | OpBin::Resta
+        | OpBin::Mul
+        | OpBin::Div
+        | OpBin::Resto
+        | OpBin::YBits
+        | OpBin::OBits
+        | OpBin::XorBits
+        | OpBin::Izq
+        | OpBin::Der
+        | OpBin::DerSinSigno => aritmetica(w, op, a, b),
+        _ => None,
+    }
+}
+
 /// Aritmética y bits: `None` significa "operador que no es de este grupo".
 pub fn aritmetica(w: &Mundo, op: OpBin, a: Valor, b: Valor) -> Option<Valor> {
     if let (Some(x), Some(y)) = (a.como_entero(), b.como_entero()) {

@@ -1,8 +1,10 @@
 //! Propiedades con cachés en línea, índices de arreglos y variables globales.
 //!
-//! La caché de cada instrucción guarda la última forma vista y su hueco: si el objeto
-//! vuelve a tener esa forma, leer `o.x` es comparar un número y leer un hueco. El perfil
-//! de Boa midió que la búsqueda de propiedades se llevaba el 20-38 % del tiempo.
+//! Dos niveles de caché por instrucción: el primero guarda una forma y su hueco (si el objeto
+//! vuelve a tener esa forma, leer `o.x` es comparar un número y leer un hueco); el segundo, los
+//! stubs al estilo CacheIR (`ic.rs`): varias formas, métodos del prototipo, `length` de los
+//! arreglos y propiedades que se añaden. El perfil de Boa midió que la búsqueda de propiedades
+//! se llevaba el 20-38 % del tiempo.
 
 use crate::{Cache, Motor, R_GLOBAL, operaciones};
 use alloc::format;
@@ -21,10 +23,34 @@ impl Motor {
         self.funciones.get(fi).and_then(|c| c.caches.get(pc)).copied().unwrap_or(crate::CACHE_VACIA)
     }
 
-    fn guardar_cache(&mut self, fi: usize, pc: usize, forma: u32, hueco: u32) {
-        if let Some(c) = self.funciones.get_mut(fi).and_then(|c| c.caches.get_mut(pc)) {
-            *c = Cache { forma, hueco };
+    /// Guarda el caso en el primer nivel si está libre. Devuelve `false` si ya tenía otro (el
+    /// sitio es polimórfico: el caso va a los stubs).
+    fn guardar_cache(&mut self, fi: usize, pc: usize, forma: u32, hueco: u32) -> bool {
+        match self.funciones.get_mut(fi).and_then(|c| c.caches.get_mut(pc)) {
+            Some(c) if c.forma == u32::MAX || c.forma == forma => {
+                (c.forma, c.hueco) = (forma, hueco);
+                true
+            }
+            _ => false,
         }
+    }
+
+    /// `obj.x` si acierta el primer nivel de la caché (sin buscar el nombre de la clave).
+    pub(crate) fn leer_cacheado(&self, obj: Valor, fi: usize, pc: usize) -> Option<Valor> {
+        let c = self.cache(fi, pc);
+        if c.forma == u32::MAX || !self.mundo.es_objeto(obj) || self.mundo.forma(obj) != Some(c.forma) {
+            return None;
+        }
+        Some(self.mundo.leer_hueco(obj, c.hueco).unwrap_or(Valor::INDEFINIDO))
+    }
+
+    /// `obj.x = v` si acierta el primer nivel de la caché. `false`: hay que ir por `escribir_prop`.
+    pub(crate) fn escribir_cacheado(&mut self, obj: Valor, v: Valor, fi: usize, pc: usize) -> bool {
+        let c = self.cache(fi, pc);
+        c.forma != u32::MAX
+            && self.mundo.es_objeto(obj)
+            && self.mundo.forma(obj) == Some(c.forma)
+            && self.mundo.escribir_hueco(obj, c.hueco, v)
     }
 
     /// `obj.clave`.
@@ -35,9 +61,18 @@ impl Motor {
                 if c.forma == forma {
                     return Ok(self.mundo.leer_hueco(obj, c.hueco).unwrap_or(Valor::INDEFINIDO));
                 }
-                if let Some(hueco) = self.mundo.formas.buscar(forma, clave) {
-                    self.guardar_cache(fi, pc, forma, hueco);
-                    return Ok(self.mundo.leer_hueco(obj, hueco).unwrap_or(Valor::INDEFINIDO));
+                if pc != SIN_CACHE {
+                    if let Some(v) = self.ic_leer(obj, forma, fi, pc) {
+                        return Ok(v);
+                    }
+                    if let Some(hueco) = self.mundo.formas.buscar(forma, clave)
+                        && self.guardar_cache(fi, pc, forma, hueco)
+                    {
+                        return Ok(self.mundo.leer_hueco(obj, hueco).unwrap_or(Valor::INDEFINIDO));
+                    }
+                    if let Some(v) = self.ic_aprender_lectura(obj, clave, fi, pc) {
+                        return Ok(v);
+                    }
                 }
             }
             return Ok(self.leer_lento(obj, clave));
@@ -103,9 +138,17 @@ impl Motor {
             if c.forma == forma && self.mundo.escribir_hueco(obj, c.hueco, v) {
                 return Ok(());
             }
-            if let Some(hueco) = self.mundo.formas.buscar(forma, clave) {
-                self.guardar_cache(fi, pc, forma, hueco);
-                if self.mundo.escribir_hueco(obj, hueco, v) {
+            if pc != SIN_CACHE {
+                if let Some(true) = self.ic_escribir(obj, forma, v, fi, pc) {
+                    return Ok(());
+                }
+                if let Some(hueco) = self.mundo.formas.buscar(forma, clave)
+                    && self.guardar_cache(fi, pc, forma, hueco)
+                    && self.mundo.escribir_hueco(obj, hueco, v)
+                {
+                    return Ok(());
+                }
+                if let Some(true) = self.ic_aprender_escritura(obj, forma, clave, v, (fi, pc)) {
                     return Ok(());
                 }
             }

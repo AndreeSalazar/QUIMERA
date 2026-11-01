@@ -19,5 +19,9 @@ externos = ["boa_engine"]
 quimera-vm.workspace = true
 boa_engine = "0.22.0"
 
+[features]
+# `cargo run --release -p quimera-banco-vm --features perfil -- script.js`: dónde se va el tiempo.
+perfil = ["quimera-vm/perfil"]
+
 [lints]
 workspace = true

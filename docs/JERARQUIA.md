@@ -23,7 +23,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 2 | `grafico` | ✅ `quimera-imagen` | PNG, JPEG y GIF → RGBA, sin dependencias | image-rs, stb_image, libjpeg | sí |
 | 2 | `red` | ✅ `quimera-red` | HTTP/1.1, HTTP/2, TLS (rustls), caché | Chromium `net` | no |
 | 3 | `motor-js` | ✅ `quimera-objetos` | *Shapes*, elementos densos, propiedades | SpiderMonkey `NativeObject` | sí |
-| 3 | `motor-js` | 🔨 `quimera-ic` | Cachés en línea con un mini-lenguaje común | SpiderMonkey CacheIR | sí |
+| 3 | `motor-js` | ✅ `quimera-ic` → dentro de `quimera-vm` (`ic.rs`) | Cachés en línea con un mini-lenguaje común: guardas de forma por la cadena de prototipos + acción. Vive en la VM porque necesita los objetos (nivel 3) y no puede ser un crate del mismo nivel | SpiderMonkey CacheIR | sí |
 | 3 | `proceso` | `quimera-aislamiento` | Procesos, IPC y sandbox (seccomp en ULTRA) | Chromium `sandbox`, `mojo` | no |
 | 4 | `motor-js` | ✅ `quimera-vm` | Intérprete de registros, un único bucle | SpiderMonkey `Interpreter.cpp` | sí |
 | 5 | `motor-js` | `quimera-builtins` | Array, Map, Promise, JSON... | Boa `builtins` | sí |

@@ -122,10 +122,8 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
         return llamar_call(m, ll);
     }
     if id == coleccion::APPLY {
-        // `apply` ejecuta la función hasta el final (llamada interna) y deja su resultado.
-        let v = coleccion::llamar(m, id, &ll)?;
-        m.mundo.m.pila_mut()[ll.destino] = v;
-        return Ok(false);
+        // `apply` abre el marco de la función como una llamada más: sin recursión de Rust.
+        return coleccion::aplicar(m, &ll);
     }
     let construye = matches!(id, OBJETO | ARREGLO | regexp::REGEXP) || fecha::es_constructor(id);
     if ll.construir && !construye {

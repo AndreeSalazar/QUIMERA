@@ -23,7 +23,7 @@ Cada fase deja algo que ya sirve por sí solo. El orden es el que más sitios de
 
 ## Fase 0: hecho
 
-- **JavaScript:** frontend propio (3,9× el parser de Boa) y VM (3,3× la puntuación de Boa en los 8 benchmarks de V8), con GC generacional y RegExp propias.
+- **JavaScript:** frontend propio (3,9× el parser de Boa) y VM (3,8× la puntuación de Boa en los 8 benchmarks de V8, con cachés al estilo CacheIR), con GC generacional y RegExp propias.
 - **HTML y CSS:** el mismo árbol que html5ever en 5.000 páginas reales; la cascada; bloques, líneas, listas y flexbox como Chromium.
 - **Red:** HTTP/1.1 y HTTPS (rustls).
 - **Imágenes:** PNG, JPEG (también progresivo) y GIF, al píxel igual que las referencias.

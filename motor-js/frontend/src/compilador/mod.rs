@@ -81,6 +81,8 @@ struct Ctx {
     bucles: Vec<Bucle>,
     regiones: Vec<Region>,
     argumentos: Option<Reg>,
+    /// El registro donde está `this` desde que empieza la función (si la función lo usa).
+    este: Option<Reg>,
 }
 
 #[derive(Clone, Copy)]
@@ -328,11 +330,19 @@ impl Compilador<'_> {
             }
             None => None,
         };
+        // `this` no cambia dentro de una función: se carga una vez y cada `this.x` usa ese registro.
+        if info.usa_este {
+            c.este = Some(c.tope);
+            c.tope += 1;
+        }
         c.primer_temporal = c.tope;
         c.maximo = c.tope;
         c.entorno = huecos;
         if huecos > 0 {
             self.emitir(Instr::CrearEntorno { huecos });
+        }
+        if let Some(r) = self.ctx().este {
+            self.emitir(Instr::Este { dst: r });
         }
         if let Some((reg, hueco)) = arguments_capturado {
             self.emitir(Instr::EscribirEntorno { saltos: 0, hueco, src: reg });

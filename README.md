@@ -41,7 +41,7 @@ cargo run --release -p quimera-ventana -- https://en.wikipedia.org/wiki/Cat
 - **HTML** con el mismo árbol que html5ever en 5.000 páginas reales, y 2,2× más rápido.
 - **CSS:** cascada, herencia, `@media`, bloques con márgenes que colapsan, texto en líneas, listas, **flexbox**, **tablas**, **flotantes** y **`position`/`z-index`** como Chromium (Hacker News se ve igual; en Wikipedia, la ficha a la derecha del texto).
 - **Imágenes** PNG, JPEG y GIF con decodificador propio, al píxel igual que las bibliotecas de referencia. Se descargan en segundo plano.
-- **JavaScript** propio, 3,3× más rápido que Boa en los benchmarks de V8. Aún no está conectado a las páginas: eso es la fase 3 del plan.
+- **JavaScript** propio, 3,8× más rápido que Boa en los benchmarks de V8, con cachés en línea al estilo CacheIR de SpiderMonkey. Aún no está conectado a las páginas: eso es la fase 3 del plan.
 - Dibuja con la GPU (wgpu) y fuentes del sistema.
 
 ## Qué falta: el plan
@@ -69,7 +69,7 @@ En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, 
 | `motor-js/regex` → `quimera-regex` | 1 | Expresiones regulares: patrón → programa → máquina con vuelta atrás sin recursión ([docs/REGEX.md](docs/REGEX.md)) | ✅ 6 pruebas |
 | `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador, literales `/re/` | ✅ 24 pruebas |
 | `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas únicas que se liberan, objetos, arreglos densos, funciones y entornos sobre el GC, `delete` en su sitio | ✅ 10 pruebas |
-| `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea, superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones | ✅ 29 pruebas |
+| `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea al estilo CacheIR (prototipos, polimórficas, `length`, transiciones), superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones; perfil por instrucción | ✅ 34 pruebas |
 | `web/html` → `quimera-html` | 2 | HTML5 → árbol, con la recuperación de errores de los navegadores; mismo árbol que html5ever en 5.000 páginas reales, 2,2× más rápido ([docs/HTML-CSS.md](docs/HTML-CSS.md)) | ✅ 10 pruebas |
 | `web/css` → `quimera-css` | 2 | CSS → reglas, `@media`, selectores con especificidad, colores y longitudes | ✅ 9 pruebas |
 | `web/estilo` → `quimera-estilo` | 8 | La cascada: hoja del navegador, `<style>`, `<link>`, `style=`, `@media`, especificidad, herencia, atajos, flexbox, tablas, `float`, `position`, modo de compatibilidad ([docs/ESTILO-MAQUETACION.md](docs/ESTILO-MAQUETACION.md)) | ✅ 13 pruebas |
@@ -112,8 +112,8 @@ El frontend, con el corpus de Boa y V8 (los 8 benchmarks de Octane) repetido has
 
 | | Media geométrica frente a boa_engine 0.22 |
 |---|---:|
-| **`quimera-vm`** | **2,81× más rápido** (de 1,13× en nested-loop a 5,60× en closures-create) |
-| **V8 (Octane), los 8 benchmarks con su arnés completo** | **3,33× la puntuación de Boa** (de 1,78× en NavierStokes a 12,5× en RegExp; gana en los 8) |
+| **`quimera-vm`** | **2,94× más rápido** (de 1,07× en nested-loop a 6,48× en closures-create) |
+| **V8 (Octane), los 8 benchmarks con su arnés completo** | **3,82× la puntuación de Boa** (mediana de tres corridas; de 2,30× en NavierStokes a 12,5× en RegExp; gana en los 8) |
 
 Ver [docs/VM.md](docs/VM.md).
 

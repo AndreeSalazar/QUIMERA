@@ -16,6 +16,8 @@ pub struct Info {
     pub locales: Vec<String>,
     /// Las que alguna función interna usa.
     pub capturadas: BTreeSet<String>,
+    /// Si usa `this`: entonces se carga una sola vez al entrar, en un registro propio.
+    pub usa_este: bool,
 }
 
 /// Información de cada función, por su dirección en el árbol (el programa usa la clave 0).
@@ -126,7 +128,7 @@ impl Analisis {
             anadir(&mut locales, n);
         }
         let conjunto = locales.iter().cloned().collect();
-        self.out.insert(clave(f), Info { locales, capturadas: BTreeSet::new() });
+        self.out.insert(clave(f), Info { locales, capturadas: BTreeSet::new(), usa_este: false });
         self.pila.push((clave(f), conjunto, f.flecha));
         for p in &f.params {
             if let Some(d) = &p.defecto {
@@ -252,7 +254,14 @@ impl Analisis {
                 args.iter().for_each(|a| self.expr(a));
             }
             Expr::Secuencia(v) => v.iter().for_each(|x| self.expr(x)),
-            Expr::Numero(_) | Expr::Cadena(_) | Expr::Regex(..) | Expr::Bool(_) | Expr::Nulo | Expr::Este => {}
+            Expr::Este => {
+                if let Some((k, _, _)) = self.pila.last().filter(|(k, _, _)| *k != 0)
+                    && let Some(info) = self.out.get_mut(k)
+                {
+                    info.usa_este = true;
+                }
+            }
+            Expr::Numero(_) | Expr::Cadena(_) | Expr::Regex(..) | Expr::Bool(_) | Expr::Nulo => {}
         }
     }
 }

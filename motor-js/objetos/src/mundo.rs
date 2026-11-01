@@ -59,6 +59,8 @@ pub struct Mundo {
     pub cadenas: Cadenas,
     /// Id de la cadena `"length"`.
     pub clave_length: u32,
+    /// Id de la cadena `"prototype"` (el de una función se crea la primera vez que se lee).
+    pub clave_prototype: u32,
 }
 
 impl Default for Mundo {
@@ -76,7 +78,8 @@ impl Mundo {
     pub fn nuevo(config: Config) -> Mundo {
         let mut cadenas = Cadenas::default();
         let clave_length = cadenas.internar("length");
-        Mundo { m: Monton::nuevo(config), formas: Formas::default(), cadenas, clave_length }
+        let clave_prototype = cadenas.internar("prototype");
+        Mundo { m: Monton::nuevo(config), formas: Formas::default(), cadenas, clave_length, clave_prototype }
     }
 
     /// La clase de un valor, si es una celda del montón.
@@ -271,6 +274,13 @@ impl Mundo {
         }
         let nueva = self.formas.anadir(forma, clave);
         let hueco = self.formas.huecos(nueva) - 1;
+        self.anadir_propiedad(obj, nueva, hueco, v)
+    }
+
+    /// Añade una propiedad ya calculada: el objeto pasa a la forma `nueva` (la de su forma con
+    /// una clave más) y escribe su `hueco`. Es lo que repite una caché en línea que ya vio la
+    /// transición. Puede asignar memoria (y mover objetos).
+    pub fn anadir_propiedad(&mut self, obj: Valor, nueva: IdForma, hueco: u32, v: Valor) -> bool {
         let base = self.proteger(&[obj, v]);
         let ok = self.asegurar_huecos(base, hueco + 1);
         let (obj, v) = (self.recuperar(base, 0), self.recuperar(base, 1));

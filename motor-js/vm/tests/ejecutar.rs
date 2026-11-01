@@ -391,3 +391,83 @@ fn las_cadenas_que_nadie_usa_se_liberan() {
     assert!(liberadas > 900_000, "liberadas: {liberadas}");
     assert!(vivas < 200_000, "vivas: {vivas}");
 }
+
+/// Las cachés en línea (`ic.rs`) nunca devuelven un valor viejo: cada caso en que una caché
+/// podría quedarse con algo que ya no vale.
+#[test]
+fn las_caches_no_mienten() {
+    let codigo = "function P() {} P.prototype.f = function () { return 1 };
+        function Q() {} Q.prototype.f = function () { return 'q' };
+        function leer(o) { return o.f() }
+        function x(o) { return o.x }
+        function resultado() {
+            let r = [], p = new P(), q = new Q();
+            for (let i = 0; i < 3; i++) r.push(leer(p));          // método del prototipo, aprendido
+            P.prototype.f = function () { return 2 };            // se cambia el método
+            r.push(leer(p));
+            p.f = function () { return 3 };                      // una propia lo tapa
+            r.push(leer(p));
+            r.push(leer(q));                                     // otra clase en el mismo sitio
+            delete p.f; r.push(leer(p));                         // vuelve al del prototipo
+            let o = new P(); r.push(String(x(o))); r.push(String(x(o))); // no existe (aprendido)
+            P.prototype.x = 'proto'; r.push(x(o));               // ahora sí, en el prototipo
+            Object.prototype.y = 'raiz'; r.push(o.y);            // y en el de más arriba
+            o.x = 'propia'; r.push(x(o));
+            return r.join(' ')
+        }";
+    assert_eq!(ejecutar(codigo), "1 1 1 2 3 q 2 undefined undefined proto raiz propia");
+}
+
+#[test]
+fn caches_polimorficas_megamorficas_y_length() {
+    let codigo = "function suma(o) { return o.v }
+        function resultado() {
+            let objs = [];
+            for (let i = 0; i < 9; i++) { let o = {}; o['k' + i] = i; o.v = i; objs.push(o) } // 9 formas
+            let s = 0;
+            for (let vuelta = 0; vuelta < 3; vuelta++) for (let i = 0; i < 9; i++) s += suma(objs[i]);
+            let a = [1, 2]; let n = []; for (let i = 0; i < 3; i++) { n.push(a.length); a.push(0) }
+            let c = { length: 'propia' };
+            function largo(x) { return x.length }
+            return [s, n.join(''), largo(a), largo(c), largo([])]
+        }";
+    assert_eq!(ejecutar(codigo), "108,234,5,propia,0");
+}
+
+#[test]
+fn anadir_propiedades_con_cache() {
+    // El mismo `this.x = ...` en objetos que empiezan con formas distintas.
+    let codigo = "function Punto(a, b) { this.x = a; this.y = b }
+        function resultado() {
+            let r = [];
+            for (let i = 0; i < 4; i++) { let p = new Punto(i, i * 2); r.push(p.x + p.y) }
+            let raro = Object.create(Punto.prototype); raro.z = 1; Punto.call(raro, 5, 6);
+            r.push(raro.x + raro.y + raro.z);
+            for (let i = 0; i < 6; i++) { let o = {}; o.a = i; o.b = i; o.c = i; o.d = i; o.e = i; r.push(o.e) }
+            return r.join(',')
+        }";
+    assert_eq!(ejecutar(codigo), "0,3,6,9,12,0,1,2,3,4,5");
+}
+
+#[test]
+fn apply_sin_recursion_de_rust() {
+    // 20.000 niveles de `apply` y 100.000 `apply` en un bucle: ni pila nativa ni raíces que crecen.
+    let codigo = "function bajar(n) { return n == 0 ? 0 : 1 + bajar.apply(null, [n - 1]) }
+        function sumar(a, b) { return a + b }
+        function resultado() {
+            let s = 0;
+            for (let i = 0; i < 100000; i++) s = sumar.apply(null, [s, 1]);
+            return [bajar(20000), s, Math.max.apply(null, [3, 9, 4])]
+        }";
+    assert_eq!(ejecutar(codigo), "20000,100000,9");
+}
+
+#[test]
+fn this_en_su_registro() {
+    // `this` se carga una vez al entrar; las flechas usan el de fuera; `new` el objeto nuevo.
+    let codigo = "function C() { this.v = 7; let f = () => this.v + 1; this.w = f() }
+        C.prototype.doble = function () { let t = this; return this.v * 2 + (t === this ? 0 : 100) };
+        function suelta() { return this.n }
+        function resultado() { let c = new C(); return [c.v, c.w, c.doble(), suelta.call({ n: 5 })] }";
+    assert_eq!(ejecutar(codigo), "7,8,14,5");
+}

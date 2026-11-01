@@ -26,6 +26,22 @@ fn entero_literal(e: &Expr) -> Option<i32> {
 }
 
 /// `+=` → `+`, `**=` → `**`...
+/// Las operaciones que pueden llevar un entero literal dentro de la instrucción (`BinariaInm`).
+fn con_inmediato(op: OpBin) -> bool {
+    matches!(
+        op,
+        OpBin::Suma
+            | OpBin::Resta
+            | OpBin::Mul
+            | OpBin::YBits
+            | OpBin::OBits
+            | OpBin::XorBits
+            | OpBin::Izq
+            | OpBin::Der
+            | OpBin::DerSinSigno
+    )
+}
+
 fn op_compuesta(op: &str) -> Option<OpBin> {
     OpBin::desde(op.strip_suffix('=')?)
 }
@@ -36,6 +52,9 @@ impl Compilador<'_> {
         if let Expr::Ident(n) = e
             && let Destino::Local(r) = self.resolver(n)
         {
+            return Ok(r);
+        }
+        if let (Expr::Este, Some(r)) = (e, self.ctx().este) {
             return Ok(r);
         }
         let t = self.temporal()?;
@@ -58,7 +77,11 @@ impl Compilador<'_> {
             }
             Expr::Bool(valor) => _ = self.emitir(Instr::Booleano { dst, valor: *valor }),
             Expr::Nulo => _ = self.emitir(Instr::Nulo { dst }),
-            Expr::Este => _ = self.emitir(Instr::Este { dst }),
+            Expr::Este => match self.ctx().este {
+                Some(r) if r == dst => {}
+                Some(r) => _ = self.emitir(Instr::Mover { dst, src: r }),
+                None => _ = self.emitir(Instr::Este { dst }),
+            },
             Expr::Ident(n) if n == "undefined" && matches!(self.resolver(n), Destino::Global(_)) => {
                 self.emitir(Instr::Indefinido { dst });
             }
@@ -73,8 +96,8 @@ impl Compilador<'_> {
             Expr::Actualizar { op, prefijo, destino } => self.actualizar(op, *prefijo, destino, dst)?,
             Expr::Binaria(op, a, b) => {
                 let op = OpBin::desde(op).ok_or_else(|| sin_operador(op))?;
-                // `a + 3`, `a - 1`: el entero va dentro de la instrucción.
-                if let (OpBin::Suma | OpBin::Resta, Some(valor)) = (op, entero_literal(b)) {
+                // `a + 3`, `x & 0xff`, `h >> 8`: el entero va dentro de la instrucción.
+                if let (true, Some(valor)) = (con_inmediato(op), entero_literal(b)) {
                     let ra = self.operando(a)?;
                     self.emitir(Instr::BinariaInm { op, dst, a: ra, valor });
                     return Ok(());
@@ -297,7 +320,7 @@ impl Compilador<'_> {
             return Ok(());
         }
         let binop = op_compuesta(op).ok_or_else(|| sin_operador(op))?;
-        if let (OpBin::Suma | OpBin::Resta, Some(v)) = (binop, entero_literal(valor)) {
+        if let (true, Some(v)) = (con_inmediato(binop), entero_literal(valor)) {
             self.emitir(Instr::BinariaInm { op: binop, dst, a: dst, valor: v });
             return Ok(());
         }
@@ -313,7 +336,7 @@ impl Compilador<'_> {
             Destino::Local(r) if op_compuesta(op).is_some() => {
                 let op = op_compuesta(op).ok_or_else(|| sin_operador(op))?;
                 match (op, entero_literal(valor)) {
-                    (OpBin::Suma | OpBin::Resta, Some(v)) => {
+                    (op, Some(v)) if con_inmediato(op) => {
                         _ = self.emitir(Instr::BinariaInm { op, dst: r, a: r, valor: v })
                     }
                     _ => {
