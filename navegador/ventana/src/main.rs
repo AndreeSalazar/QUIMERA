@@ -23,6 +23,7 @@ mod imagenes;
 mod navegador;
 mod pagina;
 mod perfil;
+mod peticiones;
 mod png;
 mod tipografias;
 
@@ -169,14 +170,14 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
     if let Ok(clase) = std::env::var("QUIMERA_DEPURAR") {
         depurar(&pagina, &clase, (w, h));
     }
-    let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes);
+    let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes, &cliente);
     if let Some(a) = &antes {
         let (destino, cuerpo) = destino_previo(&pagina, &m, a)?;
         pagina = Pagina::cargar(&cliente, &destino, cuerpo.as_deref());
         imagenes = cargar_imagenes(&cliente, &pagina);
         pintor.olvidar_fuentes();
         cargar_fuentes(&cliente, &pagina, &mut pintor);
-        m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes);
+        m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes, &cliente);
     }
     gpu.cargar(&pintor.escena(&m, 1.0, &|s| imagenes.id(s)));
     for (id, w, h, rgba) in imagenes.por_subir() {
@@ -289,10 +290,11 @@ fn maquetar_pagina(
     pintor: &Pintor,
     (ancho, alto): (f32, f32),
     imagenes: &Imagenes,
+    cliente: &Cliente,
 ) -> quimera_maquetacion::Maquetacion {
-    // Con su JavaScript: los scripts, y los temporizadores del primer segundo.
+    // Con su JavaScript: los scripts, los temporizadores del primer segundo y lo que pidan a la red.
     let mut guion = guiones::Guion::preparar(pagina);
-    guion.adelantar(1000.0);
+    guion.adelantar(1000.0, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p));
     let doc = guion.dom.documento();
     let externa = |href: &str| pagina.hoja(href);
     let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);

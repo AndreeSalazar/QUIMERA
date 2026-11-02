@@ -1,7 +1,7 @@
 //! Sentencias: declaraciones, control de flujo, funciones, `try` y `switch`.
 
 use super::Parser;
-use super::azucar::nombres;
+use super::azucar::{llamar, miembro, nombres};
 use crate::ast::{Caso, Decl, Expr, Funcion, Sent};
 use crate::fuente::{Resultado, error};
 use crate::lexico::Tipo;
@@ -127,9 +127,6 @@ impl Parser {
         let pos = self.pos();
         self.esperar("function")?;
         let generador = self.tomar("*");
-        if generador && asincrona {
-            return error(self.pos(), "los generadores asíncronos (async function*) todavía no están en QUIMERA");
-        }
         let nombre = if matches!(self.ver(), Tipo::Ident(_)) { Some(self.ident()?) } else { None };
         if declaracion && nombre.is_none() {
             return error(self.pos(), "una declaración de función necesita nombre");
@@ -169,8 +166,12 @@ impl Parser {
 
     fn para(&mut self) -> Resultado<Sent> {
         self.avanzar();
-        if self.es_palabra("await") {
-            return error(self.pos(), "for await todavía no está en QUIMERA");
+        let esperar = self.es_palabra("await") && self.contextos.last().is_some_and(|c| c.1);
+        if esperar {
+            self.avanzar();
+        }
+        if esperar {
+            return self.para_await();
         }
         self.esperar("(")?;
         self.sin_in = true;
@@ -192,6 +193,46 @@ impl Parser {
         self.esperar(")")?;
         let cuerpo = Box::new(self.sentencia()?);
         Ok(Sent::Para { inicio: inicio.map(Box::new), cond, paso, cuerpo })
+    }
+
+    /// `for await (const x of fuente) cuerpo` (con `for await` ya leído), como
+    /// `{ let t = __quimera_iterador_async(fuente); while (true) { let r = await t.next();
+    /// if (r.done) break; const x = r.value; cuerpo } }`.
+    fn para_await(&mut self) -> Resultado<Sent> {
+        let pos = self.pos();
+        self.esperar("(")?;
+        self.sin_in = true;
+        let inicio = if self.es("var") || self.es("let") || self.es("const") {
+            Some(self.declaracion()?)
+        } else {
+            Some(Sent::Expr(self.expresion()?))
+        };
+        self.sin_in = false;
+        if !self.es_palabra("of") {
+            return error(pos, "for await necesita `of`");
+        }
+        let Sent::ParaEn { decl, nombre, objeto, cuerpo, .. } = self.para_en(inicio)? else {
+            return error(pos, "for await mal formado");
+        };
+        let (t, r) = (self.temporal(), self.temporal());
+        let siguiente = Expr::Llamar(Box::new(miembro(Expr::Ident(t.clone()), "next")), Vec::new());
+        let paso = self.esperar_expr(siguiente);
+        let valor = miembro(Expr::Ident(r.clone()), "value");
+        let asignar = match decl {
+            Some(d) => Sent::Declarar(d, alloc::vec![(nombre, Some(valor))]),
+            None => Sent::Expr(Expr::Asignar("=", Box::new(Expr::Ident(nombre)), Box::new(valor))),
+        };
+        let vuelta = Sent::Bloque(alloc::vec![
+            Sent::Declarar(Decl::Let, alloc::vec![(r.clone(), Some(paso))]),
+            Sent::Si(miembro(Expr::Ident(r), "done"), Box::new(Sent::Romper), None),
+            asignar,
+            *cuerpo,
+        ]);
+        let fuente = llamar("__quimera_iterador_async", alloc::vec![objeto]);
+        Ok(Sent::Bloque(alloc::vec![
+            Sent::Declarar(Decl::Let, alloc::vec![(t, Some(fuente))]),
+            Sent::Mientras(Expr::Bool(true), Box::new(vuelta)),
+        ]))
     }
 
     /// El resto de `for (x in o)` / `for (const x of l)`.

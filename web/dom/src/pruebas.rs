@@ -130,3 +130,71 @@ fn scripts_eventos_y_temporizadores() {
     assert_eq!(d.consola(), ["a los 100", "tres veces"]);
     assert_eq!(d.proximo_temporizador(), None);
 }
+
+#[test]
+fn fragmentos() {
+    let mut d = dom("<ul id=l><li>a</li></ul>");
+    let r = correr(
+        &mut d,
+        "var f = document.createDocumentFragment();
+         ['b', 'c'].forEach(function (t) { var li = document.createElement('li'); li.textContent = t; f.appendChild(li); });
+         console.log(f.nodeType, f.nodeName, f.childNodes.length);
+         var l = document.getElementById('l');
+         l.appendChild(f);
+         console.log(l.innerHTML, f.childNodes.length);",
+    );
+    assert_eq!(r, ["11 #document-fragment 2", "<li>a</li><li>b</li><li>c</li> 0"]);
+}
+
+#[test]
+fn fetch_xhr_y_scripts_añadidos() {
+    use crate::RespuestaJs;
+    let mut d = dom("<p id=p></p>");
+    d.ejecutar(
+        "fetch('/datos.json', {method: 'post', body: 'x=1', headers: {'X-Prueba': 'si'}})
+           .then(function (r) { console.log('fetch', r.ok, r.status, r.headers.get('Content-Type')); return r.json(); })
+           .then(function (j) { console.log('json', j.a); });
+         fetch('https://otro.example/').catch(function (e) { console.log('falló', e instanceof TypeError); });
+         var x = new XMLHttpRequest();
+         x.open('GET', 'texto.txt');
+         x.onload = function () { console.log('xhr', x.status, x.responseText, x.getResponseHeader('content-type')); };
+         x.send();
+         var s = document.createElement('script');
+         s.src = 'extra.js';
+         s.onload = function () { console.log('script cargado', window.extra); };
+         document.body.appendChild(s);
+         var en_linea = document.createElement('script');
+         en_linea.textContent = 'console.log(\"en línea\")';
+         document.body.appendChild(en_linea);",
+    );
+    assert_eq!(d.consola(), ["en línea"]);
+    let pedidas = d.tomar_peticiones();
+    let resumen: Vec<String> = pedidas
+        .iter()
+        .map(|p| alloc::format!("{} {} {:?} {:?} {}", p.metodo, p.url, p.cuerpo, p.cabeceras, p.es_script))
+        .collect();
+    assert_eq!(
+        resumen,
+        [
+            r#"POST /datos.json Some("x=1") [("x-prueba", "si")] false"#,
+            "GET https://otro.example/ None [] false",
+            "GET texto.txt None [] false",
+            "GET extra.js None [] true",
+        ]
+    );
+    let resp = |cuerpo: &str, tipo: &str| RespuestaJs {
+        estado: 200,
+        url: String::from("https://ejemplo.com/x"),
+        cabeceras: alloc::vec![(String::from("content-type"), String::from(tipo))],
+        cuerpo: String::from(cuerpo),
+    };
+    d.responder(pedidas[0].id, Ok(resp("{\"a\": 5}", "application/json")));
+    d.responder(pedidas[1].id, Err(String::from("CORS")));
+    d.responder(pedidas[2].id, Ok(resp("hola", "text/plain")));
+    d.responder(pedidas[3].id, Ok(resp("window.extra = 'sí';", "text/javascript")));
+    assert_eq!(
+        d.consola(),
+        ["fetch true 200 application/json", "json 5", "falló true", "xhr 200 hola text/plain", "script cargado sí"]
+    );
+    assert!(d.errores().is_empty());
+}

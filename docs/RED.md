@@ -25,6 +25,10 @@ TLS es lo único de fuera, a propósito: la criptografía no se escribe a mano (
 - Si algo falla (DNS, conexión, certificado, estado HTTP sin contenido), se muestra una página de error de QUIMERA con el motivo.
 - El texto plano, CSS, JSON y JavaScript se muestran como texto dentro de un `<pre>`, como hacen los navegadores.
 
+## Peticiones de las páginas
+
+`Cliente::solicitar(url, &Peticion)`: cualquier método, cuerpo, cabeceras extra (las peligrosas, como `Cookie`, `Host` o `Content-Length`, y cualquier salto de línea, se ignoran) y si van las cookies. Lo usan `fetch` y `XMLHttpRequest` (ver [DOM.md](DOM.md#la-red-desde-javascript)). Sin cookies (una petición a otro origen), tampoco se guardan las que lleguen.
+
 ## Cookies
 
 El `Cliente` lleva un tarro (`Mutex<Tarro>`, lo comparten los hilos que descargan imágenes y fuentes). Cada respuesta HTTP deja sus `Set-Cookie` y cada petición lleva su `Cookie`, también en las redirecciones (así funciona un inicio de sesión que pone la cookie y redirige).

@@ -9,6 +9,7 @@ mod json;
 mod numeros;
 mod regexp;
 mod texto;
+mod uri;
 
 use crate::llamadas::Llamada;
 use crate::{
@@ -37,6 +38,11 @@ const SIMBOLO_KEY_FOR: u32 = 17;
 const GEN_NEXT: u32 = 18;
 const GEN_RETURN: u32 = 19;
 const GEN_THROW: u32 = 20;
+/// `Object.prototype.toString`: `[object Array]`, `[object Map]`... La conversión a texto
+/// interna (`a_primitivo`) la salta y usa el texto por defecto, que es lo mismo y más rápido.
+pub(crate) const OBJETO_TO_STRING: u32 = 21;
+/// `Function.prototype.toString`.
+const FUNCION_TO_STRING: u32 = 22;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -49,6 +55,8 @@ const GRUPO_COLECCION: u32 = 400;
 const GRUPO_REGEXP: u32 = 500;
 /// Desde aquí, `JSON` (`json.rs`).
 const GRUPO_JSON: u32 = 600;
+/// Desde aquí, `encodeURIComponent` y compañía, `btoa`/`atob` (`uri.rs`).
+const GRUPO_URI: u32 = 700;
 
 /// Crea el objeto global, los prototipos y las nativas.
 pub(crate) fn preparar(m: &mut Motor) {
@@ -80,6 +88,8 @@ pub(crate) fn preparar(m: &mut Motor) {
     let arreglo = constructor(m, "Array", ARREGLO, R_ARREGLO);
     constructor(m, "Function", FUNCION, R_FUNCION);
     definir_nativa(m, R_GLOBAL, "__quimera_no_enumerar", NO_ENUMERAR);
+    definir_nativa(m, R_OBJETO, "toString", OBJETO_TO_STRING);
+    definir_nativa(m, R_FUNCION, "toString", FUNCION_TO_STRING);
     simbolos(m);
     let generador = nuevo_objeto(m, R_GLOBAL, "__quimera_generador");
     definir_nativa(m, generador, "next", GEN_NEXT);
@@ -91,8 +101,67 @@ pub(crate) fn preparar(m: &mut Motor) {
     fecha::preparar(m);
     regexp::preparar(m);
     json::preparar(m);
+    uri::preparar(m);
     m.fijar_claves_ocultas();
     m.mundo.m.soltar_raices(crate::N_FIJAS);
+}
+
+/// La etiqueta de `Object.prototype.toString`: `Symbol.toStringTag` si la tiene, o según su
+/// clase (`Array`, `Function`, `Error`, `Date`...).
+fn etiqueta_de(m: &mut Motor, v: Valor) -> String {
+    use quimera_objetos::Tipo;
+    match v.tipo() {
+        Tipo::Indefinido => return String::from("Undefined"),
+        Tipo::Nulo => return String::from("Null"),
+        Tipo::Numero | Tipo::Entero => return String::from("Number"),
+        Tipo::Cadena => return String::from("String"),
+        Tipo::Booleano => return String::from("Boolean"),
+        Tipo::Simbolo => return String::from("Symbol"),
+        Tipo::Referencia => {}
+    }
+    let clave = m.mundo.cadenas.internar("\u{2}@@\u{2}Symbol.toStringTag");
+    if let Some(t) = m.mundo.leer(v, clave).filter(|t| t.tipo() == Tipo::Cadena) {
+        return m.texto(t);
+    }
+    match m.mundo.clase(v) {
+        Some(Clase::Arreglo) => return String::from("Array"),
+        Some(Clase::Funcion | Clase::Nativa) => return String::from("Function"),
+        Some(Clase::RegExp) => return String::from("RegExp"),
+        _ => {}
+    }
+    // Por su cadena de prototipos: un Error o una fecha.
+    let mut p = m.mundo.prototipo(v);
+    while m.mundo.es_objeto(p) {
+        if p == m.pila(R_ERROR) {
+            return String::from("Error");
+        }
+        if p == m.pila(R_FECHA) {
+            return String::from("Date");
+        }
+        p = m.mundo.prototipo(p);
+    }
+    String::from("Object")
+}
+
+/// Un método de arreglo sobre algo que no es un arreglo pero lo parece (`length` e índices):
+/// `__quimera_generico` del preludio lo copia a un arreglo, aplica el método y, si lo cambia,
+/// escribe el resultado de vuelta.
+pub(super) fn generico(m: &mut Motor, nombre: &str, ll: &Llamada) -> Result<Valor, Valor> {
+    let args: Vec<Valor> = (0..ll.n).map(|i| arg(m, ll, i)).collect();
+    let lista = m.mundo.crear_arreglo(&args, m.pila(R_ARREGLO));
+    let marca = m.mundo.m.marca_raices();
+    m.mundo.m.raiz(lista);
+    let clave = m.mundo.cadenas.internar("__quimera_generico");
+    let f = m.mundo.leer(m.pila(R_GLOBAL), clave).unwrap_or(Valor::INDEFINIDO);
+    if !m.es_funcion(f) {
+        m.mundo.m.soltar_raices(marca);
+        return Err(m.error("TypeError", "este método necesita un arreglo"));
+    }
+    let n = m.mundo.cadena(nombre);
+    let (este, lista) = (m.pila(ll.este), m.pila(marca));
+    let r = m.llamar_interno(f, Valor::INDEFINIDO, &[n, este, lista]);
+    m.mundo.m.soltar_raices(marca);
+    r
 }
 
 /// `Symbol` y los símbolos conocidos (`Symbol.iterator`...).
@@ -212,6 +281,7 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
         return Err(m.error("TypeError", "esta función nativa no es un constructor"));
     }
     let v = match id {
+        GRUPO_URI.. => uri::llamar(m, id, &ll)?,
         GRUPO_JSON.. => json::llamar(m, id, &ll)?,
         GRUPO_REGEXP.. => regexp::llamar(m, id, &ll)?,
         GRUPO_COLECCION.. => coleccion::llamar(m, id, &ll)?,
@@ -263,33 +333,7 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         }
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
-        SIMBOLO | SIMBOLO_FOR => {
-            let d = arg(m, ll, 0);
-            let texto = if d == Valor::INDEFINIDO && id == SIMBOLO { String::new() } else { m.texto(d) };
-            nuevo_simbolo(m, &texto, id == SIMBOLO_FOR)
-        }
-        SIMBOLO_KEY_FOR => {
-            let s = arg(m, ll, 0);
-            let interno = s
-                .ref_del_monton()
-                .filter(|_| s.tipo() == quimera_objetos::Tipo::Simbolo)
-                .map(|r| String::from(m.mundo.cadenas.texto(r.numero() as u32)));
-            match interno.as_deref().and_then(|i| i.strip_prefix("\u{2}for\u{2}")) {
-                Some(k) => {
-                    let k = String::from(k);
-                    m.mundo.cadena(&k)
-                }
-                None => Valor::INDEFINIDO,
-            }
-        }
-        NO_ENUMERAR => {
-            let o = arg(m, ll, 0);
-            if let Some(forma) = m.mundo.forma(o).filter(|_| m.mundo.es_objeto(o)) {
-                let n = m.mundo.claves(o).len();
-                m.formas_ocultas.insert(forma, n);
-            }
-            Valor::INDEFINIDO
-        }
+        SIMBOLO..=SIMBOLO_KEY_FOR | FUNCION_TO_STRING | OBJETO_TO_STRING | NO_ENUMERAR => return otras(m, id, ll),
         FUNCION => {
             // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
             let partes: Vec<String> = (0..ll.n).map(|i| m.texto(arg(m, ll, i))).collect();
@@ -321,9 +365,54 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
     })
 }
 
+/// Símbolos, `toString` de objetos y funciones, `__quimera_no_enumerar`.
+fn otras(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
+    Ok(match id {
+        SIMBOLO | SIMBOLO_FOR => {
+            let d = arg(m, ll, 0);
+            let texto = if d == Valor::INDEFINIDO && id == SIMBOLO { String::new() } else { m.texto(d) };
+            nuevo_simbolo(m, &texto, id == SIMBOLO_FOR)
+        }
+        SIMBOLO_KEY_FOR => {
+            let s = arg(m, ll, 0);
+            let interno = s
+                .ref_del_monton()
+                .filter(|_| s.tipo() == quimera_objetos::Tipo::Simbolo)
+                .map(|r| String::from(m.mundo.cadenas.texto(r.numero() as u32)));
+            match interno.as_deref().and_then(|i| i.strip_prefix("\u{2}for\u{2}")) {
+                Some(k) => {
+                    let k = String::from(k);
+                    m.mundo.cadena(&k)
+                }
+                None => Valor::INDEFINIDO,
+            }
+        }
+        FUNCION_TO_STRING => {
+            // Sin el código fuente guardado: la forma que dan los navegadores para las nativas.
+            let k = m.mundo.cadenas.internar("name");
+            let f = m.pila(ll.este);
+            let nombre = m.mundo.leer(f, k).map(|n| m.texto(n)).unwrap_or_default();
+            m.mundo.cadena(&alloc::format!("function {nombre}() {{ [native code] }}"))
+        }
+        OBJETO_TO_STRING => {
+            let etiqueta = etiqueta_de(m, m.pila(ll.este));
+            m.mundo.cadena(&alloc::format!("[object {etiqueta}]"))
+        }
+        NO_ENUMERAR => {
+            let o = arg(m, ll, 0);
+            if let Some(forma) = m.mundo.forma(o).filter(|_| m.mundo.es_objeto(o)) {
+                let n = m.mundo.claves(o).len();
+                m.formas_ocultas.insert(forma, n);
+            }
+            Valor::INDEFINIDO
+        }
+        _ => Valor::INDEFINIDO,
+    })
+}
+
 fn arreglo(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
     if m.clase_en(ll.este) != Some(Clase::Arreglo) {
-        return Err(m.error("TypeError", "push/pop necesitan un arreglo"));
+        return generico(m, if id == ARREGLO_SACAR { "pop" } else { "push" }, ll);
     }
     if id == ARREGLO_SACAR {
         let a = m.pila(ll.este);

@@ -22,4 +22,5 @@ mod extranjero;
 mod tokenizador;
 
 pub use arbol::{Dato, Documento, Elemento, Nodo, NodoId};
+pub use cambios::FRAGMENTO;
 pub use constructor::analizar;

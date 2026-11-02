@@ -48,27 +48,29 @@ pub(super) fn preparar(m: &mut Motor, objeto: usize, arreglo: usize) {
     definir_nativa(m, R_OBJETO, "hasOwnProperty", HAS_OWN);
     definir_nativa(m, arreglo, "isArray", IS_ARRAY);
     definir_nativa(m, R_FUNCION, "apply", APPLY);
-    let metodos = [
-        ("slice", SLICE),
-        ("concat", CONCAT),
-        ("reverse", REVERSE),
-        ("shift", SHIFT),
-        ("unshift", UNSHIFT),
-        ("includes", INCLUDES),
-        ("sort", SORT),
-        ("forEach", FOR_EACH),
-        ("map", MAP),
-        ("filter", FILTER),
-        ("reduce", REDUCE),
-        ("some", SOME),
-        ("every", EVERY),
-        ("find", FIND),
-        ("findIndex", FIND_INDEX),
-    ];
-    for (nombre, id) in metodos {
+    for (nombre, id) in METODOS {
         definir_nativa(m, R_ARREGLO, nombre, id);
     }
 }
+
+/// Los métodos de los arreglos (también para llamarlos sobre algo que no es un arreglo).
+const METODOS: [(&str, u32); 15] = [
+    ("slice", SLICE),
+    ("concat", CONCAT),
+    ("reverse", REVERSE),
+    ("shift", SHIFT),
+    ("unshift", UNSHIFT),
+    ("includes", INCLUDES),
+    ("sort", SORT),
+    ("forEach", FOR_EACH),
+    ("map", MAP),
+    ("filter", FILTER),
+    ("reduce", REDUCE),
+    ("some", SOME),
+    ("every", EVERY),
+    ("find", FIND),
+    ("findIndex", FIND_INDEX),
+];
 
 pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
     match id {
@@ -126,7 +128,10 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
         _ => {}
     }
     if m.clase_en(ll.este) != Some(Clase::Arreglo) {
-        return Err(m.error("TypeError", "este método necesita un arreglo"));
+        // Sobre algo parecido a un arreglo (`Array.prototype.slice.call(lista)`), la versión
+        // genérica del preludio.
+        let nombre = METODOS.iter().find(|(_, i)| *i == id).map_or("slice", |(n, _)| n);
+        return super::generico(m, nombre, ll);
     }
     let marca = m.mundo.m.marca_raices();
     let r = if id >= FOR_EACH { por_elemento(m, id, ll, marca) } else { arreglo(m, id, ll, marca) };

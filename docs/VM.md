@@ -164,7 +164,7 @@ Coste: crear un motor tarda unos 2 ms más (compila el preludio). Se podría gua
 
 **Símbolos**: `Symbol()`, `Symbol.for`, `keyFor`, `description` y los conocidos (`Symbol.iterator`...). Un símbolo es una cadena interna única que empieza por U+0002: ya es un número de clave, así que `o[s]` funciona sin tocar nada más. Estas claves no se enumeran. `Symbol.iterator` conecta `for-of`, el spread y `Array.from` con cualquier objeto iterable, y los arreglos, cadenas, `Map`, `Set` y sus iteradores lo tienen.
 
-También: `Object.setPrototypeOf` y `getPrototypeOf`, `{__proto__: p}` en un literal, `console.warn/error/info`, y el error de llamar a algo que no es una función dice su nombre (`forEach no es una función (vale undefined)`), que es lo que más ayuda a ver qué falta en una página real.
+También: `Date` completo (partes, texto ISO, métodos y setters; la hora local es UTC por ahora), `Object.prototype.toString` nativo con `Symbol.toStringTag` (la conversión interna a texto lo salta: ni cambia ni cuesta), métodos de arreglo sobre «parecidos a arreglos» (`Array.prototype.push.call(obj)`, como hace jQuery), `encodeURIComponent` y compañía, `btoa`/`atob`, `Math.imul`, `Boolean`, `Object.setPrototypeOf` y `getPrototypeOf`, `{__proto__: p}` en un literal, `console.warn/error/info`, y el error de llamar a algo que no es una función dice su nombre (`forEach no es una función (vale undefined)`), que es lo que más ayuda a ver qué falta en una página real.
 
 ## Generadores y `async`/`await`
 
@@ -178,7 +178,11 @@ También: `Object.setPrototypeOf` y `getPrototypeOf`, `{__proto__: p}` en un lit
 
 **`async`/`await`** se monta encima sin tocar la máquina: el parser convierte `async function f() {...}` en una función que devuelve `__quimera_async(function* () {...}, this, arguments)`. Dentro, cada `await x` es un `yield x`, y el ayudante del preludio sigue al generador con promesas. El orden de las microtareas coincide con Chromium en las pruebas.
 
-Falta: generadores asíncronos (`async function*`, `for await`); `return()` y `throw()` sobre un generador pausado dentro de un `try` con `finally` no ejecutan el `finally`.
+**Generadores asíncronos** (`async function*`) y **`for await`**: un generador interno donde cada `await` llega marcado (`__quimera_espera`) y el conductor del preludio lo espera dentro; cada `yield` es un valor que `next()` entrega en una promesa. `for await` es un bucle con `await iterador.next()`.
+
+**`this` y el modo estricto**: una función llamada sin objeto recibe el objeto global como `this`, salvo que sea estricta (`"use strict"`, clases, y lo que haya dentro de ellas). El patrón UMD de muchas librerías (`global.X = …`) lo necesita.
+
+Falta: `return()` y `throw()` sobre un generador pausado dentro de un `try` con `finally` no ejecutan el `finally`.
 
 ## Objetos y funciones del anfitrión
 

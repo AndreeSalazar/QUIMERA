@@ -12,7 +12,7 @@ use quimera_objetos::{Cadenas, Clase, Valor};
 
 /// Las ranuras internas (U+0001), los símbolos (U+0002) y los campos `#privados` no se enumeran.
 fn oculta(clave: &str) -> bool {
-    clave.starts_with('\u{1}') || clave.starts_with('\u{2}') || clave.starts_with('#')
+    clave.starts_with('\u{1}') || clave.starts_with('\u{2}') || clave.starts_with('#') || clave == "[[Valor]]"
 }
 
 impl Motor {

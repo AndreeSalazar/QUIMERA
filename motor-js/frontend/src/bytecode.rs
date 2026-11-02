@@ -233,6 +233,9 @@ pub struct Funcion {
     pub argumentos: Option<Reg>,
     /// Es un generador (`function*`): llamarla crea un generador en vez de ejecutarla.
     pub generador: bool,
+    /// Modo estricto (`"use strict"`, clases, módulos): llamada sin objeto, su `this` es
+    /// `undefined`. Si no, es el objeto global, como en los navegadores.
+    pub estricta: bool,
     /// Las instrucciones.
     pub codigo: Vec<Instr>,
     /// Sus constantes.

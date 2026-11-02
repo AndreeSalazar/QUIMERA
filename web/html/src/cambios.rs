@@ -7,6 +7,10 @@ use crate::arbol::{Dato, Documento, Elemento, Nodo, NodoId};
 use alloc::string::String;
 use alloc::vec::Vec;
 
+/// El nombre de un `DocumentFragment`: un elemento que nunca entra en el árbol (al meterlo, entran
+/// sus hijos). El analizador no puede crear un elemento con este nombre.
+pub const FRAGMENTO: &str = "#document-fragment";
+
 /// Elementos sin cierre (`<br>`): al escribir HTML no llevan `</br>`.
 const VACIOS: &[&str] =
     &["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"];
@@ -53,6 +57,16 @@ impl Documento {
     pub fn insertar(&mut self, padre: NodoId, hijo: NodoId, antes: Option<NodoId>) -> bool {
         if self.contiene(hijo, padre) || hijo == Self::RAIZ {
             return false;
+        }
+        if self.elemento(hijo).is_some_and(|e| e.nombre == FRAGMENTO) {
+            // Un fragmento no entra: entran sus hijos, en orden, y él queda vacío.
+            if antes.is_some_and(|a| self.nodo(a).padre != Some(padre)) {
+                return false;
+            }
+            for h in self.nodo(hijo).hijos.clone() {
+                self.insertar(padre, h, antes);
+            }
+            return true;
         }
         if antes.is_some_and(|a| self.nodo(a).padre != Some(padre) || a == hijo) {
             return false;

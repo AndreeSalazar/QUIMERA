@@ -1,0 +1,13 @@
+var d = new Date(Date.UTC(2024, 1, 29, 13, 5, 9, 7));
+console.log(d.toISOString(), d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCDay(), d.getUTCHours(), d.getTime());
+console.log(new Date('2020-03-01T10:20:30Z').getTime(), new Date('2020-03-01T10:20:30.5+02:00').toISOString(), Date.parse('1999-12-31'));
+console.log(JSON.stringify({ cuando: new Date(0) }), new Date(0).toUTCString(), isNaN(new Date('no es fecha').getTime()));
+var e = new Date(Date.UTC(2023, 0, 31));
+e.setUTCMonth(1);
+console.log(e.toISOString(), d instanceof Date, typeof Date.now());
+var tipo = Object.prototype.toString;
+console.log(tipo.call([]), tipo.call({}), tipo.call(null), tipo.call(undefined), tipo.call(1), tipo.call('a'), tipo.call(function () {}), tipo.call(/x/), tipo.call(new Map()), tipo.call(new Error('x')), tipo.call(new Date(0)), tipo.call(Promise.resolve()));
+console.log(String([1, [2, 3]]), String({}), 'abcabc'.lastIndexOf('b'), 'abc'.substr(-2, 1), 'a'.concat('b', 1), '😀'.codePointAt(0), String.fromCodePoint(128512) === '😀');
+console.log([1, 2, 3].reduceRight(function (a, b) { return a + b; }), [3, 1, 2].toSorted().join(), [1, 2].with(0, 9).join(), Boolean(''), Boolean('x'));
+var claves = []; for (var k in new Date(0)) claves.push(k);
+console.log(claves.length, encodeURIComponent('a b&ñ'), decodeURIComponent('%C3%B1'), btoa('hola'), atob('aG9sYQ=='));

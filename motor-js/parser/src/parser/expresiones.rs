@@ -83,6 +83,14 @@ impl Parser {
         Ok(Expr::Asignar(op, Box::new(izquierda), Box::new(derecha)))
     }
 
+    /// `await e`: un `yield e` (en una `async`), o un `yield __quimera_espera(e)` (en un
+    /// `async function*`, donde un `yield` normal entrega un valor).
+    pub(super) fn esperar_expr(&mut self, e: Expr) -> Expr {
+        let en_generador = self.contextos.last().is_some_and(|c| c.0 && c.1);
+        let valor = if en_generador { llamar("__quimera_espera", vec![e]) } else { e };
+        Expr::Rendir { valor: Some(Box::new(valor)), delegar: false }
+    }
+
     /// `yield`, `yield v` o `yield* v` (ya se sabe que se está en un generador).
     fn rendir(&mut self) -> Resultado<Expr> {
         self.avanzar();
@@ -195,7 +203,7 @@ impl Parser {
         self.avanzar();
         let e = self.unaria()?;
         if op == "await" {
-            return Ok(Expr::Rendir { valor: Some(Box::new(e)), delegar: false });
+            return Ok(self.esperar_expr(e));
         }
         if op == "++" || op == "--" {
             if !es_destino(&e) {
@@ -495,9 +503,6 @@ impl Parser {
             self.avanzar();
         }
         let generador = self.tomar("*");
-        if asincrona && generador {
-            return error(pos, "los generadores asíncronos (async *m) todavía no están en QUIMERA");
-        }
         if asincrona || generador {
             let clave = self.clave_de_propiedad()?;
             let nombre = if let Clave::Nombre(n) = &clave { Some(n.clone()) } else { None };

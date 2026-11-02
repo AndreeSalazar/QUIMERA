@@ -99,6 +99,26 @@ pub struct Cliente {
     galletas: std::sync::Mutex<galletas::Tarro>,
 }
 
+/// Lo que se pide: método, cuerpo, cabeceras extra y si van las cookies.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Peticion {
+    /// `GET`, `POST`...
+    pub metodo: String,
+    /// El cuerpo (con `Content-Length`; `Content-Type` sale de `cabeceras` o es de formulario).
+    pub cuerpo: Option<Vec<u8>>,
+    /// Cabeceras extra (las peligrosas, como `Cookie` o `Host`, se ignoran).
+    pub cabeceras: Vec<(String, String)>,
+    /// Si se mandan las cookies y se guardan las que lleguen. No, en una petición a otro sitio.
+    pub galletas: bool,
+}
+
+impl Peticion {
+    /// Un GET normal, con cookies.
+    pub fn get() -> Peticion {
+        Peticion { metodo: String::from("GET"), cuerpo: None, cabeceras: Vec::new(), galletas: true }
+    }
+}
+
 /// Segundos desde 1970 (para la caducidad de las cookies).
 fn ahora() -> u64 {
     std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_secs())
@@ -137,23 +157,34 @@ impl Cliente {
 
     /// Pide una URL siguiendo las redirecciones.
     pub fn pedir(&self, url: &Url) -> Result<Respuesta, Error> {
-        self.enviar(url, None)
+        self.solicitar(url, &Peticion::get())
     }
 
     /// Pide una URL, o envía un formulario por POST si hay `formulario` (codificado como
     /// `application/x-www-form-urlencoded`), siguiendo las redirecciones: tras un POST, una 301,
     /// 302 o 303 se pide por GET; una 307 o 308 vuelve a enviar el formulario.
     pub fn enviar(&self, url: &Url, formulario: Option<&[u8]>) -> Result<Respuesta, Error> {
+        let p = match formulario {
+            Some(f) => Peticion { metodo: String::from("POST"), cuerpo: Some(f.to_vec()), ..Peticion::get() },
+            None => Peticion::get(),
+        };
+        self.solicitar(url, &p)
+    }
+
+    /// Hace la petición `p` a `url` siguiendo las redirecciones (tras una 301, 302 o 303 de
+    /// algo que no sea GET, se sigue por GET y sin cuerpo; una 307 o 308 la repite igual).
+    pub fn solicitar(&self, url: &Url, p: &Peticion) -> Result<Respuesta, Error> {
         let mut actual = url.clone();
-        let mut cuerpo = formulario;
+        let mut p = p.clone();
         for _ in 0..=REDIRECCIONES {
-            let r = self.pedir_una(&actual, cuerpo)?;
+            let r = self.pedir_una(&actual, &p)?;
             let destino = r.cabecera("location").filter(|_| matches!(r.estado, 301 | 302 | 303 | 307 | 308));
             match destino {
                 Some(d) => {
                     actual = actual.unir(d)?;
-                    if !matches!(r.estado, 307 | 308) {
-                        cuerpo = None;
+                    if !matches!(r.estado, 307 | 308) && p.metodo != "HEAD" {
+                        p.metodo = String::from("GET");
+                        p.cuerpo = None;
                     }
                 }
                 None => return Ok(r),
@@ -174,13 +205,17 @@ impl Cliente {
         }
     }
 
-    fn pedir_una(&self, url: &Url, formulario: Option<&[u8]>) -> Result<Respuesta, Error> {
+    fn pedir_una(&self, url: &Url, p: &Peticion) -> Result<Respuesta, Error> {
         match url.esquema.as_str() {
             "http" | "https" => {
-                let galleta = self.galletas.lock().ok().and_then(|t| t.cabecera(url, ahora()));
-                let bruto = self.intercambio(url, galleta.as_deref(), formulario)?;
+                let galleta =
+                    if p.galletas { self.galletas.lock().ok().and_then(|t| t.cabecera(url, ahora())) } else { None };
+                let bruto = self.intercambio(url, galleta.as_deref(), p)?;
                 let l = http::leer(&bruto)?;
-                if let Ok(mut t) = self.galletas.lock() {
+                // Sin cookies (una petición a otro sitio), tampoco se guardan las que lleguen.
+                if p.galletas
+                    && let Ok(mut t) = self.galletas.lock()
+                {
                     for (_, v) in l.cabeceras.iter().filter(|(k, _)| k == "set-cookie") {
                         t.recibir(url, v, ahora());
                     }
@@ -200,7 +235,7 @@ impl Cliente {
     }
 
     /// Conecta, envía la petición y lee todo hasta que el servidor cierra.
-    fn intercambio(&self, url: &Url, galletas: Option<&str>, formulario: Option<&[u8]>) -> Result<Vec<u8>, Error> {
+    fn intercambio(&self, url: &Url, galletas: Option<&str>, p: &Peticion) -> Result<Vec<u8>, Error> {
         let anfitrion = url.anfitrion.trim_start_matches('[').trim_end_matches(']');
         let direcciones = (anfitrion, url.puerto_efectivo())
             .to_socket_addrs()
@@ -219,7 +254,7 @@ impl Cliente {
         let tcp = tcp.ok_or(ultimo)?;
         tcp.set_read_timeout(Some(self.espera)).map_err(|e| Error::Red(e.to_string()))?;
         tcp.set_write_timeout(Some(self.espera)).map_err(|e| Error::Red(e.to_string()))?;
-        let peticion = http::peticion(url, &self.agente, galletas, formulario);
+        let peticion = http::peticion(url, &self.agente, galletas, p);
         if url.esquema == "https" {
             let nombre = rustls::pki_types::ServerName::try_from(anfitrion.to_string())
                 .map_err(|e| Error::Tls(e.to_string()))?;

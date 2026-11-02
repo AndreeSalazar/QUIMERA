@@ -273,3 +273,59 @@ fn async_await() {
         ]
     );
 }
+
+/// Generadores asíncronos, `for await` y las banderas de las expresiones regulares
+/// (`tests/async_gen.js`), con la salida de Chromium.
+#[test]
+fn generadores_asincronos() {
+    let r = salida(include_str!("async_gen.js"));
+    assert_eq!(
+        r,
+        [
+            "gi a true true true (?:)",
+            "true",
+            "for await 0,10,20",
+            r#"{"value":0,"done":false} {"value":10,"done":false} {"value":"fin","done":true}"#,
+            "valor 1",
+            "error roto",
+            "sobre promesas a,b,c",
+            "propio",
+            "function function",
+        ]
+    );
+}
+
+/// `Date` con partes, texto ISO y métodos; `Object.prototype.toString`; más métodos de cadenas
+/// y arreglos; URI y base64 (`tests/biblioteca2.js`), con la salida de Chromium.
+#[test]
+fn biblioteca_segunda_tanda() {
+    let r = salida(include_str!("biblioteca2.js"));
+    assert_eq!(
+        r,
+        [
+            "2024-02-29T13:05:09.007Z 2024 1 29 4 13 1709211909007",
+            "1583058030000 2020-03-01T08:20:30.500Z 946598400000",
+            r#"{"cuando":"1970-01-01T00:00:00.000Z"} Thu, 01 Jan 1970 00:00:00 GMT true"#,
+            "2023-03-03T00:00:00.000Z true number",
+            "[object Array] [object Object] [object Null] [object Undefined] [object Number] [object String] [object Function] [object RegExp] [object Map] [object Error] [object Date] [object Promise]",
+            "1,2,3 [object Object] 4 b ab1 128512 true",
+            "6 1,2,3 9,2 false true",
+            "0 a%20b%26%C3%B1 ñ aG9sYQ== hola",
+        ]
+    );
+}
+
+/// `this` de una llamada sin objeto: el global fuera del modo estricto, `undefined` con
+/// `"use strict"` y en las clases (que siempre son estrictas), y el de fuera en las flechas.
+#[test]
+fn this_y_modo_estricto() {
+    let r = salida(
+        "function a() { return this === globalThis; }
+         function b() { 'use strict'; return this; }
+         function c() { 'use strict'; return (function () { return this; })(); }
+         class C { m() { return this; } }
+         var m = new C().m;
+         console.log(a(), b(), c(), m(), (function () { return typeof this; })(), (() => this === globalThis)());",
+    );
+    assert_eq!(r, ["true undefined undefined undefined object true"]);
+}

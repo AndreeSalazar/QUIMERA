@@ -33,6 +33,8 @@ pub enum Evento {
     Imagen { id: u64, src: String, imagen: Result<Imagen, String> },
     /// Una fuente (`@font-face`) de la página `id`, con sus bytes o por qué no llegó.
     Fuente { id: u64, pedida: tipografias::Pedida, bytes: Result<Vec<u8>, String> },
+    /// La respuesta a algo que pidió el JavaScript de la página `id` (`fetch`, XHR, un script).
+    Respuesta { id: u64, peticion: u32, resultado: Result<quimera_dom::RespuestaJs, String> },
 }
 
 /// Lo que existe mientras la ventana está abierta.
@@ -150,6 +152,14 @@ impl Navegador {
                 }
                 Err(e) => eprintln!("imagen {src}: {e}"),
             },
+            Evento::Respuesta { id, peticion, resultado } if id == self.id_carga => {
+                if let Some(g) = &mut self.guion {
+                    g.dom.responder(peticion, resultado);
+                    g.informar();
+                }
+                self.tras_javascript();
+                self.atender_peticiones();
+            }
             Evento::Fuente { id, pedida, bytes } if id == self.id_carga => {
                 let w = &pedida.web;
                 match bytes.map(|b| self.pintor.anadir_fuente(&w.familia, w.negrita, w.cursiva, b)) {
@@ -192,6 +202,7 @@ impl Navegador {
         self.url = final_;
         self.guion = Some(Guion::preparar(&pagina));
         self.pagina = Some(pagina);
+        self.atender_peticiones();
         self.cargando = false;
         self.estado = None;
         if let Some(a) = &mut self.abierta {
@@ -390,7 +401,23 @@ impl Navegador {
         let prevenido = g.dom.clic(nodo);
         g.informar();
         self.tras_javascript();
+        self.atender_peticiones();
         prevenido
+    }
+
+    /// Lo que el JavaScript de la página pidió a la red, en otros hilos (con las reglas de origen
+    /// de `peticiones.rs`). Cada respuesta llega como `Evento::Respuesta`.
+    pub fn atender_peticiones(&mut self) {
+        let Some(g) = &self.guion else { return };
+        let Some(pagina) = &self.pagina else { return };
+        for p in g.dom.tomar_peticiones() {
+            let (cliente, proxy, id) = (self.cliente.clone(), self.proxy.clone(), self.id_carga);
+            let (url, base) = (pagina.url.clone(), pagina.base.clone());
+            std::thread::spawn(move || {
+                let resultado = crate::peticiones::atender(&cliente, &url, &base, &p);
+                let _ = proxy.send_event(Evento::Respuesta { id, peticion: p.id, resultado });
+            });
+        }
     }
 
     /// Si JavaScript cambió el árbol, se vuelve a maquetar.
@@ -404,6 +431,7 @@ impl Navegador {
     pub fn latido(&mut self) -> Option<Instant> {
         let proximo = self.guion.as_mut()?.latido();
         self.tras_javascript();
+        self.atender_peticiones();
         proximo
     }
 

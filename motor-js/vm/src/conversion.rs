@@ -48,6 +48,11 @@ impl Motor {
             if !matches!(self.mundo.clase(f), Some(Clase::Funcion | Clase::Nativa)) {
                 continue;
             }
+            // `Object.prototype.toString` no hace falta llamarlo: el texto por defecto es el mismo
+            // (y para un arreglo, `1,2,3`).
+            if self.mundo.nativa(f) == Some(crate::nativas::OBJETO_TO_STRING) {
+                break;
+            }
             let r = self.llamar_interno(f, obj, &[]);
             match r {
                 Ok(r) if !self.mundo.es_objeto(r) => {

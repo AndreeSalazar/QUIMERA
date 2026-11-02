@@ -94,6 +94,34 @@ impl Motor {
         Ok(o)
     }
 
+    /// `source`, `flags`, `global`, `dotAll`... de una expresión regular: se calculan al leerlos
+    /// (no son propiedades del objeto: crear cada `/re/` no las paga).
+    pub(crate) fn propiedad_regexp(&mut self, obj: Valor, clave: u32) -> Option<Valor> {
+        let i = self.mundo.regexp(obj)? as usize;
+        let nombre = self.mundo.cadenas.texto(clave);
+        let bandera = match nombre {
+            "global" => 'g',
+            "ignoreCase" => 'i',
+            "multiline" => 'm',
+            "dotAll" => 's',
+            "unicode" => 'u',
+            "sticky" => 'y',
+            "hasIndices" => 'd',
+            "unicodeSets" => 'v',
+            "source" => {
+                let f = self.regexes.get(i)?.fuente.clone();
+                return Some(self.mundo.cadena(if f.is_empty() { "(?:)" } else { &f }));
+            }
+            "flags" => {
+                let b = &self.regexes.get(i)?.banderas;
+                let orden: String = "dgimsuvy".chars().filter(|c| b.contains(*c)).collect();
+                return Some(self.mundo.cadena(&orden));
+            }
+            _ => return None,
+        };
+        Some(Valor::booleano(self.regexes.get(i)?.banderas.contains(bandera)))
+    }
+
     /// El primer encaje de la expresión `i` desde `desde` (bytes).
     fn buscar_regex(&mut self, i: u32, texto: &str, desde: usize) -> Option<Grupos> {
         let re = &self.regexes[i as usize].re;

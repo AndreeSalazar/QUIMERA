@@ -74,6 +74,8 @@ struct Region {
 
 #[derive(Default)]
 struct Ctx {
+    /// Modo estricto (lo hereda cada función de dentro).
+    estricta: bool,
     codigo: Vec<Instr>,
     constantes: Vec<Constante>,
     lugares: BTreeMap<String, Lugar>,
@@ -255,7 +257,8 @@ impl Compilador<'_> {
     /// Compila parámetros y cuerpo en un contexto nuevo.
     fn cuerpo(&mut self, params: &[Param], cuerpo: &[Sent], clave: usize, op: Opciones) -> Resultado<Funcion> {
         let info = self.ambitos.get(&clave).cloned().unwrap_or_default();
-        self.pila.push(Ctx::default());
+        let estricta = self.pila.last().is_some_and(|c| c.estricta) || usa_estricto(cuerpo);
+        self.pila.push(Ctx { estricta, ..Ctx::default() });
         self.preparar_locales(params, &info, op)?;
         self.valores_por_defecto(params)?;
         if op.global {
@@ -283,6 +286,7 @@ impl Compilador<'_> {
             flecha: op.flecha,
             argumentos: ctx.argumentos,
             generador: op.generador,
+            estricta,
             codigo: ctx.codigo,
             constantes: ctx.constantes,
         })
@@ -441,6 +445,17 @@ fn recoger_funciones<'a>(cuerpo: &'a [Sent], v: &mut Vec<&'a FuncionAst>) {
 
 /// Una expresión que solo escribe su destino en su última instrucción, después de leer todo
 /// lo que necesita: se puede compilar directamente sobre el registro de una variable.
+/// Si el cuerpo empieza con la directiva `"use strict"`.
+fn usa_estricto(cuerpo: &[Sent]) -> bool {
+    cuerpo
+        .iter()
+        .map_while(|s| match s {
+            Sent::Expr(Expr::Cadena(t)) => Some(t),
+            _ => None,
+        })
+        .any(|t| t == "use strict")
+}
+
 fn segura_sobre_variable(e: &Expr) -> bool {
     !matches!(
         e,

@@ -94,11 +94,7 @@ fn sentencias_de_control() {
 
 #[test]
 fn lo_que_falta_avisa_con_claridad() {
-    for (codigo, pista) in [
-        ("class A { async *m() {} }", "asíncronos"),
-        ("a: for (;;) break a;", "etiquetas"),
-        ("async function* g() {}", "asíncronos"),
-    ] {
+    for (codigo, pista) in [("a: for (;;) break a;", "etiquetas"), ("class A { static { } }", "static")] {
         let e = analizar(codigo).unwrap_err();
         assert!(e.mensaje.contains(pista), "{codigo}: {}", e.mensaje);
     }

@@ -21,7 +21,7 @@ mod interprete;
 mod iteracion;
 mod llamadas;
 pub mod matematicas;
-mod nativas;
+pub(crate) mod nativas;
 pub mod operaciones;
 #[cfg(feature = "perfil")]
 mod perfil;

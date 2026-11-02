@@ -125,7 +125,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
 
 fn arreglo(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
     if m.clase_en(ll.este) != Some(Clase::Arreglo) {
-        return Err(m.error("TypeError", "join/indexOf necesitan un arreglo"));
+        return super::generico(m, if id == JOIN { "join" } else { "indexOf" }, ll);
     }
     let a = m.pila(ll.este);
     let n = m.mundo.longitud(a).unwrap_or(0);

@@ -89,7 +89,8 @@ impl Motor {
     /// Abre el marco de la función `indice` y copia los argumentos a sus primeros registros.
     fn abrir_marco(&mut self, (indice, entorno, este_lexico): (u32, Valor, Valor), ll: Llamada, nuevo: Valor) {
         let Some(c) = self.funciones.get(indice as usize) else { return };
-        let (params, registros, flecha) = (c.f.params as usize, c.f.registros as usize, c.f.flecha);
+        let (params, registros, flecha, estricta) =
+            (c.f.params as usize, c.f.registros as usize, c.f.flecha, c.f.estricta);
         let argumentos = c.f.argumentos;
         let f = self.pila(ll.f);
         let este = if flecha {
@@ -97,7 +98,13 @@ impl Motor {
         } else if ll.construir {
             nuevo
         } else {
-            self.pila(ll.este)
+            // Fuera del modo estricto, `f()` recibe el objeto global como `this`.
+            let e = self.pila(ll.este);
+            if !estricta && matches!(e.tipo(), quimera_objetos::Tipo::Indefinido | quimera_objetos::Tipo::Nulo) {
+                self.pila(crate::R_GLOBAL)
+            } else {
+                e
+            }
         };
         let base_marco = self.mundo.m.abrir_raices(CABECERA + registros.max(params), Valor::INDEFINIDO);
         let base = base_marco + CABECERA;

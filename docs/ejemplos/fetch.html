@@ -1,0 +1,19 @@
+<!doctype html>
+<!-- fetch y async/await: la lista se pide a datos.json y se pinta al llegar. -->
+<title>fetch en QUIMERA</title>
+<style>body { font-family: sans-serif; margin: 16px } li { color: rgb(21, 101, 192) }</style>
+<h1 id=titulo>Esperando…</h1>
+<ul id=lista></ul>
+<script>
+  async function cargar() {
+    const r = await fetch('datos.json');
+    const { titulo, lenguajes } = await r.json();
+    document.getElementById('titulo').textContent = `${titulo} (${r.status})`;
+    for (const l of lenguajes) {
+      const li = document.createElement('li');
+      li.textContent = l;
+      document.getElementById('lista').appendChild(li);
+    }
+  }
+  cargar().catch(e => { document.getElementById('titulo').textContent = 'Error: ' + e.message; });
+</script>

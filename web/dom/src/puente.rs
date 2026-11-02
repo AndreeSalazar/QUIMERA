@@ -141,6 +141,7 @@ fn atributo_booleano(nombre: &str) -> Option<&'static str> {
 /// `nodeName`: la etiqueta en mayúsculas, o `#text`, `#comment`, `#document`.
 fn nombre_de_nodo(doc: &Documento, id: NodoId) -> String {
     match &doc.nodo(id).dato {
+        Dato::Elemento(e) if e.nombre == quimera_html::FRAGMENTO => e.nombre.clone(),
         Dato::Elemento(e) => e.nombre.to_ascii_uppercase(),
         Dato::Texto(_) => String::from("#text"),
         Dato::Comentario(_) => String::from("#comment"),
@@ -230,7 +231,8 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
     }
     let el = doc.elemento(id);
     Some(match nombre {
-        "nodeType" => Leido::Entero(match doc.nodo(id).dato {
+        "nodeType" => Leido::Entero(match &doc.nodo(id).dato {
+            Dato::Elemento(e) if e.nombre == quimera_html::FRAGMENTO => 11,
             Dato::Elemento(_) => 1,
             Dato::Texto(_) => 3,
             Dato::Comentario(_) => 8,
@@ -238,7 +240,7 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
             Dato::Doctype(_) => 10,
         }),
         "nodeName" => Leido::Texto(nombre_de_nodo(&doc, id)),
-        "tagName" if el.is_some() => Leido::Texto(nombre_de_nodo(&doc, id)),
+        "tagName" if el.is_some_and(|e| e.nombre != quimera_html::FRAGMENTO) => Leido::Texto(nombre_de_nodo(&doc, id)),
         "localName" => el.map_or(Leido::Indefinido, |e| Leido::Texto(e.nombre.clone())),
         "textContent" | "innerText" => Leido::Texto(doc.texto(id)),
         "nodeValue" | "data" => match &doc.nodo(id).dato {

@@ -38,6 +38,7 @@ const POR_ID: u32 = 30;
 const CREATE_ELEMENT: u32 = 31;
 const CREATE_TEXT: u32 = 32;
 const CREATE_COMMENT: u32 = 33;
+const CREATE_FRAGMENT: u32 = 34;
 const PREVENT_DEFAULT: u32 = 40;
 const STOP_PROPAGATION: u32 = 41;
 const CLASE_ADD: u32 = 50;
@@ -52,6 +53,7 @@ const SET_INTERVAL: u32 = 71;
 const CLEAR_TIMEOUT: u32 = 72;
 const ANIMATION_FRAME: u32 = 73;
 const ALERT: u32 = 74;
+const PEDIR: u32 = 75;
 
 /// Qué métodos lleva cada prototipo (`window`: el objeto global).
 pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
@@ -96,6 +98,7 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
             ("createElement", CREATE_ELEMENT),
             ("createTextNode", CREATE_TEXT),
             ("createComment", CREATE_COMMENT),
+            ("createDocumentFragment", CREATE_FRAGMENT),
         ],
     ),
     ("p_evento", &[("preventDefault", PREVENT_DEFAULT), ("stopPropagation", STOP_PROPAGATION)]),
@@ -114,6 +117,7 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
             ("requestAnimationFrame", ANIMATION_FRAME),
             ("cancelAnimationFrame", CLEAR_TIMEOUT),
             ("alert", ALERT),
+            ("__quimera_pedir", PEDIR),
             ("addEventListener", ADD_LISTENER),
             ("removeEventListener", REMOVE_LISTENER),
         ],
@@ -152,6 +156,7 @@ fn buscar(est: &Estado, raiz: NodoId, f: impl Fn(&Documento, NodoId) -> bool) ->
 pub(crate) fn llamar(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Result<Valor, Valor> {
     match id {
         SET_TIMEOUT..=ALERT => return ventana(m, est, id, a),
+        PEDIR => return pedir(m, est, a),
         ADD_LISTENER | REMOVE_LISTENER => {
             let nodo = if a.este(m) == m.global() { Some(NodoId(VENTANA)) } else { nodo_de(m, est, a.este(m)) };
             let Some(nodo) = nodo else { return Ok(Valor::INDEFINIDO) };
@@ -237,6 +242,9 @@ fn arbol(m: &mut Motor, est: &Estado, id: u32, este: NodoId, a: &Argumentos) -> 
         return Err(m.error_de_tipo("HierarchyRequestError: ese nodo no puede ir ahí"));
     }
     est.cambiado.set(true);
+    if let Some(n) = n0 {
+        crate::red::scripts_insertados(m, est, n);
+    }
     Ok(a.arg(m, 0))
 }
 
@@ -311,6 +319,7 @@ fn elemento(m: &mut Motor, est: &Estado, id: u32, este: NodoId, a: &Argumentos) 
         CREATE_ELEMENT => doc.crear_elemento(&t0),
         CREATE_TEXT => doc.crear(Dato::Texto(t0)),
         CREATE_COMMENT => doc.crear(Dato::Comentario(t0)),
+        CREATE_FRAGMENT => doc.crear_elemento(quimera_html::FRAGMENTO),
         _ => return Ok(Valor::INDEFINIDO),
     };
     drop(doc);
@@ -380,6 +389,22 @@ fn estilo(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Result<Valor,
     poner_estilo(&mut doc, nodo, &prop, if id == ESTILO_SET { &valor } else { "" });
     est.cambiado.set(true);
     Ok(Valor::INDEFINIDO)
+}
+
+/// `__quimera_pedir(url, método, cuerpo, cabeceras, credenciales)`: apunta la petición y
+/// devuelve su número (ver `red.rs`).
+fn pedir(m: &mut Motor, est: &Estado, a: &Argumentos) -> Result<Valor, Valor> {
+    let cuerpo = a.arg(m, 2);
+    let p = crate::red::PeticionJs {
+        id: 0,
+        url: texto_arg(m, a, 0),
+        metodo: texto_arg(m, a, 1),
+        cuerpo: (cuerpo != Valor::NULO && cuerpo != Valor::INDEFINIDO).then(|| m.texto(cuerpo)),
+        cabeceras: crate::red::pares_de(m, a.arg(m, 3)),
+        credenciales: texto_arg(m, a, 4),
+        es_script: false,
+    };
+    Ok(Valor::entero(crate::red::pedir(est, p) as i32))
 }
 
 /// Temporizadores y `alert`.

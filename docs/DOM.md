@@ -30,6 +30,21 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 | **Eventos** | `click` al pulsar en la ventana: en el enlace o control pulsado, o en `<body>`. Sube por los antepasados hasta `window`. Primero el manejador `onclick` (propiedad o atributo), luego los listeners, como Chromium. `preventDefault()` evita seguir el enlace o enviar el formulario; `stopPropagation()` corta la subida |
 | **Temporizadores** | Con el reloj de la página (ms desde que llegó). La ventana duerme hasta el siguiente (`ControlFlow::WaitUntil`). En el modo captura se adelanta el reloj un segundo, para ver lo que hacen |
 
+## La red desde JavaScript
+
+`fetch` (con `Response`, `Headers`, `text()`, `json()`), `XMLHttpRequest` y los `<script src>` que añade un script (`red.rs`). El DOM no tiene red: apunta lo pedido en una cola, y la ventana la atiende en otros hilos y devuelve cada respuesta (en el modo captura, al momento). Las reglas de origen las aplica la ventana (`peticiones.rs`):
+
+- Una página web no puede leer archivos locales (`file:`).
+- Las cookies solo van al mismo origen (esquema, anfitrión y puerto), salvo `credentials: 'include'`.
+- **CORS**: a otro origen se manda `Origin`, y la respuesta solo llega si el servidor lo permite (`Access-Control-Allow-Origin`). Un `<script src>` de otro origen se ejecuta (no se lee), pero va sin cookies.
+- Falta la petición previa `OPTIONS` de las peticiones «no simples».
+
+`docs/ejemplos/fetch.html` pide un JSON con `fetch` + `async`/`await` y lo pinta.
+
+**`window` y `document`, más completos** (algunos, aproximaciones para que las páginas no se caigan): `location` entero, `history` (sin cambiar la dirección), `navigator`, `screen`, `innerWidth`, `matchMedia` (nunca coincide), `getComputedStyle` (devuelve el `style` del elemento), `performance.now`, `requestIdleCallback`, `MutationObserver`/`IntersectionObserver`/`ResizeObserver` (no avisan nunca), `Event`/`CustomEvent`, `document.implementation.createHTMLDocument`, `createDocumentFragment`, `dataset`.
+
+**Wikipedia** ya pasa su prueba de compatibilidad (pide `async function*`, `/./.dotAll` y `Object.fromEntries`), arranca su cargador de módulos, los pide por la red y ejecuta jQuery y varios módulos. Algunos fallan aún por detalles del DOM.
+
 ## Comprobado
 
 - **Contra Chromium:** las mismas salidas de `console.log` que Chromium en tres scripts que leen el árbol, lo cambian y escuchan eventos (`web/dom/src/pruebas.rs`), también el orden de `onclick` frente a `addEventListener` y cómo queda el atributo `style`. Las pruebas se ejecutan en cada commit.
@@ -40,7 +55,7 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 ## Falta (por orden, para llegar a YouTube)
 
 1. **JavaScript moderno en la VM:** ✅ `JSON`, `Promise` y microtareas (se vacían tras cada script, evento y temporizador), `Map`/`Set`, clases, plantillas, desestructuración, `...spread`, `?.`, y `localStorage` en memoria ([VM.md](VM.md#la-biblioteca-en-javascript-preludio), [FRONTEND.md](FRONTEND.md#qué-entiende-hoy)). ✅ Accesores `get`/`set`, `Symbol`, `dataset`. rust-lang.org y MDN ya ejecutan todos sus scripts sin errores. ✅ `async`/`await` y generadores. rust-lang.org, MDN, Wikipedia, GitHub y Hacker News ejecutan sus scripts sin errores. Falta: módulos (`<script type=module>`) y los scripts que añaden otros scripts.
-2. **`fetch` y `XMLHttpRequest`**, y `localStorage`.
+2. ✅ **`fetch`, `XMLHttpRequest`** y scripts añadidos, con CORS básico. `localStorage` (en memoria; falta guardarlo).
 3. **Más eventos:** `input`, `change`, `keydown`, `submit`, `focus`; y que `input.value` y lo escrito en la ventana sean lo mismo (hoy JavaScript lee el atributo `value`, no lo que tecleó la persona).
 4. **Medidas de la maquetación:** `getBoundingClientRect`, `offsetWidth`, `scrollTop`, `getComputedStyle`.
 5. **Listas vivas** (`childNodes` es hoy una foto), `DocumentFragment`, `dataset`, `insertAdjacentHTML`.

@@ -616,6 +616,217 @@
     if (typeof campos === 'function') campos.call(este);
   };
 
+  // ---------------- más cadenas, arreglos, Boolean ----------------
+
+  definir(String.prototype, {
+    lastIndexOf: function (buscar, desde) {
+      var s = String(this), b = String(buscar);
+      var i = desde === undefined ? s.length : Math.max(0, Math.min(desde | 0, s.length));
+      for (; i >= 0; i--) if (s.substring(i, i + b.length) === b) return i;
+      return -1;
+    },
+    concat: function () {
+      var s = String(this);
+      for (var i = 0; i < arguments.length; i++) s += String(arguments[i]);
+      return s;
+    },
+    substr: function (inicio, largo) {
+      var s = String(this);
+      inicio = inicio < 0 ? Math.max(s.length + inicio, 0) : inicio | 0;
+      return s.substring(inicio, largo === undefined ? s.length : inicio + Math.max(largo | 0, 0));
+    },
+    codePointAt: function (i) {
+      var s = String(this), a = s.charCodeAt(i | 0);
+      if (a !== a) return undefined;
+      if (a >= 0xD800 && a < 0xDC00) {
+        var b = s.charCodeAt((i | 0) + 1);
+        if (b >= 0xDC00 && b < 0xE000) return (a - 0xD800) * 0x400 + (b - 0xDC00) + 0x10000;
+      }
+      return a;
+    },
+    normalize: function () { return String(this); },
+    localeCompare: function (otra) {
+      var a = String(this), b = String(otra);
+      return a < b ? -1 : a > b ? 1 : 0;
+    },
+    toLocaleLowerCase: function () { return String(this).toLowerCase(); },
+    toLocaleUpperCase: function () { return String(this).toUpperCase(); }
+  });
+  String.prototype.trimLeft = String.prototype.trimStart;
+  String.prototype.trimRight = String.prototype.trimEnd;
+  String.fromCodePoint = function () {
+    var s = '';
+    for (var i = 0; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c > 0xFFFF) { c -= 0x10000; s += String.fromCharCode(0xD800 + (c >> 10), 0xDC00 + (c & 0x3FF)); }
+      else s += String.fromCharCode(c);
+    }
+    return s;
+  };
+
+  definir(Array.prototype, {
+    reduceRight: function (f, inicial) {
+      var i = this.length - 1, acc = inicial;
+      if (arguments.length < 2) { acc = this[i]; i--; }
+      for (; i >= 0; i--) acc = f(acc, this[i], i, this);
+      return acc;
+    },
+    toSorted: function (f) { return this.slice().sort(f); },
+    toReversed: function () { return this.slice().reverse(); },
+    'with': function (i, v) { var c = this.slice(); c[i < 0 ? c.length + i : i] = v; return c; },
+    toString: function () { return this.join(','); }
+  });
+
+  global.Boolean = function Boolean(v) { return !!v; };
+  global.Boolean.prototype.toString = function () { return this ? 'true' : 'false'; };
+  global.Boolean.prototype.valueOf = function () { return !!this; };
+  ocultar.push(global.Boolean.prototype);
+
+  // Un método de arreglo sobre algo que lo parece (lo llaman las nativas de Rust).
+  var MUTAN = ['push', 'pop', 'shift', 'unshift', 'reverse', 'sort'];
+  global.__quimera_generico = function (nombre, o, args) {
+    if (o == null) throw new TypeError('Array.prototype.' + nombre + ' sobre ' + o);
+    var n = o.length >>> 0, a = [];
+    for (var i = 0; i < n; i++) a.push(o[i]);
+    var r = Array.prototype[nombre].apply(a, args);
+    if (MUTAN.indexOf(nombre) >= 0) {
+      for (var j = 0; j < a.length; j++) o[j] = a[j];
+      for (var k = a.length; k < n; k++) delete o[k];
+      o.length = a.length;
+    }
+    return r;
+  };
+
+  definir(Math, {
+    imul: function (a, b) {
+      var ah = (a >>> 16) & 0xffff, al = a & 0xffff, bh = (b >>> 16) & 0xffff, bl = b & 0xffff;
+      return ((al * bl) + (((ah * bl + al * bh) << 16) >>> 0)) | 0;
+    },
+    clz32: function (x) {
+      x = x >>> 0;
+      if (x === 0) return 32;
+      var n = 0;
+      while ((x & 0x80000000) === 0) { x = x << 1; n++; }
+      return n;
+    },
+    fround: function (x) { return +x; },
+    expm1: function (x) { return Math.exp(x) - 1; },
+    log1p: function (x) { return Math.log(1 + x); },
+    sinh: function (x) { return (Math.exp(x) - Math.exp(-x)) / 2; },
+    cosh: function (x) { return (Math.exp(x) + Math.exp(-x)) / 2; },
+    tanh: function (x) { var a = Math.exp(x), b = Math.exp(-x); return (a - b) / (a + b); }
+  });
+
+  // `Object.prototype.toString` (nativo) mira Symbol.toStringTag.
+  Map.prototype[Symbol.toStringTag] = 'Map';
+  Set.prototype[Symbol.toStringTag] = 'Set';
+  WeakMap.prototype[Symbol.toStringTag] = 'WeakMap';
+  Promise.prototype[Symbol.toStringTag] = 'Promise';
+
+  // ---------------- Date ----------------
+  // Sobre la nativa (que guarda los milisegundos): constructores con texto ISO o con partes, y
+  // los métodos. La hora local es UTC por ahora (getTimezoneOffset() da 0).
+  var DateNativa = global.Date;
+  var DIA = 86400000;
+  function diasDesdeCivil(a, m, d) {
+    a -= m <= 2 ? 1 : 0;
+    var era = Math.floor(a / 400), ae = a - era * 400;
+    var dy = Math.floor((153 * (m + (m > 2 ? -3 : 9)) + 2) / 5) + d - 1;
+    var de = ae * 365 + Math.floor(ae / 4) - Math.floor(ae / 100) + dy;
+    return era * 146097 + de - 719468;
+  }
+  function civilDesdeDias(z) {
+    z += 719468;
+    var era = Math.floor(z / 146097), de = z - era * 146097;
+    var ae = Math.floor((de - Math.floor(de / 1460) + Math.floor(de / 36524) - Math.floor(de / 146096)) / 365);
+    var a = ae + era * 400, dy = de - (365 * ae + Math.floor(ae / 4) - Math.floor(ae / 100));
+    var mp = Math.floor((5 * dy + 2) / 153), d = dy - Math.floor((153 * mp + 2) / 5) + 1;
+    var m = mp + (mp < 10 ? 3 : -9);
+    return [a + (m <= 2 ? 1 : 0), m, d];
+  }
+  function desdePartes(a, m, d, h, mi, s, ms) {
+    a = +a; m = +m || 0;
+    a += Math.floor(m / 12); m = ((m % 12) + 12) % 12;
+    return diasDesdeCivil(a, m + 1, 1) * DIA + ((d === undefined ? 1 : +d) - 1) * DIA +
+      (+h || 0) * 3600000 + (+mi || 0) * 60000 + (+s || 0) * 1000 + (+ms || 0);
+  }
+  function parsear(t) {
+    var r = /^(\d{4})(?:-(\d\d)(?:-(\d\d))?)?(?:[T ](\d\d):(\d\d)(?::(\d\d)(?:\.(\d{1,3}))?)?)?(Z|[+-]\d\d:?\d\d)?$/.exec(String(t).trim());
+    if (!r) return NaN;
+    var ms = desdePartes(r[1], (r[2] || 1) - 1, r[3] || 1, r[4], r[5], r[6], r[7] ? (r[7] + '00').slice(0, 3) : 0);
+    if (r[8] && r[8] !== 'Z') {
+      var signo = r[8][0] === '-' ? -1 : 1, hh = +r[8].slice(1, 3), mm = +r[8].slice(-2);
+      ms -= signo * (hh * 60 + mm) * 60000;
+    }
+    return ms;
+  }
+  function FechaJs(a, m, d, h, mi, s, ms) {
+    if (!(this instanceof FechaJs)) return new DateNativa(DateNativa.now()).toString();
+    var n = arguments.length, valor;
+    if (n === 0) valor = DateNativa.now();
+    else if (n === 1) valor = typeof a === 'string' ? parsear(a) : a instanceof DateNativa ? a.getTime() : +a;
+    else valor = desdePartes(a, m, d, h, mi, s, ms);
+    return new DateNativa(valor);
+  }
+  FechaJs.prototype = DateNativa.prototype;
+  FechaJs.prototype.constructor = FechaJs;
+  FechaJs.now = DateNativa.now;
+  FechaJs.parse = parsear;
+  FechaJs.UTC = function (a, m, d, h, mi, s, ms) { return desdePartes(a, m, d, h, mi, s, ms); };
+  global.Date = FechaJs;
+  function partes(f) { var t = f.getTime(); var dias = Math.floor(t / DIA); var c = civilDesdeDias(dias); var resto = t - dias * DIA; return { a: c[0], m: c[1] - 1, d: c[2], h: Math.floor(resto / 3600000), mi: Math.floor(resto / 60000) % 60, s: Math.floor(resto / 1000) % 60, ms: resto % 1000, dia: ((dias % 7) + 11) % 7 }; }
+  function dos(n) { return (n < 10 ? '0' : '') + n; }
+  var DIAS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var MESES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var metodos = {
+    getFullYear: function () { return partes(this).a; },
+    getMonth: function () { return partes(this).m; },
+    getDate: function () { return partes(this).d; },
+    getDay: function () { return partes(this).dia; },
+    getHours: function () { return partes(this).h; },
+    getMinutes: function () { return partes(this).mi; },
+    getSeconds: function () { return partes(this).s; },
+    getMilliseconds: function () { return partes(this).ms; },
+    getTimezoneOffset: function () { return 0; },
+    setTime: function (t) { this['[[Valor]]'] = +t; return +t; },
+    toISOString: function () {
+      var p = partes(this);
+      if (this.getTime() !== this.getTime()) throw new RangeError('Invalid time value');
+      return p.a + '-' + dos(p.m + 1) + '-' + dos(p.d) + 'T' + dos(p.h) + ':' + dos(p.mi) + ':' + dos(p.s) + '.' + ('00' + p.ms).slice(-3) + 'Z';
+    },
+    toJSON: function () { return this.getTime() !== this.getTime() ? null : this.toISOString(); },
+    toUTCString: function () {
+      var p = partes(this);
+      return DIAS[p.dia] + ', ' + dos(p.d) + ' ' + MESES[p.m] + ' ' + p.a + ' ' + dos(p.h) + ':' + dos(p.mi) + ':' + dos(p.s) + ' GMT';
+    },
+    toDateString: function () { var p = partes(this); return DIAS[p.dia] + ' ' + MESES[p.m] + ' ' + dos(p.d) + ' ' + p.a; },
+    toTimeString: function () { var p = partes(this); return dos(p.h) + ':' + dos(p.mi) + ':' + dos(p.s) + ' GMT+0000 (Coordinated Universal Time)'; },
+    toString: function () {
+      if (this.getTime() !== this.getTime()) return 'Invalid Date';
+      return this.toDateString() + ' ' + this.toTimeString();
+    },
+    toLocaleDateString: function () { var p = partes(this); return (p.m + 1) + '/' + p.d + '/' + p.a; },
+    toLocaleTimeString: function () { var p = partes(this); return dos(p.h) + ':' + dos(p.mi) + ':' + dos(p.s); },
+    toLocaleString: function () { return this.toLocaleDateString() + ', ' + this.toLocaleTimeString(); }
+  };
+  ['FullYear', 'Month', 'Date', 'Day', 'Hours', 'Minutes', 'Seconds', 'Milliseconds'].forEach(function (n) {
+    metodos['getUTC' + n] = metodos['get' + n];
+  });
+  function setter(cual) {
+    return function (v) {
+      var p = partes(this), args = arguments;
+      var orden = ['a', 'm', 'd', 'h', 'mi', 's', 'ms'], i = orden.indexOf(cual);
+      for (var k = 0; k < args.length && i + k < orden.length; k++) p[orden[i + k]] = +args[k];
+      return this.setTime(desdePartes(p.a, p.m, p.d, p.h, p.mi, p.s, p.ms));
+    };
+  }
+  [['FullYear', 'a'], ['Month', 'm'], ['Date', 'd'], ['Hours', 'h'], ['Minutes', 'mi'], ['Seconds', 's'], ['Milliseconds', 'ms']].forEach(function (par) {
+    metodos['set' + par[0]] = setter(par[1]);
+    metodos['setUTC' + par[0]] = metodos['set' + par[0]];
+  });
+  definir(DateNativa.prototype, metodos);
+  ocultar.push(DateNativa.prototype);
+
   // ---------------- generadores y async ----------------
 
   // Los generadores (su prototipo lo crea la máquina) son iterables: su iterador son ellos.
@@ -646,6 +857,56 @@
       }
       paso('next', undefined);
     });
+  };
+
+  // Un `async function*`: sus `await` llegan como Espera (y se esperan dentro); sus `yield`,
+  // como valores que cada next() entrega en una promesa. Las peticiones van en cola, en orden.
+  function Espera(v) { this.v = v; }
+  global.__quimera_espera = function (v) { return new Espera(v); };
+  global.__quimera_async_gen = function (genFn, este, args) {
+    var g = genFn.apply(este, args), cola = [], corriendo = false;
+    function siguiente() {
+      if (corriendo || !cola.length) return;
+      corriendo = true;
+      var t = cola.shift();
+      paso(t, t.metodo, t.valor);
+    }
+    function acabar(t, ok, v) {
+      corriendo = false;
+      if (ok) t.res(v); else t.rej(v);
+      siguiente();
+    }
+    function paso(t, metodo, v) {
+      var r;
+      try { r = g[metodo](v); } catch (e) { acabar(t, false, e); return; }
+      if (!r.done && r.value instanceof Espera) {
+        Promise.resolve(r.value.v).then(function (x) { paso(t, 'next', x); }, function (e) { paso(t, 'throw', e); });
+        return;
+      }
+      Promise.resolve(r.value).then(
+        function (x) { acabar(t, true, { value: x, done: r.done }); },
+        function (e) { acabar(t, false, e); }
+      );
+    }
+    var it = {};
+    ['next', 'return', 'throw'].forEach(function (m) {
+      it[m] = function (v) {
+        return new Promise(function (res, rej) { cola.push({ metodo: m, valor: v, res: res, rej: rej }); siguiente(); });
+      };
+    });
+    it[Symbol.asyncIterator] = function () { return this; };
+    return it;
+  };
+  // El iterador de `for await`: uno asíncrono, o uno normal cuyos valores se esperan.
+  global.__quimera_iterador_async = function (x) {
+    if (x != null && typeof x[Symbol.asyncIterator] === 'function') return x[Symbol.asyncIterator]();
+    var it = global.__quimera_iterador(x);
+    return {
+      next: function (v) {
+        var r = it.next(v);
+        return Promise.resolve(r.value).then(function (valor) { return { value: valor, done: r.done }; });
+      }
+    };
   };
 
   global.__quimera_ocultar = ocultar;

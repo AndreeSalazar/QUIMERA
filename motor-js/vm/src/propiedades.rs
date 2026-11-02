@@ -79,6 +79,12 @@ impl Motor {
                 if let Some(par) = self.buscar_accesor(obj, clave) {
                     return self.llamar_get(par, obj);
                 }
+                // Lo mismo con las propiedades calculadas de una expresión regular (`flags`...).
+                if self.mundo.clase(obj) == Some(Clase::RegExp)
+                    && let Some(v) = self.propiedad_regexp(obj, clave)
+                {
+                    return Ok(v);
+                }
                 if pc != SIN_CACHE {
                     if let Some(hueco) = self.mundo.formas.buscar(forma, clave)
                         && self.guardar_cache(fi, pc, forma, hueco)
@@ -124,6 +130,13 @@ impl Motor {
             }
             // Los métodos de un primitivo están en su prototipo (`(1.5).toFixed`, `"a".charAt`).
             Tipo::Cadena => Ok(self.mundo.leer(self.pila(crate::R_CADENA), clave).unwrap_or(Valor::INDEFINIDO)),
+            // Un booleano usa `Boolean.prototype` (del preludio): `true.toString()`.
+            Tipo::Booleano => {
+                let (kb, kp) = (self.mundo.cadenas.internar("Boolean"), self.mundo.clave_prototype);
+                let b = self.mundo.leer(self.pila(crate::R_GLOBAL), kb).unwrap_or(Valor::INDEFINIDO);
+                let p = if self.mundo.es_objeto(b) { self.mundo.leer(b, kp) } else { None };
+                Ok(p.and_then(|p| self.mundo.leer(p, clave)).unwrap_or(Valor::INDEFINIDO))
+            }
             Tipo::Simbolo => {
                 let interno = obj.ref_del_monton().map_or("", |r| self.mundo.cadenas.texto(r.numero() as u32));
                 if self.mundo.cadenas.texto(clave) == "description" {

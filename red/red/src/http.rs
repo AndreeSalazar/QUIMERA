@@ -8,15 +8,15 @@
 use crate::Error;
 use crate::url::Url;
 
-/// La petición para `url`: GET, o POST de un formulario si hay `formulario` (ya codificado como
-/// `application/x-www-form-urlencoded`). Con `galletas`, la cabecera `Cookie`.
-pub(crate) fn peticion(url: &Url, agente: &str, galletas: Option<&str>, formulario: Option<&[u8]>) -> Vec<u8> {
+/// La petición HTTP para `url` según `p` (método, cuerpo, cabeceras). Con `galletas`, la
+/// cabecera `Cookie`.
+pub(crate) fn peticion(url: &Url, agente: &str, galletas: Option<&str>, p: &crate::Peticion) -> Vec<u8> {
     let mut anfitrion = url.anfitrion.clone();
     let por_defecto = if url.esquema == "https" { 443 } else { 80 };
-    if let Some(p) = url.puerto.filter(|p| *p != por_defecto) {
-        anfitrion.push_str(&format!(":{p}"));
+    if let Some(puerto) = url.puerto.filter(|x| *x != por_defecto) {
+        anfitrion.push_str(&format!(":{puerto}"));
     }
-    let metodo = if formulario.is_some() { "POST" } else { "GET" };
+    let metodo = p.metodo.as_str();
     let mut s = format!(
         "{metodo} {} HTTP/1.1\r\nHost: {anfitrion}\r\nUser-Agent: {agente}\r\nAccept: text/html,application/xhtml+xml,text/css,*/*;q=0.8\r\nAccept-Language: es,en;q=0.8\r\nAccept-Encoding: identity\r\nConnection: close\r\n",
         url.ruta_y_consulta()
@@ -24,12 +24,32 @@ pub(crate) fn peticion(url: &Url, agente: &str, galletas: Option<&str>, formular
     if let Some(g) = galletas {
         s.push_str(&format!("Cookie: {g}\r\n"));
     }
-    if let Some(cuerpo) = formulario {
-        s.push_str(&format!("Content-Type: application/x-www-form-urlencoded\r\nContent-Length: {}\r\n", cuerpo.len()));
+    // Cabeceras de la página, sin saltos de línea (no pueden colar otra cabecera) y sin las que
+    // pone la red (`Host`, `Cookie`, `Content-Length`...).
+    for (k, v) in &p.cabeceras {
+        let prohibida = matches!(
+            k.to_ascii_lowercase().as_str(),
+            "host"
+                | "cookie"
+                | "content-length"
+                | "connection"
+                | "accept-encoding"
+                | "user-agent"
+                | "transfer-encoding"
+        );
+        if !prohibida && !k.contains(['\r', '\n', ':']) && !v.contains(['\r', '\n']) {
+            s.push_str(&format!("{k}: {v}\r\n"));
+        }
+    }
+    if let Some(cuerpo) = &p.cuerpo {
+        if !p.cabeceras.iter().any(|(k, _)| k.eq_ignore_ascii_case("content-type")) {
+            s.push_str("Content-Type: application/x-www-form-urlencoded\r\n");
+        }
+        s.push_str(&format!("Content-Length: {}\r\n", cuerpo.len()));
     }
     s.push_str("\r\n");
     let mut bytes = s.into_bytes();
-    bytes.extend_from_slice(formulario.unwrap_or_default());
+    bytes.extend_from_slice(p.cuerpo.as_deref().unwrap_or_default());
     bytes
 }
 

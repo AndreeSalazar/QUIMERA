@@ -52,9 +52,22 @@ impl Guion {
     }
 
     /// Para capturar: adelanta el reloj hasta `hasta` ms ejecutando los temporizadores en orden,
-    /// sin esperar (como si hubiera pasado ese tiempo).
-    pub fn adelantar(&mut self, hasta: f64) {
+    /// sin esperar (como si hubiera pasado ese tiempo), y atiende al momento lo que la página pida
+    /// a la red con `atender`.
+    pub fn adelantar(
+        &mut self,
+        hasta: f64,
+        atender: &dyn Fn(&quimera_dom::PeticionJs) -> Result<quimera_dom::RespuestaJs, String>,
+    ) {
         for _ in 0..10_000 {
+            let pedidas = self.dom.tomar_peticiones();
+            if !pedidas.is_empty() {
+                for p in pedidas {
+                    let r = atender(&p);
+                    self.dom.responder(p.id, r);
+                }
+                continue;
+            }
             match self.dom.proximo_temporizador() {
                 Some(t) if t <= hasta => self.dom.correr_temporizadores(t),
                 _ => break,

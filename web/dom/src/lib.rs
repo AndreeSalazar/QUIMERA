@@ -22,6 +22,7 @@ extern crate alloc;
 mod eventos;
 mod metodos;
 mod puente;
+mod red;
 mod selectores;
 
 use alloc::format;
@@ -32,6 +33,7 @@ use core::cell::{Cell, Ref, RefCell};
 use quimera_html::{Dato, Documento, NodoId};
 use quimera_vm::{Motor, Valor};
 
+pub use red::{PeticionJs, RespuestaJs};
 pub use selectores::Selector;
 
 /// El número de "nodo" de `window` en los listeners (no es un nodo del árbol).
@@ -58,6 +60,13 @@ pub(crate) struct Estado {
     pub(crate) url: String,
     /// Errores de JavaScript que nadie capturó (de eventos y temporizadores).
     pub(crate) errores: RefCell<Vec<String>>,
+    /// Lo pedido a la red que el anfitrión aún no ha recogido (`red.rs`).
+    pub(crate) peticiones: RefCell<Vec<red::PeticionJs>>,
+    pub(crate) siguiente_peticion: Cell<u32>,
+    /// Peticiones de `<script src>` añadidos por scripts: número de petición → nodo.
+    pub(crate) scripts_pendientes: RefCell<alloc::collections::BTreeMap<u32, u32>>,
+    /// Los `<script>` ya ejecutados (o pedidos): cada uno corre una sola vez.
+    pub(crate) ejecutados: RefCell<alloc::collections::BTreeSet<u32>>,
 }
 
 /// Una página con JavaScript: su árbol y su motor.
@@ -114,6 +123,88 @@ const ALMACENES: &str = r"(function (w) {
   w.sessionStorage = new Almacen();
 })(this);";
 
+/// `document.implementation` (`createHTMLDocument` hace un `html`/`head`/`body` sueltos con los
+/// métodos de creación de este documento: jQuery lo usa para analizar HTML sin ejecutarlo) y
+/// `document.location`.
+const DOCUMENTO_JS: &str = r"(function (w, d) {
+  // location completo, a partir de href.
+  var partes = /^([a-z][a-z0-9+.-]*:)(?:\/\/([^/?#:]*)(?::(\d+))?)?([^?#]*)(\?[^#]*)?(#.*)?$/i.exec(w.location.href) || [];
+  var loc = w.location;
+  loc.protocol = partes[1] || '';
+  loc.hostname = partes[2] || '';
+  loc.port = partes[3] || '';
+  loc.host = loc.hostname + (loc.port ? ':' + loc.port : '');
+  loc.pathname = partes[4] || '/';
+  loc.search = partes[5] || '';
+  loc.hash = partes[6] || '';
+  loc.origin = loc.host ? loc.protocol + '//' + loc.host : 'null';
+  loc.toString = function () { return this.href; };
+  loc.assign = loc.replace = loc.reload = function () {};
+  d.location = loc;
+  d.cookie = '';
+  d.referrer = '';
+  d.characterSet = 'UTF-8';
+  d.visibilityState = 'visible';
+  d.hidden = false;
+  d.hasFocus = function () { return true; };
+  // Aproximaciones: lo justo para que las páginas no se caigan (ver docs/DOM.md).
+  w.history = { length: 1, state: null, scrollRestoration: 'auto',
+    pushState: function (s) { this.state = s; }, replaceState: function (s) { this.state = s; },
+    back: function () {}, forward: function () {}, go: function () {} };
+  var nav = w.navigator;
+  nav.languages = ['es', 'en'];
+  nav.platform = 'Win32';
+  nav.vendor = '';
+  nav.cookieEnabled = true;
+  nav.onLine = true;
+  nav.hardwareConcurrency = 4;
+  nav.maxTouchPoints = 0;
+  w.screen = { width: 1920, height: 1080, availWidth: 1920, availHeight: 1040, colorDepth: 24, pixelDepth: 24 };
+  w.innerWidth = 1024; w.innerHeight = 768; w.outerWidth = 1024; w.outerHeight = 768;
+  w.devicePixelRatio = 1;
+  w.scrollX = w.scrollY = w.pageXOffset = w.pageYOffset = 0;
+  w.scrollTo = w.scrollBy = w.scroll = w.focus = w.blur = function () {};
+  w.matchMedia = function (q) {
+    return { matches: false, media: String(q), onchange: null,
+      addListener: function () {}, removeListener: function () {},
+      addEventListener: function () {}, removeEventListener: function () {} };
+  };
+  w.getComputedStyle = function (el) { return el.style; };
+  var inicio = Date.now();
+  w.performance = { now: function () { return Date.now() - inicio; }, timeOrigin: inicio,
+    mark: function () {}, measure: function () {}, getEntriesByName: function () { return []; },
+    getEntriesByType: function () { return []; } };
+  w.requestIdleCallback = function (f) { return setTimeout(function () { f({ didTimeout: false, timeRemaining: function () { return 50; } }); }, 1); };
+  w.cancelIdleCallback = clearTimeout;
+  function Observador() { this.observe = this.unobserve = this.disconnect = function () {}; this.takeRecords = function () { return []; }; }
+  w.MutationObserver = w.IntersectionObserver = w.ResizeObserver = w.PerformanceObserver = Observador;
+  function Evento(tipo, op) { op = op || {}; this.type = String(tipo); this.bubbles = !!op.bubbles; this.cancelable = !!op.cancelable; this.detail = op.detail; this.defaultPrevented = false; }
+  Evento.prototype.preventDefault = function () { this.defaultPrevented = true; };
+  Evento.prototype.stopPropagation = Evento.prototype.stopImmediatePropagation = function () {};
+  w.Event = w.CustomEvent = Evento;
+  d.implementation = {
+    hasFeature: function () { return true; },
+    createHTMLDocument: function (titulo) {
+      var html = d.createElement('html'), head = d.createElement('head'), body = d.createElement('body');
+      html.appendChild(head);
+      html.appendChild(body);
+      var nuevo = {
+        nodeType: 9, nodeName: '#document', documentElement: html, head: head, body: body, title: titulo || '',
+        implementation: d.implementation, location: null, defaultView: null,
+        createElement: function (t) { return d.createElement(t); },
+        createTextNode: function (t) { return d.createTextNode(t); },
+        createComment: function (t) { return d.createComment(t); },
+        createDocumentFragment: function () { return d.createDocumentFragment(); },
+        getElementById: function (i) { return html.querySelector('#' + i); },
+        getElementsByTagName: function (t) { return html.getElementsByTagName(t); },
+        querySelector: function (s) { return html.querySelector(s); },
+        querySelectorAll: function (s) { return html.querySelectorAll(s); }
+      };
+      return nuevo;
+    }
+  };
+})(this, this.document);";
+
 /// El objeto de un nodo, o `null`.
 pub(crate) fn envolver_o_nulo(m: &mut Motor, est: &Estado, id: Option<NodoId>) -> Valor {
     id.map_or(Valor::NULO, |id| envolver(m, est, id))
@@ -134,7 +225,7 @@ pub(crate) fn lista(m: &mut Motor, est: &Estado, ids: &[NodoId]) -> Valor {
 }
 
 /// Si `tipo` es de un `<script>` clásico que QUIMERA ejecuta.
-fn es_javascript(tipo: Option<&str>) -> bool {
+pub(crate) fn es_javascript(tipo: Option<&str>) -> bool {
     match tipo.map(|t| t.trim().to_ascii_lowercase()) {
         None => true,
         Some(t) => matches!(
@@ -156,12 +247,18 @@ impl Dom {
             siguiente_temporizador: Cell::new(1),
             url: String::from(url),
             errores: RefCell::new(Vec::new()),
+            peticiones: RefCell::new(Vec::new()),
+            siguiente_peticion: Cell::new(1),
+            scripts_pendientes: RefCell::new(alloc::collections::BTreeMap::new()),
+            ejecutados: RefCell::new(alloc::collections::BTreeSet::new()),
         });
         let mut motor = Motor::default();
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));
         puente::preparar(&mut motor, &estado);
-        if let Err(e) = motor.ejecutar(ALMACENES) {
-            estado.errores.borrow_mut().push(e.mensaje);
+        for codigo in [ALMACENES, red::RED_JS, DOCUMENTO_JS] {
+            if let Err(e) = motor.ejecutar(codigo) {
+                estado.errores.borrow_mut().push(e.mensaje);
+            }
         }
         motor.fijar_biblioteca();
         Dom { motor, estado, consola_leida: 0 }
@@ -206,6 +303,7 @@ impl Dom {
                 .map(|(e, id)| (e.atributo("src").map(String::from), e.atributo("type").map(String::from), id))
                 .collect()
         };
+        self.estado.ejecutados.borrow_mut().extend(scripts.iter().map(|(_, _, id)| id.0));
         for (src, _, id) in scripts {
             let codigo = match &src {
                 Some(s) => externo(s),

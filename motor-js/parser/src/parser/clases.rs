@@ -36,6 +36,14 @@ pub(super) fn envolver_async(cuerpo: Vec<Sent>, args: Expr, pos: crate::fuente::
     vec![Sent::Retornar(Some(llamada))]
 }
 
+/// El cuerpo de un `async function*`: `return __quimera_async_gen(function* () {...}, this, args)`.
+/// Dentro, `await x` entrega `__quimera_espera(x)` y `yield v`, el valor tal cual.
+pub(super) fn envolver_async_gen(cuerpo: Vec<Sent>, args: Expr, pos: crate::fuente::Pos) -> Vec<Sent> {
+    let interior = Funcion { nombre: None, params: Vec::new(), cuerpo, flecha: false, pos, generador: true };
+    let llamada = llamar("__quimera_async_gen", vec![Expr::Funcion(Box::new(interior)), Expr::Este, args]);
+    vec![Sent::Retornar(Some(llamada))]
+}
+
 /// La clase que se está analizando (para `super`).
 pub(super) struct InfoClase {
     /// El temporal con la clase padre, si hay `extends`.
@@ -76,7 +84,8 @@ impl Parser {
         self.clases.pop();
         let mut miembros = miembros?;
         let interno = nombre.clone().unwrap_or_else(|| self.temporal());
-        let mut cuerpo = Vec::new();
+        // El código de una clase es estricto (lo heredan el constructor y los métodos).
+        let mut cuerpo = vec![Sent::Expr(Expr::Cadena(String::from("use strict")))];
         if let (Some(p), Some(e)) = (&padre, padre_expr) {
             cuerpo.push(Sent::Declarar(Decl::Var, vec![(p.clone(), Some(e))]));
         }
@@ -194,9 +203,6 @@ impl Parser {
                 self.avanzar();
             }
             let generador = self.tomar("*");
-            if asincrona && generador {
-                return error(pos, "los generadores asíncronos (async *m) todavía no están en QUIMERA");
-            }
             if estatico && self.es("{") {
                 return error(pos, "los bloques static {} todavía no están en QUIMERA");
             }
@@ -266,7 +272,8 @@ impl Parser {
         self.cerrar_temporales(&mut cuerpo);
         self.contextos.pop();
         if asincrona {
-            cuerpo = envolver_async(cuerpo, Expr::Ident(String::from("arguments")), pos);
+            let args = Expr::Ident(String::from("arguments"));
+            cuerpo = if generador { envolver_async_gen(cuerpo, args, pos) } else { envolver_async(cuerpo, args, pos) };
         }
         Ok(Funcion { nombre, params: firma.params, cuerpo, flecha: false, pos, generador: generador && !asincrona })
     }
