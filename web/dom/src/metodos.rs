@@ -54,9 +54,14 @@ const CLEAR_TIMEOUT: u32 = 72;
 const ANIMATION_FRAME: u32 = 73;
 const ALERT: u32 = 74;
 const PEDIR: u32 = 75;
+const DISPATCH: u32 = 16;
 
 /// Qué métodos lleva cada prototipo (`window`: el objeto global).
 pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
+    (
+        "p_destino",
+        &[("addEventListener", ADD_LISTENER), ("removeEventListener", REMOVE_LISTENER), ("dispatchEvent", DISPATCH)],
+    ),
     (
         "p_nodo",
         &[
@@ -69,8 +74,6 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
             ("cloneNode", CLONE_NODE),
             ("remove", REMOVE),
             ("append", APPEND),
-            ("addEventListener", ADD_LISTENER),
-            ("removeEventListener", REMOVE_LISTENER),
             ("querySelector", QUERY),
             ("querySelectorAll", QUERY_ALL),
             ("getElementsByTagName", POR_ETIQUETA),
@@ -120,6 +123,7 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
             ("__quimera_pedir", PEDIR),
             ("addEventListener", ADD_LISTENER),
             ("removeEventListener", REMOVE_LISTENER),
+            ("dispatchEvent", DISPATCH),
         ],
     ),
 ];
@@ -157,6 +161,19 @@ pub(crate) fn llamar(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Re
     match id {
         SET_TIMEOUT..=ALERT => return ventana(m, est, id, a),
         PEDIR => return pedir(m, est, a),
+        DISPATCH => {
+            // `objetivo.dispatchEvent(evento)`: el evento lo creó la página (`new Event(...)`).
+            let nodo = if a.este(m) == m.global() { Some(NodoId(VENTANA)) } else { nodo_de(m, est, a.este(m)) };
+            let Some(nodo) = nodo else { return Ok(Valor::VERDADERO) };
+            let ev = a.arg(m, 0);
+            if !m.mundo.es_objeto(ev) {
+                return Err(m.error_de_tipo("dispatchEvent necesita un evento"));
+            }
+            let tipo = m.leer_nombre(ev, "type");
+            let tipo = m.texto(tipo);
+            let prevenido = eventos::despachar_evento(m, est, nodo, &tipo, Some(ev));
+            return Ok(Valor::booleano(!prevenido));
+        }
         ADD_LISTENER | REMOVE_LISTENER => {
             let nodo = if a.este(m) == m.global() { Some(NodoId(VENTANA)) } else { nodo_de(m, est, a.este(m)) };
             let Some(nodo) = nodo else { return Ok(Valor::INDEFINIDO) };

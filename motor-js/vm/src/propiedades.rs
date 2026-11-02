@@ -56,11 +56,13 @@ impl Motor {
     /// `obj.clave`.
     pub(crate) fn leer_prop(&mut self, obj: Valor, clave: u32, fi: usize, pc: usize) -> Result<Valor, Valor> {
         if let Some(dato) = self.mundo.anfitrion(obj) {
-            if let Some(r) = self.leer_anfitrion(dato, clave) {
-                return r;
-            }
+            // Un accesor de la página (`get value()` en un elemento personalizado) tapa la
+            // propiedad del navegador, como un getter de una subclase.
             if let Some(par) = self.buscar_accesor(obj, clave) {
                 return self.llamar_get(par, obj);
+            }
+            if let Some(r) = self.leer_anfitrion(dato, clave) {
+                return r;
             }
             return Ok(self.leer_lento(obj, clave));
         }
@@ -170,6 +172,9 @@ impl Motor {
             return Ok(()); // en un primitivo se ignora (modo no estricto)
         }
         if let Some(dato) = self.mundo.anfitrion(obj) {
+            if let Some(par) = self.buscar_accesor(obj, clave) {
+                return self.llamar_set(par, obj, v);
+            }
             match self.escribir_anfitrion(dato, clave, v) {
                 Some(r) => return r,
                 None if self.mundo.escribir(obj, clave, v) => return Ok(()),
@@ -254,6 +259,21 @@ impl Motor {
             }
         }
         let clave = self.clave_de(k);
+        if clave == u32::MAX
+            && let Some(i) = Self::indice(k)
+        {
+            // Ningún objeto tiene esa clave propia (no es ni átomo), pero un arreglo de la
+            // cadena de prototipos puede tener ese elemento (`Object.create(arreglo)[1]`).
+            let mut actual = obj;
+            while self.mundo.es_objeto(actual) {
+                if self.mundo.clase(actual) == Some(Clase::Arreglo)
+                    && let Some(v) = self.mundo.leer_elemento(actual, i)
+                {
+                    return Ok(v);
+                }
+                actual = self.mundo.prototipo(actual);
+            }
+        }
         self.leer_prop(obj, clave, 0, crate::propiedades::SIN_CACHE)
     }
 

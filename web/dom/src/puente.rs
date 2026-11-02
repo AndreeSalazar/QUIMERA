@@ -35,9 +35,16 @@ pub(crate) fn preparar(m: &mut Motor, est: &Estado) {
         let raiz = m.raiz_anfitrion();
         m.definir(raiz, lista, a);
     }
+    // La cadena de los navegadores: EventTarget → Node → Element → HTMLElement → HTMLDivElement...
+    // Los prototipos de cada etiqueta (`p_etiquetas`) los crea `interfaces.rs` en JavaScript.
     for (proto, padre) in [
-        ("p_nodo", None),
+        ("p_destino", None),
+        ("p_nodo", Some("p_destino")),
+        ("p_caracteres", Some("p_nodo")),
         ("p_elemento", Some("p_nodo")),
+        ("p_html", Some("p_elemento")),
+        ("p_svg", Some("p_elemento")),
+        ("p_fragmento", Some("p_nodo")),
         ("p_documento", Some("p_nodo")),
         ("p_evento", None),
         ("p_clases", None),
@@ -53,6 +60,21 @@ pub(crate) fn preparar(m: &mut Motor, est: &Estado) {
         let raiz = m.raiz_anfitrion();
         m.definir(raiz, proto, o);
     }
+    // `p_etiquetas`: etiqueta → prototipo (sin prototipo propio: `constructor` no es una etiqueta).
+    let etiquetas = m.mundo.crear_objeto(Valor::NULO);
+    let raiz = m.raiz_anfitrion();
+    m.definir(raiz, "p_etiquetas", etiquetas);
+    // `__quimera_protos`: los prototipos, para que `interfaces.rs` haga los constructores.
+    let protos = m.crear_objeto();
+    let marca = m.apilar(protos);
+    for nombre in PROTOS {
+        let raiz = m.raiz_anfitrion();
+        let p = m.leer_nombre(raiz, nombre);
+        m.definir(m.de_pila(marca), nombre, p);
+    }
+    let global = m.global();
+    m.definir(global, "__quimera_protos", m.de_pila(marca));
+    m.soltar_pila(marca);
     for (dueno, metodos) in TABLA {
         for &(nombre, id) in *metodos {
             let f = m.crear_funcion_anfitrion(id);
@@ -85,6 +107,48 @@ pub(crate) fn preparar(m: &mut Motor, est: &Estado) {
     }
     m.fijar_biblioteca();
 }
+
+/// Los prototipos que ve `interfaces.rs`.
+const PROTOS: [&str; 13] = [
+    "p_destino",
+    "p_nodo",
+    "p_caracteres",
+    "p_elemento",
+    "p_html",
+    "p_svg",
+    "p_fragmento",
+    "p_documento",
+    "p_evento",
+    "p_clases",
+    "p_estilo",
+    "p_datos",
+    "p_etiquetas",
+];
+
+/// Etiquetas de SVG (sus elementos son `SVGElement`, no `HTMLElement`).
+pub(crate) const SVG: &[&str] = &[
+    "svg",
+    "path",
+    "g",
+    "circle",
+    "rect",
+    "line",
+    "polyline",
+    "polygon",
+    "ellipse",
+    "tspan",
+    "defs",
+    "use",
+    "symbol",
+    "clippath",
+    "mask",
+    "pattern",
+    "lineargradient",
+    "radialgradient",
+    "stop",
+    "foreignobject",
+    "marker",
+];
 
 fn protocolo(url: &str) -> &str {
     url.find(':').map_or("", |i| &url[..=i])
@@ -258,6 +322,7 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
         "classList" if el.is_some() => Leido::Objeto(id.0 | BIT_CLASES, "p_clases"),
         "dataset" if el.is_some() => Leido::Objeto(id.0 | BIT_DATOS, "p_datos"),
         "title" => Leido::Texto(el.and_then(|e| e.atributo("title")).unwrap_or("").to_string()),
+        "content" if el.is_some_and(|e| e.nombre == "template") => return None,
         _ => {
             let e = el?;
             if let Some(a) = atributo_reflejado(nombre) {
@@ -451,6 +516,14 @@ impl Anfitrion for Puente {
             self.0.cambiado.set(true);
             return Some(Ok(()));
         }
-        self.escribir_nodo(m, NodoId(dato), &nombre, v).then_some(Ok(()))
+        let hecho = self.escribir_nodo(m, NodoId(dato), &nombre, v);
+        if hecho && nombre == "innerHTML" {
+            // Los elementos personalizados que trae el HTML nuevo se mejoran (`interfaces.rs`).
+            let el = envolver(m, &self.0, NodoId(dato));
+            if let Err(e) = m.llamar_global("__quimera_tras_html", &[el]) {
+                self.0.errores.borrow_mut().push(e.mensaje);
+            }
+        }
+        hecho.then_some(Ok(()))
     }
 }

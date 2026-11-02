@@ -153,8 +153,44 @@ pub(super) fn expr_a_patron(e: Expr) -> Option<Patron> {
             }
             Patron::Objeto(v, None)
         }
+        // `{a, ...resto} = o`: el objeto con `...` ya se leyó como `Object.assign({a}, resto)`.
+        Expr::Llamar(f, mut args) if es_metodo(&f, "Object", "assign") && args.len() >= 2 => {
+            let Some(Expr::Ident(resto)) = args.pop() else { return None };
+            let mut v = Vec::new();
+            for a in args {
+                let Expr::Objeto(props) = a else { return None };
+                for (k, x) in props {
+                    let (p, d) = con_defecto(x)?;
+                    v.push((k, p, d));
+                }
+            }
+            Patron::Objeto(v, Some(resto))
+        }
+        // `[a, ...resto] = x`: leído como `[a].concat(__quimera_lista(resto))`.
+        Expr::Llamar(f, mut args) if args.len() == 1 => {
+            let Expr::Miembro(base, metodo) = *f else { return None };
+            let (Expr::Arreglo(v), "concat") = (*base, metodo.as_str()) else { return None };
+            let Some(Expr::Llamar(g, mut dentro)) = args.pop() else { return None };
+            if !matches!(&*g, Expr::Ident(n) if n == "__quimera_lista") || dentro.len() != 1 {
+                return None;
+            }
+            let resto = expr_a_patron(dentro.pop()?)?;
+            let mut elementos = Vec::new();
+            for x in v {
+                elementos.push(match x {
+                    None => None,
+                    Some(x) => Some(con_defecto(x)?),
+                });
+            }
+            Patron::Arreglo(elementos, Some(Box::new(resto)))
+        }
         _ => return None,
     })
+}
+
+/// Si `f` es `objeto.metodo` (con `objeto` un nombre).
+fn es_metodo(f: &Expr, objeto: &str, metodo: &str) -> bool {
+    matches!(f, Expr::Miembro(o, m) if m == metodo && matches!(&**o, Expr::Ident(n) if n == objeto))
 }
 
 /// `Object.defineProperty(dueno, clave, {get: f})` (o `set`): un accesor de un objeto o clase.

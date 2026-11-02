@@ -170,6 +170,13 @@ impl Parser {
             let llamada = Expr::Llamar(Box::new(miembro(Expr::Ident(String::from(campos)), "call")), vec![Expr::Este]);
             f.cuerpo.insert(0, Sent::Expr(llamada));
         }
+        if padre.is_some() {
+            // `super(...)` cambia el `this` (ver `este.rs`).
+            super::este::reemplazar(&mut f.cuerpo);
+            let este = String::from(super::este::ESTE);
+            f.cuerpo.insert(0, Sent::Declarar(Decl::Var, vec![(este.clone(), Some(Expr::Este))]));
+            f.cuerpo.push(Sent::Retornar(Some(Expr::Ident(este))));
+        }
         f.nombre = Some(String::from(interno));
         f
     }

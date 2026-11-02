@@ -96,3 +96,20 @@ fn textos_largos_sin_desbordar_la_pila() {
     let re = Regex::nueva("b", "g").unwrap();
     assert!(!re.buscar(&largo, 10, &mut m));
 }
+
+/// `\p{...}` y `\P{...}` con la bandera `u` (resultados de Chromium).
+#[test]
+fn propiedades_de_unicode() {
+    assert_eq!(encaje(r"\p{L}+", "u", "¡Ñandú 42!"), s("Ñandú"));
+    assert_eq!(encaje(r"\p{P}|\p{S}", "u", "abc+def"), s("+"));
+    assert_eq!(encaje(r"[\p{P}\p{S}]+", "u", "hola¿—€!"), s("¿—€!"));
+    assert_eq!(encaje(r"\P{L}+", "u", "ab12 cd"), s("12 "));
+    assert_eq!(encaje(r"\p{Lu}\p{Ll}+", "u", "el Árbol"), s("Árbol"));
+    assert_eq!(encaje(r"\p{Script=Greek}+", "u", "alfa αβγ"), s("αβγ"));
+    assert_eq!(encaje(r"\p{Extended_Pictographic}", "u", "ok 😀!"), s("😀"));
+    assert_eq!(encaje(r"\p{N}+", "u", "x٣4"), s("٣4"));
+    assert_eq!(encaje(r"^[$_\p{ID_Start}][$_\p{ID_Continue}]*$", "u", "año_2"), s("año_2"));
+    assert!(Regex::nueva(r"\p{NoExiste}", "u").is_err());
+    // Sin la bandera `u`, `\p` es una `p` (anexo B).
+    assert_eq!(encaje(r"\p{L}", "", "p{L}"), s("p{L}"));
+}

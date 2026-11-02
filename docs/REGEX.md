@@ -26,7 +26,9 @@ Clases y rangos, `\d \D \w \W \s \S \b \B`, `.`, `^ $`, grupos que capturan, `(?
 
 En la VM: `RegExp` (constructor y literales), `exec`, `test`, `toString`, `lastIndex`, y en cadenas `replace` (con `$1`, `$&`, `` $` ``, `$'` o una función), `match`, `search` y `split`.
 
-**Falta**: mirar hacia atrás (`(?<=...)`), las propiedades Unicode (`\p{...}`), `source`/`flags`/`global` como propiedades, y que `replace`/`split` llamen al `exec` del usuario como pide la especificación.
+**Propiedades Unicode** (`\p{...}` y `\P{...}`, con la bandera `u`; `propiedades.rs`): las categorías `L`, `Lu`, `Ll`, `N`, `P`, `S`, `M`, `Z`, `Cc` (también por su nombre largo y con `General_Category=`), `Alphabetic`, `White_Space`, `ID_Start`, `ID_Continue`, `Emoji`, `Extended_Pictographic`, `ASCII`, `Any` y los alfabetos más usados (`Script=Latin`, `Greek`, `Cyrillic`, `Han`, `Arabic`...). Las letras y los números salen de la biblioteca estándar de Rust; la puntuación, los símbolos, los emojis y los alfabetos son tablas de bloques, aproximadas en los bordes. Un nombre desconocido es un error, como en los navegadores. Probado contra Chromium.
+
+**Falta**: mirar hacia atrás (`(?<=...)`), las tablas completas de Unicode para `\p{...}`, `source`/`flags`/`global` como propiedades, y que `replace`/`split` llamen al `exec` del usuario como pide la especificación.
 
 ## Medida
 

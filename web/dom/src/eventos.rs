@@ -121,22 +121,40 @@ fn manejador_de_atributo(m: &mut Motor, est: &Estado, nodo: NodoId, tipo: &str) 
 
 /// Lanza `tipo` en `nodo` y lo sube hasta `window`. Devuelve si se llamó a `preventDefault()`.
 pub(crate) fn despachar(m: &mut Motor, est: &Estado, nodo: NodoId, tipo: &str) -> bool {
+    despachar_evento(m, est, nodo, tipo, None)
+}
+
+/// Como [`despachar`], con un evento ya creado por la página (`dispatchEvent`). Si no burbujea
+/// (`bubbles: false`), solo llega a su objetivo.
+pub(crate) fn despachar_evento(m: &mut Motor, est: &Estado, nodo: NodoId, tipo: &str, evento: Option<Valor>) -> bool {
+    let burbujea = evento.is_none_or(|ev| {
+        let b = m.leer_nombre(ev, "bubbles");
+        quimera_vm::operaciones::a_booleano(&m.mundo, b)
+    });
     let mut ruta = Vec::new();
     let mut actual = Some(nodo).filter(|n| n.0 != VENTANA);
     while let Some(n) = actual {
         ruta.push(n);
-        actual = est.doc.borrow().nodo(n).padre;
+        actual = if burbujea { est.doc.borrow().nodo(n).padre } else { None };
     }
-    ruta.push(NodoId(VENTANA));
+    if burbujea || nodo.0 == VENTANA {
+        ruta.push(NodoId(VENTANA));
+    }
     let antes = (est.prevenido.replace(false), est.detenido.replace(false));
-    let raiz = m.raiz_anfitrion();
-    let proto = m.leer_nombre(raiz, "p_evento");
-    let ev = m.mundo.crear_objeto(proto);
-    let marca = m.apilar(ev);
-    let t = m.cadena(tipo);
-    m.definir(m.de_pila(marca), "type", t);
-    m.definir(m.de_pila(marca), "bubbles", Valor::VERDADERO);
-    m.definir(m.de_pila(marca), "defaultPrevented", Valor::FALSO);
+    let marca = match evento {
+        Some(ev) => m.apilar(ev),
+        None => {
+            let raiz = m.raiz_anfitrion();
+            let proto = m.leer_nombre(raiz, "p_evento");
+            let ev = m.mundo.crear_objeto(proto);
+            let marca = m.apilar(ev);
+            let t = m.cadena(tipo);
+            m.definir(m.de_pila(marca), "type", t);
+            m.definir(m.de_pila(marca), "bubbles", Valor::VERDADERO);
+            m.definir(m.de_pila(marca), "defaultPrevented", Valor::FALSO);
+            marca
+        }
+    };
     let objetivo = envolver(m, est, nodo);
     m.definir(m.de_pila(marca), "target", objetivo);
     for n in ruta {

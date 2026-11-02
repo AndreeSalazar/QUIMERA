@@ -267,3 +267,46 @@ fn url_y_parametros() {
         ]
     );
 }
+
+/// Las clases del DOM, `customElements` (con un elemento que ya estaba en la página), `template`,
+/// `CustomEvent` y `dispatchEvent` (`clases_dom.js`), con la salida de Chromium.
+#[test]
+fn clases_del_dom_y_elementos_personalizados() {
+    let mut d = dom(r#"<saludo-x nombre="ana"></saludo-x>"#);
+    let r = correr(&mut d, include_str!("clases_dom.js"));
+    assert_eq!(
+        r,
+        [
+            "true true true true true true false true false true 1 [object HTMLDivElement]",
+            "atributo nombre null ana",
+            "conectado 1",
+            "atributo nombre null luis",
+            "conectado 1",
+            r#"true true SALUDO-X 0 true <saludo-x nombre="ana">Hola ana</saludo-x><saludo-x nombre="luis">Hola luis</saludo-x>"#,
+            "desconectado",
+            "2 B 0 2",
+            "true 5 true true",
+            "false true false",
+            "antes<span>a</span>después 10 20",
+            "definido después",
+        ]
+    );
+}
+
+#[test]
+fn event_target_propio_y_abort_controller() {
+    let mut d = dom("");
+    let r = correr(
+        &mut d,
+        "class Bus extends EventTarget {}
+         const b = new Bus(); let n = 0;
+         b.addEventListener('x', (e) => { n += e.detail; });
+         b.dispatchEvent(new CustomEvent('x', {detail: 3}));
+         const c = new AbortController();
+         c.signal.addEventListener('abort', () => console.log('abortado', c.signal.reason.name));
+         c.abort();
+         try { c.signal.throwIfAborted(); } catch (e) { console.log('lanza', e instanceof DOMException); }
+         console.log(n, b instanceof EventTarget, c.signal.aborted, AbortSignal.abort('r').reason);",
+    );
+    assert_eq!(r, ["abortado AbortError", "lanza true", "3 true true r"]);
+}

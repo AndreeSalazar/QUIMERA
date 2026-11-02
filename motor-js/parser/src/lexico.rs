@@ -104,10 +104,11 @@ struct Lexico<'a> {
 pub fn tokens(fuente: &str) -> Resultado<Vec<Token>> {
     let mut l = Lexico { s: fuente, b: fuente.as_bytes(), i: 0, linea: 1, inicio_linea: 0 };
     let mut v = Vec::with_capacity(fuente.len() / 4);
+    let mut parentesis = Parentesis::default();
     loop {
         let salto_antes = l.saltar_blancos()?;
         let pos = l.pos();
-        let regex_posible = v.last().is_none_or(|t: &Token| puede_preceder_regex(&t.tipo));
+        let regex_posible = parentesis.regex_posible(v.last());
         if l.byte(0) == b'`' && l.i < l.b.len() {
             let etiqueta = v.last().is_some_and(|t: &Token| termina_expresion(&t.tipo));
             let mut t = l.plantilla(pos, etiqueta)?;
@@ -125,6 +126,7 @@ pub fn tokens(fuente: &str) -> Resultado<Vec<Token>> {
             l.token()?
         };
         let fin = tipo == Tipo::Fin;
+        parentesis.anotar(v.last(), &tipo);
         v.push(Token { tipo, pos, salto_antes });
         if fin {
             return Ok(v);
@@ -139,6 +141,33 @@ fn puede_preceder_regex(t: &Tipo) -> bool {
         Tipo::Signo(s) => !matches!(*s, ")" | "]" | "}" | "++" | "--"),
         Tipo::Clave(k) => !matches!(*k, "this" | "super" | "null" | "true" | "false"),
         _ => false,
+    }
+}
+
+/// Los `(` abiertos, y si cada uno abre la cabecera de un `if`, `while`, `for` o `with`: tras el
+/// `)` que la cierra empieza una sentencia, así que un `/` es una regex (`if (x) /a/.test(s)`).
+#[derive(Default)]
+struct Parentesis {
+    abiertos: Vec<bool>,
+    cierra_control: bool,
+}
+
+impl Parentesis {
+    fn regex_posible(&self, anterior: Option<&Token>) -> bool {
+        anterior.is_none_or(|t| puede_preceder_regex(&t.tipo) || (self.cierra_control && t.tipo == Tipo::Signo(")")))
+    }
+
+    /// Anota el token `tipo`, que va tras `anterior`.
+    fn anotar(&mut self, anterior: Option<&Token>, tipo: &Tipo) {
+        self.cierra_control = false;
+        match tipo {
+            Tipo::Signo("(") => {
+                let control = anterior.is_some_and(|t| matches!(t.tipo, Tipo::Clave("if" | "while" | "for" | "with")));
+                self.abiertos.push(control);
+            }
+            Tipo::Signo(")") => self.cierra_control = self.abiertos.pop().unwrap_or(false),
+            _ => {}
+        }
     }
 }
 
@@ -230,17 +259,15 @@ impl Lexico<'_> {
     }
 
     fn token(&mut self) -> Resultado<Tipo> {
-        let pos = self.pos();
         let c = self.actual().unwrap_or('\0');
-        if es_inicio_ident(c) {
-            return Ok(self.identificador());
+        if es_inicio_ident(c) || (c == '\\' && self.byte(1) == b'u') {
+            return self.identificador();
         }
         if c.is_ascii_digit() || (c == '.' && self.byte(1).is_ascii_digit()) {
             return self.numero();
         }
         match c {
             '"' | '\'' => self.cadena(),
-            '\\' => error(pos, "los escapes \\u en identificadores todavía no están en QUIMERA"),
             _ => self.signo(),
         }
     }
@@ -324,6 +351,7 @@ impl Lexico<'_> {
     fn sustitucion(&mut self, pos: Pos) -> Resultado<Vec<Token>> {
         let mut v: Vec<Token> = Vec::new();
         let mut nivel = 0usize;
+        let mut parentesis = Parentesis::default();
         loop {
             let salto_antes = self.saltar_blancos()?;
             let p = self.pos();
@@ -335,8 +363,9 @@ impl Lexico<'_> {
                 v.extend(self.plantilla(p, etiqueta)?);
                 continue;
             }
-            let regex_posible = v.last().is_none_or(|t| puede_preceder_regex(&t.tipo));
+            let regex_posible = parentesis.regex_posible(v.last());
             let tipo = if regex_posible && self.byte(0) == b'/' { self.regex()? } else { self.token()? };
+            parentesis.anotar(v.last(), &tipo);
             match tipo {
                 Tipo::Signo("{") => nivel += 1,
                 Tipo::Signo("}") if nivel == 0 => {
@@ -382,15 +411,28 @@ impl Lexico<'_> {
         Ok(Tipo::Regex(patron, String::from(&self.s[desde..self.i])))
     }
 
-    fn identificador(&mut self) -> Tipo {
-        let inicio = self.i;
-        while let Some(c) = self.actual().filter(|c| es_parte_ident(*c)) {
-            self.i += c.len_utf8();
+    /// Un identificador o palabra reservada. Admite escapes (`a`, `\u{61}`); uno escrito
+    /// con escapes nunca es una palabra reservada.
+    fn identificador(&mut self) -> Resultado<Tipo> {
+        let mut palabra = String::new();
+        let mut con_escapes = false;
+        loop {
+            match self.actual() {
+                Some('\\') if self.byte(1) == b'u' => {
+                    self.i += 2;
+                    self.escape_unicode(&mut palabra)?;
+                    con_escapes = true;
+                }
+                Some(c) if es_parte_ident(c) => {
+                    palabra.push(c);
+                    self.i += c.len_utf8();
+                }
+                _ => break,
+            }
         }
-        let palabra = &self.s[inicio..self.i];
-        match CLAVES.iter().find(|k| **k == palabra) {
-            Some(k) => Tipo::Clave(k),
-            None => Tipo::Ident(String::from(palabra)),
+        match CLAVES.iter().find(|k| **k == palabra).filter(|_| !con_escapes) {
+            Some(k) => Ok(Tipo::Clave(k)),
+            None => Ok(Tipo::Ident(palabra)),
         }
     }
 

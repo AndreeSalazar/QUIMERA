@@ -65,6 +65,14 @@ impl Constructor {
         }
     }
 
+    /// Añade unos rangos (de una propiedad `\p{...}`), o los que no están en ellos.
+    pub(crate) fn propiedad(&mut self, mut rangos: Vec<(u32, u32)>, negada: bool) {
+        if negada {
+            rangos = complemento(&unir(rangos));
+        }
+        self.rangos.extend(rangos);
+    }
+
     /// Añade las otras formas (mayúscula/minúscula) de cada carácter, para la bandera `i`.
     /// Los rangos enormes (`Ĩ-￿`) ya contienen casi todo y se dejan como están.
     pub(crate) fn sin_caso(&mut self) {
@@ -84,15 +92,8 @@ impl Constructor {
         self.rangos.extend(extra);
     }
 
-    pub(crate) fn terminar(mut self, negada: bool) -> Clase {
-        self.rangos.sort_unstable();
-        let mut unidos: Vec<(u32, u32)> = Vec::with_capacity(self.rangos.len());
-        for (a, b) in self.rangos {
-            match unidos.last_mut() {
-                Some(u) if a <= u.1.saturating_add(1) => u.1 = u.1.max(b),
-                _ => unidos.push((a, b)),
-            }
-        }
+    pub(crate) fn terminar(self, negada: bool) -> Clase {
+        let unidos = unir(self.rangos);
         let mut ascii = [0u64; 2];
         for &(a, b) in &unidos {
             for c in a..=b.min(127) {
@@ -101,6 +102,19 @@ impl Constructor {
         }
         Clase { rangos: unidos, negada, ascii }
     }
+}
+
+/// Ordena los rangos y junta los que se tocan.
+fn unir(mut rangos: Vec<(u32, u32)>) -> Vec<(u32, u32)> {
+    rangos.sort_unstable();
+    let mut unidos: Vec<(u32, u32)> = Vec::with_capacity(rangos.len());
+    for (a, b) in rangos {
+        match unidos.last_mut() {
+            Some(u) if a <= u.1.saturating_add(1) => u.1 = u.1.max(b),
+            _ => unidos.push((a, b)),
+        }
+    }
+    unidos
 }
 
 /// Los caracteres que no están en `rangos` (ordenados y sin solaparse).

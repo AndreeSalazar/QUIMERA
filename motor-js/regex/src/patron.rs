@@ -233,6 +233,11 @@ impl<'a> Lector<'a> {
                 }
                 Nodo::Clase(k.terminar(false))
             }
+            'p' | 'P' if self.unicode => {
+                let mut k = Constructor::default();
+                k.propiedad(self.propiedad()?, c == 'P');
+                Nodo::Clase(k.terminar(false))
+            }
             '1'..='9' => {
                 self.i -= 1;
                 let inicio = self.i;
@@ -268,6 +273,25 @@ impl<'a> Lector<'a> {
             'u' => self.unicode_escape().unwrap_or('u'),
             c => c,
         })
+    }
+
+    /// El `{Nombre}` de `\p{Nombre}` (con el cursor tras la `p`): sus rangos.
+    fn propiedad(&mut self) -> Result<Vec<(u32, u32)>, Error> {
+        if !self.comer('{') {
+            return error(r"falta '{' tras \p");
+        }
+        let inicio = self.i;
+        while self.ver().is_some_and(|c| c != '}') {
+            self.i += 1;
+        }
+        let nombre: alloc::string::String = self.c[inicio..self.i].iter().collect();
+        if !self.comer('}') {
+            return error(r"falta '}' en \p{...}");
+        }
+        match crate::propiedades::rangos(&nombre) {
+            Some(r) => Ok(r),
+            None => error(&alloc::format!("propiedad de Unicode desconocida: {nombre}")),
+        }
     }
 
     fn hexadecimal(&mut self, n: usize) -> Option<char> {
@@ -336,6 +360,10 @@ impl<'a> Lector<'a> {
             'd' | 'D' | 'w' | 'W' | 's' | 'S' => {
                 let (a, negada) = abreviada(e);
                 k.abreviada(a, negada);
+                None
+            }
+            'p' | 'P' if self.unicode => {
+                k.propiedad(self.propiedad()?, e == 'P');
                 None
             }
             'b' => Some(8),

@@ -56,13 +56,27 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 
 **`URL` y `URLSearchParams`**, iguales a Chromium en las pruebas (con `url.searchParams.set(...)` que cambia `href`).
 
+## Clases del DOM y elementos personalizados
+
+`interfaces.rs` (JavaScript sobre los prototipos que crea `puente.rs`):
+
+- **La cadena de los navegadores**: `EventTarget` → `Node` → `Element` → `HTMLElement` → `HTMLDivElement`..., más `CharacterData`/`Text`/`Comment`, `DocumentFragment`, `Document` y `SVGElement`. Cada nodo nace con el prototipo de su etiqueta (unas 45 interfaces `HTML...Element`, y `HTMLUnknownElement` para las demás). Así funcionan `el instanceof HTMLInputElement`, `Node.ELEMENT_NODE` y `Object.prototype.toString.call(el)` (`[object HTMLDivElement]`).
+- **`customElements`**: `define` (mejora también los elementos que ya estaban en la página), `get`, `getName`, `whenDefined` y `upgrade`. Al mejorar un elemento, se le pone el prototipo de la clase y se ejecuta su constructor sobre él. Después llegan `attributeChangedCallback` (por cada atributo de `observedAttributes`) y `connectedCallback`. Insertar y quitar elementos llama a `connectedCallback`/`disconnectedCallback`. `document.createElement('mi-x')`, `new MiX()` e `innerHTML` crean elementos ya mejorados.
+- **`super()` que devuelve otro objeto**: en `class X extends HTMLElement`, el `this` del constructor es el elemento que crea el navegador, no un objeto nuevo. El parser cambia el `this` de los constructores de subclase por una variable que toma el valor de `super(...)` (`parser/este.rs`).
+- **Eventos de verdad**: `Event` y sus subclases (`CustomEvent`, `MouseEvent`, `KeyboardEvent`, `FocusEvent`, `InputEvent`, `PointerEvent`, `UIEvent`) con `bubbles`, `cancelable` y `detail`; `dispatchEvent` en nodos y en `window`. Un evento que no burbujea solo llega a su objetivo.
+- **`EventTarget` propio** (`new EventTarget()`, o una clase que lo extiende), `AbortController`/`AbortSignal` y `DOMException`.
+- **Más de `Node` y `Element`**: `prepend`, `before`, `after`, `replaceWith`, `replaceChildren`, `toggleAttribute`, `getAttributeNames`, `attributes`, `insertAdjacentHTML/Element/Text`, `compareDocumentPosition`, `template.content`. `DocumentFragment` de verdad: al insertarlo se mueven sus hijos.
+- **Aproximaciones**: `attachShadow` devuelve un fragmento aparte que **no se pinta** (falta Shadow DOM de verdad, con `<slot>`), `getBoundingClientRect` da ceros y `CSSStyleSheet` no aplica nada.
+
+Probado contra Chromium: un elemento personalizado con atributos observados, ciclo de vida y eventos propios da las mismas 12 líneas en los dos (`web/dom/src/pruebas.rs`).
+
 ## Comprobado
 
 - **Contra Chromium:** las mismas salidas de `console.log` que Chromium en tres scripts que leen el árbol, lo cambian y escuchan eventos (`web/dom/src/pruebas.rs`), también el orden de `onclick` frente a `addEventListener` y cómo queda el atributo `style`. Las pruebas se ejecutan en cada commit.
 - **Una página hecha por sus scripts** (`docs/ejemplos/javascript.html`): título, colores, barras con `createElement` y `style`, fichas con `innerHTML`, y cambios a los 100 ms con `setTimeout`. Los anchos y posiciones horizontales coinciden con Chromium. En vertical hay 2 px de diferencia por la letra del título, no por el JavaScript.
 - **Páginas reales:** Hacker News (1,4 ms de scripts) y Wikipedia (11 ms) cargan sin errores y se ven como antes. El arranque de Wikipedia comprueba si el navegador tiene lo moderno (`Promise`, `fetch`...) y, al no encontrarlo, se queda en su versión sin JavaScript, que es lo previsto.
-- **Memoria:** Wikipedia («Gato», en español), 194 MB frente a 504 MB de Edge. MDN con todos sus módulos ejecutados, 153 MB frente a 536 MB.
-- **MDN** ejecuta todos sus módulos sin errores; **GitHub** carga los suyos (con su mapa de importación) y se para en las clases del DOM (`HTMLElement`, `customElements`), que son la fase 4.
+- **Memoria:** Wikipedia («Gato», en español), 194 MB frente a 504 MB de Edge. MDN con todos sus módulos ejecutados, 153 MB frente a 536 MB. Con las clases del DOM (mediana de varias corridas): GitHub con sus elementos personalizados, 321 MB frente a 725 MB de Edge (varía entre 306 y 426); MDN, 100–121 MB frente a 513–525 MB. La velocidad no cambió: V8 da 3,70× Boa, y el commit anterior, medido el mismo día, 3,67×.
+- **MDN** ejecuta todos sus módulos sin errores. **GitHub** carga los suyos (con su mapa de importación) y define sus elementos personalizados. De 6 módulos con error pasó a 3. Siguen fallando `landing-pages` (le falta `DataView`), `behaviors` y `environment` (`Object.keys` recibe `undefined` y algo no es iterable; sin trazas de pila aún no se ve dónde). Para encontrarlos, un error de un módulo dice ahora en qué módulo nació.
 
 ## Falta (por orden, para llegar a YouTube)
 
@@ -70,6 +84,6 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 2. ✅ **`fetch`, `XMLHttpRequest`** y scripts añadidos, con CORS básico. `localStorage` (en memoria; falta guardarlo).
 3. **Más eventos:** `input`, `change`, `keydown`, `submit`, `focus`; y que `input.value` y lo escrito en la ventana sean lo mismo (hoy JavaScript lee el atributo `value`, no lo que tecleó la persona).
 4. **Medidas de la maquetación:** `getBoundingClientRect`, `offsetWidth`, `scrollTop`, `getComputedStyle`.
-5. **Listas vivas** (`childNodes` es hoy una foto), `DocumentFragment`, `dataset`, `insertAdjacentHTML`.
+5. **Listas vivas** (`childNodes` es hoy una foto). ✅ `DocumentFragment`, `dataset`, `insertAdjacentHTML`, clases del DOM y `customElements`. Falta Shadow DOM que se pinte.
 6. Imágenes y hojas que añaden los scripts (hoy solo se descargan las del HTML inicial), `document.write`, `iframe`.
 7. Generar el puente desde WebIDL cuando la tabla pase de unas decenas de métodos.

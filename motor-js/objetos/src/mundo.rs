@@ -303,6 +303,13 @@ impl Mundo {
             if !self.es_objeto(actual) {
                 return None;
             }
+            // Un arreglo como prototipo (`Object.create(arreglo)`): sus elementos se heredan,
+            // y la clave llega como texto (`"1"`).
+            if self.clase(actual) == Some(Clase::Arreglo)
+                && let Some(v) = indice_canonico(self.cadenas.texto(clave)).and_then(|i| self.leer_elemento(actual, i))
+            {
+                return Some(v);
+            }
         }
         None
     }
@@ -502,4 +509,13 @@ impl Mundo {
             _ => None,
         }
     }
+}
+
+/// El índice de arreglo que escribe `texto` (`"0"`, `"12"`; no `"01"` ni `"-1"`).
+fn indice_canonico(texto: &str) -> Option<u32> {
+    let b = texto.as_bytes();
+    if b.is_empty() || !b[0].is_ascii_digit() || (b[0] == b'0' && b.len() > 1) {
+        return None;
+    }
+    texto.parse::<u32>().ok().filter(|i| *i != u32::MAX)
 }

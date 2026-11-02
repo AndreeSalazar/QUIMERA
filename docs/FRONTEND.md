@@ -48,7 +48,7 @@ función 4 main: 0 parámetros, 4 registros, entorno 0
 
 **Analiza y compila**: `var`/`let`/`const`, funciones (declaradas, expresiones, flechas, métodos, parámetros por defecto, nombre propio), cierres anidados, objetos (abreviados, calculados, métodos), arreglos con huecos, todos los operadores (también `**`, `??`, `&&=`, `>>>=`...), `new`, `this`, `typeof`/`delete`/`void`, `if`, `while`, `do`, `for`, `break`/`continue`, `for-in`/`for-of`, `switch`, `try`/`catch`/`finally` (también con `return`/`break` dentro), `throw`, y el `;` automático.
 
-**Expresiones regulares**: un `/` es una expresión regular si el token anterior no puede terminar una expresión (`x / y` divide; `= /re/` no). Cada literal se valida al analizar con `quimera-regex`, como hacen los navegadores.
+**Expresiones regulares**: un `/` es una expresión regular si el token anterior no puede terminar una expresión (`x / y` divide; `= /re/` no). Tras un `)` divide, salvo que cierre la cabecera de un `if`, `while`, `for` o `with`: ahí empieza una sentencia (`if (c) /x/.test(s)`, que GitHub tiene minificado). El léxico lleva la cuenta de los paréntesis abiertos para saberlo. Cada literal se valida al analizar con `quimera-regex`, como hacen los navegadores.
 
 **Sintaxis moderna, convertida al analizar** (`parser/azucar.rs`, `parser/clases.rs`): se reescribe en construcciones que el compilador ya entiende, como hace Babel, sin tocar el compilador ni la máquina.
 
@@ -75,7 +75,9 @@ Los temporales se llaman `\u{1}t3`: no se pueden escribir desde JavaScript y no 
 
 **Etiquetas** (`fuera: for ... break fuera`, también en bloques y `switch`) y **módulos** (`import`/`export`, ver [DOM.md](DOM.md#módulos)): `analizar_modulo` y `compilar_modulo`.
 
-**Avisa con un error claro**: bloques `static {}` de las clases, escapes `\u` en identificadores, `...rest` en una asignación con patrón (`[a, ...b] = x`; en declaraciones sí vale), `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
+**Escapes `\u` en nombres** (`café`, `\u{61}`): un nombre escrito con escapes nunca es palabra reservada. **`...rest` en asignaciones con patrón** (`({a, ...r} = o)`, `[x, ...y] = v`): se reconocen las formas en que ya se leyó el literal (`Object.assign(...)`, `[...].concat(...)`) y se vuelven patrón.
+
+**Avisa con un error claro**: bloques `static {}` de las clases y BigInt.
 
 Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y los 8 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay, RegExp). Los 15 se analizan, compilan y ejecutan.
 

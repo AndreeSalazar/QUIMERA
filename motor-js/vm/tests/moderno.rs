@@ -350,3 +350,60 @@ fn etiquetas() {
     );
     assert_eq!(r, ["00,10,a,do,fin"]);
 }
+
+/// `super(...)` sustituye el `this`: subclases de `Array` y `Error` de verdad, y `return;` en un
+/// constructor derivado (valores de Chromium).
+#[test]
+fn super_sustituye_this() {
+    let r = salida(
+        "class Pila extends Array { tope() { return this[this.length - 1]; } }
+         var p = new Pila(); p.push(1, 2);
+         class E2 extends Error { constructor(m) { super(m); this.code = 7; } }
+         var e = new E2('x');
+         class A { constructor() { this.a = 1; } }
+         class B extends A { constructor() { super(); if (this.a) return; this.b = 2; } }
+         class C extends A { constructor() { super(); const f = () => this.a + 1; this.c = f(); } }
+         console.log(Array.isArray(p), p.length, p.tope(), p instanceof Pila, p instanceof Array, e instanceof E2, e instanceof Error,
+                     e.message, e.code, Object.prototype.toString.call(e), JSON.stringify(new B()), JSON.stringify(new C()));",
+    );
+    assert_eq!(r, [r#"true 2 2 true true true true x 7 [object Error] {"a":1} {"a":1,"c":2}"#]);
+}
+
+/// `...rest` en asignaciones con patrón y escapes `\u` en los nombres (valores de Chromium).
+#[test]
+fn resto_en_asignaciones_y_escapes() {
+    let r = salida(
+        r"var t, i, a, b;
+          ({ref: i, ...t} = {ref: 1, x: 2, y: 3});
+          [a, ...b] = [7, 8, 9];
+          var caf\u{e9} = 'café';
+          console.log(i, JSON.stringify(t), a, b.join(), café, typeof 1);",
+    );
+    assert_eq!(r, [r#"1 {"x":2,"y":3} 7 8,9 café number"#]);
+}
+
+/// Tras el `)` de un `if`/`while`/`for`, un `/` empieza una regex; tras otro `)`, divide.
+#[test]
+fn regex_tras_cabecera_de_control() {
+    let r = salida(
+        r"var o = 65, r = [], a = 8, b = 2, g = 2;
+          if (o < 128) /[A-Z]/.test(String.fromCharCode(o)) && r.push('regex');
+          for (var i = 0; i < 1; i++) /x/g.test('x') && r.push('for');
+          r.push((a) / b / g, (a + 0) / 2);
+          console.log(r.join());",
+    );
+    assert_eq!(r, ["regex,for,2,4"]);
+}
+
+/// `Object.create(arreglo)` hereda sus elementos y su `length` (como usa selector-observer).
+#[test]
+fn objeto_sobre_arreglo_hereda_elementos() {
+    let r = salida(
+        r"var a = []; a.push({n: 1}, {n: 2}); a.default = {n: 9};
+          var o = Object.create(a);
+          var s = o.slice(0);
+          console.log(o.length, s.length, s.concat(o.default).map(function (x) { return x && x.n; }).join(), o[1].n,
+            a.isPrototypeOf(o), Array.prototype.isPrototypeOf(o), o.isPrototypeOf(a), Object.keys(o).length);",
+    );
+    assert_eq!(r, ["2 2 1,2,9 2 true true false 0"]);
+}

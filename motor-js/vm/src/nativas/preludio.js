@@ -606,14 +606,18 @@
     if (P) Object.keys(P).forEach(function (k) { if (k !== 'prototype') C[k] = P[k]; });
   };
   // `super(...args)`: el constructor del padre sobre `this`, y luego los campos de la clase.
-  // Si el padre devuelve otro objeto (Error, que se crea solo), se copian sus propiedades.
+  // Devuelve el `this` del constructor: si el padre crea su propio objeto (un Error, un
+  // elemento del DOM, un arreglo), ese pasa a ser el `this`, con el prototipo de la subclase.
   global.__quimera_super = function (P, este, args, campos) {
     if (P === null) throw new TypeError('super() en una clase que extiende null');
     var r = P.apply(este, args);
-    if (r !== este && r !== null && typeof r === 'object') {
-      Object.keys(r).forEach(function (k) { este[k] = r[k]; });
+    var real = este;
+    if (r !== este && r !== null && (typeof r === 'object' || typeof r === 'function')) {
+      Object.setPrototypeOf(r, Object.getPrototypeOf(este));
+      real = r;
     }
-    if (typeof campos === 'function') campos.call(este);
+    if (typeof campos === 'function') campos.call(real);
+    return real;
   };
 
   // ---------------- más cadenas, arreglos, Boolean ----------------
@@ -715,6 +719,16 @@
     sinh: function (x) { return (Math.exp(x) - Math.exp(-x)) / 2; },
     cosh: function (x) { return (Math.exp(x) + Math.exp(-x)) / 2; },
     tanh: function (x) { var a = Math.exp(x), b = Math.exp(-x); return (a - b) / (a + b); }
+  });
+
+  definir(Object.prototype, {
+    isPrototypeOf: function (o) {
+      while (o !== null && (typeof o === 'object' || typeof o === 'function')) {
+        o = Object.getPrototypeOf(o);
+        if (o === this) return true;
+      }
+      return false;
+    }
   });
 
   // `Object.prototype.toString` (nativo) mira Symbol.toStringTag.

@@ -164,7 +164,7 @@ Coste: crear un motor tarda unos 2 ms más (compila el preludio). Se podría gua
 
 **Símbolos**: `Symbol()`, `Symbol.for`, `keyFor`, `description` y los conocidos (`Symbol.iterator`...). Un símbolo es una cadena interna única que empieza por U+0002: ya es un número de clave, así que `o[s]` funciona sin tocar nada más. Estas claves no se enumeran. `Symbol.iterator` conecta `for-of`, el spread y `Array.from` con cualquier objeto iterable, y los arreglos, cadenas, `Map`, `Set` y sus iteradores lo tienen.
 
-También: `Date` completo (partes, texto ISO, métodos y setters; la hora local es UTC por ahora), `Object.prototype.toString` nativo con `Symbol.toStringTag` (la conversión interna a texto lo salta: ni cambia ni cuesta), métodos de arreglo sobre «parecidos a arreglos» (`Array.prototype.push.call(obj)`, como hace jQuery), `encodeURIComponent` y compañía, `btoa`/`atob`, `Math.imul`, `Boolean`, `Object.setPrototypeOf` y `getPrototypeOf`, `{__proto__: p}` en un literal, `console.warn/error/info`, y el error de llamar a algo que no es una función dice su nombre (`forEach no es una función (vale undefined)`), que es lo que más ayuda a ver qué falta en una página real.
+También: `Date` completo (partes, texto ISO, métodos y setters; la hora local es UTC por ahora), `Object.prototype.toString` nativo con `Symbol.toStringTag` (la conversión interna a texto lo salta: ni cambia ni cuesta), métodos de arreglo sobre «parecidos a arreglos» (`Array.prototype.push.call(obj)`, como hace jQuery), `encodeURIComponent` y compañía, `btoa`/`atob`, `Math.imul`, `Boolean`, `Object.setPrototypeOf` y `getPrototypeOf`, `{__proto__: p}` en un literal, `console.warn/error/info`, `Object.prototype.isPrototypeOf`, un objeto hecho con `Object.create(arreglo)` que hereda sus elementos (`o[1]`; lo usa selector-observer en GitHub), y el error de llamar a algo que no es una función dice su nombre (`forEach no es una función (vale undefined)`), que es lo que más ayuda a ver qué falta en una página real.
 
 ## Generadores y `async`/`await`
 
@@ -182,6 +182,8 @@ También: `Date` completo (partes, texto ISO, métodos y setters; la hora local 
 
 **`this` y el modo estricto**: una función llamada sin objeto recibe el objeto global como `this`, salvo que sea estricta (`"use strict"`, clases, y lo que haya dentro de ellas). El patrón UMD de muchas librerías (`global.X = …`) lo necesita.
 
+**`super()` puede cambiar `this`** (como en `class X extends HTMLElement`, donde el padre devuelve el elemento del navegador): `__quimera_super` devuelve el objeto que queda, el parser hace que el constructor use ese, y los campos de la clase se ponen sobre él.
+
 Falta: `return()` y `throw()` sobre un generador pausado dentro de un `try` con `finally` no ejecutan el `finally`.
 
 ## Objetos y funciones del anfitrión
@@ -190,6 +192,7 @@ Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias fu
 
 - **Funciones del anfitrión:** nativas con un número del anfitrión (desde 2^24). La máquina le pasa ese número, `this` y los argumentos, leídos de la pila de raíces, así que siguen valiendo aunque se asigne memoria.
 - **Objetos del anfitrión:** una clase de celda más (`Clase::Anfitrion`) con un número dentro, el del nodo. Leer o escribir una propiedad suya pregunta primero al anfitrión. Las cachés en línea los excluyen en sus dos comprobaciones rápidas (una comparación más sobre el tipo, que ya se leía) y no los aprenden nunca. V8 pasó de 3,81× a 3,80× Boa, dentro del ruido.
+- **Un accesor de la página gana al anfitrión**: si un elemento personalizado define `get value()`, leer `el.value` llama a ese getter y no a la propiedad del navegador, como haría una subclase.
 - **Raíz del anfitrión:** una raíz fija más, un objeto donde el anfitrión guarda lo que debe durar (los objetos de los nodos, prototipos, listeners, temporizadores). Como el montón mueve objetos, el anfitrión no guarda `Valor`es de objetos en Rust entre llamadas.
 
 ## Qué falta

@@ -178,14 +178,21 @@ pub(crate) const MODULOS_JS: &str = r#"(function (w) {
   w.URL = URL;
   w.URLSearchParams = URLSearchParams;
   function ejecutar(texto, url, m) {
-    var f = __quimera_modulo(texto);
+    var f;
+    // El error de sintaxis nombra su módulo: si no, se ve el del módulo que lo importó.
+    try { f = __quimera_modulo(texto); } catch (e) { throw new SyntaxError(url + ": " + String(e && e.message || e)); }
     m.ejecutando = true;
     var importar = function (espec) {
       try { return cargar(resolver(espec, url)); } catch (e) { return Promise.reject(e); }
     };
     return f(m.ns, importar, { url: url, resolve: function (e) { return resolver(e, url); } }).then(
       function () { m.ejecutando = false; return m.ns; },
-      function (e) { m.ejecutando = false; throw e; }
+      function (e) {
+        m.ejecutando = false;
+        // Recuerda el módulo donde nació el error (el aviso lo da el que se cargó primero).
+        if (e && typeof e === 'object' && !e['modulo']) { try { e['modulo'] = url; } catch (x) {} }
+        throw e;
+      }
     );
   }
   function cargar(url) {
@@ -207,7 +214,13 @@ pub(crate) const MODULOS_JS: &str = r#"(function (w) {
   w.__quimera_importar_dinamico = function (espec) {
     try { return cargar(resolver(espec, location.href)); } catch (e) { return Promise.reject(e); }
   };
-  function avisar(donde) { return function (e) { console.error('Error en ' + donde + ': ' + String(e && e.message || e)); }; }
+  function avisar(donde) {
+    return function (e) {
+      var origen = e && e['modulo'];
+      var de = origen && origen !== donde.replace(/^el módulo /, '') ? ' (en ' + origen + ')' : '';
+      console.error('Error en ' + donde + de + ': ' + String(e && e.message || e));
+    };
+  }
   w.__quimera_modulo_en_linea = function (texto) {
     var m = { ns: Object.create(null), ejecutando: false };
     var p;

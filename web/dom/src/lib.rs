@@ -20,6 +20,7 @@
 extern crate alloc;
 
 mod eventos;
+mod interfaces;
 mod metodos;
 mod puente;
 mod red;
@@ -88,12 +89,24 @@ pub(crate) fn envolver(m: &mut Motor, est: &Estado, id: NodoId) -> Valor {
     if let Some(w) = m.mundo.leer_elemento(nodos, id.0).filter(|v| m.mundo.es_objeto(*v)) {
         return w;
     }
-    let proto = match est.doc.borrow().nodo(id).dato {
-        Dato::Elemento(_) => "p_elemento",
-        Dato::Documento => "p_documento",
-        _ => "p_nodo",
+    // El prototipo de su interfaz: el de su etiqueta (HTMLInputElement...), o el genérico.
+    let (proto, etiqueta) = match &est.doc.borrow().nodo(id).dato {
+        Dato::Elemento(e) if e.nombre == quimera_html::FRAGMENTO => ("p_fragmento", None),
+        Dato::Elemento(e) if puente::SVG.contains(&e.nombre.as_str()) => ("p_svg", None),
+        Dato::Elemento(e) => ("p_html", Some(e.nombre.clone())),
+        Dato::Texto(_) | Dato::Comentario(_) => ("p_caracteres", None),
+        Dato::Documento => ("p_documento", None),
+        Dato::Doctype(_) => ("p_nodo", None),
     };
-    let proto = m.leer_nombre(raiz, proto);
+    let propio = etiqueta.and_then(|t| {
+        let etiquetas = m.leer_nombre(raiz, "p_etiquetas");
+        let clave = m.mundo.cadenas.internar(&t);
+        m.mundo.leer_propia(etiquetas, clave).filter(|p| m.mundo.es_objeto(*p))
+    });
+    let proto = match propio {
+        Some(p) => p,
+        None => m.leer_nombre(raiz, proto),
+    };
     let w = m.crear_objeto_anfitrion(id.0, proto);
     let marca = m.apilar(w);
     let nodos = m.leer_nombre(m.raiz_anfitrion(), "nodos");
@@ -178,10 +191,6 @@ const DOCUMENTO_JS: &str = r"(function (w, d) {
   w.cancelIdleCallback = clearTimeout;
   function Observador() { this.observe = this.unobserve = this.disconnect = function () {}; this.takeRecords = function () { return []; }; }
   w.MutationObserver = w.IntersectionObserver = w.ResizeObserver = w.PerformanceObserver = Observador;
-  function Evento(tipo, op) { op = op || {}; this.type = String(tipo); this.bubbles = !!op.bubbles; this.cancelable = !!op.cancelable; this.detail = op.detail; this.defaultPrevented = false; }
-  Evento.prototype.preventDefault = function () { this.defaultPrevented = true; };
-  Evento.prototype.stopPropagation = Evento.prototype.stopImmediatePropagation = function () {};
-  w.Event = w.CustomEvent = Evento;
   d.implementation = {
     hasFeature: function () { return true; },
     createHTMLDocument: function (titulo) {
@@ -260,7 +269,7 @@ impl Dom {
         let mut motor = Motor::default();
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));
         puente::preparar(&mut motor, &estado);
-        for codigo in [ALMACENES, red::RED_JS, red::MODULOS_JS, DOCUMENTO_JS] {
+        for codigo in [ALMACENES, red::RED_JS, red::MODULOS_JS, interfaces::INTERFACES_JS, DOCUMENTO_JS] {
             if let Err(e) = motor.ejecutar(codigo) {
                 estado.errores.borrow_mut().push(e.mensaje);
             }

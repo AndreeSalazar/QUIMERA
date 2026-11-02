@@ -59,7 +59,7 @@ Que las páginas de lectura se vean como en Chrome.
 
 La fase más importante: lo que separa "leer páginas" de "usar aplicaciones web". Ver por qué en [qué es el DOM](#qué-es-el-dom-y-por-qué-cuesta).
 
-✅ **Empezada** ([detalle](DOM.md)): `quimera-dom` con un solo GC, los `<script>` de la página, `document` y los nodos, `innerHTML`, `style`, `classList`, selectores, `click` con burbujeo y `preventDefault`, y temporizadores. Las mismas salidas que Chromium en sus pruebas. ✅ JavaScript moderno, primera parte: `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración, spread y `?.`, con las mismas salidas que Chromium. ✅ Después: accesores, `Symbol`, generadores, `async`/`await` (también generadores asíncronos y `for await`), `fetch` y `XMLHttpRequest` con CORS, scripts añadidos, módulos con mapas de importación, `URL`, `Date` completo. rust-lang.org, MDN, Hacker News y GitHub ejecutan sus scripts; Wikipedia, jQuery y su cargador de módulos. Lo que sigue: las clases del DOM (`Element`, `HTMLElement`) y `customElements` (fase 4), más eventos (`input`, `keydown`) y medidas de la maquetación (`getBoundingClientRect`).
+✅ **Empezada** ([detalle](DOM.md)): `quimera-dom` con un solo GC, los `<script>` de la página, `document` y los nodos, `innerHTML`, `style`, `classList`, selectores, `click` con burbujeo y `preventDefault`, y temporizadores. Las mismas salidas que Chromium en sus pruebas. ✅ JavaScript moderno, primera parte: `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración, spread y `?.`, con las mismas salidas que Chromium. ✅ Después: accesores, `Symbol`, generadores, `async`/`await` (también generadores asíncronos y `for await`), `fetch` y `XMLHttpRequest` con CORS, scripts añadidos, módulos con mapas de importación, `URL`, `Date` completo. rust-lang.org, MDN, Hacker News y GitHub ejecutan sus scripts; Wikipedia, jQuery y su cargador de módulos. ✅ Las clases del DOM (`Node`, `Element`, `HTMLElement` y las de cada etiqueta), `customElements` y `Event` con sus subclases (adelanto de la fase 4). Lo que sigue: más eventos (`input`, `keydown`) y medidas de la maquetación (`getBoundingClientRect`).
 
 - **`quimera-js` (nivel 6):** la interfaz del motor, lo único que ve el resto del navegador. Por ahora la hace el rasgo `Anfitrion` de la VM.
 - **`quimera-dom` (nivel 7):** `document`, `Node`, `Element`, `Text`, atributos, `classList`, `querySelector`, `innerHTML`, `textContent`, `style`, eventos (`addEventListener`, propagación, clic y teclado).
@@ -74,7 +74,7 @@ La fase más importante: lo que separa "leer páginas" de "usar aplicaciones web
 
 ## Fase 4: la web moderna
 
-- Web Components: `customElements`, Shadow DOM, `<template>`, `<slot>`.
+- Web Components: ✅ `customElements` (con su ciclo de vida) y `<template>`; falta Shadow DOM que se pinte y `<slot>`.
 - CSS `grid`, `transform`, `transition`/`animation`, `opacity`, sombras, bordes redondeados.
 - SVG (los iconos de casi todos los sitios).
 - Inicio de sesión: redirecciones con cookies, formularios con JavaScript, y que Google acepte el navegador (la identificación que se manda).

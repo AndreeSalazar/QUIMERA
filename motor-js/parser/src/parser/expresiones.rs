@@ -68,7 +68,10 @@ impl Parser {
             Tipo::Signo(s) if ASIGNACIONES.contains(s) => *s,
             _ => return Ok(izquierda),
         };
-        if op == "=" && matches!(izquierda, Expr::Arreglo(_) | Expr::Objeto(_)) {
+        if op == "="
+            && matches!(izquierda, Expr::Arreglo(_) | Expr::Objeto(_) | Expr::Llamar(..))
+            && !es_destino(&izquierda)
+        {
             // `[a, b] = [b, a]`, `({a, b} = o)`.
             let Some(p) = expr_a_patron(izquierda) else { return error(pos, "no se puede asignar a esto") };
             self.avanzar();

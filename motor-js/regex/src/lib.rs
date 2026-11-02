@@ -19,6 +19,7 @@ mod clases;
 mod maquina;
 mod patron;
 mod programa;
+mod propiedades;
 
 pub use maquina::Memoria;
 

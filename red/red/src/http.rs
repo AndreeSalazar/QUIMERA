@@ -156,7 +156,11 @@ pub(crate) fn texto(cuerpo: &[u8], tipo: Option<&str>) -> String {
         Some(c)
     };
     let cuerpo = cuerpo.strip_prefix(b"\xEF\xBB\xBF").unwrap_or(cuerpo); // BOM de UTF-8
-    match de_cabecera.or_else(de_meta).as_deref() {
+    // El `<meta charset>` solo se busca en HTML: un script o un JSON puede llevar el texto
+    // «charset=» en una cadena, y entonces se leería entero mal.
+    let es_html = tipo.is_none_or(|t| t.to_ascii_lowercase().contains("html"));
+    let elegido = if es_html { de_cabecera.or_else(de_meta) } else { de_cabecera };
+    match elegido.as_deref() {
         Some("iso-8859-1" | "latin1" | "windows-1252" | "us-ascii" | "ascii") => windows_1252(cuerpo),
         _ => String::from_utf8_lossy(cuerpo).into_owned(),
     }
@@ -168,6 +172,9 @@ mod pruebas {
 
     #[test]
     fn respuestas() {
+        let js = "var s = 'charset=iso-8859-1 ñ';";
+        assert_eq!(texto(js.as_bytes(), Some("application/javascript")), js, "en un script no se mira el meta");
+        assert_eq!(texto(b"<meta charset=windows-1252>\xf1", Some("text/html")), "<meta charset=windows-1252>ñ");
         let r = leer(b"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 5\r\n\r\nholaXXX").unwrap();
         assert_eq!((r.estado, r.cuerpo.as_slice()), (200, &b"holaX"[..]), "Content-Length manda");
         let r = leer(b"HTTP/1.1 100 Continue\r\n\r\nHTTP/1.1 404 Not Found\r\nTransfer-Encoding: chunked\r\n\r\n4;ext=1\r\nWiki\r\n6\r\npedia \r\n0\r\nX-Final: 1\r\n\r\n").unwrap();
