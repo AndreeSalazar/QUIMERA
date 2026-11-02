@@ -99,6 +99,14 @@ Donde un navegador ligero más se nota: los teléfonos baratos de 2–3 GB de RA
 - Falta: toque y gestos (desplazar, pellizcar para hacer zoom), `<meta name="viewport">`, teclado en pantalla.
 - iPhone solo donde Apple permite motores propios (Unión Europea y Japón).
 
+## Después: SUPER QUIMERA
+
+Cuando QUIMERA termine sus fases, la evolución que debe desplazar del todo al original: **streaming en tiempo real**. La página se muestra y se procesa según llega, aprovechando el tiempo que tarda la red en responder, en vez de esperar respuestas enteras.
+
+La idea viene de los motores de videojuegos: **solo se trabaja en lo que se ve**, y el GC no compite con los fotogramas. Partes ya existen en otros navegadores: Chrome rasteriza por baldosas, V8 recolecta en el tiempo libre entre fotogramas, Chrome descarta imágenes. Lo propio de SUPER QUIMERA es llevarlo hasta el fondo para gastar menos RAM.
+
+Mientras tanto, QUIMERA ya aplica ese principio en lo que se va haciendo: decodificar y subir a la GPU solo lo que está cerca de la vista, y limpiar en los huecos.
+
 ## En paralelo
 
 - **VERX:** la interfaz de QUIMERA (pestañas, barra, ajustes) con Bun + Rust, encima del motor.

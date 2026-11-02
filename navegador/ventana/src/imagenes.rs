@@ -1,17 +1,29 @@
-//! Las imágenes de una página: se descargan después de la página, en unos pocos hilos, y cada
-//! una avisa al llegar. Se decodifican con `quimera-imagen` en el mismo hilo que la descarga.
+//! Las imágenes de una página, trabajando solo en lo que se ve (como los motores de videojuegos).
 //!
-//! Cada `src` (tal como aparece en el HTML) tiene un número, el de su textura en la GPU. Los
-//! píxeles se guardan solo hasta subirlos; después basta el tamaño (para maquetar).
+//! - **Se descargan todas**, en unos pocos hilos, pero se guardan **comprimidas**, con su tamaño
+//!   leído de la cabecera (`quimera_imagen::dimensiones`). Con eso ya se maqueta.
+//! - **Se decodifican solo las que están cerca de la vista** (en pantalla o a una pantalla), en
+//!   hilos aparte, y entonces se suben a la GPU.
+//! - **Las que quedan lejos sueltan su textura** (a más de [`LEJOS`] pantallas). Si se vuelve a
+//!   ellas, se decodifican otra vez desde los bytes comprimidos, que pesan de 10 a 50 veces menos.
+//!
+//! Cada `src` (tal como aparece en el HTML) tiene un número, el de su textura en la GPU. También
+//! se piden las que añaden los scripts: tras cada maquetación se mira el DOM vivo.
 
 use quimera_html::Documento;
 use quimera_imagen::Imagen;
+use quimera_maquetacion::{Maquetacion, Pieza};
 use quimera_red::{Cliente, Url};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::sync::{Arc, Mutex};
 
 /// Hilos que descargan imágenes a la vez.
 const HILOS: usize = 4;
+/// Pantallas de margen alrededor de la vista donde ya se decodifica (para que al desplazar la
+/// imagen esté lista).
+pub const CERCA: f32 = 1.0;
+/// Pantallas de distancia a partir de las que una imagen suelta su textura.
+pub const LEJOS: f32 = 3.0;
 
 /// Los `src` de los `<img>` del documento, sin repetir y en orden.
 pub fn fuentes(doc: &Documento) -> Vec<String> {
@@ -27,20 +39,29 @@ pub fn fuentes(doc: &Documento) -> Vec<String> {
     v
 }
 
-/// Descarga y decodifica una imagen.
-pub fn descargar(cliente: &Cliente, base: &Url, src: &str) -> Result<Imagen, String> {
+/// Una imagen descargada: sus bytes comprimidos y su tamaño.
+pub type Descargada = (Arc<Vec<u8>>, (u32, u32));
+
+/// Descarga una imagen y lee su tamaño (sin decodificarla).
+pub fn descargar(cliente: &Cliente, base: &Url, src: &str) -> Result<Descargada, String> {
     let url = base.unir(src.trim()).map_err(|e| e.to_string())?;
     let r = cliente.pedir(&url).map_err(|e| e.to_string())?;
     if !r.exito() {
         return Err(format!("el servidor respondió {}", r.estado));
     }
-    quimera_imagen::decodificar(&r.cuerpo).map_err(|e| e.to_string())
+    match quimera_imagen::dimensiones(&r.cuerpo) {
+        Some(tam) => Ok((Arc::new(r.cuerpo), tam)),
+        // Un formato que no se lee (WebP, SVG...): el error del decodificador lo dice.
+        None => Err(quimera_imagen::decodificar(&r.cuerpo)
+            .err()
+            .map_or_else(|| String::from("cabecera rota"), |e| e.to_string())),
+    }
 }
 
 /// Descarga `fuentes` en [`HILOS`] hilos; `avisar` recibe cada una al llegar (en su hilo).
 pub fn descargar_todas<F>(cliente: Arc<Cliente>, base: Url, fuentes: Vec<String>, avisar: F)
 where
-    F: Fn(String, Result<Imagen, String>) + Send + Sync + 'static,
+    F: Fn(String, Result<Descargada, String>) + Send + Sync + 'static,
 {
     let cola = Arc::new(Mutex::new(fuentes.into_iter().rev().collect::<Vec<_>>()));
     let (base, avisar) = (Arc::new(base), Arc::new(avisar));
@@ -57,19 +78,48 @@ where
     }
 }
 
+/// Decodifica en otro hilo; `avisar` recibe el número de la imagen y el resultado.
+pub fn decodificar_aparte<F>(id: u32, bytes: Arc<Vec<u8>>, avisar: F)
+where
+    F: FnOnce(u32, Result<Imagen, String>) + Send + 'static,
+{
+    std::thread::spawn(move || avisar(id, quimera_imagen::decodificar(&bytes).map_err(|e| e.to_string())));
+}
+
+/// Los `src` de las imágenes de la maquetación que caen entre `desde` y `hasta` (en píxeles
+/// CSS, en vertical).
+pub fn entre(m: &Maquetacion, desde: f32, hasta: f32) -> HashSet<String> {
+    let mut v = HashSet::new();
+    for p in &m.piezas {
+        if let Pieza::Imagen { y, alto, src, .. } = p
+            && y + alto >= desde
+            && *y <= hasta
+        {
+            v.insert(src.clone());
+        }
+    }
+    v
+}
+
 /// Una imagen que llegó.
 struct Cargada {
     id: u32,
     ancho: u32,
     alto: u32,
-    /// Píxeles aún por subir a la GPU.
-    rgba: Option<Vec<u8>>,
+    /// Los bytes comprimidos, para decodificarla cuando haga falta (otra vez si se soltó).
+    bytes: Arc<Vec<u8>>,
+    /// Ya está en la GPU.
+    en_gpu: bool,
+    /// Se está decodificando.
+    decodificando: bool,
 }
 
 /// Las imágenes de la página actual.
 #[derive(Default)]
 pub struct Imagenes {
     cargadas: HashMap<String, Cargada>,
+    /// Lo ya pedido (llegado, en camino o fallido): no se vuelve a pedir.
+    pedidas: HashSet<String>,
     siguiente: u32,
 }
 
@@ -77,12 +127,22 @@ impl Imagenes {
     /// Otra página: se olvidan todas.
     pub fn vaciar(&mut self) {
         self.cargadas.clear();
+        self.pedidas.clear();
     }
 
-    /// Llegó una imagen.
-    pub fn llegada(&mut self, src: String, imagen: Imagen) {
+    /// Las imágenes de `doc` que aún no se han pedido (también las que añaden los scripts).
+    /// Quedan apuntadas como pedidas.
+    pub fn nuevas(&mut self, doc: &Documento) -> Vec<String> {
+        let v: Vec<String> = fuentes(doc).into_iter().filter(|s| !self.pedidas.contains(s)).collect();
+        self.pedidas.extend(v.iter().cloned());
+        v
+    }
+
+    /// Llegó una imagen (comprimida, con su tamaño).
+    pub fn llegada(&mut self, src: String, (bytes, (ancho, alto)): Descargada) {
         self.siguiente += 1;
-        let c = Cargada { id: self.siguiente, ancho: imagen.ancho, alto: imagen.alto, rgba: Some(imagen.rgba) };
+        let c = Cargada { id: self.siguiente, ancho, alto, bytes, en_gpu: false, decodificando: false };
+        self.pedidas.insert(src.clone());
         self.cargadas.insert(src, c);
     }
 
@@ -91,19 +151,51 @@ impl Imagenes {
         self.cargadas.get(src).map(|c| (c.ancho, c.alto))
     }
 
-    /// Su número de textura (para pintar).
+    /// Su número de textura (para pintar; la GPU se salta las que no tiene).
     pub fn id(&self, src: &str) -> Option<u32> {
         self.cargadas.get(src).map(|c| c.id)
     }
 
-    /// Las que faltan por subir a la GPU: (id, ancho, alto, píxeles). Se sueltan al devolverlas.
-    pub fn por_subir(&mut self) -> Vec<(u32, u32, u32, Vec<u8>)> {
-        self.cargadas.values_mut().filter_map(|c| Some((c.id, c.ancho, c.alto, c.rgba.take()?))).collect()
+    /// Las de `cerca` que hay que decodificar: (id, bytes). Quedan marcadas como en camino.
+    pub fn por_decodificar(&mut self, cerca: &HashSet<String>) -> Vec<(u32, Arc<Vec<u8>>)> {
+        let mut v = Vec::new();
+        for (src, c) in &mut self.cargadas {
+            if !c.en_gpu && !c.decodificando && cerca.contains(src) {
+                c.decodificando = true;
+                v.push((c.id, c.bytes.clone()));
+            }
+        }
+        v
+    }
+
+    /// Terminó de decodificarse la imagen `id`: `true` si sigue siendo de esta página (y se sube).
+    pub fn decodificada(&mut self, id: u32, ok: bool) -> bool {
+        let Some(c) = self.cargadas.values_mut().find(|c| c.id == id) else { return false };
+        c.decodificando = false;
+        c.en_gpu = ok;
+        ok
+    }
+
+    /// Las que están en la GPU pero no en `no_lejos`: sueltan su textura (devuelve sus números).
+    pub fn por_soltar(&mut self, no_lejos: &HashSet<String>) -> Vec<u32> {
+        let mut v = Vec::new();
+        for (src, c) in &mut self.cargadas {
+            if c.en_gpu && !no_lejos.contains(src) {
+                c.en_gpu = false;
+                v.push(c.id);
+            }
+        }
+        v
     }
 
     /// Cuántas hay.
     pub fn total(&self) -> usize {
         self.cargadas.len()
+    }
+
+    /// Cuántas están en la GPU ahora.
+    pub fn en_gpu(&self) -> usize {
+        self.cargadas.values().filter(|c| c.en_gpu).count()
     }
 }
 
@@ -118,13 +210,23 @@ mod pruebas {
     }
 
     #[test]
-    fn subir_suelta_los_pixeles() {
+    fn decodificar_cerca_y_soltar_lejos() {
         let mut i = Imagenes::default();
-        i.llegada(String::from("a.png"), Imagen { ancho: 2, alto: 1, rgba: vec![0; 8] });
-        assert_eq!(i.tam("a.png"), Some((2, 1)));
-        let subir = i.por_subir();
-        assert_eq!((subir.len(), subir[0].0), (1, i.id("a.png").unwrap_or(0)));
-        assert!(i.por_subir().is_empty(), "solo una vez");
-        assert_eq!(i.tam("a.png"), Some((2, 1)), "el tamaño se queda");
+        let doc = quimera_html::analizar("<img src=a.png><img src=b.png>");
+        assert_eq!(i.nuevas(&doc).len(), 2);
+        assert!(i.nuevas(&doc).is_empty(), "no se piden dos veces");
+        i.llegada(String::from("a.png"), (Arc::new(vec![1, 2, 3]), (2, 1)));
+        i.llegada(String::from("b.png"), (Arc::new(vec![4]), (5, 5)));
+        assert_eq!(i.tam("a.png"), Some((2, 1)), "el tamaño ya sirve para maquetar");
+        let cerca: HashSet<String> = [String::from("a.png")].into();
+        let a = i.id("a.png").unwrap_or(0);
+        assert_eq!(i.por_decodificar(&cerca).iter().map(|(id, _)| *id).collect::<Vec<_>>(), [a]);
+        assert!(i.por_decodificar(&cerca).is_empty(), "ya está en camino");
+        assert!(i.decodificada(a, true));
+        assert_eq!(i.en_gpu(), 1);
+        assert!(i.por_soltar(&cerca).is_empty(), "sigue cerca");
+        assert_eq!(i.por_soltar(&HashSet::new()), [a], "lejos: suelta la textura");
+        assert_eq!((i.en_gpu(), i.tam("a.png")), (0, Some((2, 1))), "el tamaño se queda");
+        assert_eq!(i.por_decodificar(&cerca).len(), 1, "al volver se decodifica otra vez");
     }
 }

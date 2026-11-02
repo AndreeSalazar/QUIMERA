@@ -29,8 +29,10 @@ use winit::window::{CursorIcon, Window};
 pub enum Evento {
     /// Una página que terminó de cargar.
     Pagina { id: u64, pagina: Box<Pagina> },
-    /// Una imagen de la página `id` (descargada y decodificada, o por qué no).
-    Imagen { id: u64, src: String, imagen: Result<Imagen, String> },
+    /// Una imagen de la página `id`, descargada (comprimida, con su tamaño), o por qué no.
+    Imagen { id: u64, src: String, imagen: Result<imagenes::Descargada, String> },
+    /// La imagen número `img` de la página `id`, ya decodificada (estaba cerca de la vista).
+    Decodificada { id: u64, img: u32, imagen: Result<Imagen, String> },
     /// Una fuente (`@font-face`) de la página `id`, con sus bytes o por qué no llegó.
     Fuente { id: u64, pedida: tipografias::Pedida, bytes: Result<Vec<u8>, String> },
     /// La respuesta a algo que pidió el JavaScript de la página `id` (`fetch`, XHR, un script).
@@ -145,13 +147,25 @@ impl Navegador {
             Evento::Imagen { id, src, imagen } if id == self.id_carga => match imagen {
                 Ok(i) => {
                     self.imagenes.llegada(src, i);
-                    self.imagenes_nuevas = true;
+                    self.imagenes_nuevas = true; // su tamaño cambia la maquetación
                     if let Some(a) = &self.abierta {
                         a.ventana.request_redraw();
                     }
                 }
                 Err(e) => eprintln!("imagen {src}: {e}"),
             },
+            Evento::Decodificada { id, img, imagen } if id == self.id_carga => {
+                if let Err(e) = &imagen {
+                    eprintln!("imagen {img}: {e}");
+                }
+                if self.imagenes.decodificada(img, imagen.is_ok())
+                    && let (Ok(i), Some(a)) = (imagen, &mut self.abierta)
+                {
+                    // Sin volver a maquetar: el tamaño ya se sabía; solo falta su textura.
+                    a.gpu.subir_imagen(img, i.ancho, i.alto, &i.rgba);
+                    a.ventana.request_redraw();
+                }
+            }
             Evento::Respuesta { id, peticion, resultado } if id == self.id_carga => {
                 if let Some(g) = &mut self.guion {
                     g.dom.responder(peticion, resultado);
@@ -185,12 +199,8 @@ impl Navegador {
         if let Some(a) = &mut self.abierta {
             a.gpu.olvidar_imagenes();
         }
+        // Las imágenes se piden al maquetar, del DOM vivo (también las que añaden los scripts).
         let (id, proxy) = (self.id_carga, self.proxy.clone());
-        let fuentes = imagenes::fuentes(&pagina.documento());
-        let proxy_imagenes = proxy.clone();
-        imagenes::descargar_todas(self.cliente.clone(), pagina.base.clone(), fuentes, move |src, imagen| {
-            let _ = proxy_imagenes.send_event(Evento::Imagen { id, src, imagen });
-        });
         self.pintor.olvidar_fuentes();
         tipografias::descargar_todas(self.cliente.clone(), tipografias::pedidas(&pagina), move |pedida, bytes| {
             let _ = proxy.send_event(Evento::Fuente { id, pedida, bytes });
@@ -231,9 +241,7 @@ impl Navegador {
         let medidor = self.pintor.medidor();
         let m = maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario);
         let cuadros = self.pintor.escena(&m, escala, &|s| imagenes.id(s));
-        for (id, w, h, rgba) in imagenes.por_subir() {
-            a.gpu.subir_imagen(id, w, h, &rgba);
-        }
+        let nuevas = imagenes.nuevas(&doc);
         a.gpu.cargar(&cuadros);
         a.fondo = color_gpu(m.fondo);
         let titulo = doc.buscar("title").map(|t| doc.texto(t).trim().to_string()).filter(|t| !t.is_empty());
@@ -241,17 +249,25 @@ impl Navegador {
             if pagina.url.anfitrion.is_empty() { String::new() } else { format!(" · {}", pagina.url.anfitrion) };
         a.ventana.set_title(&format!("{}{sitio} — QUIMERA", titulo.as_deref().unwrap_or("sin título")));
         eprintln!(
-            "{}: red {:.0} ms · {} nodos, {} cuadros, {} enlaces, {} imágenes, maquetado en {:.1} ms",
+            "{}: red {:.0} ms · {} nodos, {} cuadros, {} enlaces, {} imágenes ({} en la GPU), maquetado en {:.1} ms",
             pagina.url,
             pagina.ms_red,
             doc.total(),
             cuadros.len(),
             m.enlaces.len(),
             imagenes.total(),
+            imagenes.en_gpu(),
             inicio.elapsed().as_secs_f64() * 1e3
         );
         a.maq = Some(m);
         drop(doc);
+        if !nuevas.is_empty() {
+            let (id, proxy) = (self.id_carga, self.proxy.clone());
+            let base = pagina.base.clone();
+            imagenes::descargar_todas(self.cliente.clone(), base, nuevas, move |src, imagen| {
+                let _ = proxy.send_event(Evento::Imagen { id, src, imagen });
+            });
+        }
         self.desplazar(0.0);
         self.pintar_barra();
     }
@@ -300,6 +316,28 @@ impl Navegador {
         let visible = a.ventana.inner_size().height as f32 - barra_px;
         a.desp = (a.desp + cuanto).clamp(0.0, (alto_doc - visible).max(0.0));
         a.ventana.request_redraw();
+        self.imagenes_visibles();
+    }
+
+    /// Decodifica las imágenes cerca de la vista y suelta las texturas de las lejanas (ver
+    /// `imagenes.rs`).
+    fn imagenes_visibles(&mut self) {
+        let Some(a) = &mut self.abierta else { return };
+        let Some(m) = &a.maq else { return };
+        let escala = a.ventana.scale_factor() as f32;
+        let pantalla = a.ventana.inner_size().height as f32 / escala;
+        let arriba = a.desp / escala;
+        let franja = |n: f32| imagenes::entre(m, arriba - pantalla * n, arriba + pantalla * (1.0 + n));
+        let (cerca, no_lejos) = (franja(imagenes::CERCA), franja(imagenes::LEJOS));
+        for id in self.imagenes.por_soltar(&no_lejos) {
+            a.gpu.olvidar_imagen(id);
+        }
+        for (img, bytes) in self.imagenes.por_decodificar(&cerca) {
+            let (id, proxy) = (self.id_carga, self.proxy.clone());
+            imagenes::decodificar_aparte(img, bytes, move |img, imagen| {
+                let _ = proxy.send_event(Evento::Decodificada { id, img, imagen });
+            });
+        }
     }
 
     fn ir_a_ancla(&mut self, id: &str) {

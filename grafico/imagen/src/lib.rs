@@ -98,6 +98,48 @@ pub fn formato(d: &[u8]) -> Option<Formato> {
     }
 }
 
+/// El tamaño (ancho, alto) de una imagen leído de su cabecera, sin decodificarla. Basta para
+/// maquetar: la ventana solo decodifica las imágenes que están cerca de la vista. `None` si el
+/// formato no se sabe leer o la cabecera está rota.
+pub fn dimensiones(d: &[u8]) -> Option<(u32, u32)> {
+    let be16 = |i: usize| Some(u32::from(u16::from_be_bytes([*d.get(i)?, *d.get(i + 1)?])));
+    let r = match formato(d)? {
+        // IHDR: ancho y alto en big-endian tras la firma y la cabecera del trozo.
+        Formato::Png => {
+            let n = |i: usize| Some(u32::from_be_bytes([*d.get(i)?, *d.get(i + 1)?, *d.get(i + 2)?, *d.get(i + 3)?]));
+            (n(16)?, n(20)?)
+        }
+        // La pantalla lógica: little-endian en los bytes 6 a 9.
+        Formato::Gif => (
+            u32::from(u16::from_le_bytes([*d.get(6)?, *d.get(7)?])),
+            u32::from(u16::from_le_bytes([*d.get(8)?, *d.get(9)?])),
+        ),
+        // El primer marcador SOF (C0–CF salvo C4, C8 y CC): alto y ancho.
+        Formato::Jpeg => {
+            let mut i = 2;
+            loop {
+                while *d.get(i)? != 0xFF {
+                    i += 1;
+                }
+                while *d.get(i)? == 0xFF {
+                    i += 1;
+                }
+                let m = *d.get(i)?;
+                if (0xC0..=0xCF).contains(&m) && !matches!(m, 0xC4 | 0xC8 | 0xCC) {
+                    break (be16(i + 6)?, be16(i + 4)?);
+                }
+                if (0xD0..=0xD9).contains(&m) || m == 0x01 {
+                    i += 1; // marcadores sin longitud
+                    continue;
+                }
+                i += 1 + be16(i + 1)? as usize;
+            }
+        }
+        Formato::Webp | Formato::Svg => return None,
+    };
+    (r.0 > 0 && r.1 > 0 && comprobar_tamano(r.0, r.1).is_ok()).then_some(r)
+}
+
 /// Decodifica una imagen en cualquiera de los formatos que se saben leer.
 pub fn decodificar(d: &[u8]) -> Result<Imagen, Error> {
     match formato(d) {
@@ -170,6 +212,20 @@ mod pruebas {
         assert_eq!(formato(b"<?xml version='1.0'?><svg xmlns="), Some(Formato::Svg));
         assert_eq!(formato(b"hola"), None);
         assert!(matches!(decodificar(b"<svg/>"), Err(Error::NoSoportado(_))));
+    }
+
+    #[test]
+    fn tamano_sin_decodificar() {
+        assert_eq!(dimensiones(&png_2x1()), Some((2, 1)));
+        let gif = b"GIF89a\x03\x00\x02\x00\x80\x00\x00";
+        assert_eq!(dimensiones(gif), Some((3, 2)));
+        // JPEG: SOI, un APP0 que se salta, y SOF0 con alto 480 y ancho 640.
+        let jpeg = [
+            0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x04, 0x4A, 0x46, 0xFF, 0xC0, 0x00, 0x11, 0x08, 0x01, 0xE0, 0x02, 0x80, 0x03,
+        ];
+        assert_eq!(dimensiones(&jpeg), Some((640, 480)));
+        assert_eq!(dimensiones(b"<svg/>"), None);
+        assert_eq!(dimensiones(&[0xFF, 0xD8, 0xFF]), None, "cortado");
     }
 
     #[test]

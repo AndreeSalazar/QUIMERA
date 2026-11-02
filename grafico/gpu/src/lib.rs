@@ -405,6 +405,12 @@ impl Gpu {
         self.imagenes.insert(id, t);
     }
 
+    /// Suelta la textura de una imagen (lejos de la vista). La GPU se salta los cuadros que la
+    /// usan hasta que vuelva a subirse.
+    pub fn olvidar_imagen(&mut self, id: u32) {
+        self.imagenes.remove(&id);
+    }
+
     /// Olvida todas las imágenes (otra página).
     pub fn olvidar_imagenes(&mut self) {
         self.imagenes.clear();

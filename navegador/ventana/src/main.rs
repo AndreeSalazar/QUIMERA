@@ -170,18 +170,25 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
     if let Ok(clase) = std::env::var("QUIMERA_DEPURAR") {
         depurar(&pagina, &clase, (w, h));
     }
-    let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes, &cliente);
+    let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &mut imagenes, &cliente);
     if let Some(a) = &antes {
         let (destino, cuerpo) = destino_previo(&pagina, &m, a)?;
         pagina = Pagina::cargar(&cliente, &destino, cuerpo.as_deref());
         imagenes = cargar_imagenes(&cliente, &pagina);
         pintor.olvidar_fuentes();
         cargar_fuentes(&cliente, &pagina, &mut pintor);
-        m = maquetar_pagina(&pagina, &pintor, (w, h), &imagenes, &cliente);
+        m = maquetar_pagina(&pagina, &pintor, (w, h), &mut imagenes, &cliente);
     }
     gpu.cargar(&pintor.escena(&m, 1.0, &|s| imagenes.id(s)));
-    for (id, w, h, rgba) in imagenes.por_subir() {
-        gpu.subir_imagen(id, w, h, &rgba);
+    // Solo se decodifican las imágenes que salen en la captura.
+    for (id, bytes) in imagenes.por_decodificar(&imagenes::entre(&m, 0.0, h)) {
+        match quimera_imagen::decodificar(&bytes) {
+            Ok(i) => {
+                imagenes.decodificada(id, true);
+                gpu.subir_imagen(id, i.ancho, i.alto, &i.rgba);
+            }
+            Err(e) => eprintln!("imagen {id}: {e}"),
+        }
     }
     let url_texto = pagina.url.to_string();
     let vista = barra::Vista {
@@ -266,36 +273,44 @@ fn cargar_fuentes(cliente: &Cliente, pagina: &Pagina, pintor: &mut Pintor) {
 
 /// Todas las imágenes de la página, esperando a que lleguen (para capturar).
 fn cargar_imagenes(cliente: &Arc<Cliente>, pagina: &Pagina) -> Imagenes {
-    let fuentes = imagenes::fuentes(&pagina.documento());
+    let mut imagenes = Imagenes::default();
+    let fuentes = imagenes.nuevas(&pagina.documento());
+    esperar_imagenes(cliente, &pagina.base, fuentes, &mut imagenes);
+    imagenes
+}
+
+/// Descarga `fuentes` (comprimidas, con su tamaño) y espera a que lleguen todas.
+fn esperar_imagenes(cliente: &Arc<Cliente>, base: &Url, fuentes: Vec<String>, imagenes: &mut Imagenes) {
     let total = fuentes.len();
     let (tx, rx) = std::sync::mpsc::channel();
     let tx = std::sync::Mutex::new(tx);
-    imagenes::descargar_todas(cliente.clone(), pagina.base.clone(), fuentes, move |src, r| {
+    imagenes::descargar_todas(cliente.clone(), base.clone(), fuentes, move |src, r| {
         if let Ok(tx) = tx.lock() {
             let _ = tx.send((src, r));
         }
     });
-    let mut imagenes = Imagenes::default();
     for (src, r) in rx.iter().take(total) {
         match r {
             Ok(i) => imagenes.llegada(src, i),
             Err(e) => eprintln!("imagen {src}: {e}"),
         }
     }
-    imagenes
 }
 
 fn maquetar_pagina(
     pagina: &Pagina,
     pintor: &Pintor,
     (ancho, alto): (f32, f32),
-    imagenes: &Imagenes,
-    cliente: &Cliente,
+    imagenes: &mut Imagenes,
+    cliente: &Arc<Cliente>,
 ) -> quimera_maquetacion::Maquetacion {
     // Con su JavaScript: los scripts, los temporizadores del primer segundo y lo que pidan a la red.
     let mut guion = guiones::Guion::preparar(pagina);
     guion.adelantar(1000.0, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p));
     let doc = guion.dom.documento();
+    // Las imágenes que añadieron los scripts.
+    let nuevas = imagenes.nuevas(&doc);
+    esperar_imagenes(cliente, &pagina.base, nuevas, imagenes);
     let externa = |href: &str| pagina.hoja(href);
     let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
     maquetar_con_imagenes(&doc, &estilos, &pintor.medidor(), (ancho, alto), &|s| imagenes.tam(s))
