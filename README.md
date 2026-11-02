@@ -27,13 +27,15 @@ Misma página, ventana visible, Windows, `--release`. Edge 156 es Chromium por d
 | Wikipedia, «Cat» (51 imágenes, 278 idiomas) | **244 MB** | 515–821 MB |
 | Hacker News (todo tablas) | **113 MB** | 456 MB |
 | rust-lang.org (7 fuentes propias) | **145 MB** | 486 MB |
-| Wikipedia, «Gato» (con sus scripts) | **194 MB** | 504 MB |
-| MDN (con todos sus módulos) | **153 MB** | 536 MB |
+| Wikipedia, «Gato» (con sus scripts) | **144 MB** | 529 MB |
+| MDN (con todos sus módulos) | **101 MB** | 458 MB |
+| GitHub (módulos, elementos personalizados) | **315 MB** | 722 MB |
+| Tienda de Steam (jQuery, React, sin errores) | **200 MB** (privada 284) | 729–746 MB (privada ~530) |
 | DuckDuckGo HTML, una búsqueda | **114 MB** | 481 MB |
 
-Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** ya ejecuta los scripts de las páginas, pero sin `Promise`, `fetch` ni módulos las grandes se quedan en su versión sin JavaScript, y Edge las ejecuta enteras. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
+Memoria en uso de todos los procesos. QUIMERA ya ejecuta el JavaScript de estas páginas (módulos, `fetch`, `Promise`, clases del DOM): Steam y MDN, sin un solo error. Todavía pinta menos que Edge (faltan Shadow DOM, `grid`, SVG, WebP), así que la comparación sigue algo a su favor. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
 
-Lo que bajó la memoria: las fuentes de reserva (chino, japonés, coreano, emoji: 70 MB) se leen solo cuando una página las usa, y en Windows se arranca solo DirectX 12 en vez de todos los sistemas gráficos (246 → 111 MB en example.com).
+Lo que bajó la memoria: las fuentes de reserva (chino, japonés, coreano, emoji: 70 MB) se leen solo cuando una página las usa, y en Windows se arranca solo DirectX 12 en vez de todos los sistemas gráficos (246 → 111 MB en example.com). Con JavaScript de verdad, las formas de los objetos comparten sus tablas de claves en vez de copiarlas (Steam: de 1,8 GB a 200 MB; ver [VM.md](docs/VM.md#objetos-enormes-y-módulos-con-miles-de-export)), y las imágenes se decodifican solo cerca de la vista ([VENTANA.md](docs/VENTANA.md#memoria)).
 
 ## Qué hace ya
 
