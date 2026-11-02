@@ -62,13 +62,8 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
         },
         ERROR => {
             let mensaje = arg(m, ll, 0);
-            if mensaje == Valor::INDEFINIDO {
-                let o = m.mundo.crear_objeto(m.pila(R_ERROR));
-                return Ok(o);
-            }
-            let texto = op::a_texto(&m.mundo, mensaje);
-            let v = m.mundo.cadena(&texto);
-            objeto_con(m, ll, R_ERROR, "message", v)
+            let texto = (mensaje != Valor::INDEFINIDO).then(|| op::a_texto(&m.mundo, mensaje));
+            m.objeto_error(m.pila(R_ERROR), "Error", texto.as_deref())
         }
         ERROR_TO_STRING => {
             let texto = m.texto(m.pila(ll.este));

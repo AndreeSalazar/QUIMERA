@@ -25,11 +25,6 @@ impl Motor {
         self.mundo.m.pila().get(i).copied().unwrap_or(Valor::INDEFINIDO)
     }
 
-    /// Un error de JavaScript (por ahora, una cadena `"TypeError: ..."`).
-    pub(crate) fn error(&mut self, clase: &str, mensaje: &str) -> Valor {
-        self.mundo.cadena(&format!("{clase}: {mensaje}"))
-    }
-
     /// Empieza una llamada. `Ok(true)`: hay un marco nuevo que ejecutar; `Ok(false)`: ya terminó
     /// (una nativa) y el resultado está en el destino.
     pub(crate) fn llamar(&mut self, ll: Llamada) -> Result<bool, Valor> {

@@ -236,6 +236,10 @@ pub struct Funcion {
     /// Modo estricto (`"use strict"`, clases, módulos): llamada sin objeto, su `this` es
     /// `undefined`. Si no, es el objeto global, como en los navegadores.
     pub estricta: bool,
+    /// La línea donde empieza en el texto (desde 1), para las trazas de los errores.
+    pub linea: u32,
+    /// Su columna (desde 1).
+    pub columna: u32,
     /// Las instrucciones.
     pub codigo: Vec<Instr>,
     /// Sus constantes.

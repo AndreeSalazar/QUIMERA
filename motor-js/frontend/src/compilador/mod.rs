@@ -32,7 +32,14 @@ pub fn compilar(programa: &[Sent]) -> Resultado<Stencil> {
         &[],
         programa,
         0,
-        Opciones { flecha: false, nombre: None, propio: None, global: true, generador: false },
+        Opciones {
+            flecha: false,
+            nombre: None,
+            propio: None,
+            global: true,
+            generador: false,
+            pos: Pos { linea: 1, columna: 1 },
+        },
     )?;
     c.funciones[0] = Some(programa_fn);
     let funciones = c.funciones.into_iter().map(Option::unwrap_or_default).collect();
@@ -103,6 +110,8 @@ struct Opciones<'a> {
     propio: Option<&'a str>,
     global: bool,
     generador: bool,
+    /// Dónde empieza en el texto (para las trazas de los errores).
+    pos: Pos,
 }
 
 struct Compilador<'a> {
@@ -252,7 +261,7 @@ impl Compilador<'_> {
         self.funciones.push(None);
         let nombre = f.nombre.as_deref();
         let propio = if es_expresion { nombre } else { None };
-        let opciones = Opciones { flecha: f.flecha, nombre, propio, global: false, generador: f.generador };
+        let opciones = Opciones { flecha: f.flecha, nombre, propio, global: false, generador: f.generador, pos: f.pos };
         let compilada = self.cuerpo(&f.params, &f.cuerpo, ambitos::clave(f), opciones)?;
         self.funciones[indice] = Some(compilada);
         Ok(indice as u32)
@@ -291,6 +300,8 @@ impl Compilador<'_> {
             argumentos: ctx.argumentos,
             generador: op.generador,
             estricta,
+            linea: op.pos.linea,
+            columna: op.pos.columna,
             codigo: ctx.codigo,
             constantes: ctx.constantes,
         })

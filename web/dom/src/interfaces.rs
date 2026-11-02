@@ -36,7 +36,7 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     var nativo = P.p_destino[m];
     P.p_destino[m] = function (tipo, f) {
       if (esNodo(this) || this === w) return nativo.apply(this, arguments);
-      var oyentes = this['oyentes'] || (this['oyentes'] = {});
+      var oyentes = this['\u0001oyentes'] || (this['\u0001oyentes'] = {});
       if (m === 'addEventListener') {
         var l = oyentes[tipo] || (oyentes[tipo] = []);
         if (typeof f === 'function' && l.indexOf(f) < 0) l.push(f);
@@ -76,11 +76,17 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   var registro = new Map(), porClase = new Map(), esperas = {};
   function observados(C) { return Array.isArray(C.observedAttributes) ? C.observedAttributes : []; }
   function avisar(e) { console.error('Error en un elemento personalizado: ' + String(e && e.message || e)); }
+  // Los elementos que se están mejorando: si su constructor crea el objeto con `new` o
+  // `Reflect.construct` (clases compiladas), `HTMLElement()` devuelve el elemento, como en los
+  // navegadores.
+  var enMejora = [];
   function mejorar(el, C) {
     if (el['\u0001mejorado']) return;
     el['\u0001mejorado'] = true;
     Object.setPrototypeOf(el, C.prototype);
+    enMejora.push(el);
     try { C.call(el); } catch (e) { avisar(e); }
+    enMejora.pop();
     var cambio = el.attributeChangedCallback;
     if (typeof cambio === 'function') {
       observados(C).forEach(function (a) { if (el.hasAttribute(a)) { try { cambio.call(el, a, null, el.getAttribute(a)); } catch (e) { avisar(e); } } });
@@ -156,6 +162,8 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   // uno que ya existe (`this` es ese elemento), no hace nada.
   interfaz('HTMLElement', P.p_html, function HTMLElement() {
     if (esNodo(this)) return undefined;
+    var arriba = enMejora[enMejora.length - 1];
+    if (arriba && Object.getPrototypeOf(this) === Object.getPrototypeOf(arriba)) return arriba;
     var C = this.constructor, nombre = porClase.get(C);
     if (!nombre) throw new TypeError('Illegal constructor: HTMLElement (la clase no está registrada con customElements.define)');
     var el = crearNativo.call(d, nombre);
@@ -216,7 +224,7 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     this.composed = !!op.composed;
     this.defaultPrevented = false;
     this.isTrusted = false;
-    this.timeStamp = Date.now();
+    this.timeStamp = performance.now();
     this.target = null;
     this.currentTarget = null;
   }
@@ -345,6 +353,38 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   w.CSSStyleSheet.prototype.replaceSync = function (t) { this['\u0001texto'] = String(t); };
   w.CSSStyleSheet.prototype.replace = function (t) { this.replaceSync(t); return Promise.resolve(this); };
   w.CSSStyleSheet.prototype.insertRule = function () { return 0; };
+  Object.defineProperty(P.p_documento, 'domain', { get: function () { return location.hostname; } });
+  // `href` y `src` dan la URL absoluta, como en los navegadores (el atributo guarda lo escrito).
+  function absoluta(atributo) {
+    return {
+      get: function () {
+        var v = this.getAttribute(atributo);
+        if (v === null) return '';
+        try { return new URL(v, location.href).href; } catch (e) { return v; }
+      },
+      set: function (v) { this.setAttribute(atributo, v); }
+    };
+  }
+  [['HTMLAnchorElement', 'href'], ['HTMLAreaElement', 'href'], ['HTMLLinkElement', 'href'],
+    ['HTMLImageElement', 'src'], ['HTMLScriptElement', 'src'], ['HTMLIFrameElement', 'src'],
+    ['HTMLMediaElement', 'src'], ['HTMLSourceElement', 'src'], ['HTMLEmbedElement', 'src']].forEach(function (par) {
+    var I = w[par[0]];
+    if (I) Object.defineProperty(I.prototype, par[1], absoluta(par[1]));
+  });
+  Object.defineProperty(w.HTMLImageElement.prototype, 'currentSrc', { get: function () { return this.src; } });
+  ['srcset', 'sizes'].forEach(function (a) {
+    Object.defineProperty(w.HTMLImageElement.prototype, a, {
+      get: function () { return this.getAttribute(a) || ''; },
+      set: function (v) { this.setAttribute(a, v); }
+    });
+  });
+  // `adoptedStyleSheets` se guarda (para que la página lo lea y lo amplíe), pero no se aplica.
+  [P.p_documento, ShadowRoot.prototype].forEach(function (p) {
+    Object.defineProperty(p, 'adoptedStyleSheets', {
+      get: function () { return this['\u0001adoptadas'] || (this['\u0001adoptadas'] = []); },
+      set: function (v) { this['\u0001adoptadas'] = Array.prototype.slice.call(v); }
+    });
+  });
 
   // ---------------- DOMException, AbortController ----------------
   function DOMException(mensaje, nombre) {

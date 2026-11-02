@@ -56,6 +56,9 @@ impl Motor {
     /// `obj.clave`.
     pub(crate) fn leer_prop(&mut self, obj: Valor, clave: u32, fi: usize, pc: usize) -> Result<Valor, Valor> {
         if let Some(dato) = self.mundo.anfitrion(obj) {
+            if dato == crate::proxy::DATO_PROXY {
+                return self.proxy_leer(obj, clave);
+            }
             // Un accesor de la página (`get value()` en un elemento personalizado) tapa la
             // propiedad del navegador, como un getter de una subclase.
             if let Some(par) = self.buscar_accesor(obj, clave) {
@@ -172,6 +175,9 @@ impl Motor {
             return Ok(()); // en un primitivo se ignora (modo no estricto)
         }
         if let Some(dato) = self.mundo.anfitrion(obj) {
+            if dato == crate::proxy::DATO_PROXY {
+                return self.proxy_escribir(obj, clave, v);
+            }
             if let Some(par) = self.buscar_accesor(obj, clave) {
                 return self.llamar_set(par, obj, v);
             }
@@ -258,6 +264,14 @@ impl Motor {
                 });
             }
         }
+        if self.es_proxy(obj) {
+            let marca = self.mundo.m.marca_raices();
+            self.mundo.m.raiz(obj);
+            let clave = self.clave_para_escribir(k);
+            let obj = self.pila(marca);
+            self.mundo.m.soltar_raices(marca);
+            return self.proxy_leer(obj, clave);
+        }
         let clave = self.clave_de(k);
         if clave == u32::MAX
             && let Some(i) = Self::indice(k)
@@ -333,6 +347,14 @@ impl Motor {
     pub(crate) fn contiene(&mut self, k: Valor, obj: Valor) -> Result<bool, Valor> {
         if !self.mundo.es_objeto(obj) {
             return Err(self.error("TypeError", "'in' necesita un objeto a la derecha"));
+        }
+        if self.es_proxy(obj) {
+            let marca = self.mundo.m.marca_raices();
+            self.mundo.m.raiz(obj);
+            let clave = self.clave_para_escribir(k);
+            let obj = self.pila(marca);
+            self.mundo.m.soltar_raices(marca);
+            return self.proxy_contiene(obj, clave);
         }
         if let (Some(i), Some(Clase::Arreglo)) = (Self::indice(k), self.mundo.clase(obj)) {
             return Ok(i < self.mundo.longitud(obj).unwrap_or(0));

@@ -6,7 +6,7 @@
 //! tiene cada objeto de la biblioteca y `for-in` se salta esas.
 
 use crate::{Motor, N_FIJAS, R_ARREGLO};
-use alloc::string::ToString;
+use alloc::string::{String, ToString};
 use alloc::vec::Vec;
 use quimera_objetos::{Cadenas, Clase, Valor};
 
@@ -15,7 +15,43 @@ fn oculta(clave: &str) -> bool {
     clave.starts_with('\u{1}') || clave.starts_with('\u{2}') || clave.starts_with('#') || clave == "[[Valor]]"
 }
 
+/// La ranura oculta con las claves de un objeto que no se enumeran (`Object.defineProperty`
+/// con `enumerable: false`, o sin decirlo al crearla): sus números, separados por comas. Solo la
+/// tienen los objetos que la necesitan, así que a los demás no les cuesta nada.
+pub(crate) const NO_ENUMERABLES: &str = "\u{1}noenum";
+
 impl Motor {
+    /// Las claves de `obj` marcadas como no enumerables.
+    fn no_enumerables(&self, obj: Valor) -> Vec<u32> {
+        let lista = self.mundo.cadenas.buscar(NO_ENUMERABLES).and_then(|k| self.mundo.leer_propia(obj, k));
+        match lista.and_then(|l| self.mundo.texto(l)) {
+            Some(t) => t.split(',').filter_map(|n| n.parse().ok()).collect(),
+            None => Vec::new(),
+        }
+    }
+
+    /// Si la clave propia `clave` de `obj` se enumera, según su marca.
+    pub(crate) fn es_enumerable_propia(&self, obj: Valor, clave: u32) -> bool {
+        !self.no_enumerables(obj).contains(&clave)
+    }
+
+    /// Marca la clave `clave` del objeto en la posición `pos` de la pila como enumerable o no.
+    pub(crate) fn marcar_enumerable(&mut self, pos: usize, clave: u32, enumerable: bool) {
+        let mut lista = self.no_enumerables(self.pila(pos));
+        if lista.contains(&clave) != enumerable {
+            return;
+        }
+        if enumerable {
+            lista.retain(|k| *k != clave);
+        } else {
+            lista.push(clave);
+        }
+        let texto: Vec<String> = lista.iter().map(|k| k.to_string()).collect();
+        let v = self.mundo.cadena(&texto.join(","));
+        let k = self.mundo.cadenas.internar(NO_ENUMERABLES);
+        self.mundo.escribir(self.pila(pos), k, v);
+    }
+
     /// Apunta las claves de la biblioteca (no enumerables). Se llama al terminar de prepararla.
     pub(crate) fn fijar_claves_ocultas(&mut self) {
         for i in 0..N_FIJAS {
@@ -27,8 +63,12 @@ impl Motor {
     /// la biblioteca ni las ranuras internas (las que empiezan por U+0001).
     pub(crate) fn claves_enumerables(&self, obj: Valor) -> Vec<u32> {
         let saltar = self.ocultas_de(obj);
+        let no = self.no_enumerables(obj);
         let claves = self.mundo.claves(obj).iter().skip(saltar);
-        claves.map(|&k| k & !crate::accesores::ACCESOR).filter(|&k| self.enumerable(obj, k)).collect()
+        claves
+            .map(|&k| k & !crate::accesores::ACCESOR)
+            .filter(|&k| self.enumerable(obj, k) && !no.contains(&k))
+            .collect()
     }
 
     /// Si la clave `k` de `obj` se enumera: no las ranuras internas, ni los `#privados`, ni el
@@ -57,6 +97,7 @@ impl Motor {
         for i in 0..indices {
             claves.push(self.mundo.cadenas.internar(&i.to_string()));
         }
+        let mut tapadas: Vec<u32> = Vec::new();
         let mut actual = obj;
         for _ in 0..10_000 {
             if !self.mundo.es_objeto(actual) {
@@ -68,9 +109,11 @@ impl Motor {
             if saltar == 0 && self.mundo.claves(actual).first() == Some(&constructor) {
                 saltar = 1;
             }
+            // Una propia no enumerable tampoco deja ver la del prototipo con ese nombre.
+            tapadas.extend(self.no_enumerables(actual));
             for k in self.mundo.claves(actual).iter().skip(saltar).map(|&k| k & !crate::accesores::ACCESOR) {
                 // Las claves que empiezan por U+0001 son ranuras internas de la biblioteca.
-                if !claves.contains(&k) && self.enumerable(actual, k) {
+                if !claves.contains(&k) && !tapadas.contains(&k) && self.enumerable(actual, k) {
                     claves.push(k);
                 }
             }
@@ -127,6 +170,9 @@ impl Motor {
                 self.mundo.cadenas.internar(&s)
             }
         };
+        if self.es_proxy(obj) {
+            return self.proxy_borrar(obj, clave);
+        }
         self.mundo.borrar(obj, clave);
         if clave & crate::accesores::ACCESOR == 0 {
             self.mundo.borrar(obj, clave | crate::accesores::ACCESOR);

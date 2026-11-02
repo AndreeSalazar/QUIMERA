@@ -407,3 +407,129 @@ fn objeto_sobre_arreglo_hereda_elementos() {
     );
     assert_eq!(r, ["2 2 1,2,9 2 true true false 0"]);
 }
+
+/// Los errores de la máquina son objetos de su clase, con `message` y `stack`.
+#[test]
+fn errores_como_objetos_con_traza() {
+    let r = salida(
+        r"function leer(o) { return o.x; }
+          function paso(o) { return leer(o); }
+          try { paso(undefined); } catch (e) {
+            console.log(e instanceof TypeError, e instanceof Error, e.name, e.message);
+            console.log(e.stack.split('\n').slice(0, 3).join('|'));
+          }
+          try { null(); } catch (e) { console.log(String(e).slice(0, 10), e.constructor === TypeError); }
+          try { noExiste; } catch (e) { console.log(e.name); }
+          var f = new Error('hola');
+          console.log(f.message, f.stack.split('\n')[0], 'stack' in new RangeError('x'));",
+    );
+    assert_eq!(
+        r,
+        [
+            "true true TypeError no se puede leer la propiedad 'x' de undefined",
+            "TypeError: no se puede leer la propiedad 'x' de undefined|    at leer (<anónimo>:1:1)|    at paso (<anónimo>:2:11)",
+            "TypeError: true",
+            "ReferenceError",
+            "hola Error: hola true",
+        ]
+    );
+}
+
+/// Un `let` de un bucle que se llama como una variable de una función de fuera no la tapa antes
+/// del bucle (código minificado de GitHub).
+#[test]
+fn let_del_for_no_tapa_a_la_de_fuera() {
+    let r = salida(
+        r"var r = {a: 1, b: 2};
+          function f() { var t = Object.keys(r); for (let n = t.length, r = 0; r < n; r++) t[r] += r; return t.join(); }
+          function g() { var s = r.a; for (const r of [5]) s += r; return s; }
+          console.log(f(), g(), r.a);",
+    );
+    assert_eq!(r, ["a0,b1 6 1"]);
+}
+
+/// `ArrayBuffer`, arreglos tipados, `DataView` y `TextEncoder`/`TextDecoder` (valores de Chromium).
+#[test]
+fn datos_binarios() {
+    let r = salida(
+        r"var b = new ArrayBuffer(8), v = new DataView(b), u = new Uint8Array(b);
+          v.setUint16(0, 0x1234); v.setInt32(4, -2, true);
+          console.log(u.join(), v.getUint16(0, true), v.getInt32(4, true), b.byteLength, u.length);
+          v.setFloat64(0, Math.PI); console.log(v.getFloat64(0), u[0], u[7]);
+          v.setFloat32(0, 1.1, true); console.log(v.getFloat32(0, true), Math.fround(1.1), Math.fround(5.5));
+          var i16 = new Int16Array([70000, -1, 3.7]); console.log(i16.join(), i16.byteLength, Int16Array.BYTES_PER_ELEMENT);
+          var c = new Uint8ClampedArray([300, -5, 1.5]); console.log(c.join());
+          console.log(Array.isArray(u), Array.isArray([]), ArrayBuffer.isView(u), u instanceof Uint8Array, Object.prototype.toString.call(i16));
+          var e = new TextEncoder().encode('añ€😀'); console.log(e.length, e.join(), new TextDecoder().decode(e));
+          console.log(new TextDecoder().decode(new Uint8Array([104, 0xff, 105])), u.subarray(1, 3) instanceof Uint8Array, new Uint8Array(3).fill(258).join());",
+    );
+    assert_eq!(
+        r,
+        [
+            "18,52,0,0,254,255,255,255 13330 -2 8 8",
+            "3.141592653589793 64 24",
+            "1.100000023841858 1.100000023841858 5.5",
+            "4464,-1,3 6 2",
+            "255,0,2",
+            "false true true true [object Int16Array]",
+            "10 97,195,177,226,130,172,240,159,152,128 añ€😀",
+            "h\u{fffd}i true 2,2,2",
+        ]
+    );
+}
+
+/// `enumerable` de `Object.defineProperty` (por defecto `false` al crear), getters de objetos
+/// literales (enumerables) y de clases (no). Valores de Chromium.
+#[test]
+fn propiedades_no_enumerables() {
+    let r = salida(
+        r#"var o = {a: 1};
+          Object.defineProperty(o, 'b', {value: 2, configurable: true});
+          Object.defineProperty(o, 'c', {value: 3, enumerable: true});
+          Object.defineProperty(o, 'd', {get: function () { return 4; }});
+          var k = []; for (var x in o) k.push(x);
+          console.log(Object.keys(o).join(), k.join(), JSON.stringify(o), o.b, o.propertyIsEnumerable('b'), o.propertyIsEnumerable('a'));
+          Object.defineProperty(o, 'a', {value: 9});
+          Object.defineProperty(o, 'b', {enumerable: true});
+          console.log(Object.keys(o).join(), Object.getOwnPropertyDescriptor(o, 'd').enumerable, Object.getOwnPropertyDescriptor(o, 'a').enumerable);
+          var l = {get x() { return 1; }, y: 2};
+          class C { get z() { return 3; } }
+          var h = Object.create({p: 1}); Object.defineProperty(h, 'p', {value: 2}); var hk = []; for (var q in h) hk.push(q);
+          console.log(Object.keys(l).join(), Object.keys(C.prototype).length, Object.assign({}, o).b, hk.length);"#,
+    );
+    assert_eq!(r, [r#"a,c a,c {"a":1,"c":3} 2 false true"#, "a,b,c false true", "x,y 0 2 0",]);
+}
+
+/// `Proxy` con trampas `get`, `set`, `has`, `deleteProperty` y `ownKeys`, y `Reflect`.
+/// Valores de Chromium.
+#[test]
+fn proxy_y_reflect() {
+    let r = salida(
+        r#"var vacio = new Proxy({}, {get: () => ''});
+          console.log(JSON.stringify(vacio.loquesea), typeof vacio, vacio[5] === '');
+          var log = [], obj = {a: 1};
+          var p = new Proxy(obj, {
+            get(t, k, r) { log.push('get ' + String(k)); return k in t ? Reflect.get(t, k) : 'falta'; },
+            set(t, k, v) { log.push('set ' + k); t[k] = v * 2; return true; },
+            has(t, k) { return k.charAt(0) === 'a'; },
+            deleteProperty(t, k) { log.push('delete ' + k); delete t[k]; return true; }
+          });
+          p.b = 5;
+          console.log(p.a, p.b, p.c, obj.b, 'abc' in p, 'b' in p, delete p.a, obj.a);
+          console.log(log.join('|'));
+          var q = new Proxy({x: 1, y: 2}, {ownKeys: () => ['y']});
+          var s = new Proxy([1, 2], {});
+          console.log(Object.keys(q).join(), Object.keys(new Proxy({m: 1, n: 2}, {})).join(), s.length, s[1], s instanceof Array);
+          console.log(Reflect.has({z: 1}, 'z'), Reflect.ownKeys({k: 1}).join(), Reflect.apply(Math.max, null, [1, 3]));"#,
+    );
+    assert_eq!(
+        r,
+        [
+            "\"\" object true",
+            "1 10 falta 10 true false true undefined",
+            "set b|get a|get b|get c|delete a",
+            "y m,n 2 2 true",
+            "true k 3",
+        ]
+    );
+}

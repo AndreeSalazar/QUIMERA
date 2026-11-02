@@ -194,13 +194,25 @@ fn es_metodo(f: &Expr, objeto: &str, metodo: &str) -> bool {
 }
 
 /// `Object.defineProperty(dueno, clave, {get: f})` (o `set`): un accesor de un objeto o clase.
-pub(super) fn definir_accesor(dueno: Expr, clave: Clave, es_get: bool, f: crate::ast::Funcion) -> Expr {
+/// Con `enumerable`, añade `enumerable: true` (objetos literales y exportaciones; en las clases
+/// no lo son, como en los navegadores).
+pub(super) fn definir_accesor(
+    dueno: Expr,
+    clave: Clave,
+    es_get: bool,
+    f: crate::ast::Funcion,
+    enumerable: bool,
+) -> Expr {
     let k = match clave {
         Clave::Nombre(n) => Expr::Cadena(n),
         Clave::Calculada(e) => e,
     };
     let campo = String::from(if es_get { "get" } else { "set" });
-    let desc = Expr::Objeto(vec![(Clave::Nombre(campo), Expr::Funcion(Box::new(f)))]);
+    let mut campos = vec![(Clave::Nombre(campo), Expr::Funcion(Box::new(f)))];
+    if enumerable {
+        campos.push((Clave::Nombre(String::from("enumerable")), Expr::Bool(true)));
+    }
+    let desc = Expr::Objeto(campos);
     let define = miembro(Expr::Ident(String::from("Object")), "defineProperty");
     Expr::Llamar(Box::new(define), vec![dueno, k, desc])
 }

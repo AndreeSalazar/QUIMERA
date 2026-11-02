@@ -310,3 +310,48 @@ fn event_target_propio_y_abort_controller() {
     );
     assert_eq!(r, ["abortado AbortError", "lanza true", "3 true true r"]);
 }
+
+/// Un elemento personalizado compilado al estilo de Babel/TypeScript (`Reflect.construct` con
+/// `new.target`), `adoptedStyleSheets`, `document.domain` y errores con `stack`. Como Chromium.
+#[test]
+fn elementos_compilados_y_errores_con_traza() {
+    let mut d = dom(r#"<mio-x id="a"></mio-x>"#);
+    let r = correr(
+        &mut d,
+        r#"function Mio() { var self = Reflect.construct(HTMLElement, [], Mio); self.dato = 7; return self; }
+          Mio.prototype = Object.create(HTMLElement.prototype);
+          Mio.prototype.constructor = Mio;
+          Object.setPrototypeOf(Mio, HTMLElement);
+          Mio.prototype.connectedCallback = function () { console.log('conectado', this.id, this.dato); };
+          var antes = document.getElementById('a');
+          customElements.define('mio-x', Mio);
+          var nuevo = new Mio();
+          console.log(antes instanceof Mio, antes.dato, nuevo instanceof Mio, nuevo.tagName, nuevo.dato);
+          document.adoptedStyleSheets = [...document.adoptedStyleSheets, new CSSStyleSheet()];
+          console.log(document.adoptedStyleSheets.length, typeof document.domain);
+          try { null.x; } catch (e) { console.log(e instanceof TypeError, typeof e.stack, e.stack.split('\n')[0] === String(e)); }"#,
+    );
+    assert_eq!(r, ["conectado a 7", "true 7 true MIO-X 7", "1 string", "true string true"]);
+}
+
+/// `href` y `src` absolutos, `currentSrc` y `srcset` (como Chromium en https://example.com/).
+#[test]
+fn urls_absolutas_en_enlaces_e_imagenes() {
+    let mut d = Dom::nuevo(
+        quimera_html::analizar(r#"<a id="a" href="/x?y=1">a</a><img id="i" src="img/b.png"><a id="v">v</a>"#),
+        "https://example.com/dir/pag.html",
+    );
+    let r = correr(
+        &mut d,
+        r#"var a = document.getElementById('a'), i = document.getElementById('i'), v = document.getElementById('v');
+          console.log(a.href, i.src, i.currentSrc, JSON.stringify(i.srcset), JSON.stringify(v.href), a.getAttribute('href'));
+          a.href = 'otra.html'; console.log(a.href, a.getAttribute('href'));"#,
+    );
+    assert_eq!(
+        r,
+        [
+            r#"https://example.com/x?y=1 https://example.com/dir/img/b.png https://example.com/dir/img/b.png "" "" /x?y=1"#,
+            "https://example.com/dir/otra.html otra.html",
+        ]
+    );
+}

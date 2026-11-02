@@ -159,7 +159,7 @@ Coste: crear un motor tarda unos 2 ms más (compila el preludio). Se podría gua
 **Accesores** (`accesores.rs`): `get`/`set` en clases y objetos, `Object.defineProperty` y `getOwnPropertyDescriptor`. Un accesor va en la forma del objeto con la clave marcada (bit 31) y un par `[get, set]` en su hueco:
 
 - **Las cachés nunca los guardan.** La de primer nivel solo encuentra claves sin marcar. Leer o escribir mira si hay un accesor en la cadena *antes* de aprender nada, y definir uno vacía todas las cachés una vez (un stub antiguo de «añadir propiedad» se saltaría el `set`).
-- **Sin coste hasta el primero**: mientras ninguna página defina uno, no se busca nada. Con alguno definido, solo pagan los accesos que no acierta la caché.
+- **Solo se buscan si pueden existir**: un filtro de 4096 bits apunta las claves que tienen algún accesor. Leer `x.foo` solo busca un getter si alguien definió uno llamado `foo`. Antes era un solo interruptor: el primer getter (de la biblioteca o del DOM, que define muchos) hacía buscar en cada acceso que no acertaba la caché. Al añadir `binarios.js`, V8 cayó un 5,5 %; con el filtro queda en −2 % frente al commit anterior (`--v8q` del banco, alternando los dos binarios), por el preludio más grande.
 - Al definir un accesor sobre una clave que ya existe (o sobre el hueco que deja un objeto literal), ocupa su sitio: las claves salen en el orden del código, como en Chromium.
 
 **Símbolos**: `Symbol()`, `Symbol.for`, `keyFor`, `description` y los conocidos (`Symbol.iterator`...). Un símbolo es una cadena interna única que empieza por U+0002: ya es un número de clave, así que `o[s]` funciona sin tocar nada más. Estas claves no se enumeran. `Symbol.iterator` conecta `for-of`, el spread y `Array.from` con cualquier objeto iterable, y los arreglos, cadenas, `Map`, `Set` y sus iteradores lo tienen.
@@ -186,6 +186,26 @@ También: `Date` completo (partes, texto ISO, métodos y setters; la hora local 
 
 Falta: `return()` y `throw()` sobre un generador pausado dentro de un `try` con `finally` no ejecutan el `finally`.
 
+## Errores con traza
+
+`trazas.rs`. Los errores que lanza la máquina eran cadenas (`"TypeError: ..."`): en un `catch`, `e.message` daba `undefined` y `e instanceof TypeError`, `false`. Ahora son objetos de su clase (`TypeError`, `RangeError`, `ReferenceError`, `SyntaxError`...) con `message` y `stack`. `new Error(...)` y las clases de error del preludio también llevan `stack`.
+
+- **La traza** sigue el formato de V8 (`    at nombre (archivo:línea:columna)`, hasta 10 llamadas). La posición es **donde empieza cada función**, no la línea exacta que falló, porque el bytecode no guarda la posición de cada instrucción. En código minificado basta para encontrar la función.
+- **El archivo**: el anfitrión dice de dónde viene lo que compila (`Motor::fijar_origen`): la URL de cada script y de cada módulo; el preludio sale como `quimera:preludio` y el del DOM como `quimera:dom`.
+- **Hacia fuera**: `ErrorJs` lleva `traza` aparte del mensaje, y la ventana la muestra bajo cada error. Fue lo que permitió encontrar los fallos de GitHub de esta ronda.
+
+## `Proxy`, `Reflect` y propiedades no enumerables
+
+**`Proxy`** (`proxy.rs`) con las trampas `get`, `set`, `has`, `deleteProperty` y `ownKeys`; sin trampa, la operación va al objetivo. Un proxy es un objeto del anfitrión con un número reservado: las cachés en línea ya excluyen esos objetos (como a los nodos del DOM), así que el resto del código no paga nada. Falta: proxies de funciones (`apply`, `construct`) y las trampas de descriptores y prototipos. **`Reflect`** está en el preludio; `Reflect.construct` admite el tercer argumento (`new.target`), que usan las clases compiladas por Babel y TypeScript.
+
+**`enumerable`** de `Object.defineProperty` (por defecto `false` al crear la propiedad, como en los navegadores): el objeto guarda en una ranura oculta las claves que no se enumeran, y la consultan `Object.keys`, `for-in`, `JSON.stringify` y `Object.assign`. Solo la tienen los objetos que la necesitan. Los getters de objetos literales siguen siendo enumerables y los de las clases no. `writable` y `configurable` aún no se guardan.
+
+## Datos binarios y azar
+
+`binarios.js` (tras el preludio): `ArrayBuffer`, los nueve arreglos tipados, `DataView` (con `Float32`/`Float64` codificados a mano según IEEE 754), `TextEncoder`/`TextDecoder` (UTF-8, con U+FFFD para lo inválido) y un `Math.fround` exacto. Es una aproximación: un arreglo tipado es un arreglo de la VM con otro prototipo (rápido, pero `u8[0] = 300` no recorta; `set`, `fill` y el constructor sí), y solo un `Uint8Array` sobre un buffer entero comparte sus bytes. Igual que Chromium en las pruebas.
+
+**Azar y reloj del anfitrión**: `Motor::con_entropia` da azar del sistema para `crypto.getRandomValues` y `crypto.randomUUID`, y siembra `Math.random`, que antes repetía la misma secuencia en cada página. La ventana usa SipHash con claves del sistema operativo. El DOM tampoco pasaba el reloj real: `Date.now()` daba milisegundos desde que arrancó el motor (fechas de 1970). Ahora llega la hora real.
+
 ## Objetos y funciones del anfitrión
 
 Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias funciones y objetos (`anfitrion.rs`):
@@ -198,7 +218,6 @@ Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias fu
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
-- **Errores de la máquina como objetos**: los que lanza la máquina son cadenas (`"TypeError: ..."`), así que `e.message` da `undefined` en un `catch`.
 - **Biblioteca estándar, todavía parcial.** Hay `console.log`/`print`; `Object` (`create`, `keys`, `prototype.hasOwnProperty`); `Array` (`isArray`, `push`, `pop`, `shift`, `unshift`, `slice`, `concat`, `reverse`, `join`, `indexOf`, `includes`, `sort`, `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `findIndex`); `Function.prototype` (`call`, `apply`); `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`); números (`Number`, `parseInt`, `parseFloat`, `isNaN`, `isFinite`, `toFixed`, `toPrecision`, `toString(base)`); `String` (`fromCharCode`, `charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`, `split`, `toUpperCase`, `toLowerCase`, `trim`, `includes`, `startsWith`, `endsWith`); `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
 - **`sort` es inserción binaria.** Estable y sin memoria extra, con pocas comparaciones (n log n), pero mueve O(n²) elementos: para arreglos grandes hará falta un *merge sort* con raíces.
 - **`ToPrimitive` usa una llamada interna** (recursión de Rust); `call` y `apply` dejan el marco en la máquina.

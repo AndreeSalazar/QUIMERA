@@ -521,7 +521,7 @@ impl Anfitrion for Puente {
             // Los elementos personalizados que trae el HTML nuevo se mejoran (`interfaces.rs`).
             let el = envolver(m, &self.0, NodoId(dato));
             if let Err(e) = m.llamar_global("__quimera_tras_html", &[el]) {
-                self.0.errores.borrow_mut().push(e.mensaje);
+                self.0.errores.borrow_mut().push(e.completo());
             }
         }
         hecho.then_some(Ok(()))

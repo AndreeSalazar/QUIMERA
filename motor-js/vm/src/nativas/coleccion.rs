@@ -72,12 +72,31 @@ const METODOS: [(&str, u32); 15] = [
     ("findIndex", FIND_INDEX),
 ];
 
+/// `Object.keys(proxy)`: lo que da su trampa `ownKeys`, o las claves del objetivo.
+fn claves_de_proxy(m: &mut Motor, p: Valor) -> Result<Valor, Valor> {
+    let objetivo = match m.proxy_claves(p)? {
+        Ok(lista) => return Ok(lista),
+        Err(objetivo) => objetivo,
+    };
+    let marca = m.mundo.m.marca_raices();
+    m.mundo.m.raiz(objetivo);
+    let mut claves: Vec<Valor> = indices(m, objetivo);
+    let objetivo = m.pila(marca);
+    claves.extend(m.claves_enumerables(objetivo).into_iter().map(|k| Valor::cadena(Ref::desde_u32(k))));
+    let r = m.mundo.crear_arreglo(&claves, m.pila(R_ARREGLO));
+    m.mundo.m.soltar_raices(marca);
+    Ok(r)
+}
+
 pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
     match id {
         OBJECT_KEYS => {
             let o = arg(m, ll, 0);
             if matches!(o.tipo(), Tipo::Indefinido | Tipo::Nulo) {
                 return Err(m.error("TypeError", "Object.keys necesita un objeto"));
+            }
+            if m.es_proxy(o) {
+                return claves_de_proxy(m, o);
             }
             if !m.mundo.es_objeto(o) {
                 // Un primitivo se convierte en objeto: una cadena da sus índices; lo demás, nada.
@@ -156,8 +175,9 @@ fn clave_atomo(m: &mut Motor, k: Valor) -> u32 {
     }
 }
 
-/// `Object.defineProperty(o, k, {get, set})` o `{value}`. Sin atributos de propiedad: todo es
-/// escribible, enumerable y configurable.
+/// `Object.defineProperty(o, k, {get, set})` o `{value}`. De los atributos solo se guarda
+/// `enumerable` (por defecto `false` al crear la propiedad, como en los navegadores); todo es
+/// escribible y configurable.
 fn definir_propiedad(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
     let (o, d) = (arg(m, ll, 0), arg(m, ll, 2));
     if !m.mundo.es_objeto(o) || !m.mundo.es_objeto(d) {
@@ -171,6 +191,9 @@ fn definir_propiedad(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
         m.mundo.leer(d, c)
     };
     let (get, set, valor) = (leer(m, "get"), leer(m, "set"), leer(m, "value"));
+    let enumerable = leer(m, "enumerable").map(|e| crate::operaciones::a_booleano(&m.mundo, e));
+    let o = arg(m, ll, 0);
+    let existia = m.mundo.leer_propia(o, clave).is_some() || m.accesor_propio(o, clave).is_some();
     if get.is_some() || set.is_some() {
         let o = arg(m, ll, 0);
         m.definir_accesor(o, clave, get.unwrap_or(Valor::INDEFINIDO), set.unwrap_or(Valor::INDEFINIDO));
@@ -179,6 +202,11 @@ fn definir_propiedad(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
         m.mundo.borrar(o, clave | crate::accesores::ACCESOR);
         let o = arg(m, ll, 0);
         m.mundo.escribir(o, clave, v);
+    }
+    match enumerable {
+        Some(e) => m.marcar_enumerable(ll.args, clave, e),
+        None if !existia => m.marcar_enumerable(ll.args, clave, false),
+        None => {}
     }
     Ok(arg(m, ll, 0))
 }
@@ -207,9 +235,14 @@ fn descriptor(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
     let d = m.mundo.crear_objeto(m.pila(R_OBJETO));
     m.mundo.m.raiz(d);
     let pos = marca + campos.len();
+    let enumerable = Valor::booleano(m.es_enumerable_propia(arg(m, ll, 0), clave));
     let todos = campos.iter().map(|(n, _)| *n).chain(["enumerable", "configurable"]);
     for (i, nombre) in todos.enumerate() {
-        let v = if i < campos.len() { m.pila(marca + i) } else { Valor::VERDADERO };
+        let v = match i.cmp(&campos.len()) {
+            core::cmp::Ordering::Less => m.pila(marca + i),
+            core::cmp::Ordering::Equal => enumerable,
+            core::cmp::Ordering::Greater => Valor::VERDADERO,
+        };
         let c = m.mundo.cadenas.internar(nombre);
         m.mundo.escribir(m.pila(pos), c, v);
     }

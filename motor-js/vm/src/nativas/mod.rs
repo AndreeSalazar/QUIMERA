@@ -45,6 +45,12 @@ pub(crate) const OBJETO_TO_STRING: u32 = 21;
 const FUNCION_TO_STRING: u32 = 22;
 /// `__quimera_modulo(texto)`: compila un módulo y da la función que lo ejecuta.
 const MODULO: u32 = 23;
+/// `__quimera_traza()`: la pila de llamadas como texto (para el `stack` de los errores).
+const TRAZA: u32 = 24;
+/// `new Proxy(objetivo, manejador)` (`proxy.rs`).
+const PROXY: u32 = 25;
+/// `__quimera_aleatorios(n)`: `n` bytes de azar del sistema (para `crypto`).
+const ALEATORIOS: u32 = 26;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -93,6 +99,9 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, R_OBJETO, "toString", OBJETO_TO_STRING);
     definir_nativa(m, R_FUNCION, "toString", FUNCION_TO_STRING);
     definir_nativa(m, R_GLOBAL, "__quimera_modulo", MODULO);
+    definir_nativa(m, R_GLOBAL, "__quimera_traza", TRAZA);
+    definir_nativa(m, R_GLOBAL, "Proxy", PROXY);
+    definir_nativa(m, R_GLOBAL, "__quimera_aleatorios", ALEATORIOS);
     simbolos(m);
     let generador = nuevo_objeto(m, R_GLOBAL, "__quimera_generador");
     definir_nativa(m, generador, "next", GEN_NEXT);
@@ -193,9 +202,13 @@ fn nuevo_simbolo(m: &mut Motor, descripcion: &str, global: bool) -> Valor {
     Valor::simbolo(quimera_objetos::Ref::desde_u32(id))
 }
 
-/// Ejecuta el preludio en JavaScript (`preludio.js`) y oculta a `for-in` lo que creó.
+/// Ejecuta el preludio en JavaScript (`preludio.js` y `binarios.js`) y oculta a `for-in` lo que creó.
 pub(crate) fn preludio(m: &mut Motor) {
-    if let Err(e) = m.ejecutar(include_str!("preludio.js")) {
+    m.fijar_origen("quimera:preludio");
+    // `binarios.js` va aparte (el preludio pasaría de 1000 líneas); usa su lista de ocultos.
+    let r = m.ejecutar(include_str!("preludio.js")).and_then(|_| m.ejecutar(include_str!("binarios.js")));
+    m.fijar_origen("");
+    if let Err(e) = r {
         debug_assert!(false, "el preludio falló: {}", e.mensaje);
         return;
     }
@@ -279,7 +292,7 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
         // `apply` abre el marco de la función como una llamada más: sin recursión de Rust.
         return coleccion::aplicar(m, &ll);
     }
-    let construye = matches!(id, OBJETO | ARREGLO | FUNCION | regexp::REGEXP) || fecha::es_constructor(id);
+    let construye = matches!(id, OBJETO | ARREGLO | FUNCION | PROXY | regexp::REGEXP) || fecha::es_constructor(id);
     if ll.construir && !construye {
         return Err(m.error("TypeError", "esta función nativa no es un constructor"));
     }
@@ -337,9 +350,32 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
         SIMBOLO..=SIMBOLO_KEY_FOR | FUNCION_TO_STRING | OBJETO_TO_STRING | NO_ENUMERAR => return otras(m, id, ll),
+        PROXY => return m.crear_proxy(arg(m, ll, 0), arg(m, ll, 1)),
+        ALEATORIOS => {
+            let n = arg(m, ll, 0).como_numero().unwrap_or(0.0).clamp(0.0, 65536.0) as usize;
+            let Some(bytes) = m.bytes_aleatorios(n) else {
+                return Err(m.error("Error", "QUIMERA no tiene aquí una fuente de azar del sistema"));
+            };
+            let v: Vec<Valor> = bytes.into_iter().map(|b| Valor::numero(f64::from(b))).collect();
+            m.mundo.crear_arreglo(&v, m.pila(R_ARREGLO))
+        }
+        TRAZA => {
+            // Sin el marco de quien la pide (el constructor del error).
+            let t = m.traza_desde(1);
+            m.mundo.cadena(&t)
+        }
         MODULO => {
+            // `__quimera_modulo(texto, url)`: la URL sale en las trazas de sus errores.
             let fuente = m.texto(arg(m, ll, 0));
-            m.compilar_modulo(&fuente).map_err(|e| m.mundo.cadena(&e.mensaje))?
+            let url = arg(m, ll, 1);
+            let antes = m.origen.clone();
+            if url != Valor::INDEFINIDO {
+                let url = m.texto(url);
+                m.fijar_origen(&url);
+            }
+            let r = m.compilar_modulo(&fuente);
+            m.origen = antes;
+            r.map_err(|e| m.error_desde_texto(&e.mensaje))?
         }
         FUNCION => {
             // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
@@ -347,7 +383,7 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
             let (cuerpo, parametros) = partes.split_last().map_or((String::new(), &[][..]), |(c, p)| (c.clone(), p));
             let fuente =
                 alloc::format!("__quimera_funcion = function anonymous({}\n) {{\n{cuerpo}\n}};", parametros.join(","));
-            m.ejecutar(&fuente).map_err(|e| m.mundo.cadena(&e.mensaje))?;
+            m.ejecutar(&fuente).map_err(|e| m.error_desde_texto(&e.mensaje))?;
             let clave = m.mundo.cadenas.internar("__quimera_funcion");
             let global = m.pila(R_GLOBAL);
             let f = m.mundo.leer(global, clave).unwrap_or(Valor::INDEFINIDO);

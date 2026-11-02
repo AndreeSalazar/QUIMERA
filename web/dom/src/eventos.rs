@@ -95,7 +95,7 @@ fn llamar(m: &mut Motor, est: &Estado, f: Valor, nodo: NodoId, marca_evento: usi
     let este = envolver(m, est, nodo);
     let (f, ev) = (m.de_pila(marca), m.de_pila(marca_evento));
     if let Err(e) = m.llamar_funcion(f, este, &[ev]) {
-        est.errores.borrow_mut().push(e.mensaje);
+        est.errores.borrow_mut().push(e.completo());
     }
     m.soltar_pila(marca);
     microtareas(m, est);
@@ -112,7 +112,7 @@ fn manejador_de_atributo(m: &mut Motor, est: &Estado, nodo: NodoId, tipo: &str) 
         alloc::string::String::from(e.atributo(&format!("on{tipo}"))?)
     };
     if let Err(e) = m.ejecutar(&format!("__quimera_manejador = function (event) {{\n{codigo}\n}};")) {
-        est.errores.borrow_mut().push(e.mensaje);
+        est.errores.borrow_mut().push(e.completo());
         return None;
     }
     let g = m.global();
@@ -240,7 +240,7 @@ pub(crate) fn correr_temporizadores(m: &mut Motor, est: &Estado, ahora: f64) {
         let marca = m.apilar(f);
         let g = m.global();
         if let Err(e) = m.llamar_funcion(m.de_pila(marca), g, &[]) {
-            est.errores.borrow_mut().push(e.mensaje);
+            est.errores.borrow_mut().push(e.completo());
         }
         m.soltar_pila(marca);
         microtareas(m, est);

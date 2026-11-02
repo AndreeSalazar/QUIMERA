@@ -120,7 +120,7 @@ impl Parser {
                 }
                 Miembro::Campo { estatico, clave, valor } => cuerpo.push(este_campo(clave, valor, dueno(estatico))),
                 Miembro::Accesor { estatico, clave, es_get, funcion } => {
-                    cuerpo.push(Sent::Expr(definir_accesor(dueno(estatico), clave, es_get, funcion)));
+                    cuerpo.push(Sent::Expr(definir_accesor(dueno(estatico), clave, es_get, funcion, false)));
                 }
             }
         }

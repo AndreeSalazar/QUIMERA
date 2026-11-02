@@ -293,6 +293,7 @@ pub fn analizar_modulo(fuente: &str) -> Resultado<Vec<Sent>> {
             Clave::Nombre(nombre),
             true,
             getter,
+            true,
         )));
     }
     for t in m.reexportar {

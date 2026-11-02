@@ -65,7 +65,7 @@ función 4 main: 0 parámetros, 4 registros, entorno 0
 
 Los temporales se llaman `\u{1}t3`: no se pueden escribir desde JavaScript y no salen en `for-in`. Los campos `#privados` son propiedades normales con ese nombre (no se enumeran, pero no son privados de verdad).
 
-**Ámbitos de bloque** (`bloques.rs`): el compilador reparte las variables por función, así que un `let`/`const`/`catch (e)` de bloque que tapa a otra variable con el mismo nombre se renombra antes de compilar (`n` → `n\u{1}1`), con sus usos dentro del bloque. Antes, `let n = 1; { const n = 2; } n` daba 2: el código minificado lo hace a menudo (highlight.js reutiliza `n` así). Falta una variable nueva por vuelta en `for (let i...)` cuando la capturan funciones.
+**Ámbitos de bloque** (`bloques.rs`): el compilador reparte las variables por función, así que un `let`/`const`/`catch (e)` de bloque que tapa a otra variable con el mismo nombre se renombra antes de compilar (`n` → `n\u{1}1`), con sus usos dentro del bloque. Antes, `let n = 1; { const n = 2; } n` daba 2: el código minificado lo hace a menudo (highlight.js reutiliza `n` así). También se renombra cuando choca con una variable de una función de fuera: `t = Object.keys(r); for (let r = 0; ...)` tapaba la `r` de fuera también antes del bucle (lo hacía color-convert en GitHub). Falta una variable nueva por vuelta en `for (let i...)` cuando la capturan funciones.
 
 **`get`/`set`** en objetos y clases: `Object.defineProperty` tras crear el objeto o la clase. **`{__proto__: p}`**: `Object.setPrototypeOf`.
 

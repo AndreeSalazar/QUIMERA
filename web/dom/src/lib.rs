@@ -183,10 +183,13 @@ const DOCUMENTO_JS: &str = r"(function (w, d) {
       addEventListener: function () {}, removeEventListener: function () {} };
   };
   w.getComputedStyle = function (el) { return el.style; };
-  var inicio = Date.now();
-  w.performance = { now: function () { return Date.now() - inicio; }, timeOrigin: inicio,
+  // El origen se toma en la primera lectura: el reloj real llega después de este código.
+  var inicio = null;
+  function origen() { if (inicio === null) inicio = Date.now(); return inicio; }
+  w.performance = { now: function () { return Date.now() - origen(); },
     mark: function () {}, measure: function () {}, getEntriesByName: function () { return []; },
     getEntriesByType: function () { return []; } };
+  Object.defineProperty(w.performance, 'timeOrigin', { get: origen, enumerable: true });
   w.requestIdleCallback = function (f) { return setTimeout(function () { f({ didTimeout: false, timeRemaining: function () { return 50; } }); }, 1); };
   w.cancelIdleCallback = clearTimeout;
   function Observador() { this.observe = this.unobserve = this.disconnect = function () {}; this.takeRecords = function () { return []; }; }
@@ -269,12 +272,14 @@ impl Dom {
         let mut motor = Motor::default();
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));
         puente::preparar(&mut motor, &estado);
+        motor.fijar_origen("quimera:dom");
         for codigo in [ALMACENES, red::RED_JS, red::MODULOS_JS, interfaces::INTERFACES_JS, DOCUMENTO_JS] {
             if let Err(e) = motor.ejecutar(codigo) {
-                estado.errores.borrow_mut().push(e.mensaje);
+                estado.errores.borrow_mut().push(e.completo());
             }
         }
         motor.fijar_biblioteca();
+        motor.fijar_origen(url);
         Dom { motor, estado, consola_leida: 0 }
     }
 
@@ -332,7 +337,7 @@ impl Dom {
             let texto = self.estado.doc.borrow().texto(id);
             let t = self.motor.cadena(&texto);
             if let Err(e) = self.motor.llamar_global("__quimera_mapa_importaciones", &[t]) {
-                self.estado.errores.borrow_mut().push(e.mensaje);
+                self.estado.errores.borrow_mut().push(e.completo());
             }
         }
         let (modulos, clasicos): (Vec<_>, Vec<_>) = scripts.into_iter().partition(|(_, t, _)| es_modulo(t.as_deref()));
@@ -342,7 +347,10 @@ impl Dom {
                 None => Some(self.estado.doc.borrow().texto(id)),
             };
             match codigo {
-                Some(c) => self.ejecutar(&c),
+                Some(c) => {
+                    let origen = src.clone().unwrap_or_else(|| self.estado.url.clone());
+                    self.ejecutar_desde(&c, &origen);
+                }
                 None => {
                     self.estado.errores.borrow_mut().push(format!("no llegó el script {}", src.unwrap_or_default()))
                 }
@@ -361,7 +369,7 @@ impl Dom {
                 }
             };
             if let Err(e) = r {
-                self.estado.errores.borrow_mut().push(e.mensaje);
+                self.estado.errores.borrow_mut().push(e.completo());
             }
         }
         microtareas(&mut self.motor, &self.estado);
@@ -369,10 +377,25 @@ impl Dom {
         self.despachar(NodoId(VENTANA), "load");
     }
 
+    /// El reloj de `Date` (milisegundos desde 1970) y el azar del sistema (`crypto`,
+    /// `Math.random`). El DOM es `no_std`: los da quien lo usa (la ventana).
+    pub fn con_sistema(&mut self, reloj: fn() -> f64, entropia: fn(&mut [u8])) {
+        self.motor.con_reloj(reloj);
+        self.motor.con_entropia(entropia);
+    }
+
+    /// Como [`Dom::ejecutar`], con el código de `origen` (la URL del script, para las trazas).
+    pub fn ejecutar_desde(&mut self, codigo: &str, origen: &str) {
+        self.motor.fijar_origen(origen);
+        self.ejecutar(codigo);
+        let pagina = self.estado.url.clone();
+        self.motor.fijar_origen(&pagina);
+    }
+
     /// Ejecuta código en la página (sus errores van a [`Dom::errores`]).
     pub fn ejecutar(&mut self, codigo: &str) {
         if let Err(e) = self.motor.ejecutar(codigo) {
-            self.estado.errores.borrow_mut().push(e.mensaje);
+            self.estado.errores.borrow_mut().push(e.completo());
         }
         microtareas(&mut self.motor, &self.estado);
     }

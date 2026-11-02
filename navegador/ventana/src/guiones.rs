@@ -8,6 +8,27 @@ use crate::pagina::Pagina;
 use quimera_dom::Dom;
 use std::time::Instant;
 
+/// La hora para `Date`: milisegundos desde 1970.
+fn reloj() -> f64 {
+    let ahora = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH);
+    ahora.map_or(0.0, |d| d.as_secs_f64() * 1e3)
+}
+
+/// Azar para `crypto.getRandomValues` y `Math.random`: SipHash con claves que la biblioteca
+/// estándar saca del sistema operativo (`RandomState`), sobre un contador.
+fn entropia(bytes: &mut [u8]) {
+    use std::hash::{BuildHasher, Hasher};
+    use std::sync::atomic::{AtomicU64, Ordering};
+    static CONTADOR: AtomicU64 = AtomicU64::new(0);
+    let estado = std::collections::hash_map::RandomState::new();
+    for trozo in bytes.chunks_mut(8) {
+        let mut h = estado.build_hasher();
+        h.write_u64(CONTADOR.fetch_add(1, Ordering::Relaxed));
+        let n = trozo.len();
+        trozo.copy_from_slice(&h.finish().to_le_bytes()[..n]);
+    }
+}
+
 /// La página con su JavaScript, y desde cuándo corre su reloj.
 pub struct Guion {
     pub dom: Dom,
@@ -19,6 +40,7 @@ impl Guion {
     pub fn preparar(pagina: &Pagina) -> Guion {
         let inicio = Instant::now();
         let mut dom = Dom::nuevo(pagina.documento(), &pagina.url.to_string());
+        dom.con_sistema(reloj, entropia);
         dom.ejecutar_scripts(&|src| pagina.script(src));
         let mut g = Guion { dom, inicio };
         g.informar();

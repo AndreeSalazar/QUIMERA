@@ -26,6 +26,8 @@ pub mod operaciones;
 #[cfg(feature = "perfil")]
 mod perfil;
 mod propiedades;
+mod proxy;
+mod trazas;
 
 use alloc::rc::Rc;
 use alloc::string::String;
@@ -58,6 +60,20 @@ const CABECERA: usize = 4;
 pub struct ErrorJs {
     /// El mensaje (para una excepción, su valor convertido a texto).
     pub mensaje: String,
+    /// La pila de llamadas donde nació (las líneas `    at ...` de su `stack`), o vacío.
+    pub traza: String,
+}
+
+impl ErrorJs {
+    /// Un error sin traza (de sintaxis, del anfitrión).
+    pub fn nuevo(mensaje: String) -> ErrorJs {
+        ErrorJs { mensaje, traza: String::new() }
+    }
+
+    /// El mensaje seguido de su traza, como lo muestra la consola de un navegador.
+    pub fn completo(&self) -> String {
+        alloc::format!("{}{}", self.mensaje, self.traza)
+    }
 }
 
 /// El primer nivel de la caché en línea de una instrucción: la forma vista y el hueco de una
@@ -82,6 +98,8 @@ struct Cargada {
     desplazamiento: u32,
     /// Una caché por instrucción.
     caches: Vec<Cache>,
+    /// De dónde viene su programa (la URL del script), para las trazas.
+    origen: Rc<str>,
 }
 
 /// Una llamada en curso.
@@ -120,6 +138,8 @@ pub struct Motor {
     azar: u64,
     /// Reloj del anfitrión en milisegundos (para `Date`). Sin reloj, cada lectura avanza 1 ms.
     reloj: Option<fn() -> f64>,
+    /// Azar del sistema que da el anfitrión (para `crypto.getRandomValues`).
+    entropia: Option<fn(&mut [u8])>,
     tiempo_falso: f64,
     /// Cuántas claves de cada raíz fija son de la biblioteca (no enumerables en `for-in`).
     ocultas: [usize; N_FIJAS],
@@ -137,10 +157,12 @@ pub struct Motor {
     cadenas_ic: Vec<u32>,
     /// El navegador (o quien use el motor), con sus funciones y objetos.
     anfitrion: Option<Rc<dyn Anfitrion>>,
-    /// Ya se definió algún accesor (`get`/`set`): hasta entonces no se buscan.
-    hay_accesores: bool,
+    /// Las claves que tienen algún accesor (`get`/`set`), como filtro de bits (`accesores.rs`).
+    filtro_accesores: [u64; accesores::N_FILTRO],
     /// Cuántos símbolos se han creado (para que cada uno sea único).
     simbolos: u32,
+    /// De dónde viene lo que se compila ahora (ver [`Motor::fijar_origen`]).
+    origen: Rc<str>,
     /// Cuántas veces y cuánto tiempo se lleva cada tipo de instrucción (característica `perfil`).
     #[cfg(feature = "perfil")]
     perfil: perfil::Perfil,
@@ -170,6 +192,7 @@ impl Motor {
             salida: Vec::new(),
             azar: 0x2545_F491_4F6C_DD1D,
             reloj: None,
+            entropia: None,
             tiempo_falso: 0.0,
             ocultas: [0; N_FIJAS],
             formas_ocultas: alloc::collections::BTreeMap::new(),
@@ -179,8 +202,9 @@ impl Motor {
             sitios: Vec::new(),
             cadenas_ic: Vec::new(),
             anfitrion: None,
-            hay_accesores: false,
+            filtro_accesores: [0; accesores::N_FILTRO],
             simbolos: 0,
+            origen: Rc::from(""),
             #[cfg(feature = "perfil")]
             perfil: perfil::Perfil::default(),
         };
@@ -205,6 +229,26 @@ impl Motor {
     /// Da al motor un reloj (milisegundos) para `Date`. `no_std`: el reloj lo pone quien lo usa.
     pub fn con_reloj(&mut self, reloj: fn() -> f64) {
         self.reloj = Some(reloj);
+    }
+
+    /// Da al motor una fuente de azar del sistema: la usa `crypto.getRandomValues` y siembra
+    /// `Math.random` (sin ella, `Math.random` repite la misma secuencia en cada página).
+    pub fn con_entropia(&mut self, entropia: fn(&mut [u8])) {
+        self.entropia = Some(entropia);
+        let mut semilla = [0u8; 8];
+        entropia(&mut semilla);
+        let s = u64::from_le_bytes(semilla);
+        if s != 0 {
+            self.azar = s; // xorshift no admite 0
+        }
+    }
+
+    /// `n` bytes de azar del sistema, si el anfitrión dio una fuente.
+    pub(crate) fn bytes_aleatorios(&self, n: usize) -> Option<Vec<u8>> {
+        let f = self.entropia?;
+        let mut v = alloc::vec![0u8; n];
+        f(&mut v);
+        Some(v)
     }
 
     /// La hora actual en milisegundos.
@@ -250,15 +294,22 @@ impl Motor {
                 })
                 .collect();
             let caches = alloc::vec![CACHE_VACIA; f.codigo.len()];
-            self.funciones.push(Cargada { f, constantes, atomos: atomos.clone(), desplazamiento, caches });
+            let origen = self.origen.clone();
+            self.funciones.push(Cargada { f, constantes, atomos: atomos.clone(), desplazamiento, caches, origen });
         }
         desplazamiento
+    }
+
+    /// De dónde viene lo que se compile a partir de ahora (la URL de un script): sale en las
+    /// trazas de los errores (`stack`).
+    pub fn fijar_origen(&mut self, origen: &str) {
+        self.origen = Rc::from(origen);
     }
 
     /// Compila y ejecuta un programa. Devuelve `undefined` o el error.
     pub fn ejecutar(&mut self, fuente: &str) -> Result<Valor, ErrorJs> {
         let stencil =
-            quimera_frontend::compilar(fuente).map_err(|e| ErrorJs { mensaje: alloc::format!("SyntaxError: {e}") })?;
+            quimera_frontend::compilar(fuente).map_err(|e| ErrorJs::nuevo(alloc::format!("SyntaxError: {e}")))?;
         self.ejecutar_stencil(stencil)
     }
 
@@ -276,7 +327,7 @@ impl Motor {
     /// `(exportaciones, importar, meta)` (la llama el cargador de módulos del DOM).
     pub fn compilar_modulo(&mut self, fuente: &str) -> Result<Valor, ErrorJs> {
         let stencil = quimera_frontend::compilar_modulo(fuente)
-            .map_err(|e| ErrorJs { mensaje: alloc::format!("SyntaxError: {e}") })?;
+            .map_err(|e| ErrorJs::nuevo(alloc::format!("SyntaxError: {e}")))?;
         self.ejecutar_stencil(stencil)?;
         let clave = self.mundo.cadenas.internar("__quimera_funcion");
         let global = self.fija(R_GLOBAL);
@@ -311,7 +362,7 @@ impl Motor {
         };
         let resultado = match r {
             Ok(()) => Ok(self.mundo.m.pila()[destino]),
-            Err(e) => Err(ErrorJs { mensaje: self.texto(e) }),
+            Err(e) => Err(ErrorJs { mensaje: self.texto(e), traza: self.traza_de(e) }),
         };
         self.marcos.truncate(hasta);
         self.mundo.m.soltar_raices(base);

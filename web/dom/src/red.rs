@@ -180,7 +180,7 @@ pub(crate) const MODULOS_JS: &str = r#"(function (w) {
   function ejecutar(texto, url, m) {
     var f;
     // El error de sintaxis nombra su módulo: si no, se ve el del módulo que lo importó.
-    try { f = __quimera_modulo(texto); } catch (e) { throw new SyntaxError(url + ": " + String(e && e.message || e)); }
+    try { f = __quimera_modulo(texto, url); } catch (e) { throw new SyntaxError(url + ": " + String(e && e.message || e)); }
     m.ejecutando = true;
     var importar = function (espec) {
       try { return cargar(resolver(espec, url)); } catch (e) { return Promise.reject(e); }
@@ -190,7 +190,7 @@ pub(crate) const MODULOS_JS: &str = r#"(function (w) {
       function (e) {
         m.ejecutando = false;
         // Recuerda el módulo donde nació el error (el aviso lo da el que se cargó primero).
-        if (e && typeof e === 'object' && !e['modulo']) { try { e['modulo'] = url; } catch (x) {} }
+        if (e && typeof e === 'object' && !e['\u0001modulo']) { try { e['\u0001modulo'] = url; } catch (x) {} }
         throw e;
       }
     );
@@ -208,7 +208,7 @@ pub(crate) const MODULOS_JS: &str = r#"(function (w) {
   w.__quimera_resolver = resolver;
   w.__quimera_reexportar = function (destino, origen) {
     Object.keys(origen).forEach(function (k) {
-      if (k !== 'default' && !(k in destino)) Object.defineProperty(destino, k, { get: function () { return origen[k]; } });
+      if (k !== 'default' && !(k in destino)) Object.defineProperty(destino, k, { get: function () { return origen[k]; }, enumerable: true });
     });
   };
   w.__quimera_importar_dinamico = function (espec) {
@@ -216,9 +216,13 @@ pub(crate) const MODULOS_JS: &str = r#"(function (w) {
   };
   function avisar(donde) {
     return function (e) {
-      var origen = e && e['modulo'];
+      var origen = e && e['\u0001modulo'];
       var de = origen && origen !== donde.replace(/^el módulo /, '') ? ' (en ' + origen + ')' : '';
-      console.error('Error en ' + donde + de + ': ' + String(e && e.message || e));
+      // La traza de su `stack` (las líneas «    at ...»), si la tiene.
+      var pila = e && typeof e.stack === 'string' ? e.stack : '';
+      var i = pila.indexOf('\n    at ');
+      var traza = i < 0 ? '' : pila.slice(i);
+      console.error('Error en ' + donde + de + ': ' + String(e && e.message || e) + traza);
     };
   }
   w.__quimera_modulo_en_linea = function (texto) {
@@ -431,7 +435,7 @@ pub(crate) fn scripts_insertados(m: &mut Motor, est: &Estado, nodo: NodoId) {
             None => {
                 let codigo = est.doc.borrow().texto(id);
                 if let Err(e) = m.ejecutar(&codigo) {
-                    est.errores.borrow_mut().push(e.mensaje);
+                    est.errores.borrow_mut().push(e.completo());
                 }
             }
         }
@@ -451,7 +455,7 @@ impl Dom {
         if let Some(nodo) = script {
             match r {
                 Ok(resp) if (200..300).contains(&resp.estado) => {
-                    self.ejecutar(&resp.cuerpo);
+                    self.ejecutar_desde(&resp.cuerpo, &resp.url);
                     self.despachar(NodoId(nodo), "load");
                 }
                 _ => {
@@ -483,7 +487,7 @@ impl Dom {
             }
         };
         if let Err(e) = resultado {
-            self.estado.errores.borrow_mut().push(e.mensaje);
+            self.estado.errores.borrow_mut().push(e.completo());
         }
         microtareas(&mut self.motor, &self.estado);
     }

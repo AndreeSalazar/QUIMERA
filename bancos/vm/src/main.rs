@@ -130,6 +130,16 @@ fn boa(codigo: &str) -> (Duration, String) {
 /// Ejecuta cada script con su `main()` y dice si funciona, su puntuación o el primer error.
 fn probar(rutas: &[String]) {
     // `--rapido`: solo QUIMERA con los benchmarks de Boa (para comparar cambios en segundos).
+    if rutas.first().is_some_and(|r| r == "--v8q") {
+        let mut log = 0.0;
+        for nombre in V8 {
+            let q = quimera_v8(&leer(nombre));
+            log += q.ln();
+            println!("{nombre:<30} {q:>8.0}");
+        }
+        println!("media geométrica {:.0}", (log / V8.len() as f64).exp());
+        return;
+    }
     if rutas.first().is_some_and(|r| r == "--rapido") {
         let mut log = 0.0;
         for nombre in SCRIPTS {

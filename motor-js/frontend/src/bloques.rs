@@ -21,17 +21,15 @@ use alloc::format;
 use alloc::string::String;
 use alloc::vec::Vec;
 
-/// Los ámbitos abiertos, de fuera hacia dentro: nombre → cómo se llama de verdad. `funcion`
-/// marca dónde empieza la función actual (más allá, una colisión no importa).
+/// Los ámbitos abiertos, de fuera hacia dentro: nombre → cómo se llama de verdad.
 struct Renombrar {
     ambitos: Vec<BTreeMap<String, String>>,
-    funcion: usize,
     contador: usize,
 }
 
 /// Renombra las declaraciones de bloque que tapan a otra de la misma función.
 pub fn renombrar(programa: &mut [Sent]) {
-    let mut r = Renombrar { ambitos: Vec::new(), funcion: 0, contador: 0 };
+    let mut r = Renombrar { ambitos: Vec::new(), contador: 0 };
     let mut nivel = BTreeMap::new();
     for n in nombres_de_funcion(programa, &[]) {
         nivel.insert(n.clone(), n);
@@ -71,11 +69,15 @@ impl Renombrar {
         self.ambitos.iter().rev().find_map(|a| a.get(n))
     }
 
-    /// Abre un ámbito de bloque con estos nombres; los que ya existen en la función se renombran.
+    /// Abre un ámbito de bloque con estos nombres; los que ya existen fuera se renombran.
+    ///
+    /// También los de funciones de fuera: el compilador pone un `let` de bloque en el nivel de
+    /// su función, así que `t = r; for (let r = 0; ...)` taparía la `r` de fuera también antes
+    /// del bucle (lo hace el código minificado de GitHub). Renombrar es siempre seguro.
     fn abrir(&mut self, nombres: Vec<String>) {
         let mut a = BTreeMap::new();
         for n in nombres {
-            let choca = self.ambitos[self.funcion..].iter().any(|x| x.contains_key(&n));
+            let choca = self.ambitos.iter().any(|x| x.contains_key(&n));
             let nuevo = if choca {
                 self.contador += 1;
                 format!("{n}\u{1}{}", self.contador)
@@ -214,7 +216,6 @@ impl Renombrar {
         if !f.flecha {
             nivel.insert(String::from("arguments"), String::from("arguments"));
         }
-        let antes = core::mem::replace(&mut self.funcion, self.ambitos.len());
         self.ambitos.push(nivel);
         for p in &mut f.params {
             if let Some(d) = &mut p.defecto {
@@ -223,7 +224,6 @@ impl Renombrar {
         }
         self.sentencias(&mut f.cuerpo);
         self.ambitos.pop();
-        self.funcion = antes;
     }
 
     fn expr(&mut self, e: &mut Expr) {

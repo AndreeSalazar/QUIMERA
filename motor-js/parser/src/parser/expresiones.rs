@@ -505,7 +505,7 @@ impl Parser {
         };
         // `Object.defineProperty` devuelve el objeto: se encadenan.
         for (clave, es_get, f) in accesores {
-            objeto = definir_accesor(objeto, clave, es_get, f);
+            objeto = definir_accesor(objeto, clave, es_get, f, true);
         }
         if let Some(p) = proto {
             let poner = miembro(Expr::Ident(String::from("Object")), "setPrototypeOf");

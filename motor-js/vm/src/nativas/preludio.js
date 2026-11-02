@@ -22,6 +22,7 @@
     function E(mensaje) {
       var e = this instanceof E ? this : Object.create(E.prototype);
       if (mensaje !== undefined) e.message = String(mensaje);
+      e.stack = String(e) + __quimera_traza();
       return e;
     }
     E.prototype = Object.create(Error.prototype);
@@ -722,6 +723,9 @@
   });
 
   definir(Object.prototype, {
+    propertyIsEnumerable: function (k) {
+      return Object.prototype.hasOwnProperty.call(this, k) && Object.keys(this).indexOf(String(k)) >= 0;
+    },
     isPrototypeOf: function (o) {
       while (o !== null && (typeof o === 'object' || typeof o === 'function')) {
         o = Object.getPrototypeOf(o);
@@ -730,6 +734,30 @@
       return false;
     }
   });
+
+  // `Reflect`: las operaciones de los objetos como funciones (lo que hace un Proxy sin trampa).
+  global.Reflect = {
+    get: function (o, k) { return o[k]; },
+    set: function (o, k, v) { o[k] = v; return true; },
+    has: function (o, k) { return k in o; },
+    deleteProperty: function (o, k) { return delete o[k]; },
+    ownKeys: function (o) { return Object.getOwnPropertyNames(o); },
+    getPrototypeOf: Object.getPrototypeOf,
+    setPrototypeOf: function (o, p) { Object.setPrototypeOf(o, p); return true; },
+    defineProperty: function (o, k, d) { Object.defineProperty(o, k, d); return true; },
+    getOwnPropertyDescriptor: Object.getOwnPropertyDescriptor,
+    apply: function (f, este, args) { return Function.prototype.apply.call(f, este, args); },
+    // Con `nuevo` (el `new.target` de las clases compiladas por Babel/TypeScript): el objeto
+    // nace con su prototipo, y si `F` devuelve otro objeto (un elemento), lo toma también.
+    construct: function (F, args, nuevo) {
+      if (nuevo === undefined || nuevo === F) return __quimera_nuevo(F, args);
+      var o = Object.create(nuevo.prototype), r = F.apply(o, args);
+      if (r === null || (typeof r !== 'object' && typeof r !== 'function')) return o;
+      if (Object.getPrototypeOf(r) !== nuevo.prototype) Object.setPrototypeOf(r, nuevo.prototype);
+      return r;
+    }
+  };
+  global.Reflect[Symbol.toStringTag] = 'Reflect';
 
   // `Object.prototype.toString` (nativo) mira Symbol.toStringTag.
   Map.prototype[Symbol.toStringTag] = 'Map';
