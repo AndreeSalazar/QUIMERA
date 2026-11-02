@@ -241,6 +241,11 @@ impl Renombrar {
                 args.iter_mut().for_each(|a| self.expr(a));
             }
             Expr::Secuencia(v) => v.iter_mut().for_each(|x| self.expr(x)),
+            Expr::Rendir { valor, .. } => {
+                if let Some(v) = valor {
+                    self.expr(v);
+                }
+            }
             Expr::Este | Expr::Numero(_) | Expr::Cadena(_) | Expr::Regex(..) | Expr::Bool(_) | Expr::Nulo => {}
         }
     }

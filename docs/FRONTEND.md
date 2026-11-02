@@ -69,7 +69,11 @@ Los temporales se llaman `\u{1}t3`: no se pueden escribir desde JavaScript y no 
 
 **`get`/`set`** en objetos y clases: `Object.defineProperty` tras crear el objeto o la clase. **`{__proto__: p}`**: `Object.setPrototypeOf`.
 
-**Avisa con un error claro**: generadores, `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
+**Generadores y `async`**: `function*`, `*m()`, `yield`, `yield*`; `async function`, flechas y métodos `async`, `await`. Las `async` llegan al compilador como un generador envuelto (ver [VM.md](VM.md#generadores-y-asyncawait)).
+
+**El crate**: el léxico y el parser son `quimera-parser` (nivel 2) y el análisis de ámbitos y el compilador, `quimera-frontend` (nivel 3). Se partió al pasar de 5.000 líneas.
+
+**Avisa con un error claro**: generadores asíncronos, `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
 
 Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y los 8 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay, RegExp). Los 15 se analizan, compilan y ejecutan.
 

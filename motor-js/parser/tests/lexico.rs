@@ -1,6 +1,6 @@
 //! Léxico: números, cadenas, signos, comentarios y saltos de línea.
 
-use quimera_frontend::lexico::{Tipo, tokens};
+use quimera_parser::lexico::{Tipo, tokens};
 
 fn tipos(s: &str) -> Vec<Tipo> {
     tokens(s).unwrap().into_iter().map(|t| t.tipo).collect()

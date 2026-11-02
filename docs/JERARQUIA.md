@@ -16,7 +16,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 0 | `cimientos` | `quimera-plataforma` | Lo que se pide al sistema (tiempo, hilos, archivos) como *traits*; Linux y ULTRA lo implementan | Chromium `base` | sí |
 | 1 | `motor-js` | ✅ `quimera-gc` | GC generacional: guardería en arena + zona principal | SpiderMonkey `gc/Nursery` | sí |
 | 1 | `motor-js` | ✅ `quimera-regex` | Expresiones regulares compiladas (no depende de nada: la usan el frontend y la VM) | SpiderMonkey irregexp | sí |
-| 2 | `motor-js` | ✅ `quimera-frontend` | Parser y AST de JavaScript → bytecode tipo *Stencil* | Boa `boa_parser`, `boa_ast`; SpiderMonkey `frontend/Stencil` | sí |
+| 2 | `motor-js` | ✅ `quimera-parser` | Léxico, parser y AST de JavaScript (con la sintaxis moderna convertida al analizar) | Boa `boa_parser`, `boa_ast` | sí |
 | 2 | `web` | ✅ `quimera-html` | Tokenizador y constructor de árbol HTML5 | html5ever (Servo) | sí |
 | 2 | `web` | ✅ `quimera-css` | Parser de CSS y selectores | Stylo (Servo) | sí |
 | 2 | `grafico` | ✅ `quimera-gpu` | GPU con **wgpu**: superficies, texturas, *pipelines* | WebRender, Servo | no (wgpu usa `std`) |
@@ -26,6 +26,7 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 3 | `motor-js` | ✅ `quimera-objetos` | *Shapes*, elementos densos, propiedades | SpiderMonkey `NativeObject` | sí |
 | 3 | `motor-js` | ✅ `quimera-ic` → dentro de `quimera-vm` (`ic.rs`) | Cachés en línea con un mini-lenguaje común: guardas de forma por la cadena de prototipos + acción. Vive en la VM porque necesita los objetos (nivel 3) y no puede ser un crate del mismo nivel | SpiderMonkey CacheIR | sí |
 | 3 | `proceso` | `quimera-aislamiento` | Procesos, IPC y sandbox (seccomp en ULTRA) | Chromium `sandbox`, `mojo` | no |
+| 3 | `motor-js` | ✅ `quimera-frontend` | Ámbitos y compilador: árbol → bytecode de registros (Stencil) | SpiderMonkey `frontend/` | sí |
 | 4 | `motor-js` | ✅ `quimera-vm` | Intérprete de registros, un único bucle | SpiderMonkey `Interpreter.cpp` | sí |
 | 5 | `motor-js` | `quimera-builtins` | Array, Map, Promise, JSON... | Boa `builtins` | sí |
 | 6 | `motor-js` | `quimera-js` | **La interfaz del motor**: lo único que ve el resto del navegador | — (Servo no la tiene) | sí |

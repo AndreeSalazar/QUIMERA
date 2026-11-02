@@ -5,6 +5,7 @@ members = [
     "cimientos/comprimir",
     "motor-js/gc",
     "motor-js/regex",
+    "motor-js/parser",
     "motor-js/frontend",
     "motor-js/objetos",
     "motor-js/vm",
@@ -40,6 +41,7 @@ quimera-valor = { path = "cimientos/valor" }
 quimera-comprimir = { path = "cimientos/comprimir" }
 quimera-gc = { path = "motor-js/gc" }
 quimera-regex = { path = "motor-js/regex" }
+quimera-parser = { path = "motor-js/parser" }
 quimera-frontend = { path = "motor-js/frontend" }
 quimera-objetos = { path = "motor-js/objetos" }
 quimera-vm = { path = "motor-js/vm" }

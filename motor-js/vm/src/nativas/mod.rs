@@ -33,6 +33,10 @@ const NO_ENUMERAR: u32 = 14;
 const SIMBOLO: u32 = 15;
 const SIMBOLO_FOR: u32 = 16;
 const SIMBOLO_KEY_FOR: u32 = 17;
+/// `gen.next(x)`, `gen.return(x)`, `gen.throw(x)` (`generadores.rs`).
+const GEN_NEXT: u32 = 18;
+const GEN_RETURN: u32 = 19;
+const GEN_THROW: u32 = 20;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -77,6 +81,10 @@ pub(crate) fn preparar(m: &mut Motor) {
     constructor(m, "Function", FUNCION, R_FUNCION);
     definir_nativa(m, R_GLOBAL, "__quimera_no_enumerar", NO_ENUMERAR);
     simbolos(m);
+    let generador = nuevo_objeto(m, R_GLOBAL, "__quimera_generador");
+    definir_nativa(m, generador, "next", GEN_NEXT);
+    definir_nativa(m, generador, "return", GEN_RETURN);
+    definir_nativa(m, generador, "throw", GEN_THROW);
     coleccion::preparar(m, objeto, arreglo);
     numeros::preparar(m);
     texto::preparar(m);
@@ -183,6 +191,11 @@ fn arg(m: &Motor, ll: &Llamada, i: usize) -> Valor {
 pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor> {
     if id == FUNCION_CALL {
         return llamar_call(m, ll);
+    }
+    if (GEN_NEXT..=GEN_THROW).contains(&id) {
+        use crate::generadores::{Modo, reanudar};
+        let modo = [Modo::Siguiente, Modo::Retornar, Modo::Lanzar][(id - GEN_NEXT) as usize];
+        return reanudar(m, &ll, modo);
     }
     if id >= crate::anfitrion::GRUPO_ANFITRION {
         let args = crate::Argumentos { este: ll.este, args: ll.args, n: ll.n };

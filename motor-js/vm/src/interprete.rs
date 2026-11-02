@@ -21,6 +21,8 @@ pub(crate) enum Flujo {
     Recargar,
     /// `return` del marco actual.
     Retorno(Valor),
+    /// `yield`: el generador se pausa con este valor; lo enviado al reanudar va a ese registro.
+    Suspende(Valor, Reg),
 }
 
 impl Motor {
@@ -53,6 +55,10 @@ impl Motor {
                     Ok(Flujo::Recargar) => break,
                     Ok(Flujo::Retorno(v)) => {
                         self.cerrar_marco(v);
+                        break;
+                    }
+                    Ok(Flujo::Suspende(v, dst)) => {
+                        self.suspender(v, dst, pc + 1);
                         break;
                     }
                     Err(exc) => {
@@ -269,6 +275,7 @@ impl Motor {
                 Llamada { f: abs(f), este: abs(f), args: abs(args), n: n as usize, destino: abs(dst), construir: true }
             }
             Retornar { src } => return Ok(Flujo::Retorno(self.r(base, src))),
+            Rendir { dst, src } => return Ok(Flujo::Suspende(self.r(base, src), dst)),
             Lanzar { src } => return Err(self.r(base, src)),
             Intentar { captura } => {
                 self.proteger(captura as usize);

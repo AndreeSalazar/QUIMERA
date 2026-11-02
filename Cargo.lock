@@ -2201,7 +2201,7 @@ dependencies = [
 name = "quimera-frontend"
 version = "0.1.0"
 dependencies = [
- "quimera-regex",
+ "quimera-parser",
 ]
 
 [[package]]
@@ -2248,6 +2248,13 @@ version = "0.1.0"
 dependencies = [
  "quimera-gc",
  "quimera-valor",
+]
+
+[[package]]
+name = "quimera-parser"
+version = "0.1.0"
+dependencies = [
+ "quimera-regex",
 ]
 
 [[package]]

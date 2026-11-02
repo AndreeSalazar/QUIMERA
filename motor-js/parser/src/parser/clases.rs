@@ -29,6 +29,13 @@ use alloc::string::String;
 use alloc::vec;
 use alloc::vec::Vec;
 
+/// El cuerpo de una `async`: `return __quimera_async(function* () { cuerpo }, this, args)`.
+pub(super) fn envolver_async(cuerpo: Vec<Sent>, args: Expr, pos: crate::fuente::Pos) -> Vec<Sent> {
+    let interior = Funcion { nombre: None, params: Vec::new(), cuerpo, flecha: false, pos, generador: true };
+    let llamada = llamar("__quimera_async", vec![Expr::Funcion(Box::new(interior)), Expr::Este, args]);
+    vec![Sent::Retornar(Some(llamada))]
+}
+
 /// La clase que se está analizando (para `super`).
 pub(super) struct InfoClase {
     /// El temporal con la clase padre, si hay `extends`.
@@ -83,7 +90,8 @@ impl Parser {
             _ => true,
         });
         let hay_campos = !iniciar.is_empty();
-        let f_campos = Funcion { nombre: None, params: Vec::new(), cuerpo: iniciar, flecha: false, pos };
+        let f_campos =
+            Funcion { nombre: None, params: Vec::new(), cuerpo: iniciar, flecha: false, pos, generador: false };
         cuerpo.push(Sent::Declarar(Decl::Var, vec![(campos.clone(), Some(Expr::Funcion(Box::new(f_campos))))]));
         let constructor = self.constructor(&mut miembros, &padre, &campos, hay_campos, &interno, pos);
         cuerpo.push(Sent::Funcion(constructor));
@@ -113,7 +121,7 @@ impl Parser {
         )));
         cuerpo.push(Sent::Retornar(Some(Expr::Ident(interno))));
         self.cerrar_temporales(&mut cuerpo);
-        let iife = Funcion { nombre: None, params: Vec::new(), cuerpo, flecha: true, pos };
+        let iife = Funcion { nombre: None, params: Vec::new(), cuerpo, flecha: true, pos, generador: false };
         Ok((nombre, Expr::Llamar(Box::new(Expr::Funcion(Box::new(iife))), Vec::new())))
     }
 
@@ -146,7 +154,7 @@ impl Parser {
                     ))],
                     None => Vec::new(),
                 };
-                Funcion { nombre: None, params: Vec::new(), cuerpo, flecha: false, pos }
+                Funcion { nombre: None, params: Vec::new(), cuerpo, flecha: false, pos, generador: false }
             }
         };
         if padre.is_none() && hay_campos {
@@ -181,8 +189,13 @@ impl Parser {
                 miembros.push(Miembro::Accesor { estatico, clave, es_get, funcion });
                 continue;
             }
-            if (self.es_palabra("async") && modificador(self)) || self.es("*") {
-                return error(pos, "los métodos async y los generadores todavía no están en QUIMERA");
+            let asincrona = self.es_palabra("async") && modificador(self) && !self.token(1).salto_antes;
+            if asincrona {
+                self.avanzar();
+            }
+            let generador = self.tomar("*");
+            if asincrona && generador {
+                return error(pos, "los generadores asíncronos (async *m) todavía no están en QUIMERA");
             }
             if estatico && self.es("{") {
                 return error(pos, "los bloques static {} todavía no están en QUIMERA");
@@ -193,7 +206,7 @@ impl Parser {
                     c.estatico = estatico;
                 }
                 let nombre = if let Clave::Nombre(n) = &clave { Some(n.clone()) } else { None };
-                let funcion = self.funcion_de_metodo(nombre, pos)?;
+                let funcion = self.funcion_con(nombre, pos, generador, asincrona)?;
                 miembros.push(Miembro::Metodo { estatico, clave, funcion });
             } else {
                 let valor = if self.tomar("=") {
@@ -217,24 +230,45 @@ impl Parser {
     /// Un valor que necesita temporales: `(function () { var t...; return v; }).call(this)`.
     fn envolver_en_funcion(&mut self, mut decl: Vec<Sent>, v: Expr, pos: crate::fuente::Pos) -> Expr {
         decl.push(Sent::Retornar(Some(v)));
-        let f = Funcion { nombre: None, params: Vec::new(), cuerpo: decl, flecha: false, pos };
+        let f = Funcion { nombre: None, params: Vec::new(), cuerpo: decl, flecha: false, pos, generador: false };
         Expr::Llamar(Box::new(miembro(Expr::Funcion(Box::new(f)), "call")), vec![Expr::Este])
     }
 
     /// Los parámetros y el cuerpo de un método (o de una función con nombre ya leído).
     pub(super) fn funcion_de_metodo(&mut self, nombre: Option<String>, pos: crate::fuente::Pos) -> Resultado<Funcion> {
+        self.funcion_con(nombre, pos, false, false)
+    }
+
+    /// Como [`Parser::funcion_de_metodo`], para un generador (`*m() {}`) o una `async`.
+    ///
+    /// Una `async` se convierte en una función normal que devuelve
+    /// `__quimera_async(function* () { cuerpo }, this, arguments)`: dentro, cada `await x` es un
+    /// `yield x`, y el ayudante del preludio sigue al generador con promesas.
+    pub(super) fn funcion_con(
+        &mut self,
+        nombre: Option<String>,
+        pos: crate::fuente::Pos,
+        generador: bool,
+        asincrona: bool,
+    ) -> Resultado<Funcion> {
+        self.contextos.push((generador, asincrona));
         self.abrir_temporales();
         let r = self.firma().and_then(|f| Ok((f, self.bloque()?)));
         let (mut firma, mut cuerpo): (Firma, Vec<Sent>) = match r {
             Ok(x) => x,
             Err(e) => {
                 self.temporales.pop();
+                self.contextos.pop();
                 return Err(e);
             }
         };
         Self::prologo(&mut firma, &mut cuerpo);
         self.cerrar_temporales(&mut cuerpo);
-        Ok(Funcion { nombre, params: firma.params, cuerpo, flecha: false, pos })
+        self.contextos.pop();
+        if asincrona {
+            cuerpo = envolver_async(cuerpo, Expr::Ident(String::from("arguments")), pos);
+        }
+        Ok(Funcion { nombre, params: firma.params, cuerpo, flecha: false, pos, generador: generador && !asincrona })
     }
 
     /// `super(...)`, `super.m(...)`, `super.x`, `super[k]` dentro de una clase con `extends`.

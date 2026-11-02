@@ -212,6 +212,8 @@ pub enum Instr {
     FinIntentar,
     /// Al llegar a `captura`: guarda la excepción.
     Excepcion { dst: Reg },
+    /// `yield src`: pausa el generador. Al reanudarlo con `next(x)`, `dst = x`.
+    Rendir { dst: Reg, src: Reg },
 }
 
 /// Una función compilada.
@@ -229,6 +231,8 @@ pub struct Funcion {
     pub flecha: bool,
     /// Registro donde la máquina deja el arreglo `arguments` al llamarla (solo si lo usa).
     pub argumentos: Option<Reg>,
+    /// Es un generador (`function*`): llamarla crea un generador en vez de ejecutarla.
+    pub generador: bool,
     /// Las instrucciones.
     pub codigo: Vec<Instr>,
     /// Sus constantes.
@@ -294,6 +298,7 @@ impl Stencil {
             Este { dst } => alloc::format!("r{dst} = this"),
             FuncionActual { dst } => alloc::format!("r{dst} = función actual"),
             Mover { dst, src } => alloc::format!("r{dst} = r{src}"),
+            Rendir { dst, src } => alloc::format!("r{dst} = yield r{src}"),
             Binaria { op, dst, a, b } => alloc::format!("r{dst} = r{a} {op:?} r{b}"),
             BinariaInm { op, dst, a, valor } => alloc::format!("r{dst} = r{a} {op:?} {valor}"),
             Unaria { op, dst, a } => alloc::format!("r{dst} = {op:?} r{a}"),

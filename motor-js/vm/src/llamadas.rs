@@ -35,6 +35,15 @@ impl Motor {
     pub(crate) fn llamar(&mut self, ll: Llamada) -> Result<bool, Valor> {
         let f = self.pila(ll.f);
         if let Some(datos) = self.mundo.funcion(f) {
+            let generador = self.funciones.get(datos.0 as usize).is_some_and(|c| c.f.generador);
+            if generador {
+                if ll.construir {
+                    return Err(self.error("TypeError", "un generador no es un constructor"));
+                }
+                self.abrir_marco(datos, ll, Valor::INDEFINIDO);
+                self.crear_generador();
+                return Ok(false);
+            }
             let nuevo = if ll.construir { self.objeto_para_new(ll.f, datos.0)? } else { Valor::INDEFINIDO };
             // `new` puede haber movido la función: sus datos se vuelven a leer.
             let datos = if ll.construir { self.mundo.funcion(self.pila(ll.f)).unwrap_or(datos) } else { datos };
@@ -108,7 +117,15 @@ impl Motor {
         }
         let destino = Some(ll.destino);
         let soltar = base_marco;
-        self.marcos.push(Marco { funcion: indice, pc: 0, base, destino, construir: ll.construir, soltar });
+        self.marcos.push(Marco {
+            funcion: indice,
+            pc: 0,
+            base,
+            destino,
+            construir: ll.construir,
+            soltar,
+            generador: false,
+        });
     }
 
     /// Cierra el marco actual con el valor `v` y lo escribe en el destino de quien llamó.
@@ -116,6 +133,7 @@ impl Motor {
         let Some(marco) = self.marcos.pop() else { return };
         let base_marco = marco.base - CABECERA;
         let v = if marco.construir && !self.mundo.es_objeto(v) { self.pila(base_marco + 3) } else { v };
+        let v = if marco.generador { self.terminar_generador(&marco, v) } else { v };
         self.mundo.m.soltar_raices(marco.soltar);
         if let Some(d) = marco.destino
             && let Some(hueco) = self.mundo.m.pila_mut().get_mut(d)
@@ -155,6 +173,9 @@ impl Motor {
     fn deshacer_hasta(&mut self, n: usize) {
         while self.marcos.len() > n {
             if let Some(m) = self.marcos.pop() {
+                if m.generador {
+                    self.abortar_generador(&m);
+                }
                 self.mundo.m.soltar_raices(m.soltar);
             }
         }

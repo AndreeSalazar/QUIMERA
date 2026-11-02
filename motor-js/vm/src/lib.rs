@@ -15,6 +15,7 @@ extern crate alloc;
 mod accesores;
 pub mod anfitrion;
 mod conversion;
+mod generadores;
 mod ic;
 mod interprete;
 mod iteracion;
@@ -97,6 +98,8 @@ struct Marco {
     /// Desde dónde se sueltan las raíces al cerrarlo: el principio de su marco o, si una llamada
     /// sin recursión (`apply`) puso antes los argumentos en la pila, el principio de esos.
     soltar: usize,
+    /// Es el marco de un generador (su objeto va en el hueco 3 de la cabecera).
+    generador: bool,
 }
 
 /// Un `try` activo.

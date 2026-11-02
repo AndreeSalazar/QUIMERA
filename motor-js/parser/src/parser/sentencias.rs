@@ -11,6 +11,10 @@ use alloc::vec::Vec;
 impl Parser {
     pub(super) fn sentencia(&mut self) -> Resultado<Sent> {
         let pos = self.pos();
+        if self.es_palabra("async") && self.es_en(1, "function") && !self.token(1).salto_antes {
+            self.avanzar();
+            return Ok(Sent::Funcion(self.funcion_asincrona_o_no(true, true)?));
+        }
         let (Tipo::Clave(k) | Tipo::Signo(k)) = *self.ver() else { return self.sentencia_expresion() };
         match k {
             "{" => Ok(Sent::Bloque(self.bloque()?)),
@@ -44,6 +48,7 @@ impl Parser {
                 let Some(nombre) = nombre else { return error(pos, "una declaración de clase necesita nombre") };
                 Ok(Sent::Declarar(Decl::Let, alloc::vec![(nombre, Some(e))]))
             }
+            "yield" if self.contextos.last().is_some_and(|c| c.0) => self.sentencia_expresion(),
             "import" | "export" | "with" | "yield" => error(pos, alloc::format!("`{k}` todavía no está en QUIMERA")),
             _ => self.sentencia_expresion(),
         }
@@ -114,16 +119,22 @@ impl Parser {
 
     /// `function nombre(params) { cuerpo }`; el nombre es obligatorio en una declaración.
     pub(super) fn funcion(&mut self, declaracion: bool) -> Resultado<Funcion> {
+        self.funcion_asincrona_o_no(declaracion, false)
+    }
+
+    /// `function [*] nombre(...) {...}`, con `async` ya leído si `asincrona`.
+    pub(super) fn funcion_asincrona_o_no(&mut self, declaracion: bool, asincrona: bool) -> Resultado<Funcion> {
         let pos = self.pos();
         self.esperar("function")?;
-        if self.es("*") {
-            return error(self.pos(), "los generadores (function*) todavía no están en QUIMERA");
+        let generador = self.tomar("*");
+        if generador && asincrona {
+            return error(self.pos(), "los generadores asíncronos (async function*) todavía no están en QUIMERA");
         }
         let nombre = if matches!(self.ver(), Tipo::Ident(_)) { Some(self.ident()?) } else { None };
         if declaracion && nombre.is_none() {
             return error(self.pos(), "una declaración de función necesita nombre");
         }
-        self.funcion_de_metodo(nombre, pos)
+        self.funcion_con(nombre, pos, generador, asincrona)
     }
 
     fn condicion(&mut self) -> Resultado<Expr> {

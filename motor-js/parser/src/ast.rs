@@ -36,6 +36,8 @@ pub struct Funcion {
     pub cuerpo: Vec<Sent>,
     /// Es una flecha (`this` léxico, sin `arguments`).
     pub flecha: bool,
+    /// Es un generador (`function*`). Las `async` llegan ya convertidas en generadores.
+    pub generador: bool,
     /// Dónde empieza.
     pub pos: Pos,
 }
@@ -101,6 +103,14 @@ pub enum Expr {
     Indice(Box<Expr>, Box<Expr>),
     /// `a, b`.
     Secuencia(Vec<Expr>),
+    /// `yield v`, `yield* v` (dentro de un generador) o `await v` (dentro de una `async`, que
+    /// se convierte en generador).
+    Rendir {
+        /// Lo que se entrega (`None`: `undefined`).
+        valor: Option<Box<Expr>>,
+        /// `yield*`: entrega uno a uno los valores de otro iterable.
+        delegar: bool,
+    },
 }
 
 /// Un caso de `switch` (`None` es `default`).

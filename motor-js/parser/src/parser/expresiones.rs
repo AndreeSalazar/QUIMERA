@@ -56,6 +56,9 @@ impl Parser {
 
     /// `a = b`, `a += b`, una flecha o una condicional.
     pub(super) fn asignacion(&mut self) -> Resultado<Expr> {
+        if self.es("yield") && self.contextos.last().is_some_and(|c| c.0) {
+            return self.rendir();
+        }
         if let Some(f) = self.flecha()? {
             return Ok(f);
         }
@@ -80,13 +83,32 @@ impl Parser {
         Ok(Expr::Asignar(op, Box::new(izquierda), Box::new(derecha)))
     }
 
-    /// Si empieza una flecha (`x =>`, `(a, b) =>`), la analiza.
+    /// `yield`, `yield v` o `yield* v` (ya se sabe que se está en un generador).
+    fn rendir(&mut self) -> Resultado<Expr> {
+        self.avanzar();
+        let delegar = self.tomar("*");
+        let fin = self.token(0).salto_antes
+            || matches!(self.ver(), Tipo::Signo(")" | "]" | "}" | "," | ";" | ":") | Tipo::Fin)
+            || self.es("in") && self.sin_in;
+        let valor = if fin && !delegar { None } else { Some(Box::new(self.asignacion()?)) };
+        Ok(Expr::Rendir { valor, delegar })
+    }
+
+    /// Si empieza una flecha (`x =>`, `(a, b) =>`, también `async x =>`), la analiza.
     fn flecha(&mut self) -> Resultado<Option<Expr>> {
         let pos = self.pos();
+        let asincrona = self.es_palabra("async")
+            && !self.token(1).salto_antes
+            && ((matches!(self.token(1).tipo, Tipo::Ident(_)) && self.es_en(2, "=>"))
+                || (self.es_en(1, "(") && self.cierre_desde(1).is_some_and(|c| self.es_en(c + 1, "=>"))));
+        if asincrona {
+            self.avanzar();
+        }
         let simple = matches!(self.ver(), Tipo::Ident(_)) && self.es_en(1, "=>");
         if !simple && !(self.es("(") && self.cierre_desde(0).is_some_and(|c| self.es_en(c + 1, "=>"))) {
             return Ok(None);
         }
+        self.contextos.push((false, asincrona));
         self.abrir_temporales();
         let mut firma = if simple {
             Firma { params: vec![Param { nombre: self.ident()?, defecto: None }], prologo: Vec::new(), resto: None }
@@ -109,8 +131,19 @@ impl Parser {
         let con_resto = firma.resto.is_some();
         Self::prologo(&mut firma, &mut cuerpo);
         self.cerrar_temporales(&mut cuerpo);
-        let f =
-            Expr::Funcion(Box::new(Funcion { nombre: None, params: firma.params, cuerpo, flecha: !con_resto, pos }));
+        self.contextos.pop();
+        if asincrona {
+            let args = if con_resto { Expr::Ident(String::from("arguments")) } else { Expr::Arreglo(Vec::new()) };
+            cuerpo = super::clases::envolver_async(cuerpo, args, pos);
+        }
+        let f = Expr::Funcion(Box::new(Funcion {
+            nombre: None,
+            params: firma.params,
+            cuerpo,
+            flecha: !con_resto,
+            pos,
+            generador: false,
+        }));
         Ok(Some(if con_resto { Expr::Llamar(Box::new(miembro(f, "bind")), vec![Expr::Este]) } else { f }))
     }
 
@@ -156,11 +189,14 @@ impl Parser {
         let op = match self.ver() {
             Tipo::Signo(s @ ("!" | "~" | "+" | "-" | "++" | "--")) => *s,
             Tipo::Clave(k @ ("typeof" | "void" | "delete")) => *k,
-            Tipo::Ident(n) if n == "await" => return error(pos, "await todavía no está en QUIMERA"),
+            Tipo::Ident(n) if n == "await" && self.contextos.last().is_some_and(|c| c.1) => "await",
             _ => return self.postfija(),
         };
         self.avanzar();
         let e = self.unaria()?;
+        if op == "await" {
+            return Ok(Expr::Rendir { valor: Some(Box::new(e)), delegar: false });
+        }
         if op == "++" || op == "--" {
             if !es_destino(&e) {
                 return error(pos, format!("{op} necesita una variable o una propiedad"));
@@ -320,6 +356,10 @@ impl Parser {
         let e = match self.ver().clone() {
             Tipo::Numero(n) => Expr::Numero(n),
             Tipo::Cadena(s) => Expr::Cadena(s),
+            Tipo::Ident(n) if n == "async" && self.es_en(1, "function") && !self.token(1).salto_antes => {
+                self.avanzar();
+                return Ok(Expr::Funcion(Box::new(self.funcion_asincrona_o_no(false, true)?)));
+            }
             Tipo::Ident(n) => Expr::Ident(n),
             Tipo::Clave("true") => Expr::Bool(true),
             Tipo::Clave("false") => Expr::Bool(false),
@@ -448,9 +488,21 @@ impl Parser {
     /// `a: 1`, `a` (abreviada), `[k]: 1`, `"a": 1`, `1: x` o un método `f() {}`.
     fn propiedad(&mut self) -> Resultado<(Clave, Expr)> {
         let pos = self.pos();
-        let asincrona = self.es_palabra("async") && !self.es_en(1, ":") && !self.es_en(1, "(");
-        if asincrona || self.es("*") {
-            return error(pos, "get/set, async y * en objetos todavía no están en QUIMERA");
+        let asincrona = self.es_palabra("async")
+            && !(self.es_en(1, ":") || self.es_en(1, "(") || self.es_en(1, ",") || self.es_en(1, "}"))
+            && !self.token(1).salto_antes;
+        if asincrona {
+            self.avanzar();
+        }
+        let generador = self.tomar("*");
+        if asincrona && generador {
+            return error(pos, "los generadores asíncronos (async *m) todavía no están en QUIMERA");
+        }
+        if asincrona || generador {
+            let clave = self.clave_de_propiedad()?;
+            let nombre = if let Clave::Nombre(n) = &clave { Some(n.clone()) } else { None };
+            let f = self.funcion_con(nombre, pos, generador, asincrona)?;
+            return Ok((clave, Expr::Funcion(Box::new(f))));
         }
         let abreviable = matches!(self.ver(), Tipo::Ident(_));
         let clave = self.clave_de_propiedad()?;

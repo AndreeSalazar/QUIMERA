@@ -56,7 +56,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
 | 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF) · `calc()`, WOFF2, gzip, WebP | Wikipedia, documentación, blogs |
 | 2 | ✅ Formularios (GET y POST), ✅ cookies, ✅ foco y teclado · caché, selección | buscar (DuckDuckGo HTML): navegar de verdad |
-| 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores), ✅ `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración · accesores, `async`/`await`, módulos, `fetch` | Steam y páginas con JavaScript |
+| 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores), ✅ `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración, accesores, `Symbol`, generadores, `async`/`await` · módulos, `fetch` | Steam y páginas con JavaScript |
 | 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
 | 5 | `<video>` con los decodificadores del sistema, audio | **YouTube** |
 | 6 | Toque, zoom y `viewport` | **Android**, donde un navegador ligero más se nota |
@@ -71,7 +71,8 @@ En paralelo: **VERX** como interfaz, y QUIMERA como motor de interfaces. Steam, 
 | `cimientos/valor` → `quimera-valor` | 0 | Valor JS de 64 bits, `Copy`, sin contador | ✅ 8 pruebas |
 | `motor-js/gc` → `quimera-gc` | 1 | GC generacional: guardería en arena + zona principal también en un solo bloque (sin `malloc` por objeto), barrera de escritura; anota las cadenas vivas | ✅ 10 pruebas |
 | `motor-js/regex` → `quimera-regex` | 1 | Expresiones regulares: patrón → programa → máquina con vuelta atrás sin recursión ([docs/REGEX.md](docs/REGEX.md)) | ✅ 6 pruebas |
-| `motor-js/frontend` → `quimera-frontend` | 2 | JavaScript → bytecode de registros (Stencil): léxico, parser, ámbitos, compilador, literales `/re/` | ✅ 24 pruebas |
+| `motor-js/parser` → `quimera-parser` | 2 | JavaScript → árbol: léxico, parser, y la sintaxis moderna (clases, desestructuración, spread, `?.`, `async`, generadores) convertida al analizar | ✅ pruebas |
+| `motor-js/frontend` → `quimera-frontend` | 3 | Árbol → bytecode de registros (Stencil): ámbitos de función y de bloque, compilador | ✅ pruebas |
 | `motor-js/objetos` → `quimera-objetos` | 3 | Formas, cadenas únicas que se liberan, objetos, arreglos densos, funciones y entornos sobre el GC, `delete` en su sitio | ✅ 10 pruebas |
 | `motor-js/vm` → `quimera-vm` | 4 | Intérprete, cachés en línea al estilo CacheIR (prototipos, polimórficas, `length`, transiciones), superinstrucciones, ToPrimitive, `finally`/`for-in`/`for-of`/`delete`, `RegExp` y biblioteca de colecciones; perfil por instrucción | ✅ 34 pruebas |
 | `web/html` → `quimera-html` | 2 | HTML5 → árbol, con la recuperación de errores de los navegadores; mismo árbol que html5ever en 5.000 páginas reales, 2,2× más rápido ([docs/HTML-CSS.md](docs/HTML-CSS.md)) | ✅ 10 pruebas |

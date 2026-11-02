@@ -223,3 +223,53 @@ fn simbolos() {
         ]
     );
 }
+
+/// Generadores: `yield`, `next(x)`, `throw`, `return`, `yield*`, métodos `*m()` y
+/// `Symbol.iterator` (`tests/generadores.js`), con la salida de Chromium.
+#[test]
+fn generadores() {
+    let r = salida(include_str!("generadores.js"));
+    assert_eq!(
+        r,
+        [
+            "recibido hola",
+            r#"{"value":0,"done":false} {"value":1,"done":false} {"value":2,"done":false} {"value":"fin","done":true} {"done":true}"#,
+            "0,1,2,3 0,1",
+            "of 0",
+            "of 1",
+            "capturado fallo",
+            r#"1 tras catch {"done":true}"#,
+            r#"{"value":"corto","done":true} {"done":true}"#,
+            "0,a,b,r,7,8",
+            "2,4 x 1,2,3,4",
+            "13,2 function true",
+            "0,1,2",
+            "no es constructor",
+        ]
+    );
+}
+
+/// `async`/`await` en funciones, flechas, métodos y clases, con errores capturados y el orden
+/// de las microtareas (`tests/async.js`), con la salida de Chromium.
+#[test]
+fn async_await() {
+    let r = salida(include_str!("async.js"));
+    assert_eq!(
+        r,
+        [
+            "inicio",
+            "fin true function",
+            "simple 2",
+            "metodo",
+            "falla TypeError mal",
+            "flecha 10",
+            "capturado con await mal",
+            "suma 3",
+            "servicio 123",
+            "todos 2,4,3",
+            "bucle a",
+            "bucle b",
+            "listo",
+        ]
+    );
+}

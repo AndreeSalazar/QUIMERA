@@ -26,6 +26,7 @@ pub fn analizar(fuente: &str) -> Resultado<Vec<Sent>> {
         contador_temporales: 0,
         clases: Vec::new(),
         patron_pendiente: None,
+        contextos: Vec::new(),
     };
     p.abrir_temporales();
     let mut programa = Vec::new();
@@ -48,6 +49,9 @@ pub(crate) struct Parser {
     clases: Vec<clases::InfoClase>,
     /// El patrón de `for (const [a, b] of x)`, que se despliega dentro del cuerpo.
     patron_pendiente: Option<azucar::Patron>,
+    /// Las funciones abiertas: (es generador, es `async`). Dentro de un generador `yield` es un
+    /// operador; dentro de una `async`, `await`.
+    contextos: Vec<(bool, bool)>,
 }
 
 impl Parser {

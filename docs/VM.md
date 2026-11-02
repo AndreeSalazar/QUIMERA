@@ -166,6 +166,20 @@ Coste: crear un motor tarda unos 2 ms más (compila el preludio). Se podría gua
 
 También: `Object.setPrototypeOf` y `getPrototypeOf`, `{__proto__: p}` en un literal, `console.warn/error/info`, y el error de llamar a algo que no es una función dice su nombre (`forEach no es una función (vale undefined)`), que es lo que más ayuda a ver qué falta en una página real.
 
+## Generadores y `async`/`await`
+
+`generadores.rs`. Un generador es un marco que se guarda y se vuelve a poner:
+
+- **Al llamar** a un `function*` se abre su marco como cualquier otro (parámetros, `this`, `arguments`), pero antes de ejecutar nada se copia a un objeto generador y se cierra.
+- **`yield v`** (la instrucción `Rendir`) copia los registros del marco y sus `try` abiertos al generador, lo cierra y devuelve `{value: v, done: false}`.
+- **`next(x)`** vuelve a poner los registros en la pila de raíces, deja `x` como resultado del `yield` y sigue. Es una llamada más, sin recursión de Rust, como `call`. `throw(e)` reanuda lanzando `e` donde estaba el `yield`, y sus `try` lo capturan.
+- Mientras corre, el objeto generador va en el hueco 3 de la cabecera del marco (el de `new`, que un generador no usa), así el GC lo mantiene vivo y lo actualiza.
+- `yield*` es un bucle en el bytecode sobre el iterador del otro.
+
+**`async`/`await`** se monta encima sin tocar la máquina: el parser convierte `async function f() {...}` en una función que devuelve `__quimera_async(function* () {...}, this, arguments)`. Dentro, cada `await x` es un `yield x`, y el ayudante del preludio sigue al generador con promesas. El orden de las microtareas coincide con Chromium en las pruebas.
+
+Falta: generadores asíncronos (`async function*`, `for await`); `return()` y `throw()` sobre un generador pausado dentro de un `try` con `finally` no ejecutan el `finally`.
+
 ## Objetos y funciones del anfitrión
 
 Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias funciones y objetos (`anfitrion.rs`):
@@ -177,7 +191,6 @@ Para el DOM ([DOM.md](DOM.md)), la VM deja que quien la usa ponga sus propias fu
 ## Qué falta
 
 - **Leer una global cuesta unos 10 ns.** Es lo que queda de `nested-loop`. Inyectar el valor de un `const` rompería la TDZ (leerlo antes de su declaración debe fallar), así que necesita una caché con guardas, no un atajo.
-- **Generadores y `async`/`await`**: necesitan que la máquina guarde un marco a medias y lo reanude.
 - **Errores de la máquina como objetos**: los que lanza la máquina son cadenas (`"TypeError: ..."`), así que `e.message` da `undefined` en un `catch`.
 - **Biblioteca estándar, todavía parcial.** Hay `console.log`/`print`; `Object` (`create`, `keys`, `prototype.hasOwnProperty`); `Array` (`isArray`, `push`, `pop`, `shift`, `unshift`, `slice`, `concat`, `reverse`, `join`, `indexOf`, `includes`, `sort`, `forEach`, `map`, `filter`, `reduce`, `some`, `every`, `find`, `findIndex`); `Function.prototype` (`call`, `apply`); `Math` (`floor`, `ceil`, `round`, `abs`, `max`, `min`, `sqrt`, `random`, `log`, `exp`, `pow`, `PI`, `E`); números (`Number`, `parseInt`, `parseFloat`, `isNaN`, `isFinite`, `toFixed`, `toPrecision`, `toString(base)`); `String` (`fromCharCode`, `charAt`, `charCodeAt`, `indexOf`, `slice`, `substring`, `split`, `toUpperCase`, `toLowerCase`, `trim`, `includes`, `startsWith`, `endsWith`); `Date` (`now`, `getTime`) y `Error`. Lo demás da `undefined`.
 - **`sort` es inserción binaria.** Estable y sin memoria extra, con pocas comparaciones (n log n), pero mueve O(n²) elementos: para arreglos grandes hará falta un *merge sort* con raíces.

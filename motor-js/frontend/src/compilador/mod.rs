@@ -28,8 +28,12 @@ pub fn compilar(programa: &[Sent]) -> Resultado<Stencil> {
         pila: Vec::new(),
     };
     c.funciones.push(None);
-    let programa_fn =
-        c.cuerpo(&[], programa, 0, Opciones { flecha: false, nombre: None, propio: None, global: true })?;
+    let programa_fn = c.cuerpo(
+        &[],
+        programa,
+        0,
+        Opciones { flecha: false, nombre: None, propio: None, global: true, generador: false },
+    )?;
     c.funciones[0] = Some(programa_fn);
     let funciones = c.funciones.into_iter().map(Option::unwrap_or_default).collect();
     Ok(Stencil { funciones, atomos: c.atomos })
@@ -92,6 +96,7 @@ struct Opciones<'a> {
     /// Nombre propio de una expresión de función (`function g() {}` dentro de una expresión).
     propio: Option<&'a str>,
     global: bool,
+    generador: bool,
 }
 
 struct Compilador<'a> {
@@ -241,7 +246,7 @@ impl Compilador<'_> {
         self.funciones.push(None);
         let nombre = f.nombre.as_deref();
         let propio = if es_expresion { nombre } else { None };
-        let opciones = Opciones { flecha: f.flecha, nombre, propio, global: false };
+        let opciones = Opciones { flecha: f.flecha, nombre, propio, global: false, generador: f.generador };
         let compilada = self.cuerpo(&f.params, &f.cuerpo, ambitos::clave(f), opciones)?;
         self.funciones[indice] = Some(compilada);
         Ok(indice as u32)
@@ -277,6 +282,7 @@ impl Compilador<'_> {
             entorno: ctx.entorno,
             flecha: op.flecha,
             argumentos: ctx.argumentos,
+            generador: op.generador,
             codigo: ctx.codigo,
             constantes: ctx.constantes,
         })

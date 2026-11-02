@@ -616,5 +616,37 @@
     if (typeof campos === 'function') campos.call(este);
   };
 
+  // ---------------- generadores y async ----------------
+
+  // Los generadores (su prototipo lo crea la máquina) son iterables: su iterador son ellos.
+  var protoGenerador = global.__quimera_generador;
+  protoGenerador[Symbol.iterator] = function () { return this; };
+  ocultar.push(protoGenerador);
+
+  // El iterador de `yield* x`.
+  global.__quimera_iterador = function (x) {
+    if (x != null && typeof x[Symbol.iterator] === 'function') return x[Symbol.iterator]();
+    if (x != null && typeof x.next === 'function') return x;
+    return new Iterador(aLista(x));
+  };
+
+  // Una función `async` es un generador que va entregando lo que espera: cada `yield` (un
+  // `await`) se resuelve como promesa y lo obtenido vuelve al generador con next (o throw).
+  global.__quimera_async = function (genFn, este, args) {
+    return new Promise(function (resolver, rechazar) {
+      var g = genFn.apply(este, args);
+      function paso(metodo, v) {
+        var r;
+        try { r = g[metodo](v); } catch (e) { rechazar(e); return; }
+        if (r.done) { resolver(r.value); return; }
+        Promise.resolve(r.value).then(
+          function (x) { paso('next', x); },
+          function (e) { paso('throw', e); }
+        );
+      }
+      paso('next', undefined);
+    });
+  };
+
   global.__quimera_ocultar = ocultar;
 })(this);

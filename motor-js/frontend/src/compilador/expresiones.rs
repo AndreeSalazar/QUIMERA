@@ -123,6 +123,7 @@ impl Compilador<'_> {
                 let (o, ri) = (self.operando(obj)?, self.operando(i)?);
                 self.emitir(Instr::LeerIndice { dst, obj: o, indice: ri });
             }
+            Expr::Rendir { valor, delegar } => self.rendir(valor.as_deref(), *delegar, dst)?,
             Expr::Secuencia(v) => {
                 for (i, x) in v.iter().enumerate() {
                     if i + 1 == v.len() {
@@ -134,6 +135,47 @@ impl Compilador<'_> {
                 }
             }
         }
+        Ok(())
+    }
+
+    /// `yield v`: una instrucción `Rendir`. `yield* v` es un bucle: pide el iterador de `v`
+    /// (`__quimera_iterador`) y entrega cada valor hasta que acabe; vale su último `value`.
+    fn rendir(&mut self, valor: Option<&Expr>, delegar: bool, dst: Reg) -> Resultado<()> {
+        let marca = self.marca();
+        let src = self.temporal()?;
+        match valor {
+            Some(v) => self.expr(v, src)?,
+            None => {
+                self.emitir(Instr::Indefinido { dst: src });
+            }
+        }
+        if !delegar {
+            self.emitir(Instr::Rendir { dst, src });
+            self.soltar(marca);
+            return Ok(());
+        }
+        let (it, f, este) = (self.temporal()?, self.temporal()?, self.temporal()?);
+        let nombre = self.atomo("__quimera_iterador");
+        self.emitir(Instr::LeerGlobal { dst: f, nombre });
+        self.emitir(Instr::Indefinido { dst: este });
+        self.emitir(Instr::Llamar { dst: it, f, este, args: src, n: 1 });
+        let (enviado, r, hecho, v) = (self.temporal()?, self.temporal()?, self.temporal()?, self.temporal()?);
+        self.emitir(Instr::Indefinido { dst: enviado });
+        let bucle = self.pc();
+        let next = self.atomo("next");
+        self.emitir(Instr::LeerProp { dst: f, obj: it, nombre: next });
+        self.emitir(Instr::Llamar { dst: r, f, este: it, args: enviado, n: 1 });
+        let done = self.atomo("done");
+        self.emitir(Instr::LeerProp { dst: hecho, obj: r, nombre: done });
+        let salir = self.emitir(Instr::SaltarSi { c: hecho, destino: 0 });
+        let value = self.atomo("value");
+        self.emitir(Instr::LeerProp { dst: v, obj: r, nombre: value });
+        self.emitir(Instr::Rendir { dst: enviado, src: v });
+        self.emitir(Instr::Saltar { destino: bucle });
+        let fin = self.pc();
+        self.parchear(salir, fin);
+        self.emitir(Instr::LeerProp { dst, obj: r, nombre: value });
+        self.soltar(marca);
         Ok(())
     }
 

@@ -1,7 +1,7 @@
 //! Parser: precedencia, `;` automático, flechas, objetos y errores claros.
 
-use quimera_frontend::analizar;
-use quimera_frontend::ast::{Clave, Expr, Sent};
+use quimera_parser::analizar;
+use quimera_parser::ast::{Clave, Expr, Sent};
 
 fn expr(s: &str) -> Expr {
     match analizar(s).unwrap().remove(0) {
@@ -95,9 +95,9 @@ fn sentencias_de_control() {
 #[test]
 fn lo_que_falta_avisa_con_claridad() {
     for (codigo, pista) in [
-        ("class A { async m() {} }", "async"),
+        ("class A { async *m() {} }", "asíncronos"),
         ("a: for (;;) break a;", "etiquetas"),
-        ("function* g() {}", "generadores"),
+        ("async function* g() {}", "asíncronos"),
     ] {
         let e = analizar(codigo).unwrap_err();
         assert!(e.mensaje.contains(pista), "{codigo}: {}", e.mensaje);

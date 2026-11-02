@@ -254,6 +254,11 @@ impl Analisis {
                 args.iter().for_each(|a| self.expr(a));
             }
             Expr::Secuencia(v) => v.iter().for_each(|x| self.expr(x)),
+            Expr::Rendir { valor, .. } => {
+                if let Some(v) = valor {
+                    self.expr(v);
+                }
+            }
             Expr::Este => {
                 if let Some((k, _, _)) = self.pila.last().filter(|(k, _, _)| *k != 0)
                     && let Some(info) = self.out.get_mut(k)

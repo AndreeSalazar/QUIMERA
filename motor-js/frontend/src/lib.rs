@@ -1,9 +1,9 @@
 //! Frontend de QUIMERA: JavaScript → bytecode de registros.
 //!
-//! Tres pasos, cada uno en su módulo:
-//! 1. [`lexico`]: texto → tokens.
-//! 2. [`parser`]: tokens → árbol de sintaxis ([`ast`]).
-//! 3. [`compilador`]: árbol → [`bytecode::Stencil`].
+//! Tres pasos:
+//! 1. [`lexico`]: texto → tokens (en `quimera-parser`).
+//! 2. [`parser`]: tokens → árbol de sintaxis ([`ast`]) (en `quimera-parser`).
+//! 3. [`bloques`] y [`compilador`]: árbol → [`bytecode::Stencil`].
 //!
 //! La idea del *Stencil* viene de SpiderMonkey (`frontend/Stencil.cpp`): el resultado de
 //! compilar no contiene objetos del GC, solo números, índices y cadenas. Se puede guardar,
@@ -15,13 +15,11 @@
 extern crate alloc;
 
 pub mod ambitos;
-pub mod ast;
 pub mod bloques;
 pub mod bytecode;
 pub mod compilador;
-pub mod fuente;
-pub mod lexico;
-pub mod parser;
+
+pub use quimera_parser::{ast, fuente, lexico, parser};
 
 pub use bytecode::Stencil;
 pub use fuente::{Error, Pos, Resultado};
