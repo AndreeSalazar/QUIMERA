@@ -180,6 +180,11 @@ impl Constructor {
     }
 
     /// Si `<head>` sigue abierto (está en la pila).
+    /// Dentro de un `<template>` abierto: su contenido se queda en él (aunque esté en `<head>`).
+    fn en_plantilla(&self) -> bool {
+        self.pila.iter().any(|&id| self.nombre(id) == "template")
+    }
+
     fn head_abierto(&self) -> bool {
         self.head.is_some_and(|h| self.pila.contains(&h))
     }
@@ -220,7 +225,8 @@ impl Constructor {
         if s.is_empty() {
             return;
         }
-        let dentro_de_cabecera = DE_CABECERA.contains(&self.nombre_actual()) && self.body.is_none();
+        let dentro_de_cabecera =
+            (DE_CABECERA.contains(&self.nombre_actual()) || self.en_plantilla()) && self.body.is_none();
         if self.body.is_none() && !dentro_de_cabecera {
             // Antes del cuerpo: los blancos van a `<head>` (o a `<html>` tras `</head>`), o se
             // ignoran si aún no hay `<head>`; el primer carácter que no es blanco abre el cuerpo.
@@ -255,6 +261,14 @@ impl Constructor {
             "body" => {
                 let b = self.asegurar_body();
                 self.doc.anadir_atributos(b, atributos);
+                return;
+            }
+            n if self.body.is_none() && self.en_plantilla() => {
+                let padre = self.actual();
+                let id = self.crear(padre, n, atributos);
+                if !VACIOS.contains(&n) {
+                    self.pila.push(id);
+                }
                 return;
             }
             n if DE_CABECERA.contains(&n) && self.body.is_none() => {

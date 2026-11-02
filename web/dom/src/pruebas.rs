@@ -426,3 +426,32 @@ fn piezas_para_youtube() {
         ]
     );
 }
+
+/// Lo que está en un `<template>` es inerte: no se mejora ni se conecta hasta que su copia
+/// (`importNode`) entra en el documento. Como Chromium.
+#[test]
+fn plantillas_inertes() {
+    let mut d = dom(r#"<template id="t"><mi-p id="dentro"></mi-p></template><div id="caja"></div>"#);
+    let r = correr(
+        &mut d,
+        r#"class P extends HTMLElement {
+            constructor() { super(); console.log('construido', this.isConnected); }
+            connectedCallback() { console.log('conectado', this.id); }
+          }
+          customElements.define('mi-p', P);
+          var t = document.createElement('template');
+          t.innerHTML = '<div><mi-p id="otro"></mi-p></div>';
+          console.log('definido', t.content.firstChild.firstChild instanceof P);
+          var copia = document.importNode(t.content, true);
+          console.log('copiado', copia.firstChild.firstChild instanceof P);
+          document.getElementById('caja').appendChild(copia);
+          var c2 = document.getElementById('t').content.cloneNode(true);
+          console.log('t', document.getElementById('t').content.firstChild instanceof P);
+          var t2 = document.createElement('template'); t2.innerHTML = '<b id="x">1</b><template><i>2</i></template>';
+          t2.content.firstChild.id = 'y';
+          var caja = document.createElement('div'); caja.appendChild(t2);
+          var c = caja.cloneNode(true).firstChild, c2 = t2.cloneNode(true);
+          console.log(c.content.firstChild.id, c2.content.childNodes.length, c2.content.lastChild.content.firstChild.textContent);"#,
+    );
+    assert_eq!(r, ["definido false", "construido false", "copiado true", "conectado otro", "t false", "y 2 2"]);
+}

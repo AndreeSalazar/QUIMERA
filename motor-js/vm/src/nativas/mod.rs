@@ -57,6 +57,8 @@ const ALEATORIOS: u32 = 26;
 const EVAL: u32 = 27;
 /// `__quimera_densa(arr)`: una copia con los huecos como `undefined` (spread, `Array.from`).
 const DENSA: u32 = 28;
+/// `__quimera_construyendo()`: si la función que la llama se llamó con `new` (el `bind`).
+const CONSTRUYENDO: u32 = 29;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -112,6 +114,7 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, R_GLOBAL, "__quimera_aleatorios", ALEATORIOS);
     definir_nativa(m, R_GLOBAL, "eval", EVAL);
     definir_nativa(m, R_GLOBAL, "__quimera_densa", DENSA);
+    definir_nativa(m, R_GLOBAL, "__quimera_construyendo", CONSTRUYENDO);
     simbolos(m);
     let generador = nuevo_objeto(m, R_GLOBAL, "__quimera_generador");
     definir_nativa(m, generador, "next", GEN_NEXT);
@@ -388,7 +391,7 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
         SIMBOLO..=SIMBOLO_KEY_FOR | FUNCION_TO_STRING | OBJETO_TO_STRING | NO_ENUMERAR => return otras(m, id, ll),
-        PROXY | DENSA | EVAL | ALEATORIOS | TRAZA | MODULO => return sistema(m, id, ll),
+        PROXY | DENSA | EVAL | ALEATORIOS | TRAZA | MODULO | CONSTRUYENDO => return sistema(m, id, ll),
         FUNCION => {
             // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
             let partes: Vec<String> = (0..ll.n).map(|i| m.texto(arg(m, ll, i))).collect();
@@ -445,6 +448,7 @@ fn sistema(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
             let v: Vec<Valor> = bytes.into_iter().map(|b| Valor::numero(f64::from(b))).collect();
             m.mundo.crear_arreglo(&v, m.pila(R_ARREGLO))
         }
+        CONSTRUYENDO => Valor::booleano(m.marcos.last().is_some_and(|f| f.construir)),
         TRAZA => {
             // Sin el marco de quien la pide (el constructor del error).
             let t = m.traza_desde(1);

@@ -38,9 +38,14 @@
   Function.prototype.bind = function (este) {
     var f = this, previos = slice.call(arguments, 1);
     if (typeof f !== 'function') throw new TypeError('bind necesita una función');
-    return function () {
-      return f.apply(este, previos.concat(slice.call(arguments)));
+    // Con `new`, el `this` atado no cuenta: se construye `f` con los argumentos (los inyectores
+    // de dependencias hacen `new (Function.prototype.bind.apply(Clase, [null].concat(args)))`).
+    var atada = function () {
+      var args = previos.concat(slice.call(arguments));
+      return __quimera_construyendo() ? __quimera_nuevo(f, args) : f.apply(este, args);
     };
+    atada.prototype = f.prototype;
+    return atada;
   };
 
   definir(Object, {

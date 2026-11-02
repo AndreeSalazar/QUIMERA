@@ -106,10 +106,24 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     el['\u0001conectado'] = true;
     if (typeof el.connectedCallback === 'function') { try { el.connectedCallback(); } catch (e) { avisar(e); } }
   }
+  // Lo que está dentro de un `<template>` (o en su `content`) es inerte: ni se mejora ni se
+  // conecta, como en los navegadores (su documento no tiene registro de elementos).
+  function enPlantilla(n) {
+    for (var p = n.parentNode; p; p = p.parentNode) {
+      if (p['inerte'] || p.localName === 'template') return true;
+    }
+    return false;
+  }
   function cadaElemento(n, f) {
-    if (!esNodo(n)) return;
+    if (!esNodo(n) || n['inerte'] || enPlantilla(n)) return;
     if (n.nodeType === 1) f(n);
-    if (n.nodeType === 1 || n.nodeType === 11 || n.nodeType === 9) n.querySelectorAll('*').forEach(f);
+    if (n.nodeType !== 1 && n.nodeType !== 11 && n.nodeType !== 9) return;
+    if (n.localName === 'template') return;
+    var todos = n.querySelectorAll('*'), plantillas = n.querySelectorAll('template');
+    todos.forEach(plantillas.length ? function (el) {
+      for (var i = 0; i < plantillas.length; i++) if (plantillas[i] !== el && plantillas[i].contains(el)) return;
+      f(el);
+    } : f);
   }
   // Tras meter `n` en el árbol: mejorar lo registrado y avisar a lo que entra en el documento.
   function conectar(n) {
@@ -140,7 +154,12 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   };
   P.p_documento.createElementNS = function (ns, t) { return this.createElement(String(t).replace(/^.*:/, '')); };
   P.p_documento.createEvent = function () { return new Event(''); };
-  P.p_documento.importNode = function (n, profundo) { return n.cloneNode(!!profundo); };
+  // La copia nace en el documento: lo registrado se mejora ya (sin conectar, aún no está dentro).
+  P.p_documento.importNode = function (n, profundo) {
+    var c = n.cloneNode(!!profundo);
+    if (registro.size) cadaElemento(c, function (el) { var C = registro.get(el.localName); if (C) mejorar(el, C); });
+    return c;
+  };
   P.p_documento.adoptNode = function (n) { if (n.parentNode) n.parentNode.removeChild(n); return n; };
 
   w.customElements = {
@@ -150,7 +169,7 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
       if (registro.has(nombre)) throw new Error('el elemento "' + nombre + '" ya está definido');
       registro.set(nombre, C);
       porClase.set(C, nombre);
-      d.querySelectorAll(nombre).forEach(function (el) { mejorar(el, C); });
+      d.querySelectorAll(nombre).forEach(function (el) { if (!enPlantilla(el)) mejorar(el, C); });
       if (esperas[nombre]) { esperas[nombre].resolver(C); delete esperas[nombre]; }
     },
     get: function (nombre) { return registro.get(String(nombre)); },
@@ -217,6 +236,7 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     get: function () {
       if (!this['\u0001contenido']) {
         var f = d.createDocumentFragment();
+        f['inerte'] = true;
         while (this.firstChild) f.appendChild(this.firstChild);
         this['\u0001contenido'] = f;
       }
@@ -294,8 +314,14 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     var nativo = N[m];
     N[m] = function () {
       if (m === 'replaceChild') desconectar(arguments[1]);
+      // Un fragmento se vacía al meterlo: lo que hay que conectar son sus hijos.
+      var entran = [], lista = m === 'append' ? arguments : [arguments[0]];
+      for (var i = 0; i < lista.length; i++) {
+        var x = lista[i];
+        if (esNodo(x) && x.nodeType === 11) { for (var c = x.firstChild; c; c = c.nextSibling) entran.push(c); } else entran.push(x);
+      }
       var r = nativo.apply(this, arguments);
-      if (m === 'append') { for (var i = 0; i < arguments.length; i++) conectar(arguments[i]); } else conectar(arguments[0]);
+      for (var j = 0; j < entran.length; j++) conectar(entran[j]);
       return r;
     };
   });
@@ -303,6 +329,20 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     var nativo = N[m];
     N[m] = function (x) { desconectar(m === 'remove' ? this : x); return nativo.apply(this, arguments); };
   });
+  // Copiar en profundidad copia también el `content` de cada plantilla (ya separado del árbol).
+  var clonarNativo = N.cloneNode;
+  N.cloneNode = function (profundo) {
+    var c = clonarNativo.call(this, profundo);
+    if (!profundo || !this.querySelectorAll) return c;
+    var de = this.localName === 'template' ? [this] : [], a = c.localName === 'template' ? [c] : [];
+    de = de.concat(Array.from(this.querySelectorAll('template')));
+    a = a.concat(Array.from(c.querySelectorAll('template')));
+    for (var i = 0; i < de.length && i < a.length; i++) {
+      var f = de[i]['\u0001contenido'];
+      if (f) a[i].content.appendChild(f.cloneNode(true));
+    }
+    return c;
+  };
   function nodoDe(x) { return esNodo(x) ? x : d.createTextNode(String(x)); }
   N.prepend = function () { var primero = this.firstChild; for (var i = 0; i < arguments.length; i++) this.insertBefore(nodoDe(arguments[i]), primero); };
   N.before = function () { var p = this.parentNode; if (p) for (var i = 0; i < arguments.length; i++) p.insertBefore(nodoDe(arguments[i]), this); };

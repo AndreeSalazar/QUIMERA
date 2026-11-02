@@ -129,3 +129,19 @@ fn nombres_de_funciones_y_proto() {
     );
     assert_eq!(r, ["A 2 K 1 f g 3 met max true", "m true true false true"]);
 }
+
+/// `new` sobre una función atada con `bind` ignora el `this` atado pero conserva los argumentos.
+#[test]
+fn new_sobre_bind() {
+    let r = salida(
+        r#"function C(a, b) { this.a = a; this.b = b; }
+          C.prototype.suma = function () { return this.a + this.b; };
+          var B = Function.prototype.bind.apply(C, [null, 1]);
+          var o = new B(2);
+          console.log(o.suma(), o instanceof C, o instanceof B);
+          class K { constructor(x) { this.x = x; } }
+          var k = new (K.bind(null, 7))();
+          console.log(k.x, k instanceof K);"#,
+    );
+    assert_eq!(r, ["3 true true", "7 true"]);
+}
