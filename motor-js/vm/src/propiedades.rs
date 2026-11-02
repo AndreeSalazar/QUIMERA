@@ -26,6 +26,9 @@ impl Motor {
     /// Guarda el caso en el primer nivel si está libre. Devuelve `false` si ya tenía otro (el
     /// sitio es polimórfico: el caso va a los stubs).
     fn guardar_cache(&mut self, fi: usize, pc: usize, forma: u32, hueco: u32) -> bool {
+        if self.mundo.formas.es_diccionario(forma) {
+            return false; // sus huecos se mueven sin que cambie la forma
+        }
         match self.funciones.get_mut(fi).and_then(|c| c.caches.get_mut(pc)) {
             Some(c) if c.forma == u32::MAX || c.forma == forma => {
                 (c.forma, c.hueco) = (forma, hueco);
@@ -189,6 +192,15 @@ impl Motor {
         }
         if let Some(par) = self.buscar_accesor(obj, clave) {
             return self.llamar_set(par, obj, v);
+        }
+        // `arr.length = n` cambia sus elementos: nunca por las cachés. Un arreglo puede tener la
+        // forma de un objeto normal, y la caché de «añadir `length`» aprendida con ese objeto le
+        // pondría una propiedad suelta (así se colgaba jQuery 1.8 en Steam).
+        if clave == self.mundo.clave_length && self.mundo.clase(obj) == Some(Clase::Arreglo) {
+            return match self.mundo.escribir(obj, clave, v) {
+                true => Ok(()),
+                false => Err(self.error("RangeError", "longitud de arreglo no válida")),
+            };
         }
         if let Some(forma) = self.mundo.forma(obj) {
             let c = self.cache(fi, pc);

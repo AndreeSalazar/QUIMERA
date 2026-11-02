@@ -29,6 +29,8 @@ TLS es lo único de fuera, a propósito: la criptografía no se escribe a mano (
 
 `Cliente::solicitar(url, &Peticion)`: cualquier método, cuerpo, cabeceras extra (las peligrosas, como `Cookie`, `Host` o `Content-Length`, y cualquier salto de línea, se ignoran) y si van las cookies. Lo usan `fetch` y `XMLHttpRequest` (ver [DOM.md](DOM.md#la-red-desde-javascript)). Sin cookies (una petición a otro origen), tampoco se guardan las que lleguen.
 
+**Compresión**: se piden `gzip, deflate` y se descomprimen con el DEFLATE propio (`quimera-comprimir`, con la envoltura gzip del RFC 1952 y su CRC-32). El CDN de Steam mandaba los scripts en gzip aunque se pidiera `identity`, y por eso jQuery no cargaba. Brotli todavía no: una respuesta en `br` da error.
+
 **Codificación del texto**: la de `Content-Type`; si no la dice, la de `<meta charset>`, pero **solo en HTML**. Un script o un JSON puede llevar el texto `charset=` dentro de una cadena y antes se leía entero como Windows-1252.
 
 ## Cookies

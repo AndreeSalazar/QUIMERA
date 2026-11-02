@@ -249,6 +249,14 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   subclase('KeyboardEvent', { key: '', code: '', ctrlKey: false, shiftKey: false, altKey: false, metaKey: false, repeat: false });
   subclase('FocusEvent', { relatedTarget: null });
   subclase('InputEvent', { data: null, inputType: '' });
+  subclase('MessageEvent', { data: null, origin: '', lastEventId: '', source: null, ports: [] });
+  // `window.postMessage`: el evento `message` llega a la propia ventana en otra tarea (sin
+  // marcos ni otras ventanas aún; el dato no se copia, se pasa tal cual).
+  w.postMessage = function (dato) {
+    setTimeout(function () {
+      w.dispatchEvent(new MessageEvent('message', { data: dato, origin: location.origin, source: w }));
+    }, 0);
+  };
 
   // ---------------- más de Node y Element ----------------
   var N = P.p_nodo, E = P.p_elemento;
@@ -370,6 +378,24 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     ['HTMLMediaElement', 'src'], ['HTMLSourceElement', 'src'], ['HTMLEmbedElement', 'src']].forEach(function (par) {
     var I = w[par[0]];
     if (I) Object.defineProperty(I.prototype, par[1], absoluta(par[1]));
+  });
+  // `<a>` y `<area>` se descomponen como una URL (`a.pathname`, `a.host`...): lo usan axios y
+  // muchas librerías para resolver direcciones.
+  ['protocol', 'username', 'password', 'host', 'hostname', 'port', 'pathname', 'search', 'hash', 'origin'].forEach(function (k) {
+    var d = {
+      get: function () {
+        var h = this.href;
+        if (!h) return '';
+        try { return new URL(h)[k]; } catch (e) { return k === 'origin' ? 'null' : ''; }
+      }
+    };
+    if (k !== 'origin') {
+      d.set = function (v) {
+        try { var u = new URL(this.href); u[k] = String(v); this.setAttribute('href', u.href); } catch (e) {}
+      };
+    }
+    Object.defineProperty(w.HTMLAnchorElement.prototype, k, d);
+    if (w.HTMLAreaElement) Object.defineProperty(w.HTMLAreaElement.prototype, k, d);
   });
   Object.defineProperty(w.HTMLImageElement.prototype, 'currentSrc', { get: function () { return this.src; } });
   ['srcset', 'sizes'].forEach(function (a) {

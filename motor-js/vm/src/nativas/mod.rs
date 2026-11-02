@@ -51,6 +51,10 @@ const TRAZA: u32 = 24;
 const PROXY: u32 = 25;
 /// `__quimera_aleatorios(n)`: `n` bytes de azar del sistema (para `crypto`).
 const ALEATORIOS: u32 = 26;
+/// `eval(código)`, indirecto: se ejecuta en el ámbito global (como `window.eval.call(window, c)`
+/// de jQuery). Devuelve `undefined`: falta el valor de la última expresión y el `eval` directo
+/// con las variables locales.
+const EVAL: u32 = 27;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -88,7 +92,9 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, R_ARREGLO, "push", ARREGLO_EMPUJAR);
     definir_nativa(m, R_ARREGLO, "pop", ARREGLO_SACAR);
     let console = nuevo_objeto(m, R_GLOBAL, "console");
-    for nombre in ["log", "info", "warn", "error", "debug", "trace"] {
+    for nombre in
+        ["log", "info", "warn", "error", "debug", "trace", "dir", "dirxml", "table", "group", "groupCollapsed"]
+    {
         definir_nativa(m, console, nombre, IMPRIMIR);
     }
     let objeto = constructor(m, "Object", OBJETO, R_OBJETO);
@@ -102,6 +108,7 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, R_GLOBAL, "__quimera_traza", TRAZA);
     definir_nativa(m, R_GLOBAL, "Proxy", PROXY);
     definir_nativa(m, R_GLOBAL, "__quimera_aleatorios", ALEATORIOS);
+    definir_nativa(m, R_GLOBAL, "eval", EVAL);
     simbolos(m);
     let generador = nuevo_objeto(m, R_GLOBAL, "__quimera_generador");
     definir_nativa(m, generador, "next", GEN_NEXT);
@@ -202,11 +209,34 @@ fn nuevo_simbolo(m: &mut Motor, descripcion: &str, global: bool) -> Valor {
     Valor::simbolo(quimera_objetos::Ref::desde_u32(id))
 }
 
-/// Ejecuta el preludio en JavaScript (`preludio.js` y `binarios.js`) y oculta a `for-in` lo que creó.
+/// `new String(x)`, `new Number(x)`: un objeto con su valor primitivo dentro (`[[Valor]]`, que
+/// leen la conversión a texto y a número) y, si se da, su `length`. jQuery 1.8 usa `new String`
+/// como ficha con propiedades.
+pub(super) fn envoltorio(m: &mut Motor, ll: &Llamada, proto: usize, valor: Valor, largo: Option<usize>) -> Valor {
+    let o = m.mundo.crear_objeto(m.pila(proto));
+    m.mundo.m.pila_mut()[ll.destino] = o;
+    let marca = m.mundo.m.marca_raices();
+    m.mundo.m.raiz(valor);
+    let k = m.mundo.cadenas.internar(op::CLAVE_VALOR);
+    let (o, v) = (m.pila(ll.destino), m.pila(marca));
+    m.mundo.escribir(o, k, v);
+    if let Some(n) = largo {
+        let k = m.mundo.clave_length;
+        m.mundo.escribir(m.pila(ll.destino), k, Valor::numero(n as f64));
+        m.marcar_enumerable(ll.destino, k, false);
+    }
+    m.mundo.m.soltar_raices(marca);
+    m.pila(ll.destino)
+}
+
+/// Ejecuta el preludio en JavaScript (`preludio.js`, `binarios.js` e `intl.js`) y oculta a `for-in` lo que creó.
 pub(crate) fn preludio(m: &mut Motor) {
     m.fijar_origen("quimera:preludio");
     // `binarios.js` va aparte (el preludio pasaría de 1000 líneas); usa su lista de ocultos.
-    let r = m.ejecutar(include_str!("preludio.js")).and_then(|_| m.ejecutar(include_str!("binarios.js")));
+    let r = m
+        .ejecutar(include_str!("preludio.js"))
+        .and_then(|_| m.ejecutar(include_str!("binarios.js")))
+        .and_then(|_| m.ejecutar(include_str!("intl.js")));
     m.fijar_origen("");
     if let Err(e) = r {
         debug_assert!(false, "el preludio falló: {}", e.mensaje);
@@ -292,7 +322,8 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
         // `apply` abre el marco de la función como una llamada más: sin recursión de Rust.
         return coleccion::aplicar(m, &ll);
     }
-    let construye = matches!(id, OBJETO | ARREGLO | FUNCION | PROXY | regexp::REGEXP) || fecha::es_constructor(id);
+    let construye = matches!(id, OBJETO | ARREGLO | FUNCION | PROXY | regexp::REGEXP | texto::STRING | numeros::NUMBER)
+        || fecha::es_constructor(id);
     if ll.construir && !construye {
         return Err(m.error("TypeError", "esta función nativa no es un constructor"));
     }
@@ -351,6 +382,12 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
         SIMBOLO..=SIMBOLO_KEY_FOR | FUNCION_TO_STRING | OBJETO_TO_STRING | NO_ENUMERAR => return otras(m, id, ll),
         PROXY => return m.crear_proxy(arg(m, ll, 0), arg(m, ll, 1)),
+        EVAL => {
+            let c = arg(m, ll, 0);
+            let Some(codigo) = m.mundo.texto(c).map(String::from) else { return Ok(c) };
+            m.ejecutar(&codigo).map_err(|e| m.error_desde_texto(&e.mensaje))?;
+            Valor::INDEFINIDO
+        }
         ALEATORIOS => {
             let n = arg(m, ll, 0).como_numero().unwrap_or(0.0).clamp(0.0, 65536.0) as usize;
             let Some(bytes) = m.bytes_aleatorios(n) else {

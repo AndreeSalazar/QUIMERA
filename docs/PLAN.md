@@ -70,7 +70,7 @@ La fase más importante: lo que separa "leer páginas" de "usar aplicaciones web
 - **Completar JavaScript moderno** en la VM: clases completas, `async`/`await`, generadores, módulos, desestructuración, `Map`/`Set`/`WeakMap`, `Proxy` donde haga falta.
 - Rehacer solo lo necesario tras cada cambio del DOM (estilo, maquetación y pintado por partes), para que sea rápido.
 
-**Comprobación:** las *web-platform-tests* oficiales de las partes hechas, automatizadas con Bun. **Hito:** la tienda de Steam y páginas con JavaScript normal.
+**Comprobación:** las *web-platform-tests* oficiales de las partes hechas, automatizadas con Bun. **Hito:** la tienda de Steam y páginas con JavaScript normal. 🟡 La tienda de Steam ejecuta todos sus scripts sin errores (jQuery 1.8, su app de React con `Intl`) y pinta lo que construyen, como los juegos destacados, con 436 MB frente a 726 MB de Edge. Faltan las imágenes que añaden los scripts y que la maquetación coincida con Chromium.
 
 ## Fase 4: la web moderna
 

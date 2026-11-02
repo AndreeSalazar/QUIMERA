@@ -159,6 +159,8 @@ pub struct Motor {
     anfitrion: Option<Rc<dyn Anfitrion>>,
     /// Las claves que tienen algún accesor (`get`/`set`), como filtro de bits (`accesores.rs`).
     filtro_accesores: [u64; accesores::N_FILTRO],
+    /// Cuántos accesores se han definido (los stubs de «añadir» la comparan, `ic.rs`).
+    epoca_accesores: u32,
     /// Cuántos símbolos se han creado (para que cada uno sea único).
     simbolos: u32,
     /// De dónde viene lo que se compila ahora (ver [`Motor::fijar_origen`]).
@@ -203,6 +205,7 @@ impl Motor {
             cadenas_ic: Vec::new(),
             anfitrion: None,
             filtro_accesores: [0; accesores::N_FILTRO],
+            epoca_accesores: 0,
             simbolos: 0,
             origen: Rc::from(""),
             #[cfg(feature = "perfil")]

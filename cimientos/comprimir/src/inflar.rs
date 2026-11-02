@@ -160,6 +160,12 @@ pub fn zlib(datos: &[u8], capacidad: usize) -> Result<Vec<u8>, Error> {
 
 /// DEFLATE crudo → añade los bytes a `salida`.
 pub fn inflar(datos: &[u8], salida: &mut Vec<u8>) -> Result<(), Error> {
+    inflar_contando(datos, salida).map(|_| ())
+}
+
+/// Como [`inflar`], y devuelve cuántos bytes de `datos` ocupaba el DEFLATE (lo que sigue es,
+/// en gzip, su pie).
+pub(crate) fn inflar_contando(datos: &[u8], salida: &mut Vec<u8>) -> Result<usize, Error> {
     let mut b = Bits { d: datos, i: 0, buf: 0, n: 0 };
     loop {
         let ultimo = b.tomar(1) == 1;
@@ -179,7 +185,8 @@ pub fn inflar(datos: &[u8], salida: &mut Vec<u8>) -> Result<(), Error> {
             return Err(Error::Datos("DEFLATE cortado"));
         }
         if ultimo {
-            return Ok(());
+            // Los bytes enteros que quedan en el búfer se leyeron por adelantado.
+            return Ok(b.i - (b.n / 8) as usize);
         }
     }
 }

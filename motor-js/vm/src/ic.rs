@@ -41,8 +41,10 @@ enum Accion {
     Longitud,
     /// Escribir el hueco del receptor.
     EscribirHueco(u32),
-    /// Añadir la propiedad al receptor: pasar a la forma `nueva` y escribir su `hueco`.
-    Anadir { nueva: u32, hueco: u32 },
+    /// Añadir la propiedad al receptor: pasar a la forma `nueva` y escribir su `hueco`. `epoca`:
+    /// cuántos accesores había definidos al aprenderlo (si no ha cambiado, no hay `set` nuevo
+    /// en la cadena y las guardas de los prototipos sobran).
+    Anadir { nueva: u32, hueco: u32, epoca: u32 },
     /// No está en ningún objeto de la cadena (que acaba después del último): `undefined`.
     Ausente,
 }
@@ -100,6 +102,13 @@ impl Motor {
 
     /// Añade un stub al sitio con las formas de los prototipos de su cadena.
     fn aprender(&mut self, (fi, pc): (usize, usize), forma: u32, protos: &[u32], accion: Accion) {
+        // Nada que dependa de una forma diccionario: gana y pierde claves sin cambiar de número
+        // (y la de un «añadir» que acaba en una es propia de un solo objeto).
+        let f = &self.mundo.formas;
+        let nueva = if let Accion::Anadir { nueva, .. } = accion { nueva } else { forma };
+        if f.es_diccionario(forma) || f.es_diccionario(nueva) || protos.iter().any(|p| f.es_diccionario(*p)) {
+            return;
+        }
         let cadena = self.cadenas_ic.len() as u32;
         self.cadenas_ic.extend_from_slice(protos);
         let s = Stub { forma, cadena, saltos: protos.len() as u8, accion };
@@ -195,7 +204,13 @@ impl Motor {
         for s in sitio.stubs.iter().map_while(|s| s.as_ref()).filter(|s| s.forma == forma) {
             match s.accion {
                 Accion::EscribirHueco(h) => return Some(self.mundo.escribir_hueco(obj, h, v)),
-                Accion::Anadir { nueva, hueco } => return Some(self.mundo.anadir_propiedad(obj, nueva, hueco, v)),
+                // Añadir mira antes la cadena de prototipos: un `set` nuevo en uno de ellos
+                // cambia su forma y el stub deja de valer (sin vaciar las cachés de nadie).
+                Accion::Anadir { nueva, hueco, epoca }
+                    if epoca == self.epoca_accesores || self.guardas(obj, forma, s).is_some() =>
+                {
+                    return Some(self.mundo.anadir_propiedad(obj, nueva, hueco, v));
+                }
                 _ => {}
             }
         }
@@ -217,17 +232,27 @@ impl Motor {
         {
             return None;
         }
+        let mut protos: Vec<u32> = Vec::new();
         let accion = match self.mundo.formas.buscar(forma, clave) {
             Some(h) => Accion::EscribirHueco(h),
             None => {
+                // Las formas de la cadena de prototipos, para las guardas.
+                let mut actual = self.mundo.prototipo(obj);
+                while self.mundo.es_objeto(actual) {
+                    if protos.len() >= MAX_SALTOS {
+                        return None;
+                    }
+                    protos.push(self.mundo.forma(actual)?);
+                    actual = self.mundo.prototipo(actual);
+                }
                 let nueva = self.mundo.formas.anadir(forma, clave);
-                Accion::Anadir { nueva, hueco: self.mundo.formas.huecos(nueva) - 1 }
+                Accion::Anadir { nueva, hueco: self.mundo.formas.huecos(nueva) - 1, epoca: self.epoca_accesores }
             }
         };
-        self.aprender((fi, pc), forma, &[], accion);
+        self.aprender((fi, pc), forma, &protos, accion);
         Some(match accion {
             Accion::EscribirHueco(h) => self.mundo.escribir_hueco(obj, h, v),
-            Accion::Anadir { nueva, hueco } => self.mundo.anadir_propiedad(obj, nueva, hueco, v),
+            Accion::Anadir { nueva, hueco, .. } => self.mundo.anadir_propiedad(obj, nueva, hueco, v),
             _ => false,
         })
     }

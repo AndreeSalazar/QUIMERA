@@ -41,12 +41,7 @@ impl Motor {
     pub(crate) fn traza_de(&self, e: Valor) -> String {
         let pila = self.mundo.cadenas.buscar("stack").and_then(|k| self.mundo.leer(e, k));
         match pila.and_then(|p| self.mundo.texto(p)) {
-            Some(t) => t
-                .find(
-                    "
-    at ",
-                )
-                .map_or(String::new(), |i| String::from(&t[i..])),
+            Some(t) => t.find("\n    at ").map_or(String::new(), |i| String::from(&t[i..])),
             None => String::new(),
         }
     }

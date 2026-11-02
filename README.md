@@ -55,7 +55,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 | Fase | Qué | Desbloquea |
 |---|---|---|
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
-| 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF) · `calc()`, WOFF2, gzip, WebP | Wikipedia, documentación, blogs |
+| 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF), ✅ gzip · `calc()`, WOFF2, WebP | Wikipedia, documentación, blogs |
 | 2 | ✅ Formularios (GET y POST), ✅ cookies, ✅ foco y teclado · caché, selección | buscar (DuckDuckGo HTML): navegar de verdad |
 | 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores), ✅ `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración, accesores, `Symbol`, generadores, `async`/`await`, ✅ módulos, `fetch`/XHR con CORS · más eventos, medidas de la maquetación | Steam y páginas con JavaScript |
 | 4 | ✅ clases del DOM y `customElements` · Shadow DOM, `grid`, SVG, inicio de sesión | Epic Games, Gmail |

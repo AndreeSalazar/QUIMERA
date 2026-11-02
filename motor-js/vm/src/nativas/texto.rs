@@ -17,7 +17,7 @@ const CHAR_CODE_AT: u32 = 201;
 const INDEX_OF: u32 = 202;
 const SLICE: u32 = 203;
 const TO_STRING: u32 = 204;
-const STRING: u32 = 205;
+pub(super) const STRING: u32 = 205;
 const FROM_CHAR_CODE: u32 = 206;
 const SPLIT: u32 = 207;
 const TO_UPPER: u32 = 208;
@@ -77,7 +77,12 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
                 let v = m.a_primitivo(arg(m, ll, 0))?;
                 m.texto(v)
             };
-            return Ok(m.mundo.cadena(&t));
+            let largo = t.encode_utf16().count();
+            let v = m.mundo.cadena(&t);
+            if ll.construir {
+                return Ok(super::envoltorio(m, ll, R_CADENA, v, Some(largo)));
+            }
+            return Ok(v);
         }
         FROM_CHAR_CODE => {
             let unidades: Vec<u16> = (0..ll.n).map(|i| op::a_numero(&m.mundo, arg(m, ll, i)) as i64 as u16).collect();

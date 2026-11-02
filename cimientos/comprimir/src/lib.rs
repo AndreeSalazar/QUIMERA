@@ -1,13 +1,16 @@
-//! Descompresión de QUIMERA, sin dependencias: **DEFLATE** (RFC 1951) y **zlib** (RFC 1950).
+//! Descompresión de QUIMERA, sin dependencias: **DEFLATE** (RFC 1951), **zlib** (RFC 1950) y
+//! **gzip** (RFC 1952).
 //!
-//! La usan las imágenes PNG, las fuentes WOFF y, más adelante, las respuestas `gzip` de la red.
+//! La usan las imágenes PNG, las fuentes WOFF y las respuestas comprimidas de la red.
 //! Está en el nivel 0 para que cualquier crate de arriba pueda usarla.
 #![no_std]
 
 extern crate alloc;
 
+mod gzip;
 mod inflar;
 
+pub use gzip::gzip;
 pub use inflar::{inflar, zlib};
 
 /// Por qué no se pudo descomprimir.

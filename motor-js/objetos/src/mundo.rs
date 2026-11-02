@@ -365,8 +365,13 @@ impl Mundo {
         let Some(hueco) = self.formas.buscar(forma, clave) else { return true };
         let claves: alloc::vec::Vec<u32> = self.formas.claves(forma).to_vec();
         let mut nueva = FORMA_VACIA;
-        for &k in claves.iter().filter(|&&k| k != clave) {
-            nueva = self.formas.anadir(nueva, k);
+        if self.formas.es_diccionario(forma) {
+            self.formas.quitar(forma, clave);
+            nueva = forma;
+        } else {
+            for &k in claves.iter().filter(|&&k| k != clave) {
+                nueva = self.formas.anadir(nueva, k);
+            }
         }
         let Some(props) = self.m.leer(obj, C_PROPS) else { return false };
         for i in hueco as usize..claves.len() - 1 {
@@ -382,6 +387,10 @@ impl Mundo {
     pub fn cambiar_clave(&mut self, obj: Valor, clave: u32, nueva: u32, v: Valor) -> bool {
         let Some(forma) = self.forma(obj) else { return false };
         let Some(hueco) = self.formas.buscar(forma, clave) else { return false };
+        if self.formas.es_diccionario(forma) {
+            self.formas.renombrar(forma, clave, nueva);
+            return self.escribir_hueco(obj, hueco, v);
+        }
         let claves: alloc::vec::Vec<u32> = self.formas.claves(forma).to_vec();
         let mut f = FORMA_VACIA;
         for &k in &claves {
@@ -469,6 +478,11 @@ impl Mundo {
         let capacidad = self.m.largo(celda).unwrap_or(0) as u32;
         if n <= capacidad {
             return true;
+        }
+        // Un tope: un bucle sin fin de `push` no debe agotar la memoria del navegador (JavaScript
+        // recibe un RangeError y la página sigue). 32 millones de elementos: 256 MB de valores.
+        if n > 1 << 25 {
+            return false;
         }
         let nueva_cap = (capacidad * 2).max(8).max(n) as usize;
         let mut campos = alloc::vec![Valor::INDEFINIDO; nueva_cap];

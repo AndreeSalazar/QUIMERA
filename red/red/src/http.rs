@@ -18,7 +18,7 @@ pub(crate) fn peticion(url: &Url, agente: &str, galletas: Option<&str>, p: &crat
     }
     let metodo = p.metodo.as_str();
     let mut s = format!(
-        "{metodo} {} HTTP/1.1\r\nHost: {anfitrion}\r\nUser-Agent: {agente}\r\nAccept: text/html,application/xhtml+xml,text/css,*/*;q=0.8\r\nAccept-Language: es,en;q=0.8\r\nAccept-Encoding: identity\r\nConnection: close\r\n",
+        "{metodo} {} HTTP/1.1\r\nHost: {anfitrion}\r\nUser-Agent: {agente}\r\nAccept: text/html,application/xhtml+xml,text/css,*/*;q=0.8\r\nAccept-Language: es,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nConnection: close\r\n",
         url.ruta_y_consulta()
     );
     if let Some(g) = galletas {
@@ -101,8 +101,28 @@ pub(crate) fn leer(mut datos: &[u8]) -> Result<Leida, Error> {
         } else {
             resto.to_vec()
         };
+        let cuerpo = descomprimir(cuerpo, valor("content-encoding"))?;
         return Ok(Leida { estado, cabeceras, cuerpo });
     }
+}
+
+/// El cuerpo según su `Content-Encoding`: `gzip` o `deflate` (zlib o crudo, que de los dos hay
+/// servidores). Algunos CDN lo mandan comprimido aunque no se haya pedido. Brotli aún no.
+fn descomprimir(cuerpo: Vec<u8>, codificacion: Option<&str>) -> Result<Vec<u8>, Error> {
+    let c = codificacion.unwrap_or("").trim().to_ascii_lowercase();
+    if cuerpo.is_empty() {
+        return Ok(cuerpo);
+    }
+    let r = match c.as_str() {
+        "gzip" | "x-gzip" => quimera_comprimir::gzip(&cuerpo),
+        "deflate" => quimera_comprimir::zlib(&cuerpo, cuerpo.len() * 4).or_else(|_| {
+            let mut v = Vec::with_capacity(cuerpo.len() * 4);
+            quimera_comprimir::inflar(&cuerpo, &mut v).map(|()| v)
+        }),
+        "" | "identity" => return Ok(cuerpo),
+        otra => return Err(error(format!("respuesta comprimida con {otra}, que QUIMERA no lee"))),
+    };
+    r.map_err(|e| error(format!("no se pudo descomprimir la respuesta: {e}")))
 }
 
 /// `Transfer-Encoding: chunked`: tamaño en hexadecimal, `\r\n`, datos, `\r\n`... hasta un 0.
@@ -180,6 +200,19 @@ mod pruebas {
         let r = leer(b"HTTP/1.1 100 Continue\r\n\r\nHTTP/1.1 404 Not Found\r\nTransfer-Encoding: chunked\r\n\r\n4;ext=1\r\nWiki\r\n6\r\npedia \r\n0\r\nX-Final: 1\r\n\r\n").unwrap();
         assert_eq!((r.estado, String::from_utf8_lossy(&r.cuerpo).as_ref()), (404, "Wikipedia "));
         assert_eq!(r.cabeceras[0], (String::from("transfer-encoding"), String::from("chunked")));
+        // gzip (el de quimera-comprimir), aunque venga por trozos.
+        let gz: [u8; 58] = [
+            31, 139, 8, 8, 0, 0, 0, 0, 2, 255, 104, 111, 108, 97, 46, 116, 120, 116, 0, 203, 200, 207, 73, 84, 8, 12,
+            245, 244, 117, 13, 114, 212, 81, 56, 188, 49, 49, 47, 229, 240, 46, 61, 133, 140, 81, 225, 161, 39, 12, 0,
+            123, 147, 68, 108, 204, 1, 0, 0,
+        ];
+        let mut resp =
+            b"HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nTransfer-Encoding: chunked\r\n\r\n3a\r\n".to_vec();
+        resp.extend_from_slice(&gz);
+        resp.extend_from_slice(b"\r\n0\r\n\r\n");
+        let r = leer(&resp).unwrap();
+        assert_eq!(String::from_utf8_lossy(&r.cuerpo), "hola QUIMERA, ñandú. ".repeat(20));
+        assert!(leer(b"HTTP/1.1 200 OK\r\nContent-Encoding: br\r\n\r\nxyz").is_err(), "brotli aún no");
         assert!(leer(b"no es http\r\n\r\n").is_err());
         assert!(leer(b"HTTP/1.1 200 OK\r\nContent-Length: 3").is_err(), "cabeceras sin terminar");
     }

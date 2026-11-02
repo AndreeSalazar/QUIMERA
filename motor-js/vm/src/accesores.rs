@@ -5,15 +5,17 @@
 //!   hueco un arreglo `[get, set]`. Así una propiedad de datos `x` y un accesor `x` no se
 //!   confunden, y la forma cambia al añadir un accesor: las guardas de las cachés lo notan.
 //! - **Las cachés nunca los guardan.** La de primer nivel solo encuentra claves sin marcar. Leer
-//!   o escribir mira si hay un accesor en la cadena *antes* de aprender nada, y definir uno vacía
-//!   todas las cachés una vez (un stub antiguo de «añadir propiedad» se saltaría el `set`).
+//!   o escribir mira si hay un accesor en la cadena *antes* de aprender nada. Los stubs de
+//!   «añadir propiedad» guardan las formas de la cadena de prototipos: un `set` nuevo en uno de
+//!   ellos cambia su forma y el stub falla solo. (Antes, definir un accesor vaciaba todas las
+//!   cachés, y un módulo con miles de `export` —cada uno es un getter— tardaba segundos.)
 //! - **Solo se buscan si pueden existir.** Un filtro de bits apunta las claves que tienen algún
 //!   accesor en algún objeto (`filtro_accesores`): leer `x.foo` solo busca un accesor si alguien
 //!   definió uno llamado `foo` (o una clave que cae en el mismo bit). Antes era un solo
 //!   interruptor, y el primer getter de la biblioteca o del DOM hacía buscar en cada acceso que
 //!   no acertaba la caché: un 5 % menos en V8.
 
-use crate::{CACHE_VACIA, Motor};
+use crate::Motor;
 use quimera_objetos::Valor;
 
 /// El bit que marca la clave de un accesor en una forma.
@@ -105,7 +107,7 @@ impl Motor {
         self.mundo.m.soltar_raices(marca);
         let bit = clave as usize % (64 * N_FILTRO);
         self.filtro_accesores[bit / 64] |= 1 << (bit % 64);
-        self.invalidar_caches();
+        self.epoca_accesores = self.epoca_accesores.wrapping_add(1);
     }
 
     /// Si `clave` puede tener un accesor en algún objeto (el filtro de bits; `false` es seguro).
@@ -113,14 +115,5 @@ impl Motor {
     fn quizas_accesor(&self, clave: u32) -> bool {
         let bit = clave as usize % (64 * N_FILTRO);
         self.filtro_accesores[bit / 64] & (1 << (bit % 64)) != 0
-    }
-
-    /// Olvida todo lo aprendido por las cachés en línea (se vuelve a aprender al ejecutar).
-    pub(crate) fn invalidar_caches(&mut self) {
-        for f in &mut self.funciones {
-            f.caches.fill(CACHE_VACIA);
-        }
-        self.sitios.clear();
-        self.cadenas_ic.clear();
     }
 }

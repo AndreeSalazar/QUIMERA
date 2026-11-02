@@ -735,6 +735,21 @@
     }
   });
 
+  // El resto de `console` (lo que escribe va por `console.log`).
+  var cuentas = {}, relojes = {};
+  definir(global.console, {
+    assert: function (c) {
+      if (!c) console.error.apply(console, ['Assertion failed:'].concat(Array.prototype.slice.call(arguments, 1)));
+    },
+    groupEnd: function () {},
+    clear: function () {},
+    count: function (k) { k = k === undefined ? 'default' : String(k); cuentas[k] = (cuentas[k] || 0) + 1; console.log(k + ': ' + cuentas[k]); },
+    countReset: function (k) { cuentas[k === undefined ? 'default' : String(k)] = 0; },
+    time: function (k) { relojes[k === undefined ? 'default' : String(k)] = Date.now(); },
+    timeLog: function (k) { k = k === undefined ? 'default' : String(k); console.log(k + ': ' + (Date.now() - relojes[k]) + ' ms'); },
+    timeEnd: function (k) { k = k === undefined ? 'default' : String(k); console.log(k + ': ' + (Date.now() - relojes[k]) + ' ms'); delete relojes[k]; }
+  });
+
   // `Reflect`: las operaciones de los objetos como funciones (lo que hace un Proxy sin trampa).
   global.Reflect = {
     get: function (o, k) { return o[k]; },
@@ -841,6 +856,7 @@
       var p = partes(this);
       return DIAS[p.dia] + ', ' + dos(p.d) + ' ' + MESES[p.m] + ' ' + p.a + ' ' + dos(p.h) + ':' + dos(p.mi) + ':' + dos(p.s) + ' GMT';
     },
+    toGMTString: function () { return this.toUTCString(); }, // el nombre antiguo, que aún usan
     toDateString: function () { var p = partes(this); return DIAS[p.dia] + ' ' + MESES[p.m] + ' ' + dos(p.d) + ' ' + p.a; },
     toTimeString: function () { var p = partes(this); return dos(p.h) + ':' + dos(p.mi) + ':' + dos(p.s) + ' GMT+0000 (Coordinated Universal Time)'; },
     toString: function () {

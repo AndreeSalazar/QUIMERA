@@ -158,7 +158,7 @@ Coste: crear un motor tarda unos 2 ms más (compila el preludio). Se podría gua
 
 **Accesores** (`accesores.rs`): `get`/`set` en clases y objetos, `Object.defineProperty` y `getOwnPropertyDescriptor`. Un accesor va en la forma del objeto con la clave marcada (bit 31) y un par `[get, set]` en su hueco:
 
-- **Las cachés nunca los guardan.** La de primer nivel solo encuentra claves sin marcar. Leer o escribir mira si hay un accesor en la cadena *antes* de aprender nada, y definir uno vacía todas las cachés una vez (un stub antiguo de «añadir propiedad» se saltaría el `set`).
+- **Las cachés nunca los guardan.** La de primer nivel solo encuentra claves sin marcar. Leer o escribir mira si hay un accesor en la cadena *antes* de aprender nada, y los stubs de «añadir propiedad» comprueban las formas de los prototipos, así que un `set` definido después los hace fallar (ver [objetos enormes](#objetos-enormes-y-módulos-con-miles-de-export)).
 - **Solo se buscan si pueden existir**: un filtro de 4096 bits apunta las claves que tienen algún accesor. Leer `x.foo` solo busca un getter si alguien definió uno llamado `foo`. Antes era un solo interruptor: el primer getter (de la biblioteca o del DOM, que define muchos) hacía buscar en cada acceso que no acertaba la caché. Al añadir `binarios.js`, V8 cayó un 5,5 %; con el filtro queda en −2 % frente al commit anterior (`--v8q` del banco, alternando los dos binarios), por el preludio más grande.
 - Al definir un accesor sobre una clave que ya existe (o sobre el hueco que deja un objeto literal), ocupa su sitio: las claves salen en el orden del código, como en Chromium.
 
@@ -199,6 +199,25 @@ Falta: `return()` y `throw()` sobre un generador pausado dentro de un `try` con 
 **`Proxy`** (`proxy.rs`) con las trampas `get`, `set`, `has`, `deleteProperty` y `ownKeys`; sin trampa, la operación va al objetivo. Un proxy es un objeto del anfitrión con un número reservado: las cachés en línea ya excluyen esos objetos (como a los nodos del DOM), así que el resto del código no paga nada. Falta: proxies de funciones (`apply`, `construct`) y las trampas de descriptores y prototipos. **`Reflect`** está en el preludio; `Reflect.construct` admite el tercer argumento (`new.target`), que usan las clases compiladas por Babel y TypeScript.
 
 **`enumerable`** de `Object.defineProperty` (por defecto `false` al crear la propiedad, como en los navegadores): el objeto guarda en una ranura oculta las claves que no se enumeran, y la consultan `Object.keys`, `for-in`, `JSON.stringify` y `Object.assign`. Solo la tienen los objetos que la necesitan. Los getters de objetos literales siguen siendo enumerables y los de las clases no. `writable` y `configurable` aún no se guardan.
+
+## `Intl`, `eval` y envoltorios
+
+`intl.js` (tras `binarios.js`): `NumberFormat` (decimales, agrupación, porcentajes y monedas comunes), `DateTimeFormat` (numérico y con nombres de meses y días), `PluralRules`, `ListFormat`, `RelativeTimeFormat`, `Collator` y `Locale`, y los `toLocaleString` de números y fechas encima. Sin tablas de CLDR: español e inglés bien (igual que Chromium en las pruebas), separadores de algunos idiomas más, y lo demás como en inglés. La zona horaria es UTC, como el resto de `Date`.
+
+**`eval` indirecto** (`window.eval.call(window, código)`, como ejecuta jQuery los scripts que añade): el código corre en el ámbito global. Falta el `eval` directo con las variables locales y que devuelva el valor de la última expresión.
+
+**`new String(x)` y `new Number(x)`**: objetos con su valor dentro (`[[Valor]]`), con `length` e índices en `Object.keys` como en Chromium. El selector de jQuery 1.8 los usa como fichas con propiedades.
+
+**`arr.length = n` nunca pasa por la caché**: un arreglo puede compartir forma con un objeto normal, y la caché de «añadir `length`» aprendida con ese objeto le ponía una propiedad suelta sin recortarlo. Un `splice` del preludio, llamado antes con objetos jQuery, dejaba de recortar arreglos y un bucle de jQuery no acababa (Steam pedía 30 GB). Ahora, además, un arreglo no pasa de 32 millones de elementos: la página recibe un `RangeError` y el navegador sigue.
+
+## Objetos enormes y módulos con miles de `export`
+
+Steam destapó dos costes que crecían con el cuadrado del tamaño:
+
+- **Formas copiadas.** Cada forma nueva copiaba todas las claves de la anterior: un objeto de N claves dejaba N formas con N²/2 claves. Sus diccionarios de traducciones (miles de claves) se comían **1,7 GB**. Ahora, pasadas 1024 claves, el objeto entra en **modo diccionario** (como en V8): una forma propia que crece y encoge en su sitio. Las cachés en línea no guardan nada de esas formas, así que esos objetos van por el camino lento.
+- **Vaciar todas las cachés por cada getter.** Definir un accesor vaciaba las cachés de todas las funciones cargadas (cientos de miles de sitios), y cada `export` de un módulo es un getter: miles de vaciados. Lo pedía un único caso: un stub de «añadir propiedad» se saltaría un `set` definido después en un prototipo. Ahora esos stubs guardan las formas de la cadena de prototipos (como los de lectura) y fallan solos. Para no recorrer la cadena en cada objeto nuevo, cada stub apunta cuántos accesores había al aprenderlo: si no se ha definido ninguno desde entonces, las guardas sobran. V8 queda igual que antes (+0,4 % de media en ocho pares alternados).
+
+Steam en la ventana: de 1,8 GB y creciendo a **437 MB estables** de memoria en uso (Edge, 737 MB; en memoria privada quedan empatados, 525 MB frente a 520–531 MB), y su JavaScript del primer segundo de 11,7 s a 3,5 s.
 
 ## Datos binarios y azar
 

@@ -355,3 +355,32 @@ fn urls_absolutas_en_enlaces_e_imagenes() {
         ]
     );
 }
+
+/// Un `<a>` se descompone como una URL (lo usa axios), `postMessage` llega como `message`, y
+/// `toGMTString`. Como Chromium en https://example.com/dir/pag.html.
+#[test]
+fn enlaces_como_url_y_post_message() {
+    let mut d = Dom::nuevo(quimera_html::analizar(""), "https://example.com/dir/pag.html");
+    let r = correr(
+        &mut d,
+        r#"var a = document.createElement('a');
+          a.setAttribute('href', '../x/y.html?q=1#f');
+          console.log(a.protocol, a.host, a.hostname, JSON.stringify(a.port), a.pathname, a.search, a.hash, a.origin);
+          a.pathname = '/otra'; console.log(a.href, JSON.stringify(document.createElement('a').pathname));
+          window.addEventListener('message', function (e) { console.log('mensaje', e.data, e.origin, e.source === window, e instanceof MessageEvent); });
+          window.postMessage('hola', '*');
+          console.log(new Date(0).toGMTString());"#,
+    );
+    let mut r = r;
+    d.correr_temporizadores(10.0);
+    r.extend(d.consola());
+    assert_eq!(
+        r,
+        [
+            r#"https: example.com example.com "" /x/y.html ?q=1 #f https://example.com"#,
+            r#"https://example.com/otra?q=1#f """#,
+            "Thu, 01 Jan 1970 00:00:00 GMT",
+            "mensaje hola https://example.com true true",
+        ]
+    );
+}

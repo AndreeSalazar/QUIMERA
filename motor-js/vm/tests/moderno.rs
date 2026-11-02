@@ -533,3 +533,109 @@ fn proxy_y_reflect() {
         ]
     );
 }
+
+/// `new String(x)` y `new Number(x)`: objetos con su valor dentro (Sizzle de jQuery 1.8).
+/// Valores de Chromium.
+#[test]
+fn envoltorios_de_primitivos() {
+    let r = salida(
+        r#"var n = new String('ab>c'); n.type = 'TAG';
+          console.log(typeof n, n.length, n + '!', n.slice(1, 3), n == 'ab>c', n === 'ab>c', n.type, n.toUpperCase(), String(n), JSON.stringify(Object.keys(n)));
+          var x = new Number(5);
+          console.log(typeof x, x + 1, x * 2, x.toFixed(1), x == 5, Number(x));"#,
+    );
+    assert_eq!(r, [r#"object 4 ab>c! b> true false TAG AB>C ab>c ["0","1","2","3","type"]"#, "object 6 10 5.0 true 5"]);
+}
+
+/// Escribir `length` en un arreglo lo recorta aunque la caché de esa línea haya aprendido
+/// «añadir `length`» con un objeto normal (colgaba jQuery 1.8 en Steam). Y `eval` indirecto.
+#[test]
+fn length_de_arreglos_y_eval() {
+    let r = salida(
+        r#"function f(o, n) { o.length = n; }
+          var o = {}; f(o, 1);
+          var p = {length: 5}; f(p, 2);
+          var a = [1, 2, 3]; f(a, 1);
+          var b = [1, 2, 3]; b.x = 1; f(b, 2);
+          var c = [1, 2, 3, 4]; c.length = 2;
+          function g(o) { return o.length; }
+          var lecturas = [g({}), g({}), g([1, 2]), g([1, 2, 3]), g({length: 7}), g([])];
+          console.log(o.length, p.length, a.length, a.join(), b.length, b.join(), c.join(), lecturas.join());
+          var global = this; global.eval.call(global, 'var desdeEval = 6 * 7;');
+          console.log(desdeEval, eval(5), typeof eval);"#,
+    );
+    assert_eq!(r, ["1 2 1 1 2 1,2 1,2 ,,2,3,7,0", "42 5 function"]);
+}
+
+/// `Intl` en español e inglés (valores de Chromium; la hora es UTC).
+#[test]
+fn intl_basico() {
+    let r = salida(
+        r#"var d = new Date(Date.UTC(2024, 0, 2, 13, 5, 9));
+          console.log(new Intl.NumberFormat('en-US').format(1234567.891), new Intl.NumberFormat('es-ES').format(1234.5), new Intl.NumberFormat('es-ES').format(12345.678));
+          console.log(new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(-9.5), new Intl.NumberFormat('es-ES', {style: 'currency', currency: 'EUR'}).format(1234.5), new Intl.NumberFormat('en', {style: 'percent'}).format(0.256));
+          console.log(new Intl.DateTimeFormat('en-US', {timeZone: 'UTC'}).format(d), new Intl.DateTimeFormat('es-ES', {timeZone: 'UTC'}).format(d));
+          console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}).format(d), '|', new Intl.DateTimeFormat('es-ES', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}).format(d));
+          console.log(new Intl.DateTimeFormat('en-US', {hour: 'numeric', minute: '2-digit', timeZone: 'UTC'}).format(d), new Intl.DateTimeFormat('es-ES', {hour: 'numeric', minute: '2-digit', timeZone: 'UTC'}).format(d));
+          console.log(new Intl.PluralRules('en').select(1), new Intl.PluralRules('en').select(2), new Intl.PluralRules('en', {type: 'ordinal'}).select(22));
+          console.log(new Intl.ListFormat('en').format(['a', 'b', 'c']), '|', new Intl.ListFormat('es').format(['a', 'b', 'c']), '|', new Intl.ListFormat('en', {type: 'disjunction'}).format(['x', 'y']));
+          console.log(new Intl.RelativeTimeFormat('en').format(-3, 'day'), '|', new Intl.RelativeTimeFormat('es').format(2, 'hours'), '|', new Intl.RelativeTimeFormat('es', {numeric: 'auto'}).format(-1, 'day'));
+          console.log(typeof Intl.DateTimeFormat().resolvedOptions().timeZone, (1234.5).toLocaleString('en-US'), new Intl.Locale('es-PE').region);"#,
+    );
+    assert_eq!(
+        r,
+        [
+            "1,234,567.891 1234,5 12.345,678",
+            "-$9.50 1234,50\u{a0}€ 26%",
+            "1/2/2024 2/1/2024",
+            "January 2, 2024 | 2 de enero de 2024",
+            "1:05 PM 13:05",
+            "one other two",
+            "a, b, and c | a, b y c | x or y",
+            "3 days ago | dentro de 2 horas | ayer",
+            "string 1,234.5 PE",
+        ]
+    );
+}
+
+/// Un objeto con miles de claves (modo diccionario): leer, escribir, borrar y recorrer desde
+/// los mismos sitios del código, para que una caché equivocada se notara.
+#[test]
+fn objetos_enormes_en_modo_diccionario() {
+    let r = salida(
+        r#"function leer(o, k) { return o[k]; }
+          function x(o) { return o.k5; }
+          var o = {}, p = {};
+          for (var i = 0; i < 3000; i++) { o['k' + i] = i; if (i < 10) p['k' + i] = -i; }
+          var s = 0;
+          for (var j = 0; j < 3000; j++) s += leer(o, 'k' + j);
+          var antes = [x(o), x(p), x(o)];
+          delete o.k5; delete o.k0;
+          o.nueva = 'n';
+          var despues = [x(o), x(p), leer(o, 'k6'), leer(o, 'k2999'), o.nueva];
+          o.k5 = 55;
+          var keys = Object.keys(o), n = 0; for (var q in o) n++;
+          console.log(s, antes.join(), despues.join(), x(o), keys.length, n, keys[0], keys[keys.length - 1], JSON.stringify(o).length > 30000);"#,
+    );
+    assert_eq!(r, ["4498500 5,-5,5 ,-5,6,2999,n 55 3000 3000 k1 k5 true"]);
+}
+
+/// Un `set` definido en un prototipo después de que una caché aprendiera «añadir `x`» se llama
+/// igual: el stub guarda las formas de la cadena. Y un módulo con miles de `export`.
+#[test]
+fn setter_nuevo_tras_cache_de_anadir() {
+    let r = salida(
+        r#"function poner(o) { o.x = 1; }
+          var P = {}, log = [];
+          poner(Object.create(P)); poner(Object.create(P)); poner(Object.create(P));
+          Object.defineProperty(P, 'x', { set: function (v) { log.push('set ' + v); } });
+          var b = Object.create(P); poner(b);
+          function poner2(o) { o.y = 2; }
+          poner2({}); poner2({});
+          Object.defineProperty(Object.prototype, 'y', { set: function (v) { log.push('y ' + v); }, configurable: true });
+          var c = {}; poner2(c);
+          delete Object.prototype.y;
+          console.log(log.join(), b.hasOwnProperty('x'), c.hasOwnProperty('y'));"#,
+    );
+    assert_eq!(r, ["set 1,y 2 false false"]);
+}

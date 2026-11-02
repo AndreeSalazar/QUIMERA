@@ -26,7 +26,7 @@ const PARSE_INT: u32 = 130;
 const PARSE_FLOAT: u32 = 131;
 const IS_NAN: u32 = 132;
 const IS_FINITE: u32 = 133;
-const NUMBER: u32 = 134;
+pub(super) const NUMBER: u32 = 134;
 
 pub(super) fn preparar(m: &mut Motor) {
     let math = nuevo_objeto(m, R_GLOBAL, "Math");
@@ -216,6 +216,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
         TO_FIXED | TO_PRECISION | TO_STRING => return metodo(m, id, ll),
         IS_NAN => return Ok(Valor::booleano(x.is_nan())),
         IS_FINITE => return Ok(Valor::booleano(x.is_finite())),
+        NUMBER if ll.construir => return Ok(super::envoltorio(m, ll, R_NUMERO, op::numero(x), None)),
         NUMBER => x,
         _ => return Ok(Valor::INDEFINIDO),
     };
