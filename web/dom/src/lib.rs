@@ -19,6 +19,7 @@
 
 extern crate alloc;
 
+mod complementos;
 mod eventos;
 mod interfaces;
 mod metodos;
@@ -186,10 +187,34 @@ const DOCUMENTO_JS: &str = r"(function (w, d) {
   // El origen se toma en la primera lectura: el reloj real llega después de este código.
   var inicio = null;
   function origen() { if (inicio === null) inicio = Date.now(); return inicio; }
+  // La entrada de navegación (`responseStart`...): todo ocurre en el instante de origen, que es
+  // cuando llegó la página (QUIMERA no mide aún las fases de la red).
+  function navegacion() {
+    var e = { name: w.location.href, entryType: 'navigation', startTime: 0, duration: 0, type: 'navigate',
+      redirectCount: 0, transferSize: 0, encodedBodySize: 0, decodedBodySize: 0, nextHopProtocol: 'http/1.1' };
+    ['fetchStart', 'domainLookupStart', 'domainLookupEnd', 'connectStart', 'connectEnd', 'secureConnectionStart',
+      'requestStart', 'responseStart', 'responseEnd', 'domInteractive', 'domContentLoadedEventStart',
+      'domContentLoadedEventEnd', 'domComplete', 'loadEventStart', 'loadEventEnd', 'redirectStart', 'redirectEnd',
+      'unloadEventStart', 'unloadEventEnd', 'workerStart'].forEach(function (k) { e[k] = 0; });
+    e.toJSON = function () { return this; };
+    return e;
+  }
   w.performance = { now: function () { return Date.now() - origen(); },
-    mark: function () {}, measure: function () {}, getEntriesByName: function () { return []; },
-    getEntriesByType: function () { return []; } };
+    mark: function () {}, measure: function () {}, clearMarks: function () {}, clearMeasures: function () {},
+    getEntries: function () { return [navegacion()]; },
+    getEntriesByName: function () { return []; },
+    getEntriesByType: function (t) { return t === 'navigation' ? [navegacion()] : []; },
+    setResourceTimingBufferSize: function () {}, toJSON: function () { return {}; } };
   Object.defineProperty(w.performance, 'timeOrigin', { get: origen, enumerable: true });
+  // `performance.timing` (el antiguo): los instantes en milisegundos desde 1970.
+  Object.defineProperty(w.performance, 'timing', { get: function () {
+    var t = {}, o = Math.round(origen());
+    ['navigationStart', 'fetchStart', 'domainLookupStart', 'domainLookupEnd', 'connectStart', 'connectEnd',
+      'requestStart', 'responseStart', 'responseEnd', 'domLoading', 'domInteractive', 'domContentLoadedEventStart',
+      'domContentLoadedEventEnd', 'domComplete', 'loadEventStart', 'loadEventEnd'].forEach(function (k) { t[k] = o; });
+    t.unloadEventStart = t.unloadEventEnd = t.redirectStart = t.redirectEnd = t.secureConnectionStart = 0;
+    return t;
+  }, enumerable: true });
   w.requestIdleCallback = function (f) { return setTimeout(function () { f({ didTimeout: false, timeRemaining: function () { return 50; } }); }, 1); };
   w.cancelIdleCallback = clearTimeout;
   function Observador() { this.observe = this.unobserve = this.disconnect = function () {}; this.takeRecords = function () { return []; }; }
@@ -273,7 +298,14 @@ impl Dom {
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));
         puente::preparar(&mut motor, &estado);
         motor.fijar_origen("quimera:dom");
-        for codigo in [ALMACENES, red::RED_JS, red::MODULOS_JS, interfaces::INTERFACES_JS, DOCUMENTO_JS] {
+        for codigo in [
+            ALMACENES,
+            red::RED_JS,
+            red::MODULOS_JS,
+            interfaces::INTERFACES_JS,
+            complementos::COMPLEMENTOS_JS,
+            DOCUMENTO_JS,
+        ] {
             if let Err(e) = motor.ejecutar(codigo) {
                 estado.errores.borrow_mut().push(e.completo());
             }

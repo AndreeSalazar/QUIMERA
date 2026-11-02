@@ -11,7 +11,7 @@ use alloc::vec::Vec;
 use quimera_objetos::{Cadenas, Clase, Valor};
 
 /// Las ranuras internas (U+0001), los símbolos (U+0002) y los campos `#privados` no se enumeran.
-fn oculta(clave: &str) -> bool {
+pub(crate) fn oculta(clave: &str) -> bool {
     clave.starts_with('\u{1}') || clave.starts_with('\u{2}') || clave.starts_with('#') || clave == "[[Valor]]"
 }
 
@@ -94,7 +94,8 @@ impl Motor {
             (_, Some(s)) => s.chars().count() as u32,
             _ => 0,
         };
-        for i in 0..indices {
+        let presentes: Vec<u32> = (0..indices).filter(|&i| !self.mundo.es_hueco(obj, i)).collect();
+        for i in presentes {
             claves.push(self.mundo.cadenas.internar(&i.to_string()));
         }
         let mut tapadas: Vec<u32> = Vec::new();
@@ -159,7 +160,7 @@ impl Motor {
             && let Some(i) = Self::indice(k)
         {
             if i < self.mundo.longitud(obj).unwrap_or(0) {
-                self.mundo.escribir_elemento(obj, i, Valor::INDEFINIDO);
+                self.mundo.escribir_elemento(obj, i, Valor::HUECO);
             }
             return Ok(Valor::VERDADERO);
         }

@@ -94,7 +94,9 @@ impl Motor {
                 let v = self.funciones[fi].constantes.get(k as usize).copied().unwrap_or(Valor::INDEFINIDO);
                 self.w(base, dst, v);
             }
-            Indefinido { dst } | Hueco { dst } => self.w(base, dst, Valor::INDEFINIDO),
+            Indefinido { dst } => self.w(base, dst, Valor::INDEFINIDO),
+            // Solo lo lee `CrearArreglo`, que lo deja como hueco del arreglo (`[1, , 3]`).
+            Hueco { dst } => self.w(base, dst, Valor::HUECO),
             Nulo { dst } => self.w(base, dst, Valor::NULO),
             Booleano { dst, valor } => self.w(base, dst, Valor::booleano(valor)),
             Este { dst } => self.w(base, dst, self.pila(cab + 1)),
@@ -320,6 +322,14 @@ impl Motor {
                     break;
                 }
                 _ => {}
+            }
+        }
+        // Una llamada a un nombre (una variable local o de una función de fuera): lo apuntó el
+        // compilador.
+        if nombre.is_none() {
+            let lista = &self.funciones[fi].f.nombres_llamada;
+            if let Ok(i) = lista.binary_search_by_key(&(pc as u32), |(p, _)| *p) {
+                nombre = Some(alloc::string::String::from(self.mundo.cadenas.texto(self.clave(fi, lista[i].1))));
             }
         }
         match nombre {

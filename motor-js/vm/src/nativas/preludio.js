@@ -65,7 +65,6 @@
       aLista(pares).forEach(function (p) { o[p[0]] = p[1]; });
       return o;
     },
-    getOwnPropertyNames: function (o) { return Object.keys(o); },
     // QUIMERA no tiene atributos de propiedad: congelar no hace nada (y se dice que no lo está).
     freeze: function (o) { return o; },
     seal: function (o) { return o; },
@@ -89,7 +88,8 @@
   // objetos con next(), y los que tienen length.
   function aLista(x) {
     if (x == null) throw new TypeError(x + ' no es iterable');
-    if (Array.isArray(x)) return x.slice();
+    // Una copia sin huecos: `[...Array(3)]` son tres `undefined` de verdad.
+    if (Array.isArray(x)) return __quimera_densa(x);
     if (typeof x === 'string') return x.split('');
     var lista = x['\u0001lista'];
     if (typeof lista === 'function') return lista.call(x);
@@ -748,6 +748,14 @@
     time: function (k) { relojes[k === undefined ? 'default' : String(k)] = Date.now(); },
     timeLog: function (k) { k = k === undefined ? 'default' : String(k); console.log(k + ': ' + (Date.now() - relojes[k]) + ' ms'); },
     timeEnd: function (k) { k = k === undefined ? 'default' : String(k); console.log(k + ': ' + (Date.now() - relojes[k]) + ' ms'); delete relojes[k]; }
+  });
+
+  // `obj.__proto__` (leer y asignar): el accesor del anexo B, que usan librerías viejas y
+  // polyfills (ShadyDOM convierte un fragmento en ShadowRoot con `f.__proto__ = ...`).
+  Object.defineProperty(Object.prototype, '__proto__', {
+    get: function () { return Object.getPrototypeOf(this); },
+    set: function (p) { if (p === null || typeof p === 'object' || typeof p === 'function') Object.setPrototypeOf(this, p); },
+    configurable: true
   });
 
   // `Reflect`: las operaciones de los objetos como funciones (lo que hace un Proxy sin trampa).

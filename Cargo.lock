@@ -2185,6 +2185,7 @@ version = "0.1.0"
 name = "quimera-dom"
 version = "0.1.0"
 dependencies = [
+ "quimera-css",
  "quimera-html",
  "quimera-vm",
 ]

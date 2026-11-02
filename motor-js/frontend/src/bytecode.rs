@@ -240,6 +240,9 @@ pub struct Funcion {
     pub linea: u32,
     /// Su columna (desde 1).
     pub columna: u32,
+    /// (instrucción, átomo) de cada llamada a un nombre (`f()`), ordenadas: el error de llamar
+    /// a algo que no es una función dice el nombre, como los navegadores (`f no es una función`).
+    pub nombres_llamada: Vec<(u32, u32)>,
     /// Las instrucciones.
     pub codigo: Vec<Instr>,
     /// Sus constantes.

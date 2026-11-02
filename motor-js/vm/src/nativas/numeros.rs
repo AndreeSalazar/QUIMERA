@@ -3,6 +3,7 @@
 use super::{arg, constructor, definir_nativa, definir_valor, nuevo_objeto};
 use crate::llamadas::Llamada;
 use crate::matematicas as mat;
+use crate::trigonometria as trig;
 use crate::{Motor, R_GLOBAL, R_NUMERO, operaciones as op};
 use alloc::format;
 use alloc::string::String;
@@ -27,6 +28,16 @@ const PARSE_FLOAT: u32 = 131;
 const IS_NAN: u32 = 132;
 const IS_FINITE: u32 = 133;
 pub(super) const NUMBER: u32 = 134;
+const SIN: u32 = 111;
+const COS: u32 = 112;
+const TAN: u32 = 113;
+const ATAN: u32 = 114;
+const ATAN2: u32 = 115;
+const ASIN: u32 = 116;
+const ACOS: u32 = 117;
+const ASINH: u32 = 118;
+const ACOSH: u32 = 119;
+const ATANH: u32 = 123;
 
 pub(super) fn preparar(m: &mut Motor) {
     let math = nuevo_objeto(m, R_GLOBAL, "Math");
@@ -42,6 +53,16 @@ pub(super) fn preparar(m: &mut Motor) {
         ("log", LOG),
         ("exp", EXP),
         ("pow", POW),
+        ("sin", SIN),
+        ("cos", COS),
+        ("tan", TAN),
+        ("atan", ATAN),
+        ("atan2", ATAN2),
+        ("asin", ASIN),
+        ("acos", ACOS),
+        ("asinh", ASINH),
+        ("acosh", ACOSH),
+        ("atanh", ATANH),
     ];
     for (nombre, id) in funciones {
         definir_nativa(m, math, nombre, id);
@@ -207,6 +228,16 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
         LOG => mat::ln(x),
         EXP => mat::exp(x),
         POW => mat::potencia(x, numero_arg(m, ll, 1)?),
+        SIN => trig::seno(x),
+        COS => trig::coseno(x),
+        TAN => trig::tangente(x),
+        ATAN => trig::arcotangente(x),
+        ATAN2 => trig::arcotangente2(x, numero_arg(m, ll, 1)?),
+        ASIN => trig::arcoseno(x),
+        ACOS => trig::arcocoseno(x),
+        ASINH => trig::arcoseno_h(x),
+        ACOSH => trig::arcocoseno_h(x),
+        ATANH => trig::arcotangente_h(x),
         RANDOM => {
             m.azar ^= m.azar << 13;
             m.azar ^= m.azar >> 7;

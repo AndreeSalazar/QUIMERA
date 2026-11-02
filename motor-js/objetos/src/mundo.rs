@@ -419,10 +419,22 @@ impl Mundo {
 
     /// El elemento `i` (`undefined` si está fuera o es un hueco).
     pub fn leer_elemento(&self, arr: Valor, i: u32) -> Option<Valor> {
+        let v = self.leer_elemento_crudo(arr, i)?;
+        Some(if v == Valor::HUECO { Valor::INDEFINIDO } else { v })
+    }
+
+    /// Como [`Mundo::leer_elemento`], pero un hueco sale como [`Valor::HUECO`] (para copiar
+    /// arreglos sin rellenar sus huecos). Ese valor no debe llegar nunca a JavaScript.
+    pub fn leer_elemento_crudo(&self, arr: Valor, i: u32) -> Option<Valor> {
         if i >= self.longitud(arr)? {
             return Some(Valor::INDEFINIDO);
         }
         self.m.leer(self.m.leer(arr, C_EXTRA)?, i as usize)
+    }
+
+    /// Si el elemento `i` de `arr` es un hueco (`Array(3)`, `delete a[i]`).
+    pub fn es_hueco(&self, arr: Valor, i: u32) -> bool {
+        self.longitud(arr).is_some_and(|n| i < n) && self.leer_elemento_crudo(arr, i) == Some(Valor::HUECO)
     }
 
     /// Escribe el elemento `i`, creciendo si hace falta. Puede asignar memoria (y mover objetos).
@@ -436,6 +448,10 @@ impl Mundo {
         let (arr, v) = (self.recuperar(base, 0), self.recuperar(base, 1));
         self.m.soltar_raices(base);
         let Some(celda) = self.m.leer(arr, C_EXTRA) else { return false };
+        // Escribir más allá del final deja huecos en medio (`a = []; a[3] = 1`).
+        for j in largo..i {
+            self.m.escribir(celda, j as usize, Valor::HUECO);
+        }
         if !(ok && self.m.escribir(celda, i as usize, v)) {
             return false;
         }
@@ -461,7 +477,7 @@ impl Mundo {
     fn cambiar_longitud(&mut self, arr: Valor, n: u32) -> bool {
         let Some(largo) = self.longitud(arr) else { return false };
         if n > largo {
-            return self.escribir_elemento(arr, n - 1, Valor::INDEFINIDO);
+            return self.escribir_elemento(arr, n - 1, Valor::HUECO);
         }
         if let Some(celda) = self.m.leer(arr, C_EXTRA) {
             for i in n..largo {

@@ -61,6 +61,11 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   w.Text.prototype = P.p_caracteres;
   w.Comment = function Comment(t) { return d.createComment(t === undefined ? '' : String(t)); };
   w.Comment.prototype = P.p_caracteres;
+  // Las que en HTML casi no aparecen, pero existen (el polyfill de Web Components las recorre).
+  w.CDATASection = function CDATASection() { throw new TypeError('Illegal constructor: CDATASection'); };
+  w.CDATASection.prototype = Object.create(P.p_caracteres);
+  w.ProcessingInstruction = function ProcessingInstruction() { throw new TypeError('Illegal constructor: ProcessingInstruction'); };
+  w.ProcessingInstruction.prototype = Object.create(P.p_caracteres);
   interfaz('Element', P.p_elemento);
   interfaz('SVGElement', P.p_svg);
   interfaz('DocumentFragment', P.p_fragmento, function DocumentFragment() { return d.createDocumentFragment(); });
@@ -75,7 +80,10 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   // ---------------- elementos personalizados ----------------
   var registro = new Map(), porClase = new Map(), esperas = {};
   function observados(C) { return Array.isArray(C.observedAttributes) ? C.observedAttributes : []; }
-  function avisar(e) { console.error('Error en un elemento personalizado: ' + String(e && e.message || e)); }
+  function avisar(e) {
+    var pila = e && typeof e.stack === 'string' ? e.stack : '', i = pila.indexOf('\n    at ');
+    console.error('Error en un elemento personalizado: ' + String(e && e.message || e) + (i < 0 ? '' : pila.slice(i)));
+  }
   // Los elementos que se están mejorando: si su constructor crea el objeto con `new` o
   // `Reflect.construct` (clases compiladas), `HTMLElement()` devuelve el elemento, como en los
   // navegadores.
@@ -132,6 +140,8 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   };
   P.p_documento.createElementNS = function (ns, t) { return this.createElement(String(t).replace(/^.*:/, '')); };
   P.p_documento.createEvent = function () { return new Event(''); };
+  P.p_documento.importNode = function (n, profundo) { return n.cloneNode(!!profundo); };
+  P.p_documento.adoptNode = function (n) { if (n.parentNode) n.parentNode.removeChild(n); return n; };
 
   w.customElements = {
     define: function (nombre, C) {
@@ -250,6 +260,25 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   subclase('FocusEvent', { relatedTarget: null });
   subclase('InputEvent', { data: null, inputType: '' });
   subclase('MessageEvent', { data: null, origin: '', lastEventId: '', source: null, ports: [] });
+  // El resto de clases de eventos que nombran las aplicaciones al arrancar (YouTube...).
+  subclase('WheelEvent', { deltaX: 0, deltaY: 0, deltaZ: 0, deltaMode: 0, clientX: 0, clientY: 0, ctrlKey: false, shiftKey: false });
+  subclase('DragEvent', { dataTransfer: null, clientX: 0, clientY: 0 });
+  subclase('TouchEvent', { touches: [], targetTouches: [], changedTouches: [] });
+  subclase('AnimationEvent', { animationName: '', elapsedTime: 0, pseudoElement: '' });
+  subclase('TransitionEvent', { propertyName: '', elapsedTime: 0, pseudoElement: '' });
+  subclase('ProgressEvent', { lengthComputable: false, loaded: 0, total: 0 });
+  subclase('PopStateEvent', { state: null });
+  subclase('HashChangeEvent', { oldURL: '', newURL: '' });
+  subclase('PageTransitionEvent', { persisted: false });
+  subclase('StorageEvent', { key: null, oldValue: null, newValue: null, url: '', storageArea: null });
+  subclase('ErrorEvent', { message: '', filename: '', lineno: 0, colno: 0, error: null });
+  subclase('PromiseRejectionEvent', { promise: null, reason: undefined });
+  subclase('SubmitEvent', { submitter: null });
+  subclase('CompositionEvent', { data: '' });
+  subclase('ClipboardEvent', { clipboardData: null });
+  subclase('BeforeUnloadEvent', { returnValue: '' });
+  subclase('ToggleEvent', { oldState: '', newState: '' });
+  subclase('SecurityPolicyViolationEvent', { violatedDirective: '', blockedURI: '' });
   // `window.postMessage`: el evento `message` llega a la propia ventana en otra tarea (sin
   // marcos ni otras ventanas aún; el dato no se copia, se pasa tal cual).
   w.postMessage = function (dato) {

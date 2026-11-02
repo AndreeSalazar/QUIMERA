@@ -87,7 +87,26 @@ pub fn numero_a_texto(n: f64) -> String {
     if n > -9.0e15 && n < 9.0e15 && (n as i64) as f64 == n {
         return format!("{}", n as i64);
     }
-    format!("{n}")
+    // Los dígitos más cortos que vuelven a dar `n` (Rust los da en `{:e}`: `1.2246e-16`), y la
+    // regla de la especificación para colocar el punto o pasar a exponente.
+    let signo = if n < 0.0 { "-" } else { "" };
+    let e = format!("{:e}", n.abs());
+    let (mantisa, exp) = e.split_once('e').unwrap_or((&e, "0"));
+    let digitos: String = mantisa.chars().filter(char::is_ascii_digit).collect();
+    let k = digitos.len() as i32;
+    let p = exp.parse::<i32>().unwrap_or(0) + 1; // dónde va el punto, contando desde el primer dígito
+    let cuerpo = if k <= p && p <= 21 {
+        format!("{digitos}{}", "0".repeat((p - k) as usize))
+    } else if 0 < p && p <= 21 {
+        format!("{}.{}", &digitos[..p as usize], &digitos[p as usize..])
+    } else if -6 < p && p <= 0 {
+        format!("0.{}{digitos}", "0".repeat((-p) as usize))
+    } else {
+        let s = if p - 1 < 0 { '-' } else { '+' };
+        let resto = if k > 1 { format!(".{}", &digitos[1..]) } else { String::new() };
+        format!("{}{resto}e{s}{}", &digitos[..1], (p - 1).abs())
+    };
+    format!("{signo}{cuerpo}")
 }
 
 /// `ToString` (los objetos dan su forma por defecto; `toString` propio llegará más adelante).

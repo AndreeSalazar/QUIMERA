@@ -105,6 +105,10 @@ const _: () = assert!(core::mem::size_of::<Valor>() == 8);
 impl Valor {
     /// `undefined`.
     pub const INDEFINIDO: Valor = Valor(etiquetado(ETQ_INDEFINIDO, 0));
+    /// Un **hueco** de arreglo (`Array(3)`, `[1, , 3]`, `delete a[i]`): un `undefined` con una
+    /// marca. Solo existe dentro de los elementos de un arreglo: leerlo da `undefined` (nunca llega
+    /// a JavaScript), pero `forEach`, `map`, `in`... saben que no hay nada ahí.
+    pub const HUECO: Valor = Valor(etiquetado(ETQ_INDEFINIDO, 1));
     /// `null`.
     pub const NULO: Valor = Valor(etiquetado(ETQ_NULO, 0));
     /// `true`.

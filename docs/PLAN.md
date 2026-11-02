@@ -112,6 +112,7 @@ Mientras tanto, QUIMERA ya aplica ese principio en lo que se va haciendo: decodi
 - **VERX:** la interfaz de QUIMERA (pestañas, barra, ajustes) con Bun + Rust, encima del motor.
 - **QUIMERA como motor de interfaces.** Steam, Epic, Discord, Spotify y VS Code cargan un Chromium entero solo para dibujar sus botones. Para una interfaz propia el HTML lo escribe uno mismo, así que QUIMERA sirve para eso **mucho antes** que para YouTube. Es el primer uso real para VERX.
 - **Velocidad:** decodificar PNG más rápido (hoy 0,5× de la referencia), marcar el GC mayor por partes.
+- **El coste fijo de la GPU (potencial para después).** Medido fase a fase (noviembre de 2026): arrancar el driver de DirectX 12 suma **~123 MB** antes de cargar nada, en todas las páginas. Es el mayor coste fijo que queda (Wikipedia entera, 144 MB en uso). Ideas para probar, midiendo cada una: otro sistema gráfico (Vulkan, OpenGL) o el adaptador de bajo consumo; límites y funciones de wgpu más pequeños (`Limits::downlevel_defaults`, sin funciones que no usamos); un atlas de letras y búferes más chicos; y, si nada baja lo suficiente, un modo de pintado por CPU para páginas sencillas. Que la escena suba a la GPU solo lo visible encaja aquí y en SUPER QUIMERA.
 
 ## Qué es el DOM y por qué cuesta
 

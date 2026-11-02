@@ -78,6 +78,7 @@ pub(crate) fn preparar(m: &mut Motor, est: &Estado) {
     for (dueno, metodos) in TABLA {
         for &(nombre, id) in *metodos {
             let f = m.crear_funcion_anfitrion(id);
+            m.nombrar_funcion_anfitrion(id, nombre);
             let raiz = m.raiz_anfitrion();
             let o = if *dueno == "window" { m.global() } else { m.leer_nombre(raiz, dueno) };
             m.definir(o, nombre, f);

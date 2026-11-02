@@ -58,10 +58,10 @@ impl Compilador<'_> {
         if let Destino::Local(r) = self.resolver(nombre)
             && segura_sobre_variable(valor)
         {
-            return self.expr(valor, r);
+            return self.expr_con_nombre(valor, nombre, r);
         }
         let t = self.temporal()?;
-        self.expr(valor, t)?;
+        self.expr_con_nombre(valor, nombre, t)?;
         self.guardar(nombre, t);
         Ok(())
     }

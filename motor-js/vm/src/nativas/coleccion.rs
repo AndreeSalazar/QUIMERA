@@ -19,6 +19,8 @@ const IS_ARRAY: u32 = 402;
 pub(super) const APPLY: u32 = 403;
 const DEFINE_PROPERTY: u32 = 404;
 const DESCRIPTOR: u32 = 405;
+/// `Object.getOwnPropertyNames(o)`: todas las claves propias, también las no enumerables.
+const NOMBRES_PROPIOS: u32 = 408;
 const GET_PROTOTYPE_OF: u32 = 406;
 const SET_PROTOTYPE_OF: u32 = 407;
 const SLICE: u32 = 410;
@@ -43,6 +45,7 @@ pub(super) fn preparar(m: &mut Motor, objeto: usize, arreglo: usize) {
     definir_nativa(m, objeto, "keys", OBJECT_KEYS);
     definir_nativa(m, objeto, "defineProperty", DEFINE_PROPERTY);
     definir_nativa(m, objeto, "getOwnPropertyDescriptor", DESCRIPTOR);
+    definir_nativa(m, objeto, "getOwnPropertyNames", NOMBRES_PROPIOS);
     definir_nativa(m, objeto, "getPrototypeOf", GET_PROTOTYPE_OF);
     definir_nativa(m, objeto, "setPrototypeOf", SET_PROTOTYPE_OF);
     definir_nativa(m, R_OBJETO, "hasOwnProperty", HAS_OWN);
@@ -113,7 +116,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
             let clave = clave_de(m, k);
             let indice = k.como_entero().and_then(|i| u32::try_from(i).ok());
             let es_indice = m.mundo.clase(o) == Some(Clase::Arreglo)
-                && indice.is_some_and(|i| i < m.mundo.longitud(o).unwrap_or(0));
+                && indice.is_some_and(|i| i < m.mundo.longitud(o).unwrap_or(0) && !m.mundo.es_hueco(o, i));
             let propia = m.mundo.es_objeto(o)
                 && (m.mundo.leer_propia(o, clave).is_some()
                     || (clave != u32::MAX && m.accesor_propio(o, clave).is_some()));
@@ -122,6 +125,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
         IS_ARRAY => return Ok(Valor::booleano(m.mundo.clase(arg(m, ll, 0)) == Some(Clase::Arreglo))),
         DEFINE_PROPERTY => return definir_propiedad(m, ll),
         DESCRIPTOR => return descriptor(m, ll),
+        NOMBRES_PROPIOS => return nombres_propios(m, ll),
         SET_PROTOTYPE_OF => {
             let (o, p) = (arg(m, ll, 0), arg(m, ll, 1));
             if !(m.mundo.es_objeto(p) || p == Valor::NULO) {
@@ -167,7 +171,8 @@ fn indices(m: &mut Motor, o: Valor) -> Vec<Valor> {
         let texto = crate::operaciones::valor_primitivo(&m.mundo, o).and_then(|v| m.mundo.texto(v));
         texto.map_or(0, |t| t.encode_utf16().count() as u32)
     };
-    (0..n).map(|i| m.mundo.cadena(&alloc::format!("{i}"))).collect()
+    let presentes: Vec<u32> = (0..n).filter(|&i| !m.mundo.es_hueco(o, i)).collect();
+    presentes.into_iter().map(|i| m.mundo.cadena(&alloc::format!("{i}"))).collect()
 }
 
 /// La clave para escribir (un átomo: las formas guardan su número).
@@ -202,7 +207,7 @@ fn definir_propiedad(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
     let existia = m.mundo.leer_propia(o, clave).is_some() || m.accesor_propio(o, clave).is_some();
     if get.is_some() || set.is_some() {
         let o = arg(m, ll, 0);
-        m.definir_accesor(o, clave, get.unwrap_or(Valor::INDEFINIDO), set.unwrap_or(Valor::INDEFINIDO));
+        m.definir_accesor(o, clave, get, set);
     } else if let Some(v) = valor {
         let o = arg(m, ll, 0);
         m.mundo.borrar(o, clave | crate::accesores::ACCESOR);
@@ -215,6 +220,36 @@ fn definir_propiedad(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
         None => {}
     }
     Ok(arg(m, ll, 0))
+}
+
+/// `Object.getOwnPropertyNames(o)`: los índices, las claves propias en orden de creación (también
+/// las no enumerables y las de la biblioteca, salvo las ranuras internas) y `length` en un arreglo.
+fn nombres_propios(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
+    let o = arg(m, ll, 0);
+    if matches!(o.tipo(), Tipo::Indefinido | Tipo::Nulo) {
+        return Err(m.error("TypeError", "Object.getOwnPropertyNames necesita un objeto"));
+    }
+    if m.es_proxy(o) || !m.mundo.es_objeto(o) {
+        return llamar(m, OBJECT_KEYS, ll);
+    }
+    let marca = m.mundo.m.marca_raices();
+    m.mundo.m.raiz(o);
+    let mut claves: Vec<Valor> = indices(m, o);
+    let o = m.pila(marca);
+    let propias: Vec<u32> = m
+        .mundo
+        .claves(o)
+        .iter()
+        .map(|&k| k & !crate::accesores::ACCESOR)
+        .filter(|&k| !crate::iteracion::oculta(m.mundo.cadenas.texto(k)))
+        .collect();
+    claves.extend(propias.into_iter().map(|k| Valor::cadena(Ref::desde_u32(k))));
+    if m.mundo.clase(o) == Some(Clase::Arreglo) {
+        claves.push(Valor::cadena(Ref::desde_u32(m.mundo.clave_length)));
+    }
+    let r = m.mundo.crear_arreglo(&claves, m.pila(R_ARREGLO));
+    m.mundo.m.soltar_raices(marca);
+    Ok(r)
 }
 
 /// `Object.getOwnPropertyDescriptor(o, k)`.
@@ -267,6 +302,18 @@ fn clave_de(m: &mut Motor, k: Valor) -> u32 {
     }
 }
 
+/// Los elementos con sus huecos ([`Valor::HUECO`]): para copiar arreglos (`slice`, `concat`...).
+/// Lo que se devuelva a JavaScript desde aquí debe pasar por [`sin_hueco`].
+fn elementos_crudos(m: &Motor, a: Valor) -> Vec<Valor> {
+    let n = m.mundo.longitud(a).unwrap_or(0);
+    (0..n).map(|i| m.mundo.leer_elemento_crudo(a, i).unwrap_or(Valor::INDEFINIDO)).collect()
+}
+
+/// Un hueco leído en crudo, como lo ve JavaScript.
+fn sin_hueco(v: Valor) -> Valor {
+    if v == Valor::HUECO { Valor::INDEFINIDO } else { v }
+}
+
 fn elementos(m: &Motor, a: Valor) -> Vec<Valor> {
     let n = m.mundo.longitud(a).unwrap_or(0);
     (0..n).map(|i| m.mundo.leer_elemento(a, i).unwrap_or(Valor::INDEFINIDO)).collect()
@@ -288,7 +335,7 @@ pub(crate) fn aplicar(m: &mut Motor, ll: &Llamada) -> Result<bool, Valor> {
 fn arreglo(m: &mut Motor, id: u32, ll: &Llamada, marca: usize) -> Result<Valor, Valor> {
     let a = m.pila(ll.este);
     m.mundo.m.raiz(a);
-    let lista = elementos(m, a);
+    let lista = elementos_crudos(m, a);
     let n = lista.len();
     let nuevo = |m: &mut Motor, v: &[Valor]| m.mundo.crear_arreglo(v, m.pila(R_ARREGLO));
     Ok(match id {
@@ -302,7 +349,11 @@ fn arreglo(m: &mut Motor, id: u32, ll: &Llamada, marca: usize) -> Result<Valor, 
             let mut todo = lista;
             for i in 0..ll.n {
                 let v = arg(m, ll, i);
-                if m.mundo.clase(v) == Some(Clase::Arreglo) { todo.extend(elementos(m, v)) } else { todo.push(v) }
+                if m.mundo.clase(v) == Some(Clase::Arreglo) {
+                    todo.extend(elementos_crudos(m, v))
+                } else {
+                    todo.push(v)
+                }
             }
             nuevo(m, &todo)
         }
@@ -318,7 +369,7 @@ fn arreglo(m: &mut Motor, id: u32, ll: &Llamada, marca: usize) -> Result<Valor, 
                 m.mundo.escribir_elemento(a, i as u32 - 1, v);
             }
             m.mundo.sacar(a);
-            primero
+            sin_hueco(primero)
         }
         UNSHIFT => {
             let mut todo: Vec<Valor> = (0..ll.n).map(|i| arg(m, ll, i)).collect();
@@ -333,7 +384,10 @@ fn arreglo(m: &mut Motor, id: u32, ll: &Llamada, marca: usize) -> Result<Valor, 
         }
         INCLUDES => {
             let buscado = arg(m, ll, 0);
-            let igual = |e: &Valor| op::estricto(*e, buscado) || (es_nan(*e) && es_nan(buscado));
+            let igual = |e: &Valor| {
+                let e = sin_hueco(*e);
+                op::estricto(e, buscado) || (es_nan(e) && es_nan(buscado))
+            };
             Valor::booleano(lista.iter().any(igual))
         }
         _ => return ordenar(m, ll, marca),
@@ -416,16 +470,25 @@ fn por_elemento(m: &mut Motor, id: u32, ll: &Llamada, marca: usize) -> Result<Va
         m.mundo.m.pila_mut()[marca + 3] = r;
     } else if id == REDUCE {
         let inicial = if ll.n >= 2 { Some(arg(m, ll, 1)) } else { None };
+        // Sin valor inicial: el primer elemento que no sea un hueco.
+        let primero = (0..n).find(|&i| !m.mundo.es_hueco(a, i));
         let Some(inicial) =
-            inicial.or_else(|| (n > 0).then(|| m.mundo.leer_elemento(a, 0).unwrap_or(Valor::INDEFINIDO)))
+            inicial.or_else(|| primero.map(|i| m.mundo.leer_elemento(a, i).unwrap_or(Valor::INDEFINIDO)))
         else {
             return Err(m.error("TypeError", "reduce de un arreglo vacío sin valor inicial"));
         };
-        desde = u32::from(ll.n < 2);
+        desde = if ll.n < 2 { primero.map_or(n, |i| i + 1) } else { 0 };
         m.mundo.m.pila_mut()[marca + 3] = inicial;
     }
     for i in desde..n {
         let (a, f, este) = (m.pila(marca), m.pila(marca + 1), m.pila(marca + 2));
+        // Los huecos no se visitan (salvo en `find`, que los ve como `undefined`); `map` los deja.
+        if !matches!(id, FIND | FIND_INDEX) && m.mundo.es_hueco(a, i) {
+            if id == MAP && !m.mundo.escribir_elemento(m.pila(marca + 3), i, Valor::HUECO) {
+                return Err(m.error("RangeError", "arreglo demasiado largo"));
+            }
+            continue;
+        }
         let e = m.mundo.leer_elemento(a, i).unwrap_or(Valor::INDEFINIDO);
         let indice = Valor::entero(i as i32);
         let r = if id == REDUCE {
@@ -437,9 +500,13 @@ fn por_elemento(m: &mut Motor, id: u32, ll: &Llamada, marca: usize) -> Result<Va
         // La llamada pudo mover el elemento: se vuelve a leer.
         let e = m.mundo.leer_elemento(m.pila(marca), i).unwrap_or(Valor::INDEFINIDO);
         match id {
-            MAP | FILTER => {
-                let v = if id == MAP { r } else { e };
-                if (id == MAP || si) && m.mundo.empujar(m.pila(marca + 3), v).is_none() {
+            MAP => {
+                if !m.mundo.escribir_elemento(m.pila(marca + 3), i, r) {
+                    return Err(m.error("RangeError", "arreglo demasiado largo"));
+                }
+            }
+            FILTER => {
+                if si && m.mundo.empujar(m.pila(marca + 3), e).is_none() {
                     return Err(m.error("RangeError", "arreglo demasiado largo"));
                 }
             }

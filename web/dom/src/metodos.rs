@@ -55,6 +55,8 @@ const ANIMATION_FRAME: u32 = 73;
 const ALERT: u32 = 74;
 const PEDIR: u32 = 75;
 const DISPATCH: u32 = 16;
+/// `__quimera_color(texto)`: un color de CSS normalizado como lo da un canvas, o `null`.
+const COLOR: u32 = 17;
 
 /// Qué métodos lleva cada prototipo (`window`: el objeto global).
 pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
@@ -121,6 +123,7 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
             ("cancelAnimationFrame", CLEAR_TIMEOUT),
             ("alert", ALERT),
             ("__quimera_pedir", PEDIR),
+            ("__quimera_color", COLOR),
             ("addEventListener", ADD_LISTENER),
             ("removeEventListener", REMOVE_LISTENER),
             ("dispatchEvent", DISPATCH),
@@ -161,6 +164,17 @@ pub(crate) fn llamar(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Re
     match id {
         SET_TIMEOUT..=ALERT => return ventana(m, est, id, a),
         PEDIR => return pedir(m, est, a),
+        COLOR => {
+            let texto = texto_arg(m, a, 0);
+            return Ok(match quimera_css::color(&quimera_css::tokens(&texto)) {
+                Some(c) if c.a == 255 => m.cadena(&alloc::format!("#{:02x}{:02x}{:02x}", c.r, c.g, c.b)),
+                Some(c) => {
+                    let alfa = quimera_vm::matematicas::redondear(f64::from(c.a) / 255.0 * 1000.0) / 1000.0;
+                    m.cadena(&alloc::format!("rgba({}, {}, {}, {alfa})", c.r, c.g, c.b))
+                }
+                None => Valor::NULO,
+            });
+        }
         DISPATCH => {
             // `objetivo.dispatchEvent(evento)`: el evento lo creó la página (`new Event(...)`).
             let nodo = if a.este(m) == m.global() { Some(NodoId(VENTANA)) } else { nodo_de(m, est, a.este(m)) };

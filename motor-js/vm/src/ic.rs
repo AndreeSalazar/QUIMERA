@@ -166,7 +166,13 @@ impl Motor {
     /// cadena demasiado larga): queda para el camino lento.
     pub(crate) fn ic_aprender_lectura(&mut self, obj: Valor, clave: u32, fi: usize, pc: usize) -> Option<Valor> {
         // `F.prototype` se crea al leerlo por primera vez: no se aprende.
-        let prototipo_de_funcion = clave == self.mundo.clave_prototype && self.mundo.clase(obj) == Some(Clase::Funcion);
+        // `F.prototype` se crea al leerlo, y `name`/`length` de una función salen de su bytecode:
+        // ninguno está en la forma, así que no se aprenden.
+        let es_funcion = matches!(self.mundo.clase(obj), Some(Clase::Funcion | Clase::Nativa));
+        let prototipo_de_funcion = es_funcion
+            && (clave == self.mundo.clave_prototype
+                || clave == self.mundo.clave_length
+                || self.mundo.cadenas.texto(clave) == "name");
         if self.megamorfico(fi, pc) || prototipo_de_funcion {
             return None;
         }

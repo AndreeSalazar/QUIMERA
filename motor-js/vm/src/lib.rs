@@ -28,6 +28,7 @@ mod perfil;
 mod propiedades;
 mod proxy;
 mod trazas;
+pub mod trigonometria;
 
 use alloc::rc::Rc;
 use alloc::string::String;
@@ -161,6 +162,8 @@ pub struct Motor {
     filtro_accesores: [u64; accesores::N_FILTRO],
     /// Cuántos accesores se han definido (los stubs de «añadir» la comparan, `ic.rs`).
     epoca_accesores: u32,
+    /// El nombre de cada función nativa (su `name`), por su número.
+    nombres_nativas: alloc::collections::BTreeMap<u32, u32>,
     /// Cuántos símbolos se han creado (para que cada uno sea único).
     simbolos: u32,
     /// De dónde viene lo que se compila ahora (ver [`Motor::fijar_origen`]).
@@ -206,6 +209,7 @@ impl Motor {
             anfitrion: None,
             filtro_accesores: [0; accesores::N_FILTRO],
             epoca_accesores: 0,
+            nombres_nativas: alloc::collections::BTreeMap::new(),
             simbolos: 0,
             origen: Rc::from(""),
             #[cfg(feature = "perfil")]

@@ -26,6 +26,7 @@ pub fn compilar(programa: &[Sent]) -> Resultado<Stencil> {
         indice: BTreeMap::new(),
         funciones: Vec::new(),
         pila: Vec::new(),
+        nombre_inferido: None,
     };
     c.funciones.push(None);
     let programa_fn = c.cuerpo(
@@ -100,6 +101,8 @@ struct Ctx {
     argumentos: Option<Reg>,
     /// El registro donde está `this` desde que empieza la función (si la función lo usa).
     este: Option<Reg>,
+    /// (instrucción, átomo) de cada llamada a un nombre: `f()`.
+    nombres_llamada: Vec<(u32, u32)>,
 }
 
 #[derive(Clone, Copy)]
@@ -121,6 +124,8 @@ struct Compilador<'a> {
     /// Funciones terminadas; `None` mientras se compila (su índice ya está reservado).
     funciones: Vec<Option<Funcion>>,
     pila: Vec<Ctx>,
+    /// El nombre que recibe la próxima función anónima (`var f = function () {}` se llama `f`).
+    nombre_inferido: Option<String>,
 }
 
 impl Compilador<'_> {
@@ -255,12 +260,24 @@ impl Compilador<'_> {
         }
     }
 
+    /// Compila `valor` en `dst`; si es una función anónima, se llama `nombre` (como en `x = function`).
+    fn expr_con_nombre(&mut self, valor: &Expr, nombre: &str, dst: Reg) -> Resultado<()> {
+        if matches!(valor, Expr::Funcion(f) if f.nombre.is_none()) {
+            self.nombre_inferido = Some(String::from(nombre));
+        }
+        let r = self.expr(valor, dst);
+        self.nombre_inferido = None;
+        r
+    }
+
     /// Compila una función interna y devuelve su índice en el Stencil.
     fn funcion(&mut self, f: &FuncionAst, es_expresion: bool) -> Resultado<u32> {
         let indice = self.funciones.len();
         self.funciones.push(None);
-        let nombre = f.nombre.as_deref();
-        let propio = if es_expresion { nombre } else { None };
+        let inferido = self.nombre_inferido.take();
+        let propio = if es_expresion { f.nombre.as_deref() } else { None };
+        // El nombre inferido da `name`, pero no crea la variable propia dentro de la función.
+        let nombre = f.nombre.as_deref().or(inferido.as_deref());
         let opciones = Opciones { flecha: f.flecha, nombre, propio, global: false, generador: f.generador, pos: f.pos };
         let compilada = self.cuerpo(&f.params, &f.cuerpo, ambitos::clave(f), opciones)?;
         self.funciones[indice] = Some(compilada);
@@ -302,6 +319,7 @@ impl Compilador<'_> {
             estricta,
             linea: op.pos.linea,
             columna: op.pos.columna,
+            nombres_llamada: ctx.nombres_llamada,
             codigo: ctx.codigo,
             constantes: ctx.constantes,
         })

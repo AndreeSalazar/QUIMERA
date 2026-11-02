@@ -77,19 +77,22 @@ impl Motor {
         }
     }
 
-    /// Define (o completa) el accesor `clave` de `obj`. Un `get` o `set` `undefined` conserva el
-    /// que hubiera; si había una propiedad de datos con ese nombre, se quita.
-    pub(crate) fn definir_accesor(&mut self, obj: Valor, clave: u32, get: Valor, set: Valor) {
+    /// Define (o completa) el accesor `clave` de `obj`. Un `get` o `set` que no viene (`None`)
+    /// conserva el que hubiera; si había una propiedad de datos con ese nombre, se quita.
+    pub(crate) fn definir_accesor(&mut self, obj: Valor, clave: u32, get: Option<Valor>, set: Option<Valor>) {
         let marca = self.mundo.m.marca_raices();
-        for v in [obj, get, set] {
+        let (dado_get, dado_set) = (get.is_some(), set.is_some());
+        for v in [obj, get.unwrap_or(Valor::INDEFINIDO), set.unwrap_or(Valor::INDEFINIDO)] {
             self.mundo.m.raiz(v);
         }
-        let (mut get, mut set) = (get, set);
+        let (mut get, mut set) = (self.pila(marca + 1), self.pila(marca + 2));
+        // Lo que no viene en el descriptor se conserva (`get x` y `set x` llegan en dos llamadas);
+        // lo que viene, aunque sea `undefined`, sustituye (un decorador que borra el getter).
         if let Some(previo) = self.accesor_propio(obj, clave) {
-            if get == Valor::INDEFINIDO {
+            if !dado_get {
                 get = self.mundo.leer_elemento(previo, 0).unwrap_or(Valor::INDEFINIDO);
             }
-            if set == Valor::INDEFINIDO {
+            if !dado_set {
                 set = self.mundo.leer_elemento(previo, 1).unwrap_or(Valor::INDEFINIDO);
             }
         }

@@ -220,6 +220,20 @@ Steam destapó dos costes que crecían con el cuadrado del tamaño:
 
 Steam en la ventana: de 1,8 GB y creciendo a **437 MB estables** de memoria en uso (Edge, 737 MB; en memoria privada quedan empatados, 525 MB frente a 520–531 MB), y su JavaScript del primer segundo de 11,7 s a 3,5 s.
 
+## Lo que destapó YouTube
+
+Abrir YouTube (10 MB de JavaScript, Polymer y Web Components) sacó fallos que afectan a cualquier página:
+
+- **Trigonometría** (`trigonometria.rs`): `sin`, `cos`, `tan`, `atan`, `atan2`, `asin`, `acos` y las hiperbólicas inversas no existían. Están portadas de **fdlibm**, la biblioteca que usa V8, y dan los mismos dígitos que Chrome en las pruebas. Coinciden con la libm del sistema con como mucho 1 ulp. Falta la reducción de rango de Payne-Hanek para |x| mayor que unos 10⁹.
+- **Números a texto** como la especificación: exponente por debajo de 10⁻⁶ y desde 10²¹ (`1.2246467991473532e-16`, `1e+21`). Antes salían todos los ceros.
+- **Huecos de arreglo**: `Array(3)`, `[1, , 3]`, `delete a[i]` y `length` mayor dejan huecos de verdad (un `undefined` marcado, `Valor::HUECO`, que nunca llega a JavaScript). Se los saltan `forEach`, `filter`, `some`, `every`, `reduce`, `indexOf`, `in`, `Object.keys` y `for-in`; `map` los conserva; `concat` y `slice` los copian; el spread y `Array.from` los convierten en `undefined`.
+- **`Object.defineProperty` con `get: undefined`** quita el getter. Antes lo conservaba, y los decoradores de TypeScript que borran getters (Polymer en YouTube) no funcionaban.
+- **`Object.getOwnPropertyNames`** incluye lo no enumerable (antes era `Object.keys`).
+- **`name` y `length` de las funciones**: del bytecode, también el nombre inferido (`var f = function () {}` se llama `f`). Las nativas tienen nombre, pero su `length` da 0.
+- **`obj.__proto__ = p`** cambia el prototipo (el accesor del anexo B).
+- **`Function.prototype.toString`**: las funciones de la página ya no dicen `[native code]` (hay librerías que lo miran); QUIMERA no guarda su código fuente.
+- **El nombre de lo que no es una función**: `f()` con `f` sin definir dice `f no es una función`, también para variables locales (el compilador apunta qué nombre se llama en cada llamada). Con esto se encontró que faltaba `Math.cos`.
+
 ## Datos binarios y azar
 
 `binarios.js` (tras el preludio): `ArrayBuffer`, los nueve arreglos tipados, `DataView` (con `Float32`/`Float64` codificados a mano según IEEE 754), `TextEncoder`/`TextDecoder` (UTF-8, con U+FFFD para lo inválido) y un `Math.fround` exacto. Es una aproximación: un arreglo tipado es un arreglo de la VM con otro prototipo (rápido, pero `u8[0] = 300` no recorta; `set`, `fill` y el constructor sí), y solo un `Uint8Array` sobre un buffer entero comparte sus bytes. Igual que Chromium en las pruebas.

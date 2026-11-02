@@ -56,6 +56,22 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 
 **`URL` y `URLSearchParams`**, iguales a Chromium en las pruebas (con `url.searchParams.set(...)` que cambia `href`).
 
+## Lo que pidió YouTube
+
+`complementos.rs`, y más clases de eventos en `interfaces.rs`:
+
+- `NodeFilter`, `document.createTreeWalker` y `createNodeIterator`, con el algoritmo de la especificación.
+- `Range` (`createContextualFragment`, `selectNodeContents`, `deleteContents`…), sin medir ni pintar; `getSelection()` vacía.
+- `new Image()`; `img.width` y `img.height` como números.
+- `canvas.getContext('2d')`: no dibuja, pero guarda su estado. Normaliza los colores con el CSS de QUIMERA (`'red'` → `#ff0000`) y mide texto de forma aproximada. WebGL da `null`.
+- `Window` (`window` hereda de `Window.prototype` y de `EventTarget`), `MessageChannel`, `postMessage`, `performance.timing` y la entrada de navegación, `document.importNode`/`adoptNode`, `CDATASection` y `ProcessingInstruction`.
+- Los `init...Event` antiguos y unas veinte clases de eventos más (`WheelEvent`, `DragEvent`, `TouchEvent`, `AnimationEvent`, `PopStateEvent`…).
+- Los errores en elementos personalizados llevan traza.
+
+Todo comparado con Chromium en `pruebas.rs`.
+
+**Dónde está YouTube:** de 6 errores al arrancar pasa a 2. Polymer arranca, sus elementos personalizados se definen y se mejoran. Los 2 que quedan son de su inyector de dependencias (`PAGE_TOKEN`), que se registra en el `ready()` de un elemento: es cuestión de en qué orden corren los `ready` y los `connectedCallback`. Todavía no se pinta nada, porque la página entera la construye su JavaScript.
+
 ## Clases del DOM y elementos personalizados
 
 `interfaces.rs` (JavaScript sobre los prototipos que crea `puente.rs`):

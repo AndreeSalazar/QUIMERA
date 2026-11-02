@@ -115,6 +115,14 @@ impl Motor {
             return v;
         }
         let es_funcion = self.mundo.clase(obj) == Some(Clase::Funcion);
+        // `name` y `length` de una función: salen de su bytecode (o del nombre de la nativa).
+        if matches!(self.mundo.clase(obj), Some(Clase::Funcion | Clase::Nativa)) {
+            match self.mundo.cadenas.texto(clave) {
+                "name" => return self.nombre_de_funcion(obj).unwrap_or_else(|| self.mundo.cadena("")),
+                "length" => return Valor::entero(self.longitud_de_funcion(obj) as i32),
+                _ => {}
+            }
+        }
         if es_funcion && self.mundo.cadenas.texto(clave) == "prototype" {
             let marca = self.mundo.m.marca_raices();
             self.mundo.m.raiz(obj);
@@ -123,6 +131,23 @@ impl Motor {
             return p;
         }
         Valor::INDEFINIDO
+    }
+
+    /// El `name` de una función: el de su bytecode (declarado o inferido: `var f = function`) o
+    /// el de la nativa. `None` si no tiene.
+    pub(crate) fn nombre_de_funcion(&self, f: Valor) -> Option<Valor> {
+        let atomo = if let Some(datos) = self.mundo.funcion(f) {
+            let c = self.funciones.get(datos.0 as usize)?;
+            *c.atomos.get(c.f.nombre? as usize)?
+        } else {
+            *self.nombres_nativas.get(&self.mundo.nativa(f)?)?
+        };
+        Some(Valor::cadena(quimera_objetos::Ref::desde_u32(atomo)))
+    }
+
+    /// El `length` de una función: sus parámetros (las nativas, 0).
+    fn longitud_de_funcion(&self, f: Valor) -> u16 {
+        self.mundo.funcion(f).and_then(|d| self.funciones.get(d.0 as usize)).map_or(0, |c| c.f.params)
     }
 
     fn leer_primitivo(&mut self, obj: Valor, clave: u32) -> Result<Valor, Valor> {
@@ -369,7 +394,7 @@ impl Motor {
             return self.proxy_contiene(obj, clave);
         }
         if let (Some(i), Some(Clase::Arreglo)) = (Self::indice(k), self.mundo.clase(obj)) {
-            return Ok(i < self.mundo.longitud(obj).unwrap_or(0));
+            return Ok(i < self.mundo.longitud(obj).unwrap_or(0) && !self.mundo.es_hueco(obj, i));
         }
         let clave = self.clave_de(k);
         Ok(self.mundo.leer(obj, clave).is_some() || self.buscar_accesor(obj, clave).is_some())

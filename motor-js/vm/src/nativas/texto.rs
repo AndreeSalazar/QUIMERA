@@ -136,7 +136,10 @@ fn arreglo(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
     let n = m.mundo.longitud(a).unwrap_or(0);
     if id == ARR_INDEX_OF {
         let buscado = arg(m, ll, 0);
-        let pos = (0..n).find(|&i| m.mundo.leer_elemento(a, i).is_some_and(|e| op::estricto(e, buscado)));
+        // Los huecos no cuentan (`Array(3).indexOf(undefined)` es -1).
+        let pos = (0..n).find(|&i| {
+            !m.mundo.es_hueco(a, i) && m.mundo.leer_elemento(a, i).is_some_and(|e| op::estricto(e, buscado))
+        });
         return Ok(Valor::entero(pos.map_or(-1, |p| p as i32)));
     }
     let sep = match arg(m, ll, 0) {

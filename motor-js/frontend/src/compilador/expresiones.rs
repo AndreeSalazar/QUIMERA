@@ -314,7 +314,14 @@ impl Compilador<'_> {
             }
         };
         let (desde, n) = self.argumentos(args)?;
-        self.emitir(Instr::Llamar { dst, f: rf, este, args: desde, n });
+        let pc = self.emitir(Instr::Llamar { dst, f: rf, este, args: desde, n });
+        // El nombre de lo llamado (`f()`), para el error si no es una función.
+        if let Expr::Ident(nombre) = f {
+            let a = self.atomo(nombre);
+            if let Some(ctx) = self.pila.last_mut() {
+                ctx.nombres_llamada.push((pc as u32, a));
+            }
+        }
         Ok(())
     }
 
@@ -374,7 +381,7 @@ impl Compilador<'_> {
     fn asignar_nombre(&mut self, op: &str, n: &str, valor: &Expr, dst: Reg) -> Resultado<()> {
         match self.resolver(n) {
             // En su registro y sin copias: `x += 1` es `rX = rX Suma r1`.
-            Destino::Local(r) if op == "=" && segura_sobre_variable(valor) => self.expr(valor, r)?,
+            Destino::Local(r) if op == "=" && segura_sobre_variable(valor) => self.expr_con_nombre(valor, n, r)?,
             Destino::Local(r) if op_compuesta(op).is_some() => {
                 let op = op_compuesta(op).ok_or_else(|| sin_operador(op))?;
                 match (op, entero_literal(valor)) {

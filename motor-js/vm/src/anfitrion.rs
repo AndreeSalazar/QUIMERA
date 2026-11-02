@@ -94,6 +94,12 @@ impl Motor {
         self.mundo.crear_nativa(GRUPO_ANFITRION + id, proto)
     }
 
+    /// El `name` de la función del anfitrión `id` (`addEventListener`...).
+    pub fn nombrar_funcion_anfitrion(&mut self, id: u32, nombre: &str) {
+        let a = self.mundo.cadenas.internar(nombre);
+        self.nombres_nativas.insert(GRUPO_ANFITRION + id, a);
+    }
+
     /// Un objeto del anfitrión con su número y su prototipo.
     pub fn crear_objeto_anfitrion(&mut self, dato: u32, proto: Valor) -> Valor {
         self.mundo.crear_anfitrion(dato, proto)

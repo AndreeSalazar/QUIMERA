@@ -55,6 +55,8 @@ const ALEATORIOS: u32 = 26;
 /// de jQuery). Devuelve `undefined`: falta el valor de la última expresión y el `eval` directo
 /// con las variables locales.
 const EVAL: u32 = 27;
+/// `__quimera_densa(arr)`: una copia con los huecos como `undefined` (spread, `Array.from`).
+const DENSA: u32 = 28;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -109,6 +111,7 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, R_GLOBAL, "Proxy", PROXY);
     definir_nativa(m, R_GLOBAL, "__quimera_aleatorios", ALEATORIOS);
     definir_nativa(m, R_GLOBAL, "eval", EVAL);
+    definir_nativa(m, R_GLOBAL, "__quimera_densa", DENSA);
     simbolos(m);
     let generador = nuevo_objeto(m, R_GLOBAL, "__quimera_generador");
     definir_nativa(m, generador, "next", GEN_NEXT);
@@ -266,6 +269,8 @@ fn definir_valor(m: &mut Motor, dueno: usize, nombre: &str, v: Option<Valor>) {
 
 fn definir_nativa(m: &mut Motor, dueno: usize, nombre: &str, id: u32) {
     let f = m.mundo.crear_nativa(id, m.pila(R_FUNCION));
+    let a = m.mundo.cadenas.internar(nombre);
+    m.nombres_nativas.entry(id).or_insert(a);
     definir_valor(m, dueno, nombre, Some(f));
 }
 
@@ -287,6 +292,8 @@ fn nuevo_objeto(m: &mut Motor, dueno: usize, nombre: &str) -> usize {
 /// Una función constructora global con su `prototype`; devuelve su posición en la pila.
 fn constructor(m: &mut Motor, nombre: &str, id: u32, proto: usize) -> usize {
     let f = m.mundo.crear_nativa(id, m.pila(R_FUNCION));
+    let a = m.mundo.cadenas.internar(nombre);
+    m.nombres_nativas.insert(id, a);
     m.mundo.m.raiz(f);
     let pos = m.mundo.m.marca_raices() - 1;
     definir_valor(m, R_GLOBAL, nombre, Some(m.pila(pos)));
@@ -381,7 +388,49 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
         SIMBOLO..=SIMBOLO_KEY_FOR | FUNCION_TO_STRING | OBJETO_TO_STRING | NO_ENUMERAR => return otras(m, id, ll),
+        PROXY | DENSA | EVAL | ALEATORIOS | TRAZA | MODULO => return sistema(m, id, ll),
+        FUNCION => {
+            // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
+            let partes: Vec<String> = (0..ll.n).map(|i| m.texto(arg(m, ll, i))).collect();
+            let (cuerpo, parametros) = partes.split_last().map_or((String::new(), &[][..]), |(c, p)| (c.clone(), p));
+            let fuente =
+                alloc::format!("__quimera_funcion = function anonymous({}\n) {{\n{cuerpo}\n}};", parametros.join(","));
+            m.ejecutar(&fuente).map_err(|e| m.error_desde_texto(&e.mensaje))?;
+            let clave = m.mundo.cadenas.internar("__quimera_funcion");
+            let global = m.pila(R_GLOBAL);
+            let f = m.mundo.leer(global, clave).unwrap_or(Valor::INDEFINIDO);
+            m.mundo.borrar(global, clave);
+            f
+        }
+        ARREGLO => {
+            // `new Array(n)` crea n huecos; `new Array(a, b)`, esos elementos.
+            let un_numero = ll.n == 1 && arg(m, ll, 0).como_numero().is_some();
+            let elementos: Vec<Valor> = if un_numero {
+                let n = op::a_numero(&m.mundo, arg(m, ll, 0));
+                if !((0.0..=1e7).contains(&n) && (n as u32) as f64 == n) {
+                    return Err(m.error("RangeError", "longitud de arreglo no válida"));
+                }
+                alloc::vec![Valor::HUECO; n as usize]
+            } else {
+                (0..ll.n).map(|i| arg(m, ll, i)).collect()
+            };
+            m.mundo.crear_arreglo(&elementos, m.pila(R_ARREGLO))
+        }
+        _ => Valor::INDEFINIDO,
+    })
+}
+
+/// Lo que habla con el motor o el anfitrión: `Proxy`, `eval`, azar del sistema, trazas, módulos y
+/// la copia densa de un arreglo.
+fn sistema(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
+    Ok(match id {
         PROXY => return m.crear_proxy(arg(m, ll, 0), arg(m, ll, 1)),
+        DENSA => {
+            let a = arg(m, ll, 0);
+            let n = m.mundo.longitud(a).unwrap_or(0);
+            let v: Vec<Valor> = (0..n).map(|i| m.mundo.leer_elemento(a, i).unwrap_or(Valor::INDEFINIDO)).collect();
+            m.mundo.crear_arreglo(&v, m.pila(R_ARREGLO))
+        }
         EVAL => {
             let c = arg(m, ll, 0);
             let Some(codigo) = m.mundo.texto(c).map(String::from) else { return Ok(c) };
@@ -414,33 +463,6 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
             m.origen = antes;
             r.map_err(|e| m.error_desde_texto(&e.mensaje))?
         }
-        FUNCION => {
-            // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
-            let partes: Vec<String> = (0..ll.n).map(|i| m.texto(arg(m, ll, i))).collect();
-            let (cuerpo, parametros) = partes.split_last().map_or((String::new(), &[][..]), |(c, p)| (c.clone(), p));
-            let fuente =
-                alloc::format!("__quimera_funcion = function anonymous({}\n) {{\n{cuerpo}\n}};", parametros.join(","));
-            m.ejecutar(&fuente).map_err(|e| m.error_desde_texto(&e.mensaje))?;
-            let clave = m.mundo.cadenas.internar("__quimera_funcion");
-            let global = m.pila(R_GLOBAL);
-            let f = m.mundo.leer(global, clave).unwrap_or(Valor::INDEFINIDO);
-            m.mundo.borrar(global, clave);
-            f
-        }
-        ARREGLO => {
-            // `new Array(n)` crea n huecos; `new Array(a, b)`, esos elementos.
-            let un_numero = ll.n == 1 && arg(m, ll, 0).como_numero().is_some();
-            let elementos: Vec<Valor> = if un_numero {
-                let n = op::a_numero(&m.mundo, arg(m, ll, 0));
-                if !((0.0..=1e7).contains(&n) && (n as u32) as f64 == n) {
-                    return Err(m.error("RangeError", "longitud de arreglo no válida"));
-                }
-                alloc::vec![Valor::INDEFINIDO; n as usize]
-            } else {
-                (0..ll.n).map(|i| arg(m, ll, i)).collect()
-            };
-            m.mundo.crear_arreglo(&elementos, m.pila(R_ARREGLO))
-        }
         _ => Valor::INDEFINIDO,
     })
 }
@@ -468,11 +490,16 @@ fn otras(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
             }
         }
         FUNCION_TO_STRING => {
-            // Sin el código fuente guardado: la forma que dan los navegadores para las nativas.
-            let k = m.mundo.cadenas.internar("name");
+            // Las nativas, como en los navegadores. Las de la página no se hacen pasar por nativas
+            // (hay librerías que miran `[native code]`); QUIMERA no guarda su código fuente.
             let f = m.pila(ll.este);
-            let nombre = m.mundo.leer(f, k).map(|n| m.texto(n)).unwrap_or_default();
-            m.mundo.cadena(&alloc::format!("function {nombre}() {{ [native code] }}"))
+            let nombre = m.nombre_de_funcion(f).map(|n| m.texto(n)).unwrap_or_default();
+            let texto = if m.mundo.clase(f) == Some(quimera_objetos::Clase::Nativa) {
+                alloc::format!("function {nombre}() {{ [native code] }}")
+            } else {
+                alloc::format!("function {nombre}() {{ /* QUIMERA no guarda el código fuente */ }}")
+            };
+            m.mundo.cadena(&texto)
         }
         OBJETO_TO_STRING => {
             let etiqueta = etiqueta_de(m, m.pila(ll.este));

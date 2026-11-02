@@ -384,3 +384,45 @@ fn enlaces_como_url_y_post_message() {
         ]
     );
 }
+
+/// Lo que pide YouTube al arrancar: TreeWalker, NodeIterator, Range, Image, canvas, MessageChannel,
+/// `performance.timing`, `Window` e `initCustomEvent`. Como Chromium.
+#[test]
+fn piezas_para_youtube() {
+    let mut d = dom(r#"<div id="r"><p>uno<b>dos</b></p><!--c--><i>tres</i></div>"#);
+    let r = correr(
+        &mut d,
+        r#"var r = document.getElementById('r'), v = [];
+          var tw = document.createTreeWalker(r, NodeFilter.SHOW_ELEMENT);
+          while (tw.nextNode()) v.push(tw.currentNode.tagName);
+          var ni = document.createNodeIterator(r, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_COMMENT), t = [], n;
+          while ((n = ni.nextNode())) t.push(n.nodeValue);
+          var tw2 = document.createTreeWalker(r, NodeFilter.SHOW_ALL, { acceptNode: function (x) { return x.nodeName === 'P' ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } });
+          var u = []; while (tw2.nextNode()) u.push(tw2.currentNode.nodeName);
+          console.log(v.join(), t.join(), u.join(), tw.parentNode() && tw.currentNode.tagName);
+          var rg = document.createRange(); rg.selectNodeContents(r.firstChild);
+          var f = rg.createContextualFragment('<span>a</span><em>b</em>');
+          console.log(rg.toString(), rg.collapsed, f.childNodes.length, f.firstChild.tagName, rg.commonAncestorContainer === r.firstChild);
+          rg.deleteContents(); console.log(r.firstChild.childNodes.length, rg.collapsed);
+          var img = new Image(10, 20), cv = document.createElement('canvas'), cx = cv.getContext('2d');
+          cx.fillStyle = 'red';
+          console.log(img.tagName, img.width === 10 || img.getAttribute('width'), img instanceof HTMLImageElement, cv.width, cv.height, cx.fillStyle, cv.getContext('webgl'), typeof cx.measureText('abc').width);
+          var e = document.createEvent('CustomEvent'); e.initCustomEvent('hola', true, false, {x: 1});
+          console.log(e.type, e.bubbles, e.detail.x, window instanceof Window, window instanceof EventTarget, typeof performance.timing.responseStart, performance.getEntriesByType('navigation').length);
+          var mc = new MessageChannel(); mc.port2.onmessage = function (ev) { console.log('puerto', ev.data); }; mc.port1.postMessage('ping');"#,
+    );
+    let mut r = r;
+    d.correr_temporizadores(10.0);
+    r.extend(d.consola());
+    assert_eq!(
+        r,
+        [
+            "P,B,I uno,dos,c,tres #comment,I,#text DIV",
+            "unodos false 2 SPAN true",
+            "0 true",
+            "IMG true true 300 150 #ff0000 null number",
+            "hola true 1 true true number 1",
+            "puerto ping",
+        ]
+    );
+}
