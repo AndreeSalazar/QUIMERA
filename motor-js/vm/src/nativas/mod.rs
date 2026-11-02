@@ -43,6 +43,8 @@ const GEN_THROW: u32 = 20;
 pub(crate) const OBJETO_TO_STRING: u32 = 21;
 /// `Function.prototype.toString`.
 const FUNCION_TO_STRING: u32 = 22;
+/// `__quimera_modulo(texto)`: compila un módulo y da la función que lo ejecuta.
+const MODULO: u32 = 23;
 /// Desde aquí, `Math` y los métodos de números (`numeros.rs`).
 const GRUPO_NUMEROS: u32 = 100;
 /// Desde aquí, cadenas y `join`/`indexOf` de arreglos (`texto.rs`).
@@ -90,6 +92,7 @@ pub(crate) fn preparar(m: &mut Motor) {
     definir_nativa(m, R_GLOBAL, "__quimera_no_enumerar", NO_ENUMERAR);
     definir_nativa(m, R_OBJETO, "toString", OBJETO_TO_STRING);
     definir_nativa(m, R_FUNCION, "toString", FUNCION_TO_STRING);
+    definir_nativa(m, R_GLOBAL, "__quimera_modulo", MODULO);
     simbolos(m);
     let generador = nuevo_objeto(m, R_GLOBAL, "__quimera_generador");
     definir_nativa(m, generador, "next", GEN_NEXT);
@@ -334,6 +337,10 @@ fn basica(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valor> {
         ARREGLO_EMPUJAR | ARREGLO_SACAR => return arreglo(m, id, ll),
         OBJETO => m.mundo.crear_objeto(m.pila(R_OBJETO)),
         SIMBOLO..=SIMBOLO_KEY_FOR | FUNCION_TO_STRING | OBJETO_TO_STRING | NO_ENUMERAR => return otras(m, id, ll),
+        MODULO => {
+            let fuente = m.texto(arg(m, ll, 0));
+            m.compilar_modulo(&fuente).map_err(|e| m.mundo.cadena(&e.mensaje))?
+        }
         FUNCION => {
             // Como los navegadores: `function anonymous(parámetros\n) {\ncuerpo\n}`.
             let partes: Vec<String> = (0..ll.n).map(|i| m.texto(arg(m, ll, i))).collect();

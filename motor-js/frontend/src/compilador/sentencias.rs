@@ -34,6 +34,9 @@ impl Compilador<'_> {
             Sent::ParaEn { decl, nombre, de, objeto, cuerpo } => self.para_en(*decl, nombre, *de, objeto, cuerpo)?,
             Sent::Retornar(v) => self.retornar(v.as_ref())?,
             Sent::Romper | Sent::Continuar => self.romper_o_continuar(matches!(s, Sent::Romper))?,
+            Sent::RomperEtiqueta(e) => self.saltar_a_etiqueta(e, true)?,
+            Sent::ContinuarEtiqueta(e) => self.saltar_a_etiqueta(e, false)?,
+            Sent::Etiquetada(e, cuerpo) => self.etiquetada(e, cuerpo)?,
             Sent::Lanzar(e) => {
                 let r = self.operando(e)?;
                 self.emitir(Instr::Lanzar { src: r });
@@ -146,7 +149,26 @@ impl Compilador<'_> {
 
     pub(super) fn abrir_bucle(&mut self, es_switch: bool) {
         let regiones = self.ctx().regiones.len();
-        self.ctx().bucles.push(Bucle { es_switch, regiones, ..Bucle::default() });
+        let etiquetas = core::mem::take(&mut self.ctx().etiquetas_pendientes);
+        self.ctx().bucles.push(Bucle { es_switch, regiones, etiquetas, ..Bucle::default() });
+    }
+
+    /// `etiqueta: sentencia`. Un bucle (o `switch`) se queda la etiqueta; otra sentencia se
+    /// compila como un bloque del que solo se sale con `break etiqueta`.
+    fn etiquetada(&mut self, etiqueta: &str, cuerpo: &Sent) -> Resultado<()> {
+        let es_bucle = matches!(
+            cuerpo,
+            Sent::Mientras(..) | Sent::Hacer(..) | Sent::Para { .. } | Sent::ParaEn { .. } | Sent::Elegir(..)
+        );
+        self.ctx().etiquetas_pendientes.push(alloc::string::String::from(etiqueta));
+        if es_bucle {
+            return self.sentencia(cuerpo);
+        }
+        self.abrir_bucle(true);
+        self.sentencia(cuerpo)?;
+        let fin = self.pc();
+        self.cerrar_bucle(fin, fin);
+        Ok(())
     }
 
     /// Cierra el bucle actual: los `break` van a `fin` y los `continue` a `seguir`.

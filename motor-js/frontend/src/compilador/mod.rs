@@ -61,6 +61,8 @@ struct Bucle {
     es_switch: bool,
     /// Regiones `try` abiertas al empezar el bucle: `break` cierra las de dentro.
     regiones: usize,
+    /// Sus etiquetas (`fuera: for ...`), para `break fuera` y `continue fuera`.
+    etiquetas: Vec<String>,
 }
 
 /// Un `try` abierto mientras se compila su cuerpo (o su `catch`).
@@ -85,6 +87,8 @@ struct Ctx {
     maximo: Reg,
     entorno: u16,
     bucles: Vec<Bucle>,
+    /// Etiquetas que se ponen al siguiente bucle que se abra (`fuera: for ...`).
+    etiquetas_pendientes: Vec<String>,
     regiones: Vec<Region>,
     argumentos: Option<Reg>,
     /// El registro donde está `this` desde que empieza la función (si la función lo usa).

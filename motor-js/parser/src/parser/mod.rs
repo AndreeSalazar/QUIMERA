@@ -7,7 +7,10 @@
 mod azucar;
 mod clases;
 mod expresiones;
+mod modulos;
 mod sentencias;
+
+pub use modulos::analizar_modulo;
 
 use crate::ast::Sent;
 use crate::fuente::{Pos, Resultado, error};
@@ -18,16 +21,7 @@ use alloc::vec::Vec;
 
 /// Analiza un programa completo.
 pub fn analizar(fuente: &str) -> Resultado<Vec<Sent>> {
-    let mut p = Parser {
-        toks: lexico::tokens(fuente)?,
-        i: 0,
-        sin_in: false,
-        temporales: Vec::new(),
-        contador_temporales: 0,
-        clases: Vec::new(),
-        patron_pendiente: None,
-        contextos: Vec::new(),
-    };
+    let mut p = Parser::con_tokens(lexico::tokens(fuente)?);
     p.abrir_temporales();
     let mut programa = Vec::new();
     while p.ver() != &Tipo::Fin {
@@ -52,9 +46,25 @@ pub(crate) struct Parser {
     /// Las funciones abiertas: (es generador, es `async`). Dentro de un generador `yield` es un
     /// operador; dentro de una `async`, `await`.
     contextos: Vec<(bool, bool)>,
+    /// Se analiza un módulo (`import`, `export`, `import.meta`).
+    modulo: bool,
 }
 
 impl Parser {
+    fn con_tokens(toks: Vec<Token>) -> Parser {
+        Parser {
+            toks,
+            i: 0,
+            sin_in: false,
+            temporales: Vec::new(),
+            contador_temporales: 0,
+            clases: Vec::new(),
+            patron_pendiente: None,
+            contextos: Vec::new(),
+            modulo: false,
+        }
+    }
+
     fn token(&self, n: usize) -> &Token {
         let i = (self.i + n).min(self.toks.len() - 1);
         &self.toks[i]

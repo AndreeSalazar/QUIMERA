@@ -28,6 +28,7 @@ Misma página, ventana visible, Windows, `--release`. Edge 156 es Chromium por d
 | Hacker News (todo tablas) | **113 MB** | 456 MB |
 | rust-lang.org (7 fuentes propias) | **145 MB** | 486 MB |
 | Wikipedia, «Gato» (con sus scripts) | **194 MB** | 504 MB |
+| MDN (con todos sus módulos) | **153 MB** | 536 MB |
 | DuckDuckGo HTML, una búsqueda | **114 MB** | 481 MB |
 
 Memoria en uso de todos los procesos. **Hoy es una comparación a favor de QUIMERA:** ya ejecuta los scripts de las páginas, pero sin `Promise`, `fetch` ni módulos las grandes se quedan en su versión sin JavaScript, y Edge las ejecuta enteras. La medida se repite en cada fase del [plan](docs/PLAN.md) para que la ventaja se mantenga.
@@ -56,7 +57,7 @@ Mis sitios son el examen. Cada fase deja algo que ya sirve. Detalle en [docs/PLA
 | ✅ 0 | Motor JS, HTML, CSS, flexbox, red, imágenes, ventana | leer páginas sencillas |
 | 1 | ✅ Tablas, ✅ `float`, ✅ `position`, ✅ `var()`, ✅ `@font-face` (WOFF) · `calc()`, WOFF2, gzip, WebP | Wikipedia, documentación, blogs |
 | 2 | ✅ Formularios (GET y POST), ✅ cookies, ✅ foco y teclado · caché, selección | buscar (DuckDuckGo HTML): navegar de verdad |
-| 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores), ✅ `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración, accesores, `Symbol`, generadores, `async`/`await` · módulos, `fetch` | Steam y páginas con JavaScript |
+| 3 | ✅ **JavaScript ↔ DOM** (un solo GC, scripts, eventos, temporizadores), ✅ `JSON`, `Promise`, `Map`/`Set`, clases, plantillas, desestructuración, accesores, `Symbol`, generadores, `async`/`await`, ✅ módulos, `fetch`/XHR con CORS · más eventos, medidas de la maquetación | Steam y páginas con JavaScript |
 | 4 | Web Components, `grid`, SVG, inicio de sesión | Epic Games, Gmail |
 | 5 | `<video>` con los decodificadores del sistema, audio | **YouTube** |
 | 6 | Toque, zoom y `viewport` | **Android**, donde un navegador ligero más se nota |

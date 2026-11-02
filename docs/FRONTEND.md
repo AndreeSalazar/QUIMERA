@@ -73,7 +73,9 @@ Los temporales se llaman `\u{1}t3`: no se pueden escribir desde JavaScript y no 
 
 **El crate**: el léxico y el parser son `quimera-parser` (nivel 2) y el análisis de ámbitos y el compilador, `quimera-frontend` (nivel 3). Se partió al pasar de 5.000 líneas.
 
-**Avisa con un error claro**: generadores asíncronos, `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
+**Etiquetas** (`fuera: for ... break fuera`, también en bloques y `switch`) y **módulos** (`import`/`export`, ver [DOM.md](DOM.md#módulos)): `analizar_modulo` y `compilar_modulo`.
+
+**Avisa con un error claro**: bloques `static {}` de las clases, escapes `\u` en identificadores, `...rest` en una asignación con patrón (`[a, ...b] = x`; en declaraciones sí vale), `async`/`await`, etiquetas en `break`/`continue`, bloques `static {}` y BigInt.
 
 Corpus de prueba (`motor-js/frontend/tests/datos/`): los 7 scripts pequeños de Boa y los 8 de V8 (Richards, DeltaBlue, Crypto, RayTrace, EarleyBoyer, NavierStokes, Splay, RegExp). Los 15 se analizan, compilan y ejecutan.
 

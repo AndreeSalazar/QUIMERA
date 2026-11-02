@@ -1,0 +1,8 @@
+<!doctype html>
+<!-- Módulos: index importa app.js, que importa lib/formato.js. Lo que se ve lo pintan ellos. -->
+<title>Módulos en QUIMERA</title>
+<style>body { font-family: sans-serif; margin: 16px } .ok { color: rgb(46, 125, 50) }</style>
+<h1 id=titulo>Sin módulos</h1>
+<p id=detalle></p>
+<script type=module src="./app.js"></script>
+<script nomodule>document.getElementById('titulo').textContent = 'Navegador sin módulos';</script>

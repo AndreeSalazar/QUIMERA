@@ -75,6 +75,28 @@ impl Compilador<'_> {
         Ok(())
     }
 
+    /// `break etiqueta` / `continue etiqueta`: al bucle (o bloque) con esa etiqueta.
+    pub(super) fn saltar_a_etiqueta(&mut self, etiqueta: &str, romper: bool) -> Resultado<()> {
+        let indice = self
+            .ctx()
+            .bucles
+            .iter()
+            .rposition(|b| b.etiquetas.iter().any(|e| e == etiqueta) && (romper || !b.es_switch));
+        let Some(indice) = indice else {
+            return error(Pos::default(), alloc::format!("no hay ningún bucle con la etiqueta {etiqueta}"));
+        };
+        let regiones = self.ctx().bucles[indice].regiones;
+        self.salir_regiones(regiones)?;
+        let salto = self.emitir(Instr::Saltar { destino: 0 });
+        let b = &mut self.ctx().bucles[indice];
+        if romper {
+            b.romper.push(salto)
+        } else {
+            b.continuar.push(salto)
+        }
+        Ok(())
+    }
+
     /// `try { B } catch (e) { C } finally { F }`.
     ///
     /// ```text

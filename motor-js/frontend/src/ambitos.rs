@@ -105,6 +105,7 @@ fn declaraciones_de(s: &Sent, v: &mut Vec<String>, solo_var: bool) {
         }
         Sent::Elegir(_, casos) => casos.iter().for_each(|(_, c)| varias(c, v, solo_var)),
         Sent::Bloque(b) => varias(b, v, solo_var),
+        Sent::Etiquetada(_, s) => declaraciones_de(s, v, solo_var),
         _ => {}
     }
 }
@@ -221,7 +222,13 @@ impl Analisis {
                 }
             }
             Sent::Bloque(b) => self.sentencias(b),
-            Sent::Retornar(None) | Sent::Romper | Sent::Continuar | Sent::Vacio => {}
+            Sent::Etiquetada(_, s) => self.sentencia(s),
+            Sent::Retornar(None)
+            | Sent::Romper
+            | Sent::Continuar
+            | Sent::RomperEtiqueta(_)
+            | Sent::ContinuarEtiqueta(_)
+            | Sent::Vacio => {}
         }
     }
 

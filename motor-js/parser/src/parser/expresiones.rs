@@ -386,8 +386,26 @@ impl Parser {
             }
             Tipo::Clave("class") => return Ok(self.clase()?.1),
             Tipo::Clave("super") => return self.super_(),
+            Tipo::Clave("import") if self.es_en(1, "(") => {
+                // `import(x)`: el módulo, como promesa (relativo al módulo actual, o a la página).
+                self.avanzar();
+                let mut piezas = self.piezas_entre("(", ")")?;
+                let especificador =
+                    if piezas.exprs.is_empty() { Expr::Cadena(String::new()) } else { piezas.exprs.remove(0) };
+                let f = if self.modulo { "__importar" } else { "__quimera_importar_dinamico" };
+                return Ok(llamar(f, vec![especificador]));
+            }
+            Tipo::Clave("import") if self.modulo && self.es_en(1, ".") => {
+                self.avanzar();
+                self.avanzar();
+                if !self.es_palabra("meta") {
+                    return error(pos, "tras `import.` solo puede ir `meta`");
+                }
+                self.avanzar();
+                return Ok(Expr::Ident(String::from("__meta")));
+            }
             Tipo::Clave(k @ ("import" | "yield")) => {
-                return error(pos, format!("`{k}` todavía no está en QUIMERA"));
+                return error(pos, format!("`{k}` aquí necesita un módulo o un generador"));
             }
             otro => return error(pos, format!("se esperaba una expresión y hay {}", describir(&otro))),
         };

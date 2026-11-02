@@ -259,12 +259,30 @@ impl Motor {
     pub fn ejecutar(&mut self, fuente: &str) -> Result<Valor, ErrorJs> {
         let stencil =
             quimera_frontend::compilar(fuente).map_err(|e| ErrorJs { mensaje: alloc::format!("SyntaxError: {e}") })?;
+        self.ejecutar_stencil(stencil)
+    }
+
+    /// Ejecuta un programa ya compilado.
+    fn ejecutar_stencil(&mut self, stencil: Stencil) -> Result<Valor, ErrorJs> {
         let programa = self.cargar(stencil);
         let entorno = Valor::NULO;
         let global = self.fija(R_GLOBAL);
         let proto = self.fija(R_FUNCION);
         let f = self.mundo.crear_funcion(programa, entorno, global, proto);
         self.llamar_valor(f, global, &[])
+    }
+
+    /// Compila un módulo (`import`/`export`) y devuelve la función que lo ejecuta con
+    /// `(exportaciones, importar, meta)` (la llama el cargador de módulos del DOM).
+    pub fn compilar_modulo(&mut self, fuente: &str) -> Result<Valor, ErrorJs> {
+        let stencil = quimera_frontend::compilar_modulo(fuente)
+            .map_err(|e| ErrorJs { mensaje: alloc::format!("SyntaxError: {e}") })?;
+        self.ejecutar_stencil(stencil)?;
+        let clave = self.mundo.cadenas.internar("__quimera_funcion");
+        let global = self.fija(R_GLOBAL);
+        let f = self.mundo.leer(global, clave).unwrap_or(Valor::INDEFINIDO);
+        self.mundo.borrar(global, clave);
+        Ok(f)
     }
 
     /// Llama a la función global `nombre` con estos argumentos.

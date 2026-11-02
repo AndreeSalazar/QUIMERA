@@ -94,10 +94,9 @@ fn sentencias_de_control() {
 
 #[test]
 fn lo_que_falta_avisa_con_claridad() {
-    for (codigo, pista) in [("a: for (;;) break a;", "etiquetas"), ("class A { static { } }", "static")] {
-        let e = analizar(codigo).unwrap_err();
-        assert!(e.mensaje.contains(pista), "{codigo}: {}", e.mensaje);
-    }
+    // Lo único que aún falta del lenguaje que se analiza: los bloques `static {}` de las clases.
+    let e = analizar("class A { static { } }").unwrap_err();
+    assert!(e.mensaje.contains("static"), "{}", e.mensaje);
 }
 
 #[test]

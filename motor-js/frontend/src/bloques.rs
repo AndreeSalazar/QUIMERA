@@ -135,6 +135,21 @@ impl Renombrar {
                 self.expr(c);
                 self.sentencia(cuerpo);
             }
+            Sent::Para { .. } | Sent::ParaEn { .. } | Sent::Intentar { .. } | Sent::Elegir(..) => self.control(s),
+            Sent::Bloque(b) => self.bloque(b),
+            Sent::Etiquetada(_, s) => self.sentencia(s),
+            Sent::Retornar(None)
+            | Sent::Romper
+            | Sent::Continuar
+            | Sent::RomperEtiqueta(_)
+            | Sent::ContinuarEtiqueta(_)
+            | Sent::Vacio => {}
+        }
+    }
+
+    /// Bucles `for`, `try` y `switch`: abren su propio ámbito.
+    fn control(&mut self, s: &mut Sent) {
+        match s {
             Sent::Para { inicio, cond, paso, cuerpo } => {
                 let nombres = match inicio.as_deref() {
                     Some(Sent::Declarar(Decl::Let | Decl::Const, l)) => l.iter().map(|(n, _)| n.clone()).collect(),
@@ -182,8 +197,7 @@ impl Renombrar {
                 }
                 self.ambitos.pop();
             }
-            Sent::Bloque(b) => self.bloque(b),
-            Sent::Retornar(None) | Sent::Romper | Sent::Continuar | Sent::Vacio => {}
+            _ => {}
         }
     }
 

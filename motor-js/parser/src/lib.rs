@@ -15,4 +15,4 @@ pub mod lexico;
 pub mod parser;
 
 pub use fuente::{Error, Pos, Resultado};
-pub use parser::analizar;
+pub use parser::{analizar, analizar_modulo};

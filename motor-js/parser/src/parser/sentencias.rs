@@ -36,7 +36,13 @@ impl Parser {
             "break" | "continue" => {
                 self.avanzar();
                 if matches!(self.ver(), Tipo::Ident(_)) && !self.token(0).salto_antes {
-                    return error(self.pos(), "las etiquetas en break/continue todavía no están en QUIMERA");
+                    let etiqueta = self.ident()?;
+                    self.fin_sentencia()?;
+                    return Ok(if k == "break" {
+                        Sent::RomperEtiqueta(etiqueta)
+                    } else {
+                        Sent::ContinuarEtiqueta(etiqueta)
+                    });
                 }
                 self.fin_sentencia()?;
                 Ok(if k == "break" { Sent::Romper } else { Sent::Continuar })
@@ -49,14 +55,18 @@ impl Parser {
                 Ok(Sent::Declarar(Decl::Let, alloc::vec![(nombre, Some(e))]))
             }
             "yield" if self.contextos.last().is_some_and(|c| c.0) => self.sentencia_expresion(),
-            "import" | "export" | "with" | "yield" => error(pos, alloc::format!("`{k}` todavía no está en QUIMERA")),
+            "import" if self.es_en(1, "(") || self.es_en(1, ".") => self.sentencia_expresion(),
+            "import" | "export" => error(pos, alloc::format!("`{k}` solo vale en un módulo (<script type=module>)")),
+            "with" | "yield" => error(pos, alloc::format!("`{k}` todavía no está en QUIMERA")),
             _ => self.sentencia_expresion(),
         }
     }
 
     fn sentencia_expresion(&mut self) -> Resultado<Sent> {
         if matches!(self.ver(), Tipo::Ident(_)) && self.es_en(1, ":") {
-            return error(self.pos(), "las etiquetas todavía no están en QUIMERA");
+            let etiqueta = self.ident()?;
+            self.avanzar();
+            return Ok(Sent::Etiquetada(etiqueta, Box::new(self.sentencia()?)));
         }
         let e = self.expresion()?;
         self.fin_sentencia()?;

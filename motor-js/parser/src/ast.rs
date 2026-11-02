@@ -176,6 +176,12 @@ pub enum Sent {
     Elegir(Expr, Vec<Caso>),
     /// `{ ... }`.
     Bloque(Vec<Sent>),
+    /// `etiqueta: sentencia`.
+    Etiquetada(String, Box<Sent>),
+    /// `break etiqueta;`
+    RomperEtiqueta(String),
+    /// `continue etiqueta;`
+    ContinuarEtiqueta(String),
     /// `;`
     Vacio,
 }

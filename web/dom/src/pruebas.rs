@@ -147,6 +147,49 @@ fn fragmentos() {
 }
 
 #[test]
+fn modulos() {
+    use crate::RespuestaJs;
+    let mut d = Dom::nuevo(
+        analizar(
+            "<p id=p>antes</p>
+             <script type=module>
+               import { suma, PI as pi } from './util.js';
+               import contar, * as todo from './sub/contador.js';
+               document.getElementById('p').textContent = `${suma(2, 3)} ${pi} ${contar()} ${contar()} ${todo.nombre}`;
+               const dinamico = await import('./util.js');
+               console.log('mismo módulo', dinamico.suma === suma, import.meta === undefined);
+             </script>
+             <script nomodule>console.log('no debe correr');</script>",
+        ),
+        "https://ejemplo.com/app/index.html",
+    );
+    d.ejecutar_scripts(&|_| None);
+    let archivos = [
+        ("https://ejemplo.com/app/util.js", "export function suma(a, b) { return a + b; }\nexport const PI = 3;"),
+        (
+            "https://ejemplo.com/app/sub/contador.js",
+            "import { suma } from '../util.js';\nlet n = 0;\nexport const nombre = 'contador';\nexport default function () { n = suma(n, 1); return n; }",
+        ),
+    ];
+    for _ in 0..10 {
+        let pedidas = d.tomar_peticiones();
+        if pedidas.is_empty() {
+            break;
+        }
+        for p in pedidas {
+            let url = p.url.clone();
+            let cuerpo = archivos.iter().find(|(u, _)| *u == url).map(|(_, c)| String::from(*c));
+            let r = cuerpo.map(|c| RespuestaJs { estado: 200, url: url.clone(), cabeceras: Vec::new(), cuerpo: c });
+            d.responder(p.id, r.ok_or_else(|| alloc::format!("404 {url}")));
+        }
+    }
+    assert_eq!(d.consola(), ["mismo módulo true false"]);
+    assert!(d.errores().is_empty(), "{:?}", d.errores());
+    let doc = d.documento();
+    assert_eq!(doc.texto(doc.buscar("p").expect("p")), "5 3 1 2 contador");
+}
+
+#[test]
 fn fetch_xhr_y_scripts_añadidos() {
     use crate::RespuestaJs;
     let mut d = dom("<p id=p></p>");
@@ -197,4 +240,30 @@ fn fetch_xhr_y_scripts_añadidos() {
         ["fetch true 200 application/json", "json 5", "falló true", "xhr 200 hola text/plain", "script cargado sí"]
     );
     assert!(d.errores().is_empty());
+}
+
+#[test]
+fn url_y_parametros() {
+    let mut d = dom("");
+    let r = correr(
+        &mut d,
+        "const u = new URL('https://user:pw@Ejemplo.COM:8080/a/b/../c?x=1&y=dos+tres#frag');
+         console.log(u.protocol, u.username, u.hostname, u.port, u.host, u.pathname, u.search, u.hash, u.origin);
+         console.log(u.searchParams.get('y'), u.searchParams.has('x'), [...u.searchParams.keys()].join());
+         u.searchParams.set('x', 'nuevo valor'); u.searchParams.append('z', 'ñ');
+         console.log(u.search, u.href);
+         console.log(new URL('../img/a.png', 'https://e.com/docs/x/y.html').href, new URL('?q=1', 'https://e.com/p').href, new URL('//cdn.e.com/l.js', 'https://e.com/').href, new URL('https://e.com:443/').port);
+         const p = new URLSearchParams({a: '1', b: 'x y'}); p.append('a', '2');
+         console.log(p.toString(), p.getAll('a').join(), URL.canParse('nada'), String(new URL('http://e.com')));",
+    );
+    assert_eq!(
+        r,
+        [
+            "https: user ejemplo.com 8080 ejemplo.com:8080 /a/c ?x=1&y=dos+tres #frag https://ejemplo.com:8080",
+            "dos tres true x,y",
+            "?x=nuevo+valor&y=dos+tres&z=%C3%B1 https://user:pw@ejemplo.com:8080/a/c?x=nuevo+valor&y=dos+tres&z=%C3%B1#frag",
+            "https://e.com/docs/img/a.png https://e.com/p?q=1 https://cdn.e.com/l.js ",
+            "a=1&b=x+y&a=2 1,2 false http://e.com/",
+        ]
+    );
 }

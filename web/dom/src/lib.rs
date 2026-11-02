@@ -224,6 +224,11 @@ pub(crate) fn lista(m: &mut Motor, est: &Estado, ids: &[NodoId]) -> Valor {
     arr
 }
 
+/// Si `tipo` es el de un módulo (`<script type=module>`).
+pub(crate) fn es_modulo(tipo: Option<&str>) -> bool {
+    tipo.is_some_and(|t| t.trim().eq_ignore_ascii_case("module"))
+}
+
 /// Si `tipo` es de un `<script>` clásico que QUIMERA ejecuta.
 pub(crate) fn es_javascript(tipo: Option<&str>) -> bool {
     match tipo.map(|t| t.trim().to_ascii_lowercase()) {
@@ -255,7 +260,7 @@ impl Dom {
         let mut motor = Motor::default();
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));
         puente::preparar(&mut motor, &estado);
-        for codigo in [ALMACENES, red::RED_JS, DOCUMENTO_JS] {
+        for codigo in [ALMACENES, red::RED_JS, red::MODULOS_JS, DOCUMENTO_JS] {
             if let Err(e) = motor.ejecutar(codigo) {
                 estado.errores.borrow_mut().push(e.mensaje);
             }
@@ -299,12 +304,30 @@ impl Dom {
             let doc = self.estado.doc.borrow();
             doc.descendientes(Documento::RAIZ)
                 .filter_map(|id| doc.elemento(id).filter(|e| e.nombre == "script").map(|e| (e, id)))
-                .filter(|(e, _)| es_javascript(e.atributo("type")))
+                // Con módulos, los `nomodule` (la versión para navegadores viejos) no corren.
+                .filter(|(e, _)| e.atributo("nomodule").is_none())
+                .filter(|(e, _)| {
+                    let t = e.atributo("type");
+                    es_javascript(t) || es_modulo(t) || t.is_some_and(|t| t.trim().eq_ignore_ascii_case("importmap"))
+                })
                 .map(|(e, id)| (e.atributo("src").map(String::from), e.atributo("type").map(String::from), id))
                 .collect()
         };
         self.estado.ejecutados.borrow_mut().extend(scripts.iter().map(|(_, _, id)| id.0));
-        for (src, _, id) in scripts {
+        // Los módulos van después de los scripts clásicos (como `defer`).
+        // El mapa de importación, antes que nada.
+        let (mapas, scripts): (Vec<_>, Vec<_>) = scripts
+            .into_iter()
+            .partition(|(_, t, _)| t.as_deref().is_some_and(|t| t.trim().eq_ignore_ascii_case("importmap")));
+        for (_, _, id) in mapas {
+            let texto = self.estado.doc.borrow().texto(id);
+            let t = self.motor.cadena(&texto);
+            if let Err(e) = self.motor.llamar_global("__quimera_mapa_importaciones", &[t]) {
+                self.estado.errores.borrow_mut().push(e.mensaje);
+            }
+        }
+        let (modulos, clasicos): (Vec<_>, Vec<_>) = scripts.into_iter().partition(|(_, t, _)| es_modulo(t.as_deref()));
+        for (src, _, id) in clasicos {
             let codigo = match &src {
                 Some(s) => externo(s),
                 None => Some(self.estado.doc.borrow().texto(id)),
@@ -316,6 +339,23 @@ impl Dom {
                 }
             }
         }
+        for (src, _, id) in modulos {
+            let r = match src {
+                Some(s) => {
+                    let s = self.motor.cadena(&s);
+                    self.motor.llamar_global("__quimera_modulo_externo", &[s])
+                }
+                None => {
+                    let texto = self.estado.doc.borrow().texto(id);
+                    let t = self.motor.cadena(&texto);
+                    self.motor.llamar_global("__quimera_modulo_en_linea", &[t])
+                }
+            };
+            if let Err(e) = r {
+                self.estado.errores.borrow_mut().push(e.mensaje);
+            }
+        }
+        microtareas(&mut self.motor, &self.estado);
         self.despachar(Documento::RAIZ, "DOMContentLoaded");
         self.despachar(NodoId(VENTANA), "load");
     }

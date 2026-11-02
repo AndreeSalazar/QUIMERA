@@ -329,3 +329,24 @@ fn this_y_modo_estricto() {
     );
     assert_eq!(r, ["true undefined undefined undefined object true"]);
 }
+
+/// Etiquetas: `break`/`continue` a un bucle de fuera, y `break` de un bloque o `switch`.
+#[test]
+fn etiquetas() {
+    let r = salida(
+        "var r = [];
+         fuera: for (var i = 0; i < 3; i++) {
+           for (var j = 0; j < 3; j++) {
+             if (j === 1) continue fuera;
+             if (i === 2) break fuera;
+             r.push(i + '' + j);
+           }
+         }
+         bloque: { r.push('a'); if (true) break bloque; r.push('nunca'); }
+         sw: switch (1) { case 1: for (;;) { break sw; } }
+         d: do { r.push('do'); while (true) { break d; } } while (false);
+         r.push('fin');
+         console.log(r.join());",
+    );
+    assert_eq!(r, ["00,10,a,do,fin"]);
+}

@@ -45,12 +45,24 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 
 **Wikipedia** ya pasa su prueba de compatibilidad (pide `async function*`, `/./.dotAll` y `Object.fromEntries`), arranca su cargador de módulos, los pide por la red y ejecuta jQuery y varios módulos. Algunos fallan aún por detalles del DOM.
 
+## Módulos
+
+`<script type=module>` (en línea o con `src`), `import`/`export` y `import()` dinámico:
+
+- **El parser** convierte un módulo en una función `async (__exportar, __importar, __meta)`: los `import` son `await __importar("...")` al principio (así vale `await` fuera de las funciones), y cada `export` es un getter en el objeto de exportaciones, con el valor vivo. Lo importado se copia al importar: si el otro módulo lo cambia después, aquí no se ve (en los navegadores sí).
+- **El cargador** (`red.rs`, en JavaScript) pide cada módulo con `fetch` (con las mismas reglas de origen), lo compila y lo ejecuta una sola vez. En un ciclo, quien importa recibe el espacio de nombres a medio llenar, como en los navegadores. Resuelve rutas relativas, URLs y los nombres de `<script type=importmap>` (exactos o por prefijo).
+- Los `<script nomodule>` ya no corren, como en cualquier navegador con módulos.
+- `docs/ejemplos/modulos/`: tres módulos que se importan entre sí, con `await fetch` arriba del todo.
+
+**`URL` y `URLSearchParams`**, iguales a Chromium en las pruebas (con `url.searchParams.set(...)` que cambia `href`).
+
 ## Comprobado
 
 - **Contra Chromium:** las mismas salidas de `console.log` que Chromium en tres scripts que leen el árbol, lo cambian y escuchan eventos (`web/dom/src/pruebas.rs`), también el orden de `onclick` frente a `addEventListener` y cómo queda el atributo `style`. Las pruebas se ejecutan en cada commit.
 - **Una página hecha por sus scripts** (`docs/ejemplos/javascript.html`): título, colores, barras con `createElement` y `style`, fichas con `innerHTML`, y cambios a los 100 ms con `setTimeout`. Los anchos y posiciones horizontales coinciden con Chromium. En vertical hay 2 px de diferencia por la letra del título, no por el JavaScript.
 - **Páginas reales:** Hacker News (1,4 ms de scripts) y Wikipedia (11 ms) cargan sin errores y se ven como antes. El arranque de Wikipedia comprueba si el navegador tiene lo moderno (`Promise`, `fetch`...) y, al no encontrarlo, se queda en su versión sin JavaScript, que es lo previsto.
-- **Memoria:** Wikipedia («Gato», en español), 194 MB frente a 504 MB de Edge.
+- **Memoria:** Wikipedia («Gato», en español), 194 MB frente a 504 MB de Edge. MDN con todos sus módulos ejecutados, 153 MB frente a 536 MB.
+- **MDN** ejecuta todos sus módulos sin errores; **GitHub** carga los suyos (con su mapa de importación) y se para en las clases del DOM (`HTMLElement`, `customElements`), que son la fase 4.
 
 ## Falta (por orden, para llegar a YouTube)
 

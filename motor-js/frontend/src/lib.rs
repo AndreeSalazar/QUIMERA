@@ -25,6 +25,14 @@ pub use bytecode::Stencil;
 pub use fuente::{Error, Pos, Resultado};
 pub use parser::analizar;
 
+/// Analiza y compila un módulo: el programa deja en `__quimera_funcion` la función que lo
+/// ejecuta (ver `quimera-parser`, `modulos.rs`).
+pub fn compilar_modulo(fuente: &str) -> Resultado<Stencil> {
+    let mut programa = quimera_parser::analizar_modulo(fuente)?;
+    bloques::renombrar(&mut programa);
+    compilador::compilar(&programa)
+}
+
 /// Analiza y compila un programa: texto → Stencil.
 pub fn compilar(fuente: &str) -> Resultado<Stencil> {
     let mut programa = parser::analizar(fuente)?;
