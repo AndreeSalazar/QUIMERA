@@ -232,6 +232,7 @@ Abrir YouTube (10 MB de JavaScript, Polymer y Web Components) sacó fallos que a
 - **`name` y `length` de las funciones**: del bytecode, también el nombre inferido (`var f = function () {}` se llama `f`). Las nativas tienen nombre, pero su `length` da 0.
 - **`obj.__proto__ = p`** cambia el prototipo (el accesor del anexo B).
 - **`Function.prototype.toString`**: las funciones de la página ya no dicen `[native code]` (hay librerías que lo miran); QUIMERA no guarda su código fuente.
+- **`new` sobre una función atada con `bind`** construye la original con los argumentos atados e ignora el `this` atado (`__quimera_construyendo()` dice si el marco actual se llamó con `new`). Los inyectores de dependencias hacen `new (Function.prototype.bind.apply(Clase, [null].concat(args)))`.
 - **El nombre de lo que no es una función**: `f()` con `f` sin definir dice `f no es una función`, también para variables locales (el compilador apunta qué nombre se llama en cada llamada). Con esto se encontró que faltaba `Math.cos`.
 
 ## Datos binarios y azar

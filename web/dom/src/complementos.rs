@@ -171,6 +171,30 @@ pub(crate) const COMPLEMENTOS_JS: &str = r#"(function (w, d, P) {
     return img;
   };
   w.Image.prototype = w.HTMLImageElement.prototype;
+  // `new Audio(src)`: un `<audio>` con `preload="auto"` (aún no suena: falta la fase de medios).
+  w.Audio = function Audio(src) {
+    var a = d.createElement('audio');
+    a.setAttribute('preload', 'auto');
+    if (src !== undefined) a.setAttribute('src', String(src));
+    return a;
+  };
+  if (w.HTMLAudioElement) w.Audio.prototype = w.HTMLAudioElement.prototype;
+  // `<audio>` y `<video>` sin reproductor todavía: el estado de uno que no ha cargado nada.
+  // `canPlayType` da '' (no puede), y `play()` se queda en pausa sin error.
+  var M = w.HTMLMediaElement.prototype;
+  M.load = function () {};
+  M.pause = function () {};
+  M.play = function () { return Promise.resolve(); };
+  M.canPlayType = function () { return ''; };
+  M.addTextTrack = function () { return { cues: [], mode: 'disabled', addCue: function () {} }; };
+  [['paused', true], ['ended', false], ['seeking', false], ['currentTime', 0], ['duration', NaN],
+    ['volume', 1], ['muted', false], ['playbackRate', 1], ['readyState', 0], ['networkState', 0],
+    ['error', null], ['buffered', { length: 0 }], ['textTracks', []]].forEach(function (par) {
+    M[par[0]] = par[1];
+  });
+  ['HAVE_NOTHING', 'HAVE_METADATA', 'HAVE_CURRENT_DATA', 'HAVE_FUTURE_DATA', 'HAVE_ENOUGH_DATA'].forEach(function (k, i) {
+    w.HTMLMediaElement[k] = M[k] = i;
+  });
   // `img.width` y `img.height`: números (el atributo, o 0 mientras no se sepa).
   ['width', 'height'].forEach(function (a) {
     Object.defineProperty(w.HTMLImageElement.prototype, a, {

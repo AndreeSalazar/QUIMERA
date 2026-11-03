@@ -451,7 +451,39 @@ fn plantillas_inertes() {
           t2.content.firstChild.id = 'y';
           var caja = document.createElement('div'); caja.appendChild(t2);
           var c = caja.cloneNode(true).firstChild, c2 = t2.cloneNode(true);
-          console.log(c.content.firstChild.id, c2.content.childNodes.length, c2.content.lastChild.content.firstChild.textContent);"#,
+          console.log(c.content.firstChild.id, c2.content.childNodes.length, c2.content.lastChild.content.firstChild.textContent);
+          var dentro = t.content.firstChild, od = dentro.ownerDocument, nuevo = od.createElement('mi-p');
+          console.log(od === document, nuevo instanceof P, document.createElement('mi-p') instanceof P, document.body.ownerDocument === document);"#,
     );
-    assert_eq!(r, ["definido false", "construido false", "copiado true", "conectado otro", "t false", "y 2 2"]);
+    assert_eq!(
+        r,
+        [
+            "definido false",
+            "construido false",
+            "copiado true",
+            "conectado otro",
+            "t false",
+            "y 2 2",
+            "construido false",
+            "false false true true"
+        ]
+    );
+}
+
+/// Las propiedades del DOM son accesores de los prototipos, como en Chromium.
+#[test]
+fn accesores_en_los_prototipos() {
+    let mut d = dom(r#"<div id="a" class="c"><b>x</b>y</div>"#);
+    let r = correr(
+        &mut d,
+        r#"var a = document.getElementById('a');
+          var fc = Object.getOwnPropertyDescriptor(Node.prototype, 'firstChild');
+          console.log(typeof fc.get, fc.set, fc.configurable, fc.get.call(a) === a.firstChild, a.hasOwnProperty('firstChild'));
+          var ih = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+          ih.set.call(a, '<i>z</i>'); console.log(ih.get.call(a), a.firstChild.nodeName, 'childNodes' in a);
+          console.log(Object.getOwnPropertyDescriptor(Node.prototype, 'childNodes').get.call(a).length, a.className, a.id);
+          var f = document.createDocumentFragment(); f.appendChild(document.createElement('p'));
+          console.log(Object.getOwnPropertyDescriptor(DocumentFragment.prototype, 'children').get.call(f).length);"#,
+    );
+    assert_eq!(r, ["function undefined true true false", "<i>z</i> I true", "1 c a", "1"]);
 }

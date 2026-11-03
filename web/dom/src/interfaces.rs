@@ -110,12 +110,12 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   // conecta, como en los navegadores (su documento no tiene registro de elementos).
   function enPlantilla(n) {
     for (var p = n.parentNode; p; p = p.parentNode) {
-      if (p['inerte'] || p.localName === 'template') return true;
+      if (p['\u0001inerte'] || p.localName === 'template') return true;
     }
     return false;
   }
   function cadaElemento(n, f) {
-    if (!esNodo(n) || n['inerte'] || enPlantilla(n)) return;
+    if (!esNodo(n) || n['\u0001inerte'] || enPlantilla(n)) return;
     if (n.nodeType === 1) f(n);
     if (n.nodeType !== 1 && n.nodeType !== 11 && n.nodeType !== 9) return;
     if (n.localName === 'template') return;
@@ -236,7 +236,7 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     get: function () {
       if (!this['\u0001contenido']) {
         var f = d.createDocumentFragment();
-        f['inerte'] = true;
+        f['\u0001inerte'] = true;
         while (this.firstChild) f.appendChild(this.firstChild);
         this['\u0001contenido'] = f;
       }
@@ -309,6 +309,36 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
 
   // ---------------- más de Node y Element ----------------
   var N = P.p_nodo, E = P.p_elemento;
+  // Las propiedades del DOM, como accesores en los prototipos (como los navegadores): hay
+  // librerías que copian sus descriptores (ShadyDOM mira `Node.prototype.firstChild`).
+  function accesores(proto, lectura, escritura) {
+    lectura.concat(escritura).forEach(function (k) {
+      var d = { get: __quimera_accesor_anfitrion(k, false), configurable: true, enumerable: true };
+      if (escritura.indexOf(k) >= 0) d.set = __quimera_accesor_anfitrion(k, true);
+      Object.defineProperty(proto, k, d);
+    });
+  }
+  var hijos = ['children', 'childElementCount', 'firstElementChild', 'lastElementChild'];
+  accesores(N, ['parentNode', 'parentElement', 'firstChild', 'lastChild', 'childNodes', 'nextSibling',
+    'previousSibling', 'ownerDocument', 'isConnected', 'nodeType', 'nodeName'], ['textContent', 'nodeValue']);
+  accesores(E, hijos.concat(['nextElementSibling', 'previousElementSibling', 'outerHTML', 'localName', 'tagName']),
+    ['innerHTML', 'id', 'className']);
+  accesores(P.p_fragmento, hijos, []);
+  accesores(P.p_documento, hijos, []);
+  // El `ownerDocument` de lo que está en una plantilla es un documento inerte: lo que crea no
+  // se mejora (Polymer convierte `<template is="dom-repeat">` con `t.ownerDocument.createElement`).
+  var docInerte = Object.create(d), propietario = Object.getOwnPropertyDescriptor(N, 'ownerDocument').get;
+  docInerte.createElement = function (t) { return crearNativo.call(d, t); };
+  docInerte.createElementNS = function (ns, t) { return crearNativo.call(d, String(t).replace(/^.*:/, '')); };
+  ['createTextNode', 'createComment', 'createDocumentFragment', 'createTreeWalker', 'createNodeIterator',
+    'getElementById', 'querySelector', 'querySelectorAll'].forEach(function (k) {
+    docInerte[k] = function () { return d[k].apply(d, arguments); };
+  });
+  docInerte.importNode = function (n, profundo) { return n.cloneNode(!!profundo); };
+  Object.defineProperty(N, 'ownerDocument', {
+    get: function () { return this['inerte'] || enPlantilla(this) ? docInerte : propietario.call(this); },
+    configurable: true, enumerable: true
+  });
   // Meter y sacar nodos avisa a los elementos personalizados.
   ['appendChild', 'insertBefore', 'replaceChild', 'append'].forEach(function (m) {
     var nativo = N[m];
@@ -388,7 +418,21 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   Object.defineProperty(E, 'attributes', {
     get: function () {
       var el = this;
-      return this.getAttributeNames().map(function (n) { return { name: n, localName: n, nodeName: n, value: el.getAttribute(n), nodeType: 2 }; });
+      // Un `NamedNodeMap` (una copia, no vivo) con nodos `Attr` sencillos.
+      var lista = this.getAttributeNames().map(function (n) {
+        return { name: n, localName: n, nodeName: n, value: el.getAttribute(n), nodeValue: el.getAttribute(n),
+          nodeType: 2, specified: true, ownerElement: el, namespaceURI: null, prefix: null };
+      });
+      lista.item = function (i) { return this[i] || null; };
+      lista.getNamedItem = function (n) {
+        n = String(n).toLowerCase();
+        for (var i = 0; i < this.length; i++) if (this[i].name === n) return this[i];
+        return null;
+      };
+      lista.getNamedItemNS = function (ns, n) { return this.getNamedItem(n); };
+      lista.removeNamedItem = function (n) { var a = this.getNamedItem(n); if (a) el.removeAttribute(a.name); return a; };
+      lista.setNamedItem = function (a) { var v = this.getNamedItem(a.name); el.setAttribute(a.name, a.value); return v; };
+      return lista;
     }
   });
   E.insertAdjacentHTML = function (donde, html) {

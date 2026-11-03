@@ -70,7 +70,13 @@ cargo run --release -p quimera-ventana -- docs/ejemplos/javascript.html
 
 Todo comparado con Chromium en `pruebas.rs`.
 
-**Dónde está YouTube:** de 6 errores al arrancar pasa a 2. Polymer arranca, sus elementos personalizados se definen y se mejoran. Los 2 que quedan son de su inyector de dependencias (`PAGE_TOKEN`), que se registra en el `ready()` de un elemento: es cuestión de en qué orden corren los `ready` y los `connectedCallback`. Todavía no se pinta nada, porque la página entera la construye su JavaScript.
+- **Plantillas inertes**: lo que hay dentro de un `<template>` (también su `content`) no se mejora ni se conecta, y su `ownerDocument` es un documento inerte que crea elementos sin mejorar (Polymer convierte `<template is="dom-repeat">` con él). `importNode` mejora la copia; `cloneNode` copia también el `content`. El analizador HTML deja el contenido de un `<template>` de `<head>` dentro de él.
+- Meter un fragmento en el documento conecta sus hijos (antes el fragmento llegaba ya vacío).
+- **Las propiedades del DOM son accesores de los prototipos**, como en los navegadores: `Object.getOwnPropertyDescriptor(Node.prototype, 'firstChild').get` existe y funciona con `.call(nodo)`. Son nativas que leen del puente directamente (`__quimera_accesor_anfitrion`). ShadyDOM, el polyfill de Shadow DOM que usa YouTube, mira ese descriptor para elegir su camino. En `Node`: `parentNode`, `firstChild`, `childNodes`, `textContent`…; en `Element`: `children`, `innerHTML`, `id`, `className`…
+- `el.attributes` es un `NamedNodeMap` (`getNamedItem`, `item`…), aún como copia, no vivo.
+- `new Audio()` y lo mínimo de `HTMLMediaElement` (`load`, `play`, `pause` y el estado de uno sin cargar). `canPlayType` da `''`: todavía no hay reproductor.
+
+**Dónde está YouTube:** arranca sin errores, como en Chrome (antes eran 6). Faltaban el `new` sobre funciones atadas (su inyector de dependencias), las plantillas inertes y los descriptores del DOM. Todavía no se pinta nada: el contenido lo pide después por red y lo sella en raíces de ShadyDOM. Eso es lo siguiente.
 
 ## Clases del DOM y elementos personalizados
 
