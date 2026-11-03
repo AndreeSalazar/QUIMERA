@@ -202,7 +202,27 @@ pub(crate) fn calcular(
             pila.extend(doc.nodo(id).hijos.iter().rev().map(|&h| (h, id.0 as usize)));
         }
     }
+    // La opacidad, ya con la herencia hecha (si no, los hijos la heredarían dos veces en su color).
+    estilos.iter_mut().flatten().filter(|e| e.opacidad < 1.0).for_each(aplicar_opacidad);
     Estilos { estilos }
+}
+
+/// Multiplica la opacidad en los colores del elemento (los de dentro llevan ya la suya, que
+/// incluye esta). Como la opacidad de grupo de CSS cuando lo de dentro no se solapa.
+fn aplicar_opacidad(e: &mut Estilo) {
+    let por = |a: u8| (f32::from(a) * e.opacidad + 0.5) as u8;
+    // Un borde sin color usa el del texto: el de antes de multiplicar.
+    let color = e.color;
+    e.color.a = por(e.color.a);
+    e.fondo.a = por(e.fondo.a);
+    for b in &mut e.borde {
+        let mut c = b.color.unwrap_or(color);
+        c.a = por(c.a);
+        b.color = Some(c);
+    }
+    if e.opacidad <= 0.0 {
+        e.visible = false;
+    }
 }
 
 /// El estilo de un elemento a partir del de su padre.

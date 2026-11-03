@@ -19,6 +19,7 @@
 
 extern crate alloc;
 
+mod animaciones;
 mod complementos;
 mod eventos;
 mod interfaces;
@@ -264,7 +265,10 @@ const DOCUMENTO_JS: &str = r"(function (w, d) {
   w.requestIdleCallback = function (f) { return setTimeout(function () { f({ didTimeout: false, timeRemaining: function () { return 50; } }); }, 1); };
   w.cancelIdleCallback = clearTimeout;
   function Observador() { this.observe = this.unobserve = this.disconnect = function () {}; this.takeRecords = function () { return []; }; }
-  w.MutationObserver = w.PerformanceObserver = Observador;
+  w.MutationObserver = Observador;
+  // Sin entradas de rendimiento todavía: no anuncia ningún tipo.
+  w.PerformanceObserver = function PerformanceObserver() { Observador.call(this); };
+  w.PerformanceObserver.supportedEntryTypes = [];
   d.implementation = {
     hasFeature: function () { return true; },
     createHTMLDocument: function (titulo) {
@@ -354,6 +358,7 @@ impl Dom {
             interfaces::INTERFACES_JS,
             complementos::COMPLEMENTOS_JS,
             observadores::OBSERVADORES_JS,
+            animaciones::ANIMACIONES_JS,
             DOCUMENTO_JS,
         ] {
             if let Err(e) = motor.ejecutar(codigo) {

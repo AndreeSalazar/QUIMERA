@@ -39,7 +39,7 @@ pub use quimera_html::NodoId;
 pub use tabla::{AlinearVertical, Tabla};
 pub use valores::{
     Alinear, AltoLinea, Borde, Color, Display, Espacios, Estilo, EstiloBorde, Flotar, Generica, Limpiar, Medida,
-    SIN_BORDE, TipoLista,
+    Relleno, SIN_BORDE, TipoLista,
 };
 pub use variables::Variables;
 

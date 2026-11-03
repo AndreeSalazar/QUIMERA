@@ -22,8 +22,8 @@ pub(crate) enum Nodo {
     Limite(bool),
     /// Un grupo; con número si captura.
     Grupo(Box<Nodo>, Option<u32>),
-    /// `(?=...)` (positiva) o `(?!...)`.
-    Mirar(Box<Nodo>, bool),
+    /// `(?=...)` (positiva) o `(?!...)`; con `atras`, `(?<=...)` o `(?<!...)`.
+    Mirar(Box<Nodo>, bool, bool),
     Referencia(u32),
     Secuencia(Vec<Nodo>),
     Alternativa(Vec<Nodo>),
@@ -140,8 +140,12 @@ impl<'a> Lector<'a> {
         let (captura, mirar) = if self.comer('?') {
             let r = match self.ver() {
                 Some(':') => (false, None),
-                Some('=') => (false, Some(true)),
-                Some('!') => (false, Some(false)),
+                Some('=') => (false, Some((true, false))),
+                Some('!') => (false, Some((false, false))),
+                Some('<') if matches!(self.c.get(self.i + 1), Some('=' | '!')) => {
+                    self.i += 1; // el `<`; el `=` o el `!` lo salta lo común
+                    (false, Some((self.ver() == Some('='), true)))
+                }
                 Some('<') if !matches!(self.c.get(self.i + 1), Some('=' | '!')) => {
                     // Grupo con nombre: captura como uno normal (el nombre aún no se usa).
                     while self.ver().is_some_and(|c| c != '>') {
@@ -165,7 +169,7 @@ impl<'a> Lector<'a> {
             return error("falta ')'");
         }
         Ok(match mirar {
-            Some(positiva) => Nodo::Mirar(Box::new(dentro), positiva),
+            Some((positiva, atras)) => Nodo::Mirar(Box::new(dentro), positiva, atras),
             None => Nodo::Grupo(Box::new(dentro), numero),
         })
     }

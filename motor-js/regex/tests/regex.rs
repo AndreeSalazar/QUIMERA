@@ -109,7 +109,23 @@ fn propiedades_de_unicode() {
     assert_eq!(encaje(r"\p{Extended_Pictographic}", "u", "ok 😀!"), s("😀"));
     assert_eq!(encaje(r"\p{N}+", "u", "x٣4"), s("٣4"));
     assert_eq!(encaje(r"^[$_\p{ID_Start}][$_\p{ID_Continue}]*$", "u", "año_2"), s("año_2"));
+    // Un emoji con su tono de piel, como lo separa GitHub (`\p{Emoji}\p{EMod}`).
+    assert_eq!(encaje(r"\p{RI}\p{RI}|\p{Emoji}\p{EMod}?", "u", "a👍🏽b"), s("👍🏽"));
+    assert_eq!(encaje(r"\p{RI}\p{RI}|\p{Emoji}\p{EMod}?", "u", "x🇵🇪"), s("🇵🇪"));
     assert!(Regex::nueva(r"\p{NoExiste}", "u").is_err());
     // Sin la bandera `u`, `\p` es una `p` (anexo B).
     assert_eq!(encaje(r"\p{L}", "", "p{L}"), s("p{L}"));
+}
+
+/// Mirar hacia atrás: `(?<=...)` y `(?<!...)` (resultados de Chromium).
+#[test]
+fn mirar_hacia_atras() {
+    assert_eq!(encaje(r"(?<=\$)\d+", "", "cuesta $42 o 7"), s("42"));
+    assert_eq!(encaje(r"(?<!\$)\b\d+", "", "cuesta $42 o 7"), s("7"));
+    assert_eq!(encaje(r"(?<=ñ)o", "u", "año"), s("o"));
+    // Como en el patrón de bots de GitHub: `bot` que no va tras `cu`.
+    assert_eq!(encaje(r"(?<! cu)bots?(?:\b|_)", "i", "Mozilla cubot x"), None);
+    assert_eq!(encaje(r"(?<! cu)bots?(?:\b|_)", "i", "Googlebot/2.1"), s("bot"));
+    assert_eq!(encaje(r"(?<!lib)http", "", "libhttp http"), s("http"));
+    assert_eq!(grupos(r"(?<=(a)b)c", "", "abc"), Some(vec![s("c"), s("a")]));
 }

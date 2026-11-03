@@ -2232,6 +2232,7 @@ name = "quimera-imagen"
 version = "0.1.0"
 dependencies = [
  "quimera-comprimir",
+ "quimera-vector",
 ]
 
 [[package]]
@@ -2241,6 +2242,7 @@ dependencies = [
  "quimera-css",
  "quimera-estilo",
  "quimera-html",
+ "quimera-vector",
 ]
 
 [[package]]
@@ -2292,6 +2294,10 @@ dependencies = [
 
 [[package]]
 name = "quimera-valor"
+version = "0.1.0"
+
+[[package]]
+name = "quimera-vector"
 version = "0.1.0"
 
 [[package]]

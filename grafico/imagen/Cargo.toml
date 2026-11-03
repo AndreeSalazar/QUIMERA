@@ -1,6 +1,6 @@
 [package]
 name = "quimera-imagen"
-description = "Decodificadores de imágenes de QUIMERA, propios y no_std: PNG (con DEFLATE propio), JPEG (baseline y progresivo) y GIF."
+description = "Decodificadores de imágenes de QUIMERA, propios y no_std: PNG (con DEFLATE propio), JPEG (baseline y progresivo), GIF y SVG (con quimera-vector)."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -15,6 +15,7 @@ externos = []
 
 [dependencies]
 quimera-comprimir.workspace = true
+quimera-vector.workspace = true
 
 [lints]
 workspace = true

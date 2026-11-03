@@ -187,7 +187,11 @@ Wikipedia destapó además un fallo de capas: un flotante dentro de un elemento 
 
 `QUIMERA_DEPURAR=nombre` en el modo captura imprime el estilo calculado del primer elemento con esa clase, id o etiqueta (en el DOM tras el JavaScript) y de sus antepasados. `QUIMERA_GUION=archivo.js` ejecuta un guion propio tras la carga (lo que escriba con `console.log` sale en la terminal) y `QUIMERA_ESPERA=ms` adelanta más tiempo de la página (1 s si no se dice).
 
-Un `fixed` dentro de un `absolute` (la cabecera de YouTube dentro de `ytd-app`) se coloca contra la ventana: al colocar los `absolute` contra ella se repite mientras salgan `fixed` nuevos. La maquetación anota la caja de borde de cada bloque (`Maquetacion::cajas`), que es lo que leen las medidas del DOM.
+Un `fixed` dentro de un `absolute` (la cabecera de YouTube dentro de `ytd-app`) se coloca contra la ventana: al colocar los `absolute` contra ella se repite mientras salgan `fixed` nuevos. **`opacity`**: el estilo calcula la efectiva (la propia por la de los antepasados) y, con la herencia ya hecha, la aplica a los colores de texto, fondo y bordes; con 0, el elemento no se ve pero conserva su sitio. Equivale a la opacidad de grupo de CSS cuando lo de dentro no se solapa. **`fill`** se hereda y llega a la raíz de cada `<svg>` (YouTube pone `fill: currentColor` a sus iconos).
+
+Un `<svg>` dentro del HTML es un elemento reemplazado (tamaño de CSS, de `width`/`height` o de la proporción del `viewBox`; 300 × 150 sin nada) y sale como imagen (ver [IMAGENES.md](IMAGENES.md)). Un `inline-block` se maqueta en (0, 0) y luego se mueve a su sitio en la línea: ahora se mueven también las capas de lo posicionado que lleva dentro y sus cajas de medidas (los iconos de los botones de YouTube quedaban en la esquina).
+
+La maquetación anota la caja de borde de cada bloque (`Maquetacion::cajas`), que es lo que leen las medidas del DOM.
 
 **Falta:** `calc()`, `min()`, `max()` y `clamp()` (con `var()` dentro son muy comunes), y `inherit`/`initial` en las propias variables.
 

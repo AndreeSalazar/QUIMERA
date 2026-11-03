@@ -245,6 +245,11 @@ pub struct Estilo {
     pub lista: TipoLista,
     /// `visibility: hidden` lo hace invisible sin quitarle el sitio.
     pub visible: bool,
+    /// `fill` (heredado): el relleno de las formas SVG.
+    pub relleno_svg: Relleno,
+    /// `opacity` efectiva: la suya por la de sus antepasados. Al final de la cascada ya está
+    /// aplicada a sus colores (texto, fondo, bordes); con 0, el elemento no se ve (`visible`).
+    pub opacidad: f32,
     /// `text-transform: uppercase/lowercase`: `Some(true)` mayúsculas, `Some(false)` minúsculas.
     pub transformar: Option<bool>,
     /// Flexbox (como contenedor y como elemento flexible).
@@ -263,6 +268,19 @@ pub struct Estilo {
     /// Las propiedades personalizadas (`--x`) que ve, heredadas y propias (compartidas con el
     /// padre si no declara ninguna).
     pub variables: alloc::rc::Rc<crate::variables::Variables>,
+}
+
+/// El valor de `fill`.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Relleno {
+    /// El inicial: negro.
+    Negro,
+    /// `currentColor`: el `color` de cada elemento.
+    Actual,
+    /// Un color.
+    Color(Color),
+    /// `none`.
+    Ninguno,
 }
 
 impl Default for Estilo {
@@ -293,6 +311,8 @@ impl Default for Estilo {
             alto_min: Medida::Px(0.0),
             lista: TipoLista::Disco,
             visible: true,
+            opacidad: 1.0,
+            relleno_svg: Relleno::Negro,
             transformar: None,
             flex: crate::flex::Flex::default(),
             tabla: crate::tabla::Tabla::default(),
@@ -321,6 +341,8 @@ impl Estilo {
             espacios: padre.espacios,
             lista: padre.lista,
             visible: padre.visible,
+            opacidad: padre.opacidad,
+            relleno_svg: padre.relleno_svg,
             transformar: padre.transformar,
             // text-decoration no se hereda, pero se propaga al texto de dentro.
             subrayado: padre.subrayado,

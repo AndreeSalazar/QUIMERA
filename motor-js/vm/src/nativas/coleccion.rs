@@ -21,6 +21,8 @@ const DEFINE_PROPERTY: u32 = 404;
 const DESCRIPTOR: u32 = 405;
 /// `Object.getOwnPropertyNames(o)`: todas las claves propias, también las no enumerables.
 const NOMBRES_PROPIOS: u32 = 408;
+/// `Object.getOwnPropertySymbols`.
+const SIMBOLOS_PROPIOS: u32 = 409;
 const GET_PROTOTYPE_OF: u32 = 406;
 const SET_PROTOTYPE_OF: u32 = 407;
 const SLICE: u32 = 410;
@@ -46,6 +48,7 @@ pub(super) fn preparar(m: &mut Motor, objeto: usize, arreglo: usize) {
     definir_nativa(m, objeto, "defineProperty", DEFINE_PROPERTY);
     definir_nativa(m, objeto, "getOwnPropertyDescriptor", DESCRIPTOR);
     definir_nativa(m, objeto, "getOwnPropertyNames", NOMBRES_PROPIOS);
+    definir_nativa(m, objeto, "getOwnPropertySymbols", SIMBOLOS_PROPIOS);
     definir_nativa(m, objeto, "getPrototypeOf", GET_PROTOTYPE_OF);
     definir_nativa(m, objeto, "setPrototypeOf", SET_PROTOTYPE_OF);
     definir_nativa(m, R_OBJETO, "hasOwnProperty", HAS_OWN);
@@ -126,6 +129,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
         DEFINE_PROPERTY => return definir_propiedad(m, ll),
         DESCRIPTOR => return descriptor(m, ll),
         NOMBRES_PROPIOS => return nombres_propios(m, ll),
+        SIMBOLOS_PROPIOS => return simbolos_propios(m, ll),
         SET_PROTOTYPE_OF => {
             let (o, p) = (arg(m, ll, 0), arg(m, ll, 1));
             if !(m.mundo.es_objeto(p) || p == Valor::NULO) {
@@ -250,6 +254,27 @@ fn nombres_propios(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
     let r = m.mundo.crear_arreglo(&claves, m.pila(R_ARREGLO));
     m.mundo.m.soltar_raices(marca);
     Ok(r)
+}
+
+/// `Object.getOwnPropertySymbols(o)`: las claves que son símbolos (cadenas internas que empiezan
+/// por `\u{2}`, que nadie puede escribir).
+fn simbolos_propios(m: &mut Motor, ll: &Llamada) -> Result<Valor, Valor> {
+    let o = arg(m, ll, 0);
+    if matches!(o.tipo(), Tipo::Indefinido | Tipo::Nulo) {
+        return Err(m.error("TypeError", "Object.getOwnPropertySymbols necesita un objeto"));
+    }
+    if m.es_proxy(o) || !m.mundo.es_objeto(o) {
+        return Ok(m.mundo.crear_arreglo(&[], m.pila(R_ARREGLO)));
+    }
+    let simbolos: Vec<Valor> = m
+        .mundo
+        .claves(o)
+        .iter()
+        .map(|&k| k & !crate::accesores::ACCESOR)
+        .filter(|&k| m.mundo.cadenas.texto(k).starts_with('\u{2}'))
+        .map(|k| Valor::simbolo(Ref::desde_u32(k)))
+        .collect();
+    Ok(m.mundo.crear_arreglo(&simbolos, m.pila(R_ARREGLO)))
 }
 
 /// `Object.getOwnPropertyDescriptor(o, k)`.

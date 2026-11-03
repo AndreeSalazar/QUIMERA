@@ -15,6 +15,7 @@ members = [
     "web/dom",
     "web/maquetacion",
     "grafico/texto",
+    "grafico/vector",
     "grafico/imagen",
     "grafico/gpu",
     "grafico/pintar",
@@ -39,6 +40,7 @@ authors = ["Eddi Salazar"]
 [workspace.dependencies]
 quimera-valor = { path = "cimientos/valor" }
 quimera-comprimir = { path = "cimientos/comprimir" }
+quimera-vector = { path = "grafico/vector" }
 quimera-gc = { path = "motor-js/gc" }
 quimera-regex = { path = "motor-js/regex" }
 quimera-parser = { path = "motor-js/parser" }

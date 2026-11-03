@@ -68,7 +68,7 @@ pub enum Formato {
     Gif,
     /// WebP (todavía no se decodifica)
     Webp,
-    /// SVG (todavía no se dibuja)
+    /// SVG (formas y rellenos, con quimera-vector)
     Svg,
 }
 
@@ -135,7 +135,8 @@ pub fn dimensiones(d: &[u8]) -> Option<(u32, u32)> {
                 i += 1 + be16(i + 1)? as usize;
             }
         }
-        Formato::Webp | Formato::Svg => return None,
+        Formato::Svg => quimera_vector::tam_propio(d)?,
+        Formato::Webp => return None,
     };
     (r.0 > 0 && r.1 > 0 && comprobar_tamano(r.0, r.1).is_ok()).then_some(r)
 }
@@ -147,7 +148,9 @@ pub fn decodificar(d: &[u8]) -> Result<Imagen, Error> {
         Some(Formato::Jpeg) => jpeg::decodificar(d),
         Some(Formato::Gif) => gif::decodificar(d),
         Some(Formato::Webp) => Err(Error::NoSoportado("WebP")),
-        Some(Formato::Svg) => Err(Error::NoSoportado("SVG")),
+        Some(Formato::Svg) => quimera_vector::rasterizar(d)
+            .map(|l| Imagen { ancho: l.ancho, alto: l.alto, rgba: l.rgba })
+            .ok_or(Error::Datos("SVG ilegible")),
         None => Err(Error::Datos("formato desconocido")),
     }
 }
@@ -211,7 +214,7 @@ mod pruebas {
         assert_eq!(formato(b"RIFF\0\0\0\0WEBPVP8 "), Some(Formato::Webp));
         assert_eq!(formato(b"<?xml version='1.0'?><svg xmlns="), Some(Formato::Svg));
         assert_eq!(formato(b"hola"), None);
-        assert!(matches!(decodificar(b"<svg/>"), Err(Error::NoSoportado(_))));
+        assert!(matches!(decodificar(b"<svg width='2' height='1'/>"), Ok(Imagen { ancho: 2, alto: 1, .. })));
     }
 
     #[test]
@@ -224,7 +227,7 @@ mod pruebas {
             0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x04, 0x4A, 0x46, 0xFF, 0xC0, 0x00, 0x11, 0x08, 0x01, 0xE0, 0x02, 0x80, 0x03,
         ];
         assert_eq!(dimensiones(&jpeg), Some((640, 480)));
-        assert_eq!(dimensiones(b"<svg/>"), None);
+        assert_eq!(dimensiones(b"<svg viewBox='0 0 24 12'/>"), Some((24, 12)));
         assert_eq!(dimensiones(&[0xFF, 0xD8, 0xFF]), None, "cortado");
     }
 

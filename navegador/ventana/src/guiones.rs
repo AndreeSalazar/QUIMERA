@@ -57,6 +57,10 @@ impl Guion {
         let inicio = Instant::now();
         let mut dom = Dom::nuevo(pagina.documento(), &pagina.url.to_string());
         dom.con_sistema(reloj, entropia);
+        // `QUIMERA_LANZADOS=1`: también las excepciones que la página captura y se calla.
+        if std::env::var_os("QUIMERA_LANZADOS").is_some() {
+            dom.motor.anotar_lanzados();
+        }
         dom.con_medidas(vista, medidor(pagina, vista));
         dom.ejecutar_scripts(&|src| pagina.script(src));
         let mut g = Guion { dom, inicio };
@@ -72,6 +76,9 @@ impl Guion {
 
     /// Escribe en la terminal lo nuevo de la consola y los errores de la página.
     pub fn informar(&mut self) {
+        for l in self.dom.motor.lanzados() {
+            eprintln!("lanzado: {l}");
+        }
         for l in self.dom.consola() {
             eprintln!("consola: {l}");
         }

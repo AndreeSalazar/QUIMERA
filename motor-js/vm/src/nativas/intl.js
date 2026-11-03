@@ -239,13 +239,83 @@
   Locale.prototype.minimize = function () { return this; };
   clase('Locale', Locale);
 
+
+  // Intl.Segmenter: letras (por punto de código; las marcas combinantes, los selectores de
+  // variante, los tonos de piel y lo unido con ZWJ van con la letra anterior), palabras (con
+  // `isWordLike`) y frases (hasta `.`, `!` o `?` y los blancos que siguen). Sin los diccionarios
+  // de las lenguas sin espacios (chino, japonés, tailandés).
+  function puntos(s) {
+    var v = [];
+    for (var i = 0; i < s.length; i++) {
+      var c = s.charCodeAt(i), largo = 1;
+      if (c >= 0xD800 && c < 0xDC00 && i + 1 < s.length) {
+        var d = s.charCodeAt(i + 1);
+        if (d >= 0xDC00 && d < 0xE000) { c = 0x10000 + ((c - 0xD800) << 10) + (d - 0xDC00); largo = 2; }
+      }
+      v.push({ c: c, i: i, t: s.substr(i, largo) });
+      i += largo - 1;
+    }
+    return v;
+  }
+  function seUne(c) {
+    return (c >= 0x300 && c <= 0x36F) || (c >= 0x1AB0 && c <= 0x1AFF) || (c >= 0x20D0 && c <= 0x20FF) ||
+      (c >= 0xFE00 && c <= 0xFE0F) || (c >= 0xFE20 && c <= 0xFE2F) || (c >= 0x1F3FB && c <= 0x1F3FF) ||
+      (c >= 0xE0100 && c <= 0xE01EF) || c === 0x200D;
+  }
+  function deLetra(t) { return /[0-9_]/.test(t) || t.toLowerCase() !== t.toUpperCase() || t.charCodeAt(0) > 0x2E7F; }
+  function letras(s) {
+    var v = [], p = puntos(s);
+    for (var k = 0; k < p.length; k++) {
+      var previo = v[v.length - 1];
+      var unido = previo && (seUne(p[k].c) || (k > 0 && p[k - 1].c === 0x200D));
+      if (unido) previo.segment += p[k].t; else v.push({ segment: p[k].t, index: p[k].i });
+    }
+    return v;
+  }
+  function palabras(s) {
+    var v = [];
+    letras(s).forEach(function (g) {
+      var tipo = /^\s+$/.test(g.segment) ? 'b' : deLetra(g.segment) ? 'p' : 's';
+      var previo = v[v.length - 1];
+      if (previo && tipo !== 's' && previo.tipo === tipo) previo.segment += g.segment;
+      else v.push({ segment: g.segment, index: g.index, tipo: tipo });
+    });
+    return v.map(function (x) { return { segment: x.segment, index: x.index, isWordLike: x.tipo === 'p' }; });
+  }
+  function frases(s) {
+    var v = [], re = /[^.!?]*(?:[.!?]+|$)\s*/g, m;
+    while ((m = re.exec(s)) && m[0] !== '') { v.push({ segment: m[0], index: m.index }); }
+    return v;
+  }
+  function Segmenter(loc, op) {
+    if (!(this instanceof Segmenter)) return crear(Segmenter, arguments);
+    this.locale = idioma(loc).locale;
+    this.granularity = (op && op.granularity) || 'grapheme';
+  }
+  Segmenter.prototype.segment = function (s) {
+    s = String(s);
+    var g = this.granularity, partes = g === 'word' ? palabras(s) : g === 'sentence' ? frases(s) : letras(s);
+    partes.forEach(function (p) { p.input = s; if (g !== 'word') delete p.isWordLike; });
+    var segmentos = {
+      containing: function (i) {
+        i = i === undefined ? 0 : Number(i);
+        for (var k = 0; k < partes.length; k++) if (i >= partes[k].index && i < partes[k].index + partes[k].segment.length) return partes[k];
+        return undefined;
+      }
+    };
+    segmentos[Symbol.iterator] = function () { return partes.slice()[Symbol.iterator](); };
+    return segmentos;
+  };
+  Segmenter.prototype.resolvedOptions = function () { return { locale: this.locale, granularity: this.granularity }; };
+  clase('Segmenter', Segmenter);
+
   var Intl = {
-    NumberFormat: NumberFormat, DateTimeFormat: DateTimeFormat, PluralRules: PluralRules, ListFormat: ListFormat,
+    Segmenter: Segmenter, NumberFormat: NumberFormat, DateTimeFormat: DateTimeFormat, PluralRules: PluralRules, ListFormat: ListFormat,
     RelativeTimeFormat: RelativeTimeFormat, Collator: Collator, Locale: Locale,
     getCanonicalLocales: function (l) { return (l === undefined ? [] : Array.isArray(l) ? l : [l]).map(String); },
     supportedValuesOf: function () { return []; }
   };
-  [NumberFormat, DateTimeFormat, PluralRules, ListFormat, RelativeTimeFormat, Collator].forEach(function (C) {
+  [NumberFormat, DateTimeFormat, PluralRules, ListFormat, RelativeTimeFormat, Collator, Segmenter].forEach(function (C) {
     C.supportedLocalesOf = function (l) { return Intl.getCanonicalLocales(l); };
   });
   Intl[Symbol.toStringTag] = 'Intl';

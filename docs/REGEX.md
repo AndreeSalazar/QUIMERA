@@ -22,13 +22,13 @@
 
 ## Qué soporta
 
-Clases y rangos, `\d \D \w \W \s \S \b \B`, `.`, `^ $`, grupos que capturan, `(?:...)`, grupos con nombre (capturan; el nombre aún no se usa), `(?=...)` y `(?!...)`, referencias `\1`, cuantificadores `* + ? {n} {n,} {n,m}` codiciosos y perezosos, escapes `\t \n \x41 é \u{1F600}` y `\cX`, y las banderas `dgimsuy`.
+Clases y rangos, `\d \D \w \W \s \S \b \B`, `.`, `^ $`, grupos que capturan, `(?:...)`, grupos con nombre (capturan; el nombre aún no se usa), `(?=...)` y `(?!...)`, mirar hacia atrás `(?<=...)` y `(?<!...)` (el subpatrón se prueba empezando en cada posición anterior hasta que uno acaba justo donde se mira), referencias `\1`, cuantificadores `* + ? {n} {n,} {n,m}` codiciosos y perezosos, escapes `\t \n \x41 é \u{1F600}` y `\cX`, y las banderas `dgimsuy`.
 
 En la VM: `RegExp` (constructor y literales), `exec`, `test`, `toString`, `lastIndex`, y en cadenas `replace` (con `$1`, `$&`, `` $` ``, `$'` o una función), `match`, `search` y `split`.
 
-**Propiedades Unicode** (`\p{...}` y `\P{...}`, con la bandera `u`; `propiedades.rs`): las categorías `L`, `Lu`, `Ll`, `N`, `P`, `S`, `M`, `Z`, `Cc` (también por su nombre largo y con `General_Category=`), `Alphabetic`, `White_Space`, `ID_Start`, `ID_Continue`, `Emoji`, `Extended_Pictographic`, `ASCII`, `Any` y los alfabetos más usados (`Script=Latin`, `Greek`, `Cyrillic`, `Han`, `Arabic`...). Las letras y los números salen de la biblioteca estándar de Rust; la puntuación, los símbolos, los emojis y los alfabetos son tablas de bloques, aproximadas en los bordes. Un nombre desconocido es un error, como en los navegadores. Probado contra Chromium.
+**Propiedades Unicode** (`\p{...}` y `\P{...}`, con la bandera `u`; `propiedades.rs`): las categorías `L`, `Lu`, `Ll`, `N`, `P`, `S`, `M`, `Z`, `Cc` (también por su nombre largo y con `General_Category=`), `Alphabetic`, `White_Space`, `ID_Start`, `ID_Continue`, `Emoji`, `Extended_Pictographic`, `Regional_Indicator`, `Emoji_Modifier`, `Emoji_Modifier_Base`, `Emoji_Component`, `ASCII`, `Any` y los alfabetos más usados (`Script=Latin`, `Greek`, `Cyrillic`, `Han`, `Arabic`...). Las letras y los números salen de la biblioteca estándar de Rust; la puntuación, los símbolos, los emojis y los alfabetos son tablas de bloques, aproximadas en los bordes. Un nombre desconocido es un error, como en los navegadores. Probado contra Chromium.
 
-**Falta**: mirar hacia atrás (`(?<=...)`), las tablas completas de Unicode para `\p{...}`, `source`/`flags`/`global` como propiedades, y que `replace`/`split` llamen al `exec` del usuario como pide la especificación.
+**Falta**: las tablas completas de Unicode para `\p{...}`, `source`/`flags`/`global` como propiedades, y que `replace`/`split` llamen al `exec` del usuario como pide la especificación.
 
 ## Medida
 

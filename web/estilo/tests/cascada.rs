@@ -277,3 +277,16 @@ fn box_sizing() {
     assert!(a.caja_borde && !b.caja_borde && c.caja_borde, "los botones, border-box por defecto");
     assert_eq!(b.ancho, Medida::Porcentaje(50.0));
 }
+
+#[test]
+fn opacidad_en_los_colores() {
+    let (doc, e) = estilos(
+        "<div id=a style='opacity:.5;color:red;background:blue'><p id=b style='opacity:50%'>x</p></div><div id=c style='opacity:0;background:red'><span id=d>y</span></div>",
+    );
+    let (a, b) = (de(&doc, &e, "a"), de(&doc, &e, "b"));
+    assert_eq!((a.opacidad, a.color.a, a.fondo.a), (0.5, 128, 128));
+    // El hijo hereda el rojo sin multiplicar y aplica su opacidad efectiva (0.5 × 0.5).
+    assert_eq!((b.opacidad, b.color.a), (0.25, 64));
+    let (c, d) = (de(&doc, &e, "c"), de(&doc, &e, "d"));
+    assert!(!c.visible && !d.visible, "con opacidad 0 no se ve, ni lo de dentro");
+}

@@ -17,6 +17,7 @@ externos = []
 quimera-html.workspace = true
 quimera-css.workspace = true
 quimera-estilo.workspace = true
+quimera-vector.workspace = true
 
 [lints]
 workspace = true

@@ -145,3 +145,68 @@ fn new_sobre_bind() {
     );
     assert_eq!(r, ["3 true true", "7 true"]);
 }
+
+/// El `BigInt` mínimo: crea valores con su texto exacto (operar con ellos es aproximado).
+#[test]
+fn bigint_minimo() {
+    let r = salida(
+        r#"var a = BigInt("-9223372036854775808"), b = BigInt(42), c = BigInt("0x1f");
+          console.log(String(a), b.toString(), String(c), b + 1, BigInt("007").toString());
+          try { BigInt(1.5); } catch (e) { console.log(e.name); }
+          try { new BigInt(1); } catch (e) { console.log(e.name); }"#,
+    );
+    assert_eq!(r, ["-9223372036854775808 42 31 43 7", "RangeError", "TypeError"]);
+}
+
+/// `%IteratorPrototype%` y los métodos de los iteradores, como Chromium.
+#[test]
+fn prototipo_de_los_iteradores() {
+    let r = salida(
+        r#"var ip = Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]()));
+          function* g() { yield 1; yield 2; yield 3; yield 4; }
+          console.log(ip === Iterator.prototype, ip !== Object.prototype, Object.getPrototypeOf(Object.getPrototypeOf(g())) === Object.getPrototypeOf(ip) ? 'mal' : 'bien',
+            new Map().entries() instanceof Iterator, typeof Iterator.prototype.map);
+          console.log(g().map(function (x) { return x * 10; }).filter(function (x) { return x > 10; }).take(2).toArray().join(','),
+            [5, 6, 7][Symbol.iterator]().drop(1).reduce(function (a, b) { return a + b; }),
+            Iterator.from({ next: function () { return { done: true }; } }).toArray().length);
+          var k = []; for (var x in {}) k.push(x); console.log('nada', k.length);"#,
+    );
+    assert_eq!(r, ["true true bien true function", "20,30 13 0", "nada 0"]);
+}
+
+/// `Object.getOwnPropertyDescriptors`, como Chromium.
+#[test]
+fn descriptores_de_todas_las_propiedades() {
+    let r = salida(
+        r#"var o = { a: 1, get b() { return 2; } }; Object.defineProperty(o, 'c', { value: 3 });
+          var d = Object.getOwnPropertyDescriptors(o);
+          console.log(Object.keys(d).join(','), d.a.value, typeof d.b.get, d.c.enumerable);"#,
+    );
+    // (Chromium da `writable: false` para `c`: la VM aún no guarda propiedades de solo lectura.)
+    assert_eq!(r, ["a,b,c 1 function false"]);
+}
+
+/// `Intl.Segmenter` básico: letras, palabras y frases, como Chromium.
+#[test]
+fn segmentar_texto() {
+    let r = salida(
+        r#"var s = new Intl.Segmenter('es', { granularity: 'word' });
+          console.log(Array.from(s.segment('Hola, mundo 42')).map(function (x) { return x.segment + (x.isWordLike ? '*' : ''); }).join('|'));
+          var g = new Intl.Segmenter();
+          console.log(Array.from(g.segment('e\u0301a')).length, Array.from(g.segment('a\ud83d\udc4d\ud83c\udffdb')).map(function (x) { return x.segment.length; }).join(','));
+          var f = new Intl.Segmenter('es', { granularity: 'sentence' });
+          console.log(Array.from(f.segment('Hola. ¿Qué tal? Bien')).map(function (x) { return x.segment; }).join('|'), s.segment('ab cd').containing(4).segment);"#,
+    );
+    assert_eq!(r, ["Hola*|,| |mundo*| |42*", "2 1,4,1", "Hola. |¿Qué tal? |Bien cd"]);
+}
+
+/// `Object.getOwnPropertySymbols`, como Chromium.
+#[test]
+fn simbolos_propios() {
+    let r = salida(
+        r#"var a = Symbol('a'), b = Symbol.for('b'); var o = { x: 1 }; o[a] = 2; o[b] = 3;
+          var s = Object.getOwnPropertySymbols(o);
+          console.log(s.length, s[0] === a, s[1] === b, String(s[0]), Object.keys(o).join(','), Object.getOwnPropertySymbols({}).length);"#,
+    );
+    assert_eq!(r, ["2 true true Symbol(a) x 0"]);
+}

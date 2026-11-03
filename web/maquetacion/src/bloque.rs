@@ -438,7 +438,7 @@ impl<'a> Maquetador<'a> {
         ancho: f32,
     ) -> (f32, Option<f32>) {
         let l = EnLinea { medir: self.medir, bloque: e, x, y, ancho, flotantes: &self.flotantes };
-        l.maquetar(items, &mut self.piezas, &mut self.enlaces)
+        l.maquetar(items, &mut self.piezas, &mut self.enlaces, (&mut self.capas, &mut self.cajas))
     }
 
     /// El contenido en línea de `id` (un texto o un elemento en línea) como elementos.
@@ -467,7 +467,7 @@ impl<'a> Maquetador<'a> {
                 }
                 // Una caja en línea (y los controles): se maqueta aparte y va como una palabra.
                 let control = crate::control::tipo_control(self, id).is_some();
-                if (e.display == Display::BloqueEnLinea || control) && el.nombre != "img" {
+                if (e.display == Display::BloqueEnLinea || control) && el.nombre != "img" && el.nombre != "svg" {
                     items.push(self.caja_en_linea(id, e));
                     *ultimo_espacio = false;
                     return;
@@ -477,9 +477,9 @@ impl<'a> Maquetador<'a> {
                         items.push(Item::Salto { estilo: e });
                         *ultimo_espacio = true;
                     }
-                    "img" => {
+                    "img" | "svg" => {
                         let (ancho, alto) = self.tam_imagen(id, e, self.ancho_actual);
-                        let src = String::from(el.atributo("src").unwrap_or(""));
+                        let src = self.src_imagen(id, e, (ancho, alto));
                         if ancho > 0.0 && alto > 0.0 {
                             items.push(Item::Imagen { ancho, alto, src, estilo: e, enlace: self.enlace });
                             *ultimo_espacio = false;

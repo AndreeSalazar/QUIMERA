@@ -33,6 +33,17 @@ impl Motor {
     /// `ToPrimitive`: un primitivo se devuelve igual; un objeto prueba `valueOf` y luego
     /// `toString`. Sin ninguno propio, su texto por defecto (`[object Object]`, `1,2,3`).
     pub(crate) fn a_primitivo(&mut self, v: Valor) -> Result<Valor, Valor> {
+        self.a_primitivo_con(v, ["valueOf", "toString"])
+    }
+
+    /// `ToString` de JavaScript (`String(v)`, `el.textContent = v`): un objeto prueba primero
+    /// `toString` y luego `valueOf` (la pista «string» de `ToPrimitive`).
+    pub fn a_texto_js(&mut self, v: Valor) -> Result<alloc::string::String, Valor> {
+        let p = self.a_primitivo_con(v, ["toString", "valueOf"])?;
+        Ok(op::a_texto(&self.mundo, p))
+    }
+
+    fn a_primitivo_con(&mut self, v: Valor, orden: [&str; 2]) -> Result<Valor, Valor> {
         if !self.mundo.es_objeto(v) {
             return Ok(v);
         }
@@ -41,7 +52,7 @@ impl Motor {
         }
         let marca = self.mundo.m.marca_raices();
         self.mundo.m.raiz(v);
-        for nombre in ["valueOf", "toString"] {
+        for nombre in orden {
             let clave = self.mundo.cadenas.internar(nombre);
             let obj = self.pila(marca);
             let Some(f) = self.mundo.leer(obj, clave) else { continue };

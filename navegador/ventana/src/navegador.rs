@@ -246,6 +246,7 @@ impl Navegador {
         let imagenes = &mut self.imagenes;
         let medidor = self.pintor.medidor();
         let m = maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario);
+        imagenes.en_linea(&self.cliente, &pagina.base, &m);
         let cuadros = self.pintor.escena(&m, escala, &|s| imagenes.id(s));
         let nuevas = imagenes.nuevas(&doc);
         a.gpu.cargar(&cuadros);

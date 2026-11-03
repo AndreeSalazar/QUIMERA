@@ -8,6 +8,9 @@ use crate::{CABECERA, Manejador, Marco, Motor, R_ARREGLO, R_EXCEPCION, R_OBJETO,
 use alloc::format;
 use quimera_objetos::{Clase, Valor};
 
+/// Cuántas excepciones lanzadas se anotan como mucho (ver `Motor::anotar_lanzados`).
+const LANZADOS_MAX: usize = 500;
+
 /// Una llamada pendiente: dónde están la función, `this`, los argumentos y el destino.
 #[derive(Debug, Clone, Copy)]
 pub(crate) struct Llamada {
@@ -157,6 +160,12 @@ impl Motor {
     /// Lanza `exc`. Si un `try` de esta ejecución (por encima de `hasta`) la captura, deshace los
     /// marcos hasta él y sigue en su `catch`; si no, deshace hasta `hasta` y la devuelve.
     pub(crate) fn lanzar(&mut self, exc: Valor, hasta: usize) -> Result<(), Valor> {
+        if self.lanzados.as_ref().is_some_and(|v| v.len() < LANZADOS_MAX) {
+            let t = self.describir_lanzado(exc);
+            if let Some(v) = &mut self.lanzados {
+                v.push(t);
+            }
+        }
         if let Some(h) = self.mundo.m.pila_mut().get_mut(R_EXCEPCION) {
             *h = exc;
         }
@@ -170,6 +179,26 @@ impl Motor {
         }
         self.deshacer_hasta(hasta);
         Err(exc)
+    }
+
+    /// El texto de una excepción para [`Motor::anotar_lanzados`]: su `message` de ahora (hay
+    /// errores que lo rellenan después de crearse) y su `stack`, o el valor. Se leen sin llamar a
+    /// getters: lanzar no ejecuta JavaScript.
+    fn describir_lanzado(&mut self, exc: Valor) -> alloc::string::String {
+        if !self.mundo.es_objeto(exc) {
+            return self.texto(exc);
+        }
+        let leer = |m: &mut Motor, nombre: &str| {
+            let clave = m.mundo.cadenas.internar(nombre);
+            m.mundo.leer(exc, clave).and_then(|v| m.mundo.texto(v).map(alloc::string::String::from))
+        };
+        let (mensaje, pila) = (leer(self, "message"), leer(self, "stack"));
+        match (mensaje, pila) {
+            (Some(m), Some(p)) if !m.is_empty() && !p.contains(m.as_str()) => alloc::format!("{m}\n{p}"),
+            (_, Some(p)) => p,
+            (Some(m), None) => m,
+            (None, None) => self.texto(exc),
+        }
     }
 
     fn deshacer_hasta(&mut self, n: usize) {

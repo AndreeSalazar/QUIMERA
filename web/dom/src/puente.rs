@@ -469,7 +469,13 @@ impl Puente {
         }
         let es_doc = matches!(doc.nodo(id).dato, Dato::Documento);
         match nombre {
-            "textContent" | "innerText" | "nodeValue" | "data" => doc.poner_texto(id, &texto()),
+            "textContent" | "innerText" => doc.poner_texto(id, &texto()),
+            // `data` y `nodeValue` son de los nodos de texto y comentarios; en un elemento, `data`
+            // es una propiedad suelta (Polymer la usa en `<a data="[[command]]">`).
+            "nodeValue" | "data" if matches!(doc.nodo(id).dato, Dato::Texto(_) | Dato::Comentario(_)) => {
+                doc.poner_texto(id, &texto())
+            }
+            "nodeValue" | "data" => return false,
             "innerHTML" => doc.poner_html(id, &texto()),
             "title" if es_doc => {
                 if let Some(t) = doc.buscar("title") {
@@ -552,6 +558,17 @@ impl Anfitrion for Puente {
             self.0.tocar();
             return Some(Ok(()));
         }
+        // Un objeto que se escribe como texto (`SafeHtml`, `TrustedHTML`...) usa su `toString`.
+        let es_texto = matches!(nombre.as_str(), "textContent" | "innerText" | "innerHTML" | "title" | "value")
+            || atributo_reflejado(&nombre).is_some();
+        let v = if es_texto && m.mundo.es_objeto(v) {
+            match m.a_texto_js(v) {
+                Ok(t) => m.cadena(&t),
+                Err(e) => return Some(Err(e)),
+            }
+        } else {
+            v
+        };
         let hecho = self.escribir_nodo(m, NodoId(dato), &nombre, v);
         if hecho && nombre == "innerHTML" {
             // Los elementos personalizados que trae el HTML nuevo se mejoran (`interfaces.rs`).

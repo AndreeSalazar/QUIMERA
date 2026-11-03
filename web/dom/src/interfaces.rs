@@ -309,6 +309,9 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
 
   // ---------------- más de Node y Element ----------------
   var N = P.p_nodo, E = P.p_elemento;
+  // `setAttribute` convierte el valor con `String()` (con su `toString`, como `TrustedScriptURL`).
+  var ponerNativo = E.setAttribute;
+  E.setAttribute = function (n, v) { return ponerNativo.call(this, n, typeof v === 'object' && v !== null ? String(v) : v); };
   // Las propiedades del DOM, como accesores en los prototipos (como los navegadores): hay
   // librerías que copian sus descriptores (ShadyDOM mira `Node.prototype.firstChild`).
   function accesores(proto, lectura, escritura) {
@@ -462,7 +465,6 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   w.DOMRect = function DOMRect(x, y, ancho, alto) { return rect(x || 0, y || 0, ancho || 0, alto || 0); };
   E.getBoundingClientRect = function () { return rect(this.__quimera_x, this.__quimera_y, this.__quimera_ancho, this.__quimera_alto); };
   E.getClientRects = function () { var r = this.getBoundingClientRect(); return r.width || r.height ? [r] : []; };
-  E.animate = function () { return { finished: Promise.resolve(), cancel: function () {}, play: function () {}, pause: function () {}, onfinish: null }; };
   E.attachShadow = function (op) {
     if (this['\u0001sombra']) throw new Error('el elemento ya tiene una raíz de sombra');
     var r = d.createDocumentFragment();

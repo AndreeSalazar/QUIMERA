@@ -38,11 +38,16 @@ pub(crate) enum Op {
     /// Borra las capturas de los grupos `desde..=hasta` (al empezar cada vuelta de una repetición).
     Limpiar(u32, u32),
     Referencia(u32),
-    /// `(?=...)`: el subprograma va desde la siguiente hasta `fin` (que es un `Exito`).
+    /// `(?=...)`: el subprograma va desde la siguiente hasta `fin` (que es un `Exito`). Con
+    /// `atras` (`(?<=...)`), se prueba empezando en cada posición anterior y antes del `Exito`
+    /// hay un `FinAtras`, que exige acabar justo donde se miraba.
     Mirar {
         positiva: bool,
         fin: u32,
+        atras: bool,
     },
+    /// El final de un `(?<=...)`: falla si no se llegó a la posición desde la que se mira.
+    FinAtras,
     MarcarPosicion(u32),
     /// Falla si la posición no avanzó desde su marca.
     ExigirAvance(u32),
@@ -132,9 +137,12 @@ impl Compilador<'_> {
                 self.emitir(Op::Limite(*b))?;
             }
             Nodo::Grupo(dentro, numero) => self.grupo(dentro, *numero)?,
-            Nodo::Mirar(dentro, positiva) => {
-                let m = self.emitir(Op::Mirar { positiva: *positiva, fin: 0 })?;
+            Nodo::Mirar(dentro, positiva, atras) => {
+                let m = self.emitir(Op::Mirar { positiva: *positiva, fin: 0, atras: *atras })?;
                 self.nodo(dentro)?;
+                if *atras {
+                    self.emitir(Op::FinAtras)?;
+                }
                 let fin = self.emitir(Op::Exito)?;
                 self.parchear(m, fin, false);
             }
@@ -264,7 +272,7 @@ fn grupos_de(n: &Nodo) -> Option<(u32, u32)> {
     };
     match n {
         Nodo::Grupo(d, g) => unir(g.map(|g| (g, g)), grupos_de(d)),
-        Nodo::Mirar(d, _) => grupos_de(d),
+        Nodo::Mirar(d, ..) => grupos_de(d),
         Nodo::Repetir { nodo, .. } => grupos_de(nodo),
         Nodo::Secuencia(v) | Nodo::Alternativa(v) => v.iter().fold(None, |acc, x| unir(acc, grupos_de(x))),
         _ => None,

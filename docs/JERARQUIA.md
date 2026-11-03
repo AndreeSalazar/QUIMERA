@@ -21,7 +21,8 @@ QUIMERA se construye **de abajo arriba, por niveles**, igual que se construye Ch
 | 2 | `web` | ✅ `quimera-css` | Parser de CSS y selectores | Stylo (Servo) | sí |
 | 2 | `grafico` | ✅ `quimera-gpu` | GPU con **wgpu**: superficies, texturas, *pipelines* | WebRender, Servo | no (wgpu usa `std`) |
 | 2 | `grafico` | ✅ `quimera-texto` | Fuentes y *shaping* | skrifa, harfrust | sí |
-| 2 | `grafico` | ✅ `quimera-imagen` | PNG, JPEG y GIF → RGBA, sin dependencias | image-rs, stb_image, libjpeg | sí |
+| 1 | `grafico` | ✅ `quimera-vector` | SVG → RGBA: rutas, formas, `transform`, rellenos con antialias, sin dependencias | resvg, tiny-skia | sí |
+| 2 | `grafico` | ✅ `quimera-imagen` | PNG, JPEG, GIF y SVG (con `quimera-vector`) → RGBA, sin dependencias | image-rs, stb_image, libjpeg | sí |
 | 2 | `red` | ✅ `quimera-red` | HTTP/1.1, HTTP/2, TLS (rustls), caché | Chromium `net` | no |
 | 3 | `motor-js` | ✅ `quimera-objetos` | *Shapes*, elementos densos, propiedades | SpiderMonkey `NativeObject` | sí |
 | 3 | `motor-js` | ✅ `quimera-ic` → dentro de `quimera-vm` (`ic.rs`) | Cachés en línea con un mini-lenguaje común: guardas de forma por la cadena de prototipos + acción. Vive en la VM porque necesita los objetos (nivel 3) y no puede ser un crate del mismo nivel | SpiderMonkey CacheIR | sí |

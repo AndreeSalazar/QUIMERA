@@ -236,10 +236,30 @@ fn se_hereda(prop: &str) -> bool {
             | "white-space"
             | "text-transform"
             | "visibility"
+            | "fill"
             | "list-style-type"
             | "border-collapse"
             | "border-spacing"
     )
+}
+
+/// `fill`: `none`, `currentColor` o un color (los degradados `url(#id)` todavía no).
+fn relleno(v: &[Token]) -> Option<crate::valores::Relleno> {
+    use crate::valores::Relleno;
+    match ident(v).as_deref() {
+        Some("none") => Some(Relleno::Ninguno),
+        Some("currentcolor") => Some(Relleno::Actual),
+        _ => color(v).map(Relleno::Color),
+    }
+}
+
+/// `opacity`: un número o un porcentaje, entre 0 y 1.
+fn opacidad(v: &[Token]) -> Option<f32> {
+    match v {
+        [Token::Numero(n)] => Some((*n as f32).clamp(0.0, 1.0)),
+        [Token::Porcentaje(n)] => Some((*n as f32 / 100.0).clamp(0.0, 1.0)),
+        _ => None,
+    }
 }
 
 /// Copia una propiedad del padre (`inherit`).
@@ -269,6 +289,7 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
         "min-height" => e.alto_min = de.alto_min,
         "list-style-type" => e.lista = de.lista,
         "visibility" => e.visible = de.visible,
+        "fill" => e.relleno_svg = de.relleno_svg,
         "text-transform" => e.transformar = de.transformar,
         "float" => e.flotar = de.flotar,
         "clear" => e.limpiar = de.limpiar,
@@ -348,6 +369,8 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
         "min-height" => e.alto_min = medida(v, c).unwrap_or(e.alto_min),
         "list-style-type" => e.lista = n.as_deref().and_then(tipo_lista).unwrap_or(e.lista),
         "visibility" => e.visible = n.as_deref() != Some("hidden") && n.as_deref() != Some("collapse"),
+        "opacity" => e.opacidad = padre.opacidad * opacidad(v).unwrap_or(1.0),
+        "fill" => e.relleno_svg = relleno(v).unwrap_or(e.relleno_svg),
         "text-transform" => {
             e.transformar = match n.as_deref() {
                 Some("uppercase") => Some(true),
@@ -434,6 +457,8 @@ pub(crate) fn valida(prop: &str, v: &[Token]) -> bool {
         "max-width" => n == Some("none") || medida(v, &c).is_some(),
         "list-style-type" => n.and_then(tipo_lista).is_some(),
         "visibility" => matches!(n, Some("visible" | "hidden" | "collapse")),
+        "opacity" => opacidad(v).is_some(),
+        "fill" => relleno(v).is_some(),
         "text-transform" => matches!(n, Some("none" | "uppercase" | "lowercase" | "capitalize")),
         "float" => n.and_then(flotar).is_some(),
         "box-sizing" => matches!(n, Some("border-box" | "content-box")),

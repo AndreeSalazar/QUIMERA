@@ -282,16 +282,17 @@ impl<'a> Maquetador<'a> {
             }
             m => m.px(contenedor, 0.0) - e.extras_si_caja_borde(contenedor) + extras_horizontales(e) + ml + mr,
         };
-        let (p0, e0) = (self.piezas.len(), self.enlaces.len());
+        let (p0, e0, c0, k0) = (self.piezas.len(), self.enlaces.len(), self.capas.len(), self.cajas.len());
         let hecho = self.bloque_libre(id, 0.0, mt, exterior);
         let piezas = self.piezas.split_off(p0);
         let mut enlaces: Vec<EnlaceBruto> = self.enlaces.split_off(e0);
+        let (capas, cajas) = (self.capas.split_off(c0), self.cajas.split_off(k0));
         let alto = mt + hecho.alto + mb;
         // Un `<button>` se pulsa como un control (envía su formulario, o un script lo escucha).
         if self.doc.elemento(id).is_some_and(|el| el.nombre == "button") {
             enlaces.push((ml, mt, exterior - ml - mr, hecho.alto, CONTROL | id.0));
         }
         let base = hecho.primera_base.unwrap_or(alto);
-        Item::Caja { ancho: exterior, alto, base, piezas, enlaces, estilo: e }
+        Item::Caja { ancho: exterior, alto, base, piezas, enlaces, capas, cajas, estilo: e }
     }
 }

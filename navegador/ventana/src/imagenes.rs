@@ -138,6 +138,24 @@ impl Imagenes {
         v
     }
 
+    /// Las imágenes `data:` de la maquetación que aún no se tienen (los `<svg>` de la página
+    /// salen así): se leen ya, sin red; se decodifican luego como las demás, si están cerca.
+    pub fn en_linea(&mut self, cliente: &Cliente, base: &Url, m: &Maquetacion) {
+        for p in &m.piezas {
+            let Pieza::Imagen { src, .. } = p else { continue };
+            if !src.starts_with("data:") || self.pedidas.contains(src) {
+                continue;
+            }
+            match descargar(cliente, base, src) {
+                Ok(d) => self.llegada(src.clone(), d),
+                Err(e) => {
+                    eprintln!("imagen data: {e}");
+                    self.pedidas.insert(src.clone());
+                }
+            }
+        }
+    }
+
     /// Llegó una imagen (comprimida, con su tamaño).
     pub fn llegada(&mut self, src: String, (bytes, (ancho, alto)): Descargada) {
         self.siguiente += 1;

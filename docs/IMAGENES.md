@@ -14,7 +14,9 @@ cargo run --release -p quimera-banco-imagen
 | `gif.rs` | GIF: el primer fotograma, LZW, transparencia y entrelazado |
 | `jpeg.rs`, `jpeg_bloques.rs` | JPEG secuencial y **progresivo** (DC y AC, primera pasada y refinado, series de EOB), reinicios, 4:4:4 / 4:2:2 / 4:2:0, gris, CMYK/YCCK de Adobe; la IDCT entera de stb_image y el remuestreo «fancy» de libjpeg |
 
-WebP y SVG se reconocen y devuelven `NoSoportado`: la página se maqueta igual (con el tamaño de los atributos) y la imagen no se dibuja. Hay un límite de 100 megapíxeles por imagen.
+WebP se reconoce y devuelve `NoSoportado`: la página se maqueta igual (con el tamaño de los atributos) y la imagen no se dibuja.
+
+**SVG** (`quimera-vector`, propio y `no_std`): rutas `d` con todas sus órdenes (también arcos, con las banderas pegadas como `a2 2 0 100 4`), `rect` redondeado, `circle`, `ellipse`, `polygon`, `polyline`, grupos, `use`, `transform`, `viewBox` con `preserveAspectRatio`, y relleno (`fill`, `fill-opacity`, `opacity`, `fill-rule`, `currentColor`, colores CSS; un degradado se pinta con su primer color) con antialias de 5 sub-líneas por fila. Lo usan `<img src=".svg">` y los `<svg>` dentro del HTML: la maquetación los trata como elementos reemplazados y los manda como imagen `data:` con su código, el color del texto y el `fill` de las hojas, al doble de su tamaño para que se vean nítidos; la ventana los rasteriza como otra imagen cercana a la vista. Falta: trazos (`stroke`), texto, recortes, máscaras, filtros y degradados de verdad. Hay un límite de 100 megapíxeles por imagen.
 
 ## Comprobado
 
@@ -42,4 +44,4 @@ Las referencias usan varios hilos y `fdeflate`; acelerar PNG es trabajo pendient
 
 ## Pendiente
 
-`srcset` y `<picture>`, `background-image`, WebP, SVG, animación de GIF, `object-fit`, mipmaps (una foto grande dibujada pequeña se ve con dientes), y una caché para no volver a descargar al recargar.
+`srcset` y `<picture>`, `background-image`, WebP, trazos y degradados de SVG, animación de GIF, `object-fit`, mipmaps (una foto grande dibujada pequeña se ve con dientes), y una caché para no volver a descargar al recargar.

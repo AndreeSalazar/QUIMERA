@@ -49,6 +49,12 @@
   };
 
   definir(Object, {
+    getOwnPropertyDescriptors: function (o) {
+      var r = {}, claves = Object.getOwnPropertyNames(o);
+      if (Object.getOwnPropertySymbols) claves = claves.concat(Object.getOwnPropertySymbols(o));
+      claves.forEach(function (k) { r[k] = Object.getOwnPropertyDescriptor(o, k); });
+      return r;
+    },
     assign: function (destino) {
       if (destino == null) throw new TypeError('Object.assign necesita un objeto');
       for (var i = 1; i < arguments.length; i++) {
@@ -124,6 +130,20 @@
     },
     '\u0001lista': function () { return this['\u0001elementos'].slice(this['\u0001i']); }
   });
+  // %IteratorPrototype%: de él cuelgan todos los iteradores (de arreglos, cadenas, Map, Set y
+  // generadores), como en los navegadores. Los *polyfills* lo buscan subiendo desde
+  // `[][Symbol.iterator]()`: sin él llegaban a `Object.prototype` y le ponían `map`, `filter`...
+  var ProtoIterador = {};
+  ProtoIterador[Symbol.iterator] = function () { return this; };
+  function Iterator() {
+    if (!(this instanceof Iterator) || this.constructor === Iterator) throw new TypeError('Iterator es abstracto');
+  }
+  Iterator.prototype = ProtoIterador;
+  definir(ProtoIterador, { constructor: Iterator });
+  ProtoIterador[Symbol.toStringTag] = 'Iterator';
+  ocultar.push(ProtoIterador);
+  global.Iterator = Iterator;
+  Object.setPrototypeOf(Iterador.prototype, ProtoIterador);
   Iterador.prototype[Symbol.iterator] = function () { return this; };
   ocultar.push(Iterador.prototype);
 
@@ -902,6 +922,7 @@
 
   // Los generadores (su prototipo lo crea la máquina) son iterables: su iterador son ellos.
   var protoGenerador = global.__quimera_generador;
+  Object.setPrototypeOf(protoGenerador, ProtoIterador);
   protoGenerador[Symbol.iterator] = function () { return this; };
   ocultar.push(protoGenerador);
 

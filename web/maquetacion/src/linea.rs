@@ -10,10 +10,12 @@
 
 use crate::flotante::{Flotante, bajar, espacio};
 use crate::pintura::Pieza;
+use crate::posicion::Capa;
 use crate::texto::{Fuente, MedirTexto};
 use alloc::string::String;
 use alloc::vec::Vec;
 use quimera_estilo::{Alinear, Espacios, Estilo};
+use quimera_html::NodoId;
 
 /// Un elemento del contenido en línea.
 pub(crate) enum Item<'e> {
@@ -47,9 +49,15 @@ pub(crate) enum Item<'e> {
         base: f32,
         piezas: Vec<Pieza>,
         enlaces: Vec<EnlaceBruto>,
+        /// Las capas de lo posicionado de dentro y las cajas para las medidas: se mueven con ella.
+        capas: Vec<Capa>,
+        cajas: Vec<(NodoId, [f32; 4])>,
         estilo: &'e Estilo,
     },
 }
+
+/// Las capas y las cajas de las medidas, adonde van las de los `inline-block` al colocarlos.
+pub(crate) type Extra<'a> = (&'a mut Vec<Capa>, &'a mut Vec<(NodoId, [f32; 4])>);
 
 /// Una línea con dónde empieza la próxima, su espacio (izquierda, derecha) y su alto (sobre, bajo).
 type LineaPuesta = (Linea, usize, (f32, f32), (f32, f32));
@@ -215,6 +223,7 @@ impl EnLinea<'_> {
         items: &[Item<'_>],
         piezas: &mut Vec<Pieza>,
         enlaces: &mut Vec<EnlaceBruto>,
+        extra: Extra<'_>,
     ) -> (f32, Option<f32>) {
         let mut y = self.y;
         let mut primera = None;
@@ -238,7 +247,7 @@ impl EnLinea<'_> {
                 Alinear::Derecha => libre,
                 _ => 0.0,
             };
-            self.dibujar(items, &l.puestos, (izq + dx, base), piezas, enlaces);
+            self.dibujar(items, &l.puestos, (izq + dx, base), (piezas, enlaces), (&mut *extra.0, &mut *extra.1));
             y += sobre + bajo;
         }
         (y - self.y, primera)
@@ -292,19 +301,26 @@ impl EnLinea<'_> {
         items: &[Item<'_>],
         puestos: &[(usize, f32, f32)],
         (x0, base): (f32, f32),
-        piezas: &mut Vec<Pieza>,
-        enlaces: &mut Vec<EnlaceBruto>,
+        (piezas, enlaces): (&mut Vec<Pieza>, &mut Vec<EnlaceBruto>),
+        (capas, cajas): Extra<'_>,
     ) {
         let mut k = 0;
         while k < puestos.len() {
             let (i, x, _) = puestos[k];
-            if let Item::Caja { base: b, piezas: suyas, enlaces: suyos, .. } = &items[i] {
+            if let Item::Caja { base: b, piezas: suyas, enlaces: suyos, capas: sus_capas, cajas: sus_cajas, .. } =
+                &items[i]
+            {
                 // La caja ya está maquetada en (0, 0): se mueve a su sitio en la línea.
                 let (dx, dy) = (x0 + x, base - b);
                 piezas.extend(suyas.iter().cloned().map(|mut p| {
                     p.mover(dx, dy);
                     p
                 }));
+                capas.extend(sus_capas.iter().cloned().map(|mut c| {
+                    c.piezas.iter_mut().for_each(|p| p.mover(dx, dy));
+                    c
+                }));
+                cajas.extend(sus_cajas.iter().map(|&(id, c)| (id, [c[0] + dx, c[1] + dy, c[2], c[3]])));
                 enlaces.extend(suyos.iter().map(|&(ex, ey, w, h, n)| (ex + dx, ey + dy, w, h, n)));
                 k += 1;
                 continue;

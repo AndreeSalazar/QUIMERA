@@ -142,6 +142,9 @@ pub struct Motor {
     /// Azar del sistema que da el anfitrión (para `crypto.getRandomValues`).
     entropia: Option<fn(&mut [u8])>,
     tiempo_falso: f64,
+    /// Para depurar: si existe, cada excepción lanzada (también las que captura un `try`) deja
+    /// aquí su mensaje y su traza (ver [`Motor::anotar_lanzados`]).
+    lanzados: Option<Vec<String>>,
     /// Cuántas claves de cada raíz fija son de la biblioteca (no enumerables en `for-in`).
     ocultas: [usize; N_FIJAS],
     /// Lo mismo para los prototipos del preludio en JavaScript, por su forma.
@@ -199,6 +202,7 @@ impl Motor {
             reloj: None,
             entropia: None,
             tiempo_falso: 0.0,
+            lanzados: None,
             ocultas: [0; N_FIJAS],
             formas_ocultas: alloc::collections::BTreeMap::new(),
             regexes: Vec::new(),
@@ -231,6 +235,17 @@ impl Motor {
 
     fn fija(&self, i: usize) -> Valor {
         self.mundo.m.pila()[i]
+    }
+
+    /// Para depurar: desde ahora anota cada excepción lanzada, aunque la capture un `try`
+    /// (las páginas que se tragan sus errores). [`Motor::lanzados`] las entrega.
+    pub fn anotar_lanzados(&mut self) {
+        self.lanzados.get_or_insert_with(Vec::new);
+    }
+
+    /// Las excepciones anotadas desde la última vez (vacío si no se anotan).
+    pub fn lanzados(&mut self) -> Vec<String> {
+        self.lanzados.as_mut().map(core::mem::take).unwrap_or_default()
     }
 
     /// Da al motor un reloj (milisegundos) para `Date`. `no_std`: el reloj lo pone quien lo usa.

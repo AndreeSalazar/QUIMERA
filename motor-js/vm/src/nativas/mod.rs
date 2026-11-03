@@ -247,6 +247,7 @@ pub(crate) fn preludio(m: &mut Motor) {
     // `binarios.js` va aparte (el preludio pasaría de 1000 líneas); usa su lista de ocultos.
     let r = m
         .ejecutar(include_str!("preludio.js"))
+        .and_then(|_| m.ejecutar(include_str!("iteradores.js")))
         .and_then(|_| m.ejecutar(include_str!("binarios.js")))
         .and_then(|_| m.ejecutar(include_str!("intl.js")));
     m.fijar_origen("");

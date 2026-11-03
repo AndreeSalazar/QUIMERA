@@ -1,4 +1,9 @@
-//! Elementos reemplazados (`<img>`): su tamaño como lo calcula CSS (2.1, §10.3.2 y §10.6.2).
+//! Elementos reemplazados (`<img>` y `<svg>` dentro del HTML): su tamaño como lo calcula CSS
+//! (2.1, §10.3.2 y §10.6.2).
+//!
+//! Un `<svg>` sale como una imagen `data:` con su propio código, el color del texto (para
+//! `currentColor`) y el doble de su tamaño en píxeles (para que se vea nítido): la ventana la
+//! rasteriza con `quimera-vector` como a cualquier otra imagen cercana a la vista.
 //!
 //! - Con ancho y alto (de CSS o de los atributos, que el estilo ya convirtió en pistas), esos.
 //! - Con uno solo, el otro guarda la proporción de la imagen.
@@ -11,20 +16,31 @@
 use crate::bloque::{Hecho, Maquetador};
 use crate::pintura::Pieza;
 use alloc::string::String;
-use quimera_estilo::{Estilo, Medida};
+use quimera_estilo::{Estilo, Medida, Relleno};
 use quimera_html::NodoId;
 
-/// Si el nodo es una imagen.
+/// Si el nodo es una imagen (`<img>` o `<svg>`).
 pub(crate) fn es_imagen(m: &Maquetador<'_>, id: NodoId) -> bool {
-    m.doc.elemento(id).is_some_and(|e| e.nombre == "img")
+    m.doc.elemento(id).is_some_and(|e| e.nombre == "img" || e.nombre == "svg")
 }
+
+/// Cuántas veces su tamaño se rasteriza un `<svg>`.
+const NITIDEZ: f32 = 2.0;
 
 impl Maquetador<'_> {
     /// (ancho, alto) de la caja de contenido de una imagen en un contenedor de `contenedor` píxeles.
     pub(crate) fn tam_imagen(&self, id: NodoId, e: &Estilo, contenedor: f32) -> (f32, f32) {
         let el = self.doc.elemento(id);
-        let propio =
-            el.and_then(|el| el.atributo("src")).and_then(|s| (self.imagenes)(s)).map(|(w, h)| (w as f32, h as f32));
+        let propio = match el {
+            Some(el) if el.nombre == "svg" => {
+                // El analizador guarda `viewBox` como en SVG (o en minúsculas, si venía así).
+                let caja = el.atributo("viewBox").or_else(|| el.atributo("viewbox"));
+                Some(quimera_vector::tam_de_atributos(el.atributo("width"), el.atributo("height"), caja))
+            }
+            _ => {
+                el.and_then(|el| el.atributo("src")).and_then(|s| (self.imagenes)(s)).map(|(w, h)| (w as f32, h as f32))
+            }
+        };
         let atributo = |n: &str| {
             el.and_then(|el| el.atributo(n)).and_then(|v| v.trim().trim_end_matches("px").parse::<f32>().ok())
         };
@@ -62,6 +78,38 @@ impl Maquetador<'_> {
         (w.max(0.0), h.max(0.0))
     }
 
+    /// Lo que identifica la imagen: el `src` de un `<img>`, o el `data:` de un `<svg>` de `ancho` × `alto`.
+    pub(crate) fn src_imagen(&self, id: NodoId, e: &Estilo, (ancho, alto): (f32, f32)) -> String {
+        let Some(el) = self.doc.elemento(id) else { return String::new() };
+        if el.nombre != "svg" {
+            return String::from(el.atributo("src").unwrap_or(""));
+        }
+        let mut codigo = String::new();
+        self.doc.escribir_html(id, &mut codigo);
+        let c = e.color;
+        // `fill` de las hojas de la página (como `fill: currentColor` en los iconos de YouTube).
+        let relleno = match e.relleno_svg {
+            Relleno::Negro => String::new(),
+            Relleno::Actual => String::from(" fill=\"currentColor\""),
+            Relleno::Ninguno => String::from(" fill=\"none\""),
+            Relleno::Color(f) => {
+                alloc::format!(" fill=\"rgba({}, {}, {}, {})\"", f.r, f.g, f.b, f32::from(f.a) / 255.0)
+            }
+        };
+        // Los atributos que se añaden van primero: ganan a los que ya tenía (como el CSS a los
+        // atributos de presentación).
+        let propios = alloc::format!(
+            "<svg color=\"rgb({}, {}, {})\"{relleno} width=\"{}\" height=\"{}\"",
+            c.r,
+            c.g,
+            c.b,
+            (ancho * NITIDEZ) as u32,
+            (alto * NITIDEZ) as u32
+        );
+        let codigo = codigo.replacen("<svg", &propios, 1).replace('%', "%25").replace('#', "%23").replace('?', "%3F");
+        alloc::format!("data:image/svg+xml;utf8,{codigo}")
+    }
+
     /// Una imagen como bloque (`display: block`, o un elemento flexible): su caja con borde
     /// empieza en (x, y); `margin: auto` la centra.
     pub(crate) fn bloque_imagen(&mut self, id: NodoId, e: &Estilo, (x, y): (f32, f32), contenedor: f32) -> Hecho {
@@ -91,7 +139,7 @@ impl Maquetador<'_> {
         };
         let (cx, cy) =
             (x + izquierda + px(e.relleno[3]) + e.borde[3].ocupa(), y + px(e.relleno[0]) + e.borde[0].ocupa());
-        let src = String::from(self.doc.elemento(id).and_then(|el| el.atributo("src")).unwrap_or(""));
+        let src = self.src_imagen(id, e, (w, h));
         if e.visible && w > 0.0 && h > 0.0 {
             self.piezas.push(Pieza::Imagen { x: cx, y: cy, ancho: w, alto: h, src });
         }

@@ -235,6 +235,15 @@ Abrir YouTube (10 MB de JavaScript, Polymer y Web Components) sacó fallos que a
 - **`new` sobre una función atada con `bind`** construye la original con los argumentos atados e ignora el `this` atado (`__quimera_construyendo()` dice si el marco actual se llamó con `new`). Los inyectores de dependencias hacen `new (Function.prototype.bind.apply(Clase, [null].concat(args)))`.
 - **El nombre de lo que no es una función**: `f()` con `f` sin definir dice `f no es una función`, también para variables locales (el compilador apunta qué nombre se llama en cada llamada). Con esto se encontró que faltaba `Math.cos`.
 
+## Lo que destapó GitHub
+
+- **`Object.getOwnPropertySymbols`** y **`Object.getOwnPropertyDescriptors`**. (Los descriptores dicen `writable: true` siempre: la VM aún no guarda propiedades de solo lectura.)
+- **`%IteratorPrototype%`** y el global `Iterator`: todos los iteradores (de arreglos, cadenas, `Map`, `Set` y generadores) cuelgan de él, como en los navegadores, con sus métodos (`map`, `filter`, `take`, `drop`, `flatMap`, `toArray`, `forEach`, `some`, `every`, `find`, `reduce`, `Iterator.from`; `iteradores.js`). Sin él, un *polyfill* subía hasta `Object.prototype` y le ponía `map`, que luego veían todos los `for-in`.
+- **`String(objeto)`** usa primero su `toString` (la pista «string» de `ToPrimitive`); antes probaba `valueOf` primero. `Motor::a_texto_js` lo da a quien escribe texto en el DOM.
+- **`BigInt` mínimo**: crea valores con su texto exacto (Zod crea `BigInt("-9223372036854775808")` al cargar), pero `valueOf` da un `Number` aproximado y `typeof` dice `"object"`. El tipo `bigint` de verdad sigue pendiente.
+- **`Intl.Segmenter`**: letras (con las marcas combinantes, los tonos de piel y lo unido con ZWJ), palabras con `isWordLike` y frases. Sin diccionarios para chino, japonés o tailandés.
+- **`QUIMERA_LANZADOS=1`** (herramienta): la ventana imprime cada excepción lanzada, también las que la página captura y se calla (`Motor::anotar_lanzados`).
+
 ## Datos binarios y azar
 
 `binarios.js` (tras el preludio): `ArrayBuffer`, los nueve arreglos tipados, `DataView` (con `Float32`/`Float64` codificados a mano según IEEE 754), `TextEncoder`/`TextDecoder` (UTF-8, con U+FFFD para lo inválido) y un `Math.fround` exacto. Es una aproximación: un arreglo tipado es un arreglo de la VM con otro prototipo (rápido, pero `u8[0] = 300` no recorta; `set`, `fill` y el constructor sí), y solo un `Uint8Array` sobre un buffer entero comparte sus bytes. Igual que Chromium en las pruebas.

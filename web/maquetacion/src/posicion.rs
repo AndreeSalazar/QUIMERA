@@ -33,6 +33,7 @@ pub(crate) struct Pendiente {
 }
 
 /// Las piezas de un elemento posicionado, con su sitio en el orden de dibujo.
+#[derive(Clone)]
 pub(crate) struct Capa {
     pub ruta: Ruta,
     pub piezas: Vec<Pieza>,

@@ -176,6 +176,7 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
         cargar_fuentes(&cliente, &pagina, &mut pintor);
         m = maquetar_pagina(&pagina, &pintor, (w, h), &mut imagenes, &cliente);
     }
+    imagenes.en_linea(&cliente, &pagina.base, &m);
     gpu.cargar(&pintor.escena(&m, 1.0, &|s| imagenes.id(s)));
     // Solo se decodifican las imágenes que salen en la captura.
     for (id, bytes) in imagenes.por_decodificar(&imagenes::entre(&m, 0.0, h)) {

@@ -71,12 +71,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
     match id {
         JOIN | ARR_INDEX_OF => return arreglo(m, id, ll),
         STRING => {
-            let t = if ll.n == 0 {
-                String::new()
-            } else {
-                let v = m.a_primitivo(arg(m, ll, 0))?;
-                m.texto(v)
-            };
+            let t = if ll.n == 0 { String::new() } else { m.a_texto_js(arg(m, ll, 0))? };
             let largo = t.encode_utf16().count();
             let v = m.mundo.cadena(&t);
             if ll.construir {

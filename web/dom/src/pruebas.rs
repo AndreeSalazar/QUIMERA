@@ -522,3 +522,52 @@ fn medidas_y_observadores() {
         ["800 300 40 20 10 310 60 600", "tamaño a 300 40", "cruce b false 0", "tamaño a 500 40", "cruce b true 0.2"]
     );
 }
+
+/// `data` en un elemento es una propiedad suelta, y lo que se escribe como texto usa el
+/// `toString` del objeto (`SafeHtml`, `TrustedScriptURL`...). Como Chromium.
+#[test]
+fn objetos_escritos_como_texto() {
+    let mut d = dom(r#"<a id="a">x</a><div id="b"></div>"#);
+    let r = correr(
+        &mut d,
+        r#"var a = document.getElementById('a'), b = document.getElementById('b');
+          a.data = { orden: 1 };
+          var html = { toString: function () { return '<i>h</i>'; }, valueOf: function () { return 7; } };
+          b.innerHTML = html; a.setAttribute('title', html); a.href = { toString: function () { return '/z'; } };
+          console.log(a.textContent, a.data.orden, b.firstChild.nodeName, a.getAttribute('title'), a.getAttribute('href'), String(html), '' + html);"#,
+    );
+    assert_eq!(r, ["x 1 I <i>h</i> /z <i>h</i> 7"]);
+}
+
+/// `element.animate()`: al acabar avisa (la promesa antes que el evento, como Chromium) y, con
+/// `fill: forwards`, deja el último fotograma. Chromium lo guarda en una capa de efectos y
+/// `style.opacity` sigue siendo "0"; QUIMERA lo escribe en el estilo (se ve igual): da "1".
+#[test]
+fn animaciones_que_terminan() {
+    let mut d = dom(r#"<div id="a" style="opacity: 0"></div><div id="b"></div>"#);
+    let mut r = correr(
+        &mut d,
+        r#"var a = document.getElementById('a'), b = document.getElementById('b');
+          var an = a.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 100, fill: 'forwards' });
+          an.onfinish = function () { console.log('fin', an.playState, a.style.opacity); };
+          an.finished.then(function () { console.log('promesa'); });
+          var bn = b.animate({ transform: ['scale(0)', 'scale(1)'] }, 50);
+          bn.finished.then(function () { console.log('b', JSON.stringify(b.style.transform)); });
+          console.log(an.playState, a.getAnimations().length);"#,
+    );
+    d.correr_temporizadores(200.0);
+    d.correr_temporizadores(210.0);
+    r.extend(d.consola());
+    assert_eq!(r, ["running 1", "b \"\"", "promesa", "fin finished 1"]);
+}
+
+/// `document.getElementsByName` y `CSS.escape`, como Chromium.
+#[test]
+fn nombres_y_css_escape() {
+    let mut d = dom(r#"<input name="q" id="a"><input name="x"><p name="q">p</p>"#);
+    let r = correr(
+        &mut d,
+        r#"console.log(document.getElementsByName('q').length, CSS.escape('1a.b#c'), CSS.escape('-'), CSS.escape('a b'), CSS.supports('display', 'grid'));"#,
+    );
+    assert_eq!(r, ["2 \\31 a\\.b\\#c \\- a\\ b true"]);
+}

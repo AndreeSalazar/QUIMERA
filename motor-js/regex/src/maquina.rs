@@ -27,6 +27,8 @@ pub struct Memoria {
     pila: Vec<Marca>,
     pub(crate) ranuras: Vec<usize>,
     registros: Vec<usize>,
+    /// Desde dónde mira cada `(?<=...)` abierto (donde tiene que acabar).
+    atras: Vec<usize>,
 }
 
 impl Memoria {
@@ -105,6 +107,24 @@ fn anterior(t: &[u8], pos: usize) -> Option<char> {
     siguiente(t, i).map(|(c, _)| c)
 }
 
+/// `(?<=...)`: el subprograma desde cada posición anterior (en límites de carácter, de la más
+/// cercana a la más lejana), hasta que uno acaba justo en `pos`.
+fn mirar_atras(p: &Programa, t: &[u8], pc: usize, pos: usize, m: &mut Memoria, base: usize) -> bool {
+    m.atras.push(pos);
+    let mut desde = pos;
+    let encaja = loop {
+        if t.get(desde).is_none_or(|b| b & 0xc0 != 0x80) && correr(p, t, pc, desde, m, base) {
+            break true;
+        }
+        if desde == 0 {
+            break false;
+        }
+        desde -= 1;
+    };
+    m.atras.pop();
+    encaja
+}
+
 /// Busca desde `inicio` un encaje que empiece justo ahí.
 pub(crate) fn encajar(p: &Programa, t: &[u8], inicio: usize, m: &mut Memoria) -> bool {
     m.pila.clear();
@@ -145,9 +165,10 @@ fn correr(p: &Programa, t: &[u8], mut pc: usize, mut pos: usize, m: &mut Memoria
                 true
             }
             Op::ExigirAvance(r) => m.registros[r as usize] != pos,
-            Op::Mirar { positiva, fin } => {
+            Op::FinAtras => m.atras.last() == Some(&pos),
+            Op::Mirar { positiva, fin, atras } => {
                 let b = m.pila.len();
-                let encaja = correr(p, t, pc + 1, pos, m, b);
+                let encaja = if atras { mirar_atras(p, t, pc + 1, pos, m, b) } else { correr(p, t, pc + 1, pos, m, b) };
                 if encaja && positiva {
                     m.olvidar_alternativas(b);
                 } else if encaja {

@@ -163,6 +163,29 @@ pub(crate) const COMPLEMENTOS_JS: &str = r#"(function (w, d, P) {
   w.NodeIterator = NodeIterator;
   P.p_documento.createNodeIterator = function (raiz, mostrar, filtro) { return new NodeIterator(raiz, mostrar, filtro); };
 
+  // ---------------- getElementsByName, CSS ----------------
+  P.p_documento.getElementsByName = function (n) {
+    return Array.prototype.filter.call(this.querySelectorAll('[name]'), function (e) { return e.getAttribute('name') === String(n); });
+  };
+  // `CSS.escape` (CSSOM, §2.1) y `CSS.supports`: dice que sí a lo que parece una declaración o una
+  // condición bien formada (QUIMERA no sabe todavía qué propiedades entiende cada una).
+  w.CSS = {
+    escape: function (v) {
+      var s = String(v), r = '';
+      for (var i = 0; i < s.length; i++) {
+        var c = s.charCodeAt(i), ch = s.charAt(i);
+        if (c === 0) r += '�';
+        else if ((c >= 1 && c <= 0x1f) || c === 0x7f || (/[0-9]/.test(ch) && (i === 0 || (i === 1 && s.charAt(0) === '-')))) r += '\\' + c.toString(16) + ' ';
+        else if (i === 0 && ch === '-' && s.length === 1) r += '\\-';
+        else if (c >= 0x80 || /[-_a-zA-Z0-9]/.test(ch)) r += ch;
+        else r += '\\' + ch;
+      }
+      return r;
+    },
+    supports: function (p, v) { return arguments.length > 1 ? /^[-a-z]+$/i.test(String(p)) && String(v) !== '' : /\(.+:.+\)|^selector\(/.test(String(p)); },
+    registerProperty: function () {}
+  };
+
   // ---------------- Image ----------------
   w.Image = function Image(ancho, alto) {
     var img = d.createElement('img');

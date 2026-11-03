@@ -290,4 +290,43 @@
   global.DataView = DataView;
   global.TextEncoder = TextEncoder;
   global.TextDecoder = TextDecoder;
+
+  // ---------------- BigInt (mínimo) ----------------
+  // QUIMERA aún no tiene el tipo `bigint`. Esto deja crear valores (Zod, en GitHub, crea
+  // `BigInt("-9223372036854775808")` al cargar): guardan su texto exacto, que da `toString()`, y
+  // `valueOf()` da un Number aproximado, así que operar con ellos es aproximado. `typeof` da
+  // "object", no "bigint".
+  function BigInt(v) {
+    if (this instanceof BigInt) throw new TypeError('BigInt no es un constructor');
+    var t;
+    if (typeof v === 'number') {
+      if (!isFinite(v) || Math.floor(v) !== v) throw new RangeError(v + ' no se puede convertir a BigInt porque no es un entero');
+      t = Math.abs(v) < 1e21 ? v.toFixed(0) : String(v);
+    } else if (typeof v === 'boolean') {
+      t = v ? '1' : '0';
+    } else if (v instanceof BigInt) {
+      return v;
+    } else {
+      t = String(v).trim();
+      if (/^0x[0-9a-f]+$/i.test(t)) t = String(parseInt(t, 16));
+      if (t === '') t = '0';
+      if (!/^[+-]?\d+$/.test(t)) throw new SyntaxError('No se puede convertir ' + t + ' a BigInt');
+    }
+    var negativo = t[0] === '-';
+    t = t.replace(/^[+-]/, '').replace(/^0+(?=\d)/, '');
+    var b = Object.create(BigInt.prototype);
+    b['\u0001t'] = (negativo && t !== '0' ? '-' : '') + t;
+    return b;
+  }
+  BigInt.prototype.toString = function (base) {
+    return base === undefined || base === 10 ? this['\u0001t'] : Number(this['\u0001t']).toString(base);
+  };
+  BigInt.prototype.toLocaleString = function () { return Number(this['\u0001t']).toLocaleString(); };
+  BigInt.prototype.valueOf = function () { return Number(this['\u0001t']); };
+  BigInt.prototype.toJSON = undefined;
+  BigInt.prototype[Symbol.toStringTag] = 'BigInt';
+  BigInt.asIntN = function (bits, x) { return x; };
+  BigInt.asUintN = function (bits, x) { return x; };
+  __quimera_no_enumerar(BigInt.prototype);
+  global.BigInt = BigInt;
 })(this);
