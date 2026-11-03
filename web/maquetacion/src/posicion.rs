@@ -103,14 +103,24 @@ impl Maquetador<'_> {
 
     /// Coloca los `absolute` anotados desde `desde` dentro de `caja` (x, y, ancho, alto). Los
     /// `fixed` siguen esperando a la ventana, salvo que esta sea la ventana.
+    /// Con la ventana, los `fixed` que salen al colocar otros (uno dentro de un `absolute`) se
+    /// colocan también, hasta que no queda ninguno.
     pub(crate) fn poner_absolutos(&mut self, desde: usize, caja: (f32, f32, f32, f32), ventana: bool) {
-        let todos: Vec<Pendiente> = self.absolutos.drain(desde..).collect();
-        let es_fijo = |p: &Pendiente| self.estilos.de(p.id).is_some_and(|e| e.colocacion.posicion == Posicion::Fija);
-        let (fijos, propios): (Vec<Pendiente>, Vec<Pendiente>) =
-            todos.into_iter().partition(|p| !ventana && es_fijo(p));
-        self.absolutos.extend(fijos);
-        for p in propios {
-            self.absoluto(p, caja);
+        loop {
+            let todos: Vec<Pendiente> = self.absolutos.drain(desde..).collect();
+            let es_fijo =
+                |p: &Pendiente| self.estilos.de(p.id).is_some_and(|e| e.colocacion.posicion == Posicion::Fija);
+            let (fijos, propios): (Vec<Pendiente>, Vec<Pendiente>) =
+                todos.into_iter().partition(|p| !ventana && es_fijo(p));
+            let esperan = self.absolutos.len();
+            self.absolutos.extend(fijos);
+            for p in propios {
+                self.absoluto(p, caja);
+            }
+            // Sin ventana, los `fixed` esperan arriba; con ella, se repite si salieron más.
+            if !ventana || self.absolutos.len() <= esperan {
+                break;
+            }
         }
     }
 

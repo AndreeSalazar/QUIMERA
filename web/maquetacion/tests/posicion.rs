@@ -121,3 +121,18 @@ fn un_flotante_dentro_de_un_relative_queda_encima_de_su_fondo() {
         |r: u8| m.piezas.iter().position(|p| matches!(p, Pieza::Rect { color, .. } if *color == Color::rgb(r, r, r)));
     assert!(pos(1) < pos(2), "el fondo del contenedor, debajo del flotante: {:?} {:?}", pos(1), pos(2));
 }
+
+#[test]
+fn un_fixed_dentro_de_un_absolute_se_coloca_en_la_ventana() {
+    // Como la cabecera de YouTube: `ytd-app` es `absolute` y su cabecera, `fixed`.
+    let doc = quimera_html::analizar(
+        "<div style='position:absolute;top:50px;left:30px;width:100px'>         <div style='position:fixed;top:10px;left:200px;width:40px;height:30px;background:rgb(3,3,3)'></div></div>",
+    );
+    let estilos = calcular(&doc, &Opciones { ancho: 800.0, alto: 600.0 });
+    let m = maquetar(&doc, &estilos, &Aproximado, 800.0, 600.0);
+    let caja = m.piezas.iter().find_map(|p| match p {
+        Pieza::Rect { x, y, ancho, alto, color } if *color == Color::rgb(3, 3, 3) => Some((*x, *y, *ancho, *alto)),
+        _ => None,
+    });
+    assert_eq!(caja, Some((200.0, 10.0, 40.0, 30.0)));
+}

@@ -167,9 +167,6 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
     let (w, h) = (ancho as f32, alto as f32 - barra::ALTO);
     let mut imagenes = cargar_imagenes(&cliente, &pagina);
     cargar_fuentes(&cliente, &pagina, &mut pintor);
-    if let Ok(clase) = std::env::var("QUIMERA_DEPURAR") {
-        depurar(&pagina, &clase, (w, h));
-    }
     let mut m = maquetar_pagina(&pagina, &pintor, (w, h), &mut imagenes, &cliente);
     if let Some(a) = &antes {
         let (destino, cuerpo) = destino_previo(&pagina, &m, a)?;
@@ -216,17 +213,19 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
     Ok(())
 }
 
-/// `QUIMERA_DEPURAR=clase`: el estilo calculado del primer elemento con esa clase y de sus
-/// antepasados (para entender por qué algo no se ve como en otro navegador).
-fn depurar(pagina: &Pagina, clase: &str, (ancho, alto): (f32, f32)) {
-    let doc = pagina.documento();
-    let externa = |href: &str| pagina.hoja(href);
-    let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
+/// `QUIMERA_DEPURAR=nombre`: el estilo calculado del primer elemento con esa clase, id o etiqueta
+/// (tras el JavaScript) y de sus antepasados, para entender por qué algo no se ve como en otro
+/// navegador.
+fn depurar(doc: &quimera_html::Documento, estilos: &quimera_estilo::Estilos, que: &str) {
     let tiene = |id| {
-        doc.elemento(id).and_then(|e| e.atributo("class")).is_some_and(|c| c.split_whitespace().any(|x| x == clase))
+        doc.elemento(id).is_some_and(|e| {
+            e.nombre == que
+                || e.atributo("id") == Some(que)
+                || e.atributo("class").is_some_and(|c| c.split_whitespace().any(|x| x == que))
+        })
     };
     let Some(id) = doc.descendientes(quimera_html::Documento::RAIZ).find(|&id| tiene(id)) else {
-        return eprintln!("ningún elemento con la clase {clase}");
+        return eprintln!("ningún elemento es {que}");
     };
     let mut actual = Some(id);
     while let Some(n) = actual {
@@ -306,13 +305,23 @@ fn maquetar_pagina(
 ) -> quimera_maquetacion::Maquetacion {
     // Con su JavaScript: los scripts, los temporizadores del primer segundo y lo que pidan a la red.
     let mut guion = guiones::Guion::preparar(pagina);
-    guion.adelantar(1000.0, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p));
+    // `QUIMERA_ESPERA=ms`: cuánto tiempo de la página se adelanta (1 s si no se dice).
+    let espera = std::env::var("QUIMERA_ESPERA").ok().and_then(|e| e.parse().ok()).unwrap_or(1000.0);
+    guion.adelantar(espera, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p));
+    // `QUIMERA_GUION=archivo.js`: un guion propio tras la carga, para mirar la página por dentro.
+    if let Some(codigo) = std::env::var("QUIMERA_GUION").ok().and_then(|f| std::fs::read_to_string(f).ok()) {
+        guion.dom.ejecutar(&codigo);
+        guion.informar();
+    }
     let doc = guion.dom.documento();
     // Las imágenes que añadieron los scripts.
     let nuevas = imagenes.nuevas(&doc);
     esperar_imagenes(cliente, &pagina.base, nuevas, imagenes);
     let externa = |href: &str| pagina.hoja(href);
     let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
+    if let Ok(que) = std::env::var("QUIMERA_DEPURAR") {
+        depurar(&doc, &estilos, &que);
+    }
     maquetar_con_imagenes(&doc, &estilos, &pintor.medidor(), (ancho, alto), &|s| imagenes.tam(s))
 }
 
