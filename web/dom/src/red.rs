@@ -24,8 +24,8 @@ pub struct PeticionJs {
     pub url: String,
     /// `GET`, `POST`...
     pub metodo: String,
-    /// El cuerpo, si lo hay.
-    pub cuerpo: Option<String>,
+    /// El cuerpo, si lo hay (bytes: puede ser binario, como el JSON comprimido de YouTube).
+    pub cuerpo: Option<Vec<u8>>,
     /// Cabeceras que pide la página.
     pub cabeceras: Vec<(String, String)>,
     /// `same-origin` (lo normal), `include` u `omit`: cuándo van las cookies.
@@ -286,14 +286,57 @@ pub(crate) const RED_JS: &str = r"(function (w) {
   };
   w.Headers = Headers;
   w.Response = Response;
+  // `new Request(url | request, opciones)`: lo que se pedirá (YouTube lo construye antes de `fetch`).
+  function Request(recurso, op) {
+    op = op || {};
+    var base = recurso instanceof Request ? recurso : null;
+    this.url = base ? base.url : new URL(String(recurso), w.location.href).href;
+    this.method = String(op.method || (base && base.method) || 'GET').toUpperCase();
+    this.headers = new Headers(op.headers || (base && base.headers));
+    this.credentials = op.credentials || (base && base.credentials) || 'same-origin';
+    this.mode = op.mode || (base && base.mode) || 'cors';
+    this.cache = op.cache || (base && base.cache) || 'default';
+    this.redirect = op.redirect || (base && base.redirect) || 'follow';
+    this.referrer = op.referrer !== undefined ? op.referrer : 'about:client';
+    this.referrerPolicy = op.referrerPolicy || '';
+    this.integrity = op.integrity || '';
+    this.keepalive = !!op.keepalive;
+    this.signal = op.signal || (base && base.signal) || null;
+    this.destination = '';
+    this.bodyUsed = false;
+    this['\u0001cuerpo'] = op.body !== undefined ? op.body : base ? base['\u0001cuerpo'] : null;
+  }
+  Request.prototype.clone = function () { return new Request(this); };
+  Request.prototype.text = function () { var c = this['\u0001cuerpo']; return Promise.resolve(c == null ? '' : String(c)); };
+  Request.prototype.json = function () { return this.text().then(JSON.parse); };
+  w.Request = Request;
+  // El cuerpo como lo manda `__quimera_pedir`: texto, o un arreglo de bytes si es binario
+  // (`ArrayBuffer` o una vista tipada); `URLSearchParams` y lo demás, con su `toString`.
+  function cuerpoDe(c) {
+    if (c === undefined || c === null) return null;
+    if (typeof c === 'string') return c;
+    if (c instanceof ArrayBuffer) c = new Uint8Array(c);
+    else if (ArrayBuffer.isView(c) && !(c instanceof Uint8Array)) c = new Uint8Array(c.buffer, c.byteOffset, c.byteLength);
+    if (c instanceof Uint8Array) {
+      var bytes = new Array(c.length);
+      for (var i = 0; i < c.length; i++) bytes[i] = c[i] & 255;
+      return bytes;
+    }
+    return String(c);
+  }
   w.fetch = function (recurso, op) {
     op = op || {};
-    var url = typeof recurso === 'string' ? recurso : (recurso && recurso.url) || String(recurso);
-    var cab = new Headers(op.headers)['\u0001c'];
-    var cuerpo = op.body === undefined || op.body === null ? null : String(op.body);
-    var metodo = String(op.method || 'GET').toUpperCase();
+    var pedido = recurso instanceof Request ? new Request(recurso, op) : null;
+    var url = pedido ? pedido.url : typeof recurso === 'string' ? recurso : (recurso && recurso.url) || String(recurso);
+    var cab = pedido ? pedido.headers['\u0001c'] : new Headers(op.headers)['\u0001c'];
+    var crudo = pedido ? pedido['\u0001cuerpo'] : op.body;
+    var cuerpo = cuerpoDe(crudo);
+    var metodo = pedido ? pedido.method : String(op.method || 'GET').toUpperCase();
+    var credenciales = pedido ? pedido.credentials : String(op.credentials || 'same-origin');
+    var senal = pedido ? pedido.signal : op.signal;
+    if (senal && senal.aborted) return Promise.reject(new DOMException('La petición se abortó', 'AbortError'));
     return new Promise(function (res, rej) {
-      var id = __quimera_pedir(url, metodo, cuerpo, cab, String(op.credentials || 'same-origin'));
+      var id = __quimera_pedir(url, metodo, cuerpo, cab, String(credenciales));
       pendientes[id] = { res: res, rej: rej };
     });
   };

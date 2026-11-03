@@ -57,6 +57,10 @@ const PEDIR: u32 = 75;
 const DISPATCH: u32 = 16;
 /// `__quimera_color(texto)`: un color de CSS normalizado como lo da un canvas, o `null`.
 const COLOR: u32 = 17;
+/// `__quimera_observar_mutaciones(nodo, subtree)`: lo usa `MutationObserver.observe`.
+const OBSERVAR_MUTACIONES: u32 = 18;
+/// `__quimera_tomar_mutaciones()`: los cambios pendientes para los `MutationObserver`.
+const TOMAR_MUTACIONES: u32 = 19;
 
 /// Qué métodos lleva cada prototipo (`window`: el objeto global).
 pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
@@ -124,6 +128,8 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
             ("alert", ALERT),
             ("__quimera_pedir", PEDIR),
             ("__quimera_color", COLOR),
+            ("__quimera_observar_mutaciones", OBSERVAR_MUTACIONES),
+            ("__quimera_tomar_mutaciones", TOMAR_MUTACIONES),
             ("addEventListener", ADD_LISTENER),
             ("removeEventListener", REMOVE_LISTENER),
             ("dispatchEvent", DISPATCH),
@@ -143,10 +149,15 @@ fn texto_arg(m: &Motor, a: &Argumentos, i: usize) -> String {
 
 /// Copia un nodo (y sus descendientes si `profundo`), suelto.
 fn clonar(doc: &mut Documento, id: NodoId, profundo: bool) -> NodoId {
+    // Lo copiado es nuevo: nadie lo observa todavía.
+    doc.sin_anotar(|d| clonar_sin_anotar(d, id, profundo))
+}
+
+fn clonar_sin_anotar(doc: &mut Documento, id: NodoId, profundo: bool) -> NodoId {
     let nuevo = doc.crear(doc.nodo(id).dato.clone());
     if profundo {
         for h in doc.nodo(id).hijos.clone() {
-            let c = clonar(doc, h, true);
+            let c = clonar_sin_anotar(doc, h, true);
             doc.insertar(nuevo, c, None);
         }
     }
@@ -164,6 +175,13 @@ pub(crate) fn llamar(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Re
     match id {
         SET_TIMEOUT..=ALERT => return ventana(m, est, id, a),
         PEDIR => return pedir(m, est, a),
+        OBSERVAR_MUTACIONES => {
+            if let Some(n) = nodo_de(m, est, a.arg(m, 0)) {
+                crate::mutaciones::observar(est, n, a_booleano(&m.mundo, a.arg(m, 1)));
+            }
+            return Ok(Valor::INDEFINIDO);
+        }
+        TOMAR_MUTACIONES => return Ok(crate::mutaciones::tomar(m, est)),
         COLOR => {
             let texto = texto_arg(m, a, 0);
             return Ok(match quimera_css::color(&quimera_css::tokens(&texto)) {
@@ -426,11 +444,21 @@ fn estilo(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Result<Valor,
 /// devuelve su número (ver `red.rs`).
 fn pedir(m: &mut Motor, est: &Estado, a: &Argumentos) -> Result<Valor, Valor> {
     let cuerpo = a.arg(m, 2);
+    // Un arreglo son bytes (cuerpo binario, ver `cuerpoDe` en `red.rs`); lo demás, texto en UTF-8.
+    let bytes = match m.mundo.longitud(cuerpo) {
+        Some(n) if m.mundo.es_objeto(cuerpo) => Some(
+            (0..n)
+                .map(|i| m.mundo.leer_elemento(cuerpo, i).and_then(|v| v.como_numero()).unwrap_or(0.0) as u8)
+                .collect(),
+        ),
+        _ if cuerpo == Valor::NULO || cuerpo == Valor::INDEFINIDO => None,
+        _ => Some(m.texto(cuerpo).into_bytes()),
+    };
     let p = crate::red::PeticionJs {
         id: 0,
         url: texto_arg(m, a, 0),
         metodo: texto_arg(m, a, 1),
-        cuerpo: (cuerpo != Valor::NULO && cuerpo != Valor::INDEFINIDO).then(|| m.texto(cuerpo)),
+        cuerpo: bytes,
         cabeceras: crate::red::pares_de(m, a.arg(m, 3)),
         credenciales: texto_arg(m, a, 4),
         es_script: false,

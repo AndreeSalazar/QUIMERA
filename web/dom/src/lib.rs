@@ -24,6 +24,7 @@ mod complementos;
 mod eventos;
 mod interfaces;
 mod metodos;
+mod mutaciones;
 mod observadores;
 mod puente;
 mod red;
@@ -77,6 +78,10 @@ pub(crate) struct Estado {
     pub(crate) medidas: RefCell<Option<Rc<Medidas>>>,
     /// El árbol cambió y los observadores aún no lo saben.
     pub(crate) sin_observar: Cell<bool>,
+    /// Los nodos que observa algún `MutationObserver` (número, con `subtree`).
+    pub(crate) observados: RefCell<Vec<(u32, bool)>>,
+    /// Cambió el árbol con observadores: hay que encolar la microtarea que los avisa.
+    pub(crate) mutacion_pendiente: Cell<bool>,
 }
 
 /// Maqueta un documento y da sus medidas (el DOM no maqueta: está por debajo del estilo).
@@ -96,6 +101,9 @@ impl Estado {
     pub(crate) fn tocar(&self) {
         self.cambiado.set(true);
         self.sin_observar.set(true);
+        if !self.observados.borrow().is_empty() {
+            self.mutacion_pendiente.set(true);
+        }
         self.medidas.borrow_mut().take();
     }
 
@@ -161,6 +169,15 @@ pub(crate) fn envolver(m: &mut Motor, est: &Estado, id: NodoId) -> Valor {
 /// Las microtareas (promesas, `queueMicrotask`): como en los navegadores, se vacían al terminar
 /// cada script, cada manejador de eventos y cada temporizador.
 pub(crate) fn microtareas(m: &mut Motor, est: &Estado) {
+    microtareas_sin_mutaciones(m, est);
+    // Los avisos de `MutationObserver` (`mutaciones.rs`).
+    if !est.observados.borrow().is_empty() {
+        mutaciones::entregar(m, est);
+    }
+}
+
+/// Las microtareas, sin entregar los cambios a los `MutationObserver`.
+pub(crate) fn microtareas_sin_mutaciones(m: &mut Motor, est: &Estado) {
     let errores = m.correr_microtareas();
     est.errores.borrow_mut().extend(errores);
     // Si la tarea cambió el árbol, los observadores de tamaño y de cruce miran en el siguiente
@@ -225,11 +242,6 @@ const DOCUMENTO_JS: &str = r"(function (w, d) {
   w.devicePixelRatio = 1;
   w.scrollX = w.scrollY = w.pageXOffset = w.pageYOffset = 0;
   w.scrollTo = w.scrollBy = w.scroll = w.focus = w.blur = function () {};
-  w.matchMedia = function (q) {
-    return { matches: false, media: String(q), onchange: null,
-      addListener: function () {}, removeListener: function () {},
-      addEventListener: function () {}, removeEventListener: function () {} };
-  };
   w.getComputedStyle = function (el) { return el.style; };
   // El origen se toma en la primera lectura: el reloj real llega después de este código.
   var inicio = null;
@@ -265,7 +277,6 @@ const DOCUMENTO_JS: &str = r"(function (w, d) {
   w.requestIdleCallback = function (f) { return setTimeout(function () { f({ didTimeout: false, timeRemaining: function () { return 50; } }); }, 1); };
   w.cancelIdleCallback = clearTimeout;
   function Observador() { this.observe = this.unobserve = this.disconnect = function () {}; this.takeRecords = function () { return []; }; }
-  w.MutationObserver = Observador;
   // Sin entradas de rendimiento todavía: no anuncia ningún tipo.
   w.PerformanceObserver = function PerformanceObserver() { Observador.call(this); };
   w.PerformanceObserver.supportedEntryTypes = [];
@@ -346,6 +357,8 @@ impl Dom {
             medir: RefCell::new(None),
             medidas: RefCell::new(None),
             sin_observar: Cell::new(false),
+            observados: RefCell::new(Vec::new()),
+            mutacion_pendiente: Cell::new(false),
         });
         let mut motor = Motor::default();
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));

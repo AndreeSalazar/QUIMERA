@@ -163,6 +163,95 @@ pub(crate) const COMPLEMENTOS_JS: &str = r#"(function (w, d, P) {
   w.NodeIterator = NodeIterator;
   P.p_documento.createNodeIterator = function (raiz, mostrar, filtro) { return new NodeIterator(raiz, mostrar, filtro); };
 
+  // ---------------- matchMedia ----------------
+  // Consultas de medios contra el tamaño de la ventana (`innerWidth`, `innerHeight`): `min-`/`max-`
+  // `width`/`height` en px o em, rangos (`width >= 600px`), `orientation`, `aspect-ratio`,
+  // `resolution`, `not`, `and`, listas con comas, `screen`/`all`/`print`, y las preferencias de
+  // QUIMERA: tema claro, sin reducir movimiento, ratón (`hover`, `pointer: fine`). Lo desconocido
+  // no se cumple.
+  function longitudMedio(v) {
+    var m = /^(-?[\d.]+)(px|em|rem)?$/.exec(String(v).trim());
+    if (!m) return NaN;
+    return parseFloat(m[1]) * (m[2] === 'em' || m[2] === 'rem' ? 16 : 1);
+  }
+  function rasgo(nombre, valor) {
+    var W = w.innerWidth, H = w.innerHeight;
+    var medidas = { width: W, height: H, 'device-width': (w.screen || {}).width || W, 'device-height': (w.screen || {}).height || H };
+    var m = /^(min-|max-)?(.*)$/.exec(nombre), lim = m[1], base = m[2];
+    if (medidas[base] !== undefined) {
+      if (valor === undefined) return medidas[base] > 0;
+      var n = longitudMedio(valor);
+      return lim === 'min-' ? medidas[base] >= n : lim === 'max-' ? medidas[base] <= n : medidas[base] === n;
+    }
+    if (base === 'aspect-ratio') {
+      var r = String(valor).split('/'), q = parseFloat(r[0]) / (parseFloat(r[1]) || 1);
+      return lim === 'min-' ? W / H >= q : lim === 'max-' ? W / H <= q : Math.abs(W / H - q) < 1e-6;
+    }
+    if (base === 'resolution' || base === '-webkit-device-pixel-ratio' || base === 'device-pixel-ratio') {
+      var d = parseFloat(valor) / (/dpi$/.test(String(valor)) ? 96 : 1), dpr = w.devicePixelRatio || 1;
+      return lim === 'min-' || nombre.indexOf('min-') >= 0 ? dpr >= d : lim === 'max-' ? dpr <= d : dpr === d;
+    }
+    var fijos = { orientation: W >= H ? 'landscape' : 'portrait', 'prefers-color-scheme': 'light',
+      'prefers-reduced-motion': 'no-preference', 'prefers-contrast': 'no-preference', 'prefers-reduced-transparency': 'no-preference',
+      hover: 'hover', 'any-hover': 'hover', pointer: 'fine', 'any-pointer': 'fine', 'display-mode': 'browser',
+      'forced-colors': 'none', 'inverted-colors': 'none', scripting: 'enabled', update: 'fast', color: '8', 'color-gamut': 'srgb' };
+    if (fijos[nombre] === undefined) {
+      if (/^-webkit-(min|max)-device-pixel-ratio$/.test(nombre)) return rasgo(nombre.slice(8).replace('device-pixel-ratio', 'resolution'), valor);
+      return false;
+    }
+    if (valor === undefined) return fijos[nombre] !== 'none' && fijos[nombre] !== 'no-preference';
+    return nombre === 'color' ? parseFloat(valor) <= 8 : String(valor).trim() === fijos[nombre];
+  }
+  // `(width >= 600px)`, `(400px <= width < 800px)`.
+  function rango(texto) {
+    var m = /^([\d.]+[a-z]*)\s*(<=|<|>=|>)\s*([a-z-]+)\s*(<=|<|>=|>)\s*([\d.]+[a-z]*)$/.exec(texto);
+    if (m) return rango(m[3] + ' ' + invertir(m[2]) + ' ' + m[1]) && rango(m[3] + ' ' + m[4] + ' ' + m[5]);
+    m = /^([a-z-]+)\s*(<=|<|>=|>|=)\s*(.+)$/.exec(texto) || /^(.+?)\s*(<=|<|>=|>|=)\s*([a-z-]+)$/.exec(texto);
+    if (!m) return null;
+    var nombre = m[1], op = m[2], valor = m[3];
+    if (!/^[a-z-]+$/.test(nombre)) { nombre = m[3]; valor = m[1]; op = invertir(op); }
+    var medidas = { width: w.innerWidth, height: w.innerHeight };
+    if (medidas[nombre] === undefined) return false;
+    var a = medidas[nombre], b = longitudMedio(valor);
+    return op === '<' ? a < b : op === '<=' ? a <= b : op === '>' ? a > b : op === '>=' ? a >= b : a === b;
+  }
+  function invertir(op) { return { '<': '>', '<=': '>=', '>': '<', '>=': '<=', '=': '=' }[op]; }
+  function consultaMedio(q) {
+    q = q.trim().toLowerCase();
+    if (!q) return true;
+    var negada = /^not\s+/.test(q);
+    if (negada) q = q.replace(/^not\s+/, '');
+    q = q.replace(/^only\s+/, '');
+    var partes = q.split(/\s+and\s+/), ok = true;
+    for (var i = 0; i < partes.length && ok; i++) {
+      var p = partes[i].trim();
+      if (p === 'all' || p === 'screen') continue;
+      if (p === 'print' || p === 'speech' || p === 'tv' || p === 'handheld') { ok = false; continue; }
+      var m = /^\(\s*(.*?)\s*\)$/.exec(p);
+      if (!m) { ok = false; continue; }
+      var dentro = m[1], r = rango(dentro);
+      if (r !== null) { ok = r; continue; }
+      var kv = dentro.split(':');
+      ok = rasgo(kv[0].trim(), kv.length > 1 ? kv.slice(1).join(':').trim() : undefined);
+    }
+    return negada ? !ok : ok;
+  }
+  w.__quimera_consulta_medio = function (q) { return String(q).split(',').some(consultaMedio); };
+  function MediaQueryList(q) {
+    this.media = String(q);
+    this.onchange = null;
+    this['\u0001escuchas'] = [];
+  }
+  Object.defineProperty(MediaQueryList.prototype, 'matches', { get: function () { return w.__quimera_consulta_medio(this.media); } });
+  MediaQueryList.prototype.addListener = function (f) { if (typeof f === 'function') this['\u0001escuchas'].push(f); };
+  MediaQueryList.prototype.removeListener = function (f) { this['\u0001escuchas'] = this['\u0001escuchas'].filter(function (g) { return g !== f; }); };
+  MediaQueryList.prototype.addEventListener = function (t, f) { if (t === 'change') this.addListener(f); };
+  MediaQueryList.prototype.removeEventListener = function (t, f) { if (t === 'change') this.removeListener(f); };
+  MediaQueryList.prototype.dispatchEvent = function () { return true; };
+  w.MediaQueryList = MediaQueryList;
+  w.matchMedia = function (q) { return new MediaQueryList(q); };
+  __quimera_no_enumerar(MediaQueryList.prototype);
+
   // ---------------- getElementsByName, CSS ----------------
   P.p_documento.getElementsByName = function (n) {
     return Array.prototype.filter.call(this.querySelectorAll('[name]'), function (e) { return e.getAttribute('name') === String(n); });

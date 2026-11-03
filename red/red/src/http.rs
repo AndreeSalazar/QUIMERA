@@ -46,6 +46,9 @@ pub(crate) fn peticion(url: &Url, agente: &str, galletas: Option<&str>, p: &crat
             s.push_str("Content-Type: application/x-www-form-urlencoded\r\n");
         }
         s.push_str(&format!("Content-Length: {}\r\n", cuerpo.len()));
+    } else if matches!(metodo, "POST" | "PUT" | "PATCH") {
+        // Sin cuerpo, los navegadores dicen igual que mide 0 (Google responde 411 si falta).
+        s.push_str("Content-Length: 0\r\n");
     }
     s.push_str("\r\n");
     let mut bytes = s.into_bytes();
@@ -215,6 +218,18 @@ mod pruebas {
         assert!(leer(b"HTTP/1.1 200 OK\r\nContent-Encoding: br\r\n\r\nxyz").is_err(), "brotli aún no");
         assert!(leer(b"no es http\r\n\r\n").is_err());
         assert!(leer(b"HTTP/1.1 200 OK\r\nContent-Length: 3").is_err(), "cabeceras sin terminar");
+    }
+
+    #[test]
+    fn post_sin_cuerpo_dice_que_mide_cero() {
+        let url = Url::analizar("https://ejemplo.com/api").expect("url");
+        let texto = |p: &crate::Peticion| String::from_utf8(peticion(&url, "Q", None, p)).expect("texto");
+        let mut p = crate::Peticion::get();
+        assert!(!texto(&p).contains("Content-Length"), "un GET no lo lleva");
+        p.metodo = String::from("POST");
+        assert!(texto(&p).contains("Content-Length: 0\r\n"));
+        p.cuerpo = Some(b"abc".to_vec());
+        assert!(texto(&p).contains("Content-Length: 3\r\n"));
     }
 
     #[test]

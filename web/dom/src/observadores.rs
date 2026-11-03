@@ -10,7 +10,11 @@
 //!   vez y cuando un elemento entra o sale, o cruza uno de sus `threshold`.
 //!
 //! Si los avisos cambian el árbol, se vuelve a mirar en el siguiente fotograma (16 ms).
-//! `MutationObserver` sigue sin avisar.
+//!
+//! **`MutationObserver`**: el árbol anota sus cambios mientras hay alguno observando
+//! (`mutaciones.rs`); al acabar cada tarea llegan aquí y se reparten según `childList`,
+//! `attributes` (con `attributeFilter`), `characterData`, `subtree` y los `...OldValue`. Polymer
+//! encola sus microtareas cambiando el texto de un nodo observado.
 
 /// El código (tras `complementos.rs`).
 pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
@@ -114,6 +118,73 @@ pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
     });
     if (hubo) pronto();
   };
+  // ---------------- MutationObserver ----------------
+  var mutantes = [];
+  function MutationObserver(f) {
+    if (typeof f !== 'function') throw new TypeError('MutationObserver necesita una función');
+    this['\u0001f'] = f; this['\u0001obs'] = []; this['\u0001cola'] = [];
+  }
+  MutationObserver.prototype.observe = function (nodo, op) {
+    if (!nodo || typeof nodo.nodeType !== 'number') throw new TypeError('observe necesita un nodo');
+    op = op || {};
+    var o = { nodo: nodo, hijos: !!op.childList, subtree: !!op.subtree,
+      atributos: op.attributes !== undefined ? !!op.attributes : !!(op.attributeOldValue || op.attributeFilter),
+      texto: op.characterData !== undefined ? !!op.characterData : !!op.characterDataOldValue,
+      viejoAtributo: !!op.attributeOldValue, viejoTexto: !!op.characterDataOldValue,
+      filtro: op.attributeFilter ? [].concat(op.attributeFilter).map(function (a) { return String(a).toLowerCase(); }) : null };
+    if (!o.hijos && !o.atributos && !o.texto) throw new TypeError('observe necesita childList, attributes o characterData');
+    this['\u0001obs'] = this['\u0001obs'].filter(function (x) { return x.nodo !== nodo; }).concat([o]);
+    if (mutantes.indexOf(this) < 0) mutantes.push(this);
+    __quimera_observar_mutaciones(nodo, o.subtree);
+  };
+  MutationObserver.prototype.disconnect = function () {
+    this['\u0001obs'] = []; this['\u0001cola'] = [];
+    var i = mutantes.indexOf(this);
+    if (i >= 0) mutantes.splice(i, 1);
+  };
+  MutationObserver.prototype.takeRecords = function () { var c = this['\u0001cola']; this['\u0001cola'] = []; return c; };
+  var TIPOS = ['childList', 'attributes', 'characterData'];
+  // Cada cambio llega como [tipo, objetivo, anterior, siguiente, atributo, viejo, añadidos, quitados].
+  w.__quimera_mutaciones = function (lista) {
+    lista.forEach(function (c) {
+      var tipo = TIPOS[c[0]], objetivo = c[1];
+      mutantes.forEach(function (mo) {
+        var o = null;
+        mo['\u0001obs'].forEach(function (x) {
+          if (o) return;
+          if (x.nodo !== objetivo && !(x.subtree && x.nodo.contains && x.nodo.contains(objetivo))) return;
+          if (tipo === 'childList' && !x.hijos) return;
+          if (tipo === 'attributes' && (!x.atributos || (x.filtro && x.filtro.indexOf(c[4]) < 0))) return;
+          if (tipo === 'characterData' && !x.texto) return;
+          o = x;
+        });
+        if (!o) return;
+        var viejo = (tipo === 'attributes' && o.viejoAtributo) || (tipo === 'characterData' && o.viejoTexto) ? c[5] : null;
+        mo['\u0001cola'].push({ type: tipo, target: objetivo, addedNodes: c[6], removedNodes: c[7], previousSibling: c[2],
+          nextSibling: c[3], attributeName: c[4], attributeNamespace: null, oldValue: viejo });
+      });
+    });
+    mutantes.slice().forEach(function (mo) {
+      var cola = mo.takeRecords();
+      if (cola.length) { try { mo['\u0001f'].call(mo, cola, mo); } catch (e) { console.error(String(e && e.stack || e)); } }
+    });
+  };
+  // La microtarea que avisa, encolada una vez tras el primer cambio (la pide el DOM).
+  var encolada = false;
+  w.__quimera_programar_mutaciones = function () {
+    if (encolada) return;
+    encolada = true;
+    queueMicrotask(function () {
+      encolada = false;
+      var l = __quimera_tomar_mutaciones();
+      if (l.length) w.__quimera_mutaciones(l);
+    });
+  };
+  w.MutationObserver = MutationObserver;
+  w.WebKitMutationObserver = MutationObserver;
+  w.MutationRecord = function MutationRecord() {};
+  __quimera_no_enumerar(MutationObserver.prototype);
+
   w.ResizeObserver = ResizeObserver;
   w.IntersectionObserver = IntersectionObserver;
   w.IntersectionObserverEntry = function IntersectionObserverEntry() {};

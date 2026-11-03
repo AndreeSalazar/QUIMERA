@@ -48,6 +48,8 @@ Las diferencias que fue encontrando, ya arregladas: los atributos de `<html lang
 
 **Para ser justos**: todas son páginas generadas por rustdoc y mdBook, HTML bien escrito y de pocas formas distintas. Páginas de otros sitios (con tablas mal anidadas o `<b><i></b></i>`) encontrarán lo que falta. html5ever además es *streaming* (analiza mientras llega el texto) y guarda los nombres internados.
 
+**Registro de cambios** (`registro.rs`): encendido (solo mientras algún `MutationObserver` observa), cada cambio de hijos, de atributo o de texto deja un `Cambio`; `tomar_cambios` los entrega y `sin_anotar` copia sin anotar (lo que se copia dentro de nodos nuevos, como en `innerHTML`, no lo puede estar observando nadie).
+
 ## quimera-css
 
 | Archivo | Qué hace |

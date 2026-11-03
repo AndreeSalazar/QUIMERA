@@ -219,7 +219,8 @@ fn fetch_xhr_y_scripts_añadidos() {
     assert_eq!(
         resumen,
         [
-            r#"POST /datos.json Some("x=1") [("x-prueba", "si")] false"#,
+            // El cuerpo va en bytes: "x=1".
+            r#"POST /datos.json Some([120, 61, 49]) [("x-prueba", "si")] false"#,
             "GET https://otro.example/ None [] false",
             "GET texto.txt None [] false",
             "GET extra.js None [] true",
@@ -570,4 +571,63 @@ fn nombres_y_css_escape() {
         r#"console.log(document.getElementsByName('q').length, CSS.escape('1a.b#c'), CSS.escape('-'), CSS.escape('a b'), CSS.supports('display', 'grid'));"#,
     );
     assert_eq!(r, ["2 \\31 a\\.b\\#c \\- a\\ b true"]);
+}
+
+/// `matchMedia` con la ventana de 1280 × 800 (resultados de Chromium con esa ventana, salvo
+/// `prefers-color-scheme: dark`: QUIMERA pinta en claro y lo dice, aunque el sistema esté en oscuro).
+#[test]
+fn consultas_de_medios() {
+    let mut d = dom("<p>x</p>");
+    let r = correr(
+        &mut d,
+        r#"innerWidth = 1280; innerHeight = 800;
+          var q = ['(min-width: 1000px)', '(max-width: 600px)', 'screen and (min-width: 40em)', 'print', 'not print',
+            '(width >= 1200px)', '(400px <= width <= 1000px)', '(orientation: landscape)', '(prefers-color-scheme: dark)',
+            '(hover: hover)', '(max-width: 500px), (min-height: 700px)', '(min-aspect-ratio: 16/10)', '(min-resolution: 2dppx)'];
+          console.log(q.map(function (x) { return matchMedia(x).matches ? 1 : 0; }).join(''), matchMedia('(min-width: 1px)').media);"#,
+    );
+    assert_eq!(r, ["1010110101110 (min-width: 1px)"]);
+}
+
+/// `MutationObserver`: hijos, atributos con su valor de antes y filtro, texto de un nodo suelto
+/// (el truco de Polymer), `subtree` y `disconnect`. Como Chromium.
+#[test]
+fn observar_mutaciones() {
+    let mut d = dom(r#"<div id="a"><p id="p">x</p></div>"#);
+    let r = correr(
+        &mut d,
+        r#"var a = document.getElementById('a'), p = document.getElementById('p'), log = [];
+          var mo = new MutationObserver(function (rs) {
+            rs.forEach(function (r) {
+              log.push(r.type + ':' + (r.target.id || r.target.nodeName) + ':' + r.addedNodes.length + '/' + r.removedNodes.length + ':' + r.attributeName + ':' + r.oldValue);
+            });
+          });
+          mo.observe(a, { childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class'], subtree: true });
+          var b = document.createElement('b'); a.appendChild(b); a.removeChild(b);
+          a.className = 'uno'; a.setAttribute('class', 'dos'); a.setAttribute('title', 'no'); p.setAttribute('class', 'hijo');
+          var t = document.createTextNode(''), veces = 0;
+          new MutationObserver(function () { veces++; console.log('microtarea', veces); }).observe(t, { characterData: true });
+          t.textContent = '1';
+          Promise.resolve().then(function () { console.log(log.join(' | ')); mo.disconnect(); a.setAttribute('class', 'tres'); });"#,
+    );
+    assert_eq!(
+        r,
+        // Los avisos van en una microtarea encolada con el primer cambio, antes que el `then`.
+        [
+            "microtarea 1",
+            "childList:a:1/0:null:null | childList:a:0/1:null:null | attributes:a:0/0:class:null | attributes:a:0/0:class:uno | attributes:p:0/0:class:null"
+        ]
+    );
+}
+
+/// `new Request(...)`, como Chromium (en https://ejemplo.com/a).
+#[test]
+fn objetos_request() {
+    let mut d = dom("<p>x</p>");
+    let r = correr(
+        &mut d,
+        r#"var q = new Request('/api?x=1', { method: 'post', headers: { 'Content-Type': 'application/json' }, body: '{"a":1}', credentials: 'include' });
+          q.json().then(function (j) { var c = new Request(q.url, { method: 'PUT' }); console.log(q.url, q.method, q.headers.get('content-type'), q.credentials, c.method, c.url === q.url, j.a, q instanceof Request); });"#,
+    );
+    assert_eq!(r, ["https://ejemplo.com/api?x=1 POST application/json include PUT true 1 true"]);
 }

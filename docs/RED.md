@@ -27,7 +27,9 @@ TLS es lo único de fuera, a propósito: la criptografía no se escribe a mano (
 
 ## Peticiones de las páginas
 
-`Cliente::solicitar(url, &Peticion)`: cualquier método, cuerpo, cabeceras extra (las peligrosas, como `Cookie`, `Host` o `Content-Length`, y cualquier salto de línea, se ignoran) y si van las cookies. Lo usan `fetch` y `XMLHttpRequest` (ver [DOM.md](DOM.md#la-red-desde-javascript)). Sin cookies (una petición a otro origen), tampoco se guardan las que lleguen.
+`Cliente::solicitar(url, &Peticion)`: cualquier método, cuerpo, cabeceras extra (las peligrosas, como `Cookie`, `Host` o `Content-Length`, y cualquier salto de línea, se ignoran) y si van las cookies. Lo usan `fetch` y `XMLHttpRequest` (ver [DOM.md](DOM.md#la-red-desde-javascript)). Sin cookies (una petición a otro origen), tampoco se guardan las que lleguen. El cuerpo son bytes (puede ser binario), y un `POST`, `PUT` o `PATCH` sin cuerpo lleva `Content-Length: 0` (Google responde 411 si falta).
+
+`QUIMERA_RED=1` en el modo captura imprime cada petición de la página: método, URL, bytes enviados, estado y tamaño de la respuesta (y su principio, si es un error).
 
 **Compresión**: se piden `gzip, deflate` y se descomprimen con el DEFLATE propio (`quimera-comprimir`, con la envoltura gzip del RFC 1952 y su CRC-32). El CDN de Steam mandaba los scripts en gzip aunque se pidiera `identity`, y por eso jQuery no cargaba. Brotli todavía no: una respuesta en `br` da error.
 

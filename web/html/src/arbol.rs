@@ -61,11 +61,13 @@ pub struct Nodo {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Documento {
     pub(crate) nodos: Vec<Nodo>,
+    /// El registro de cambios, si está encendido (`registro.rs`).
+    pub(crate) cambios: Option<Vec<crate::registro::Cambio>>,
 }
 
 impl Default for Documento {
     fn default() -> Self {
-        Documento { nodos: alloc::vec![Nodo { padre: None, hijos: Vec::new(), dato: Dato::Documento }] }
+        Documento { nodos: alloc::vec![Nodo { padre: None, hijos: Vec::new(), dato: Dato::Documento }], cambios: None }
     }
 }
 

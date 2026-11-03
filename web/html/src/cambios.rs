@@ -4,6 +4,7 @@
 //! Un nodo quitado sigue en el arreglo, suelto (sin padre): JavaScript puede volver a meterlo.
 
 use crate::arbol::{Dato, Documento, Elemento, Nodo, NodoId};
+use crate::registro::Cambio;
 use alloc::string::String;
 use alloc::vec::Vec;
 
@@ -47,6 +48,11 @@ impl Documento {
 
     /// Saca un nodo de su padre (queda suelto).
     pub fn quitar(&mut self, id: NodoId) {
+        if self.cambios.is_some() && self.nodo(id).padre.is_some() {
+            let (anterior, siguiente) = self.hermanos(id);
+            let padre = self.nodo(id).padre.unwrap_or(Self::RAIZ);
+            self.anotar(Cambio::Hijos { padre, anadidos: Vec::new(), quitados: alloc::vec![id], anterior, siguiente });
+        }
         if let Some(p) = self.nodos[id.0 as usize].padre.take() {
             self.nodos[p.0 as usize].hijos.retain(|&h| h != id);
         }
@@ -76,25 +82,50 @@ impl Documento {
         let i = antes.and_then(|a| hijos.iter().position(|&h| h == a)).unwrap_or(hijos.len());
         hijos.insert(i, hijo);
         self.nodos[hijo.0 as usize].padre = Some(padre);
+        if self.cambios.is_some() {
+            let (anterior, siguiente) = self.hermanos(hijo);
+            self.anotar(Cambio::Hijos {
+                padre,
+                anadidos: alloc::vec![hijo],
+                quitados: Vec::new(),
+                anterior,
+                siguiente,
+            });
+        }
         true
     }
 
     /// Cambia (o crea) un atributo.
     pub fn poner_atributo(&mut self, id: NodoId, nombre: &str, valor: &str) {
+        let mut nota = None;
         if let Dato::Elemento(e) = &mut self.nodos[id.0 as usize].dato {
             let nombre = nombre.to_ascii_lowercase();
-            match e.atributos.iter_mut().find(|(n, _)| *n == nombre) {
-                Some((_, v)) => *v = String::from(valor),
-                None => e.atributos.push((nombre, String::from(valor))),
-            }
+            let viejo = match e.atributos.iter_mut().find(|(n, _)| *n == nombre) {
+                Some((_, v)) => Some(core::mem::replace(v, String::from(valor))),
+                None => {
+                    e.atributos.push((nombre.clone(), String::from(valor)));
+                    None
+                }
+            };
+            nota = Some(Cambio::Atributo { nodo: id, nombre, viejo });
+        }
+        if let Some(c) = nota.filter(|_| self.cambios.is_some()) {
+            self.anotar(c);
         }
     }
 
     /// Quita un atributo.
     pub fn quitar_atributo(&mut self, id: NodoId, nombre: &str) {
+        let mut nota = None;
         if let Dato::Elemento(e) = &mut self.nodos[id.0 as usize].dato {
             let nombre = nombre.to_ascii_lowercase();
-            e.atributos.retain(|(n, _)| *n != nombre);
+            if let Some(i) = e.atributos.iter().position(|(n, _)| *n == nombre) {
+                let (nombre, viejo) = e.atributos.remove(i);
+                nota = Some(Cambio::Atributo { nodo: id, nombre, viejo: Some(viejo) });
+            }
+        }
+        if let Some(c) = nota.filter(|_| self.cambios.is_some()) {
+            self.anotar(c);
         }
     }
 
@@ -102,7 +133,10 @@ impl Documento {
     /// sustituye todos sus hijos por un solo texto (o ninguno si está vacío).
     pub fn poner_texto(&mut self, id: NodoId, texto: &str) {
         match &mut self.nodos[id.0 as usize].dato {
-            Dato::Texto(t) | Dato::Comentario(t) => *t = String::from(texto),
+            Dato::Texto(t) | Dato::Comentario(t) => {
+                let viejo = core::mem::replace(t, String::from(texto));
+                self.anotar(Cambio::Texto { nodo: id, viejo });
+            }
             Dato::Elemento(_) | Dato::Documento => {
                 self.vaciar(id);
                 if !texto.is_empty() {
@@ -116,8 +150,12 @@ impl Documento {
 
     /// Quita todos los hijos de un nodo.
     pub fn vaciar(&mut self, id: NodoId) {
-        for h in core::mem::take(&mut self.nodos[id.0 as usize].hijos) {
+        let quitados = core::mem::take(&mut self.nodos[id.0 as usize].hijos);
+        for &h in &quitados {
             self.nodos[h.0 as usize].padre = None;
+        }
+        if self.cambios.is_some() && !quitados.is_empty() {
+            self.anotar(Cambio::Hijos { padre: id, anadidos: Vec::new(), quitados, anterior: None, siguiente: None });
         }
     }
 
@@ -134,9 +172,13 @@ impl Documento {
 
     /// Copia el nodo `id` de `otro` (con sus descendientes) en este documento, suelto.
     pub fn importar(&mut self, otro: &Documento, id: NodoId) -> NodoId {
+        self.sin_anotar(|d| d.importar_sin_anotar(otro, id))
+    }
+
+    fn importar_sin_anotar(&mut self, otro: &Documento, id: NodoId) -> NodoId {
         let nuevo = self.crear(otro.nodo(id).dato.clone());
         for &h in &otro.nodo(id).hijos {
-            let c = self.importar(otro, h);
+            let c = self.importar_sin_anotar(otro, h);
             self.insertar(nuevo, c, None);
         }
         nuevo

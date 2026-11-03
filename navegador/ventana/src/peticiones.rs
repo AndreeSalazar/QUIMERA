@@ -59,7 +59,7 @@ pub fn preparar(pagina: &Url, base: &Url, p: &PeticionJs) -> Result<Preparada, S
     }
     let peticion = Peticion {
         metodo: p.metodo.clone(),
-        cuerpo: p.cuerpo.as_ref().map(|c| c.as_bytes().to_vec()),
+        cuerpo: p.cuerpo.clone(),
         cabeceras,
         // A otro origen, un script tampoco lleva cookies (aunque los navegadores sí las mandan).
         galletas: galletas && (mismo || !p.es_script),
@@ -88,7 +88,26 @@ pub fn completar(prep: &Preparada, r: Result<Respuesta, quimera_red::Error>) -> 
 /// Atiende una petición entera (para el modo captura, que no espera en otro hilo).
 pub fn atender(cliente: &Cliente, pagina: &Url, base: &Url, p: &PeticionJs) -> Result<RespuestaJs, String> {
     let prep = preparar(pagina, base, p)?;
-    completar(&prep, cliente.solicitar(&prep.url, &prep.peticion))
+    let r = completar(&prep, cliente.solicitar(&prep.url, &prep.peticion));
+    if std::env::var_os("QUIMERA_RED").is_some() {
+        anotar(p, &r);
+    }
+    r
+}
+
+/// `QUIMERA_RED=1`: cada petición de la página, para ver qué pide y qué le llega (y el principio
+/// de la respuesta si es un error).
+fn anotar(p: &PeticionJs, r: &Result<RespuestaJs, String>) {
+    let envia = p.cuerpo.as_ref().map_or(0, Vec::len);
+    match r {
+        Ok(x) => {
+            eprintln!("red: {} {} (envía {envia} bytes) → {} ({} bytes)", p.metodo, p.url, x.estado, x.cuerpo.len());
+            if x.estado >= 400 {
+                eprintln!("red:   {}", x.cuerpo.chars().take(400).collect::<String>().replace('\n', " "));
+            }
+        }
+        Err(e) => eprintln!("red: {} {} → error: {e}", p.metodo, p.url),
+    }
 }
 
 #[cfg(test)]

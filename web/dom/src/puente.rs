@@ -506,7 +506,9 @@ impl Puente {
 
 impl Anfitrion for Puente {
     fn llamar(&self, m: &mut Motor, id: u32, args: &Argumentos) -> Result<Valor, Valor> {
-        metodos::llamar(m, &self.0, id, args)
+        let r = metodos::llamar(m, &self.0, id, args);
+        crate::mutaciones::programar(m, &self.0);
+        r
     }
 
     fn leer(&self, m: &mut Motor, dato: u32, clave: u32) -> Option<Result<Valor, Valor>> {
@@ -570,6 +572,7 @@ impl Anfitrion for Puente {
             v
         };
         let hecho = self.escribir_nodo(m, NodoId(dato), &nombre, v);
+        crate::mutaciones::programar(m, &self.0);
         if hecho && nombre == "innerHTML" {
             // Los elementos personalizados que trae el HTML nuevo se mejoran (`interfaces.rs`).
             let el = envolver(m, &self.0, NodoId(dato));
