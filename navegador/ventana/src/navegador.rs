@@ -210,7 +210,13 @@ impl Navegador {
         final_.fragmento = fragmento.clone();
         self.historial.sustituir(final_.clone());
         self.url = final_;
-        self.guion = Some(Guion::preparar(&pagina));
+        // La vista en píxeles CSS (sin la barra), para las medidas que lee la página.
+        let e = self.escala();
+        let vista = self.abierta.as_ref().map_or((1024.0, 700.0), |a| {
+            let t = a.ventana.inner_size();
+            (t.width as f32 / e, (t.height as f32 - self.alto_barra()) / e)
+        });
+        self.guion = Some(Guion::preparar(&pagina, vista));
         self.pagina = Some(pagina);
         self.atender_peticiones();
         self.cargando = false;

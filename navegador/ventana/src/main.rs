@@ -304,7 +304,7 @@ fn maquetar_pagina(
     cliente: &Arc<Cliente>,
 ) -> quimera_maquetacion::Maquetacion {
     // Con su JavaScript: los scripts, los temporizadores del primer segundo y lo que pidan a la red.
-    let mut guion = guiones::Guion::preparar(pagina);
+    let mut guion = guiones::Guion::preparar(pagina, (ancho, alto));
     // `QUIMERA_ESPERA=ms`: cuánto tiempo de la página se adelanta (1 s si no se dice).
     let espera = std::env::var("QUIMERA_ESPERA").ok().and_then(|e| e.parse().ok()).unwrap_or(1000.0);
     guion.adelantar(espera, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p));

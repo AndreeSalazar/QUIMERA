@@ -324,8 +324,9 @@ impl<'a> Maquetador<'a> {
     pub(crate) fn en_seco<R>(&mut self, f: impl FnOnce(&mut Self) -> R) -> R {
         let (p, e, a) = (self.piezas.len(), self.enlaces.len(), self.anclas.len());
         let (fl, capa, pend) = (self.flotantes.len(), self.capa_flotantes.len(), self.pendientes.len());
-        let (abs, capas) = (self.absolutos.len(), self.capas.len());
+        let (abs, capas, cajas) = (self.absolutos.len(), self.capas.len(), self.cajas.len());
         let r = f(self);
+        self.cajas.truncate(cajas);
         self.piezas.truncate(p);
         self.enlaces.truncate(e);
         self.anclas.truncate(a);

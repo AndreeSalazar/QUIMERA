@@ -76,7 +76,10 @@ Todo comparado con Chromium en `pruebas.rs`.
 - `el.attributes` es un `NamedNodeMap` (`getNamedItem`, `item`…), aún como copia, no vivo.
 - `new Audio()` y lo mínimo de `HTMLMediaElement` (`load`, `play`, `pause` y el estado de uno sin cargar). `canPlayType` da `''`: todavía no hay reproductor.
 
-**Dónde está YouTube:** arranca sin errores, como en Chrome (antes eran 6). Faltaban el `new` sobre funciones atadas (su inyector de dependencias), las plantillas inertes y los descriptores del DOM. Todavía no se pinta nada: el contenido lo pide después por red y lo sella en raíces de ShadyDOM. Eso es lo siguiente.
+- **Medidas de la maquetación** (`clientWidth`, `offsetWidth`, `offsetHeight`, `offsetTop`, `scrollWidth`, `getBoundingClientRect`, `getClientRects`, `innerWidth`). El DOM no maqueta (va por debajo del estilo): el anfitrión le da una función con `Dom::con_medidas`, y el DOM guarda sus medidas hasta que el árbol cambia. La ventana maqueta con las hojas de la página y anchos de texto aproximados: las páginas miden sobre todo contenedores. La cascada guarda las hojas ya analizadas (`CacheHojas`): con las 19 000 reglas de YouTube, cada maquetación baja de unos 200 ms a 25–50 ms. Aún sin restar bordes en `client*` ni contar el desplazamiento de la página.
+- **`ResizeObserver` e `IntersectionObserver`** de verdad (`observadores.rs`): tras una tarea que cambió el árbol, miran en el siguiente fotograma (16 ms) y avisan la primera vez y en cada cambio de tamaño, de entrada o salida o de umbral. `MutationObserver` sigue sin avisar.
+
+**Dónde está YouTube:** arranca sin errores, como en Chrome (antes eran 6), y pinta su portada: la cabecera con la caja de búsqueda y la tarjeta «Busca algo para comenzar». Sin sesión, Chrome muestra lo mismo: YouTube no trae vídeos a la portada de quien no tiene historial. Faltaban el `new` sobre funciones atadas (su inyector de dependencias), las plantillas inertes, los descriptores del DOM, las medidas y los observadores. Faltan los iconos (SVG, hoy cajas negras) y la mini guía de la izquierda.
 
 ## Clases del DOM y elementos personalizados
 
@@ -109,7 +112,7 @@ Probado contra Chromium: un elemento personalizado con atributos observados, cic
 1. **JavaScript moderno en la VM:** ✅ `JSON`, `Promise` y microtareas (se vacían tras cada script, evento y temporizador), `Map`/`Set`, clases, plantillas, desestructuración, `...spread`, `?.`, y `localStorage` en memoria ([VM.md](VM.md#la-biblioteca-en-javascript-preludio), [FRONTEND.md](FRONTEND.md#qué-entiende-hoy)). ✅ Accesores `get`/`set`, `Symbol`, `dataset`. rust-lang.org y MDN ya ejecutan todos sus scripts sin errores. ✅ `async`/`await` y generadores. rust-lang.org, MDN, Wikipedia, GitHub y Hacker News ejecutan sus scripts sin errores. Falta: módulos (`<script type=module>`) y los scripts que añaden otros scripts.
 2. ✅ **`fetch`, `XMLHttpRequest`** y scripts añadidos, con CORS básico. `localStorage` (en memoria; falta guardarlo).
 3. **Más eventos:** `input`, `change`, `keydown`, `submit`, `focus`; y que `input.value` y lo escrito en la ventana sean lo mismo (hoy JavaScript lee el atributo `value`, no lo que tecleó la persona).
-4. **Medidas de la maquetación:** `getBoundingClientRect`, `offsetWidth`, `scrollTop`, `getComputedStyle`.
+4. **Medidas de la maquetación:** ✅ `getBoundingClientRect`, `offsetWidth`, `clientWidth`, `ResizeObserver`, `IntersectionObserver`. Falta `getComputedStyle` de verdad, `scrollTop` con el desplazamiento y `MutationObserver`.
 5. **Listas vivas** (`childNodes` es hoy una foto). ✅ `DocumentFragment`, `dataset`, `insertAdjacentHTML`, clases del DOM y `customElements`. Falta Shadow DOM que se pinte.
 6. Imágenes y hojas que añaden los scripts (hoy solo se descargan las del HTML inicial), `document.write`, `iframe`.
 7. Generar el puente desde WebIDL cuando la tabla pase de unas decenas de métodos.

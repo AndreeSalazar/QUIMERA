@@ -67,6 +67,7 @@ impl Maquetador<'_> {
         let contexto = e.colocacion.z.is_some();
         let apilado_previo = contexto.then(|| core::mem::replace(&mut self.apilado, ruta.clone()));
         let (p0, e0, c0, a0) = (self.piezas.len(), self.enlaces.len(), self.capas.len(), self.absolutos.len());
+        let k0 = self.cajas.len();
         let f0 = self.capa_flotantes.len();
         let guardia = self.guardia.replace(id);
         let hecho = self.bloque(id, x, y, ancho);
@@ -83,6 +84,9 @@ impl Maquetador<'_> {
                 self.capas[c0..].iter_mut().flat_map(|c| c.piezas.iter_mut()).for_each(|p| p.mover(dx, dy));
                 for en in &mut self.enlaces[e0..] {
                     (en.0, en.1) = (en.0 + dx, en.1 + dy);
+                }
+                for (_, c) in &mut self.cajas[k0..] {
+                    (c[0], c[1]) = (c[0] + dx, c[1] + dy);
                 }
             }
         }

@@ -242,7 +242,7 @@ fn arbol(m: &mut Motor, est: &Estado, id: u32, este: NodoId, a: &Argumentos) -> 
             let ok = doc.insertar(este, n, Some(viejo));
             doc.quitar(viejo);
             drop(doc);
-            est.cambiado.set(true);
+            est.tocar();
             return if ok { Ok(a.arg(m, 1)) } else { Err(m.error_de_tipo("HierarchyRequestError")) };
         }
         (CONTAINS, n) => return Ok(Valor::booleano(n.is_some_and(|n| doc.contiene(este, n)))),
@@ -255,7 +255,7 @@ fn arbol(m: &mut Motor, est: &Estado, id: u32, este: NodoId, a: &Argumentos) -> 
         }
         (REMOVE, _) => {
             doc.quitar(este);
-            est.cambiado.set(true);
+            est.tocar();
             return Ok(Valor::INDEFINIDO);
         }
         (APPEND, _) => {
@@ -263,7 +263,7 @@ fn arbol(m: &mut Motor, est: &Estado, id: u32, este: NodoId, a: &Argumentos) -> 
                 let hijo = p.unwrap_or_else(|t| doc.crear(Dato::Texto(t)));
                 doc.insertar(este, hijo, None);
             }
-            est.cambiado.set(true);
+            est.tocar();
             return Ok(Valor::INDEFINIDO);
         }
         _ => false,
@@ -272,7 +272,7 @@ fn arbol(m: &mut Motor, est: &Estado, id: u32, este: NodoId, a: &Argumentos) -> 
     if !ok {
         return Err(m.error_de_tipo("HierarchyRequestError: ese nodo no puede ir ahí"));
     }
-    est.cambiado.set(true);
+    est.tocar();
     if let Some(n) = n0 {
         crate::red::scripts_insertados(m, est, n);
     }
@@ -339,7 +339,7 @@ fn elemento(m: &mut Motor, est: &Estado, id: u32, este: NodoId, a: &Argumentos) 
             } else {
                 doc.quitar_atributo(este, &t0);
             }
-            est.cambiado.set(true);
+            est.tocar();
             return Ok(Valor::INDEFINIDO);
         }
         CLICK => {
@@ -399,7 +399,7 @@ fn clases(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Result<Valor,
         }
     };
     doc.poner_atributo(nodo, "class", &actuales.join(" "));
-    est.cambiado.set(true);
+    est.tocar();
     Ok(resultado)
 }
 
@@ -418,7 +418,7 @@ fn estilo(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Result<Valor,
         return Ok(m.cadena(&v));
     }
     poner_estilo(&mut doc, nodo, &prop, if id == ESTILO_SET { &valor } else { "" });
-    est.cambiado.set(true);
+    est.tocar();
     Ok(Valor::INDEFINIDO)
 }
 

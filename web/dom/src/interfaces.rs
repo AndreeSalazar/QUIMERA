@@ -454,8 +454,14 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
   E.insertAdjacentText = function (donde, t) { this.insertAdjacentElement(donde, d.createTextNode(String(t))); };
   E.scrollIntoView = E.scrollTo = E.scrollBy = function () {};
   // Sin medidas de la maquetación todavía: un rectángulo vacío.
-  E.getBoundingClientRect = function () { return { x: 0, y: 0, top: 0, left: 0, right: 0, bottom: 0, width: 0, height: 0 }; };
-  E.getClientRects = function () { return []; };
+  // La caja de la maquetación (sin desplazamiento: la página está arriba del todo).
+  function rect(x, y, w, h) {
+    return { x: x, y: y, left: x, top: y, width: w, height: h, right: x + w, bottom: y + h,
+      toJSON: function () { return { x: x, y: y, width: w, height: h, top: y, left: x, right: x + w, bottom: y + h }; } };
+  }
+  w.DOMRect = function DOMRect(x, y, ancho, alto) { return rect(x || 0, y || 0, ancho || 0, alto || 0); };
+  E.getBoundingClientRect = function () { return rect(this.__quimera_x, this.__quimera_y, this.__quimera_ancho, this.__quimera_alto); };
+  E.getClientRects = function () { var r = this.getBoundingClientRect(); return r.width || r.height ? [r] : []; };
   E.animate = function () { return { finished: Promise.resolve(), cancel: function () {}, play: function () {}, pause: function () {}, onfinish: null }; };
   E.attachShadow = function (op) {
     if (this['\u0001sombra']) throw new Error('el elemento ya tiene una raíz de sombra');

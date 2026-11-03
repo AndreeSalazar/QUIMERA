@@ -22,6 +22,7 @@ enum Leido {
     Lista(Vec<NodoId>),
     Texto(String),
     Entero(i32),
+    Numero(f64),
     Booleano(bool),
     /// Un objeto del anfitrión sin caché (`style`, `classList`) con este número y prototipo.
     Objeto(u32, &'static str),
@@ -324,6 +325,13 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
         "dataset" if el.is_some() => Leido::Objeto(id.0 | BIT_DATOS, "p_datos"),
         "title" => Leido::Texto(el.and_then(|e| e.atributo("title")).unwrap_or("").to_string()),
         "content" if el.is_some_and(|e| e.nombre == "template") => return None,
+        "offsetWidth" | "offsetHeight" | "clientWidth" | "clientHeight" | "scrollWidth" | "scrollHeight"
+        | "offsetTop" | "offsetLeft" | "__quimera_x" | "__quimera_y" | "__quimera_ancho" | "__quimera_alto"
+            if el.is_some() =>
+        {
+            medida(est, id, nombre)
+        }
+        "clientTop" | "clientLeft" | "scrollTop" | "scrollLeft" if el.is_some() => Leido::Entero(0),
         _ => {
             let e = el?;
             if let Some(a) = atributo_reflejado(nombre) {
@@ -333,6 +341,32 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
             }
         }
     })
+}
+
+/// Una medida de la maquetación. `client*` y `scroll*` usan la caja de borde (aún sin restar
+/// bordes ni barras), `offsetTop`/`offsetLeft` cuentan desde la página. `<html>` mide la ventana.
+/// Sin caja (`display: none`, en línea) o sin quien maquete, 0.
+fn medida(est: &Estado, id: NodoId, nombre: &str) -> Leido {
+    let Some(m) = est.medidas() else { return Leido::Entero(0) };
+    let es_html = est.doc.borrow().elemento(id).is_some_and(|e| e.nombre == "html");
+    let [x, y, ancho, alto] = match m.cajas.get(&id.0) {
+        Some(c) if es_html => [c[0], c[1], m.ventana.0, c[3].max(m.ventana.1)],
+        Some(c) => *c,
+        None => [0.0; 4],
+    };
+    let alto_cliente = if es_html { m.ventana.1 } else { alto };
+    let v = match nombre {
+        "__quimera_x" => return Leido::Numero(f64::from(x)),
+        "__quimera_y" => return Leido::Numero(f64::from(y)),
+        "__quimera_ancho" => return Leido::Numero(f64::from(ancho)),
+        "__quimera_alto" => return Leido::Numero(f64::from(alto)),
+        "offsetTop" => y,
+        "offsetLeft" => x,
+        "clientHeight" => alto_cliente,
+        "offsetHeight" | "scrollHeight" => alto,
+        _ => ancho,
+    };
+    Leido::Entero(quimera_vm::matematicas::redondear(f64::from(v)) as i32)
 }
 
 /// `backgroundColor` → `background-color`.
@@ -415,6 +449,7 @@ impl Puente {
             Leido::Lista(v) => lista(m, &self.0, &v),
             Leido::Texto(t) => m.cadena(&t),
             Leido::Entero(n) => Valor::entero(n),
+            Leido::Numero(n) => Valor::numero(n),
             Leido::Booleano(b) => Valor::booleano(b),
             Leido::Objeto(dato, proto) => {
                 let raiz = m.raiz_anfitrion();
@@ -458,7 +493,7 @@ impl Puente {
                 }
             }
         }
-        self.0.cambiado.set(true);
+        self.0.tocar();
         true
     }
 }
@@ -502,7 +537,7 @@ impl Anfitrion for Puente {
             let atributo = atributo_de_dato(&nombre)?;
             let valor = m.texto(v);
             self.0.doc.borrow_mut().poner_atributo(NodoId(dato & !BIT_DATOS), &atributo, &valor);
-            self.0.cambiado.set(true);
+            self.0.tocar();
             return Some(Ok(()));
         }
         if dato & BIT_ESTILO != 0 {
@@ -514,7 +549,7 @@ impl Anfitrion for Puente {
             } else {
                 poner_estilo(&mut doc, id, &nombre_css(&nombre), &valor);
             }
-            self.0.cambiado.set(true);
+            self.0.tocar();
             return Some(Ok(()));
         }
         let hecho = self.escribir_nodo(m, NodoId(dato), &nombre, v);

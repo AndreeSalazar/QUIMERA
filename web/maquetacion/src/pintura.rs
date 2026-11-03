@@ -116,6 +116,9 @@ pub struct Maquetacion {
     pub anclas: Vec<(String, f32)>,
     /// Dónde están los controles de formulario (para saber qué se pulsa).
     pub controles: Vec<Control>,
+    /// La caja de borde (x, y, ancho, alto) de cada bloque, en orden de maquetación (si uno sale
+    /// dos veces, vale la última): lo que leen `clientWidth` o `getBoundingClientRect`.
+    pub cajas: Vec<(quimera_html::NodoId, [f32; 4])>,
 }
 
 /// El rectángulo de un control de formulario.

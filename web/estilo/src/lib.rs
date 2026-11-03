@@ -29,6 +29,7 @@ mod valores;
 mod variables;
 
 use alloc::vec::Vec;
+pub use cascada::CacheHojas;
 pub use elemento::Nodo;
 pub use flex::{AlinearFlex, Direccion, Flex, Justificar};
 pub use fuentes::{FuenteWeb, fuentes_web};
@@ -66,7 +67,7 @@ impl Estilos {
 
 /// Calcula los estilos de todo el documento (sin hojas externas).
 pub fn calcular(doc: &quimera_html::Documento, op: &Opciones) -> Estilos {
-    cascada::calcular(doc, op, &|_| None)
+    cascada::calcular(doc, op, &|_| None, &CacheHojas::default())
 }
 
 /// Como [`calcular`], con las hojas de `<link rel="stylesheet">`: `externa` recibe cada `href`
@@ -76,5 +77,15 @@ pub fn calcular_con_hojas(
     op: &Opciones,
     externa: &dyn Fn(&str) -> Option<alloc::string::String>,
 ) -> Estilos {
-    cascada::calcular(doc, op, externa)
+    cascada::calcular(doc, op, externa, &CacheHojas::default())
+}
+
+/// Como [`calcular_con_hojas`], guardando en `cache` las hojas analizadas para la próxima vez.
+pub fn calcular_con_cache(
+    doc: &quimera_html::Documento,
+    op: &Opciones,
+    externa: &dyn Fn(&str) -> Option<alloc::string::String>,
+    cache: &CacheHojas,
+) -> Estilos {
+    cascada::calcular(doc, op, externa, cache)
 }

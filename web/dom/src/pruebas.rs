@@ -487,3 +487,38 @@ fn accesores_en_los_prototipos() {
     );
     assert_eq!(r, ["function undefined true true false", "<i>z</i> I true", "1 c a", "1"]);
 }
+
+/// Medidas y observadores con un maquetador de prueba: la caja de cada elemento sale de su
+/// atributo `data-caja="x y ancho alto"`.
+#[test]
+fn medidas_y_observadores() {
+    let mut d = dom(r#"<div id="a" data-caja="10 20 300 40"></div><div id="b" data-caja="0 2000 50 50"></div>"#);
+    d.con_medidas(
+        (800.0, 600.0),
+        alloc::boxed::Box::new(|doc: &quimera_html::Documento| {
+            let mut cajas = alloc::collections::BTreeMap::new();
+            for id in doc.descendientes(quimera_html::Documento::RAIZ) {
+                let Some(c) = doc.elemento(id).and_then(|e| e.atributo("data-caja")) else { continue };
+                let v: Vec<f32> = c.split(' ').filter_map(|n| n.parse().ok()).collect();
+                cajas.insert(id.0, [v[0], v[1], v[2], v[3]]);
+            }
+            crate::Medidas { cajas, ventana: (800.0, 600.0) }
+        }),
+    );
+    let mut r = correr(
+        &mut d,
+        r#"var a = document.getElementById('a'), b = document.getElementById('b');
+          var g = a.getBoundingClientRect();
+          console.log(innerWidth, a.clientWidth, a.offsetHeight, a.offsetTop, g.x, g.right, g.bottom, document.documentElement.clientHeight);
+          new ResizeObserver(function (es) { es.forEach(function (e) { console.log('tamaño', e.target.id, e.contentRect.width, e.contentRect.height); }); }).observe(a);
+          new IntersectionObserver(function (es) { es.forEach(function (e) { console.log('cruce', e.target.id, e.isIntersecting, e.intersectionRatio); }); }).observe(b);"#,
+    );
+    d.correr_temporizadores(20.0);
+    d.ejecutar("document.getElementById('a').setAttribute('data-caja', '10 20 500 40'); document.getElementById('b').setAttribute('data-caja', '0 590 50 50');");
+    d.correr_temporizadores(40.0);
+    r.extend(d.consola());
+    assert_eq!(
+        r,
+        ["800 300 40 20 10 310 60 600", "tamaño a 300 40", "cruce b false 0", "tamaño a 500 40", "cruce b true 0.2"]
+    );
+}

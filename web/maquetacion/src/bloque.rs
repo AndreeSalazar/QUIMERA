@@ -34,6 +34,8 @@ pub(crate) struct Maquetador<'a> {
     pub enlaces: Vec<EnlaceBruto>,
     /// (id, y) de cada bloque con `id`: a dónde llevan los `#ancla`.
     pub anclas: Vec<(String, f32)>,
+    /// La caja de borde (x, y, ancho, alto) de cada bloque maquetado, para las medidas del DOM.
+    pub cajas: Vec<(NodoId, [f32; 4])>,
     /// Tamaños intrínsecos ya calculados, por nodo.
     pub intrinsecos: Vec<Option<(f32, f32)>>,
     /// Este elemento ignora su `width`: ocupa el ancho que se le da (elementos flexibles).
@@ -108,6 +110,7 @@ impl<'a> Maquetador<'a> {
             enlace: None,
             enlaces: Vec::new(),
             anclas: Vec::new(),
+            cajas: Vec::new(),
             intrinsecos: alloc::vec![None; doc.total()],
             ancho_libre: None,
             alto_forzado: None,
@@ -294,6 +297,7 @@ impl<'a> Maquetador<'a> {
             self.flotantes = fuera;
         }
         let alto = forzado.unwrap_or(bt + pt + alto_contenido + pb + bb);
+        self.cajas.push((id, [x + ml, y, ancho_borde, alto]));
         self.caja(inicio_piezas, e, (x + ml, y, ancho_borde, alto), impuestos.is_none());
         if e.display == Display::ElementoDeLista {
             self.marcador(id, e, cx, primera_base.unwrap_or(cy + e.tam_letra * 0.8));

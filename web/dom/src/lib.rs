@@ -23,6 +23,7 @@ mod complementos;
 mod eventos;
 mod interfaces;
 mod metodos;
+mod observadores;
 mod puente;
 mod red;
 mod selectores;
@@ -69,6 +70,44 @@ pub(crate) struct Estado {
     pub(crate) scripts_pendientes: RefCell<alloc::collections::BTreeMap<u32, u32>>,
     /// Los `<script>` ya ejecutados (o pedidos): cada uno corre una sola vez.
     pub(crate) ejecutados: RefCell<alloc::collections::BTreeSet<u32>>,
+    /// Quien maqueta el documento para las medidas (`clientWidth`...); lo pone el anfitrión.
+    pub(crate) medir: RefCell<Option<Medir>>,
+    /// Las últimas medidas, hasta que el árbol cambie.
+    pub(crate) medidas: RefCell<Option<Rc<Medidas>>>,
+    /// El árbol cambió y los observadores aún no lo saben.
+    pub(crate) sin_observar: Cell<bool>,
+}
+
+/// Maqueta un documento y da sus medidas (el DOM no maqueta: está por debajo del estilo).
+pub type Medir = alloc::boxed::Box<dyn Fn(&Documento) -> Medidas>;
+
+/// Las medidas de la maquetación que lee JavaScript.
+#[derive(Debug, Default, Clone)]
+pub struct Medidas {
+    /// La caja de borde (x, y, ancho, alto) de cada elemento maquetado, por número de nodo.
+    pub cajas: alloc::collections::BTreeMap<u32, [f32; 4]>,
+    /// El tamaño de la ventana.
+    pub ventana: (f32, f32),
+}
+
+impl Estado {
+    /// El árbol cambió: hay que repintar y las medidas ya no valen.
+    pub(crate) fn tocar(&self) {
+        self.cambiado.set(true);
+        self.sin_observar.set(true);
+        self.medidas.borrow_mut().take();
+    }
+
+    /// Las medidas del documento como está ahora (maqueta si cambió desde la última vez).
+    pub(crate) fn medidas(&self) -> Option<Rc<Medidas>> {
+        if let Some(m) = self.medidas.borrow().as_ref() {
+            return Some(m.clone());
+        }
+        let medir = self.medir.borrow();
+        let m = Rc::new((medir.as_ref()?)(&self.doc.borrow()));
+        *self.medidas.borrow_mut() = Some(m.clone());
+        Some(m)
+    }
 }
 
 /// Una página con JavaScript: su árbol y su motor.
@@ -123,6 +162,13 @@ pub(crate) fn envolver(m: &mut Motor, est: &Estado, id: NodoId) -> Valor {
 pub(crate) fn microtareas(m: &mut Motor, est: &Estado) {
     let errores = m.correr_microtareas();
     est.errores.borrow_mut().extend(errores);
+    // Si la tarea cambió el árbol, los observadores de tamaño y de cruce miran en el siguiente
+    // fotograma (`observadores.rs`).
+    if est.sin_observar.replace(false)
+        && let Err(e) = m.llamar_global("__quimera_tras_cambio", &[])
+    {
+        est.errores.borrow_mut().push(e.completo());
+    }
 }
 
 /// `localStorage` y `sessionStorage`, en memoria (se pierden al cerrar la página).
@@ -218,7 +264,7 @@ const DOCUMENTO_JS: &str = r"(function (w, d) {
   w.requestIdleCallback = function (f) { return setTimeout(function () { f({ didTimeout: false, timeRemaining: function () { return 50; } }); }, 1); };
   w.cancelIdleCallback = clearTimeout;
   function Observador() { this.observe = this.unobserve = this.disconnect = function () {}; this.takeRecords = function () { return []; }; }
-  w.MutationObserver = w.IntersectionObserver = w.ResizeObserver = w.PerformanceObserver = Observador;
+  w.MutationObserver = w.PerformanceObserver = Observador;
   d.implementation = {
     hasFeature: function () { return true; },
     createHTMLDocument: function (titulo) {
@@ -293,6 +339,9 @@ impl Dom {
             siguiente_peticion: Cell::new(1),
             scripts_pendientes: RefCell::new(alloc::collections::BTreeMap::new()),
             ejecutados: RefCell::new(alloc::collections::BTreeSet::new()),
+            medir: RefCell::new(None),
+            medidas: RefCell::new(None),
+            sin_observar: Cell::new(false),
         });
         let mut motor = Motor::default();
         motor.poner_anfitrion(Rc::new(puente::Puente(estado.clone())));
@@ -304,6 +353,7 @@ impl Dom {
             red::MODULOS_JS,
             interfaces::INTERFACES_JS,
             complementos::COMPLEMENTOS_JS,
+            observadores::OBSERVADORES_JS,
             DOCUMENTO_JS,
         ] {
             if let Err(e) = motor.ejecutar(codigo) {
@@ -407,6 +457,17 @@ impl Dom {
         microtareas(&mut self.motor, &self.estado);
         self.despachar(Documento::RAIZ, "DOMContentLoaded");
         self.despachar(NodoId(VENTANA), "load");
+    }
+
+    /// Da al DOM quien maqueta, para `clientWidth`, `getBoundingClientRect`... y el tamaño de la
+    /// ventana (`innerWidth`, `innerHeight`).
+    pub fn con_medidas(&mut self, (ancho, alto): (f32, f32), medir: Medir) {
+        *self.estado.medir.borrow_mut() = Some(medir);
+        self.estado.medidas.borrow_mut().take();
+        let codigo = alloc::format!(
+            "window.innerWidth = window.outerWidth = {ancho}; window.innerHeight = window.outerHeight = {alto};"
+        );
+        self.ejecutar(&codigo);
     }
 
     /// El reloj de `Date` (milisegundos desde 1970) y el azar del sistema (`crypto`,

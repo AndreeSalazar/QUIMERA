@@ -185,7 +185,9 @@ En Wikipedia casi todos los colores van en variables (`color: var(--color-base, 
 
 Wikipedia destapó además un fallo de capas: un flotante dentro de un elemento `relative` se dibujaba en la capa del contexto de fuera, por debajo del fondo de ese elemento. En cuanto ese fondo dejó de ser transparente (venía de una variable), tapó la ficha. Ahora los flotantes van en la capa de su elemento posicionado, encima de su fondo (con prueba).
 
-`QUIMERA_DEPURAR=clase` en el modo captura imprime el estilo calculado del primer elemento con esa clase y de sus antepasados.
+`QUIMERA_DEPURAR=nombre` en el modo captura imprime el estilo calculado del primer elemento con esa clase, id o etiqueta (en el DOM tras el JavaScript) y de sus antepasados. `QUIMERA_GUION=archivo.js` ejecuta un guion propio tras la carga (lo que escriba con `console.log` sale en la terminal) y `QUIMERA_ESPERA=ms` adelanta más tiempo de la página (1 s si no se dice).
+
+Un `fixed` dentro de un `absolute` (la cabecera de YouTube dentro de `ytd-app`) se coloca contra la ventana: al colocar los `absolute` contra ella se repite mientras salgan `fixed` nuevos. La maquetación anota la caja de borde de cada bloque (`Maquetacion::cajas`), que es lo que leen las medidas del DOM.
 
 **Falta:** `calc()`, `min()`, `max()` y `clamp()` (con `var()` dentro son muy comunes), y `inherit`/`initial` en las propias variables.
 

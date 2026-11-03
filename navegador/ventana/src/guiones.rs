@@ -29,6 +29,22 @@ fn entropia(bytes: &mut [u8]) {
     }
 }
 
+/// Quien maqueta para las medidas que lee JavaScript (`clientWidth`, `getBoundingClientRect`):
+/// la cascada con las hojas de la página y la maquetación con anchos de texto aproximados (las
+/// páginas miden sobre todo contenedores, que casi no dependen del texto).
+fn medidor(pagina: &Pagina, (ancho, alto): (f32, f32)) -> quimera_dom::Medir {
+    let hojas = pagina.hojas.clone();
+    let cache = quimera_estilo::CacheHojas::default();
+    Box::new(move |doc| {
+        let externa = |h: &str| hojas.iter().find(|(x, _)| x == h).map(|(_, css)| css.clone());
+        let op = quimera_estilo::Opciones { ancho, alto };
+        let estilos = quimera_estilo::calcular_con_cache(doc, &op, &externa, &cache);
+        let m = quimera_maquetacion::maquetar(doc, &estilos, &quimera_maquetacion::Aproximado, ancho, alto);
+        let cajas = m.cajas.into_iter().map(|(id, c)| (id.0, c)).collect();
+        quimera_dom::Medidas { cajas, ventana: (ancho, alto) }
+    })
+}
+
 /// La página con su JavaScript, y desde cuándo corre su reloj.
 pub struct Guion {
     pub dom: Dom,
@@ -36,11 +52,12 @@ pub struct Guion {
 }
 
 impl Guion {
-    /// Crea el DOM de la página y ejecuta sus scripts.
-    pub fn preparar(pagina: &Pagina) -> Guion {
+    /// Crea el DOM de la página y ejecuta sus scripts, en una vista de `vista` (ancho, alto).
+    pub fn preparar(pagina: &Pagina, vista: (f32, f32)) -> Guion {
         let inicio = Instant::now();
         let mut dom = Dom::nuevo(pagina.documento(), &pagina.url.to_string());
         dom.con_sistema(reloj, entropia);
+        dom.con_medidas(vista, medidor(pagina, vista));
         dom.ejecutar_scripts(&|src| pagina.script(src));
         let mut g = Guion { dom, inicio };
         g.informar();

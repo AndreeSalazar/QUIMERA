@@ -14,8 +14,10 @@ use crate::valores::{Display, Estilo};
 use crate::variables;
 use crate::{Estilos, Opciones};
 use alloc::collections::BTreeMap;
+use alloc::rc::Rc;
 use alloc::string::String;
 use alloc::vec::Vec;
+use core::cell::RefCell;
 use quimera_css::{Declaracion, Hoja, Regla, Selector, Token};
 use quimera_html::{Dato, Documento, NodoId};
 
@@ -54,7 +56,7 @@ struct Indice<'h> {
 }
 
 impl<'h> Indice<'h> {
-    fn nuevo(hojas: &'h [(u8, Hoja)], op: &Opciones) -> Indice<'h> {
+    fn nuevo(hojas: &'h [(u8, Rc<Hoja>)], op: &Opciones) -> Indice<'h> {
         let mut ind = Indice {
             entradas: Vec::new(),
             por_id: BTreeMap::new(),
@@ -116,15 +118,15 @@ impl<'h> Indice<'h> {
 
 /// Las hojas del documento: la del navegador y, en orden de documento, los `<style>` y los
 /// `<link rel="stylesheet">` (cuyo texto da `externa` a partir del `href`).
-fn hojas(doc: &Documento, externa: &dyn Fn(&str) -> Option<String>) -> Vec<(u8, Hoja)> {
-    let mut v = alloc::vec![(0, quimera_css::analizar(NAVEGADOR))];
+fn hojas(doc: &Documento, externa: &dyn Fn(&str) -> Option<String>, cache: &CacheHojas) -> Vec<(u8, Rc<Hoja>)> {
+    let mut v = alloc::vec![(0, cache.analizada(NAVEGADOR))];
     if en_compatibilidad(doc) {
-        v.push((0, quimera_css::analizar(COMPATIBILIDAD)));
+        v.push((0, cache.analizada(COMPATIBILIDAD)));
     }
     for id in doc.descendientes(Documento::RAIZ) {
         let Some(e) = doc.elemento(id) else { continue };
         if e.nombre == "style" {
-            v.push((1, quimera_css::analizar(&doc.texto(id))));
+            v.push((1, cache.analizada(&doc.texto(id))));
         }
         let es_hoja =
             e.atributo("rel").is_some_and(|r| r.split_ascii_whitespace().any(|x| x.eq_ignore_ascii_case("stylesheet")));
@@ -134,15 +136,50 @@ fn hojas(doc: &Documento, externa: &dyn Fn(&str) -> Option<String>) -> Vec<(u8, 
             && !alternativa
             && let Some(texto) = e.atributo("href").and_then(externa)
         {
-            v.push((1, quimera_css::analizar(&texto)));
+            v.push((1, cache.analizada(&texto)));
         }
     }
     v
 }
 
+/// Las hojas ya analizadas, por su texto: quien calcula el estilo muchas veces sobre la misma
+/// página (las medidas que lee JavaScript) no vuelve a analizar el mismo CSS.
+#[derive(Default)]
+pub struct CacheHojas {
+    /// (huella, longitud, hoja), la más reciente al final.
+    hojas: RefCell<Vec<(u64, usize, Rc<Hoja>)>>,
+}
+
+/// Cuántas hojas distintas guarda como mucho.
+const MAX_CACHE: usize = 256;
+
+impl CacheHojas {
+    /// La hoja de `texto`, analizándola solo la primera vez.
+    pub fn analizada(&self, texto: &str) -> Rc<Hoja> {
+        // FNV-1a de 64 bits, junto con la longitud.
+        let huella =
+            texto.bytes().fold(0xcbf2_9ce4_8422_2325_u64, |h, b| (h ^ u64::from(b)).wrapping_mul(0x100_0000_01b3));
+        let mut hojas = self.hojas.borrow_mut();
+        if let Some(h) = hojas.iter().find(|(f, n, _)| *f == huella && *n == texto.len()) {
+            return h.2.clone();
+        }
+        let hoja = Rc::new(quimera_css::analizar(texto));
+        if hojas.len() >= MAX_CACHE {
+            hojas.remove(0);
+        }
+        hojas.push((huella, texto.len(), hoja.clone()));
+        hoja
+    }
+}
+
 /// Calcula el estilo de todos los elementos.
-pub(crate) fn calcular(doc: &Documento, op: &Opciones, externa: &dyn Fn(&str) -> Option<String>) -> Estilos {
-    let hojas = hojas(doc, externa);
+pub(crate) fn calcular(
+    doc: &Documento,
+    op: &Opciones,
+    externa: &dyn Fn(&str) -> Option<String>,
+    cache: &CacheHojas,
+) -> Estilos {
+    let hojas = hojas(doc, externa, cache);
     let indice = Indice::nuevo(&hojas, op);
     let mut estilos: Vec<Option<Estilo>> = alloc::vec![None; doc.total()];
     let raiz = Estilo::default();
