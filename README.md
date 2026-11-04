@@ -214,3 +214,7 @@ Todo lo anterior está en [datos-investigación/](datos-investigación/README.md
 - [cómo está construido Chromium](datos-investigación/docs/INVESTIGACION-CHROMIUM-COMPLETA.md) y [su jerarquía completa](datos-investigación/datos/chromium-jerarquia/LEEME.md);
 - [Servo, Boa y SpiderMonkey medidos](datos-investigación/docs/INVESTIGACION-MOTORES-RUST.md);
 - [el perfil de Boa y el diseño de QUIMERA](datos-investigación/docs/PERFIL-BOA-Y-MOTOR-PROPIO.md).
+
+## Licencia
+
+Copyright 2026 Eddi Andreé Salazar Matos. QUIMERA se publica bajo la [licencia Apache 2.0](LICENSE): se puede usar, modificar y distribuir, también con fines comerciales, siempre que se conserven el aviso de autoría y el archivo [NOTICE](NOTICE).

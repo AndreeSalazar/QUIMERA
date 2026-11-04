@@ -1,0 +1,12 @@
+QUIMERA
+Copyright 2026 Eddi Andreé Salazar Matos
+
+This product is a web browser written from scratch in Rust by
+Eddi Andreé Salazar Matos, licensed under the Apache License 2.0
+(see LICENSE).
+
+It depends on third-party crates (winit, wgpu, rustls, webpki-roots,
+ab_glyph, windows, pollster and their dependencies), each under its own
+license. The benchmark crates in bancos/ also use html5ever, boa_engine,
+png, jpeg-decoder, jpeg-encoder and gif for comparison only.
+Third-party material quoted in datos-investigación/ keeps its own license.
