@@ -1,0 +1,60 @@
+! La lista de bloqueo de QUIMERA (sintaxis de EasyList; ver bloqueo.rs).
+! Solo dominios que sirven anuncios o rastreo y nada más: bloquearlos no rompe ningún sitio.
+! Las rutas, solo las que en YouTube y Google son de anuncios o de medir anuncios.
+
+! --- Anuncios de Google ---
+||doubleclick.net^
+||googlesyndication.com^
+||googleadservices.com^
+||googletagservices.com^
+||adservice.google.com^
+||imasdk.googleapis.com^
+||pagead2.googlesyndication.com^
+
+! --- Rastreo de Google ---
+||google-analytics.com^
+||googletagmanager.com^
+||analytics.google.com^
+
+! --- YouTube: anuncios y su medida ---
+||youtube.com/pagead/
+||youtube.com/ptracking
+||youtube.com/api/stats/ads
+||youtube.com/get_midroll_
+||youtube.com/pcs/activeview
+/pagead/
+/api/stats/ads
+
+! --- Otras redes de anuncios ---
+||amazon-adsystem.com^
+||adnxs.com^
+||adsrvr.org^
+||criteo.com^
+||criteo.net^
+||taboola.com^
+||outbrain.com^
+||pubmatic.com^
+||rubiconproject.com^
+||casalemedia.com^
+||openx.net^
+||moatads.com^
+||adform.net^
+||smartadserver.com^
+||serving-sys.com^
+||yieldmo.com^
+||media.net^
+
+! --- Otro rastreo ---
+||scorecardresearch.com^
+||quantserve.com^
+||hotjar.com^
+||hotjar.io^
+||mouseflow.com^
+||crazyegg.com^
+||fullstory.com^
+||bat.bing.com^
+||clarity.ms^
+||ads-twitter.com^
+||analytics.tiktok.com^
+||ads.linkedin.com^
+||px.ads.linkedin.com^

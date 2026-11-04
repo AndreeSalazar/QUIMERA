@@ -47,6 +47,28 @@ El `Cliente` lleva un tarro (`Mutex<Tarro>`, lo comparten los hilos que descarga
 
 Falta `SameSite`, `HttpOnly` (sin JavaScript da igual: nadie puede leerlas desde la página) y la lista de sufijos públicos.
 
+## Bloqueo de anuncios y rastreo
+
+Como el escudo de Brave, pero más pequeño. Va activado de serie y la lista va **dentro del binario** (`red/red/src/bloqueo.txt`): no se descarga nada ni se avisa a nadie.
+
+- **El filtro** (`bloqueo.rs`, `Filtro`): reglas al estilo EasyList. `||dominio^` bloquea el dominio y sus subdominios (se mira cada sufijo del anfitrión en un `HashSet`); `||youtube.com/ptracking`, el anfitrión con esa ruta; un texto suelto (`/pagead/`) se busca en la URL; `^` es un separador; `@@` es una excepción. Las reglas con opciones (`$third-party`) y las de ocultar elementos (`##`) todavía se ignoran: mejor no bloquear de más.
+- **La lista**: Google Ads (`doubleclick.net`, `googlesyndication.com`, `googleadservices.com`, IMA), Google Analytics y Tag Manager, las rutas de anuncios de YouTube (`/pagead/`, `/api/stats/ads`, `/ptracking`, `/get_midroll_`) y unas 30 redes de anuncios y rastreo. Solo dominios que no sirven otra cosa, para no romper sitios.
+- **Dónde**: en `Cliente::solicitar` y `Cliente::pedir`, en cada salto de las redirecciones. Por ahí pasa todo lo que pide la página: `fetch`, `XMLHttpRequest`, scripts, hojas, imágenes y fuentes. Lo bloqueado devuelve `Error::Bloqueado`, que la página ve como un fallo de red y sigue funcionando. **La navegación** (`Cliente::enviar`: la barra, un enlace, un formulario) no se filtra: la elige el usuario.
+- **Anuncios de vídeo de YouTube** (`anuncios.rs`): no vienen de otro dominio, sino dentro de la respuesta del reproductor. En YouTube se quitan las claves `adPlacements`, `playerAds` y `adSlots` (con su valor JSON entero y su coma) del HTML de `/watch` (`ytInitialPlayerResponse`) y de las respuestas JSON (`/youtubei/v1/player`) antes de que la página las lea. Es lo que hace Brave con su *scriptlet* `json-prune`.
+- `QUIMERA_RED=1` en el modo captura dice cuántas peticiones se bloquearon y cuáles, y cuántas claves de anuncios se quitaron.
+
+**Medido** (modo captura, 1280×900, `QUIMERA_RED=1`, 3 de noviembre de 2026):
+
+| Página | Sin bloqueo | Con bloqueo |
+|---|---|---|
+| YouTube, `watch?v=GWprpnIG-w4` | pide `googleads.g.doubleclick.net/pagead/id` (2 veces) y `static.doubleclick.net/instream/ad_status.js`; el HTML trae un anuncio al principio del vídeo (`AD_PLACEMENT_KIND_START`) | **3 peticiones bloqueadas**, el anuncio quitado; `ytInitialPlayerResponse` se sigue leyendo (título y 26 formatos), sin `adPlacements` |
+| YouTube, RAM (pico, dos pasadas) | 866 y 846 MB privados · 656 y 638 MB en uso | 848 y 802 MB privados · 641 y 595 MB en uso |
+| Steam, portada | no pide publicidad | 0 bloqueadas; se ve igual (cambian los juegos destacados, que rota el servidor); 261 → 269 MB privados (ruido) |
+
+La memoria baja poco (de 20 a 40 MB en YouTube, dentro del ruido entre pasadas): hoy los scripts de anuncios ya fallaban o no hacían casi nada en QUIMERA. Lo que se gana sobre todo es privacidad, y que el reproductor no pida anuncios cuando reproduzca vídeo.
+
+Falta: las opciones de EasyList (`$third-party`, `$script`, `$domain=`), ocultar elementos (`##`), una lista más grande y poder apagar el bloqueo por sitio.
+
 ## Comprobado
 
 - **Sin internet** (en el hook): un servidor HTTP de verdad en `127.0.0.1` dentro de la prueba, con respuesta por trozos, redirección relativa con consulta, bucle de redirecciones (se corta en 10), 404, Latin-1, espacios codificados y conexión rechazada. Además, los ejemplos de resolución de relativas del RFC 3986.

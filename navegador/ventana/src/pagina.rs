@@ -77,7 +77,9 @@ impl Pagina {
     pub fn cargar(cliente: &Cliente, url: &Url, formulario: Option<&[u8]>) -> Pagina {
         let inicio = Instant::now();
         let (url_final, html) = match cliente.enviar(url, formulario) {
-            Ok(r) if r.exito() || !r.cuerpo.is_empty() => (r.url.clone(), texto_html(&r)),
+            Ok(r) if r.exito() || !r.cuerpo.is_empty() => {
+                (r.url.clone(), crate::peticiones::limpiar_youtube(&r.url, texto_html(&r)))
+            }
             Ok(r) => (r.url.clone(), error(url, &format!("el servidor respondió {}", r.estado))),
             Err(e) => (url.clone(), error(url, &e.to_string())),
         };

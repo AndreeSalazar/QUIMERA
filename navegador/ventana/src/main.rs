@@ -211,6 +211,7 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
         m.enlaces.len(),
         imagenes.total()
     );
+    peticiones::informar_bloqueo(&cliente);
     Ok(())
 }
 

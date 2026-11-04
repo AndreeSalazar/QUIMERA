@@ -6,6 +6,8 @@
 //! - **HTTPS** con rustls (TLS 1.2 y 1.3, Rust) y los certificados raíz de Mozilla
 //!   (`webpki-roots`): se comprueba el certificado y el nombre del servidor, como un navegador.
 //! - `file:` (archivos locales) y `data:` (texto o base64 dentro de la URL).
+//! - **Bloqueo de anuncios y rastreo** ([`bloqueo`]), como el escudo de Brave: lo que pide una
+//!   página a un dominio de anuncios responde como un fallo de red ([`Error::Bloqueado`]).
 //!
 //! ```no_run
 //! let cliente = quimera_red::Cliente::nuevo();
@@ -13,6 +15,8 @@
 //! println!("{} {}", r.estado, r.texto());
 //! ```
 
+pub mod anuncios;
+pub mod bloqueo;
 pub mod galletas;
 mod http;
 mod url;
@@ -37,6 +41,8 @@ pub enum Error {
     Http(String),
     /// Esquema que todavía no se sabe pedir.
     NoSoportado(String),
+    /// La URL es de anuncios o de rastreo y el filtro no la deja salir.
+    Bloqueado(String),
 }
 
 impl std::fmt::Display for Error {
@@ -47,6 +53,7 @@ impl std::fmt::Display for Error {
             Error::Tls(m) => write!(f, "conexión segura fallida: {m}"),
             Error::Http(m) => write!(f, "respuesta HTTP no válida: {m}"),
             Error::NoSoportado(m) => write!(f, "no se sabe abrir: {m}"),
+            Error::Bloqueado(m) => write!(f, "bloqueada (anuncios o rastreo): {m}"),
         }
     }
 }
@@ -87,6 +94,8 @@ impl Respuesta {
 /// Máximo de bytes que se aceptan en una respuesta.
 const MAXIMO: u64 = 64 << 20;
 const REDIRECCIONES: usize = 10;
+/// Cuántas direcciones bloqueadas se recuerdan (para contarlas y enseñarlas).
+const RECORDADAS: usize = 1000;
 
 /// El cliente: la configuración de TLS (se prepara una vez) y cómo se presenta.
 pub struct Cliente {
@@ -97,6 +106,10 @@ pub struct Cliente {
     pub espera: Duration,
     /// Las cookies (compartidas por los hilos que piden con este cliente).
     galletas: std::sync::Mutex<galletas::Tarro>,
+    /// El filtro de anuncios y rastreo (`None`: sin bloqueo).
+    pub filtro: Option<bloqueo::Filtro>,
+    /// Lo que se bloqueó: cuántas veces y las primeras direcciones.
+    bloqueadas: std::sync::Mutex<(usize, Vec<String>)>,
 }
 
 /// Lo que se pide: método, cuerpo, cabeceras extra y si van las cookies.
@@ -152,6 +165,8 @@ impl Cliente {
             agente: format!("QUIMERA/{} (+navegador personal en Rust)", env!("CARGO_PKG_VERSION")),
             espera: Duration::from_secs(15),
             galletas: std::sync::Mutex::new(galletas::Tarro::default()),
+            filtro: Some(bloqueo::Filtro::de_serie()),
+            bloqueadas: std::sync::Mutex::new((0, Vec::new())),
         }
     }
 
@@ -160,23 +175,51 @@ impl Cliente {
         self.solicitar(url, &Peticion::get())
     }
 
-    /// Pide una URL, o envía un formulario por POST si hay `formulario` (codificado como
+    /// Navega: pide una URL, o envía un formulario por POST si hay `formulario` (codificado como
     /// `application/x-www-form-urlencoded`), siguiendo las redirecciones: tras un POST, una 301,
     /// 302 o 303 se pide por GET; una 307 o 308 vuelve a enviar el formulario.
+    ///
+    /// Es lo que elige el usuario (la barra, un enlace, un formulario), así que no pasa por el
+    /// filtro: solo se bloquea lo que la página pide por su cuenta.
     pub fn enviar(&self, url: &Url, formulario: Option<&[u8]>) -> Result<Respuesta, Error> {
         let p = match formulario {
             Some(f) => Peticion { metodo: String::from("POST"), cuerpo: Some(f.to_vec()), ..Peticion::get() },
             None => Peticion::get(),
         };
-        self.solicitar(url, &p)
+        self.seguir(url, &p, false)
     }
 
     /// Hace la petición `p` a `url` siguiendo las redirecciones (tras una 301, 302 o 303 de
     /// algo que no sea GET, se sigue por GET y sin cuerpo; una 307 o 308 la repite igual).
+    /// Pasa por el filtro en cada salto: lo bloqueado da [`Error::Bloqueado`].
     pub fn solicitar(&self, url: &Url, p: &Peticion) -> Result<Respuesta, Error> {
+        self.seguir(url, p, true)
+    }
+
+    /// Cuántas peticiones se bloquearon, y las primeras direcciones.
+    pub fn bloqueadas(&self) -> (usize, Vec<String>) {
+        self.bloqueadas.lock().map(|b| b.clone()).unwrap_or_default()
+    }
+
+    /// Si el filtro bloquea `url` (y entonces la apunta).
+    fn bloquear(&self, url: &Url) -> bool {
+        let si = self.filtro.as_ref().is_some_and(|f| f.bloquea(url));
+        if si && let Ok(mut b) = self.bloqueadas.lock() {
+            b.0 += 1;
+            if b.1.len() < RECORDADAS {
+                b.1.push(url.to_string());
+            }
+        }
+        si
+    }
+
+    fn seguir(&self, url: &Url, p: &Peticion, filtrar: bool) -> Result<Respuesta, Error> {
         let mut actual = url.clone();
         let mut p = p.clone();
         for _ in 0..=REDIRECCIONES {
+            if filtrar && self.bloquear(&actual) {
+                return Err(Error::Bloqueado(actual.to_string()));
+            }
             let r = self.pedir_una(&actual, &p)?;
             let destino = r.cabecera("location").filter(|_| matches!(r.estado, 301 | 302 | 303 | 307 | 308));
             match destino {
@@ -347,6 +390,17 @@ fn base64(s: &str) -> Option<Vec<u8>> {
 #[cfg(test)]
 mod pruebas {
     use super::*;
+
+    #[test]
+    fn el_filtro_responde_como_un_fallo_de_red() {
+        let c = Cliente::nuevo();
+        let anuncio = Url::analizar("https://googleads.g.doubleclick.net/pagead/id").unwrap();
+        assert!(matches!(c.pedir(&anuncio), Err(Error::Bloqueado(_))));
+        assert!(matches!(c.solicitar(&anuncio, &Peticion::get()), Err(Error::Bloqueado(_))));
+        assert_eq!(c.bloqueadas(), (2, vec![anuncio.to_string(), anuncio.to_string()]));
+        let datos = Url::analizar("data:text/plain,pagead").unwrap();
+        assert!(c.pedir(&datos).is_ok());
+    }
 
     #[test]
     fn urls_data() {

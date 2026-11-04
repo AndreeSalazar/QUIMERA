@@ -9,6 +9,10 @@
 //!   ese origen exacto y `Access-Control-Allow-Credentials: true`). Los `<script src>` no pasan
 //!   por CORS (la página no lee su texto: solo se ejecuta), pero a otro origen van sin cookies.
 //!
+//! Lo que es de anuncios o de rastreo no sale: el filtro de `quimera-red` lo responde como un
+//! fallo de red. Y a las respuestas de YouTube se les quitan los anuncios de vídeo
+//! ([`limpiar_youtube`]).
+//!
 //! Falta: la petición previa (`OPTIONS`) que hacen los navegadores antes de una petición «no
 //! simple» a otro origen. Sin ella, esas peticiones salen igual (sin cookies).
 
@@ -82,7 +86,33 @@ pub fn completar(prep: &Preparada, r: Result<Respuesta, quimera_red::Error>) -> 
             return Err(format!("CORS: {} no permite que {o} lea su respuesta", origen(&prep.url)));
         }
     }
-    Ok(RespuestaJs { estado: r.estado, url: r.url.to_string(), cabeceras: r.cabeceras.clone(), cuerpo: r.texto() })
+    let cuerpo = limpiar_youtube(&r.url, r.texto());
+    Ok(RespuestaJs { estado: r.estado, url: r.url.to_string(), cabeceras: r.cabeceras.clone(), cuerpo })
+}
+
+/// En YouTube, quita los anuncios de vídeo (`adPlacements`, `playerAds`, `adSlots`) del HTML de
+/// `/watch` y del JSON de `/youtubei/v1/player` antes de que la página los lea.
+pub fn limpiar_youtube(url: &Url, texto: String) -> String {
+    if !quimera_red::anuncios::es_de_youtube(&url.anfitrion) {
+        return texto;
+    }
+    let (limpio, n) = quimera_red::anuncios::quitar(&texto);
+    if n > 0 && std::env::var_os("QUIMERA_RED").is_some() {
+        eprintln!("red: anuncios de vídeo quitados de {}: {n}", url.ruta);
+    }
+    limpio
+}
+
+/// `QUIMERA_RED=1`: cuántas peticiones bloqueó el filtro y cuáles.
+pub fn informar_bloqueo(cliente: &Cliente) {
+    if std::env::var_os("QUIMERA_RED").is_none() {
+        return;
+    }
+    let (n, urls) = cliente.bloqueadas();
+    eprintln!("red: {n} peticiones bloqueadas (anuncios y rastreo)");
+    for u in urls {
+        eprintln!("red:   bloqueada {}", u.chars().take(160).collect::<String>());
+    }
 }
 
 /// Atiende una petición entera (para el modo captura, que no espera en otro hilo).
@@ -162,5 +192,14 @@ mod pruebas {
         assert!(completar(&prep, resp(Some("https://malo.com"))).is_err());
         assert_eq!(completar(&prep, resp(Some("*"))).map(|r| r.cuerpo).as_deref(), Ok("ok"));
         assert!(completar(&prep, resp(Some("https://ejemplo.com"))).is_ok());
+    }
+
+    #[test]
+    fn sin_anuncios_de_video_en_youtube() {
+        let json = String::from(r#"{"playerAds":[1],"videoDetails":{}}"#);
+        let yt = Url::analizar("https://www.youtube.com/youtubei/v1/player").expect("url");
+        assert_eq!(limpiar_youtube(&yt, json.clone()), r#"{"videoDetails":{}}"#);
+        let otro = Url::analizar("https://ejemplo.com/api").expect("url");
+        assert_eq!(limpiar_youtube(&otro, json.clone()), json, "solo en YouTube");
     }
 }
