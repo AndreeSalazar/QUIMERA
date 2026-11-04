@@ -114,6 +114,23 @@ Mientras tanto, QUIMERA ya aplica ese principio en lo que se va haciendo: decodi
 - **Velocidad:** decodificar PNG más rápido (hoy 0,5× de la referencia), marcar el GC mayor por partes.
 - **El coste fijo de la GPU (potencial para después).** Medido fase a fase (noviembre de 2026): arrancar el driver de DirectX 12 suma **~123 MB** antes de cargar nada, en todas las páginas. Es el mayor coste fijo que queda (Wikipedia entera, 144 MB en uso). Ideas para probar, midiendo cada una: otro sistema gráfico (Vulkan, OpenGL) o el adaptador de bajo consumo; límites y funciones de wgpu más pequeños (`Limits::downlevel_defaults`, sin funciones que no usamos); un atlas de letras y búferes más chicos; y, si nada baja lo suficiente, un modo de pintado por CPU para páginas sencillas. Que la escena suba a la GPU solo lo visible encaja aquí y en SUPER QUIMERA.
 
+## Pendiente: el bloqueador de anuncios
+
+Hecho (noviembre de 2026): filtro de red con EasyList y EasyPrivacy enteras, ocultar elementos con `:has()`, *scriptlets*, anuncios de vídeo de YouTube quitados y Ctrl+B por sitio. Detalle y medidas en [RED.md](RED.md#bloqueo-de-anuncios-y-rastreo). Queda:
+
+- [ ] **Probar Ctrl+B a mano en la ventana** (apagar y encender en YouTube, que se guarde en `sin-bloqueo.txt` y que la recarga lo respete). Hoy solo lo cubren las pruebas unitarias.
+- [ ] **Ver un anuncio de vídeo bloqueado de verdad**, cuando el reproductor de YouTube reproduzca ([VIDEO.md](VIDEO.md)): que empiece el vídeo y no el anuncio, y que no pida `/pagead/` ni `/api/stats/ads`.
+- [ ] *Scriptlets* que faltan: `json-edit`, `rmnt` (`remove-node-text`), `aost` (`abort-on-stack-trace`), `trusted-*`.
+- [ ] Opciones de red que se ignoran (la regla entera no se aplica): `$popup`, `$csp=`, `$redirect=` y `$redirect-rule=` (responder con un recurso vacío en vez de un fallo), `$removeparam=`, `$ping`, `$websocket`.
+- [ ] `$generichide` y `$elemhide`: hoy esas excepciones se ignoran, y en esos sitios se ocultan igual las genéricas.
+- [ ] Las variantes de Adblock Plus: `#?#` (`:-abp-has`, `:-abp-contains`), `#$#` (sus *snippets*) y `#%#`.
+- [ ] Reglas genéricas de ocultar también para las clases e ids que añade el JavaScript después de cargar (hoy solo se miran las del HTML que llega).
+- [ ] La lista de sufijos públicos (`co.uk`, `github.io`…): `sitio()` es una aproximación, y también la usan las cookies.
+- [ ] Dominios con comodín en las reglas de sitio (`google.*##…`): hoy se ignoran.
+- [ ] Actualizar EasyList y EasyPrivacy de vez en cuando (ver `red/red/listas/LEEME.md`), y aclarar su licencia (GPLv3 o CC BY-SA 3.0) antes de repartir el binario.
+- [ ] Un indicador en la barra con cuántas peticiones se bloquearon en la página, como el escudo de Brave.
+- [ ] Leer las listas en otro hilo al arrancar (hoy tardan 44–97 ms la primera vez que se usa el filtro).
+
 ## Qué es el DOM y por qué cuesta
 
 El DOM es la página viva en memoria, en forma de árbol (`documento → body → h1 → "Hola"`), que JavaScript puede leer y cambiar. Existe para que la página cambie sin recargarse: YouTube llega casi vacío y su JavaScript construye toda la página metiendo nodos en ese árbol.
