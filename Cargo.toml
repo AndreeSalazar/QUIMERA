@@ -17,6 +17,7 @@ members = [
     "grafico/texto",
     "grafico/vector",
     "grafico/imagen",
+    "grafico/video",
     "grafico/gpu",
     "grafico/pintar",
     "navegador/ventana",
@@ -54,6 +55,7 @@ quimera-dom = { path = "web/dom" }
 quimera-maquetacion = { path = "web/maquetacion" }
 quimera-texto = { path = "grafico/texto" }
 quimera-imagen = { path = "grafico/imagen" }
+quimera-video = { path = "grafico/video" }
 quimera-gpu = { path = "grafico/gpu" }
 quimera-pintar = { path = "grafico/pintar" }
 quimera-red = { path = "red/red" }

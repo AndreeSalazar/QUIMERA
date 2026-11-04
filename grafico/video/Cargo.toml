@@ -1,0 +1,25 @@
+[package]
+name = "quimera-video"
+description = "Vídeo de QUIMERA: MP4 (también fragmentado) y H.264 a Annex B propios; H.264 decodificado con Media Foundation en Windows."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[package.metadata.quimera]
+nivel = 2
+capa = "grafico"
+no_std = true
+externos = ["windows"]
+permite_unsafe = true
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "=0.58.0", features = [
+    "Win32_Foundation",
+    "Win32_Media_MediaFoundation",
+    "Win32_System_Com",
+] }
+
+[lints]
+workspace = true
