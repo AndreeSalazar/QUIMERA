@@ -113,6 +113,8 @@ struct Cargada {
     en_gpu: bool,
     /// Se está decodificando.
     decodificando: bool,
+    /// Un fotograma de vídeo, ya en RGBA: se sube tal cual y no se suelta.
+    crudo: Option<Arc<Vec<u8>>>,
 }
 
 /// Las imágenes de la página actual.
@@ -160,9 +162,37 @@ impl Imagenes {
     /// Llegó una imagen (comprimida, con su tamaño).
     pub fn llegada(&mut self, src: String, (bytes, (ancho, alto)): Descargada) {
         self.siguiente += 1;
-        let c = Cargada { id: self.siguiente, ancho, alto, bytes, en_gpu: false, decodificando: false };
+        let c = Cargada { id: self.siguiente, ancho, alto, bytes, en_gpu: false, decodificando: false, crudo: None };
         self.pedidas.insert(src.clone());
         self.cargadas.insert(src, c);
+    }
+
+    /// El fotograma que toca de un `<video>` (`src` = `quimera-video:N`), ya en RGBA. Conserva
+    /// su número de textura: la GPU solo cambia los píxeles.
+    pub fn fotograma(&mut self, src: String, ancho: u32, alto: u32, rgba: Vec<u8>) {
+        let id = match self.cargadas.get(&src) {
+            Some(c) => c.id,
+            None => {
+                self.siguiente += 1;
+                self.siguiente
+            }
+        };
+        let crudo = Some(Arc::new(rgba));
+        let c = Cargada { id, ancho, alto, bytes: Arc::new(Vec::new()), en_gpu: false, decodificando: false, crudo };
+        self.pedidas.insert(src.clone());
+        self.cargadas.insert(src, c);
+    }
+
+    /// Los fotogramas de vídeo nuevos que hay que subir a la GPU: (id, ancho, alto, RGBA).
+    pub fn fotogramas_por_subir(&mut self) -> Vec<(u32, u32, u32, Arc<Vec<u8>>)> {
+        let mut v = Vec::new();
+        for c in self.cargadas.values_mut() {
+            if let (Some(rgba), false) = (&c.crudo, c.en_gpu) {
+                c.en_gpu = true;
+                v.push((c.id, c.ancho, c.alto, rgba.clone()));
+            }
+        }
+        v
     }
 
     /// Su tamaño propio (para maquetar).
@@ -179,7 +209,7 @@ impl Imagenes {
     pub fn por_decodificar(&mut self, cerca: &HashSet<String>) -> Vec<(u32, Arc<Vec<u8>>)> {
         let mut v = Vec::new();
         for (src, c) in &mut self.cargadas {
-            if !c.en_gpu && !c.decodificando && cerca.contains(src) {
+            if !c.en_gpu && !c.decodificando && c.crudo.is_none() && cerca.contains(src) {
                 c.decodificando = true;
                 v.push((c.id, c.bytes.clone()));
             }

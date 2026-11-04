@@ -54,6 +54,13 @@ const CLEAR_TIMEOUT: u32 = 72;
 const ANIMATION_FRAME: u32 = 73;
 const ALERT: u32 = 74;
 const PEDIR: u32 = 75;
+const MEDIO_FUENTE: u32 = 76;
+const MEDIO_ANADIR: u32 = 77;
+const MEDIO_QUITAR: u32 = 78;
+const MEDIO_VIDEO: u32 = 79;
+const MEDIO_TIEMPO: u32 = 80;
+const MEDIO_RELOJ: u32 = 81;
+const MEDIO_TAM: u32 = 82;
 const DISPATCH: u32 = 16;
 /// `__quimera_color(texto)`: un color de CSS normalizado como lo da un canvas, o `null`.
 const COLOR: u32 = 17;
@@ -130,6 +137,13 @@ pub(crate) const TABLA: &[(&str, &[(&str, u32)])] = &[
             ("__quimera_color", COLOR),
             ("__quimera_observar_mutaciones", OBSERVAR_MUTACIONES),
             ("__quimera_tomar_mutaciones", TOMAR_MUTACIONES),
+            ("__quimera_medio_fuente", MEDIO_FUENTE),
+            ("__quimera_medio_anadir", MEDIO_ANADIR),
+            ("__quimera_medio_quitar", MEDIO_QUITAR),
+            ("__quimera_medio_video", MEDIO_VIDEO),
+            ("__quimera_medio_tiempo", MEDIO_TIEMPO),
+            ("__quimera_medio_reloj", MEDIO_RELOJ),
+            ("__quimera_medio_tam", MEDIO_TAM),
             ("addEventListener", ADD_LISTENER),
             ("removeEventListener", REMOVE_LISTENER),
             ("dispatchEvent", DISPATCH),
@@ -145,6 +159,50 @@ fn nodo_de(m: &Motor, est: &Estado, v: Valor) -> Option<NodoId> {
 
 fn texto_arg(m: &Motor, a: &Argumentos, i: usize) -> String {
     m.texto(a.arg(m, i))
+}
+
+/// `MediaSource` y `<video>` (ver `medios.rs`).
+fn medio(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Result<Valor, Valor> {
+    use crate::medios;
+    let num = |m: &Motor, i: usize| a_numero(&m.mundo, a.arg(m, i));
+    let rangos = |m: &mut Motor, r: Vec<f64>| {
+        let v: Vec<Valor> = r.into_iter().map(Valor::numero).collect();
+        m.crear_arreglo(&v)
+    };
+    let fuente = |m: &Motor, i: usize| num(m, i).max(0.0) as usize;
+    Ok(match id {
+        MEDIO_FUENTE => Valor::entero(medios::nueva_fuente(est, &texto_arg(m, a, 0)) as i32),
+        MEDIO_ANADIR => {
+            let datos = m.bytes_de(a.arg(m, 1)).unwrap_or_default();
+            let r = medios::anadir(est, fuente(m, 0), &datos, num(m, 2));
+            rangos(m, r)
+        }
+        MEDIO_QUITAR => {
+            let r = medios::quitar(est, fuente(m, 0), num(m, 1), num(m, 2));
+            rangos(m, r)
+        }
+        MEDIO_VIDEO => {
+            if let Some(n) = nodo_de(m, est, a.arg(m, 0)) {
+                medios::enlazar(est, n.0, fuente(m, 1));
+            }
+            Valor::INDEFINIDO
+        }
+        MEDIO_TIEMPO => Valor::numero(nodo_de(m, est, a.arg(m, 0)).map_or(0.0, |n| medios::tiempo(est, n.0))),
+        MEDIO_RELOJ => {
+            if let Some(n) = nodo_de(m, est, a.arg(m, 0)) {
+                let corre = a_booleano(&m.mundo, a.arg(m, 2));
+                medios::poner_reloj(est, n.0, num(m, 1).max(0.0), corre, num(m, 3));
+            }
+            Valor::INDEFINIDO
+        }
+        _ => match medios::tam(est, fuente(m, 0)) {
+            Some((w, h)) => {
+                let v = [Valor::entero(i32::from(w)), Valor::entero(i32::from(h))];
+                m.crear_arreglo(&v)
+            }
+            None => Valor::NULO,
+        },
+    })
 }
 
 /// Copia un nodo (y sus descendientes si `profundo`), suelto.
@@ -175,6 +233,7 @@ pub(crate) fn llamar(m: &mut Motor, est: &Estado, id: u32, a: &Argumentos) -> Re
     match id {
         SET_TIMEOUT..=ALERT => return ventana(m, est, id, a),
         PEDIR => return pedir(m, est, a),
+        MEDIO_FUENTE..=MEDIO_TAM => return medio(m, est, id, a),
         OBSERVAR_MUTACIONES => {
             if let Some(n) = nodo_de(m, est, a.arg(m, 0)) {
                 crate::mutaciones::observar(est, n, a_booleano(&m.mundo, a.arg(m, 1)));

@@ -27,6 +27,7 @@ mod perfil;
 mod peticiones;
 mod png;
 mod tipografias;
+mod video;
 
 use imagenes::Imagenes;
 use navegador::{Evento, Navegador};
@@ -184,6 +185,9 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
     }
     imagenes.en_linea(&cliente, &pagina.base, &m);
     gpu.cargar(&pintor.escena(&m, 1.0, &|s| imagenes.id(s)));
+    for (id, ancho, alto, rgba) in imagenes.fotogramas_por_subir() {
+        gpu.subir_imagen(id, ancho, alto, &rgba);
+    }
     // Solo se decodifican las imágenes que salen en la captura.
     for (id, bytes) in imagenes.por_decodificar(&imagenes::entre(&m, 0.0, h)) {
         match quimera_imagen::decodificar(&bytes) {
@@ -327,6 +331,8 @@ fn maquetar_pagina(
         guion.dom.ejecutar(&codigo);
         guion.informar();
     }
+    // El fotograma que toca en cada `<video>`.
+    video::Videos::default().avanzar(&guion.dom, imagenes);
     let mut doc = guion.dom.documento().clone();
     // Las imágenes que añadieron los scripts.
     let nuevas = imagenes.nuevas(&doc);

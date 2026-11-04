@@ -35,6 +35,13 @@ Con un MediaSource provisional que solo contaba bytes, y respondiendo que sí a 
 
 1. ✅ **`ArrayBuffer` y arreglos tipados nativos en la VM** (ver [VM.md](VM.md)). Con ellos, el mismo experimento llega mucho más lejos: el reproductor mete en sus `SourceBuffer` el segmento de inicio (741 bytes) y trozos de vídeo de unos 350 KB y de audio de unos 160 KB. Son 1,8 MB de vídeo y 1,1 MB de audio en una prueba de 6 s de página.
 
-2. **`MediaSource`, `SourceBuffer` y `<video>`** en el DOM, con su reloj y sus eventos. Los segmentos van a `mp4::Demuxer` para saber qué tiempos hay (`buffered`), e `isTypeSupported` dice que sí solo a H.264 y AAC con parámetros razonables.
-3. **Pintar los fotogramas** en la caja del `<video>`.
-4. **Sonido**: AAC con Media Foundation y salida con WASAPI.
+2. ✅ **`MediaSource`, `SourceBuffer` y `<video>`** en el DOM (`web/dom/src/medios.rs`):
+   - **Qué tiempos hay.** Lo que se mete con `appendBuffer` va al `mp4::Demuxer` de `quimera-video`, que dice qué tiempos tienen datos (`buffered`). Las muestras de vídeo esperan a que el anfitrión las tome con `Dom::tomar_videos`.
+   - **El reloj** de cada `<video>` vive en Rust, sobre la hora de la página: corre al reproducir y se para al final de los datos. Va igual en la ventana y en una captura.
+   - **La API y sus eventos**, en JavaScript: `sourceopen`, `updateend`, `loadedmetadata`, `loadeddata`, `canplay`, `play`, `playing`, `timeupdate`, `waiting`, `pause`, `seeking`, `seeked` y `ended`. También `URL.createObjectURL`.
+   - **Qué se acepta.** `isTypeSupported` dice que sí solo a H.264 y AAC en MP4 con `codecs` (Chrome tampoco acepta `video/mp4` sin ellos), así que YouTube elige esos.
+3. ✅ **Pintar los fotogramas.** `<video>` es un elemento reemplazado en la maquetación (300 × 150 si no tiene imagen, como en los navegadores) y se pinta con la imagen `quimera-video:N`. La ventana (`navegador/ventana/src/video.rs`) decodifica sus muestras con Media Foundation. Para no llenar la RAM, solo decodifica hasta el tiempo actual: las demás esperan comprimidas.
+
+   **Primer resultado:** en una captura de la página de vídeo con 14 s de página, el `<video>` de YouTube va por el segundo 14 sin pausa, con `readyState` 4 y datos hasta el segundo 64. YouTube eligió 480p (854 × 480; en otra prueba, 720p) y QUIMERA pinta el fotograma real de ese momento.
+4. **Que se mueva en la ventana**: decodificar y pintar fotograma a fotograma mientras la página corre (hoy se ve en las capturas).
+5. **Sonido**: AAC con Media Foundation y salida con WASAPI.

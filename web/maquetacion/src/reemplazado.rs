@@ -19,9 +19,14 @@ use alloc::string::String;
 use quimera_estilo::{Estilo, Medida, Relleno};
 use quimera_html::NodoId;
 
-/// Si el nodo es una imagen (`<img>` o `<svg>`).
+/// Si el nodo es una imagen (`<img>`, `<svg>` o `<video>`, que se pinta con su fotograma).
 pub(crate) fn es_imagen(m: &Maquetador<'_>, id: NodoId) -> bool {
-    m.doc.elemento(id).is_some_and(|e| e.nombre == "img" || e.nombre == "svg")
+    m.doc.elemento(id).is_some_and(|e| matches!(e.nombre.as_str(), "img" | "svg" | "video"))
+}
+
+/// Lo que identifica el fotograma de un `<video>`: el anfitrión lo da con este `src`.
+pub fn src_de_video(id: NodoId) -> String {
+    alloc::format!("quimera-video:{}", id.0)
 }
 
 /// Cuántas veces su tamaño se rasteriza un `<svg>`.
@@ -36,6 +41,10 @@ impl Maquetador<'_> {
                 // El analizador guarda `viewBox` como en SVG (o en minúsculas, si venía así).
                 let caja = el.atributo("viewBox").or_else(|| el.atributo("viewbox"));
                 Some(quimera_vector::tam_de_atributos(el.atributo("width"), el.atributo("height"), caja))
+            }
+            // Su fotograma; sin él, 300 × 150, como en los navegadores.
+            Some(el) if el.nombre == "video" => {
+                Some((self.imagenes)(&src_de_video(id)).map_or((300.0, 150.0), |(w, h)| (w as f32, h as f32)))
             }
             _ => {
                 el.and_then(|el| el.atributo("src")).and_then(|s| (self.imagenes)(s)).map(|(w, h)| (w as f32, h as f32))
@@ -84,6 +93,9 @@ impl Maquetador<'_> {
     /// Lo que identifica la imagen: el `src` de un `<img>`, o el `data:` de un `<svg>` de `ancho` × `alto`.
     pub(crate) fn src_imagen(&self, id: NodoId, e: &Estilo, (ancho, alto): (f32, f32)) -> String {
         let Some(el) = self.doc.elemento(id) else { return String::new() };
+        if el.nombre == "video" {
+            return src_de_video(id);
+        }
         if el.nombre != "svg" {
             return String::from(el.atributo("src").unwrap_or(""));
         }

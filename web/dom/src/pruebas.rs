@@ -6,12 +6,12 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use quimera_html::analizar;
 
-fn dom(html: &str) -> Dom {
+pub(crate) fn dom(html: &str) -> Dom {
     Dom::nuevo(analizar(html), "https://ejemplo.com/a")
 }
 
 /// Ejecuta `js` y devuelve lo escrito con `console.log` (y los errores, si hubo).
-fn correr(d: &mut Dom, js: &str) -> Vec<String> {
+pub(crate) fn correr(d: &mut Dom, js: &str) -> Vec<String> {
     d.ejecutar(js);
     let mut r = d.consola();
     r.extend(d.errores().into_iter().map(|e| alloc::format!("ERROR {e}")));

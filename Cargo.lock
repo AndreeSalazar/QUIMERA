@@ -2187,6 +2187,7 @@ version = "0.1.0"
 dependencies = [
  "quimera-css",
  "quimera-html",
+ "quimera-video",
  "quimera-vm",
 ]
 
@@ -2315,6 +2316,7 @@ dependencies = [
  "quimera-pintar",
  "quimera-red",
  "quimera-texto",
+ "quimera-video",
  "winit",
 ]
 

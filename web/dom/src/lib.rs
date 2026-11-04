@@ -24,6 +24,7 @@ mod binario;
 mod complementos;
 mod eventos;
 mod interfaces;
+mod medios;
 mod metodos;
 mod mutaciones;
 mod observadores;
@@ -39,6 +40,7 @@ use core::cell::{Cell, Ref, RefCell};
 use quimera_html::{Dato, Documento, NodoId};
 use quimera_vm::{Motor, Valor};
 
+pub use medios::VideoPendiente;
 pub use red::{PeticionJs, RespuestaJs};
 pub use selectores::Selector;
 
@@ -71,6 +73,8 @@ pub(crate) struct Estado {
     pub(crate) siguiente_peticion: Cell<u32>,
     /// Peticiones de `<script src>` añadidos por scripts: número de petición → nodo.
     pub(crate) scripts_pendientes: RefCell<alloc::collections::BTreeMap<u32, u32>>,
+    /// `MediaSource`: lo metido en cada `SourceBuffer` y el reloj de cada `<video>`.
+    pub(crate) medios: RefCell<medios::Medios>,
     /// Las imágenes que ya llegaron, por `src`: su tamaño propio (`None` si fallaron).
     pub(crate) naturales: RefCell<alloc::collections::BTreeMap<String, Option<(u32, u32)>>>,
     /// Los `<script>` ya ejecutados (o pedidos): cada uno corre una sola vez.
@@ -357,6 +361,7 @@ impl Dom {
             siguiente_peticion: Cell::new(1),
             scripts_pendientes: RefCell::new(alloc::collections::BTreeMap::new()),
             naturales: RefCell::new(alloc::collections::BTreeMap::new()),
+            medios: RefCell::new(medios::Medios::default()),
             ejecutados: RefCell::new(alloc::collections::BTreeSet::new()),
             medir: RefCell::new(None),
             medidas: RefCell::new(None),
@@ -375,6 +380,7 @@ impl Dom {
             interfaces::INTERFACES_JS,
             complementos::COMPLEMENTOS_JS,
             binario::BINARIO_JS,
+            medios::MEDIOS_JS,
             observadores::OBSERVADORES_JS,
             animaciones::ANIMACIONES_JS,
             DOCUMENTO_JS,
@@ -528,6 +534,12 @@ impl Dom {
         puente::despachar(&mut self.motor, &self.estado, nodo, tipo)
     }
 
+    /// Los `<video>` con MediaSource: su tiempo ahora y las muestras de vídeo nuevas (para
+    /// decodificarlas y pintar el fotograma que toca).
+    pub fn tomar_videos(&self) -> Vec<VideoPendiente> {
+        medios::tomar(&self.estado)
+    }
+
     /// Llegó la imagen `src` (con su tamaño propio) o falló (`None`): sus `<img>` lanzan `load`
     /// (o `error`) y ya dicen `naturalWidth`, `naturalHeight` y `complete`.
     pub fn imagen_cargada(&mut self, src: &str, tam: Option<(u32, u32)>) {
@@ -559,3 +571,5 @@ impl Dom {
 
 #[cfg(test)]
 mod pruebas;
+#[cfg(test)]
+mod pruebas_medios;

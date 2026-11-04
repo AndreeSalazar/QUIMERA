@@ -485,7 +485,8 @@ impl<'a> Maquetador<'a> {
                 }
                 // Una caja en línea (y los controles): se maqueta aparte y va como una palabra.
                 let control = crate::control::tipo_control(self, id).is_some();
-                if (e.display == Display::BloqueEnLinea || control) && el.nombre != "img" && el.nombre != "svg" {
+                let reemplazado = matches!(el.nombre.as_str(), "img" | "svg" | "video");
+                if (e.display == Display::BloqueEnLinea || control) && !reemplazado {
                     items.push(self.caja_en_linea(id, e));
                     *ultimo_espacio = false;
                     return;
@@ -495,7 +496,7 @@ impl<'a> Maquetador<'a> {
                         items.push(Item::Salto { estilo: e });
                         *ultimo_espacio = true;
                     }
-                    "img" | "svg" => {
+                    "img" | "svg" | "video" => {
                         let contenedor = if self.midiendo { 0.0 } else { self.ancho_actual };
                         let (ancho, alto) = self.tam_imagen(id, e, contenedor);
                         let src = self.src_imagen(id, e, (ancho, alto));
