@@ -17,6 +17,7 @@ cargo run --release -p quimera-ventana -- pagina.html --captura salida.png 1024 
 | Escribir una dirección | Clic en el campo, Ctrl+L o F6; Enter para ir, Esc para salir. `example.com/x` → `https://`; `localhost:8080` → `http://`; también rutas locales. Lo que no es una dirección no se envía a ningún buscador |
 | Atrás / adelante | Botones ← →, Alt+← / Alt+→, o los botones laterales del ratón |
 | Recargar | ⟳, F5 o Ctrl+R |
+| Apagar o encender el bloqueo de anuncios en este sitio | Ctrl+B (recarga la página; ver [RED.md](RED.md#bloqueo-de-anuncios-y-rastreo)) |
 | Formularios | Clic en un campo para escribir (Retroceso borra, Esc o Tab sueltan el foco, Enter envía); clic en una casilla la marca; clic en un botón de enviar envía su formulario |
 
 Las páginas se cargan en **otro hilo**: la ventana sigue respondiendo y la línea de estado dice «Cargando...». Si mientras tanto se pide otra página, la primera se descarta al llegar. El historial guarda la URL final, tras las redirecciones.

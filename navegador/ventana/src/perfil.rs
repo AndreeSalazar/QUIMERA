@@ -1,4 +1,5 @@
-//! Lo que QUIMERA recuerda entre una vez y otra: por ahora, las cookies que no son de sesión.
+//! Lo que QUIMERA recuerda entre una vez y otra: las cookies que no son de sesión y los sitios
+//! donde se apagó el bloqueo de anuncios (`sin-bloqueo.txt`, un sitio por línea).
 //!
 //! Van en `%APPDATA%\QUIMERA\galletas.txt` (Windows) o `~/.local/share/quimera/galletas.txt`
 //! (`$XDG_DATA_HOME` si está). Es texto sin cifrar, como el `Cookies` de un perfil de Firefox
@@ -26,6 +27,27 @@ fn archivo_galletas() -> Option<PathBuf> {
 pub fn cargar_galletas(cliente: &Cliente) {
     if let Some(texto) = archivo_galletas().and_then(|a| std::fs::read_to_string(a).ok()) {
         cliente.cargar_galletas(&texto);
+    }
+}
+
+fn archivo_sin_bloqueo() -> Option<PathBuf> {
+    carpeta().map(|c| c.join("sin-bloqueo.txt"))
+}
+
+/// Carga los sitios donde el usuario apagó el bloqueo.
+pub fn cargar_sin_bloqueo(cliente: &Cliente) {
+    if let Some(texto) = archivo_sin_bloqueo().and_then(|a| std::fs::read_to_string(a).ok()) {
+        cliente.cargar_sin_bloqueo(&texto);
+    }
+}
+
+/// Guarda los sitios sin bloqueo.
+pub fn guardar_sin_bloqueo(cliente: &Cliente) {
+    let Some(archivo) = archivo_sin_bloqueo() else { return };
+    let texto = cliente.sin_bloqueo_texto();
+    let hecho = archivo.parent().map_or(Ok(()), std::fs::create_dir_all).and_then(|()| std::fs::write(&archivo, texto));
+    if let Err(e) = hecho {
+        eprintln!("no se pudo guardar la lista de sitios sin bloqueo en {}: {e}", archivo.display());
     }
 }
 

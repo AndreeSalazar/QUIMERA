@@ -13,7 +13,8 @@
 use quimera_html::Documento;
 use quimera_imagen::Imagen;
 use quimera_maquetacion::{Maquetacion, Pieza};
-use quimera_red::{Cliente, Url};
+use quimera_red::bloqueo::Tipo;
+use quimera_red::{Cliente, Peticion, Url};
 use std::collections::{HashMap, HashSet};
 use std::sync::{Arc, Mutex};
 
@@ -45,7 +46,7 @@ pub type Descargada = (Arc<Vec<u8>>, (u32, u32));
 /// Descarga una imagen y lee su tamaño (sin decodificarla).
 pub fn descargar(cliente: &Cliente, base: &Url, src: &str) -> Result<Descargada, String> {
     let url = base.unir(src.trim()).map_err(|e| e.to_string())?;
-    let r = cliente.pedir(&url).map_err(|e| e.to_string())?;
+    let r = cliente.solicitar(&url, &Peticion::recurso(Tipo::Imagen, base)).map_err(|e| e.to_string())?;
     if !r.exito() {
         return Err(format!("el servidor respondió {}", r.estado));
     }

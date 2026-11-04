@@ -22,7 +22,7 @@
 ||youtube.com/api/stats/ads
 ||youtube.com/get_midroll_
 ||youtube.com/pcs/activeview
-/pagead/
+/pagead/*
 /api/stats/ads
 
 ! --- Otras redes de anuncios ---
@@ -58,3 +58,63 @@
 ||analytics.tiktok.com^
 ||ads.linkedin.com^
 ||px.ads.linkedin.com^
+
+! --- Rastreo de redes sociales y analítica, solo desde otros sitios ($third-party) ---
+||connect.facebook.net^$third-party
+||facebook.com/tr^$third-party
+||facebook.com/plugins/$third-party
+||analytics.twitter.com^
+||static.ads-twitter.com^
+||t.co/i/adsct
+||snap.licdn.com^$third-party
+||ct.pinterest.com^
+||analytics.tiktok.com^
+||mc.yandex.ru^
+||api.segment.io^
+||cdn.segment.com^$third-party
+||api.amplitude.com^$third-party
+||cdn.amplitude.com^$third-party
+||api-js.mixpanel.com^
+||cdn.mxpnl.com^
+||js-agent.newrelic.com^
+||bam.nr-data.net^
+||pixel.wp.com^
+||stats.wp.com^$third-party
+||googleoptimize.com^
+||adsafeprotected.com^
+||doubleverify.com^
+||branch.io^$third-party
+||app-measurement.com^
+||firebaselogging-pa.googleapis.com^
+
+! --- Rutas típicas de anuncios, solo desde otros sitios o solo scripts ---
+/adsbygoogle.js$script
+/gpt.js$script,third-party
+/prebid.js$script,third-party
+/pubads_impl$script
+/show_ads.js$script
+
+! --- Ocultar elementos (##): YouTube ---
+youtube.com##ytd-ad-slot-renderer
+youtube.com##ytd-in-feed-ad-layout-renderer
+youtube.com##ytd-display-ad-renderer
+youtube.com##ytd-promoted-sparkles-web-renderer
+youtube.com##ytd-promoted-video-renderer
+youtube.com##ytd-compact-promoted-video-renderer
+youtube.com##ytd-banner-promo-renderer
+youtube.com##ytd-statement-banner-renderer
+youtube.com##ytd-player-legacy-desktop-watch-ads-renderer
+youtube.com##ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-ads"]
+youtube.com##ytd-rich-item-renderer:has(> #content > ytd-ad-slot-renderer)
+youtube.com###masthead-ad
+youtube.com###player-ads
+youtube.com##.ytp-ad-module
+youtube.com##.ytp-ad-overlay-container
+
+! --- Ocultar elementos (##): en todas las páginas ---
+##ins.adsbygoogle
+##.adsbygoogle
+##[id^="div-gpt-ad"]
+##[id^="google_ads_iframe"]
+##amp-ad
+##.GoogleActiveViewElement

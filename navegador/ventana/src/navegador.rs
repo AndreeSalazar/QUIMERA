@@ -83,6 +83,7 @@ impl Navegador {
     pub fn nuevo(url: Url, pintor: Pintor, proxy: EventLoopProxy<Evento>) -> Navegador {
         let cliente = Arc::new(Cliente::nuevo());
         crate::perfil::cargar_galletas(&cliente);
+        crate::perfil::cargar_sin_bloqueo(&cliente);
         Navegador {
             cliente,
             proxy,
@@ -576,6 +577,17 @@ impl Navegador {
         }
     }
 
+    /// Ctrl+B: apaga o enciende el bloqueo de anuncios en este sitio, lo guarda y recarga.
+    fn alternar_bloqueo(&mut self) {
+        let activo = self.cliente.alternar_bloqueo(&self.url);
+        crate::perfil::guardar_sin_bloqueo(&self.cliente);
+        let sitio = quimera_red::bloqueo::sitio(&self.url.anfitrion).to_string();
+        self.navegar(self.url.clone(), false);
+        let que = if activo { "activado" } else { "desactivado" };
+        self.estado = Some(format!("Bloqueo de anuncios {que} en {sitio} · recargando…"));
+        self.pintar_barra();
+    }
+
     /// Una tecla pulsada.
     pub fn tecla(&mut self, evento: &KeyEvent) {
         if self.barra.editando {
@@ -590,6 +602,7 @@ impl Navegador {
         match &evento.logical_key {
             Key::Character(c) if ctrl && c.eq_ignore_ascii_case("l") => self.enfocar_barra(),
             Key::Character(c) if ctrl && c.eq_ignore_ascii_case("r") => self.navegar(self.url.clone(), false),
+            Key::Character(c) if ctrl && c.eq_ignore_ascii_case("b") => self.alternar_bloqueo(),
             Key::Named(NamedKey::F6) => self.enfocar_barra(),
             Key::Named(NamedKey::F5) => self.navegar(self.url.clone(), false),
             Key::Named(NamedKey::ArrowLeft) if alt => self.atras(),

@@ -162,7 +162,12 @@ fn destino_previo(
 fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<Antes>) -> Result<(), String> {
     let mut pintor = Pintor::nuevo(Fuentes::del_sistema(), TAM_ATLAS);
     let mut gpu = pollster::block_on(Gpu::sin_ventana(ancho, alto, TAM_ATLAS))?;
-    let cliente = Arc::new(Cliente::nuevo());
+    let mut cliente = Cliente::nuevo();
+    // `QUIMERA_SIN_BLOQUEO=1`: sin el filtro de anuncios y rastreo (para comparar).
+    if std::env::var_os("QUIMERA_SIN_BLOQUEO").is_some() {
+        cliente.filtro = None;
+    }
+    let cliente = Arc::new(cliente);
     let mut pagina = Pagina::cargar(&cliente, url, None);
     let (w, h) = (ancho as f32, alto as f32 - barra::ALTO);
     let mut imagenes = cargar_imagenes(&cliente, &pagina);
@@ -257,8 +262,7 @@ fn depurar(doc: &quimera_html::Documento, estilos: &quimera_estilo::Estilos, que
 fn cargar_fuentes(cliente: &Cliente, pagina: &Pagina, pintor: &mut Pintor) {
     for p in tipografias::pedidas(pagina) {
         let w = &p.web;
-        match tipografias::descargar(cliente, &p.url).map(|b| pintor.anadir_fuente(&w.familia, w.negrita, w.cursiva, b))
-        {
+        match tipografias::descargar(cliente, &p).map(|b| pintor.anadir_fuente(&w.familia, w.negrita, w.cursiva, b)) {
             Ok(true) => {
                 eprintln!(
                     "fuente {} ({}{}) ← {}",

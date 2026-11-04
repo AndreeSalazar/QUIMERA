@@ -4,7 +4,8 @@
 //! relativas se resuelven contra la URL final, tras las redirecciones, o contra `<base href>`.
 
 use quimera_html::{Documento, analizar};
-use quimera_red::{Cliente, Respuesta, Url};
+use quimera_red::bloqueo::Tipo;
+use quimera_red::{Cliente, Peticion, Respuesta, Url};
 use std::time::Instant;
 
 /// Una página cargada.
@@ -77,12 +78,11 @@ impl Pagina {
     pub fn cargar(cliente: &Cliente, url: &Url, formulario: Option<&[u8]>) -> Pagina {
         let inicio = Instant::now();
         let (url_final, html) = match cliente.enviar(url, formulario) {
-            Ok(r) if r.exito() || !r.cuerpo.is_empty() => {
-                (r.url.clone(), crate::peticiones::limpiar_youtube(&r.url, texto_html(&r)))
-            }
+            Ok(r) if r.exito() || !r.cuerpo.is_empty() => (r.url.clone(), texto_html(&r)),
             Ok(r) => (r.url.clone(), error(url, &format!("el servidor respondió {}", r.estado))),
             Err(e) => (url.clone(), error(url, &e.to_string())),
         };
+        let html = sin_anuncios(cliente, &url_final, html);
         let doc = analizar(&html);
         let base = base_de(&doc, &url_final);
         let mut hojas = Vec::new();
@@ -92,11 +92,13 @@ impl Pagina {
                 .atributo("rel")
                 .is_some_and(|r| r.split_ascii_whitespace().any(|x| x.eq_ignore_ascii_case("stylesheet")));
             let Some(href) = e.atributo("href").filter(|_| es_hoja) else { continue };
-            if let Some(css) = base.unir(href).ok().and_then(|u| cliente.pedir(&u).ok()).filter(Respuesta::exito) {
+            let peticion = Peticion::recurso(Tipo::Hoja, &url_final);
+            let css = base.unir(href).ok().and_then(|u| cliente.solicitar(&u, &peticion).ok());
+            if let Some(css) = css.filter(Respuesta::exito) {
                 hojas.push((String::from(href), css.texto()));
             }
         }
-        let scripts = descargar_scripts(cliente, &doc, &base);
+        let scripts = descargar_scripts(cliente, &doc, &base, &url_final);
         Pagina { url: url_final, base, html, hojas, scripts, ms_red: inicio.elapsed().as_secs_f64() * 1e3 }
     }
 
@@ -117,18 +119,37 @@ impl Pagina {
 }
 
 /// Los `<script src>` clásicos de la página (los `type=module` todavía no se ejecutan).
-fn descargar_scripts(cliente: &Cliente, doc: &Documento, base: &Url) -> Vec<(String, String)> {
+fn descargar_scripts(cliente: &Cliente, doc: &Documento, base: &Url, pagina: &Url) -> Vec<(String, String)> {
     let mut scripts = Vec::new();
+    let peticion = Peticion::recurso(Tipo::Script, pagina);
     for id in doc.descendientes(Documento::RAIZ) {
         let Some(e) = doc.elemento(id).filter(|e| e.nombre == "script") else { continue };
         let clasico =
             e.atributo("type").is_none_or(|t| t.trim().is_empty() || t.to_ascii_lowercase().contains("javascript"));
         let Some(src) = e.atributo("src").filter(|_| clasico) else { continue };
-        if let Some(r) = base.unir(src).ok().and_then(|u| cliente.pedir(&u).ok()).filter(Respuesta::exito) {
+        let r = base.unir(src).ok().and_then(|u| cliente.solicitar(&u, &peticion).ok());
+        if let Some(r) = r.filter(Respuesta::exito) {
             scripts.push((String::from(src), r.texto()));
         }
     }
     scripts
+}
+
+/// Con el bloqueo activo en el sitio: sin los anuncios de vídeo de YouTube y con la hoja que
+/// oculta los huecos de anuncios (las reglas `##`) al final, como hace Brave.
+fn sin_anuncios(cliente: &Cliente, url: &Url, html: String) -> String {
+    let Some(filtro) = cliente.filtro.as_ref().filter(|_| cliente.bloqueo_activo(url)) else { return html };
+    let mut html = crate::peticiones::limpiar_youtube(url, html);
+    let hoja = filtro.cosmeticas.hoja(&url.anfitrion);
+    if !hoja.is_empty() {
+        html.push_str(
+            "<style id=\"quimera-bloqueo\">
+",
+        );
+        html.push_str(&hoja.replace('<', r"\3c "));
+        html.push_str("</style>");
+    }
+    html
 }
 
 /// El cuerpo como HTML; si es texto plano, dentro de un `<pre>` como hacen los navegadores.

@@ -17,6 +17,7 @@
 
 pub mod anuncios;
 pub mod bloqueo;
+pub mod cosmetico;
 pub mod galletas;
 mod http;
 mod url;
@@ -110,6 +111,8 @@ pub struct Cliente {
     pub filtro: Option<bloqueo::Filtro>,
     /// Lo que se bloqueó: cuántas veces y las primeras direcciones.
     bloqueadas: std::sync::Mutex<(usize, Vec<String>)>,
+    /// Los sitios (`youtube.com`) donde el usuario apagó el bloqueo.
+    sin_bloqueo: std::sync::Mutex<std::collections::BTreeSet<String>>,
 }
 
 /// Lo que se pide: método, cuerpo, cabeceras extra y si van las cookies.
@@ -123,12 +126,29 @@ pub struct Peticion {
     pub cabeceras: Vec<(String, String)>,
     /// Si se mandan las cookies y se guardan las que lleguen. No, en una petición a otro sitio.
     pub galletas: bool,
+    /// Qué se pide (para el filtro: `$script`, `$image`...).
+    pub tipo: bloqueo::Tipo,
+    /// El anfitrión de la página que lo pide (para `$third-party`, `$domain=` y los sitios sin
+    /// bloqueo). `None`: no se sabe.
+    pub pagina: Option<String>,
 }
 
 impl Peticion {
     /// Un GET normal, con cookies.
     pub fn get() -> Peticion {
-        Peticion { metodo: String::from("GET"), cuerpo: None, cabeceras: Vec::new(), galletas: true }
+        Peticion {
+            metodo: String::from("GET"),
+            cuerpo: None,
+            cabeceras: Vec::new(),
+            galletas: true,
+            tipo: bloqueo::Tipo::Otro,
+            pagina: None,
+        }
+    }
+
+    /// Un GET de un recurso (`tipo`) de la página `pagina`.
+    pub fn recurso(tipo: bloqueo::Tipo, pagina: &Url) -> Peticion {
+        Peticion { tipo, pagina: Some(pagina.anfitrion.clone()), ..Peticion::get() }
     }
 }
 
@@ -167,6 +187,7 @@ impl Cliente {
             galletas: std::sync::Mutex::new(galletas::Tarro::default()),
             filtro: Some(bloqueo::Filtro::de_serie()),
             bloqueadas: std::sync::Mutex::new((0, Vec::new())),
+            sin_bloqueo: std::sync::Mutex::new(Default::default()),
         }
     }
 
@@ -201,9 +222,59 @@ impl Cliente {
         self.bloqueadas.lock().map(|b| b.clone()).unwrap_or_default()
     }
 
-    /// Si el filtro bloquea `url` (y entonces la apunta).
-    fn bloquear(&self, url: &Url) -> bool {
-        let si = self.filtro.as_ref().is_some_and(|f| f.bloquea(url));
+    /// Si el bloqueo está activo en la página `pagina`: hay filtro, el usuario no lo apagó en ese
+    /// sitio y ninguna excepción `$document` la deja libre.
+    pub fn bloqueo_activo(&self, pagina: &Url) -> bool {
+        let Some(f) = &self.filtro else { return false };
+        let apagado = self.sin_bloqueo.lock().is_ok_and(|s| s.contains(bloqueo::sitio(&pagina.anfitrion)));
+        !apagado && !f.pagina_permitida(&pagina.anfitrion)
+    }
+
+    /// Apaga o enciende el bloqueo en el sitio de `pagina`. Devuelve si queda activo.
+    pub fn alternar_bloqueo(&self, pagina: &Url) -> bool {
+        let sitio = String::from(bloqueo::sitio(&pagina.anfitrion));
+        if let Ok(mut s) = self.sin_bloqueo.lock()
+            && !s.remove(&sitio)
+        {
+            s.insert(sitio);
+        }
+        self.bloqueo_activo(pagina)
+    }
+
+    /// Los sitios sin bloqueo, uno por línea (para guardarlos en disco).
+    pub fn sin_bloqueo_texto(&self) -> String {
+        self.sin_bloqueo
+            .lock()
+            .map(|s| {
+                s.iter()
+                    .map(|x| {
+                        format!(
+                            "{x}
+"
+                        )
+                    })
+                    .collect()
+            })
+            .unwrap_or_default()
+    }
+
+    /// Recupera los sitios guardados con [`Cliente::sin_bloqueo_texto`].
+    pub fn cargar_sin_bloqueo(&self, texto: &str) {
+        if let Ok(mut s) = self.sin_bloqueo.lock() {
+            *s = texto.lines().map(str::trim).filter(|l| !l.is_empty()).map(String::from).collect();
+        }
+    }
+
+    /// Si el filtro bloquea `url` pedida con `p` (y entonces la apunta).
+    fn bloquear(&self, url: &Url, p: &Peticion) -> bool {
+        let Some(f) = &self.filtro else { return false };
+        if let Some(pagina) = &p.pagina
+            && self.sin_bloqueo.lock().is_ok_and(|s| s.contains(bloqueo::sitio(pagina)))
+        {
+            return false;
+        }
+        let c = bloqueo::Contexto { tipo: p.tipo, pagina: p.pagina.as_deref() };
+        let si = f.bloquea_en(url, &c);
         if si && let Ok(mut b) = self.bloqueadas.lock() {
             b.0 += 1;
             if b.1.len() < RECORDADAS {
@@ -217,7 +288,7 @@ impl Cliente {
         let mut actual = url.clone();
         let mut p = p.clone();
         for _ in 0..=REDIRECCIONES {
-            if filtrar && self.bloquear(&actual) {
+            if filtrar && self.bloquear(&actual, &p) {
                 return Err(Error::Bloqueado(actual.to_string()));
             }
             let r = self.pedir_una(&actual, &p)?;
@@ -400,6 +471,19 @@ mod pruebas {
         assert_eq!(c.bloqueadas(), (2, vec![anuncio.to_string(), anuncio.to_string()]));
         let datos = Url::analizar("data:text/plain,pagead").unwrap();
         assert!(c.pedir(&datos).is_ok());
+        let yt = Url::analizar("https://www.youtube.com/watch?v=x").unwrap();
+        assert!(c.bloqueo_activo(&yt));
+        assert!(!c.alternar_bloqueo(&yt), "apagado en youtube.com");
+        assert_eq!(
+            c.sin_bloqueo_texto(),
+            "youtube.com
+"
+        );
+        let desde_yt = Peticion::recurso(bloqueo::Tipo::Script, &yt);
+        assert!(!c.bloquear(&anuncio, &desde_yt), "en un sitio sin bloqueo no se bloquea");
+        assert!(c.bloquear(&anuncio, &Peticion::get()), "sin saber la página, sí");
+        c.cargar_sin_bloqueo("");
+        assert!(c.bloqueo_activo(&yt));
     }
 
     #[test]

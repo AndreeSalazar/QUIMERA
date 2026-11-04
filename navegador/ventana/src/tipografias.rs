@@ -7,7 +7,8 @@
 
 use crate::pagina::Pagina;
 use quimera_estilo::FuenteWeb;
-use quimera_red::{Cliente, Url};
+use quimera_red::bloqueo::Tipo;
+use quimera_red::{Cliente, Peticion, Url};
 use std::sync::{Arc, Mutex};
 
 /// Hilos que descargan fuentes a la vez (suelen ser pocas y pesan más que las imágenes).
@@ -20,6 +21,8 @@ const MAX_BYTES: usize = 8 << 20;
 pub struct Pedida {
     pub web: FuenteWeb,
     pub url: Url,
+    /// El anfitrión de la página que la pide (para el filtro de anuncios y rastreo).
+    pub pagina: String,
 }
 
 /// Las fuentes que pide la página, sin repetir dirección.
@@ -33,15 +36,16 @@ pub fn pedidas(pagina: &Pagina) -> Vec<Pedida> {
         };
         let Ok(url) = base.unir(web.url.trim()) else { continue };
         if !v.iter().any(|p| p.url == url) {
-            v.push(Pedida { web, url });
+            v.push(Pedida { web, url, pagina: pagina.url.anfitrion.clone() });
         }
     }
     v
 }
 
 /// Descarga una fuente.
-pub fn descargar(cliente: &Cliente, url: &Url) -> Result<Vec<u8>, String> {
-    let r = cliente.pedir(url).map_err(|e| e.to_string())?;
+pub fn descargar(cliente: &Cliente, p: &Pedida) -> Result<Vec<u8>, String> {
+    let peticion = Peticion { tipo: Tipo::Fuente, pagina: Some(p.pagina.clone()), ..Peticion::get() };
+    let r = cliente.solicitar(&p.url, &peticion).map_err(|e| e.to_string())?;
     if !r.exito() {
         return Err(format!("el servidor respondió {}", r.estado));
     }
@@ -64,7 +68,7 @@ where
             loop {
                 let siguiente = cola.lock().ok().and_then(|mut c| c.pop());
                 let Some(p) = siguiente else { break };
-                let r = descargar(&cliente, &p.url);
+                let r = descargar(&cliente, &p);
                 avisar(p, r);
             }
         });

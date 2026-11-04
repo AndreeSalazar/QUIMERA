@@ -17,6 +17,7 @@
 //! simple» a otro origen. Sin ella, esas peticiones salen igual (sin cookies).
 
 use quimera_dom::{PeticionJs, RespuestaJs};
+use quimera_red::bloqueo::Tipo;
 use quimera_red::{Cliente, Peticion, Respuesta, Url};
 
 /// Una petición lista para la red, y lo que hay que comprobar al volver.
@@ -25,6 +26,8 @@ pub struct Preparada {
     pub peticion: Peticion,
     /// Si es a otro origen y hay que mirar CORS: el origen de la página.
     pub cors: Option<String>,
+    /// Si se quitan los anuncios de vídeo de la respuesta (el bloqueo está activo en la página).
+    pub limpiar: bool,
 }
 
 /// El origen de una URL como lo escribe la cabecera `Origin` (`https://ejemplo.com:8443`).
@@ -67,8 +70,10 @@ pub fn preparar(pagina: &Url, base: &Url, p: &PeticionJs) -> Result<Preparada, S
         cabeceras,
         // A otro origen, un script tampoco lleva cookies (aunque los navegadores sí las mandan).
         galletas: galletas && (mismo || !p.es_script),
+        tipo: if p.es_script { Tipo::Script } else { Tipo::Xhr },
+        pagina: Some(pagina.anfitrion.clone()),
     };
-    Ok(Preparada { url, peticion, cors })
+    Ok(Preparada { url, peticion, cors, limpiar: true })
 }
 
 /// La respuesta para la página, o por qué no le llega.
@@ -86,7 +91,7 @@ pub fn completar(prep: &Preparada, r: Result<Respuesta, quimera_red::Error>) -> 
             return Err(format!("CORS: {} no permite que {o} lea su respuesta", origen(&prep.url)));
         }
     }
-    let cuerpo = limpiar_youtube(&r.url, r.texto());
+    let cuerpo = if prep.limpiar { limpiar_youtube(&r.url, r.texto()) } else { r.texto() };
     Ok(RespuestaJs { estado: r.estado, url: r.url.to_string(), cabeceras: r.cabeceras.clone(), cuerpo })
 }
 
@@ -117,7 +122,8 @@ pub fn informar_bloqueo(cliente: &Cliente) {
 
 /// Atiende una petición entera (para el modo captura, que no espera en otro hilo).
 pub fn atender(cliente: &Cliente, pagina: &Url, base: &Url, p: &PeticionJs) -> Result<RespuestaJs, String> {
-    let prep = preparar(pagina, base, p)?;
+    let mut prep = preparar(pagina, base, p)?;
+    prep.limpiar = cliente.bloqueo_activo(pagina);
     let r = completar(&prep, cliente.solicitar(&prep.url, &prep.peticion));
     if std::env::var_os("QUIMERA_RED").is_some() {
         anotar(p, &r);
