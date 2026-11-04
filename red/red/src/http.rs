@@ -128,6 +128,52 @@ fn descomprimir(cuerpo: Vec<u8>, codificacion: Option<&str>) -> Result<Vec<u8>, 
     r.map_err(|e| error(format!("no se pudo descomprimir la respuesta: {e}")))
 }
 
+/// Si en `datos` ya está la respuesta entera: su `Content-Length` completo o el último trozo de
+/// `chunked` (las 1xx se saltan). Sin ninguno de los dos, solo el cierre del servidor la acaba.
+/// Hay servidores (googlevideo) que no cierran aunque se pida `Connection: close`.
+pub(crate) fn completa(mut datos: &[u8]) -> bool {
+    loop {
+        let Some(fin) = datos.windows(4).position(|w| w == b"\r\n\r\n") else { return false };
+        let cabeza = String::from_utf8_lossy(&datos[..fin]).to_ascii_lowercase();
+        let resto = &datos[fin + 4..];
+        let estado: u16 = cabeza.split_whitespace().nth(1).and_then(|e| e.parse().ok()).unwrap_or(0);
+        if (100..200).contains(&estado) {
+            datos = resto;
+            continue;
+        }
+        if estado == 204 || estado == 304 {
+            return true;
+        }
+        let valor = |n: &str| {
+            cabeza
+                .lines()
+                .find_map(|l| l.split_once(':').filter(|(k, _)| k.trim() == n).map(|(_, v)| v.trim().to_string()))
+        };
+        if valor("transfer-encoding").is_some_and(|t| t.contains("chunked")) {
+            return trozos_completos(resto);
+        }
+        return valor("content-length").and_then(|l| l.parse::<usize>().ok()).is_some_and(|n| resto.len() >= n);
+    }
+}
+
+/// Si los trozos de `chunked` llegan hasta el de tamaño 0 y la línea en blanco final.
+fn trozos_completos(mut d: &[u8]) -> bool {
+    loop {
+        let Some(fin_linea) = d.windows(2).position(|w| w == b"\r\n") else { return false };
+        let linea = String::from_utf8_lossy(&d[..fin_linea]);
+        let Ok(tam) = usize::from_str_radix(linea.split(';').next().unwrap_or("").trim(), 16) else { return false };
+        d = &d[fin_linea + 2..];
+        if tam == 0 {
+            // Cabeceras finales opcionales y la línea en blanco.
+            return d.starts_with(b"\r\n") || d.windows(4).any(|w| w == b"\r\n\r\n");
+        }
+        if d.len() < tam + 2 {
+            return false;
+        }
+        d = &d[tam + 2..];
+    }
+}
+
 /// `Transfer-Encoding: chunked`: tamaño en hexadecimal, `\r\n`, datos, `\r\n`... hasta un 0.
 fn trozos(mut d: &[u8]) -> Result<Vec<u8>, Error> {
     let mut cuerpo = Vec::with_capacity(d.len());
@@ -218,6 +264,14 @@ mod pruebas {
         assert!(leer(b"HTTP/1.1 200 OK\r\nContent-Encoding: br\r\n\r\nxyz").is_err(), "brotli aún no");
         assert!(leer(b"no es http\r\n\r\n").is_err());
         assert!(leer(b"HTTP/1.1 200 OK\r\nContent-Length: 3").is_err(), "cabeceras sin terminar");
+        // Cuándo está entera (para no esperar al cierre).
+        assert!(!completa(b"HTTP/1.1 200 OK\r\nContent-Length: 5\r\n\r\nhol"));
+        assert!(completa(b"HTTP/1.1 200 OK\r\nContent-Length: 5\r\n\r\nhola!"));
+        assert!(!completa(
+            b"HTTP/1.1 100 Continue\r\n\r\nHTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n4\r\nWiki\r\n"
+        ));
+        assert!(completa(b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n4\r\nWiki\r\n0\r\n\r\n"));
+        assert!(!completa(b"HTTP/1.1 200 OK\r\n\r\nsin largo"), "sin largo: hasta que cierre");
     }
 
     #[test]

@@ -91,8 +91,16 @@ pub fn completar(prep: &Preparada, r: Result<Respuesta, quimera_red::Error>) -> 
             return Err(format!("CORS: {} no permite que {o} lea su respuesta", origen(&prep.url)));
         }
     }
-    let cuerpo = if prep.limpiar { limpiar_youtube(&r.url, r.texto()) } else { r.texto() };
-    Ok(RespuestaJs { estado: r.estado, url: r.url.to_string(), cabeceras: r.cabeceras.clone(), cuerpo })
+    let tipo = r.cabecera("content-type").unwrap_or("").to_ascii_lowercase();
+    // Binario: lo que no es texto UTF-8 o se anuncia como datos (el vídeo de YouTube llega como
+    // `application/vnd.yt-ump`, y sus mensajes como protobuf).
+    let binario = core::str::from_utf8(&r.cuerpo).is_err()
+        || ["octet-stream", "protobuf", "ump", "image/", "video/", "audio/", "font/", "wasm"]
+            .iter()
+            .any(|t| tipo.contains(t));
+    let bytes = binario.then(|| r.cuerpo.clone());
+    let cuerpo = if prep.limpiar && !binario { limpiar_youtube(&r.url, r.texto()) } else { r.texto() };
+    Ok(RespuestaJs { estado: r.estado, url: r.url.to_string(), cabeceras: r.cabeceras.clone(), cuerpo, bytes })
 }
 
 /// En YouTube, quita los anuncios de vídeo (`adPlacements`, `playerAds`, `adSlots`) del HTML de

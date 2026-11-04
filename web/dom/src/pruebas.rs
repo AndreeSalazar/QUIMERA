@@ -179,7 +179,13 @@ fn modulos() {
         for p in pedidas {
             let url = p.url.clone();
             let cuerpo = archivos.iter().find(|(u, _)| *u == url).map(|(_, c)| String::from(*c));
-            let r = cuerpo.map(|c| RespuestaJs { estado: 200, url: url.clone(), cabeceras: Vec::new(), cuerpo: c });
+            let r = cuerpo.map(|c| RespuestaJs {
+                estado: 200,
+                url: url.clone(),
+                cabeceras: Vec::new(),
+                cuerpo: c,
+                bytes: None,
+            });
             d.responder(p.id, r.ok_or_else(|| alloc::format!("404 {url}")));
         }
     }
@@ -231,6 +237,7 @@ fn fetch_xhr_y_scripts_añadidos() {
         url: String::from("https://ejemplo.com/x"),
         cabeceras: alloc::vec![(String::from("content-type"), String::from(tipo))],
         cuerpo: String::from(cuerpo),
+        bytes: None,
     };
     d.responder(pedidas[0].id, Ok(resp("{\"a\": 5}", "application/json")));
     d.responder(pedidas[1].id, Err(String::from("CORS")));
@@ -630,4 +637,35 @@ fn objetos_request() {
           q.json().then(function (j) { var c = new Request(q.url, { method: 'PUT' }); console.log(q.url, q.method, q.headers.get('content-type'), q.credentials, c.method, c.url === q.url, j.a, q instanceof Request); });"#,
     );
     assert_eq!(r, ["https://ejemplo.com/api?x=1 POST application/json include PUT true 1 true"]);
+}
+
+#[test]
+fn respuestas_y_blobs_binarios() {
+    // Lo mismo que da Chromium.
+    let mut d = dom("<p></p>");
+    d.ejecutar(
+        "(async function () {
+           var out = [];
+           var ab = await new Response(new Uint8Array([0, 255, 7, 200])).arrayBuffer();
+           out.push('ab ' + ab.byteLength + ' ' + Array.from(new Uint8Array(ab)).join(','));
+           var b = new Blob(['hé', new Uint8Array([33])], {type: 'Text/Plain'});
+           out.push('blob ' + b.size + ' ' + b.type + ' ' + (await b.text()));
+           var rd = new Response('hola').body.getReader(), c = await rd.read();
+           out.push('body ' + c.value.length + ' ' + c.done + ' ' + (await rd.read()).done);
+           out.push('txt ' + (await new Response(new Uint8Array([104, 105])).text()));
+           var r = await fetch('/video');
+           out.push('red ' + new Uint8Array(await r.arrayBuffer()).join(','));
+           console.log(out.join(' | '));
+         })();",
+    );
+    let p = d.tomar_peticiones();
+    let r = crate::RespuestaJs {
+        estado: 200,
+        url: String::from("/video"),
+        cabeceras: Vec::new(),
+        cuerpo: String::new(),
+        bytes: Some(alloc::vec![1, 0, 254]),
+    };
+    d.responder(p[0].id, Ok(r));
+    assert_eq!(d.consola(), ["ab 4 0,255,7,200 | blob 4 text/plain hé! | body 4 false true | txt hi | red 1,0,254"]);
 }

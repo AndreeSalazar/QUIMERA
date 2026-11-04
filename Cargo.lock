@@ -2328,6 +2328,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "quimera-video"
+version = "0.1.0"
+dependencies = [
+ "windows",
+]
+
+[[package]]
 name = "quimera-vm"
 version = "0.1.0"
 dependencies = [

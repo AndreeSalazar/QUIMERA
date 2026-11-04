@@ -390,12 +390,24 @@ fn enviar_y_leer<S: Read + Write>(flujo: &mut S, peticion: &[u8]) -> Result<Vec<
     flujo.write_all(peticion).map_err(clasificar)?;
     flujo.flush().map_err(clasificar)?;
     let mut bruto = Vec::new();
-    match flujo.take(MAXIMO).read_to_end(&mut bruto) {
-        Ok(_) => Ok(bruto),
-        // Muchos servidores cierran sin avisar a TLS («close_notify»): si ya hay respuesta, vale.
-        Err(e) if e.kind() == ErrorKind::UnexpectedEof && !bruto.is_empty() => Ok(bruto),
-        Err(e) => Err(clasificar(e)),
+    let mut trozo = alloc_trozo();
+    // Hasta que la respuesta esté entera o el servidor cierre (lo que antes pase).
+    while !http::completa(&bruto) && (bruto.len() as u64) < MAXIMO {
+        match flujo.read(&mut trozo) {
+            Ok(0) => break,
+            Ok(n) => bruto.extend_from_slice(&trozo[..n]),
+            Err(e) if e.kind() == ErrorKind::Interrupted => {}
+            // Muchos servidores cierran sin avisar a TLS («close_notify»): si ya hay respuesta, vale.
+            Err(e) if e.kind() == ErrorKind::UnexpectedEof && !bruto.is_empty() => break,
+            Err(e) => return Err(clasificar(e)),
+        }
     }
+    Ok(bruto)
+}
+
+/// El búfer de lectura (64 KB, en el montón para no cargar la pila).
+fn alloc_trozo() -> Vec<u8> {
+    vec![0u8; 64 * 1024]
 }
 
 /// Un error de E/S como error de red o de TLS (rustls los envuelve en `InvalidData`).

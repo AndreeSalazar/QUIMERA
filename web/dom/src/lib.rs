@@ -20,6 +20,7 @@
 extern crate alloc;
 
 mod animaciones;
+mod binario;
 mod complementos;
 mod eventos;
 mod interfaces;
@@ -373,6 +374,7 @@ impl Dom {
             red::MODULOS_JS,
             interfaces::INTERFACES_JS,
             complementos::COMPLEMENTOS_JS,
+            binario::BINARIO_JS,
             observadores::OBSERVADORES_JS,
             animaciones::ANIMACIONES_JS,
             DOCUMENTO_JS,
