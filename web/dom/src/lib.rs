@@ -490,7 +490,11 @@ impl Dom {
             match codigo {
                 Some(c) => {
                     let origen = src.clone().unwrap_or_else(|| self.estado.url.clone());
+                    // Cada script es una tarea: empieza con medidas frescas y, dentro de él, se
+                    // reutilizan (ver `Estado::medidas`).
+                    self.empezar_tarea_tolerante();
                     self.ejecutar_desde(&c, &origen);
+                    self.estado.tolerar_medidas.set(false);
                 }
                 None => {
                     self.estado.errores.borrow_mut().push(format!("no llegó el script {}", src.unwrap_or_default()))
@@ -586,16 +590,22 @@ impl Dom {
         }
     }
 
+    /// Una tarea en la que se toleran las medidas de antes de sus propios cambios: empieza con
+    /// medidas frescas (ver `Estado::medidas`).
+    fn empezar_tarea_tolerante(&mut self) {
+        if self.estado.medidas_sucias.get() {
+            self.estado.medidas.borrow_mut().take();
+        }
+        self.estado.tolerar_medidas.set(true);
+    }
+
     /// Ejecuta los temporizadores que ya tocan a la hora `ahora` (ms). Los que se crean mientras
     /// tanto esperan a la siguiente vez.
     pub fn correr_temporizadores(&mut self, ahora: f64) {
         self.estado.ahora.set(ahora);
         // La tanda empieza con medidas frescas y, dentro de ella, se toleran las de antes de sus
         // cambios (ver `Estado::medidas`).
-        if self.estado.medidas_sucias.get() {
-            self.estado.medidas.borrow_mut().take();
-        }
-        self.estado.tolerar_medidas.set(true);
+        self.empezar_tarea_tolerante();
         puente::correr_temporizadores(&mut self.motor, &self.estado, ahora);
         self.estado.tolerar_medidas.set(false);
     }

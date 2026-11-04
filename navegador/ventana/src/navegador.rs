@@ -25,6 +25,8 @@ use winit::event_loop::EventLoopProxy;
 use winit::keyboard::{Key, ModifiersState, NamedKey};
 use winit::window::{CursorIcon, Window};
 
+mod vivo;
+
 /// Lo que llega de los hilos de red al bucle de eventos.
 pub enum Evento {
     /// Una página que terminó de cargar.
@@ -37,6 +39,8 @@ pub enum Evento {
     Fuente { id: u64, pedida: tipografias::Pedida, bytes: Result<Vec<u8>, String> },
     /// La respuesta a algo que pidió el JavaScript de la página `id` (`fetch`, XHR, un script).
     Respuesta { id: u64, peticion: u32, resultado: Result<quimera_dom::RespuestaJs, String> },
+    /// La página `id` ya se pintó sin JavaScript: ahora se ejecutan sus scripts.
+    Scripts { id: u64 },
 }
 
 /// Lo que existe mientras la ventana está abierta.
@@ -79,6 +83,9 @@ pub struct Navegador {
     pub guion: Option<Guion>,
     /// Los `<video>` de la página: sus decodificadores y el fotograma que toca.
     videos: crate::video::Videos,
+    /// El árbol de la página tal como llegó, mientras aún no corren sus scripts: se pinta ya,
+    /// para que la ventana no se quede en blanco.
+    estatico: Option<quimera_html::Documento>,
 }
 
 impl Navegador {
@@ -106,6 +113,7 @@ impl Navegador {
             formulario: formularios::Estado::default(),
             guion: None,
             videos: crate::video::Videos::default(),
+            estatico: None,
         }
     }
 
@@ -151,6 +159,7 @@ impl Navegador {
     pub fn evento(&mut self, e: Evento) {
         match e {
             Evento::Pagina { id, pagina } if id == self.id_carga => self.llegada(*pagina),
+            Evento::Scripts { id } if id == self.id_carga => self.ejecutar_scripts(),
             Evento::Imagen { id, src, imagen } if id == self.id_carga => match imagen {
                 Ok(i) => {
                     if let Some(g) = &mut self.guion {
@@ -227,15 +236,11 @@ impl Navegador {
         final_.fragmento = fragmento.clone();
         self.historial.sustituir(final_.clone());
         self.url = final_;
-        // La vista en píxeles CSS (sin la barra), para las medidas que lee la página.
-        let e = self.escala();
-        let vista = self.abierta.as_ref().map_or((1024.0, 700.0), |a| {
-            let t = a.ventana.inner_size();
-            (t.width as f32 / e, (t.height as f32 - self.alto_barra()) / e)
-        });
-        self.guion = Some(Guion::preparar(&pagina, vista));
+        // Primero se pinta la página tal como llegó (con sus hojas, sin JavaScript), y sus
+        // scripts corren en la siguiente vuelta del bucle: la ventana nunca se queda en blanco.
+        self.guion = None;
+        self.estatico = Some(pagina.documento());
         self.pagina = Some(pagina);
-        self.atender_peticiones();
         self.cargando = false;
         self.estado = None;
         if let Some(a) = &mut self.abierta {
@@ -246,6 +251,8 @@ impl Navegador {
             self.ir_a_ancla(&f);
         }
         self.pintar_barra();
+        self.dibujar();
+        let _ = self.proxy.send_event(Evento::Scripts { id: self.id_carga });
     }
 
     /// Estilo, maquetación y cuadros de la página para el tamaño actual de la ventana.
@@ -256,8 +263,11 @@ impl Navegador {
         let tam = a.ventana.inner_size();
         let escala = a.ventana.scale_factor() as f32;
         let (ancho, alto) = (tam.width as f32 / escala, (tam.height as f32 - barra_px).max(1.0) / escala);
-        let Some(guion) = &self.guion else { return };
-        let mut doc = guion.dom.documento().clone();
+        let mut doc = match (&self.guion, &self.estatico) {
+            (Some(g), _) => g.dom.documento().clone(),
+            (None, Some(d)) => d.clone(),
+            (None, None) => return,
+        };
         let externa = |href: &str| pagina.hoja(href);
         let op = Opciones { ancho, alto };
         quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &self.hojas);
@@ -467,77 +477,6 @@ impl Navegador {
         self.tras_javascript();
         self.atender_peticiones();
         prevenido
-    }
-
-    /// Lo que el JavaScript de la página pidió a la red, en otros hilos (con las reglas de origen
-    /// de `peticiones.rs`). Cada respuesta llega como `Evento::Respuesta`.
-    pub fn atender_peticiones(&mut self) {
-        let Some(g) = &self.guion else { return };
-        let Some(pagina) = &self.pagina else { return };
-        for p in g.dom.tomar_peticiones() {
-            let (cliente, proxy, id) = (self.cliente.clone(), self.proxy.clone(), self.id_carga);
-            let (url, base) = (pagina.url.clone(), pagina.base.clone());
-            std::thread::spawn(move || {
-                let resultado = crate::peticiones::atender(&cliente, &url, &base, &p);
-                let _ = proxy.send_event(Evento::Respuesta { id, peticion: p.id, resultado });
-            });
-        }
-    }
-
-    /// Si JavaScript cambió el árbol, se vuelve a maquetar.
-    pub fn tras_javascript(&mut self) {
-        if self.guion.as_ref().is_some_and(|g| g.dom.tomar_cambios()) {
-            self.maquetar();
-        }
-    }
-
-    /// Ejecuta los temporizadores de la página que ya tocan; devuelve cuándo toca el siguiente.
-    pub fn latido(&mut self) -> Option<Instant> {
-        let t0 = Instant::now();
-        let proximo = self.guion.as_mut()?.latido();
-        let t1 = Instant::now();
-        self.tras_javascript();
-        self.atender_peticiones();
-        let t2 = Instant::now();
-        self.avanzar_videos();
-        if std::env::var_os("QUIMERA_VIDEO").is_some() {
-            let ms = |a: Instant, b: Instant| (b - a).as_secs_f64() * 1e3;
-            let total = ms(t0, Instant::now());
-            if total > 20.0 {
-                use std::sync::atomic::Ordering;
-                let medidor = crate::guiones::MEDIDOR_NS.swap(0, Ordering::Relaxed) as f64 / 1e6;
-                let veces = crate::guiones::MEDIDOR_VECES.swap(0, Ordering::Relaxed);
-                eprintln!(
-                    "latido {total:.0} ms: js {:.0} (medidor {medidor:.0} en {veces} veces), maquetar {:.0}, vídeo {:.0}",
-                    ms(t0, t1),
-                    ms(t1, t2),
-                    ms(t2, Instant::now())
-                );
-            }
-        }
-        // Mientras un vídeo avanza, a 30 fotogramas por segundo.
-        if self.videos.reproduciendo() {
-            let fotograma = Instant::now() + std::time::Duration::from_millis(33);
-            return Some(proximo.map_or(fotograma, |p| p.min(fotograma)));
-        }
-        proximo
-    }
-
-    /// El fotograma que toca en cada `<video>`: a la GPU (en su misma textura) y a repintar. El
-    /// primero de un vídeo pide maquetar, para que su caja sepa qué textura pintar.
-    fn avanzar_videos(&mut self) {
-        let (Some(g), Some(a)) = (&self.guion, &mut self.abierta) else { return };
-        let antes = self.imagenes.total();
-        if !self.videos.avanzar(&g.dom, &mut self.imagenes) {
-            return;
-        }
-        for (id, ancho, alto, rgba) in self.imagenes.fotogramas_por_subir() {
-            a.gpu.subir_imagen(id, ancho, alto, &rgba);
-        }
-        if self.imagenes.total() != antes {
-            self.imagenes_nuevas = true;
-        }
-        a.ventana.request_redraw();
     }
 
     /// Se pulsó un control de formulario: enfocar, marcar, elegir o enviar.
