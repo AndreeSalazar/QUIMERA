@@ -15,6 +15,7 @@
 //! el enlace número N de la página; con `--escribir "texto"`, escribe en el primer campo de la
 //! página y envía su formulario (una búsqueda, por ejemplo).
 
+mod aplicacion;
 mod barra;
 mod compositor;
 mod escudo;
@@ -31,7 +32,7 @@ mod tipografias;
 mod video;
 
 use imagenes::Imagenes;
-use navegador::{Evento, Navegador};
+use navegador::Evento;
 use pagina::{Pagina, direccion};
 use quimera_estilo::Opciones;
 use quimera_gpu::Gpu;
@@ -40,84 +41,10 @@ use quimera_pintar::{Pintor, color_gpu};
 use quimera_red::{Cliente, Url};
 use quimera_texto::Fuentes;
 use std::sync::Arc;
-use winit::application::ApplicationHandler;
-use winit::dpi::LogicalSize;
-use winit::event::{ElementState, MouseButton, MouseScrollDelta, WindowEvent};
-use winit::event_loop::{ActiveEventLoop, EventLoop};
-use winit::window::{Window, WindowId};
+use winit::event_loop::EventLoop;
 
-const TAM_ATLAS: u32 = 2048;
-
-impl ApplicationHandler<Evento> for Navegador {
-    fn resumed(&mut self, bucle: &ActiveEventLoop) {
-        if self.abierta.is_some() {
-            return;
-        }
-        let atributos =
-            Window::default_attributes().with_title("QUIMERA").with_inner_size(LogicalSize::new(1100.0, 800.0));
-        let ventana = match bucle.create_window(atributos) {
-            Ok(v) => Arc::new(v),
-            Err(e) => {
-                eprintln!("no se puede abrir la ventana: {e}");
-                bucle.exit();
-                return;
-            }
-        };
-        let tam = ventana.inner_size();
-        match pollster::block_on(Gpu::nueva(ventana.clone(), tam.width, tam.height, TAM_ATLAS)) {
-            Ok(gpu) => self.abrir(ventana, gpu),
-            Err(e) => {
-                eprintln!("no se puede usar la GPU: {e}");
-                bucle.exit();
-            }
-        }
-    }
-
-    fn user_event(&mut self, _bucle: &ActiveEventLoop, evento: Evento) {
-        self.evento(evento);
-    }
-
-    /// Antes de dormir: los temporizadores de la página que ya tocan, y despertar para el siguiente.
-    fn about_to_wait(&mut self, bucle: &ActiveEventLoop) {
-        match self.latido() {
-            Some(cuando) => bucle.set_control_flow(winit::event_loop::ControlFlow::WaitUntil(cuando)),
-            None => bucle.set_control_flow(winit::event_loop::ControlFlow::Wait),
-        }
-    }
-
-    fn window_event(&mut self, bucle: &ActiveEventLoop, _id: WindowId, evento: WindowEvent) {
-        match evento {
-            WindowEvent::CloseRequested => bucle.exit(),
-            WindowEvent::Resized(tam) => {
-                if let Some(a) = &mut self.abierta {
-                    a.gpu.redimensionar(tam.width, tam.height);
-                }
-                self.maquetar();
-                self.pintar_barra();
-            }
-            WindowEvent::ScaleFactorChanged { .. } => self.maquetar(),
-            WindowEvent::MouseWheel { delta, .. } => {
-                let escala = self.abierta.as_ref().map_or(1.0, |a| a.ventana.scale_factor() as f32);
-                let cuanto = match delta {
-                    MouseScrollDelta::LineDelta(_, y) => -y * 48.0 * escala,
-                    MouseScrollDelta::PixelDelta(p) => -p.y as f32,
-                };
-                self.desplazar(cuanto);
-            }
-            WindowEvent::CursorMoved { position, .. } => self.raton(position.x as f32, position.y as f32),
-            WindowEvent::MouseInput { state: ElementState::Released, button, .. } => match button {
-                MouseButton::Left => self.clic(),
-                MouseButton::Back => self.atras(),
-                MouseButton::Forward => self.adelante(),
-                _ => {}
-            },
-            WindowEvent::ModifiersChanged(m) => self.teclas = m.state(),
-            WindowEvent::KeyboardInput { event, .. } if event.state == ElementState::Pressed => self.tecla(&event),
-            WindowEvent::RedrawRequested => self.dibujar(),
-            _ => {}
-        }
-    }
-}
+/// Tamaño del atlas de letras.
+pub(crate) const TAM_ATLAS: u32 = 2048;
 
 /// Lo que se hace en la página antes de capturar.
 enum Antes {
@@ -401,8 +328,9 @@ fn main() {
             std::process::exit(1);
         }
     };
-    let mut navegador = Navegador::nuevo(url, Pintor::nuevo(fuentes, TAM_ATLAS), bucle.create_proxy());
-    if let Err(e) = bucle.run_app(&mut navegador) {
+    // La ventana reparte eventos; la página va en su propio hilo (ver `aplicacion.rs`).
+    let mut aplicacion = aplicacion::Aplicacion::nueva(url, fuentes, bucle.create_proxy());
+    if let Err(e) = bucle.run_app(&mut aplicacion) {
         eprintln!("la ventana terminó con un error: {e}");
         std::process::exit(1);
     }

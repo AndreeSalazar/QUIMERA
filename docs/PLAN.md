@@ -111,7 +111,7 @@ Mientras tanto, QUIMERA ya aplica ese principio en lo que se va haciendo: decodi
 
 1. ✅ **Compositor en otro hilo** ([VENTANA.md](VENTANA.md#el-compositor)): el pintado y el vídeo ya no esperan al JavaScript. Vídeo de YouTube: de ~4 a 30 fotogramas por segundo.
 2. 🟡 **Capas.** ✅ La **capa fija**: lo `fixed` se queda en su sitio al desplazar, y sus enlaces se pulsan bien (antes se iba con la página: la cabecera de YouTube desaparecía al bajar). ✅ El vídeo ya va en su textura, pintada por el compositor. Falta: cada zona desplazable (`overflow: auto`) en su propia capa, y que el compositor guarde las capas por separado para cambiar una sin volver a subir las demás.
-3. **Entrada y desplazamiento en el compositor**: la rueda no espera a los scripts (la página en otro hilo, o la entrada fuera del hilo del JavaScript).
+3. ✅ **Desplazar sin esperas.** La página va en su propio hilo; el de la ventana atiende la rueda y se la manda directa al compositor. Con YouTube cargando, cada giro se pinta en 0,5 ms de mediana (26 ms el peor), aunque un script tarde segundos.
 4. ***Streaming* del HTML**: analizar y pintar el HTML mientras llega, sin esperar a tenerlo entero, y empezar a pedir hojas e imágenes en cuanto aparecen sus etiquetas.
 5. ***Streaming* de imágenes**: decodificar a medida que llegan los bytes (JPEG progresivo, PNG entrelazado) y pintar lo que haya.
 6. ***Zero copy***: los bytes de red van al decodificador sin pasar a texto (hoy las respuestas se copian y se convierten); las imágenes y los fotogramas, del decodificador a la GPU sin copias intermedias.

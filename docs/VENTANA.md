@@ -47,15 +47,17 @@ La rueda del ratón, las flechas, Re Pág/Av Pág, espacio, Inicio y Fin desplaz
 
 ## El compositor
 
-La ventana pinta en un hilo aparte (`compositor.rs`), dueño de la GPU, como el compositor de Chrome:
+La ventana va en tres hilos, como Chrome:
 
-- **El hilo de la ventana** (eventos, JavaScript, estilo, maquetación) le manda órdenes por un canal: la escena, la barra, las imágenes, el desplazamiento... Tienen los mismos nombres que en `quimera-gpu`, pero ninguna espera: una imagen decodificada se mueve al otro hilo sin copiarse.
+- **El hilo de la ventana** (`aplicacion.rs`, el de `winit`) solo reparte eventos. La rueda la atiende él mismo: mueve el desplazamiento (compartido con la página en dos atómicos, `Desplazamiento`) y se lo manda al compositor, que repinta al momento. Nunca ejecuta JavaScript, así que **desplazar no espera nunca a un script**.
+- **El hilo de la página** tiene el `Navegador`: JavaScript, estilo, maquetación, clics, teclado y red. Recibe los demás eventos por un canal y, entre uno y otro, corre los temporizadores de la página. Tras un giro de rueda, mira qué imágenes entran en la vista.
+- **El compositor** (`compositor.rs`), dueño de la GPU. La página le manda órdenes por un canal: la escena, la barra, las imágenes, el desplazamiento... Tienen los mismos nombres que en `quimera-gpu`, pero ninguna espera: una imagen decodificada se mueve al otro hilo sin copiarse.
 - **Los `<video>` viven en el compositor.** La página le pasa cada 100 ms como mucho las muestras nuevas y el reloj de cada uno. El compositor lleva el tiempo, decodifica solo hasta el momento actual y sube el fotograma a su textura.
 - **Cuándo pinta**: cuando llega algo nuevo y, mientras un vídeo corre, a cada fotograma (la GPU espera al refresco de la pantalla).
 
 Así el vídeo de YouTube va a 30 fotogramas por segundo aunque un script de la página tarde segundos. La captura (`--captura`) sigue pintando en su propio hilo, con la GPU directamente.
 
-**Falta:** desplazar desde el compositor. Hoy la rueda la recibe el hilo de la ventana, así que si un script tarda, el desplazamiento espera. Para arreglarlo, los eventos de entrada deben ir a un hilo que nunca ejecute JavaScript, o la página a otro hilo.
+Con `QUIMERA_RUEDA=1`, el compositor dice cuánto tardó en pintar cada giro de rueda. Con YouTube cargando (2,8 s de scripts en ese rato) y 120 giros mandados a la ventana: 0,5 ms de mediana, 17 ms el percentil 95 y 26 ms el peor. Antes, un giro durante un script esperaba lo que tardara el script (hasta unos 3 s).
 
 ## Las piezas
 

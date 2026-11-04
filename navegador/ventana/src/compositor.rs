@@ -41,10 +41,14 @@ enum Orden {
     Olvidar(u32),
     OlvidarTodas,
     Dibujar([f32; 4], f32),
+    /// Con cuándo se giró la rueda (para `QUIMERA_RUEDA`).
+    Desplazar(f32, Instant),
     Video(VideoParaPintar),
 }
 
-/// El lado de la ventana: manda órdenes al hilo de pintado.
+/// El lado de la ventana: manda órdenes al hilo de pintado (se clona: lo usan el hilo de la
+/// ventana, para la rueda, y el de la página).
+#[derive(Clone)]
 pub struct Compositor {
     tx: Sender<Orden>,
 }
@@ -99,6 +103,11 @@ impl Compositor {
         Ok(())
     }
 
+    /// Solo el desplazamiento (la rueda, desde el hilo de la ventana): repinta al momento.
+    pub fn desplazar(&self, desp_y: f32) {
+        self.mandar(Orden::Desplazar(desp_y, Instant::now()));
+    }
+
     pub fn video(&self, v: VideoParaPintar) {
         self.mandar(Orden::Video(v));
     }
@@ -128,11 +137,20 @@ struct Pintado {
     listo: bool,
     /// `QUIMERA_VIDEO=1`: fotogramas pintados en el último segundo.
     cuenta: (Instant, u32),
+    /// `QUIMERA_RUEDA=1`: el giro de rueda más antiguo aún sin pintar.
+    rueda: Option<Instant>,
 }
 
 fn bucle(gpu: Gpu, rx: &Receiver<Orden>) {
-    let mut p =
-        Pintado { gpu, videos: HashMap::new(), fondo: [1.0; 4], desp: 0.0, listo: false, cuenta: (Instant::now(), 0) };
+    let mut p = Pintado {
+        gpu,
+        videos: HashMap::new(),
+        fondo: [1.0; 4],
+        desp: 0.0,
+        listo: false,
+        cuenta: (Instant::now(), 0),
+        rueda: None,
+    };
     loop {
         // Con un vídeo corriendo, se despierta para cada fotograma; si no, solo con órdenes.
         let corre = p.videos.values().any(|v| v.reloj.2);
@@ -153,6 +171,12 @@ fn bucle(gpu: Gpu, rx: &Receiver<Orden>) {
         {
             eprintln!("no se pudo dibujar: {e}");
         }
+        if sucio
+            && let Some(cuando) = p.rueda.take()
+            && std::env::var_os("QUIMERA_RUEDA").is_some()
+        {
+            eprintln!("rueda: pintada {:.1} ms después del giro", cuando.elapsed().as_secs_f64() * 1e3);
+        }
     }
 }
 
@@ -172,6 +196,10 @@ impl Pintado {
             }
             Orden::Dibujar(fondo, desp) => {
                 (self.fondo, self.desp, self.listo) = (fondo, desp, true);
+            }
+            Orden::Desplazar(desp, cuando) => {
+                self.desp = desp;
+                self.rueda = Some(self.rueda.map_or(cuando, |r: Instant| r.min(cuando)));
             }
             Orden::Video(v) => {
                 let video = self.videos.entry(v.textura).or_insert_with(|| Video {

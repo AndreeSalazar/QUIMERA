@@ -13,7 +13,6 @@ use crate::imagenes::{self, Imagenes};
 use crate::pagina::{Pagina, direccion_escrita};
 use crate::tipografias;
 use quimera_estilo::Opciones;
-use quimera_gpu::Gpu;
 use quimera_imagen::Imagen;
 use quimera_maquetacion::{Maquetacion, maquetar_pagina};
 use quimera_pintar::{Pintor, color_gpu};
@@ -50,8 +49,6 @@ pub struct Abierta {
     pub gpu: crate::compositor::Compositor,
     /// La última maquetación (para saber dónde están los enlaces y las anclas).
     maq: Option<Maquetacion>,
-    /// Desplazamiento en píxeles de pantalla.
-    desp: f32,
     fondo: [f32; 4],
 }
 
@@ -82,6 +79,8 @@ pub struct Navegador {
     formulario: formularios::Estado,
     /// El JavaScript de la página: su DOM (el árbol que se maqueta) y sus temporizadores.
     pub guion: Option<Guion>,
+    /// El desplazamiento de la página, compartido con el hilo de la ventana (`aplicacion.rs`).
+    desp: Arc<crate::aplicacion::Desplazamiento>,
     /// La página tiene algún `<video>`: se despierta a menudo para pasarle sus muestras al
     /// compositor (que los decodifica y pinta por su cuenta).
     hay_videos: bool,
@@ -97,7 +96,12 @@ pub fn bajo_la_barra(cuadros: &mut [quimera_gpu::Cuadro], barra_px: f32) {
 }
 
 impl Navegador {
-    pub fn nuevo(url: Url, pintor: Pintor, proxy: EventLoopProxy<Evento>) -> Navegador {
+    pub fn nuevo(
+        url: Url,
+        pintor: Pintor,
+        proxy: EventLoopProxy<Evento>,
+        desp: Arc<crate::aplicacion::Desplazamiento>,
+    ) -> Navegador {
         let cliente = Arc::new(Cliente::nuevo());
         crate::perfil::cargar_galletas(&cliente);
         crate::perfil::cargar_sin_bloqueo(&cliente);
@@ -121,14 +125,14 @@ impl Navegador {
             formulario: formularios::Estado::default(),
             guion: None,
             hay_videos: false,
+            desp,
             estatico: None,
         }
     }
 
     /// La ventana está lista: se pone la GPU y se pide la primera página.
-    pub fn abrir(&mut self, ventana: Arc<Window>, gpu: Gpu) {
-        let gpu = crate::compositor::Compositor::nuevo(gpu);
-        self.abierta = Some(Abierta { ventana, gpu, maq: None, desp: 0.0, fondo: [1.0; 4] });
+    pub fn abrir(&mut self, ventana: Arc<Window>, gpu: crate::compositor::Compositor) {
+        self.abierta = Some(Abierta { ventana, gpu, maq: None, fondo: [1.0; 4] });
         self.navegar(self.url.clone(), true);
     }
 
@@ -252,9 +256,7 @@ impl Navegador {
         self.pagina = Some(pagina);
         self.cargando = false;
         self.estado = None;
-        if let Some(a) = &mut self.abierta {
-            a.desp = 0.0;
-        }
+        self.desp.arriba();
         self.maquetar();
         if let Some(f) = fragmento {
             self.ir_a_ancla(&f);
@@ -347,8 +349,9 @@ impl Navegador {
             self.maquetar();
         }
         let barra_px = self.alto_barra();
+        let desp = self.desp.valor();
         if let Some(a) = &mut self.abierta
-            && let Err(e) = a.gpu.dibujar(a.fondo, a.desp - barra_px)
+            && let Err(e) = a.gpu.dibujar(a.fondo, desp - barra_px)
         {
             eprintln!("no se pudo dibujar: {e}");
         }
@@ -360,8 +363,15 @@ impl Navegador {
         let Some(a) = &mut self.abierta else { return };
         let alto_doc = a.maq.as_ref().map_or(0.0, |m| m.alto) * a.ventana.scale_factor() as f32;
         let visible = a.ventana.inner_size().height as f32 - barra_px;
-        a.desp = (a.desp + cuanto).clamp(0.0, (alto_doc - visible).max(0.0));
-        a.ventana.request_redraw();
+        // El desplazamiento es de los dos hilos (la rueda lo mueve desde el de la ventana).
+        self.desp.poner_alto(alto_doc);
+        let desp = self.desp.mover(cuanto, visible);
+        a.gpu.desplazar(desp - barra_px);
+        self.imagenes_visibles();
+    }
+
+    /// La ventana desplazó la página (la rueda): las imágenes que entran en la vista.
+    pub fn tras_desplazar(&mut self) {
         self.imagenes_visibles();
     }
 
@@ -372,7 +382,7 @@ impl Navegador {
         let Some(m) = &a.maq else { return };
         let escala = a.ventana.scale_factor() as f32;
         let pantalla = a.ventana.inner_size().height as f32 / escala;
-        let arriba = a.desp / escala;
+        let arriba = self.desp.valor() / escala;
         let franja = |n: f32| imagenes::entre(m, arriba - pantalla * n, arriba + pantalla * (1.0 + n));
         let (cerca, no_lejos) = (franja(imagenes::CERCA), franja(imagenes::LEJOS));
         for id in self.imagenes.por_soltar(&no_lejos) {
@@ -390,7 +400,7 @@ impl Navegador {
         let Some(a) = &self.abierta else { return };
         let Some(y) = a.maq.as_ref().and_then(|m| m.ancla(id)) else { return };
         let objetivo = y * a.ventana.scale_factor() as f32;
-        let actual = a.desp;
+        let actual = self.desp.valor();
         self.desplazar(objetivo - actual);
     }
 
@@ -408,7 +418,7 @@ impl Navegador {
             Some(Zona::Campo) => (CursorIcon::Text, None),
             Some(_) => (CursorIcon::Pointer, None),
             None => {
-                let desp = self.abierta.as_ref().map_or(0.0, |a| a.desp);
+                let desp = self.desp.valor();
                 let href = self
                     .abierta
                     .as_ref()
@@ -451,7 +461,7 @@ impl Navegador {
                 self.pintar_barra();
             }
             None => {
-                let desp = self.abierta.as_ref().map_or(0.0, |a| a.desp);
+                let desp = self.desp.valor();
                 let (px, py) = (x / e, (y - barra_px + desp) / e);
                 let maq = self.abierta.as_ref().and_then(|a| a.maq.as_ref());
                 let control = maq.and_then(|m| m.control_en(px, py, desp / e));
