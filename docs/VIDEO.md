@@ -43,10 +43,16 @@ Con un MediaSource provisional que solo contaba bytes, y respondiendo que sí a 
 3. ✅ **Pintar los fotogramas.** `<video>` es un elemento reemplazado en la maquetación (300 × 150 si no tiene imagen, como en los navegadores) y se pinta con la imagen `quimera-video:N`. La ventana (`navegador/ventana/src/video.rs`) decodifica sus muestras con Media Foundation. Para no llenar la RAM, solo decodifica hasta el tiempo actual: las demás esperan comprimidas.
 
    **Primer resultado:** en una captura de la página de vídeo con 14 s de página, el `<video>` de YouTube va por el segundo 14 sin pausa, con `readyState` 4 y datos hasta el segundo 64. YouTube eligió 480p (854 × 480; en otra prueba, 720p) y QUIMERA pinta el fotograma real de ese momento.
-4. 🟡 **Que se mueva en la ventana.** Ya se mueve, pero a saltos:
+4. ✅ **Que se mueva en la ventana: a 30 fotogramas por segundo.** El vídeo lo pinta el **compositor**, un hilo aparte dueño de la GPU (ver [VENTANA.md](VENTANA.md#el-compositor)):
+   - **Desde la página**: le llegan las muestras comprimidas y el reloj de cada `<video>` (tiempo, si corre, velocidad).
+   - **En el compositor**: lleva el tiempo, decodifica y sube cada fotograma a su textura, sin esperar al JavaScript ni a la maquetación. Los fotogramas nunca cruzan de hilo.
+   - **Medido con `QUIMERA_VIDEO=1`**: 30 fotogramas por segundo estables y a tiempo real (un segundo de vídeo por segundo de reloj), con bajones puntuales cuando la GPU coincide con una escena nueva grande.
+
+   Antes de esto (todo en un hilo), el vídeo iba a 1–4 fotogramas por segundo:
+   - **Cómo late**: mientras un vídeo avanza, la ventana late a 30 por segundo, decodifica lo que toca y sube el fotograma a su misma textura (solo cambian los píxeles).
    - **Cómo late**: mientras un vídeo avanza, la ventana late a 30 por segundo, decodifica lo que toca y sube el fotograma a su misma textura (solo cambian los píxeles).
    - **Cuánto da**: 1 a 3 fotogramas por segundo, con la cola de muestras creciendo.
    - **Por qué**: con `QUIMERA_VIDEO=1` se ve cada segundo lo pintado y en qué se va cada latido (JavaScript, medidor, maquetación, vídeo). El vídeo cuesta unos 10 ms por latido; el JavaScript de la página, entre 0,1 y 1,5 s (a veces más). Todo va en un solo hilo, y mientras ese JavaScript trabaja no se pinta.
    - **Primer freno, ya quitado: el medidor.** El reproductor cambiaba el árbol y leía medidas decenas de veces por tanda, y cada lectura maquetaba la página entera (unos 55 ms). Ahora, mientras corren los temporizadores, se reutilizan las medidas de la tanda: cada tanda empieza con medidas frescas, y un elemento sin caja siempre se vuelve a medir. Pasó de 37 a 67 maquetaciones por latido a 2 a 4.
-   - **El freno que queda: la velocidad del intérprete** con el reproductor de YouTube (leer UMP y protobuf, su lógica de calidad...). Es el siguiente trabajo: medir qué funciones del reproductor pesan y acelerar el motor ahí.
+   - **Segundo freno**: la maquetación en seco exponencial y el estilo (ver ESTILO-MAQUETACION.md, «Velocidad con una página de verdad»). Con eso, unos 4 por segundo; el resto lo dio el compositor.
 5. **Sonido**: AAC con Media Foundation y salida con WASAPI.

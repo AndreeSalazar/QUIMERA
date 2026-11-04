@@ -16,6 +16,7 @@
 //! página y envía su formulario (una búsqueda, por ejemplo).
 
 mod barra;
+mod compositor;
 mod escudo;
 mod formularios;
 mod guiones;
@@ -335,7 +336,7 @@ fn maquetar_pagina(
         guion.informar();
     }
     // El fotograma que toca en cada `<video>`.
-    video::Videos::default().avanzar(&guion.dom, imagenes);
+    video::fotogramas_de_captura(&guion.dom, imagenes);
     let mut doc = guion.dom.documento().clone();
     // `QUIMERA_VOLCAR=carpeta`: el árbol final y las hojas, para bancos de estilo y maquetación.
     if let Some(carpeta) = std::env::var_os("QUIMERA_VOLCAR") {

@@ -163,21 +163,27 @@ pub struct VideoPendiente {
     pub config: Option<(Vec<u8>, u32)>,
     /// Las muestras nuevas desde la última vez.
     pub muestras: Vec<Muestra>,
+    /// Ancho y alto de la imagen (0 × 0 hasta su segmento de inicio).
+    pub tam: (u16, u16),
+    /// Si su reloj corre, y a qué velocidad: quien pinta puede llevar el tiempo por su cuenta.
+    pub corre: bool,
+    /// `playbackRate`.
+    pub velocidad: f64,
 }
 
 /// Los `<video>` con su tiempo y sus muestras nuevas (que dejan de estar pendientes).
 pub(crate) fn tomar(est: &Estado) -> Vec<VideoPendiente> {
-    let enlazados: Vec<(u32, Option<usize>)> =
-        est.medios.borrow().relojes.iter().map(|(n, r)| (*n, r.fuente)).collect();
+    let enlazados: Vec<(u32, Reloj)> = est.medios.borrow().relojes.iter().map(|(n, r)| (*n, *r)).collect();
     let mut v = Vec::new();
-    for (nodo, fuente) in enlazados {
+    for (nodo, r) in enlazados {
         let t = tiempo(est, nodo);
         let mut m = est.medios.borrow_mut();
-        let (config, muestras) = match fuente.and_then(|f| m.fuentes.get_mut(f)) {
-            Some(f) => (f.config.clone(), core::mem::take(&mut f.pendientes)),
-            None => (None, Vec::new()),
+        let (config, muestras, tam) = match r.fuente.and_then(|f| m.fuentes.get_mut(f)) {
+            Some(f) => (f.config.clone(), core::mem::take(&mut f.pendientes), f.tam),
+            None => (None, Vec::new(), (0, 0)),
         };
-        v.push(VideoPendiente { nodo: quimera_html::NodoId(nodo), tiempo: t, config, muestras });
+        let nodo = quimera_html::NodoId(nodo);
+        v.push(VideoPendiente { nodo, tiempo: t, config, muestras, tam, corre: r.corre, velocidad: r.velocidad });
     }
     v
 }

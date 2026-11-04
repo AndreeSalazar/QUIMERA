@@ -67,28 +67,40 @@ impl Navegador {
                 );
             }
         }
-        // Mientras un vídeo avanza, a 30 fotogramas por segundo.
-        if self.videos.reproduciendo() {
-            let fotograma = Instant::now() + std::time::Duration::from_millis(33);
-            return Some(proximo.map_or(fotograma, |p| p.min(fotograma)));
+        // Con vídeos, cada 100 ms como mucho, para pasarle al compositor sus muestras y su reloj
+        // (él pinta cada fotograma por su cuenta).
+        if self.hay_videos {
+            let pronto = Instant::now() + std::time::Duration::from_millis(100);
+            return Some(proximo.map_or(pronto, |p| p.min(pronto)));
         }
         proximo
     }
 
-    /// El fotograma que toca en cada `<video>`: a la GPU (en su misma textura) y a repintar. El
-    /// primero de un vídeo pide maquetar, para que su caja sepa qué textura pintar.
+    /// Pasa al compositor las muestras nuevas y el reloj de cada `<video>`: él los decodifica y
+    /// pinta. La primera vez que un vídeo tiene tamaño se maqueta, para que su caja use su textura.
     fn avanzar_videos(&mut self) {
-        let (Some(g), Some(a)) = (&self.guion, &mut self.abierta) else { return };
-        let antes = self.imagenes.total();
-        if !self.videos.avanzar(&g.dom, &mut self.imagenes) {
-            return;
+        let (Some(g), Some(a)) = (&self.guion, &self.abierta) else { return };
+        let mut maquetar = false;
+        for v in g.dom.tomar_videos() {
+            self.hay_videos = true;
+            let (ancho, alto) = (u32::from(v.tam.0), u32::from(v.tam.1));
+            if ancho == 0 || alto == 0 {
+                continue;
+            }
+            let (textura, nuevo) = self.imagenes.video(format!("quimera-video:{}", v.nodo.0), ancho, alto);
+            maquetar |= nuevo;
+            a.gpu.video(crate::compositor::VideoParaPintar {
+                textura,
+                config: v.config,
+                muestras: v.muestras,
+                tiempo: v.tiempo,
+                corre: v.corre,
+                velocidad: v.velocidad,
+            });
         }
-        for (id, ancho, alto, rgba) in self.imagenes.fotogramas_por_subir() {
-            a.gpu.subir_imagen(id, ancho, alto, &rgba);
-        }
-        if self.imagenes.total() != antes {
+        if maquetar {
             self.imagenes_nuevas = true;
+            a.ventana.request_redraw();
         }
-        a.ventana.request_redraw();
     }
 }

@@ -45,6 +45,18 @@ La rueda del ratón, las flechas, Re Pág/Av Pág, espacio, Inicio y Fin desplaz
 
 `--captura` dibuja con la misma GPU, con la barra, en una imagen y la guarda como PNG. Sirve para comprobar el pintado sin mirar la pantalla. Con `--seguir N`, antes sigue el enlace número N de la página: así se comprobó que de `info.cern.ch/hypertext/WWW/TheProject.html` el enlace `../DataSources/Top.html` lleva a `/hypertext/DataSources/Top.html` y se dibuja.
 
+## El compositor
+
+La ventana pinta en un hilo aparte (`compositor.rs`), dueño de la GPU, como el compositor de Chrome:
+
+- **El hilo de la ventana** (eventos, JavaScript, estilo, maquetación) le manda órdenes por un canal: la escena, la barra, las imágenes, el desplazamiento... Tienen los mismos nombres que en `quimera-gpu`, pero ninguna espera: una imagen decodificada se mueve al otro hilo sin copiarse.
+- **Los `<video>` viven en el compositor.** La página le pasa cada 100 ms como mucho las muestras nuevas y el reloj de cada uno. El compositor lleva el tiempo, decodifica solo hasta el momento actual y sube el fotograma a su textura.
+- **Cuándo pinta**: cuando llega algo nuevo y, mientras un vídeo corre, a cada fotograma (la GPU espera al refresco de la pantalla).
+
+Así el vídeo de YouTube va a 30 fotogramas por segundo aunque un script de la página tarde segundos. La captura (`--captura`) sigue pintando en su propio hilo, con la GPU directamente.
+
+**Falta:** desplazar desde el compositor. Hoy la rueda la recibe el hilo de la ventana, así que si un script tarda, el desplazamiento espera. Para arreglarlo, los eventos de entrada deben ir a un hilo que nunca ejecute JavaScript, o la página a otro hilo.
+
 ## Las piezas
 
 | Crate | Nivel | Qué hace | Crates de fuera |

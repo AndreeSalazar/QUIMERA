@@ -115,6 +115,9 @@ struct Cargada {
     decodificando: bool,
     /// Un fotograma de vídeo, ya en RGBA: se sube tal cual y no se suelta.
     crudo: Option<Arc<Vec<u8>>>,
+    /// Un `<video>` de la ventana: su textura la pinta el compositor (no se decodifica ni se
+    /// suelta aquí).
+    video: bool,
 }
 
 /// Las imágenes de la página actual.
@@ -162,7 +165,16 @@ impl Imagenes {
     /// Llegó una imagen (comprimida, con su tamaño).
     pub fn llegada(&mut self, src: String, (bytes, (ancho, alto)): Descargada) {
         self.siguiente += 1;
-        let c = Cargada { id: self.siguiente, ancho, alto, bytes, en_gpu: false, decodificando: false, crudo: None };
+        let c = Cargada {
+            id: self.siguiente,
+            ancho,
+            alto,
+            bytes,
+            en_gpu: false,
+            decodificando: false,
+            crudo: None,
+            video: false,
+        };
         self.pedidas.insert(src.clone());
         self.cargadas.insert(src, c);
     }
@@ -178,9 +190,30 @@ impl Imagenes {
             }
         };
         let crudo = Some(Arc::new(rgba));
-        let c = Cargada { id, ancho, alto, bytes: Arc::new(Vec::new()), en_gpu: false, decodificando: false, crudo };
+        let bytes = Arc::new(Vec::new());
+        let c = Cargada { id, ancho, alto, bytes, en_gpu: false, decodificando: false, crudo, video: false };
         self.pedidas.insert(src.clone());
         self.cargadas.insert(src, c);
+    }
+
+    /// El `<video>` `src` (`quimera-video:N`) de `ancho` × `alto`, cuyas texturas pinta el
+    /// compositor: su número de textura, y si es nuevo (hay que maquetar para que su caja lo use).
+    pub fn video(&mut self, src: String, ancho: u32, alto: u32) -> (u32, bool) {
+        if let Some(c) = self.cargadas.get(&src).filter(|c| (c.ancho, c.alto) == (ancho, alto)) {
+            return (c.id, false);
+        }
+        let id = match self.cargadas.get(&src) {
+            Some(c) => c.id,
+            None => {
+                self.siguiente += 1;
+                self.siguiente
+            }
+        };
+        let bytes = Arc::new(Vec::new());
+        let c = Cargada { id, ancho, alto, bytes, en_gpu: true, decodificando: false, crudo: None, video: true };
+        self.pedidas.insert(src.clone());
+        self.cargadas.insert(src, c);
+        (id, true)
     }
 
     /// Los fotogramas de vídeo nuevos que hay que subir a la GPU: (id, ancho, alto, RGBA).
@@ -209,7 +242,7 @@ impl Imagenes {
     pub fn por_decodificar(&mut self, cerca: &HashSet<String>) -> Vec<(u32, Arc<Vec<u8>>)> {
         let mut v = Vec::new();
         for (src, c) in &mut self.cargadas {
-            if !c.en_gpu && !c.decodificando && c.crudo.is_none() && cerca.contains(src) {
+            if !c.en_gpu && !c.decodificando && c.crudo.is_none() && !c.video && cerca.contains(src) {
                 c.decodificando = true;
                 v.push((c.id, c.bytes.clone()));
             }
@@ -229,7 +262,7 @@ impl Imagenes {
     pub fn por_soltar(&mut self, no_lejos: &HashSet<String>) -> Vec<u32> {
         let mut v = Vec::new();
         for (src, c) in &mut self.cargadas {
-            if c.en_gpu && !no_lejos.contains(src) {
+            if c.en_gpu && !c.video && !no_lejos.contains(src) {
                 c.en_gpu = false;
                 v.push(c.id);
             }

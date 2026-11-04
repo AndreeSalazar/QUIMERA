@@ -46,7 +46,8 @@ pub enum Evento {
 /// Lo que existe mientras la ventana está abierta.
 pub struct Abierta {
     pub ventana: Arc<Window>,
-    pub gpu: Gpu,
+    /// El hilo de pintado, dueño de la GPU (`compositor.rs`).
+    pub gpu: crate::compositor::Compositor,
     /// La última maquetación (para saber dónde están los enlaces y las anclas).
     maq: Option<Maquetacion>,
     /// Desplazamiento en píxeles de pantalla.
@@ -81,8 +82,9 @@ pub struct Navegador {
     formulario: formularios::Estado,
     /// El JavaScript de la página: su DOM (el árbol que se maqueta) y sus temporizadores.
     pub guion: Option<Guion>,
-    /// Los `<video>` de la página: sus decodificadores y el fotograma que toca.
-    videos: crate::video::Videos,
+    /// La página tiene algún `<video>`: se despierta a menudo para pasarle sus muestras al
+    /// compositor (que los decodifica y pinta por su cuenta).
+    hay_videos: bool,
     /// El árbol de la página tal como llegó, mientras aún no corren sus scripts: se pinta ya,
     /// para que la ventana no se quede en blanco.
     estatico: Option<quimera_html::Documento>,
@@ -112,13 +114,14 @@ impl Navegador {
             teclas: ModifiersState::empty(),
             formulario: formularios::Estado::default(),
             guion: None,
-            videos: crate::video::Videos::default(),
+            hay_videos: false,
             estatico: None,
         }
     }
 
     /// La ventana está lista: se pone la GPU y se pide la primera página.
     pub fn abrir(&mut self, ventana: Arc<Window>, gpu: Gpu) {
+        let gpu = crate::compositor::Compositor::nuevo(gpu);
         self.abierta = Some(Abierta { ventana, gpu, maq: None, desp: 0.0, fondo: [1.0; 4] });
         self.navegar(self.url.clone(), true);
     }
@@ -186,7 +189,7 @@ impl Navegador {
                     && let (Ok(i), Some(a)) = (imagen, &mut self.abierta)
                 {
                     // Sin volver a maquetar: el tamaño ya se sabía; solo falta su textura.
-                    a.gpu.subir_imagen(img, i.ancho, i.alto, &i.rgba);
+                    a.gpu.subir_imagen(img, i.ancho, i.alto, i.rgba);
                     a.ventana.request_redraw();
                 }
             }
@@ -218,7 +221,7 @@ impl Navegador {
     /// Llegó la página pedida: se muestra (y se va a su `#ancla`), y se piden sus imágenes.
     fn llegada(&mut self, pagina: Pagina) {
         self.imagenes.vaciar();
-        self.videos = crate::video::Videos::default();
+        self.hay_videos = false;
         self.hojas = quimera_estilo::CacheHojas::default();
         self.imagenes_nuevas = false;
         self.formulario = formularios::Estado::default();
