@@ -5,6 +5,7 @@
 
 use crate::arbol::{Dato, Documento, Elemento, Nodo, NodoId};
 use crate::registro::Cambio;
+use crate::toques::Toque;
 use alloc::string::String;
 use alloc::vec::Vec;
 
@@ -55,6 +56,7 @@ impl Documento {
         }
         if let Some(p) = self.nodos[id.0 as usize].padre.take() {
             self.nodos[p.0 as usize].hijos.retain(|&h| h != id);
+            self.tocar(Toque::Hijos(p));
         }
     }
 
@@ -82,6 +84,7 @@ impl Documento {
         let i = antes.and_then(|a| hijos.iter().position(|&h| h == a)).unwrap_or(hijos.len());
         hijos.insert(i, hijo);
         self.nodos[hijo.0 as usize].padre = Some(padre);
+        self.tocar(Toque::Hijos(padre));
         if self.cambios.is_some() {
             let (anterior, siguiente) = self.hermanos(hijo);
             self.anotar(Cambio::Hijos {
@@ -109,6 +112,9 @@ impl Documento {
             };
             nota = Some(Cambio::Atributo { nodo: id, nombre, viejo });
         }
+        if nota.is_some() {
+            self.tocar(Toque::Atributo(id));
+        }
         if let Some(c) = nota.filter(|_| self.cambios.is_some()) {
             self.anotar(c);
         }
@@ -124,6 +130,9 @@ impl Documento {
                 nota = Some(Cambio::Atributo { nodo: id, nombre, viejo: Some(viejo) });
             }
         }
+        if nota.is_some() {
+            self.tocar(Toque::Atributo(id));
+        }
         if let Some(c) = nota.filter(|_| self.cambios.is_some()) {
             self.anotar(c);
         }
@@ -136,6 +145,7 @@ impl Documento {
             Dato::Texto(t) | Dato::Comentario(t) => {
                 let viejo = core::mem::replace(t, String::from(texto));
                 self.anotar(Cambio::Texto { nodo: id, viejo });
+                self.tocar(Toque::Texto(id));
             }
             Dato::Elemento(_) | Dato::Documento => {
                 self.vaciar(id);
@@ -153,6 +163,9 @@ impl Documento {
         let quitados = core::mem::take(&mut self.nodos[id.0 as usize].hijos);
         for &h in &quitados {
             self.nodos[h.0 as usize].padre = None;
+        }
+        if !quitados.is_empty() {
+            self.tocar(Toque::Hijos(id));
         }
         if self.cambios.is_some() && !quitados.is_empty() {
             self.anotar(Cambio::Hijos { padre: id, anadidos: Vec::new(), quitados, anterior: None, siguiente: None });

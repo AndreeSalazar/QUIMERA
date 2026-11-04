@@ -12,18 +12,17 @@ use crate::historial::Historial;
 use crate::imagenes::{self, Imagenes};
 use crate::pagina::{Pagina, direccion_escrita};
 use crate::tipografias;
-use quimera_estilo::Opciones;
 use quimera_imagen::Imagen;
-use quimera_maquetacion::{Maquetacion, maquetar_pagina};
+use quimera_maquetacion::Maquetacion;
 use quimera_pintar::{Pintor, color_gpu};
 use quimera_red::{Cliente, Url};
 use std::sync::Arc;
-use std::time::Instant;
 use winit::event::KeyEvent;
 use winit::event_loop::EventLoopProxy;
 use winit::keyboard::{Key, ModifiersState, NamedKey};
 use winit::window::{CursorIcon, Window};
 
+mod pasada;
 mod vivo;
 
 /// Lo que llega de los hilos de red al bucle de eventos.
@@ -59,6 +58,8 @@ pub struct Navegador {
     imagenes: Imagenes,
     /// Las hojas de estilo de la página ya analizadas (se maqueta a menudo).
     hojas: quimera_estilo::CacheHojas,
+    /// El estilo del cálculo anterior: tras un cambio de JavaScript solo se recalcula lo tocado.
+    memoria_estilo: quimera_estilo::Memoria,
     /// Llegaron imágenes desde la última maquetación: se maqueta otra vez antes de dibujar.
     imagenes_nuevas: bool,
     /// La página que se ve o se está pidiendo.
@@ -110,6 +111,7 @@ impl Navegador {
             proxy,
             imagenes: Imagenes::default(),
             hojas: quimera_estilo::CacheHojas::default(),
+            memoria_estilo: quimera_estilo::Memoria::default(),
             imagenes_nuevas: false,
             url,
             pagina: None,
@@ -236,6 +238,7 @@ impl Navegador {
         self.imagenes.vaciar();
         self.hay_videos = false;
         self.hojas = quimera_estilo::CacheHojas::default();
+        self.memoria_estilo = quimera_estilo::Memoria::default();
         self.imagenes_nuevas = false;
         self.formulario = formularios::Estado::default();
         if let Some(a) = &mut self.abierta {
@@ -270,69 +273,6 @@ impl Navegador {
         self.pintar_barra();
         self.dibujar();
         let _ = self.proxy.send_event(Evento::Scripts { id: self.id_carga });
-    }
-
-    /// Estilo, maquetación y cuadros de la página para el tamaño actual de la ventana.
-    pub fn maquetar(&mut self) {
-        let barra_px = self.alto_barra();
-        let (Some(a), Some(pagina)) = (&mut self.abierta, &self.pagina) else { return };
-        let inicio = Instant::now();
-        let tam = a.ventana.inner_size();
-        let escala = a.ventana.scale_factor() as f32;
-        let (ancho, alto) = (tam.width as f32 / escala, (tam.height as f32 - barra_px).max(1.0) / escala);
-        let mut doc = match (&self.guion, &self.estatico) {
-            (Some(g), _) => g.dom.documento().clone(),
-            (None, Some(d)) => d.clone(),
-            (None, None) => return,
-        };
-        let externa = |href: &str| pagina.hoja(href);
-        let op = Opciones { ancho, alto };
-        let estilos = {
-            let _t = crate::trazas::tramo("web/estilo", Some("web/dom"));
-            quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &self.hojas);
-            quimera_estilo::calcular_con_cache(&doc, &op, &externa, &self.hojas)
-        };
-        let imagenes = &mut self.imagenes;
-        let medidor = self.pintor.medidor();
-        let m = {
-            let _t = crate::trazas::tramo("web/maquetacion", Some("web/estilo"));
-            maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario)
-        };
-        imagenes.en_linea(&self.cliente, &pagina.base, &m);
-        let mut cuadros = {
-            let _t = crate::trazas::tramo("grafico/pintar", Some("web/maquetacion"));
-            self.pintor.escena(&m, escala, &|s| imagenes.id(s))
-        };
-        bajo_la_barra(&mut cuadros, barra_px);
-        let nuevas = imagenes.nuevas(&doc);
-        a.gpu.cargar(&cuadros);
-        a.fondo = color_gpu(m.fondo);
-        let titulo = doc.buscar("title").map(|t| doc.texto(t).trim().to_string()).filter(|t| !t.is_empty());
-        let sitio =
-            if pagina.url.anfitrion.is_empty() { String::new() } else { format!(" · {}", pagina.url.anfitrion) };
-        a.ventana.set_title(&format!("{}{sitio} — QUIMERA", titulo.as_deref().unwrap_or("sin título")));
-        eprintln!(
-            "{}: red {:.0} ms · {} nodos, {} cuadros, {} enlaces, {} imágenes ({} en la GPU), maquetado en {:.1} ms",
-            pagina.url,
-            pagina.ms_red,
-            doc.total(),
-            cuadros.len(),
-            m.enlaces.len(),
-            imagenes.total(),
-            imagenes.en_gpu(),
-            inicio.elapsed().as_secs_f64() * 1e3
-        );
-        a.maq = Some(m);
-        drop(doc);
-        if !nuevas.is_empty() {
-            let (id, proxy) = (self.id_carga, self.proxy.clone());
-            let base = pagina.base.clone();
-            imagenes::descargar_todas(self.cliente.clone(), base, nuevas, move |src, imagen| {
-                let _ = proxy.send_event(Evento::Imagen { id, src, imagen });
-            });
-        }
-        self.desplazar(0.0);
-        self.pintar_barra();
     }
 
     /// Vuelve a dibujar la barra y la línea de estado (capa fija) y pide un cuadro nuevo.

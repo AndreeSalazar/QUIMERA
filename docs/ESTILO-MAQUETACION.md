@@ -232,7 +232,31 @@ Lo que se encontró y cómo se arregló:
 
 **Resultado.** El estilo de toda la página pasa de 130 a 54 ms. En una captura de 8 s de la página de vídeo, el medidor pasa de 92 s (136 mediciones) a 12 s (187 mediciones, porque ahora un elemento sin caja siempre se vuelve a medir), y la captura entera, de unos dos minutos a 53 s.
 
-**Siguiente:** guardar el índice de reglas entre cálculos (13 ms) y calcular solo el estilo de lo que cambió.
+### Estilo incremental
+
+Cada cambio de JavaScript volvía a calcular el estilo de toda la página. Ahora se calcula solo lo tocado:
+
+1. **El índice de reglas se guarda** en `CacheHojas`, con clave en las hojas (sus punteros) y la pantalla: con las mismas, el mismo índice. Ya no toma prestadas las hojas: las guarda (`Rc`), y cada entrada dice por números dónde está su regla. Son 13 ms menos por cálculo en YouTube.
+2. **El documento apunta sus toques** (`quimera_html::Toques`): atributo de un elemento, hijos de un nodo o texto. Siempre está encendido y es barato; con más de 20 000 toques pasa a «todo».
+3. **`calcular_incremental`** (`incremental.rs`) reutiliza el estilo anterior de cada elemento salvo el de las raíces que salen de los toques, que se recalculan con todo lo de dentro:
+   - para un atributo, el elemento y sus hermanos de después;
+   - para un cambio de hijos, el padre y todos sus hijos;
+   - para un texto, su padre;
+   - para los `:has()` de las hojas, los antepasados (y, si miran a los hermanos, sus hermanos de antes) que pueden ser su sujeto.
+
+   Se rehace entero si cambian las hojas, la pantalla o la letra de `<html>`. Los pseudoelementos se recalculan siempre.
+
+**Comprobado:** con `QUIMERA_ESTILO_COMPROBAR=1`, cada cálculo se compara con el entero. En YouTube salieron 43 pasadas con 0 elementos distintos. La prueba `incremental::pruebas` hace lo mismo con clases, un hijo nuevo (`:first-child`), hermanos (`+`), `:has()`, `:empty` y atributos de antepasados.
+
+**Resultado:**
+
+| | Antes | Ahora |
+|---|---|---|
+| YouTube, estilo por cambio | 47 ms | **4,2 ms** de mediana (recalcula unos 12 de 2117 elementos) |
+| YouTube, estilo en 35 s | 4,9 s | 2,0 s (incluye las 4 pasadas enteras del principio) |
+| Wikipedia, estilo por cambio | 43 ms | **5,6 ms** |
+
+**Siguiente:** la maquetación incremental (31 ms por cambio en YouTube).
 
 ## Siguiente
 

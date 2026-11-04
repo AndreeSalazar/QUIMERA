@@ -37,10 +37,14 @@ fn en_compatibilidad(doc: &Documento) -> bool {
         .any(|&h| matches!(&doc.nodo(h).dato, Dato::Doctype(n) if n.eq_ignore_ascii_case("html")))
 }
 
-/// Un selector de una regla, con lo que hace falta para ordenarlo.
-struct Entrada<'h> {
-    selector: &'h Selector,
-    declaraciones: &'h [Declaracion],
+/// Un selector de una regla, con lo que hace falta para ordenarlo. Dónde está su regla va por
+/// números (hoja, bloque `@media`, regla, selector): el índice guarda las hojas.
+pub(crate) struct Entrada {
+    hoja: u32,
+    /// El bloque `@media` (`u32::MAX`: fuera de ninguno).
+    medio: u32,
+    regla: u32,
+    sel: u32,
     /// 0 navegador, 1 página.
     origen: u8,
     especificidad: (u32, u32, u32),
@@ -49,44 +53,58 @@ struct Entrada<'h> {
     antepasados: Filtro,
 }
 
-/// Las reglas de todas las hojas, indexadas.
-struct Indice<'h> {
-    entradas: Vec<Entrada<'h>>,
-    por_id: BTreeMap<&'h str, Vec<usize>>,
-    por_clase: BTreeMap<&'h str, Vec<usize>>,
-    por_etiqueta: BTreeMap<&'h str, Vec<usize>>,
-    resto: Vec<usize>,
+/// Las reglas de todas las hojas, indexadas. Guarda las hojas (así se puede guardar entre un
+/// cálculo y el siguiente: ver [`CacheHojas`]).
+pub(crate) struct Indice {
+    hojas: Vec<(u8, Rc<Hoja>)>,
+    pub(crate) entradas: Vec<Entrada>,
+    pub(crate) por_id: BTreeMap<String, Vec<usize>>,
+    pub(crate) por_clase: BTreeMap<String, Vec<usize>>,
+    pub(crate) por_etiqueta: BTreeMap<String, Vec<usize>>,
+    pub(crate) resto: Vec<usize>,
+    /// Lo que piden los `:has()` (para el estilo incremental, `incremental.rs`).
+    pub(crate) tiene: crate::incremental::ConHas,
 }
 
-impl<'h> Indice<'h> {
-    fn nuevo(hojas: &'h [(u8, Rc<Hoja>)], op: &Opciones) -> Indice<'h> {
+impl Indice {
+    pub(crate) fn nuevo(hojas: Vec<(u8, Rc<Hoja>)>, op: &Opciones) -> Indice {
         Indice::nuevo_con(hojas, op, |_| true)
     }
 
     /// Solo con los selectores que cumplen `incluir` (los de pseudoelementos, por ejemplo).
-    fn nuevo_con(hojas: &'h [(u8, Rc<Hoja>)], op: &Opciones, incluir: fn(&Selector) -> bool) -> Indice<'h> {
+    fn nuevo_con(hojas: Vec<(u8, Rc<Hoja>)>, op: &Opciones, incluir: fn(&Selector) -> bool) -> Indice {
         let mut ind = Indice {
+            hojas: Vec::new(),
             entradas: Vec::new(),
             por_id: BTreeMap::new(),
             por_clase: BTreeMap::new(),
             por_etiqueta: BTreeMap::new(),
             resto: Vec::new(),
+            tiene: crate::incremental::ConHas::default(),
         };
-        for (origen, hoja) in hojas {
-            let medios = hoja.medios.iter().filter(|m| medios::cumple(&m.condicion, op)).flat_map(|m| m.reglas.iter());
-            for regla in hoja.reglas.iter().chain(medios) {
-                ind.anadir(*origen, regla, incluir);
+        for (h, (origen, hoja)) in hojas.iter().enumerate() {
+            for (r, regla) in hoja.reglas.iter().enumerate() {
+                ind.anadir(*origen, [h, usize::MAX, r], regla, incluir);
+            }
+            for (m, medio) in hoja.medios.iter().enumerate().filter(|(_, m)| medios::cumple(&m.condicion, op)) {
+                for (r, regla) in medio.reglas.iter().enumerate() {
+                    ind.anadir(*origen, [h, m, r], regla, incluir);
+                }
             }
         }
+        ind.hojas = hojas;
         ind
     }
 
-    fn anadir(&mut self, origen: u8, regla: &'h Regla, incluir: fn(&Selector) -> bool) {
-        for selector in regla.selectores.iter().filter(|s| incluir(s)) {
+    fn anadir(&mut self, origen: u8, donde: [usize; 3], regla: &Regla, incluir: fn(&Selector) -> bool) {
+        for (s, selector) in regla.selectores.iter().enumerate().filter(|(_, s)| incluir(s)) {
             let i = self.entradas.len();
+            self.tiene.anotar(selector);
             self.entradas.push(Entrada {
-                selector,
-                declaraciones: &regla.declaraciones,
+                hoja: donde[0] as u32,
+                medio: if donde[1] == usize::MAX { u32::MAX } else { donde[1] as u32 },
+                regla: donde[2] as u32,
+                sel: s as u32,
                 origen,
                 especificidad: selector.especificidad(),
                 orden: i as u32,
@@ -94,19 +112,37 @@ impl<'h> Indice<'h> {
             });
             let Some(derecha) = selector.partes.last() else { continue };
             if let Some(id) = derecha.ids.first() {
-                self.por_id.entry(id.as_str()).or_default().push(i);
+                self.por_id.entry(id.clone()).or_default().push(i);
             } else if let Some(c) = derecha.clases.first() {
-                self.por_clase.entry(c.as_str()).or_default().push(i);
+                self.por_clase.entry(c.clone()).or_default().push(i);
             } else if let Some(t) = &derecha.etiqueta {
-                self.por_etiqueta.entry(t.as_str()).or_default().push(i);
+                self.por_etiqueta.entry(t.clone()).or_default().push(i);
             } else {
                 self.resto.push(i);
             }
         }
     }
 
+    fn regla(&self, en: &Entrada) -> &Regla {
+        let hoja = &self.hojas[en.hoja as usize].1;
+        match en.medio {
+            u32::MAX => &hoja.reglas[en.regla as usize],
+            m => &hoja.medios[m as usize].reglas[en.regla as usize],
+        }
+    }
+
+    /// El selector de una entrada.
+    pub(crate) fn selector(&self, en: &Entrada) -> &Selector {
+        &self.regla(en).selectores[en.sel as usize]
+    }
+
+    /// Las declaraciones de una entrada.
+    fn declaraciones(&self, en: &Entrada) -> &[Declaracion] {
+        &self.regla(en).declaraciones
+    }
+
     /// Las entradas que casan con el elemento, en el orden de la cascada.
-    fn casan(&self, e: Nodo<'_>) -> Vec<&Entrada<'h>> {
+    pub(crate) fn casan(&self, e: Nodo<'_>) -> Vec<&Entrada> {
         let Some(mut el) = e.doc.elemento(e.id) else { return Vec::new() };
         // Un `::before` sintético: sus reglas están indexadas por su elemento de origen.
         if el.nombre.starts_with("::")
@@ -132,14 +168,18 @@ impl<'h> Indice<'h> {
         candidatas
             .into_iter()
             .map(|i| &self.entradas[i])
-            .filter(|en| filtro.contiene(&en.antepasados) && en.selector.casa(e))
+            .filter(|en| filtro.contiene(&en.antepasados) && self.selector(en).casa(e))
             .collect()
     }
 }
 
 /// Las hojas del documento: la del navegador y, en orden de documento, los `<style>` y los
 /// `<link rel="stylesheet">` (cuyo texto da `externa` a partir del `href`).
-fn hojas(doc: &Documento, externa: &dyn Fn(&str) -> Option<String>, cache: &CacheHojas) -> Vec<(u8, Rc<Hoja>)> {
+pub(crate) fn hojas(
+    doc: &Documento,
+    externa: &dyn Fn(&str) -> Option<String>,
+    cache: &CacheHojas,
+) -> Vec<(u8, Rc<Hoja>)> {
     let mut v = alloc::vec![(0, cache.analizada(NAVEGADOR))];
     if en_compatibilidad(doc) {
         v.push((0, cache.analizada(COMPATIBILIDAD)));
@@ -172,6 +212,17 @@ pub struct CacheHojas {
     /// Las hojas enlazadas por su `href` (dentro de una página, siempre el mismo texto): así no
     /// se copia ni se recorre su texto en cada cálculo (la de YouTube pasa de 3 MB).
     enlazadas: RefCell<BTreeMap<String, Option<Rc<Hoja>>>>,
+    /// Los índices construidos (el de todo y el de los pseudoelementos), por sus hojas y la
+    /// pantalla: con las mismas, el mismo índice. En YouTube, 13 ms menos por cálculo.
+    indices: RefCell<Vec<(ClaveIndice, Rc<Indice>)>>,
+}
+
+/// Con qué hojas (su puntero) y qué pantalla se hizo un índice, y si es el de pseudoelementos.
+#[derive(PartialEq)]
+struct ClaveIndice {
+    seudo: bool,
+    pantalla: (u32, u32),
+    hojas: Vec<(u8, usize)>,
 }
 
 /// Cuántas hojas distintas guarda como mucho.
@@ -193,6 +244,27 @@ impl CacheHojas {
         }
         hojas.push((huella, texto.len(), hoja.clone()));
         hoja
+    }
+
+    /// El índice de estas hojas para esta pantalla, construyéndolo solo si cambió algo.
+    pub(crate) fn indice(&self, hojas: Vec<(u8, Rc<Hoja>)>, op: &Opciones, seudo: bool) -> Rc<Indice> {
+        let clave = ClaveIndice {
+            seudo,
+            pantalla: (op.ancho.to_bits(), op.alto.to_bits()),
+            hojas: hojas.iter().map(|(o, h)| (*o, Rc::as_ptr(h) as usize)).collect(),
+        };
+        if let Some((_, i)) = self.indices.borrow().iter().find(|(c, _)| *c == clave) {
+            return i.clone();
+        }
+        let i = Rc::new(if seudo {
+            Indice::nuevo_con(hojas, op, |s| s.seudoelemento().is_some())
+        } else {
+            Indice::nuevo(hojas, op)
+        });
+        let mut v = self.indices.borrow_mut();
+        v.retain(|(c, _)| c.seudo != seudo);
+        v.push((clave, i.clone()));
+        i
     }
 
     /// La hoja enlazada con `href` (su texto lo da `externa` la primera vez).
@@ -218,7 +290,7 @@ pub(crate) fn anadir_seudoelementos(
 ) {
     let hojas = hojas(doc, externa, cache);
     // Solo las reglas de `::before` y `::after`: muy pocas al lado de las demás.
-    let indice = Indice::nuevo_con(&hojas, op, |s| s.seudoelemento().is_some());
+    let indice = cache.indice(hojas, op, true);
     if indice.entradas.is_empty() {
         return;
     }
@@ -248,7 +320,7 @@ pub(crate) fn anadir_seudoelementos(
     }
 }
 
-impl Indice<'_> {
+impl Indice {
     /// El `content` del pseudoelemento `nombre` de `e`, si alguna regla lo pone.
     fn contenido(&self, e: Nodo<'_>, nombre: &str, filtro: &Filtro) -> Option<String> {
         let el = e.doc.elemento(e.id)?;
@@ -264,9 +336,9 @@ impl Indice<'_> {
         let mejor = candidatas
             .into_iter()
             .map(|i| &self.entradas[i])
-            .filter(|en| en.selector.seudoelemento() == Some(nombre))
-            .filter_map(|en| en.declaraciones.iter().rev().find(|d| d.propiedad == "content").map(|d| (en, d)))
-            .filter(|(en, _)| filtro.contiene(&en.antepasados) && en.selector.casa_origen(e))
+            .filter(|en| self.selector(en).seudoelemento() == Some(nombre))
+            .filter_map(|en| self.declaraciones(en).iter().rev().find(|d| d.propiedad == "content").map(|d| (en, d)))
+            .filter(|(en, _)| filtro.contiene(&en.antepasados) && self.selector(en).casa_origen(e))
             .max_by_key(|(en, d)| (d.importante, en.especificidad, en.orden))?;
         texto_de_content(&mejor.1.valor, el)
     }
@@ -303,7 +375,7 @@ pub(crate) fn calcular(
     cache: &CacheHojas,
 ) -> Estilos {
     let hojas = hojas(doc, externa, cache);
-    let indice = Indice::nuevo(&hojas, op);
+    let indice = cache.indice(hojas, op, false);
     let mut estilos: Vec<Option<Estilo>> = alloc::vec![None; doc.total()];
     let raiz = Estilo::default();
     let letra_raiz = doc
@@ -332,7 +404,7 @@ pub(crate) fn calcular(
 
 /// Multiplica la opacidad en los colores del elemento (los de dentro llevan ya la suya, que
 /// incluye esta). Como la opacidad de grupo de CSS cuando lo de dentro no se solapa.
-fn aplicar_opacidad(e: &mut Estilo) {
+pub(crate) fn aplicar_opacidad(e: &mut Estilo) {
     let por = |a: u8| (f32::from(a) * e.opacidad + 0.5) as u8;
     // Un borde sin color usa el del texto: el de antes de multiplicar.
     let color = e.color;
@@ -349,7 +421,14 @@ fn aplicar_opacidad(e: &mut Estilo) {
 }
 
 /// El estilo de un elemento a partir del de su padre.
-fn estilo_de(doc: &Documento, id: NodoId, padre: &Estilo, ind: &Indice<'_>, op: &Opciones, letra_raiz: f32) -> Estilo {
+pub(crate) fn estilo_de(
+    doc: &Documento,
+    id: NodoId,
+    padre: &Estilo,
+    ind: &Indice,
+    op: &Opciones,
+    letra_raiz: f32,
+) -> Estilo {
     let mut entradas = ind.casan(Nodo { doc, id });
     entradas.sort_by_key(|en| (en.especificidad, en.orden));
     // (fuerza, declaración): la fuerza ordena orígenes e !important; el orden estable hace el resto.
@@ -362,7 +441,7 @@ fn estilo_de(doc: &Documento, id: NodoId, padre: &Estilo, ind: &Indice<'_>, op: 
         todas.push((1, d));
     }
     for en in &entradas {
-        for d in en.declaraciones {
+        for d in ind.declaraciones(en) {
             todas.push((fuerza(en.origen, d.importante), d));
         }
     }

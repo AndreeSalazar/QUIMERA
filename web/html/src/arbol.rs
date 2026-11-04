@@ -63,11 +63,17 @@ pub struct Documento {
     pub(crate) nodos: Vec<Nodo>,
     /// El registro de cambios, si está encendido (`registro.rs`).
     pub(crate) cambios: Option<Vec<crate::registro::Cambio>>,
+    /// Qué nodos se tocaron desde la última vez (para el estilo incremental, `toques.rs`).
+    pub(crate) toques: crate::toques::Toques,
 }
 
 impl Default for Documento {
     fn default() -> Self {
-        Documento { nodos: alloc::vec![Nodo { padre: None, hijos: Vec::new(), dato: Dato::Documento }], cambios: None }
+        Documento {
+            nodos: alloc::vec![Nodo { padre: None, hijos: Vec::new(), dato: Dato::Documento }],
+            cambios: None,
+            toques: crate::toques::Toques::default(),
+        }
     }
 }
 

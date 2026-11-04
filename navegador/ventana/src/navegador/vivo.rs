@@ -20,6 +20,8 @@ impl Navegador {
             Guion::preparar(pagina, vista)
         });
         self.estatico = None;
+        // Otro documento (el de los scripts): el estilo anterior no vale.
+        self.memoria_estilo = quimera_estilo::Memoria::default();
         self.atender_peticiones();
         self.maquetar();
     }

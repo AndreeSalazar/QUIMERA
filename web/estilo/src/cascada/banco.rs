@@ -24,8 +24,9 @@ fn banco_con_una_pagina_volcada() {
     let cache = CacheHojas::default();
     {
         let hs = hojas(&doc, &externa, &cache);
-        let ind = Indice::nuevo(&hs, &op);
-        let mut clases: std::vec::Vec<(&str, usize)> = ind.por_clase.iter().map(|(k, v)| (*k, v.len())).collect();
+        let ind = Indice::nuevo(hs, &op);
+        let mut clases: std::vec::Vec<(&str, usize)> =
+            ind.por_clase.iter().map(|(k, v)| (k.as_str(), v.len())).collect();
         clases.sort_by_key(|x| core::cmp::Reverse(x.1));
         std::eprintln!("resto {} · clases más grandes {:?}", ind.resto.len(), &clases[..clases.len().min(8)]);
         // Candidatas medias por elemento.
@@ -59,9 +60,10 @@ fn banco_con_una_pagina_volcada() {
     for vuelta in 0..3 {
         let t = Instant::now();
         let hs = hojas(&doc, &externa, &cache);
+        let n_hojas = hs.len();
         let t_hojas = t.elapsed();
         let t = Instant::now();
-        let indice = Indice::nuevo(&hs, &op);
+        let indice = Indice::nuevo(hs, &op);
         let t_indice = t.elapsed();
         let t = Instant::now();
         let estilos = calcular(&doc, &op, &externa, &cache);
@@ -70,7 +72,7 @@ fn banco_con_una_pagina_volcada() {
         std::eprintln!(
             "vuelta {vuelta}: {} nodos, {n} con estilo, {} hojas, {} reglas: hojas {:?}, índice {:?}, calcular entero {:?}",
             doc.total(),
-            hs.len(),
+            n_hojas,
             indice.entradas.len(),
             t_hojas,
             t_indice,

@@ -23,6 +23,7 @@ mod cascada;
 mod elemento;
 mod flex;
 mod fuentes;
+mod incremental;
 mod medios;
 mod posicion;
 mod propiedades;
@@ -35,6 +36,7 @@ pub use cascada::CacheHojas;
 pub use elemento::Nodo;
 pub use flex::{AlinearFlex, Direccion, Flex, Justificar};
 pub use fuentes::{FuenteWeb, fuentes_web};
+pub use incremental::Memoria;
 pub use posicion::{Colocacion, Posicion};
 pub use propiedades::borde_solido;
 pub use quimera_html::NodoId;
@@ -102,4 +104,19 @@ pub fn calcular_con_cache(
     cache: &CacheHojas,
 ) -> Estilos {
     cascada::calcular(doc, op, externa, cache)
+}
+
+/// Como [`calcular_con_cache`], recalculando solo lo que alcanzan los `toques` del documento
+/// desde el cálculo guardado en `memoria` (ver `incremental.rs`). `originales` son los nodos que
+/// tenía el documento antes de [`anadir_seudoelementos`].
+pub fn calcular_incremental(
+    doc: &quimera_html::Documento,
+    op: &Opciones,
+    externa: &dyn Fn(&str) -> Option<alloc::string::String>,
+    cache: &CacheHojas,
+    memoria: &mut Memoria,
+    originales: usize,
+    toques: &quimera_html::Toques,
+) -> Estilos {
+    incremental::calcular(doc, op, externa, cache, memoria, originales, toques)
 }

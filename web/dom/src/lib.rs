@@ -431,6 +431,11 @@ impl Dom {
         self.estado.doc.borrow()
     }
 
+    /// Qué nodos se tocaron desde la última vez (y los olvida): para el estilo incremental.
+    pub fn tomar_toques(&self) -> quimera_html::Toques {
+        self.estado.doc.borrow_mut().tomar_toques()
+    }
+
     /// Si el árbol cambió desde la última vez (y lo olvida).
     pub fn tomar_cambios(&self) -> bool {
         self.estado.cambiado.replace(false)
