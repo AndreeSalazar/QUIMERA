@@ -47,7 +47,7 @@ fn trozos_cabeceras_y_peticion() {
     let peticion = vistas.lock().unwrap()[0].clone();
     assert!(peticion.starts_with("GET / HTTP/1.1\r\n"), "{peticion}");
     assert!(
-        peticion.contains(&format!("Host: {}\r\n", &base[7..])) && peticion.contains("Connection: close"),
+        peticion.contains(&format!("Host: {}\r\n", &base[7..])) && peticion.contains("Connection: keep-alive"),
         "{peticion}"
     );
     assert!(peticion.contains("User-Agent: QUIMERA/"), "{peticion}");
@@ -70,4 +70,51 @@ fn redirecciones_y_errores() {
     // Un puerto donde nadie escucha.
     let cerrado = TcpListener::bind("127.0.0.1:0").unwrap().local_addr().unwrap().port();
     assert!(matches!(pedir(&format!("http://127.0.0.1:{cerrado}"), "/"), Err(Error::Red(_))));
+}
+
+/// Un servidor que atiende varias peticiones por conexión: cuenta las conexiones abiertas.
+fn servidor_que_mantiene() -> (String, Arc<Mutex<usize>>) {
+    let escucha = TcpListener::bind("127.0.0.1:0").unwrap();
+    let base = format!("http://127.0.0.1:{}", escucha.local_addr().unwrap().port());
+    let conexiones = Arc::new(Mutex::new(0));
+    let cuenta = conexiones.clone();
+    std::thread::spawn(move || {
+        for conexion in escucha.incoming().flatten() {
+            *cuenta.lock().unwrap() += 1;
+            std::thread::spawn(move || {
+                let mut c = conexion;
+                let mut buf = [0u8; 4096];
+                while let Ok(n) = c.read(&mut buf) {
+                    if n == 0 {
+                        break;
+                    }
+                    let cerrar = String::from_utf8_lossy(&buf[..n]).contains("/cerrar");
+                    let r = if cerrar {
+                        "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 2\r\n\r\nok"
+                    } else {
+                        "HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nok"
+                    };
+                    if c.write_all(r.as_bytes()).is_err() || cerrar {
+                        break;
+                    }
+                }
+            });
+        }
+    });
+    (base, conexiones)
+}
+
+#[test]
+fn reutiliza_la_conexion() {
+    let (base, conexiones) = servidor_que_mantiene();
+    let c = Cliente::nuevo();
+    let url = |r: &str| Url::analizar(&format!("{base}{r}")).unwrap();
+    for _ in 0..3 {
+        assert_eq!(c.pedir(&url("/a")).unwrap().texto(), "ok");
+    }
+    assert_eq!(*conexiones.lock().unwrap(), 1, "tres peticiones, una conexión");
+    // Con `Connection: close`, la siguiente abre otra.
+    c.pedir(&url("/cerrar")).unwrap();
+    c.pedir(&url("/a")).unwrap();
+    assert_eq!(*conexiones.lock().unwrap(), 2);
 }

@@ -18,7 +18,7 @@ pub(crate) fn peticion(url: &Url, agente: &str, galletas: Option<&str>, p: &crat
     }
     let metodo = p.metodo.as_str();
     let mut s = format!(
-        "{metodo} {} HTTP/1.1\r\nHost: {anfitrion}\r\nUser-Agent: {agente}\r\nAccept: text/html,application/xhtml+xml,text/css,*/*;q=0.8\r\nAccept-Language: es,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nConnection: close\r\n",
+        "{metodo} {} HTTP/1.1\r\nHost: {anfitrion}\r\nUser-Agent: {agente}\r\nAccept: text/html,application/xhtml+xml,text/css,*/*;q=0.8\r\nAccept-Language: es,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nConnection: keep-alive\r\n",
         url.ruta_y_consulta()
     );
     if let Some(g) = galletas {
@@ -156,6 +156,26 @@ pub(crate) fn completa(mut datos: &[u8]) -> bool {
     }
 }
 
+/// Si el servidor deja la conexión abierta tras esta respuesta: HTTP/1.1 sin `Connection: close`
+/// (o HTTP/1.0 con `Connection: keep-alive`). Se mira la última respuesta (tras las 1xx).
+pub(crate) fn sigue_abierta(mut datos: &[u8]) -> bool {
+    loop {
+        let Some(fin) = datos.windows(4).position(|w| w == b"\r\n\r\n") else { return false };
+        let cabeza = String::from_utf8_lossy(&datos[..fin]).to_ascii_lowercase();
+        let estado: u16 = cabeza.split_whitespace().nth(1).and_then(|e| e.parse().ok()).unwrap_or(0);
+        if (100..200).contains(&estado) {
+            datos = &datos[fin + 4..];
+            continue;
+        }
+        let conexion = cabeza.lines().find_map(|l| l.strip_prefix("connection:")).map(str::trim).unwrap_or("");
+        return if cabeza.starts_with("http/1.0") {
+            conexion.contains("keep-alive")
+        } else {
+            !conexion.contains("close")
+        };
+    }
+}
+
 /// Si los trozos de `chunked` llegan hasta el de tamaño 0 y la línea en blanco final.
 fn trozos_completos(mut d: &[u8]) -> bool {
     loop {
@@ -272,6 +292,11 @@ mod pruebas {
         ));
         assert!(completa(b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n4\r\nWiki\r\n0\r\n\r\n"));
         assert!(!completa(b"HTTP/1.1 200 OK\r\n\r\nsin largo"), "sin largo: hasta que cierre");
+        // Si la conexión se puede volver a usar.
+        assert!(sigue_abierta(b"HTTP/1.1 200 OK\r\nContent-Length: 1\r\n\r\nx"));
+        assert!(!sigue_abierta(b"HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 1\r\n\r\nx"));
+        assert!(!sigue_abierta(b"HTTP/1.0 200 OK\r\nContent-Length: 1\r\n\r\nx"));
+        assert!(sigue_abierta(b"HTTP/1.0 200 OK\r\nConnection: Keep-Alive\r\nContent-Length: 1\r\n\r\nx"));
     }
 
     #[test]

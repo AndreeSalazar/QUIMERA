@@ -17,6 +17,7 @@
 
 pub mod anuncios;
 pub mod bloqueo;
+mod conexiones;
 pub mod cosmetico;
 pub mod galletas;
 mod http;
@@ -115,6 +116,8 @@ pub struct Cliente {
     bloqueadas: std::sync::Mutex<(usize, Vec<String>)>,
     /// Los sitios (`youtube.com`) donde el usuario apagó el bloqueo.
     sin_bloqueo: std::sync::Mutex<std::collections::BTreeSet<String>>,
+    /// Las conexiones abiertas que se reutilizan (`conexiones.rs`).
+    piscina: conexiones::Piscina,
 }
 
 /// Lo que se pide: método, cuerpo, cabeceras extra y si van las cookies.
@@ -190,6 +193,7 @@ impl Cliente {
             filtro: Some(bloqueo::Filtro::de_serie()),
             bloqueadas: std::sync::Mutex::new((0, Vec::new())),
             sin_bloqueo: std::sync::Mutex::new(Default::default()),
+            piscina: conexiones::Piscina::default(),
         }
     }
 
@@ -353,6 +357,29 @@ impl Cliente {
     /// Conecta, envía la petición y lee todo hasta que el servidor cierra.
     fn intercambio(&self, url: &Url, galletas: Option<&str>, p: &Peticion) -> Result<Vec<u8>, Error> {
         let anfitrion = url.anfitrion.trim_start_matches('[').trim_end_matches(']');
+        let clave = format!("{}://{anfitrion}:{}", url.esquema, url.puerto_efectivo());
+        let peticion = http::peticion(url, &self.agente, galletas, p);
+        // Con una conexión ya abierta, si hay. Si el servidor la cerró mientras tanto (falla sin
+        // responder nada), con una nueva.
+        if let Some(mut f) = self.piscina.tomar(&clave)
+            && let Ok(bruto) = enviar_y_leer(&mut f, &peticion)
+            && http::completa(&bruto)
+        {
+            if http::sigue_abierta(&bruto) {
+                self.piscina.devolver(clave, f);
+            }
+            return Ok(bruto);
+        }
+        let mut f = self.conectar(url, anfitrion)?;
+        let bruto = enviar_y_leer(&mut f, &peticion)?;
+        if http::completa(&bruto) && http::sigue_abierta(&bruto) {
+            self.piscina.devolver(clave, f);
+        }
+        Ok(bruto)
+    }
+
+    /// Una conexión nueva (TCP, y TLS encima con `https:`).
+    fn conectar(&self, url: &Url, anfitrion: &str) -> Result<conexiones::Flujo, Error> {
         let direcciones = (anfitrion, url.puerto_efectivo())
             .to_socket_addrs()
             .map_err(|e| Error::Red(format!("{anfitrion}: {e}")))?;
@@ -370,18 +397,14 @@ impl Cliente {
         let tcp = tcp.ok_or(ultimo)?;
         tcp.set_read_timeout(Some(self.espera)).map_err(|e| Error::Red(e.to_string()))?;
         tcp.set_write_timeout(Some(self.espera)).map_err(|e| Error::Red(e.to_string()))?;
-        let peticion = http::peticion(url, &self.agente, galletas, p);
-        if url.esquema == "https" {
-            let nombre = rustls::pki_types::ServerName::try_from(anfitrion.to_string())
-                .map_err(|e| Error::Tls(e.to_string()))?;
-            let conexion =
-                rustls::ClientConnection::new(self.tls.clone(), nombre).map_err(|e| Error::Tls(e.to_string()))?;
-            let mut flujo = rustls::StreamOwned::new(conexion, tcp);
-            enviar_y_leer(&mut flujo, &peticion)
-        } else {
-            let mut tcp = tcp;
-            enviar_y_leer(&mut tcp, &peticion)
+        if url.esquema != "https" {
+            return Ok(conexiones::Flujo::Plano(tcp));
         }
+        let nombre =
+            rustls::pki_types::ServerName::try_from(anfitrion.to_string()).map_err(|e| Error::Tls(e.to_string()))?;
+        let conexion =
+            rustls::ClientConnection::new(self.tls.clone(), nombre).map_err(|e| Error::Tls(e.to_string()))?;
+        Ok(conexiones::Flujo::Tls(Box::new(rustls::StreamOwned::new(conexion, tcp))))
     }
 }
 

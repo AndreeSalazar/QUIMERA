@@ -108,9 +108,11 @@ Modo captura, 1280×900, `QUIMERA_RED=1`, 3 y 4 de noviembre de 2026.
 
 ## Falta
 
+**Conexiones reutilizadas** (`conexiones.rs`): se pide con `Connection: keep-alive`. Tras una respuesta con final claro (`Content-Length` o `chunked`) en la que el servidor no dijo `Connection: close`, la conexión (TCP o TLS) vuelve a una piscina por sitio: como mucho 6 por sitio, y se tiran tras 20 s sin uso. Si una reutilizada falla sin responder nada (el servidor la cerró), se repite con una nueva. **A la vez:** la ventana descarga las hojas y los scripts de la página en paralelo, de 12 en 12. Con las dos cosas, la red de una página (HTML, hojas y scripts) pasó de 2,6–4,3 s a 1,0–1,9 s: Steam 1,0, Wikipedia 1,0, GitHub 1,1 y la página de vídeo de YouTube 1,9 s.
+
 **La respuesta acaba cuando está entera**, no solo cuando el servidor cierra: con su `Content-Length` completo o el último trozo de `chunked` (`http::completa`). googlevideo (el vídeo de YouTube) no cierra aunque se pida `Connection: close`: antes esperábamos 15 s y se tiraba la respuesta. Ahora 1,9 MB de vídeo llegan en 182 ms.
 
-- Conexiones reutilizadas (*keep-alive*) y varias peticiones a la vez: hoy cada recurso abre su conexión, una tras otra.
+- HTTP/2 (varias peticiones por una sola conexión).
 - HTTP/2, compresión (`gzip`, `br`; hoy se pide `identity`), caché.
 - Descargar en segundo plano: hoy la ventana espera a que llegue la página.
 - Enlaces que se puedan pulsar y una barra de direcciones (`quimera-navegador`).
