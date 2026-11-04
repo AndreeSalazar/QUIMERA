@@ -23,9 +23,18 @@ QUIMERA lo hace casi todo por sí mismo, pero un decodificador de H.264 propio s
 
 Medida: el vídeo de prueba de MDN (`flower.mp4`, 960 × 540, H.264) da 150 de 150 fotogramas en 438 ms, color incluido (unos 3 ms por fotograma). La prueba `tests/archivo.rs` lo decodifica si `QUIMERA_VIDEO_PRUEBA` apunta a un MP4; los vídeos no se guardan en el repositorio.
 
-## Falta
+## Lo que ya se probó con YouTube
 
-- `MediaSource`, `SourceBuffer` y `<video>` en el DOM, con su reloj y sus eventos.
-- Pintar los fotogramas en la caja del `<video>`.
-- Sonido: AAC con Media Foundation y salida con WASAPI.
-- Que el reproductor de YouTube elija H.264 + AAC: `MediaSource.isTypeSupported` solo dirá que sí a esos.
+Con un MediaSource provisional que solo contaba bytes, y respondiendo que sí a H.264 y AAC:
+
+- El reproductor se pone en marcha (sale el botón de pausa), crea un `SourceBuffer` de `audio/mp4; codecs="mp4a.40.2"` y otro de `video/mp4; codecs="avc1.4D401F"`, y pide el vídeo por SABR a servidores reales de googlevideo. Llegan 3,4 MB de vídeo de verdad.
+- Para detectar imitaciones, el reproductor pregunta `isTypeSupported` con valores absurdos (`width=99999`, `channels=99`, `eotf=catavision`): el MediaSource de verdad tendrá que decir que no a esos, como Chrome.
+- **El freno está en el motor de JavaScript.** Al procesar esos megas, el reproductor trocea el búfer con `subarray` y `DataView`, y en QUIMERA un `subarray` es una copia hecha elemento a elemento en JavaScript (`binarios.js`). El coste se vuelve cuadrático y el reproductor no avanza.
+
+## Falta, en orden
+
+1. **`ArrayBuffer` y arreglos tipados nativos en la VM**: bytes de verdad, con vistas que compartan memoria (`subarray` sin copiar, `DataView` sobre los mismos bytes). Es lo que más pesa: sin ello el reproductor no puede leer su vídeo, y además acelera cualquier página que trabaje con datos binarios.
+
+2. **`MediaSource`, `SourceBuffer` y `<video>`** en el DOM, con su reloj y sus eventos. Los segmentos van a `mp4::Demuxer` para saber qué tiempos hay (`buffered`), e `isTypeSupported` dice que sí solo a H.264 y AAC con parámetros razonables.
+3. **Pintar los fotogramas** en la caja del `<video>`.
+4. **Sonido**: AAC con Media Foundation y salida con WASAPI.

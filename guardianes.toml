@@ -38,3 +38,8 @@ motivo = "Programa de medida: si la página pedida no se puede leer, no hay nada
 regla = "A-CRATE"
 archivo = "quimera-vm"
 motivo = "Pasó de 5000 con la biblioteca moderna (JSON en Rust y el preludio en JavaScript). La biblioteca debe irse a quimera-builtins (nivel 5, como prevé docs/JERARQUIA.md), pero sus nativas usan las tripas de la máquina (pila de raíces, Llamada): separarla pide antes una interfaz para nativas externas. Pendiente, no olvidado."
+
+[[revisado]]
+regla = "A-CRATE"
+archivo = "quimera-dom"
+motivo = "Pasó de 5000 con las respuestas binarias, Blob y ReadableStream (el vídeo de YouTube llega en binario). Plan: llevar red.rs y binario.rs (fetch, XHR, Request/Response, Blob, flujos) a su propio crate cuando entre MediaSource, que también vivirá ahí. Pendiente, no olvidado."

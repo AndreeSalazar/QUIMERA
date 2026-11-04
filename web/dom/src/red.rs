@@ -45,6 +45,9 @@ pub struct RespuestaJs {
     pub cabeceras: Vec<(String, String)>,
     /// El cuerpo como texto.
     pub cuerpo: String,
+    /// Los bytes tal cual, si el cuerpo es binario (vídeo, imágenes, protobuf): `arrayBuffer()`
+    /// y `blob()` los usan en vez del texto.
+    pub bytes: Option<Vec<u8>>,
 }
 
 /// El cargador de módulos: pide cada uno con `fetch`, lo compila (`__quimera_modulo`) y lo
@@ -273,16 +276,17 @@ pub(crate) const RED_JS: &str = r"(function (w) {
     this.redirected = false;
     this.type = 'basic';
     this.bodyUsed = false;
+    var binario = cuerpo != null && typeof cuerpo === 'object' &&
+      (cuerpo instanceof ArrayBuffer || ArrayBuffer.isView(cuerpo) || (w.Blob && cuerpo instanceof w.Blob));
+    if (binario) { this['\u0001bytes'] = w.__quimera_bytes_de(cuerpo); cuerpo = ''; }
     this['\u0001cuerpo'] = cuerpo === undefined || cuerpo === null ? '' : String(cuerpo);
   }
   Response.prototype.text = function () { this.bodyUsed = true; return Promise.resolve(this['\u0001cuerpo']); };
-  Response.prototype.json = function () {
-    var t = this['\u0001cuerpo'];
-    this.bodyUsed = true;
-    return new Promise(function (r) { r(JSON.parse(t)); });
-  };
+  Response.prototype.json = function () { return this.text().then(JSON.parse); };
   Response.prototype.clone = function () {
-    return new Response(this['\u0001cuerpo'], { status: this.status, statusText: this.statusText, headers: this.headers, url: this.url });
+    var r = new Response(this['\u0001cuerpo'], { status: this.status, statusText: this.statusText, headers: this.headers, url: this.url });
+    r['\u0001bytes'] = this['\u0001bytes'];
+    return r;
   };
   w.Headers = Headers;
   w.Response = Response;
@@ -357,11 +361,12 @@ pub(crate) const RED_JS: &str = r"(function (w) {
       pendientes[id] = { res: res, rej: rej };
     });
   };
-  w.__quimera_respuesta = function (id, estado, url, cabeceras, cuerpo) {
+  w.__quimera_respuesta = function (id, estado, url, cabeceras, cuerpo, bytes) {
     var p = pendientes[id];
     delete pendientes[id];
     if (!p) return;
     var r = new Response(cuerpo, { status: estado, url: url });
+    if (bytes) r['\u0001bytes'] = bytes;
     r.headers['\u0001c'] = cabeceras;
     p.res(r);
   };
@@ -418,13 +423,15 @@ pub(crate) const RED_JS: &str = r"(function (w) {
     var x = this;
     var op = { method: this['\u0001metodo'], headers: this['\u0001cab'], body: cuerpo, credentials: this.withCredentials ? 'include' : 'same-origin' };
     w.fetch(this['\u0001url'], op).then(function (r) {
-      return r.text().then(function (t) {
+      var tipo = x.responseType;
+      var cuerpo = tipo === 'arraybuffer' ? r.arrayBuffer() : tipo === 'blob' ? r.blob() : r.text();
+      return cuerpo.then(function (t) {
         if (x['\u0001abortado']) return;
         x.status = r.status;
         x.responseURL = r.url;
         x['\u0001respuesta'] = r.headers;
-        x.responseText = t;
-        if (x.responseType === 'json') { try { x.response = JSON.parse(t); } catch (e) { x.response = null; } }
+        x.responseText = typeof t === 'string' ? t : '';
+        if (tipo === 'json') { try { x.response = JSON.parse(t); } catch (e) { x.response = null; } }
         else x.response = t;
         x.readyState = 4;
         x['\u0001aviso']('readystatechange');
@@ -535,8 +542,24 @@ impl Dom {
                 let cabeceras = m.crear_arreglo(&v);
                 let marca = m.apilar(cabeceras);
                 let (url, cuerpo) = (m.cadena(&resp.url), m.cadena(&resp.cuerpo));
-                let args =
-                    [Valor::entero(id as i32), Valor::entero(i32::from(resp.estado)), url, m.de_pila(marca), cuerpo];
+                let marca_url = m.apilar(url);
+                m.apilar(cuerpo);
+                // Los bytes como el arreglo oculto de un `ArrayBuffer`.
+                let bytes = match &resp.bytes {
+                    Some(b) => {
+                        let v: Vec<Valor> = b.iter().map(|&x| Valor::entero(i32::from(x))).collect();
+                        m.crear_arreglo(&v)
+                    }
+                    None => Valor::INDEFINIDO,
+                };
+                let args = [
+                    Valor::entero(id as i32),
+                    Valor::entero(i32::from(resp.estado)),
+                    m.de_pila(marca_url),
+                    m.de_pila(marca),
+                    m.de_pila(marca_url + 1),
+                    bytes,
+                ];
                 let r = m.llamar_global("__quimera_respuesta", &args);
                 m.soltar_pila(marca);
                 r

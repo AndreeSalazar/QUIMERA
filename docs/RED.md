@@ -57,6 +57,8 @@ Falta `SameSite`, `HttpOnly` (sin JavaScript da igual: nadie puede leerlas desde
 
 ## Falta
 
+**La respuesta acaba cuando está entera**, no solo cuando el servidor cierra: con su `Content-Length` completo o el último trozo de `chunked` (`http::completa`). googlevideo (el vídeo de YouTube) no cierra aunque se pida `Connection: close`: antes esperábamos 15 s y se tiraba la respuesta. Ahora 1,9 MB de vídeo llegan en 182 ms.
+
 - Conexiones reutilizadas (*keep-alive*) y varias peticiones a la vez: hoy cada recurso abre su conexión, una tras otra.
 - HTTP/2, compresión (`gzip`, `br`; hoy se pide `identity`), caché.
 - Descargar en segundo plano: hoy la ventana espera a que llegue la página.
