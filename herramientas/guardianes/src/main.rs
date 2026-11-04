@@ -8,12 +8,14 @@
 //! Uso: `cargo run -p quimera-guardianes -- [--estricto] [--reglas] [RAIZ]`
 //! - `--estricto`: un amarillo sin revisar cuenta como rojo (lo usa el hook de commit).
 //! - `--reglas`: explica cada regla y por qué existe.
+//! - `--sarif ARCHIVO`: además, escribe los hallazgos en SARIF 2.1.0 (para SUPER GRAFO, editores...).
 //!
 //! Sale con 0 si pasa, 1 si hay rojos y 2 si no puede leer el proyecto.
 
 mod lexico;
 mod proyecto;
 mod reglas;
+mod sarif;
 mod semaforo;
 mod toml;
 
@@ -84,9 +86,12 @@ fn informe(p: &proyecto::Proyecto, hallazgos: &[Hallazgo], estricto: bool) -> Co
 fn main() -> ExitCode {
     let mut estricto = false;
     let mut raiz = None;
-    for a in std::env::args().skip(1) {
+    let mut sarif = None;
+    let mut args = std::env::args().skip(1);
+    while let Some(a) = args.next() {
         match a.as_str() {
             "--estricto" => estricto = true,
+            "--sarif" => sarif = args.next().map(PathBuf::from),
             "--reglas" => {
                 explicar_reglas();
                 return ExitCode::SUCCESS;
@@ -103,6 +108,13 @@ fn main() -> ExitCode {
         }
     };
     let hallazgos = reglas::revisar(&p);
+    if let Some(ruta) = sarif {
+        let crates: Vec<(String, String)> = p.crates.iter().map(|c| (c.nombre.clone(), c.ruta.clone())).collect();
+        if let Err(e) = std::fs::write(&ruta, sarif::documento(&hallazgos, &crates)) {
+            eprintln!("guardianes: no se pudo escribir {}: {e}", ruta.display());
+            return ExitCode::from(2);
+        }
+    }
     match informe(&p, &hallazgos, estricto) {
         Color::Rojo => ExitCode::from(1),
         _ => ExitCode::SUCCESS,

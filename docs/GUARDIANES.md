@@ -14,6 +14,12 @@ cargo run -p quimera-guardianes -- --estricto
 cargo run -p quimera-guardianes -- --reglas
 ```
 
+```bash
+cargo run -p quimera-guardianes -- --sarif guardianes.sarif
+```
+
+Con `--sarif`, además del informe, los hallazgos se escriben en **SARIF 2.1.0**, el formato estándar de los analizadores. Un rojo es `error`, un amarillo sin revisar es `warning` y uno revisado es `note`, con su motivo de `guardianes.toml` como `suppressions`. Lo que es del crate entero apunta a su `Cargo.toml`. Así lo leen otras herramientas: [SUPER GRAFO](https://github.com/AndreeSalazar/ULTRA-LinuX) pinta el semáforo sobre sus archivos (2D y la Ciudad 3D) y se lo cuenta a una IA por MCP. El archivo no va al repositorio (`.gitignore`).
+
 ## El semáforo
 
 Cada crate es un **carril** con su color, y debajo, cada hallazgo:

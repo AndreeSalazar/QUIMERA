@@ -4,4 +4,6 @@
 /datos-investigación/evidencias/chromium-real/*.sarif
 /datos-investigación/referencia/
 __pycache__/
+# Lo escriben los guardianes con --sarif (lo lee SUPER GRAFO).
+guardianes.sarif
 *.pyc
