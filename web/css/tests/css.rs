@@ -34,6 +34,12 @@ impl<'a> ElementoCss for El<'a> {
     fn vacio(&self) -> bool {
         !self.0.nodos.iter().any(|n| n.2 == Some(self.1))
     }
+    fn primer_hijo(&self) -> Option<Self> {
+        self.0.nodos.iter().position(|n| n.2 == Some(self.1)).map(|i| El(self.0, i))
+    }
+    fn mismo(&self, otro: &Self) -> bool {
+        self.1 == otro.1
+    }
 }
 
 /// html > body > (div#principal.caja.grande > (p.nota, p, a[href]), p)
@@ -135,4 +141,23 @@ fn colores_y_longitudes() {
     assert_eq!(l("12"), None, "un número sin unidad no es una longitud");
     let v = &declaraciones("border: 1px solid rgb(1, 2, 3)")[0].valor;
     assert_eq!(piezas(v).len(), 3);
+}
+
+#[test]
+fn has_como_en_chrome() {
+    assert!(casa("div:has(> a)", 2));
+    assert!(!casa("body:has(> a)", 1), "el <a> es nieto, no hijo");
+    assert!(casa("body:has(a)", 1));
+    assert!(casa("body:has(div a[href])", 1));
+    assert!(!casa("div:has(div a)", 2), "el div de dentro tiene que estar dentro del ancla");
+    assert!(casa("p:has(+ p)", 3));
+    assert!(!casa("p:has(+ p)", 4), "lo siguiente es un <a>");
+    assert!(casa("p:has(~ a)", 3));
+    assert!(!casa("div:has(.no-existe)", 2));
+    assert!(casa("#principal:has(> span, > p.nota)", 2));
+    assert!(casa("body > :has(> .nota)", 2));
+    assert!(analizar("div:has(:has(a)) {} p {}").reglas.len() == 1, "anidado no vale");
+    assert!(analizar("div:has() {}").reglas.is_empty());
+    let hoja = analizar("div:has(#x) {}");
+    assert_eq!(hoja.reglas[0].selectores[0].especificidad(), (1, 0, 1));
 }

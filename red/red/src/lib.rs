@@ -20,6 +20,8 @@ pub mod bloqueo;
 pub mod cosmetico;
 pub mod galletas;
 mod http;
+mod regla;
+pub mod scriptlets;
 mod url;
 
 pub use url::Url;
@@ -108,7 +110,7 @@ pub struct Cliente {
     /// Las cookies (compartidas por los hilos que piden con este cliente).
     galletas: std::sync::Mutex<galletas::Tarro>,
     /// El filtro de anuncios y rastreo (`None`: sin bloqueo).
-    pub filtro: Option<bloqueo::Filtro>,
+    pub filtro: Option<Arc<bloqueo::Filtro>>,
     /// Lo que se bloqueó: cuántas veces y las primeras direcciones.
     bloqueadas: std::sync::Mutex<(usize, Vec<String>)>,
     /// Los sitios (`youtube.com`) donde el usuario apagó el bloqueo.

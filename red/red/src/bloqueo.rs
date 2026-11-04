@@ -1,33 +1,47 @@
-//! El bloqueador de anuncios y rastreo, como el escudo de Brave: una lista de reglas al estilo
-//! EasyList, incluida en el binario (no se descarga nada), y un filtro que dice si una URL se pide.
+//! El bloqueador de anuncios y rastreo, como el escudo de Brave: listas de reglas de EasyList,
+//! incluidas en el binario (no se descarga nada), y un filtro que dice si una URL se pide.
 //!
-//! Reglas de red que se entienden (un subconjunto de la sintaxis de Adblock Plus):
+//! Reglas de red que se entienden (la sintaxis de Adblock Plus, casi entera):
 //!
 //! - `||dominio^` — el dominio y sus subdominios (`||doubleclick.net^` vale para
 //!   `googleads.g.doubleclick.net`). Con ruta detrás (`||youtube.com/pagead/`), la URL tiene que
 //!   empezar por ese anfitrión y esa ruta.
-//! - cualquier otro texto (`/pagead/*`) — se busca en la URL entera, sin el esquema.
+//! - cualquier otro texto (`/pagead/*`) — se busca en la URL entera.
 //! - `^` es un separador: cualquier carácter que no sea letra, número, `_ - . %`, o el final;
-//!   `*` es cualquier trozo. Un texto entre barras (`/…/`) es una expresión regular, por eso las
-//!   rutas se escriben con `*` detrás (`/pagead/*`), como en EasyList.
+//!   `*` es cualquier trozo; `|` al principio o al final ancla ahí la URL.
+//! - `/…/` es una expresión regular de JavaScript (con `quimera-regex`) sobre la URL entera.
 //! - `@@regla` — excepción: lo que coincide se pide aunque otra regla lo bloquee. Con
 //!   `$document`, la página entera queda sin bloqueo.
-//! - **Opciones** tras `$`, separadas por comas ([`Opciones`]): `third-party` (`3p`) y
-//!   `~third-party` (`1p`), los tipos (`script`, `image`, `stylesheet`, `xmlhttprequest`, `font`,
-//!   `media`, `subdocument`, `other`, y su contrario con `~`) y `domain=a.com|~b.com`.
-//!   Una regla con una opción que no se entiende se ignora entera: mejor no bloquear de más.
-//! - `!` empieza un comentario. Las reglas de ocultar elementos (`##`) las lee
-//!   [`crate::cosmetico`]; las expresiones regulares (`/…/`) todavía se ignoran.
+//! - **Opciones** tras `$`, separadas por comas: `third-party` (`3p`) y `~third-party` (`1p`),
+//!   los tipos (`script`, `image`, `stylesheet`, `xmlhttprequest`, `font`, `media`,
+//!   `subdocument`, `other`, y su contrario con `~`), `domain=a.com|~b.com` y `match-case`.
+//!   Una regla con una opción que no se entiende (`$popup`, `$csp=`, `$redirect=`) se ignora
+//!   entera: mejor no bloquear de más.
+//! - `!` empieza un comentario. Las reglas de ocultar elementos (`##`) y los *scriptlets*
+//!   (`##+js(...)`) los lee [`crate::cosmetico`].
+//!
+//! Las listas: la propia de QUIMERA ([`LISTA`]) y EasyList y EasyPrivacy enteras ([`EASYLIST`],
+//! [`EASYPRIVACY`]), tal como se publican. Para no gastar RAM, las reglas apuntan a ese texto en
+//! vez de copiarlo, y se buscan con un **índice por trozos**, como el motor de Brave: cada regla
+//! se guarda bajo su trozo más largo (`doubleclick`, `pagead`...) y una URL solo se compara con
+//! las reglas de los trozos que tiene.
 //!
 //! Lo bloqueado no sale a la red: el `Cliente` lo responde como un fallo de red
 //! ([`crate::Error::Bloqueado`]), igual que Brave, para que la página siga funcionando.
 
 use crate::Url;
 use crate::cosmetico::Cosmeticas;
-use std::collections::HashSet;
+use crate::regla::{Ancla, Pedido, Regla, picadillo};
+use std::collections::HashMap;
+use std::sync::{Arc, OnceLock};
 
-/// La lista incluida: anuncios y rastreo, elegida para no romper los sitios que los sirven.
+/// La lista propia de QUIMERA: lo que EasyList no cubre o cubre tarde (YouTube, sobre todo).
 pub const LISTA: &str = include_str!("bloqueo.txt");
+/// EasyList (anuncios), de <https://easylist.to/>. Licencia GPLv3 o CC BY-SA 3.0, a elegir
+/// (ver `red/red/listas/LEEME.md`).
+pub const EASYLIST: &str = include_str!("../listas/easylist.txt");
+/// EasyPrivacy (rastreo), de <https://easylist.to/>, con la misma licencia.
+pub const EASYPRIVACY: &str = include_str!("../listas/easyprivacy.txt");
 
 /// Qué es lo que se pide (para las opciones `$script`, `$image`...).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -52,11 +66,11 @@ pub enum Tipo {
 }
 
 impl Tipo {
-    fn bit(self) -> u16 {
+    pub(crate) fn bit(self) -> u16 {
         1 << self as u16
     }
 
-    fn de_nombre(n: &str) -> Option<Tipo> {
+    pub(crate) fn de_nombre(n: &str) -> Option<Tipo> {
         Some(match n {
             "script" => Tipo::Script,
             "image" => Tipo::Imagen,
@@ -101,185 +115,112 @@ pub fn es_del_dominio(anfitrion: &str, dominio: &str) -> bool {
     anfitrion == dominio || anfitrion.strip_suffix(dominio).is_some_and(|r| r.ends_with('.'))
 }
 
-/// Las opciones de una regla (lo que va tras `$`).
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
-pub struct Opciones {
-    /// `Some(true)`: solo a otro sitio; `Some(false)`: solo al mismo.
-    tercero: Option<bool>,
-    /// Los tipos a los que se aplica (0: todos) y los que no.
-    tipos: u16,
-    sin_tipos: u16,
-    /// `domain=`: en qué páginas sí y en cuáles no.
-    en: Vec<String>,
-    no_en: Vec<String>,
-    /// `$document` en una excepción: la página entera sin bloqueo.
-    documento: bool,
+/// Reglas con su índice por trozos.
+#[derive(Debug, Clone, Default)]
+struct Grupo {
+    reglas: Vec<Regla>,
+    /// Trozo → reglas que lo tienen.
+    indice: HashMap<u64, Vec<u32>>,
+    /// Las que no tienen un trozo seguro (se miran con todas las URLs).
+    sueltas: Vec<u32>,
 }
 
-impl Opciones {
-    /// Lee `third-party,script,domain=a.com|~b.com`. `None` si alguna no se entiende.
-    fn leer(texto: &str) -> Option<Opciones> {
-        let mut o = Opciones::default();
-        for op in texto.split(',').map(|s| s.trim().to_ascii_lowercase()) {
-            let (no, nombre) = op.strip_prefix('~').map_or((false, op.as_str()), |r| (true, r));
-            match nombre {
-                "third-party" | "3p" => o.tercero = Some(!no),
-                "first-party" | "1p" => o.tercero = Some(no),
-                "document" | "doc" if !no => o.documento = true,
-                "match-case" | "important" => {}
-                n if n.starts_with("domain=") => {
-                    for d in n["domain=".len()..].split('|').filter(|d| !d.is_empty()) {
-                        match d.strip_prefix('~') {
-                            Some(d) => o.no_en.push(String::from(d)),
-                            None => o.en.push(String::from(d)),
-                        }
-                    }
-                }
-                n => {
-                    let t = Tipo::de_nombre(n)?;
-                    if no { o.sin_tipos |= t.bit() } else { o.tipos |= t.bit() }
-                }
-            }
+impl Grupo {
+    fn meter(&mut self, r: Regla) {
+        let n = self.reglas.len() as u32;
+        match r.trozo() {
+            Some(t) => self.indice.entry(t).or_default().push(n),
+            None => self.sueltas.push(n),
         }
-        Some(o)
+        self.reglas.push(r);
     }
 
-    fn aplica(&self, anfitrion: &str, c: &Contexto) -> bool {
-        let bit = c.tipo.bit();
-        if (self.tipos != 0 && self.tipos & bit == 0) || self.sin_tipos & bit != 0 {
-            return false;
-        }
-        let necesita_pagina = self.tercero.is_some() || !self.en.is_empty() || !self.no_en.is_empty();
-        let Some(pagina) = c.pagina else { return !necesita_pagina };
-        let pagina = pagina.to_ascii_lowercase();
-        if let Some(t) = self.tercero
-            && (sitio(anfitrion) != sitio(&pagina)) != t
-        {
-            return false;
-        }
-        let en = |l: &[String]| l.iter().any(|d| es_del_dominio(&pagina, d));
-        (self.en.is_empty() || en(&self.en)) && !en(&self.no_en)
+    fn alguna(&self, p: &Pedido, trozos: &[u64], c: &Contexto) -> bool {
+        let por_trozo = trozos.iter().filter_map(|t| self.indice.get(t)).flatten();
+        self.sueltas.iter().chain(por_trozo).any(|&i| self.reglas[i as usize].aplica(p, c))
     }
-}
-
-/// Una regla de red: dónde casa (un trozo de URL, `^` es un separador) y sus opciones.
-#[derive(Debug, Clone, PartialEq, Eq)]
-struct Regla {
-    /// `Some(dominio)` si va anclada a un anfitrión (`||dominio/ruta`).
-    dominio: Option<String>,
-    /// Lo que sigue (la ruta), o el texto entero si no va anclada.
-    texto: String,
-    opciones: Opciones,
-}
-
-impl Regla {
-    /// Lee una regla sin `@@`. `None` si no se entiende.
-    fn leer(regla: &str) -> Option<Regla> {
-        let (patron, opciones) = match regla.rsplit_once('$') {
-            Some((p, o)) => (p, Opciones::leer(o)?),
-            None => (regla, Opciones::default()),
-        };
-        if patron.len() > 1 && patron.starts_with('/') && patron.ends_with('/') {
-            return None; // una expresión regular
-        }
-        let r = match patron.strip_prefix("||") {
-            Some(r) => {
-                let (dominio, texto) = r.split_at(r.find(['^', '/']).unwrap_or(r.len()));
-                Regla { dominio: Some(dominio.to_ascii_lowercase()), texto: String::from(texto), opciones }
-            }
-            None => Regla { dominio: None, texto: String::from(patron.trim_matches('|')), opciones },
-        };
-        (r.dominio.as_ref().is_some_and(|d| !d.is_empty()) || !r.texto.is_empty()).then_some(r)
-    }
-
-    fn casa(&self, anfitrion: &str, resto: &str) -> bool {
-        match &self.dominio {
-            Some(d) => es_del_dominio(anfitrion, d) && empieza_con(resto, &self.texto),
-            None => {
-                let entera = format!("{anfitrion}{resto}");
-                (0..=entera.len()).any(|i| entera.is_char_boundary(i) && empieza_con(&entera[i..], &self.texto))
-            }
-        }
-    }
-
-    fn aplica(&self, anfitrion: &str, resto: &str, c: &Contexto) -> bool {
-        self.opciones.aplica(anfitrion, c) && self.casa(anfitrion, resto)
-    }
-}
-
-/// Si `texto` empieza con `patron`, donde `^` vale por un separador o por el final, y `*` por
-/// cualquier trozo (también vacío).
-fn empieza_con(texto: &str, patron: &str) -> bool {
-    casa_bytes(texto.as_bytes(), patron.as_bytes())
-}
-
-fn casa_bytes(mut t: &[u8], mut p: &[u8]) -> bool {
-    while let Some((&c, resto)) = p.split_first() {
-        match (c, t.split_first()) {
-            (b'*', _) => return (0..=t.len()).any(|i| casa_bytes(&t[i..], resto)),
-            (b'^', None) => return resto.iter().all(|&x| x == b'*' || x == b'^'),
-            (b'^', Some((&x, r))) if separador(x) => t = r,
-            (_, Some((&x, r))) if x.eq_ignore_ascii_case(&c) => t = r,
-            _ => return false,
-        }
-        p = resto;
-    }
-    true
-}
-
-fn separador(c: u8) -> bool {
-    !(c.is_ascii_alphanumeric() || matches!(c, b'_' | b'-' | b'.' | b'%'))
 }
 
 /// El filtro: las reglas ya leídas, listas para preguntar por cada URL.
 #[derive(Debug, Clone, Default)]
 pub struct Filtro {
-    /// Dominios bloqueados enteros y sin opciones (`||dominio^`): se busca cada sufijo.
-    dominios: HashSet<String>,
-    reglas: Vec<Regla>,
-    excepciones: Vec<Regla>,
-    /// Las de ocultar elementos (`##`).
+    /// Dominios bloqueados enteros y sin opciones (`||dominio^`), ordenados: se busca cada
+    /// sufijo del anfitrión.
+    dominios: Vec<&'static str>,
+    bloqueos: Grupo,
+    excepciones: Grupo,
+    /// `@@…$document`: páginas enteras sin bloqueo.
+    documentos: Vec<Regla>,
+    /// Las de ocultar elementos (`##`) y los *scriptlets*.
     pub cosmeticas: Cosmeticas,
 }
 
 impl Filtro {
-    /// El filtro con la lista incluida ([`LISTA`]).
-    pub fn de_serie() -> Filtro {
-        Filtro::leer(LISTA)
+    /// El filtro con las listas incluidas (la propia, EasyList y EasyPrivacy). Se lee una vez
+    /// por proceso y se comparte.
+    pub fn de_serie() -> Arc<Filtro> {
+        static FILTRO: OnceLock<Arc<Filtro>> = OnceLock::new();
+        FILTRO.get_or_init(|| Arc::new(Filtro::leer_todas(&[LISTA, EASYLIST, EASYPRIVACY]))).clone()
     }
 
     /// Lee una lista de reglas (una por línea).
-    pub fn leer(lista: &str) -> Filtro {
+    pub fn leer(lista: &'static str) -> Filtro {
+        Filtro::leer_todas(&[lista])
+    }
+
+    /// Lee varias listas.
+    pub fn leer_todas(listas: &[&'static str]) -> Filtro {
         let mut f = Filtro::default();
-        for linea in lista.lines().map(str::trim) {
-            if linea.is_empty() || linea.starts_with('!') || linea.starts_with('[') || f.cosmeticas.leer(linea) {
+        let lineas = listas.iter().enumerate().flat_map(|(i, l)| l.lines().map(move |x| (i == 0, x.trim())));
+        for (propia, linea) in lineas {
+            if linea.is_empty() || linea.starts_with('!') || linea.starts_with('[') || f.cosmeticas.leer(linea, propia)
+            {
                 continue;
             }
             let (excepcion, texto) = linea.strip_prefix("@@").map_or((false, linea), |r| (true, r));
-            let Some(regla) = Regla::leer(texto) else { continue };
-            let entero = regla.texto.is_empty() || regla.texto == "^";
-            if !excepcion
-                && entero
-                && regla.opciones == Opciones::default()
-                && let Some(d) = &regla.dominio
-            {
-                f.dominios.insert(d.clone());
-                continue;
+            if let Some(regla) = Regla::leer(texto) {
+                f.meter(excepcion, regla);
             }
-            if excepcion { f.excepciones.push(regla) } else { f.reglas.push(regla) }
         }
+        f.dominios.sort_unstable();
+        f.dominios.dedup();
         f
+    }
+
+    fn meter(&mut self, excepcion: bool, regla: Regla) {
+        let solo_dominio = regla.regex.is_none()
+            && matches!(regla.texto, "" | "^")
+            && !regla.fin
+            && regla.opciones == Default::default();
+        match regla.ancla {
+            Ancla::Dominio(d) if !excepcion && solo_dominio && !d.bytes().any(|c| c.is_ascii_uppercase()) => {
+                self.dominios.push(d);
+            }
+            _ if excepcion && regla.opciones.documento => self.documentos.push(regla),
+            _ if excepcion => self.excepciones.meter(regla),
+            _ => self.bloqueos.meter(regla),
+        }
     }
 
     /// Cuántas reglas tiene (de red y de ocultar).
     pub fn reglas(&self) -> usize {
-        self.dominios.len() + self.reglas.len() + self.excepciones.len() + self.cosmeticas.total()
+        self.dominios.len()
+            + self.bloqueos.reglas.len()
+            + self.excepciones.reglas.len()
+            + self.documentos.len()
+            + self.cosmeticas.total()
     }
 
     /// Si una excepción `$document` deja la página `anfitrion` entera sin bloqueo.
     pub fn pagina_permitida(&self, anfitrion: &str) -> bool {
+        if self.documentos.is_empty() {
+            return false;
+        }
         let a = anfitrion.to_ascii_lowercase();
-        self.excepciones.iter().any(|r| r.opciones.documento && r.casa(&a, "/"))
+        let entera = format!("https://{a}/");
+        let p = Pedido { original: &entera, entera: &entera, anfitrion: &a, resto: "/" };
+        let c = Contexto { tipo: Tipo::Otro, pagina: Some(&a) };
+        self.documentos.iter().any(|r| r.aplica(&p, &c))
     }
 
     /// Si la URL se bloquea, sin saber desde dónde se pide.
@@ -292,18 +233,27 @@ impl Filtro {
         if !matches!(url.esquema.as_str(), "http" | "https") || c.pagina.is_some_and(|p| self.pagina_permitida(p)) {
             return false;
         }
+        let mut sin_fragmento = url.clone();
+        sin_fragmento.fragmento = None;
+        let original = sin_fragmento.to_string();
+        let entera = original.to_ascii_lowercase();
         let anfitrion = url.anfitrion.to_ascii_lowercase();
-        let mut resto = url.ruta.clone();
+        let mut resto = url.ruta.to_ascii_lowercase();
         if let Some(q) = &url.consulta {
             resto.push('?');
-            resto.push_str(q);
+            resto.push_str(&q.to_ascii_lowercase());
         }
+        let p = Pedido { original: &original, entera: &entera, anfitrion: &anfitrion, resto: &resto };
+        let mut trozos: Vec<u64> =
+            entera.split(|ch: char| !ch.is_ascii_alphanumeric()).filter(|t| t.len() >= 2).map(picadillo).collect();
+        trozos.sort_unstable();
+        trozos.dedup();
         let por_dominio = anfitrion
             .char_indices()
             .filter(|(i, ch)| *i == 0 || *ch == '.')
-            .any(|(i, _)| self.dominios.contains(anfitrion[i..].trim_start_matches('.')));
-        let bloquea = por_dominio || self.reglas.iter().any(|r| r.aplica(&anfitrion, &resto, c));
-        bloquea && !self.excepciones.iter().any(|r| !r.opciones.documento && r.aplica(&anfitrion, &resto, c))
+            .any(|(i, _)| self.dominios.binary_search(&anfitrion[i..].trim_start_matches('.')).is_ok());
+        let bloquea = por_dominio || self.bloqueos.alguna(&p, &trozos, c);
+        bloquea && !self.excepciones.alguna(&p, &trozos, c)
     }
 }
 

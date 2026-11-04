@@ -118,3 +118,9 @@ youtube.com##.ytp-ad-overlay-container
 ##[id^="google_ads_iframe"]
 ##amp-ad
 ##.GoogleActiveViewElement
+
+! --- Scriptlets (##+js): YouTube, por si el texto ya llegó a la página por otro camino ---
+youtube.com##+js(set, ytInitialPlayerResponse.adPlacements, undefined)
+youtube.com##+js(set, ytInitialPlayerResponse.playerAds, undefined)
+youtube.com##+js(set, ytInitialPlayerResponse.adSlots, undefined)
+youtube.com##+js(json-prune, playerResponse.adPlacements playerResponse.playerAds playerResponse.adSlots adPlacements playerAds adSlots)

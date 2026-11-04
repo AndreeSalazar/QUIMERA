@@ -21,6 +21,14 @@ pub trait ElementoCss: Copy {
     fn siguiente(&self) -> Option<Self>;
     /// Si no tiene hijos (ni elementos ni texto).
     fn vacio(&self) -> bool;
+    /// El primer hijo elemento (para `:has()`; sin él, `:has()` no casa).
+    fn primer_hijo(&self) -> Option<Self> {
+        None
+    }
+    /// Si es el mismo elemento que `otro` (para `:has()`).
+    fn mismo(&self, _otro: &Self) -> bool {
+        false
+    }
     /// Si `class` contiene esta clase.
     fn tiene_clase(&self, clase: &str) -> bool {
         self.atributo("class").is_some_and(|c| c.split_ascii_whitespace().any(|x| x == clase))
@@ -78,6 +86,8 @@ pub enum Pseudo {
     Nunca,
     /// `:not(lista)`: no casa ninguno.
     No(Vec<Selector>),
+    /// `:has(> a, + b, c)`: algún elemento con esa relación casa (ver `tiene.rs`).
+    Tiene(Vec<crate::tiene::Relativo>),
     /// `:is(lista)` y `:where(lista)` (este sin especificidad: `false`): casa alguno.
     Alguno(Vec<Selector>, bool),
     /// `:nth-child(an+b)` y familia: su puesto entre los hermanos (de su `tipo`, si lo dice;
@@ -134,6 +144,7 @@ impl Selector {
                         l.iter().map(Selector::especificidad).max().unwrap_or((0, 0, 0))
                     }
                     Pseudo::Alguno(_, false) => (0, 0, 0),
+                    Pseudo::Tiene(l) => l.iter().map(|r| r.selector.especificidad()).max().unwrap_or((0, 0, 0)),
                     _ => (0, 1, 0),
                 };
                 (x + i, y + j, z + k)
@@ -165,14 +176,23 @@ impl Selector {
         !self.partes.is_empty() && self.casa_desde(self.partes.len() - 1, e)
     }
 
+    /// Si casa con `e` y su primera parte está en relación `c` con `ancla` (`:has()`).
+    pub(crate) fn casa_anclado<E: ElementoCss>(&self, e: E, ancla: E, c: Combinador) -> bool {
+        !self.partes.is_empty() && self.casa_con(self.partes.len() - 1, e, Some((ancla, c)))
+    }
+
     fn casa_desde<E: ElementoCss>(&self, i: usize, e: E) -> bool {
+        self.casa_con(i, e, None)
+    }
+
+    fn casa_con<E: ElementoCss>(&self, i: usize, e: E, ancla: Option<(E, Combinador)>) -> bool {
         if !casa_compuesto(&self.partes[i], e) {
             return false;
         }
         if i == 0 {
-            return true;
+            return ancla.is_none_or(|(a, c)| crate::tiene::relacion(a, e, c));
         }
-        let siguiente_a_probar = |x: E| self.casa_desde(i - 1, x);
+        let siguiente_a_probar = |x: E| self.casa_con(i - 1, x, ancla);
         match self.combinadores[i - 1] {
             Combinador::Hijo => e.padre().is_some_and(siguiente_a_probar),
             Combinador::Adyacente => e.anterior().is_some_and(siguiente_a_probar),
@@ -224,6 +244,7 @@ fn casa_pseudo<E: ElementoCss>(p: &Pseudo, e: E) -> bool {
         Pseudo::Nunca => false,
         Pseudo::No(l) => !l.iter().any(|s| s.casa_origen(e)),
         Pseudo::Alguno(l, _) => l.iter().any(|s| s.casa_origen(e)),
+        Pseudo::Tiene(l) => crate::tiene::casa(l, e),
         &Pseudo::Enesimo { a, b, tipo, desde_el_final } => {
             let mismo = |x: &E| !tipo || x.nombre() == e.nombre();
             let antes = if desde_el_final {
@@ -281,6 +302,7 @@ fn pseudo_funcion(nombre: &str, dentro: &[Token]) -> Option<Pseudo> {
         "is" | "matches" | "-webkit-any" | "any" => {
             Some(lista(dentro).map_or(Pseudo::Nunca, |l| Pseudo::Alguno(l, true)))
         }
+        "has" => crate::tiene::leer(dentro).map(Pseudo::Tiene),
         "where" => Some(lista(dentro).map_or(Pseudo::Nunca, |l| Pseudo::Alguno(l, false))),
         "nth-child" => enesimo(false, false),
         "nth-last-child" => enesimo(false, true),
@@ -308,7 +330,7 @@ pub fn lista(tokens: &[Token]) -> Option<Vec<Selector>> {
         .collect()
 }
 
-fn complejo(tokens: &[Token]) -> Option<Selector> {
+pub(crate) fn complejo(tokens: &[Token]) -> Option<Selector> {
     let mut l = LectorSel { t: tokens, i: 0 };
     let mut sel = Selector { partes: Vec::new(), combinadores: Vec::new() };
     l.blancos();

@@ -2276,6 +2276,7 @@ name = "quimera-red"
 version = "0.1.0"
 dependencies = [
  "quimera-comprimir",
+ "quimera-regex",
  "rustls",
  "webpki-roots",
 ]

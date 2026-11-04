@@ -21,11 +21,13 @@ extern crate alloc;
 mod colores;
 mod hoja;
 mod selectores;
+mod tiene;
 mod tokenizador;
 mod valores;
 
 pub use hoja::{Declaracion, Hoja, Regla, ReglaMedio, analizar, declaraciones, texto};
 pub use selectores::{Atributo, Combinador, Compuesto, ElementoCss, Pseudo, Selector};
+pub use tiene::Relativo;
 pub use tokenizador::{Token, tokens};
 pub use valores::{Color, Longitud, color, longitud, piezas};
 

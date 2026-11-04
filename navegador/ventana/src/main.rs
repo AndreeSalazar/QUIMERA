@@ -16,6 +16,7 @@
 //! página y envía su formulario (una búsqueda, por ejemplo).
 
 mod barra;
+mod escudo;
 mod formularios;
 mod guiones;
 mod historial;

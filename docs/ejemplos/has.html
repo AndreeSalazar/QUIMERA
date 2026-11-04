@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>:has() en QUIMERA</title>
+<style>
+  body { font-family: sans-serif; margin: 16px; }
+  .caja { width: 260px; height: 36px; margin: 6px 0; background: #2e7d32; color: white; padding: 4px 8px; }
+  /* Todas empiezan verdes; las que :has() marca se vuelven rojas. Comparar con Chrome. */
+  .caja:has(> .anuncio) { background: #c62828; }
+  .caja:has(b i) { background: #c62828; }
+  .caja:has(+ .siguiente) { background: #c62828; }
+  .caja:has(~ .lejos) { background: #6a1b9a; }
+  ul:has(> li.anuncio) { display: none; }
+  .tarjeta:has(> #contenido > ytd-ad-slot-renderer) { display: none; }
+</style>
+</head>
+<body>
+<div class="caja">1 · sin nada: verde</div>
+<div class="caja"><span class="anuncio">2 · hijo .anuncio: rojo</span></div>
+<div class="caja"><span><span class="anuncio">3 · nieto .anuncio: verde</span></span></div>
+<div class="caja"><b>4 · <i>b i dentro: rojo</i></b></div>
+<div class="caja"><i>5 · i sin b: verde</i></div>
+<div class="caja">6 · le sigue .siguiente: rojo</div>
+<div class="siguiente">(siguiente)</div>
+<section>
+<div class="caja">7 · más adelante hay .lejos: morado</div>
+<p>separador</p>
+<div class="lejos">(lejos)</div>
+</section>
+<ul><li>8 · lista normal: se ve</li></ul>
+<ul><li class="anuncio">lista con anuncio: NO debe verse</li></ul>
+<div class="tarjeta"><div id="contenido"><ytd-ad-slot-renderer>tarjeta de anuncio: NO debe verse</ytd-ad-slot-renderer></div></div>
+<div class="tarjeta"><div id="contenido"><p>9 · tarjeta normal: se ve</p></div></div>
+</body>
+</html>

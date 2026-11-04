@@ -50,6 +50,16 @@ impl ElementoCss for Nodo<'_> {
         self.hermano(1)
     }
 
+    fn primer_hijo(&self) -> Option<Self> {
+        let hijos = &self.doc.nodo(self.id).hijos;
+        let h = hijos.iter().find(|&&h| self.doc.elemento(h).is_some_and(|e| !e.nombre.starts_with("::")))?;
+        Some(Nodo { doc: self.doc, id: *h })
+    }
+
+    fn mismo(&self, otro: &Self) -> bool {
+        self.id == otro.id
+    }
+
     fn vacio(&self) -> bool {
         self.doc.nodo(self.id).hijos.iter().all(|&h| match &self.doc.nodo(h).dato {
             Dato::Comentario(_) => true,

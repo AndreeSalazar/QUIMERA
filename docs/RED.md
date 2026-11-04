@@ -49,38 +49,54 @@ Falta `SameSite`, `HttpOnly` (sin JavaScript da igual: nadie puede leerlas desde
 
 ## Bloqueo de anuncios y rastreo
 
-Como el escudo de Brave, pero más pequeño. Va activado de serie y la lista va **dentro del binario** (`red/red/src/bloqueo.txt`): no se descarga nada ni se avisa a nadie.
+Como el escudo de Brave. Va activado de serie y las listas van **dentro del binario**: no se descarga nada al navegar ni se avisa a nadie.
 
-- **El filtro** (`bloqueo.rs`, `Filtro`): reglas al estilo EasyList. `||dominio^` bloquea el dominio y sus subdominios (se mira cada sufijo del anfitrión en un `HashSet`); `||youtube.com/ptracking`, el anfitrión con esa ruta; un texto suelto (`/pagead/*`) se busca en la URL; `^` es un separador y `*` cualquier trozo; `@@` es una excepción. Un texto entre barras (`/…/`) es una expresión regular, como en EasyList, y todavía se ignora.
-- **Opciones** (lo que va tras `$`): `third-party`/`3p` y `~third-party`/`1p`; los tipos `script`, `image`, `stylesheet`, `xmlhttprequest`, `font`, `media`, `subdocument`, `other` (y `~tipo`); `domain=a.com|~b.com`; y `@@…$document`, que deja una página entera sin bloqueo. Una regla con una opción que no se entiende (`$popup`, `$csp=`, `$redirect=`) se ignora entera: mejor no bloquear de más. Para saber si algo es «de otro sitio» cada petición lleva su tipo y la página que la pide (`Peticion::recurso`). El sitio son los dos últimos trozos del anfitrión, o tres en `co.uk`, `gob.pe` y parecidos. Es una aproximación de la lista de sufijos públicos, que aún no está.
-- **Ocultar elementos** (`cosmetico.rs`): `##selector`, `sitio##selector`, `~sitio` y la excepción `sitio#@#selector`. Con ellas se hace una hoja `selector{display:none!important}` (una regla por selector, para que uno que no se entienda no anule a los demás). La ventana la añade al final de la página como `<style id="quimera-bloqueo">`, como hace Brave, y vale también para lo que añade después el JavaScript. Las variantes `#?#`, `#$#` y `##+js(…)` se ignoran. Un selector con `:has()` no casa con nada (el estilo todavía no lo entiende), así que en la portada de YouTube puede quedar el hueco de la tarjeta que envuelve un anuncio.
-- **Apagar por sitio**: **Ctrl+B** en la ventana apaga o enciende el bloqueo en el sitio actual (`youtube.com`, con sus subdominios) y recarga. La lista se guarda en `%APPDATA%\QUIMERA\sin-bloqueo.txt`, un sitio por línea. En un sitio apagado no se filtra ninguna petición de sus páginas, no se quitan los anuncios de vídeo y no se añade la hoja de ocultar. En el modo captura, `QUIMERA_SIN_BLOQUEO=1` quita el filtro entero (para comparar).
-- **La lista**: Google Ads (`doubleclick.net`, `googlesyndication.com`, `googleadservices.com`, IMA), Google Analytics y Tag Manager, las rutas de anuncios de YouTube (`/pagead/`, `/api/stats/ads`, `/ptracking`, `/get_midroll_`) y unas 30 redes de anuncios y rastreo. Además, el rastreo de redes sociales y analítica (Facebook, LinkedIn, Segment, Amplitude…), con `$third-party` cuando el dominio también es el del propio sitio, scripts típicos de anuncios (`/gpt.js$script,third-party`) y reglas para ocultar los anuncios de YouTube (`ytd-ad-slot-renderer`, `#masthead-ad`, `#player-ads`…) y los de AdSense en todas partes. Solo dominios que no sirven otra cosa, para no romper sitios.
-- **Dónde**: en `Cliente::solicitar` y `Cliente::pedir`, en cada salto de las redirecciones. Por ahí pasa todo lo que pide la página: `fetch`, `XMLHttpRequest`, scripts, hojas, imágenes y fuentes. Lo bloqueado devuelve `Error::Bloqueado`, que la página ve como un fallo de red y sigue funcionando. **La navegación** (`Cliente::enviar`: la barra, un enlace, un formulario) no se filtra: la elige el usuario.
-- **Anuncios de vídeo de YouTube** (`anuncios.rs`): no vienen de otro dominio, sino dentro de la respuesta del reproductor. En YouTube se quitan las claves `adPlacements`, `playerAds` y `adSlots` (con su valor JSON entero y su coma) del HTML de `/watch` (`ytInitialPlayerResponse`) y de las respuestas JSON (`/youtubei/v1/player`) antes de que la página las lea. Es lo que hace Brave con su *scriptlet* `json-prune`.
-- `QUIMERA_RED=1` en el modo captura dice cuántas peticiones se bloquearon y cuáles, y cuántas claves de anuncios se quitaron.
+**Las listas** (unas 130.000 reglas):
 
-**Medido** (modo captura, 1280×900, `QUIMERA_RED=1`, 3 de noviembre de 2026):
+- `red/red/src/bloqueo.txt`, la propia de QUIMERA: Google Ads y Analytics, las rutas de anuncios de YouTube (`/pagead/*`, `/api/stats/ads`, `/ptracking`, `/get_midroll_`), redes de anuncios y rastreo, reglas de ocultar y *scriptlets* para YouTube.
+- **EasyList** y **EasyPrivacy** enteras, tal como se publican, en `red/red/listas/` (ver su [LEEME](../red/red/listas/LEEME.md): licencia GPLv3 o CC BY-SA 3.0, distinta de la de QUIMERA, y cómo actualizarlas).
 
-| Página | Sin bloqueo | Con bloqueo |
+**Reglas de red** (`bloqueo.rs`, `regla.rs`):
+
+- `||dominio^` (el dominio y sus subdominios), `||dominio/ruta`, texto suelto (`/pagead/*`), `^` separador, `*` comodín, `|` ancla al principio o al final, `@@` excepción.
+- `/…/`: expresión regular de JavaScript con `quimera-regex`, sobre la URL entera.
+- Opciones: `third-party`/`3p`, `~third-party`/`1p`; los tipos `script`, `image`, `stylesheet`, `xmlhttprequest`, `font`, `media`, `subdocument`, `other` (y `~tipo`); `domain=a.com|~b.com`; `match-case`; `@@…$document` para dejar una página entera sin bloqueo. Una regla con una opción que no se entiende (`$popup`, `$csp=`, `$redirect=`…, unas 3.300 en las dos listas) se ignora entera: mejor no bloquear de más.
+- Cada petición lleva su tipo y la página que la pide (`Peticion::recurso`), para saber si es «de otro sitio». El sitio son los dos últimos trozos del anfitrión, o tres en `co.uk`, `gob.pe` y parecidos: una aproximación de la lista de sufijos públicos, que aún no está.
+- **Sin gastar RAM**: las reglas no copian su texto, apuntan a las listas del binario (`&'static str`). Los 87.000 `||dominio^` sin opciones van en una lista ordenada (búsqueda binaria por cada sufijo del anfitrión). Las demás se guardan bajo su **trozo** más largo que seguro aparece entero en la URL (`doubleclick`, `pagead`…), como hace el motor de Brave: una URL solo se compara con las reglas de los trozos que tiene (unos 11.800 trozos; solo 31 reglas, casi todas expresiones regulares, se miran siempre).
+- **Dónde**: `Cliente::solicitar` y `Cliente::pedir`, en cada salto de las redirecciones: `fetch`, `XMLHttpRequest`, scripts, hojas, imágenes y fuentes. Lo bloqueado devuelve `Error::Bloqueado`, que la página ve como un fallo de red. **La navegación** (`Cliente::enviar`: la barra, un enlace, un formulario) no se filtra: la elige el usuario.
+
+**Ocultar elementos** (`cosmetico.rs`, y en la ventana `escudo.rs`):
+
+- `sitio##selector`, `~sitio`, `sitio#@#selector` (excepción). Con ellas se hace una hoja `selector{display:none!important}`, una regla por selector para que uno que no se entienda no anule a los demás. Se añade al final de la página como `<style id="quimera-bloqueo">`, y vale también para lo que añade después el JavaScript.
+- **Genéricas** (`##selector`, unas 13.600 en EasyList): meterlas todas en cada página haría lenta la cascada. Como Brave, se usan las que dependen de una clase o un id (`##.anuncio`, `###banner-ad`, `##div.ad-box`) y solo si el HTML que llega trae esa clase o ese id. Las genéricas sin clave (`##a[href*="ad."]`) solo valen si son de la lista propia. Para las genéricas no se miran las clases que añade después el JavaScript.
+- Se usan los selectores que entiende el estilo, **`:has()` incluido** ([HTML-CSS.md](HTML-CSS.md)). EasyList lo usa para YouTube: `ytd-rich-item-renderer:has(> #content > ytd-ad-slot-renderer)` quita la tarjeta entera, no solo el anuncio de dentro. Las variantes de Adblock Plus `#?#`, `#$#` y `#%#` se ignoran.
+
+**Scriptlets** (`scriptlets.rs`, `scriptlets.js`): `sitio##+js(nombre, args)` mete un poco de JavaScript en un `<script>` justo tras `<head>`, antes que los scripts de la página. Están `set-constant`, `json-prune` (en `JSON.parse` y `Response.json`), `abort-on-property-read` y `-write`, `abort-current-script`, `addEventListener-defuser`, `no-fetch-if`, `no-xhr-if`, `no-setTimeout-if`, `no-setInterval-if`, `set-local-storage-item` y `remove-cookie`, con sus alias cortos de uBlock Origin (`set`, `aopr`, `acs`, `aeld`, `nostif`…). Los demás (`json-edit`, `rmnt`…) no hacen nada. Los valores que se dejan poner son los de uBlock Origin (`undefined`, `true`, `noopFunc`, números pequeños…), para que una lista no pueda meter código.
+
+**Anuncios de vídeo de YouTube** (`anuncios.rs`): vienen dentro de la respuesta del reproductor. En YouTube se quitan `adPlacements`, `playerAds` y `adSlots` (con su valor JSON entero y su coma) del HTML de `/watch` y de las respuestas JSON (`/youtubei/v1/player`) antes de que la página las lea. Además, la lista propia pone los *scriptlets* `set ytInitialPlayerResponse.adPlacements undefined` y `json-prune`, por si llegan por otro camino.
+
+**Apagar por sitio**: **Ctrl+B** en la ventana apaga o enciende el bloqueo en el sitio actual (`youtube.com`, con sus subdominios) y recarga. La lista se guarda en `%APPDATA%\QUIMERA\sin-bloqueo.txt`, un sitio por línea. En un sitio apagado no se filtra ninguna petición de sus páginas ni se cambia su HTML.
+
+**Para mirar**: `QUIMERA_RED=1` en el modo captura dice cuántas peticiones se bloquearon y cuáles, y cuántas claves de anuncios se quitaron. `QUIMERA_SIN_BLOQUEO=1` quita el filtro (para comparar). La página de prueba de `:has()` es [ejemplos/has.html](ejemplos/has.html).
+
+### Medido
+
+Modo captura, 1280×900, `QUIMERA_RED=1`, 3 y 4 de noviembre de 2026.
+
+| | Sin bloqueo | Con bloqueo |
 |---|---|---|
-| YouTube, `watch?v=GWprpnIG-w4` | pide `googleads.g.doubleclick.net/pagead/id` (2 veces) y `static.doubleclick.net/instream/ad_status.js`; el HTML trae un anuncio al principio del vídeo (`AD_PLACEMENT_KIND_START`) | **3 peticiones bloqueadas**, el anuncio quitado; `ytInitialPlayerResponse` se sigue leyendo (título y 26 formatos), sin `adPlacements` |
-| YouTube, RAM (pico, dos pasadas) | 866 y 846 MB privados · 656 y 638 MB en uso | 848 y 802 MB privados · 641 y 595 MB en uso |
-| Steam, portada | no pide publicidad | 0 bloqueadas; se ve igual (cambian los juegos destacados, que rota el servidor); 261 → 269 MB privados (ruido) |
+| YouTube, vídeo (`watch?v=GWprpnIG-w4`) | 49 peticiones de la página; `ytInitialPlayerResponse.adPlacements` es un objeto (un anuncio al principio, `AD_PLACEMENT_KIND_START`) | **4 bloqueadas**: `googleads.g.doubleclick.net/pagead/id` (2), `static.doubleclick.net/instream/ad_status.js` y `/api/stats/qoe` (telemetría, regla de EasyPrivacy). `adPlacements` es `undefined`; el título y los formatos siguen; 34 reglas de ocultar y los *scriptlets* puestos (`JSON.parse` ya devuelve los objetos sin `playerAds`) |
+| YouTube, portada (sin sesión) | `#masthead-ad` con `display: flex` | 1 bloqueada (`pagead/id`); `#masthead-ad` con `display: none` |
+| Steam, portada | 23 peticiones | 0 bloqueadas, se ve igual; solo le tocan las 3 reglas genéricas propias, que no ocultan nada suyo |
+| `ejemplos/has.html` | — | igual que Chromium en los 9 casos (hijo, nieto, descendiente anclado, `+`, `~`, ocultar una tarjeta con `:has(> #contenido > ytd-ad-slot-renderer)`) |
 
-La memoria baja poco (de 20 a 40 MB en YouTube, dentro del ruido entre pasadas): hoy los scripts de anuncios ya fallaban o no hacían casi nada en QUIMERA. Lo que se gana sobre todo es privacidad, y que el reproductor no pida anuncios cuando reproduzca vídeo.
+**Memoria y tiempo del filtro** (las tres listas, prueba `medir_la_lista`): unos **8 MB** de memoria privada (y unos 10 MB más en uso, sobre todo el texto de las listas leído del binario), 44–97 ms para leerlo una vez por proceso, y 22–47 µs por URL. El binario crece 3,5 MB por las listas.
 
-**Con las opciones y la hoja de ocultar** (misma medida, `QUIMERA_SIN_BLOQUEO=1` para el «sin»):
+**En las páginas**, la RAM no cambia de forma que se pueda medir: las diferencias entre «sin» y «con» (YouTube vídeo 855 → 856 MB privados, portada 799 → 799, Steam 277 → 277) son menores que las que hay entre dos pasadas iguales (hasta 40 MB). Lo que se gana es privacidad y que el reproductor no pida anuncios cuando reproduzca vídeo.
 
-| Página | Sin bloqueo | Con bloqueo |
-|---|---|---|
-| YouTube, vídeo | 0 bloqueadas · 804 MB privados | 3 bloqueadas, el anuncio previo quitado · 818 MB |
-| YouTube, portada (sin sesión) | `#masthead-ad` con `display: flex`; el reproductor descarga 6 trozos de `videoplayback` (sin sesión la portada no tiene vídeos, así que casi seguro son del anuncio de cabecera) · 741 MB | 1 bloqueada (`pagead/id`), `#masthead-ad` con `display: none`, **ningún** `videoplayback` · 791–792 MB |
-| Steam, portada | 0 bloqueadas · 259 MB | 0 bloqueadas, se ve igual · 271 MB |
+**Corrección.** En el commit anterior escribí que con bloqueo la portada dejaba de bajar 6 trozos de `videoplayback`. No es así: esos trozos salen o no según la variante que sirve YouTube (cambia el `am=` de sus scripts), con bloqueo y sin él. Al volver a medir aparecieron en una pasada con bloqueo y no en la de sin.
 
-La RAM sigue dentro del ruido entre pasadas (en la portada, el «sin» de 741 MB salió más bajo que los dos «con»). Las capturas de la portada son iguales: sin sesión, YouTube solo enseña «Busca algo para comenzar», y el anuncio de cabecera no llegaba a dibujarse.
-
-Falta: las expresiones regulares (`/…/`), los *scriptlets* (`##+js`), `:has()` en el estilo, la lista de sufijos públicos y una lista más grande (EasyList entera tiene unas 80.000 reglas).
+**Falta**: los *scriptlets* que quedan (`json-edit`, `rmnt`, `aost`…); las opciones `$popup`, `$csp`, `$redirect` y `$removeparam`; `$generichide`; las variantes de Adblock Plus (`#?#`, `#$#`); la lista de sufijos públicos; y mirar las genéricas también en lo que añade el JavaScript.
 
 ## Comprobado
 

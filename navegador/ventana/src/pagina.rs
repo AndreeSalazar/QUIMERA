@@ -82,7 +82,7 @@ impl Pagina {
             Ok(r) => (r.url.clone(), error(url, &format!("el servidor respondió {}", r.estado))),
             Err(e) => (url.clone(), error(url, &e.to_string())),
         };
-        let html = sin_anuncios(cliente, &url_final, html);
+        let html = crate::escudo::aplicar(cliente, &url_final, html);
         let doc = analizar(&html);
         let base = base_de(&doc, &url_final);
         let mut hojas = Vec::new();
@@ -133,23 +133,6 @@ fn descargar_scripts(cliente: &Cliente, doc: &Documento, base: &Url, pagina: &Ur
         }
     }
     scripts
-}
-
-/// Con el bloqueo activo en el sitio: sin los anuncios de vídeo de YouTube y con la hoja que
-/// oculta los huecos de anuncios (las reglas `##`) al final, como hace Brave.
-fn sin_anuncios(cliente: &Cliente, url: &Url, html: String) -> String {
-    let Some(filtro) = cliente.filtro.as_ref().filter(|_| cliente.bloqueo_activo(url)) else { return html };
-    let mut html = crate::peticiones::limpiar_youtube(url, html);
-    let hoja = filtro.cosmeticas.hoja(&url.anfitrion);
-    if !hoja.is_empty() {
-        html.push_str(
-            "<style id=\"quimera-bloqueo\">
-",
-        );
-        html.push_str(&hoja.replace('<', r"\3c "));
-        html.push_str("</style>");
-    }
-    html
 }
 
 /// El cuerpo como HTML; si es texto plano, dentro de un `<pre>` como hacen los navegadores.

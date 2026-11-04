@@ -53,7 +53,10 @@ fn excepciones_y_lineas_ignoradas() {
     assert!(!f.bloquea(&url("https://cdn.anuncios.com/necesario.js")));
     assert!(!f.bloquea(&url("https://ejemplo.com/x")), "una opción que no se entiende");
     assert!(!f.bloquea(&url("https://ejemplo.com/y")));
-    assert!(!f.bloquea(&url("https://ejemplo.com/ad1")), "las expresiones regulares se ignoran");
+    assert!(
+        !f.bloquea(&url("https://ejemplo.com/ad1")),
+        "la expresión regular mira la URL entera, que empieza por https"
+    );
     assert!(!f.bloquea(&url("data:text/plain,pagead")), "solo http(s)");
 }
 
@@ -131,5 +134,77 @@ fn la_lista_de_serie() {
     ] {
         assert!(!f.bloquea_en(&url(u), &desde(Tipo::Xhr, "www.youtube.com")), "{u}");
     }
-    assert!(f.cosmeticas.selectores("www.youtube.com").contains(&"ytd-ad-slot-renderer"));
+    assert!(f.cosmeticas.selectores("www.youtube.com", &|_| false).contains(&"ytd-ad-slot-renderer"));
+    assert!(!f.cosmeticas.scriptlets("www.youtube.com").is_empty());
+}
+
+#[test]
+fn anclas_y_expresiones_regulares() {
+    let f = Filtro::leer(concat!(
+        "|https://cdn.ejemplo.com/ad\n.gif|\n",
+        r"/^https?:\/\/[a-z]{8}\.top\//$script",
+        "\n/Mayus/$match-case"
+    ));
+    assert!(f.bloquea(&url("https://cdn.ejemplo.com/ad.js")));
+    assert!(!f.bloquea(&url("https://otro.com/?u=https://cdn.ejemplo.com/ad")), "anclada al principio");
+    assert!(f.bloquea(&url("https://x.com/a/pixel.gif")));
+    assert!(!f.bloquea(&url("https://x.com/a/pixel.gif?v=1")), "anclada al final");
+    let s = desde(Tipo::Script, "pagina.com");
+    assert!(f.bloquea_en(&url("https://abcdefgh.top/x.js"), &s));
+    assert!(!f.bloquea_en(&url("https://abcdefgh.top/x.js"), &desde(Tipo::Imagen, "pagina.com")));
+    assert!(!f.bloquea_en(&url("https://abc.top/x.js"), &s));
+    assert!(f.bloquea(&url("https://x.com/Mayus")));
+    assert!(!f.bloquea(&url("https://x.com/mayus")), "con match-case distingue mayúsculas");
+}
+
+#[test]
+fn el_indice_no_pierde_reglas() {
+    // Las mismas URLs, con las reglas mezcladas con muchas otras que no casan.
+    let mut lista = String::from("||anuncio.com/banner^\n/pixel/*$image\n*/pagead/*\n");
+    for i in 0..2000 {
+        lista.push_str(&format!("/ruta{i}/x^\n||dominio{i}.net^$third-party\n"));
+    }
+    let f = Filtro::leer(Box::leak(lista.into_boxed_str()));
+    assert!(f.bloquea(&url("https://sub.anuncio.com/banner?x")));
+    assert!(f.bloquea_en(&url("https://img.com/pixel/1.png"), &desde(Tipo::Imagen, "a.com")));
+    assert!(f.bloquea(&url("https://a.com/x/pagead/y")));
+    assert!(f.bloquea(&url("https://a.com/ruta1999/x")));
+    assert!(!f.bloquea(&url("https://a.com/ruta1999/xy")));
+    assert!(f.bloquea_en(&url("https://cdn.dominio7.net/a.js"), &desde(Tipo::Script, "b.com")));
+}
+
+/// `cargo test --release -p quimera-red medir_la_lista -- --ignored --nocapture`
+#[test]
+#[ignore]
+fn medir_la_lista() {
+    let t = std::time::Instant::now();
+    let f = Filtro::leer_todas(&[LISTA, EASYLIST, EASYPRIVACY]);
+    let leer = t.elapsed();
+    let urls: Vec<Url> = [
+        "https://www.youtube.com/youtubei/v1/player?prettyPrint=false",
+        "https://i.ytimg.com/vi/GWprpnIG-w4/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==",
+        "https://rr1---sn-q4flrnsl.googlevideo.com/videoplayback?expire=1&ei=x&ip=1.2.3.4&id=o-ABC&itag=243",
+        "https://googleads.g.doubleclick.net/pagead/id",
+        "https://store.fastly.steamstatic.com/public/javascript/applications/store/main.js?v=1",
+        "https://www.google-analytics.com/g/collect?v=2&tid=G-XYZ",
+    ]
+    .iter()
+    .map(|u| url(u))
+    .collect();
+    let c = desde(Tipo::Xhr, "www.youtube.com");
+    let t = std::time::Instant::now();
+    let mut n = 0;
+    for _ in 0..2000 {
+        for u in &urls {
+            n += usize::from(f.bloquea_en(u, &c));
+        }
+    }
+    let por = t.elapsed().as_secs_f64() * 1e6 / (2000.0 * urls.len() as f64);
+    println!(
+        "reglas {} · leer {:.1} ms · {:.1} µs por URL · {n} bloqueadas",
+        f.reglas(),
+        leer.as_secs_f64() * 1e3,
+        por
+    );
+    println!("sueltas {} · trozos {}", f.bloqueos.sueltas.len(), f.bloqueos.indice.len());
 }
