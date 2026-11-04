@@ -400,6 +400,13 @@ impl Gpu {
             ((ancho, alto), rgba[..ancho as usize * alto as usize * 4].to_vec())
         };
         premultiplicar(&mut pixeles);
+        // Del mismo tamaño que la que ya tiene (el siguiente fotograma de un vídeo): solo los píxeles.
+        if let Some((t, _)) = self.imagenes.get(&id)
+            && (t.width(), t.height()) == (w, h)
+        {
+            imagen::escribir(&self.cola, t, (w, h), &pixeles);
+            return;
+        }
         let par = (&self.disposicion_imagen, &self.muestreo_imagen);
         let t = textura_imagen(&self.dispositivo, &self.cola, par, (w, h), &pixeles);
         self.imagenes.insert(id, t);

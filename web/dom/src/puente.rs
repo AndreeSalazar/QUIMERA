@@ -347,7 +347,7 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
         }
         // Si la maquetación le dio caja (no la tiene con `display: none`, por ejemplo).
         "__quimera_con_caja" if el.is_some() => {
-            Leido::Booleano(est.medidas().is_some_and(|m| m.cajas.contains_key(&id.0)))
+            Leido::Booleano(est.medidas_de(id.0).is_some_and(|m| m.cajas.contains_key(&id.0)))
         }
         _ => {
             let e = el?;
@@ -376,7 +376,7 @@ fn de_imagen(est: &Estado, src: &str, nombre: &str) -> Leido {
 }
 
 fn medida(est: &Estado, id: NodoId, nombre: &str) -> Leido {
-    let Some(m) = est.medidas() else { return Leido::Entero(0) };
+    let Some(m) = est.medidas_de(id.0) else { return Leido::Entero(0) };
     let es_html = est.doc.borrow().elemento(id).is_some_and(|e| e.nombre == "html");
     let [x, y, ancho, alto] = match m.cajas.get(&id.0) {
         Some(c) if es_html => [c[0], c[1], m.ventana.0, c[3].max(m.ventana.1)],

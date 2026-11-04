@@ -77,6 +77,8 @@ pub struct Navegador {
     formulario: formularios::Estado,
     /// El JavaScript de la página: su DOM (el árbol que se maqueta) y sus temporizadores.
     pub guion: Option<Guion>,
+    /// Los `<video>` de la página: sus decodificadores y el fotograma que toca.
+    videos: crate::video::Videos,
 }
 
 impl Navegador {
@@ -103,6 +105,7 @@ impl Navegador {
             teclas: ModifiersState::empty(),
             formulario: formularios::Estado::default(),
             guion: None,
+            videos: crate::video::Videos::default(),
         }
     }
 
@@ -206,6 +209,7 @@ impl Navegador {
     /// Llegó la página pedida: se muestra (y se va a su `#ancla`), y se piden sus imágenes.
     fn llegada(&mut self, pagina: Pagina) {
         self.imagenes.vaciar();
+        self.videos = crate::video::Videos::default();
         self.hojas = quimera_estilo::CacheHojas::default();
         self.imagenes_nuevas = false;
         self.formulario = formularios::Estado::default();
@@ -489,10 +493,51 @@ impl Navegador {
 
     /// Ejecuta los temporizadores de la página que ya tocan; devuelve cuándo toca el siguiente.
     pub fn latido(&mut self) -> Option<Instant> {
+        let t0 = Instant::now();
         let proximo = self.guion.as_mut()?.latido();
+        let t1 = Instant::now();
         self.tras_javascript();
         self.atender_peticiones();
+        let t2 = Instant::now();
+        self.avanzar_videos();
+        if std::env::var_os("QUIMERA_VIDEO").is_some() {
+            let ms = |a: Instant, b: Instant| (b - a).as_secs_f64() * 1e3;
+            let total = ms(t0, Instant::now());
+            if total > 20.0 {
+                use std::sync::atomic::Ordering;
+                let medidor = crate::guiones::MEDIDOR_NS.swap(0, Ordering::Relaxed) as f64 / 1e6;
+                let veces = crate::guiones::MEDIDOR_VECES.swap(0, Ordering::Relaxed);
+                eprintln!(
+                    "latido {total:.0} ms: js {:.0} (medidor {medidor:.0} en {veces} veces), maquetar {:.0}, vídeo {:.0}",
+                    ms(t0, t1),
+                    ms(t1, t2),
+                    ms(t2, Instant::now())
+                );
+            }
+        }
+        // Mientras un vídeo avanza, a 30 fotogramas por segundo.
+        if self.videos.reproduciendo() {
+            let fotograma = Instant::now() + std::time::Duration::from_millis(33);
+            return Some(proximo.map_or(fotograma, |p| p.min(fotograma)));
+        }
         proximo
+    }
+
+    /// El fotograma que toca en cada `<video>`: a la GPU (en su misma textura) y a repintar. El
+    /// primero de un vídeo pide maquetar, para que su caja sepa qué textura pintar.
+    fn avanzar_videos(&mut self) {
+        let (Some(g), Some(a)) = (&self.guion, &mut self.abierta) else { return };
+        let antes = self.imagenes.total();
+        if !self.videos.avanzar(&g.dom, &mut self.imagenes) {
+            return;
+        }
+        for (id, ancho, alto, rgba) in self.imagenes.fotogramas_por_subir() {
+            a.gpu.subir_imagen(id, ancho, alto, &rgba);
+        }
+        if self.imagenes.total() != antes {
+            self.imagenes_nuevas = true;
+        }
+        a.ventana.request_redraw();
     }
 
     /// Se pulsó un control de formulario: enfocar, marcar, elegir o enviar.

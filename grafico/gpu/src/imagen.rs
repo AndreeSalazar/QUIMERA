@@ -26,6 +26,22 @@ pub(crate) fn disposicion_imagen(d: &wgpu::Device) -> wgpu::BindGroupLayout {
 }
 
 /// Una textura RGBA con sus píxeles y el grupo que la enlaza.
+/// Escribe los píxeles RGBA de una textura de `ancho` × `alto`.
+pub(crate) fn escribir(cola: &wgpu::Queue, textura: &wgpu::Texture, (ancho, alto): (u32, u32), rgba: &[u8]) {
+    let tam = wgpu::Extent3d { width: ancho, height: alto, depth_or_array_layers: 1 };
+    cola.write_texture(
+        wgpu::TexelCopyTextureInfo {
+            texture: textura,
+            mip_level: 0,
+            origin: wgpu::Origin3d::ZERO,
+            aspect: wgpu::TextureAspect::All,
+        },
+        rgba,
+        wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(ancho * 4), rows_per_image: Some(alto) },
+        tam,
+    );
+}
+
 pub(crate) fn textura_imagen(
     d: &wgpu::Device,
     cola: &wgpu::Queue,
@@ -44,17 +60,7 @@ pub(crate) fn textura_imagen(
         usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
         view_formats: &[],
     });
-    cola.write_texture(
-        wgpu::TexelCopyTextureInfo {
-            texture: &textura,
-            mip_level: 0,
-            origin: wgpu::Origin3d::ZERO,
-            aspect: wgpu::TextureAspect::All,
-        },
-        rgba,
-        wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(ancho * 4), rows_per_image: Some(alto) },
-        tam,
-    );
+    escribir(cola, &textura, (ancho, alto), rgba);
     let vista = textura.create_view(&wgpu::TextureViewDescriptor::default());
     let grupo = d.create_bind_group(&wgpu::BindGroupDescriptor {
         label: Some("imagen"),

@@ -28,15 +28,33 @@ pub struct Videos {
     videos: HashMap<u32, Uno>,
     #[cfg(not(windows))]
     videos: HashMap<u32, ()>,
+    /// El tiempo de cada `<video>` la última vez: si cambió, se está reproduciendo.
+    tiempos: HashMap<u32, f64>,
+    /// Alguno avanzó en la última vuelta (la ventana late a 30 por segundo mientras tanto).
+    avanza: bool,
+    /// `QUIMERA_VIDEO=1`: cada segundo, cuántos fotogramas se pintaron (y desde cuándo se cuenta).
+    cuenta: Option<(std::time::Instant, u32)>,
 }
 
 impl Videos {
+    /// Si algún `<video>` se está reproduciendo.
+    pub fn reproduciendo(&self) -> bool {
+        self.avanza
+    }
+
+    /// Apunta el tiempo de un `<video>` y dice si avanzó desde la vez anterior.
+    fn anotar(&mut self, nodo: u32, tiempo: f64) -> bool {
+        self.tiempos.insert(nodo, tiempo).is_some_and(|antes| antes != tiempo)
+    }
+
     /// Recoge las muestras nuevas de la página y deja en `imagenes` el fotograma que toca en cada
     /// `<video>`. Devuelve si alguno cambió (hay que volver a pintar).
     #[cfg(windows)]
     pub fn avanzar(&mut self, dom: &quimera_dom::Dom, imagenes: &mut Imagenes) -> bool {
         let mut cambio = false;
+        self.avanza = false;
         for v in dom.tomar_videos() {
+            self.avanza |= self.anotar(v.nodo.0, v.tiempo);
             let uno = self.videos.entry(v.nodo.0).or_insert_with(|| Uno {
                 decodificador: None,
                 cola: VecDeque::new(),
@@ -55,9 +73,25 @@ impl Videos {
             if let Some(f) = uno.elegir(v.tiempo) {
                 imagenes.fotograma(format!("quimera-video:{}", v.nodo.0), f.ancho, f.alto, f.rgba);
                 cambio = true;
+                let en_cola = uno.cola.len();
+                self.contar(v.tiempo, en_cola);
             }
         }
         cambio
+    }
+
+    /// Con `QUIMERA_VIDEO=1`, escribe cada segundo los fotogramas pintados.
+    fn contar(&mut self, tiempo: f64, en_cola: usize) {
+        if std::env::var_os("QUIMERA_VIDEO").is_none() {
+            return;
+        }
+        let ahora = std::time::Instant::now();
+        let (desde, n) = self.cuenta.get_or_insert((ahora, 0));
+        *n += 1;
+        if ahora.duration_since(*desde).as_secs_f64() >= 1.0 {
+            eprintln!("vídeo: {n} fotogramas en el último segundo, va por {tiempo:.2} s ({en_cola} muestras en cola)");
+            self.cuenta = Some((ahora, 0));
+        }
     }
 
     /// Sin Media Foundation no hay decodificador: los `<video>` se quedan sin imagen.

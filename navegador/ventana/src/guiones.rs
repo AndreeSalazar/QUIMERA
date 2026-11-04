@@ -29,6 +29,23 @@ fn entropia(bytes: &mut [u8]) {
     }
 }
 
+/// Tiempo y veces del medidor (para `QUIMERA_VIDEO`).
+pub static MEDIDOR_NS: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+pub static MEDIDOR_VECES: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+struct Cronometro(Instant);
+impl Cronometro {
+    fn nuevo() -> Cronometro {
+        Cronometro(Instant::now())
+    }
+}
+impl Drop for Cronometro {
+    fn drop(&mut self) {
+        use std::sync::atomic::Ordering;
+        MEDIDOR_NS.fetch_add(self.0.elapsed().as_nanos() as u64, Ordering::Relaxed);
+        MEDIDOR_VECES.fetch_add(1, Ordering::Relaxed);
+    }
+}
+
 /// Quien maqueta para las medidas que lee JavaScript (`clientWidth`, `getBoundingClientRect`):
 /// la cascada con las hojas de la página y la maquetación con anchos de texto aproximados (las
 /// páginas miden sobre todo contenedores, que casi no dependen del texto).
@@ -36,6 +53,7 @@ fn medidor(pagina: &Pagina, (ancho, alto): (f32, f32)) -> quimera_dom::Medir {
     let hojas = pagina.hojas.clone();
     let cache = quimera_estilo::CacheHojas::default();
     Box::new(move |doc| {
+        let _medida = Cronometro::nuevo();
         let externa = |h: &str| hojas.iter().find(|(x, _)| x == h).map(|(_, css)| css.clone());
         let op = quimera_estilo::Opciones { ancho, alto };
         // Con sus `::before`/`::after` (en una copia: el DOM de la página no los tiene).

@@ -83,6 +83,11 @@ pub(crate) struct Estado {
     pub(crate) medir: RefCell<Option<Medir>>,
     /// Las últimas medidas, hasta que el árbol cambie.
     pub(crate) medidas: RefCell<Option<Rc<Medidas>>>,
+    /// El árbol cambió desde que se tomaron las medidas.
+    pub(crate) medidas_sucias: Cell<bool>,
+    /// Se están corriendo temporizadores: las lecturas pueden usar las medidas de antes de los
+    /// cambios de esta tanda (ver [`Estado::medidas`]).
+    pub(crate) tolerar_medidas: Cell<bool>,
     /// El árbol cambió y los observadores aún no lo saben.
     pub(crate) sin_observar: Cell<bool>,
     /// Los nodos que observa algún `MutationObserver` (número, con `subtree`).
@@ -111,17 +116,40 @@ impl Estado {
         if !self.observados.borrow().is_empty() {
             self.mutacion_pendiente.set(true);
         }
-        self.medidas.borrow_mut().take();
+        self.medidas_sucias.set(true);
     }
 
     /// Las medidas del documento como está ahora (maqueta si cambió desde la última vez).
+    ///
+    /// Maquetar la página entera cuesta (unos 50 ms en YouTube) y un reproductor de vídeo cambia
+    /// el árbol y lee medidas decenas de veces por tanda de temporizadores: mientras corren, una
+    /// lectura reutiliza las medidas de esta tanda aunque el árbol haya cambiado. Cada tanda
+    /// empieza con medidas frescas, y preguntar por un elemento que no tenía caja (uno recién
+    /// añadido) vuelve a maquetar ([`Estado::medidas_de`]).
     pub(crate) fn medidas(&self) -> Option<Rc<Medidas>> {
-        if let Some(m) = self.medidas.borrow().as_ref() {
+        let tolerar = self.tolerar_medidas.get();
+        if let Some(m) = self.medidas.borrow().as_ref()
+            && (!self.medidas_sucias.get() || tolerar)
+        {
             return Some(m.clone());
         }
+        self.medir_ya()
+    }
+
+    /// Como [`Estado::medidas`], pero vuelve a maquetar si el elemento `id` no tenía caja.
+    pub(crate) fn medidas_de(&self, id: u32) -> Option<Rc<Medidas>> {
+        let m = self.medidas()?;
+        if self.medidas_sucias.get() && !m.cajas.contains_key(&id) {
+            return self.medir_ya();
+        }
+        Some(m)
+    }
+
+    fn medir_ya(&self) -> Option<Rc<Medidas>> {
         let medir = self.medir.borrow();
         let m = Rc::new((medir.as_ref()?)(&self.doc.borrow()));
         *self.medidas.borrow_mut() = Some(m.clone());
+        self.medidas_sucias.set(false);
         Some(m)
     }
 }
@@ -365,6 +393,8 @@ impl Dom {
             ejecutados: RefCell::new(alloc::collections::BTreeSet::new()),
             medir: RefCell::new(None),
             medidas: RefCell::new(None),
+            medidas_sucias: Cell::new(false),
+            tolerar_medidas: Cell::new(false),
             sin_observar: Cell::new(false),
             observados: RefCell::new(Vec::new()),
             mutacion_pendiente: Cell::new(false),
@@ -560,7 +590,14 @@ impl Dom {
     /// tanto esperan a la siguiente vez.
     pub fn correr_temporizadores(&mut self, ahora: f64) {
         self.estado.ahora.set(ahora);
+        // La tanda empieza con medidas frescas y, dentro de ella, se toleran las de antes de sus
+        // cambios (ver `Estado::medidas`).
+        if self.estado.medidas_sucias.get() {
+            self.estado.medidas.borrow_mut().take();
+        }
+        self.estado.tolerar_medidas.set(true);
         puente::correr_temporizadores(&mut self.motor, &self.estado, ahora);
+        self.estado.tolerar_medidas.set(false);
     }
 
     /// Cuándo toca el próximo temporizador (ms), si hay alguno.
