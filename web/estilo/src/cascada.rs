@@ -98,7 +98,13 @@ impl<'h> Indice<'h> {
 
     /// Las entradas que casan con el elemento, en el orden de la cascada.
     fn casan(&self, e: Nodo<'_>) -> Vec<&Entrada<'h>> {
-        let Some(el) = e.doc.elemento(e.id) else { return Vec::new() };
+        let Some(mut el) = e.doc.elemento(e.id) else { return Vec::new() };
+        // Un `::before` sintético: sus reglas están indexadas por su elemento de origen.
+        if el.nombre.starts_with("::")
+            && let Some(origen) = e.doc.nodo(e.id).padre.and_then(|p| e.doc.elemento(p))
+        {
+            el = origen;
+        }
         let mut candidatas: Vec<usize> = self.resto.clone();
         let mut juntar = |v: Option<&Vec<usize>>| candidatas.extend(v.into_iter().flatten());
         if let Some(id) = el.atributo("id") {
@@ -170,6 +176,88 @@ impl CacheHojas {
         hojas.push((huella, texto.len(), hoja.clone()));
         hoja
     }
+}
+
+/// Los `::before` y `::after` con `content`: mete en `doc` un hijo sintético (`::before` al
+/// principio, `::after` al final) con el texto de `content`, al que se aplican sus reglas. Así
+/// la cascada y la maquetación los tratan como un elemento más. Entiende cadenas y `attr()`;
+/// `counter()`, las comillas y las imágenes cuentan como texto vacío.
+pub(crate) fn anadir_seudoelementos(
+    doc: &mut Documento,
+    op: &Opciones,
+    externa: &dyn Fn(&str) -> Option<String>,
+    cache: &CacheHojas,
+) {
+    let hojas = hojas(doc, externa, cache);
+    let indice = Indice::nuevo(&hojas, op);
+    let elementos: Vec<NodoId> = doc
+        .descendientes(Documento::RAIZ)
+        .filter(|&id| doc.elemento(id).is_some_and(|e| !e.nombre.starts_with("::")))
+        .collect();
+    let mut nuevos: Vec<(NodoId, bool, String)> = Vec::new();
+    for id in elementos {
+        for (antes, nombre) in [(true, "before"), (false, "after")] {
+            if let Some(texto) = indice.contenido(Nodo { doc, id }, nombre) {
+                nuevos.push((id, antes, texto));
+            }
+        }
+    }
+    for (id, antes, texto) in nuevos {
+        let s = doc.crear_elemento(if antes { "::before" } else { "::after" });
+        if !texto.is_empty() {
+            let t = doc.crear(Dato::Texto(texto));
+            doc.insertar(s, t, None);
+        }
+        let primero = if antes { doc.nodo(id).hijos.first().copied() } else { None };
+        doc.insertar(id, s, primero);
+    }
+}
+
+impl Indice<'_> {
+    /// El `content` del pseudoelemento `nombre` de `e`, si alguna regla lo pone.
+    fn contenido(&self, e: Nodo<'_>, nombre: &str) -> Option<String> {
+        let el = e.doc.elemento(e.id)?;
+        let mut candidatas: Vec<usize> = self.resto.clone();
+        let mut juntar = |v: Option<&Vec<usize>>| candidatas.extend(v.into_iter().flatten());
+        if let Some(id) = el.atributo("id") {
+            juntar(self.por_id.get(id));
+        }
+        for c in el.atributo("class").unwrap_or("").split_ascii_whitespace() {
+            juntar(self.por_clase.get(c));
+        }
+        juntar(self.por_etiqueta.get(el.nombre.as_str()));
+        let mejor = candidatas
+            .into_iter()
+            .map(|i| &self.entradas[i])
+            .filter(|en| en.selector.seudoelemento() == Some(nombre))
+            .filter_map(|en| en.declaraciones.iter().rev().find(|d| d.propiedad == "content").map(|d| (en, d)))
+            .filter(|(en, _)| en.selector.casa_origen(e))
+            .max_by_key(|(en, d)| (d.importante, en.especificidad, en.orden))?;
+        texto_de_content(&mejor.1.valor, el)
+    }
+}
+
+/// El texto de `content`: `None` con `none`/`normal` (no hay pseudoelemento).
+fn texto_de_content(valor: &[Token], el: &quimera_html::Elemento) -> Option<String> {
+    let mut s = String::new();
+    let mut i = 0;
+    while i < valor.len() {
+        match &valor[i] {
+            Token::Ident(n) if n.eq_ignore_ascii_case("none") || n.eq_ignore_ascii_case("normal") => return None,
+            Token::Cadena(t) => s.push_str(t),
+            Token::Funcion(f) if f.eq_ignore_ascii_case("attr") => {
+                if let Some(Token::Ident(a)) = valor.get(i + 1) {
+                    s.push_str(el.atributo(&a.to_ascii_lowercase()).unwrap_or(""));
+                }
+                while i < valor.len() && valor[i] != Token::Cierra(')') {
+                    i += 1;
+                }
+            }
+            _ => {}
+        }
+        i += 1;
+    }
+    Some(s)
 }
 
 /// Calcula el estilo de todos los elementos.

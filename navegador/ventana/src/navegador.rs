@@ -55,6 +55,8 @@ pub struct Navegador {
     proxy: EventLoopProxy<Evento>,
     /// Las imágenes de la página actual.
     imagenes: Imagenes,
+    /// Las hojas de estilo de la página ya analizadas (se maqueta a menudo).
+    hojas: quimera_estilo::CacheHojas,
     /// Llegaron imágenes desde la última maquetación: se maqueta otra vez antes de dibujar.
     imagenes_nuevas: bool,
     /// La página que se ve o se está pidiendo.
@@ -85,6 +87,7 @@ impl Navegador {
             cliente,
             proxy,
             imagenes: Imagenes::default(),
+            hojas: quimera_estilo::CacheHojas::default(),
             imagenes_nuevas: false,
             url,
             pagina: None,
@@ -146,13 +149,21 @@ impl Navegador {
             Evento::Pagina { id, pagina } if id == self.id_carga => self.llegada(*pagina),
             Evento::Imagen { id, src, imagen } if id == self.id_carga => match imagen {
                 Ok(i) => {
+                    if let Some(g) = &mut self.guion {
+                        g.dom.imagen_cargada(&src, Some(i.1));
+                    }
                     self.imagenes.llegada(src, i);
                     self.imagenes_nuevas = true; // su tamaño cambia la maquetación
                     if let Some(a) = &self.abierta {
                         a.ventana.request_redraw();
                     }
                 }
-                Err(e) => eprintln!("imagen {src}: {e}"),
+                Err(e) => {
+                    eprintln!("imagen {src}: {e}");
+                    if let Some(g) = &mut self.guion {
+                        g.dom.imagen_cargada(&src, None);
+                    }
+                }
             },
             Evento::Decodificada { id, img, imagen } if id == self.id_carga => {
                 if let Err(e) = &imagen {
@@ -194,6 +205,7 @@ impl Navegador {
     /// Llegó la página pedida: se muestra (y se va a su `#ancla`), y se piden sus imágenes.
     fn llegada(&mut self, pagina: Pagina) {
         self.imagenes.vaciar();
+        self.hojas = quimera_estilo::CacheHojas::default();
         self.imagenes_nuevas = false;
         self.formulario = formularios::Estado::default();
         if let Some(a) = &mut self.abierta {
@@ -240,9 +252,11 @@ impl Navegador {
         let escala = a.ventana.scale_factor() as f32;
         let (ancho, alto) = (tam.width as f32 / escala, (tam.height as f32 - barra_px).max(1.0) / escala);
         let Some(guion) = &self.guion else { return };
-        let doc = guion.dom.documento();
+        let mut doc = guion.dom.documento().clone();
         let externa = |href: &str| pagina.hoja(href);
-        let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
+        let op = Opciones { ancho, alto };
+        quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &self.hojas);
+        let estilos = quimera_estilo::calcular_con_cache(&doc, &op, &externa, &self.hojas);
         let imagenes = &mut self.imagenes;
         let medidor = self.pintor.medidor();
         let m = maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario);

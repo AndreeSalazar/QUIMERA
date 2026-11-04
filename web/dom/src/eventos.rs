@@ -124,6 +124,21 @@ pub(crate) fn despachar(m: &mut Motor, est: &Estado, nodo: NodoId, tipo: &str) -
     despachar_evento(m, est, nodo, tipo, None)
 }
 
+/// Lanza `tipo` solo en `nodo`, sin subir (el `load` o `error` de una imagen).
+pub(crate) fn despachar_quieto(m: &mut Motor, est: &Estado, nodo: NodoId, tipo: &str) {
+    let raiz = m.raiz_anfitrion();
+    let proto = m.leer_nombre(raiz, "p_evento");
+    let ev = m.mundo.crear_objeto(proto);
+    let marca = m.apilar(ev);
+    let t = m.cadena(tipo);
+    m.definir(m.de_pila(marca), "type", t);
+    m.definir(m.de_pila(marca), "bubbles", Valor::FALSO);
+    m.definir(m.de_pila(marca), "defaultPrevented", Valor::FALSO);
+    let ev = m.de_pila(marca);
+    despachar_evento(m, est, nodo, tipo, Some(ev));
+    m.soltar_pila(marca);
+}
+
 /// Como [`despachar`], con un evento ya creado por la página (`dispatchEvent`). Si no burbujea
 /// (`bubbles: false`), solo llega a su objetivo.
 pub(crate) fn despachar_evento(m: &mut Motor, est: &Estado, nodo: NodoId, tipo: &str, evento: Option<Valor>) -> bool {

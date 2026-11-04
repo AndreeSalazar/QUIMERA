@@ -286,6 +286,7 @@ fn aplicar_campo(e: &mut Estilo, de: &Estilo, prop: &str) {
         "width" => e.ancho = de.ancho,
         "height" => e.alto = de.alto,
         "max-width" => e.ancho_max = de.ancho_max,
+        "min-width" => e.ancho_min = de.ancho_min,
         "min-height" => e.alto_min = de.alto_min,
         "list-style-type" => e.lista = de.lista,
         "visibility" => e.visible = de.visible,
@@ -367,6 +368,9 @@ pub(crate) fn aplicar(e: &mut Estilo, padre: &Estilo, prop: &str, v: &[Token], c
             e.ancho_max = if n.as_deref() == Some("none") { Medida::Auto } else { medida(v, c).unwrap_or(e.ancho_max) }
         }
         "min-height" => e.alto_min = medida(v, c).unwrap_or(e.alto_min),
+        "min-width" => {
+            e.ancho_min = if n.as_deref() == Some("auto") { Medida::Auto } else { medida(v, c).unwrap_or(e.ancho_min) }
+        }
         "list-style-type" => e.lista = n.as_deref().and_then(tipo_lista).unwrap_or(e.lista),
         "visibility" => e.visible = n.as_deref() != Some("hidden") && n.as_deref() != Some("collapse"),
         "opacity" => e.opacidad = padre.opacidad * opacidad(v).unwrap_or(1.0),
@@ -455,6 +459,7 @@ pub(crate) fn valida(prop: &str, v: &[Token]) -> bool {
         "text-decoration" => !v.is_empty(),
         "width" | "height" | "min-height" => medida(v, &c).is_some(),
         "max-width" => n == Some("none") || medida(v, &c).is_some(),
+        "min-width" => n == Some("auto") || medida(v, &c).is_some(),
         "list-style-type" => n.and_then(tipo_lista).is_some(),
         "visibility" => matches!(n, Some("visible" | "hidden" | "collapse")),
         "opacity" => opacidad(v).is_some(),

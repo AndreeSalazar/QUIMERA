@@ -104,6 +104,15 @@ impl<'a> Maquetador<'a> {
     /// Los anchos del contenido de `id`: bloques uno debajo de otro (cuenta el más ancho) y
     /// contenido en línea; en un contenedor flex en fila, los elementos uno al lado de otro.
     fn contenido_intrinseco(&mut self, id: NodoId, e: &'a Estilo) -> Intrinseco {
+        // Un porcentaje en línea (la `<img>` con `width: 100%` de una miniatura) no cuenta al
+        // medir: depende del ancho que se está calculando (CSS Sizing, porcentajes cíclicos).
+        let previo = core::mem::replace(&mut self.midiendo, true);
+        let r = self.intrinseco_del_contenido(id, e);
+        self.midiendo = previo;
+        r
+    }
+
+    fn intrinseco_del_contenido(&mut self, id: NodoId, e: &'a Estilo) -> Intrinseco {
         let en_fila = e.display == Display::Flex && e.flex.direccion.es_fila();
         let (mut minimo, mut maximo) = (0.0f32, 0.0f32);
         let mut items: Vec<Item<'a>> = Vec::new();

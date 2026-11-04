@@ -171,6 +171,8 @@ impl Maquetador<'_> {
             (Medida::Auto, Some(a), Some(b)) => Some((ch - a - b - mt - mb).max(0.0)),
             _ => None,
         };
+        // Su `height` en porcentaje va contra el alto de la caja de su antepasado posicionado.
+        let base = self.alto_base.replace(ch);
         let alto = estirado.unwrap_or_else(|| self.en_seco(|m| m.bloque_libre(p.id, 0.0, 0.0, exterior).alto));
         let y = match (arriba, abajo) {
             (Some(a), _) => cy + a + mt,
@@ -183,7 +185,7 @@ impl Maquetador<'_> {
         if estirado.is_some() {
             self.alto_forzado = forzado;
         }
-        self.apilado = apilado;
+        (self.apilado, self.alto_base) = (apilado, base);
     }
 
     /// Todas las piezas en orden de dibujo: el contenido normal y las capas por su ruta.

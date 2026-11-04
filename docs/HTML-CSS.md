@@ -56,7 +56,7 @@ Las diferencias que fue encontrando, ya arregladas: los atributos de `<html lang
 |---|---|
 | `tokenizador.rs` | CSS Syntax Level 3: identificadores con escapes, números, `%`, dimensiones, cadenas, `url()`, comentarios |
 | `hoja.rs` | Reglas, `@media` (la condición queda como texto para quien sepa el tamaño de la pantalla), `!important`, el atributo `style` |
-| `selectores.rs` | Etiqueta, `*`, `#id`, `.clase`, los siete tipos de `[atributo]`, `:first-child`, `:last-child`, `:only-child`, `:root`, `:empty`, `:link`, combinadores (espacio, `>`, `+`, `~`), especificidad |
+| `selectores.rs` | Etiqueta, `*`, `#id`, `.clase`, los siete tipos de `[atributo]`, `:first-child`, `:last-child`, `:only-child`, `:root`, `:empty`, `:link`, `:not()`, `:is()`, `:where()` (sin especificidad), `:nth-child()`, `:nth-last-child()`, `:nth-of-type()`, `:nth-last-of-type()`, `:first/last/only-of-type`, `::before`/`::after`, combinadores (espacio, `>`, `+`, `~`), especificidad |
 | `valores.rs` | Colores (148 nombres, `#rgb(a)`, `#rrggbb(aa)`, `rgb()`, `hsl()`, con comas o espacios y `/ alfa`) y longitudes (`px`, `em`, `rem`, `%`, `vw`, `vh`; `pt`, `in`, `cm`... pasan a píxeles) |
 
 Recuperación de errores como en los navegadores: una declaración mala (o vacía) se salta hasta el `;`; un selector malo descarta su regla entera; `@font-face`, `@keyframes`, `@import` se saltan sin romper lo de alrededor.
@@ -65,7 +65,9 @@ El emparejamiento de selectores no conoce el árbol: pregunta a través del rasg
 
 Con las hojas de estilo de la documentación de Rust: 22 hojas distintas (160 KB), 1.029 reglas y 3.183 declaraciones, sin reglas perdidas (los ~20 bloques de diferencia con un recuento a mano son los pasos de `@keyframes`).
 
-**Falta**: `:not()`, `:nth-child()`, `:is()` y `:where()` (se aceptan pero no casan), `:hover` y demás estados (no casan: el estilo es estático por ahora), las variables `var(--x)` (se guardan, no se sustituyen), `calc()`, `@supports`, `@import` de verdad y CSS anidado.
+`:not()` faltaba y era grave: YouTube define todas sus variables globales en `html:not(.style-scope)`; sin ellas, el botón de menú de cada vídeo medía 1280 px y aplastaba el título. Las comas de dentro de `:not(.a, .b)` ya no parten la lista de selectores.
+
+**Falta**: `:has()` y `:nth-child(2n of S)` (no casan), `:hover` y demás estados (no casan: el estilo es estático por ahora), las variables `var(--x)` (se guardan, no se sustituyen), `calc()`, `@supports`, `@import` de verdad y CSS anidado.
 
 ## Siguiente
 

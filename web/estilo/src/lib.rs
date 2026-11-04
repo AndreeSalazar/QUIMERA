@@ -80,6 +80,18 @@ pub fn calcular_con_hojas(
     cascada::calcular(doc, op, externa, &CacheHojas::default())
 }
 
+/// Mete en `doc` los `::before` y `::after` que tienen `content` (como hijos sintéticos que la
+/// cascada y la maquetación tratan como elementos). Se llama antes de [`calcular_con_cache`],
+/// sobre la copia del documento que se va a maquetar.
+pub fn anadir_seudoelementos(
+    doc: &mut quimera_html::Documento,
+    op: &Opciones,
+    externa: &dyn Fn(&str) -> Option<alloc::string::String>,
+    cache: &CacheHojas,
+) {
+    cascada::anadir_seudoelementos(doc, op, externa, cache);
+}
+
 /// Como [`calcular_con_hojas`], guardando en `cache` las hojas analizadas para la próxima vez.
 pub fn calcular_con_cache(
     doc: &quimera_html::Documento,

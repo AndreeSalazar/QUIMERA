@@ -235,6 +235,8 @@ pub struct Estilo {
     pub alto: Medida,
     /// `max-width` (`Auto` = sin límite).
     pub ancho_max: Medida,
+    /// `min-width` (`Auto` = el mínimo automático: en un elemento flexible, su contenido).
+    pub ancho_min: Medida,
     /// `box-sizing: border-box`: `width`/`height` incluyen relleno y borde. Las medidas en px ya
     /// vienen pasadas a contenido; un porcentaje se resuelve en la maquetación (que conoce el
     /// contenedor) restándoles relleno y borde.
@@ -307,6 +309,7 @@ impl Default for Estilo {
             ancho: Medida::Auto,
             alto: Medida::Auto,
             ancho_max: Medida::Auto,
+            ancho_min: Medida::Auto,
             caja_borde: false,
             alto_min: Medida::Px(0.0),
             lista: TipoLista::Disco,
@@ -369,6 +372,7 @@ impl Estilo {
         };
         menos(&mut self.ancho, horizontal);
         menos(&mut self.ancho_max, horizontal);
+        menos(&mut self.ancho_min, horizontal);
         menos(&mut self.alto, vertical);
         menos(&mut self.alto_min, vertical);
     }

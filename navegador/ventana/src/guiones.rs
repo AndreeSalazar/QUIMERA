@@ -38,12 +38,18 @@ fn medidor(pagina: &Pagina, (ancho, alto): (f32, f32)) -> quimera_dom::Medir {
     Box::new(move |doc| {
         let externa = |h: &str| hojas.iter().find(|(x, _)| x == h).map(|(_, css)| css.clone());
         let op = quimera_estilo::Opciones { ancho, alto };
-        let estilos = quimera_estilo::calcular_con_cache(doc, &op, &externa, &cache);
-        let m = quimera_maquetacion::maquetar(doc, &estilos, &quimera_maquetacion::Aproximado, ancho, alto);
+        // Con sus `::before`/`::after` (en una copia: el DOM de la página no los tiene).
+        let mut doc = doc.clone();
+        quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &cache);
+        let estilos = quimera_estilo::calcular_con_cache(&doc, &op, &externa, &cache);
+        let m = quimera_maquetacion::maquetar(&doc, &estilos, &quimera_maquetacion::Aproximado, ancho, alto);
         let cajas = m.cajas.into_iter().map(|(id, c)| (id.0, c)).collect();
         quimera_dom::Medidas { cajas, ventana: (ancho, alto) }
     })
 }
+
+/// Trae las imágenes nuevas de un documento: cada `src` con su tamaño (`None` si falló).
+pub type TraerImagenes<'a> = dyn FnMut(&quimera_html::Documento) -> Vec<(String, Option<(u32, u32)>)> + 'a;
 
 /// La página con su JavaScript, y desde cuándo corre su reloj.
 pub struct Guion {
@@ -100,10 +106,13 @@ impl Guion {
     /// Para capturar: adelanta el reloj hasta `hasta` ms ejecutando los temporizadores en orden,
     /// sin esperar (como si hubiera pasado ese tiempo), y atiende al momento lo que la página pida
     /// a la red con `atender`.
+    /// Las imágenes nuevas de la página las trae `imagenes` (devuelve cada `src` con su tamaño, o
+    /// `None` si falló), y sus `<img>` lanzan `load` antes de seguir con el reloj.
     pub fn adelantar(
         &mut self,
         hasta: f64,
         atender: &dyn Fn(&quimera_dom::PeticionJs) -> Result<quimera_dom::RespuestaJs, String>,
+        imagenes: &mut TraerImagenes<'_>,
     ) {
         for _ in 0..10_000 {
             let pedidas = self.dom.tomar_peticiones();
@@ -111,6 +120,13 @@ impl Guion {
                 for p in pedidas {
                     let r = atender(&p);
                     self.dom.responder(p.id, r);
+                }
+                continue;
+            }
+            let llegadas = imagenes(&self.dom.documento());
+            if !llegadas.is_empty() {
+                for (src, tam) in llegadas {
+                    self.dom.imagen_cargada(&src, tam);
                 }
                 continue;
             }

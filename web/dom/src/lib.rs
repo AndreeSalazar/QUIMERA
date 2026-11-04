@@ -70,6 +70,8 @@ pub(crate) struct Estado {
     pub(crate) siguiente_peticion: Cell<u32>,
     /// Peticiones de `<script src>` añadidos por scripts: número de petición → nodo.
     pub(crate) scripts_pendientes: RefCell<alloc::collections::BTreeMap<u32, u32>>,
+    /// Las imágenes que ya llegaron, por `src`: su tamaño propio (`None` si fallaron).
+    pub(crate) naturales: RefCell<alloc::collections::BTreeMap<String, Option<(u32, u32)>>>,
     /// Los `<script>` ya ejecutados (o pedidos): cada uno corre una sola vez.
     pub(crate) ejecutados: RefCell<alloc::collections::BTreeSet<u32>>,
     /// Quien maqueta el documento para las medidas (`clientWidth`...); lo pone el anfitrión.
@@ -353,6 +355,7 @@ impl Dom {
             peticiones: RefCell::new(Vec::new()),
             siguiente_peticion: Cell::new(1),
             scripts_pendientes: RefCell::new(alloc::collections::BTreeMap::new()),
+            naturales: RefCell::new(alloc::collections::BTreeMap::new()),
             ejecutados: RefCell::new(alloc::collections::BTreeSet::new()),
             medir: RefCell::new(None),
             medidas: RefCell::new(None),
@@ -521,6 +524,22 @@ impl Dom {
     /// si se llamó a `preventDefault()`.
     pub fn despachar(&mut self, nodo: NodoId, tipo: &str) -> bool {
         puente::despachar(&mut self.motor, &self.estado, nodo, tipo)
+    }
+
+    /// Llegó la imagen `src` (con su tamaño propio) o falló (`None`): sus `<img>` lanzan `load`
+    /// (o `error`) y ya dicen `naturalWidth`, `naturalHeight` y `complete`.
+    pub fn imagen_cargada(&mut self, src: &str, tam: Option<(u32, u32)>) {
+        self.estado.naturales.borrow_mut().insert(String::from(src), tam);
+        let imgs: Vec<NodoId> = {
+            let doc = self.estado.doc.borrow();
+            doc.descendientes(Documento::RAIZ)
+                .filter(|&id| doc.elemento(id).is_some_and(|e| e.nombre == "img" && e.atributo("src") == Some(src)))
+                .collect()
+        };
+        let tipo = if tam.is_some() { "load" } else { "error" };
+        for id in imgs {
+            puente::despachar_quieto(&mut self.motor, &self.estado, id, tipo);
+        }
     }
 
     /// Ejecuta los temporizadores que ya tocan a la hora `ahora` (ms). Los que se crean mientras

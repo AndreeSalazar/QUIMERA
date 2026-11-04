@@ -10,7 +10,7 @@ use quimera_html::{Dato, Documento, NodoId};
 use quimera_vm::operaciones::a_booleano;
 use quimera_vm::{Anfitrion, Argumentos, Motor, Valor};
 
-pub(crate) use crate::eventos::{correr_temporizadores, despachar, proximo_temporizador};
+pub(crate) use crate::eventos::{correr_temporizadores, despachar, despachar_quieto, proximo_temporizador};
 
 /// El anfitrión que ve la VM.
 pub(crate) struct Puente(pub(crate) Rc<Estado>);
@@ -332,6 +332,13 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
             medida(est, id, nombre)
         }
         "clientTop" | "clientLeft" | "scrollTop" | "scrollLeft" if el.is_some() => Leido::Entero(0),
+        "naturalWidth" | "naturalHeight" | "complete" if el.is_some_and(|e| e.nombre == "img") => {
+            de_imagen(est, el.and_then(|e| e.atributo("src")).unwrap_or(""), nombre)
+        }
+        // Si la maquetación le dio caja (no la tiene con `display: none`, por ejemplo).
+        "__quimera_con_caja" if el.is_some() => {
+            Leido::Booleano(est.medidas().is_some_and(|m| m.cajas.contains_key(&id.0)))
+        }
         _ => {
             let e = el?;
             if let Some(a) = atributo_reflejado(nombre) {
@@ -346,6 +353,18 @@ fn leer_nodo(est: &Estado, id: NodoId, nombre: &str) -> Option<Leido> {
 /// Una medida de la maquetación. `client*` y `scroll*` usan la caja de borde (aún sin restar
 /// bordes ni barras), `offsetTop`/`offsetLeft` cuentan desde la página. `<html>` mide la ventana.
 /// Sin caja (`display: none`, en línea) o sin quien maquete, 0.
+/// `naturalWidth`, `naturalHeight` y `complete` de un `<img>` con ese `src`: 0 y `false` hasta
+/// que llega (sin `src`, o si falló, `complete` ya es `true`, como en Chromium).
+fn de_imagen(est: &Estado, src: &str, nombre: &str) -> Leido {
+    let naturales = est.naturales.borrow();
+    let llegada = naturales.get(src);
+    match nombre {
+        "complete" => Leido::Booleano(src.trim().is_empty() || llegada.is_some()),
+        "naturalWidth" => Leido::Entero(llegada.copied().flatten().map_or(0, |t| t.0 as i32)),
+        _ => Leido::Entero(llegada.copied().flatten().map_or(0, |t| t.1 as i32)),
+    }
+}
+
 fn medida(est: &Estado, id: NodoId, nombre: &str) -> Leido {
     let Some(m) = est.medidas() else { return Leido::Entero(0) };
     let es_html = est.doc.borrow().elemento(id).is_some_and(|e| e.nombre == "html");

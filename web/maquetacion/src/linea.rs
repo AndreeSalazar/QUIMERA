@@ -40,6 +40,8 @@ pub(crate) enum Item<'e> {
         src: String,
         estilo: &'e Estilo,
         enlace: Option<u32>,
+        /// El `<img>` o `<svg>` (para su caja en las medidas del DOM).
+        nodo: NodoId,
     },
     /// Una caja de bloque en la línea (`inline-block`, un control): sus piezas ya maquetadas con
     /// su esquina en (0, 0) y su línea base a `base` de arriba.
@@ -325,11 +327,12 @@ impl EnLinea<'_> {
                 k += 1;
                 continue;
             }
-            if let Item::Imagen { ancho, alto, src, estilo, enlace } = &items[i] {
+            if let Item::Imagen { ancho, alto, src, estilo, enlace, nodo } = &items[i] {
+                cajas.push((*nodo, [x0 + x, base - alto, *ancho, *alto]));
                 if let Some(e) = enlace {
                     enlaces.push((x0 + x, base - alto, *ancho, *alto, *e));
                 }
-                if estilo.visible {
+                if estilo.visible && *ancho > 0.0 && *alto > 0.0 {
                     piezas.push(Pieza::Imagen {
                         x: x0 + x,
                         y: base - alto,

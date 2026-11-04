@@ -20,7 +20,8 @@ impl<'a> Nodo<'a> {
         loop {
             i += paso;
             let h = *hijos.get(usize::try_from(i).ok()?)?;
-            if self.doc.elemento(h).is_some() {
+            // Los `::before`/`::after` que mete el estilo no son hermanos de verdad.
+            if self.doc.elemento(h).is_some_and(|e| !e.nombre.starts_with("::")) {
                 return Some(Nodo { doc: self.doc, id: h });
             }
         }
@@ -50,7 +51,11 @@ impl ElementoCss for Nodo<'_> {
     }
 
     fn vacio(&self) -> bool {
-        self.doc.nodo(self.id).hijos.iter().all(|&h| matches!(self.doc.nodo(h).dato, Dato::Comentario(_)))
+        self.doc.nodo(self.id).hijos.iter().all(|&h| match &self.doc.nodo(h).dato {
+            Dato::Comentario(_) => true,
+            Dato::Elemento(e) => e.nombre.starts_with("::"),
+            _ => false,
+        })
     }
 
     fn tiene_clase(&self, clase: &str) -> bool {

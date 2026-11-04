@@ -290,3 +290,54 @@ fn opacidad_en_los_colores() {
     let (c, d) = (de(&doc, &e, "c"), de(&doc, &e, "d"));
     assert!(!c.visible && !d.visible, "con opacidad 0 no se ve, ni lo de dentro");
 }
+
+#[test]
+fn seudoelementos_before_y_after() {
+    let mut doc = analizar(
+        "<style>p::before{content:'[' attr(data-n) '] ';color:red} p::after{content:none} p:first-child{color:blue} .x:after{content:'!'}</style><div><p id=a data-n=5>hola</p><span class=x>s</span></div>",
+    );
+    let op = Opciones { ancho: 800.0, alto: 600.0 };
+    quimera_estilo::anadir_seudoelementos(&mut doc, &op, &|_| None, &quimera_estilo::CacheHojas::default());
+    let e = calcular(&doc, &op);
+    let p = doc
+        .descendientes(Documento::RAIZ)
+        .find(|&n| doc.elemento(n).and_then(|x| x.atributo("id")) == Some("a"))
+        .unwrap();
+    let hijos: Vec<String> =
+        doc.nodo(p).hijos.iter().map(|&h| doc.elemento(h).map_or_else(|| doc.texto(h), |x| x.nombre.clone())).collect();
+    assert_eq!(hijos, ["::before", "hola"], "content: none no crea ::after");
+    let antes = doc.nodo(p).hijos[0];
+    assert_eq!(doc.texto(antes), "[5] ");
+    assert_eq!(e.de(antes).unwrap().color, ROJO);
+    assert_eq!(e.de(p).unwrap().color, AZUL, ":first-child sigue casando con el primer elemento de verdad");
+    let span =
+        doc.descendientes(Documento::RAIZ).find(|&n| doc.elemento(n).is_some_and(|x| x.nombre == "span")).unwrap();
+    let ultimo = *doc.nodo(span).hijos.last().unwrap();
+    assert_eq!((doc.elemento(ultimo).unwrap().nombre.as_str(), doc.texto(ultimo).as_str()), ("::after", "!"));
+}
+
+#[test]
+fn pseudoclases_con_parentesis() {
+    // Los mismos anchos que da Chromium.
+    let (doc, e) = estilos(
+        "<style>html:not(.s){--w:40px} b{display:block} #l b:nth-child(odd){width:1px} #l b:nth-child(2n){width:2px}         #l b:nth-last-child(1){width:3px} #l b:nth-child(-n+2):nth-child(n+2){width:4px} #t i{display:block}         #t i:first-of-type{width:11px} #t i:last-of-type{width:12px} p:not(.a, .b){width:5px}         :is(#q, #r) span{display:block;width:6px} div:where(#s){width:7px} div{width:9px} #v{width:var(--w)}</style>         <div id=l><b id=l1></b><b id=l2></b><b id=l3></b><b id=l4></b></div><div id=t><i id=t1></i><b></b><i id=t2></i></div>         <p id=p1 class=a></p><p id=p2></p><div id=q><span id=q1></span></div><div id=s></div><div id=v></div>",
+    );
+    let ancho = |id: &str| de(&doc, &e, id).ancho;
+    let px = quimera_estilo::Medida::Px;
+    let esperado = [
+        ("l1", px(1.0)),
+        ("l2", px(4.0)),
+        ("l3", px(1.0)),
+        ("l4", px(3.0)),
+        ("t1", px(11.0)),
+        ("t2", px(12.0)),
+        ("p1", quimera_estilo::Medida::Auto),
+        ("p2", px(5.0)),
+        ("q1", px(6.0)),
+        ("s", px(9.0)),
+        ("v", px(40.0)),
+    ];
+    for (id, w) in esperado {
+        assert_eq!(ancho(id), w, "{id}");
+    }
+}

@@ -42,6 +42,9 @@ pub(crate) struct Maquetador<'a> {
     pub ancho_libre: Option<NodoId>,
     /// Alto de la caja con borde impuesto a este elemento (`align-items: stretch`, columnas).
     pub alto_forzado: Option<(NodoId, f32)>,
+    /// El alto de contenido definido del bloque contenedor: contra él se resuelven los
+    /// `height` en porcentaje (sin él, cuentan como `auto`).
+    pub alto_base: Option<f32>,
     /// Bordes (arriba, derecha, abajo, izquierda) que ocupa este elemento en vez de los suyos, sin
     /// dibujarlos: las celdas de una tabla con bordes que colapsan (los dibuja la tabla).
     pub bordes_celda: Option<(NodoId, [f32; 4])>,
@@ -67,6 +70,8 @@ pub(crate) struct Maquetador<'a> {
     pub imagenes: &'a dyn Fn(&str) -> Option<(u32, u32)>,
     /// Ancho del contenido del bloque que se está llenando (para los `%` de las imágenes en línea).
     pub ancho_actual: f32,
+    /// Se mide el ancho intrínseco: las imágenes en línea no resuelven su `width` en porcentaje.
+    pub midiendo: bool,
 }
 
 /// Lo que un bloque maquetado devuelve a su padre.
@@ -114,6 +119,7 @@ impl<'a> Maquetador<'a> {
             intrinsecos: alloc::vec![None; doc.total()],
             ancho_libre: None,
             alto_forzado: None,
+            alto_base: None,
             bordes_celda: None,
             flotantes: Vec::new(),
             capa_flotantes: Vec::new(),
@@ -126,6 +132,7 @@ impl<'a> Maquetador<'a> {
             imagenes,
             formulario: &crate::control::SinFormulario,
             ancho_actual: 0.0,
+            midiendo: false,
         }
     }
 
@@ -271,22 +278,19 @@ impl<'a> Maquetador<'a> {
         let contexto = propio.then(|| core::mem::take(&mut self.flotantes));
         let capa_inicio = self.capa_flotantes.len();
         let colapsa_arriba = bt + pt == 0.0 && !propio;
+        let definido = self.alto_definido(e, forzado, bt + pt + pb + bb);
+        let base_previa = core::mem::replace(&mut self.alto_base, definido);
         let (alto_contenido, abierto, primera_base) = if e.display == Display::Flex {
-            let alto_conocido = match (forzado, e.alto) {
-                (Some(f), _) => Some((f - bt - pt - pb - bb).max(0.0)),
-                (None, Medida::Px(h)) => Some(h),
-                _ => None,
-            };
-            let (alto, base) = self.flex(id, e, (cx, cy), ancho_contenido, alto_conocido);
+            let (alto, base) = self.flex(id, e, (cx, cy), ancho_contenido, definido);
             (alto, 0.0, base)
         } else {
             self.contenido(id, e, cx, cy, ancho_contenido, colapsa_arriba)
         };
-        self.enlace = enlace_previo;
+        (self.enlace, self.alto_base) = (enlace_previo, base_previa);
         let colapsa_abajo = bb + pb == 0.0 && e.alto == Medida::Auto && !propio;
-        let mut alto_contenido = match e.alto {
-            Medida::Px(h) => h,
-            _ => alto_contenido + if colapsa_abajo { 0.0 } else { abierto },
+        let mut alto_contenido = match definido.filter(|_| forzado.is_none() && e.alto != Medida::Auto) {
+            Some(h) => h,
+            None => alto_contenido + if colapsa_abajo { 0.0 } else { abierto },
         };
         alto_contenido = alto_contenido.max(e.alto_min.px(0.0, 0.0));
         if let Some(fuera) = contexto {
@@ -309,6 +313,20 @@ impl<'a> Maquetador<'a> {
         let propio = px(e.margen[2]);
         let margen_inferior = if colapsa_abajo { mayor_margen(propio, abierto) } else { propio };
         Hecho { alto, margen_inferior, primera_base, caja: (x + ml, ancho_borde) }
+    }
+
+    /// El alto de contenido definido de un bloque: el impuesto (`forzado`, con borde), su `height`
+    /// en píxeles o un porcentaje del alto definido de su contenedor.
+    pub(crate) fn alto_definido(&self, e: &Estilo, forzado: Option<f32>, verticales: f32) -> Option<f32> {
+        match (forzado, e.alto) {
+            (Some(f), _) => Some((f - verticales).max(0.0)),
+            (None, Medida::Px(h)) => Some(h),
+            (None, Medida::Porcentaje(p)) => {
+                let resta = if e.caja_borde { verticales } else { 0.0 };
+                self.alto_base.map(|b| (b * p / 100.0 - resta).max(0.0))
+            }
+            _ => None,
+        }
     }
 
     /// El fondo y los bordes de una caja, debajo de su contenido. Sin `bordes` (una celda con
@@ -478,10 +496,12 @@ impl<'a> Maquetador<'a> {
                         *ultimo_espacio = true;
                     }
                     "img" | "svg" => {
-                        let (ancho, alto) = self.tam_imagen(id, e, self.ancho_actual);
+                        let contenedor = if self.midiendo { 0.0 } else { self.ancho_actual };
+                        let (ancho, alto) = self.tam_imagen(id, e, contenedor);
                         let src = self.src_imagen(id, e, (ancho, alto));
-                        if ancho > 0.0 && alto > 0.0 {
-                            items.push(Item::Imagen { ancho, alto, src, estilo: e, enlace: self.enlace });
+                        // Sin área (una imagen que aún no cargó) también ocupa su sitio y tiene caja.
+                        if ancho > 0.0 || alto > 0.0 {
+                            items.push(Item::Imagen { ancho, alto, src, estilo: e, enlace: self.enlace, nodo: id });
                             *ultimo_espacio = false;
                         }
                     }

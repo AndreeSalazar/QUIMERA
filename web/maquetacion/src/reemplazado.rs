@@ -55,6 +55,9 @@ impl Maquetador<'_> {
         };
         let h_css = match e.alto {
             Medida::Px(v) => Some(v),
+            // Contra el alto definido de su bloque contenedor (como el `height: 100%` de las
+            // miniaturas de YouTube).
+            Medida::Porcentaje(p) => self.alto_base.map(|b| b * p / 100.0),
             _ => None,
         };
         let (pw, ph) = propio.unwrap_or((0.0, 0.0));
@@ -144,6 +147,7 @@ impl Maquetador<'_> {
             self.piezas.push(Pieza::Imagen { x: cx, y: cy, ancho: w, alto: h, src });
         }
         let caja = (x + izquierda, w + extras_h);
+        self.cajas.push((id, [x + izquierda, y, w + extras_h, h + extras_v]));
         Hecho { alto: h + extras_v, margen_inferior: px(e.margen[2]), primera_base: None, caja }
     }
 }

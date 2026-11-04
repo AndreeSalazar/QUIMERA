@@ -6,7 +6,7 @@
 //! - **`ResizeObserver`** avisa la primera vez que observa un elemento y cada vez que cambia el
 //!   tamaño de su caja (`contentRect`, `borderBoxSize`, `contentBoxSize`; por ahora todos con la
 //!   caja de borde).
-//! - **`IntersectionObserver`** (contra la ventana, con `rootMargin` en píxeles) avisa la primera
+//! - **`IntersectionObserver`** (contra la ventana, con `rootMargin` en píxeles o porcentaje) avisa la primera
 //!   vez y cuando un elemento entra o sale, o cruza uno de sus `threshold`.
 //!
 //! Si los avisos cambian el árbol, se vuelve a mirar en el siguiente fotograma (16 ms).
@@ -23,6 +23,14 @@ pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
     var r = el.getBoundingClientRect();
     return { x: r.x, y: r.y, ancho: r.width, alto: r.height };
   }
+  // Los avisos son instancias, con sus campos en el prototipo: el polyfill de la W3C (que usa
+  // YouTube) solo se aparta si ve `'intersectionRatio' in IntersectionObserverEntry.prototype`.
+  function IntersectionObserverEntry(d) { for (var k in d) this[k] = d[k]; }
+  ['time', 'target', 'rootBounds', 'boundingClientRect', 'intersectionRect', 'intersectionRatio',
+    'isIntersecting', 'isVisible'].forEach(function (k) { IntersectionObserverEntry.prototype[k] = null; });
+  function ResizeObserverEntry(d) { for (var k in d) this[k] = d[k]; }
+  ['target', 'contentRect', 'borderBoxSize', 'contentBoxSize', 'devicePixelContentBoxSize']
+    .forEach(function (k) { ResizeObserverEntry.prototype[k] = null; });
   function quitar(o) { var i = vivos.indexOf(o); if (i >= 0) vivos.splice(i, 1); }
 
   function ResizeObserver(f) {
@@ -49,8 +57,8 @@ pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
       if (c.ancho === o.ancho && c.alto === o.alto) return;
       o.ancho = c.ancho; o.alto = c.alto;
       var tam = [{ inlineSize: c.ancho, blockSize: c.alto }];
-      avisos.push({ target: o.el, contentRect: new DOMRect(0, 0, c.ancho, c.alto), borderBoxSize: tam,
-        contentBoxSize: tam, devicePixelContentBoxSize: tam });
+      avisos.push(new ResizeObserverEntry({ target: o.el, contentRect: new DOMRect(0, 0, c.ancho, c.alto), borderBoxSize: tam,
+        contentBoxSize: tam, devicePixelContentBoxSize: tam }));
     });
     if (avisos.length) this['\u0001f'].call(this, avisos, this);
     return avisos.length > 0;
@@ -60,7 +68,10 @@ pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
     if (typeof f !== 'function') throw new TypeError('IntersectionObserver necesita una función');
     op = op || {};
     var umbrales = op.threshold === undefined ? [0] : [].concat(op.threshold);
-    var margen = String(op.rootMargin || '0px').split(/\s+/).map(function (m) { return parseFloat(m) || 0; });
+    // Cada lado en píxeles o en porcentaje (del alto de la raíz arriba y abajo, del ancho a los lados).
+    var margen = String(op.rootMargin || '0px').trim().split(/\s+/).map(function (m) {
+      return { v: parseFloat(m) || 0, pc: /%$/.test(m) };
+    });
     while (margen.length < 4) margen.push(margen[margen.length > 1 ? margen.length - 2 : 0]);
     this.root = op.root || null; this.rootMargin = String(op.rootMargin || '0px 0px 0px 0px');
     this.thresholds = umbrales.slice().sort();
@@ -80,12 +91,15 @@ pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
     var yo = this, m = this['\u0001margen'], avisos = [];
     var raiz = this.root && this.root.getBoundingClientRect ? this.root.getBoundingClientRect()
       : { left: 0, top: 0, right: w.innerWidth, bottom: w.innerHeight, width: w.innerWidth, height: w.innerHeight };
+    m = m.map(function (x, i) { return x.pc ? x.v * (i % 2 ? raiz.width : raiz.height) / 100 : x.v; });
     var r0 = { left: raiz.left - m[3], top: raiz.top - m[0], right: raiz.right + m[1], bottom: raiz.bottom + m[2] };
     this['\u0001obs'].forEach(function (o) {
       var b = o.el.getBoundingClientRect();
       var x0 = Math.max(b.left, r0.left), y0 = Math.max(b.top, r0.top);
       var x1 = Math.min(b.right, r0.right), y1 = Math.min(b.bottom, r0.bottom);
-      var corta = o.el.isConnected && x1 >= x0 && y1 >= y0 && (b.width > 0 || b.height > 0);
+      // Un elemento sin área (una imagen sin cargar) también cruza si está dentro; uno sin caja
+      // (`display: none`), no.
+      var corta = o.el.isConnected && o.el.__quimera_con_caja !== false && x1 >= x0 && y1 >= y0;
       var area = b.width * b.height, dentro = corta ? (x1 - x0) * (y1 - y0) : 0;
       var razon = corta ? (area > 0 ? dentro / area : 1) : 0;
       // Qué umbral se ha cruzado (-1: fuera).
@@ -94,8 +108,8 @@ pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
       if (nivel === o.nivel) return;
       o.nivel = nivel;
       var inter = corta ? new DOMRect(x0, y0, x1 - x0, y1 - y0) : new DOMRect(0, 0, 0, 0);
-      avisos.push({ target: o.el, isIntersecting: corta, intersectionRatio: razon, time: performance.now(),
-        boundingClientRect: b, intersectionRect: inter, rootBounds: new DOMRect(r0.left, r0.top, r0.right - r0.left, r0.bottom - r0.top) });
+      avisos.push(new IntersectionObserverEntry({ target: o.el, isIntersecting: corta, isVisible: false, intersectionRatio: razon, time: performance.now(),
+        boundingClientRect: b, intersectionRect: inter, rootBounds: new DOMRect(r0.left, r0.top, r0.right - r0.left, r0.bottom - r0.top) }));
     });
     if (avisos.length) this['\u0001f'].call(this, avisos, this);
     return avisos.length > 0;
@@ -187,8 +201,8 @@ pub(crate) const OBSERVADORES_JS: &str = r#"(function (w, d) {
 
   w.ResizeObserver = ResizeObserver;
   w.IntersectionObserver = IntersectionObserver;
-  w.IntersectionObserverEntry = function IntersectionObserverEntry() {};
-  w.ResizeObserverEntry = function ResizeObserverEntry() {};
+  w.IntersectionObserverEntry = IntersectionObserverEntry;
+  w.ResizeObserverEntry = ResizeObserverEntry;
   __quimera_no_enumerar(ResizeObserver.prototype);
   __quimera_no_enumerar(IntersectionObserver.prototype);
 })(this, this.document);"#;

@@ -41,6 +41,8 @@ struct Elem {
     auto_pri: (bool, bool),
     base: f32,
     minimo: f32,
+    /// `max-width` en una fila (con relleno y borde): de ahí no crece.
+    maximo: f32,
     /// Tamaño final en el eje principal.
     tam: f32,
     /// Tamaño en el eje cruzado.
@@ -150,6 +152,7 @@ impl<'a> Maquetador<'a> {
             auto_pri,
             base: 0.0,
             minimo: 0.0,
+            maximo: f32::INFINITY,
             tam: 0.0,
             cruz: 0.0,
             alinear,
@@ -157,6 +160,10 @@ impl<'a> Maquetador<'a> {
             pos: 0.0,
         };
         (x.base, x.minimo) = self.base_flex(h, eh, c, &x);
+        if c.fila && eh.ancho_max != Medida::Auto {
+            x.maximo = (eh.ancho_max.px(c.ancho, 0.0) + extras_horizontales(eh)).max(x.minimo);
+        }
+        // Se reparte desde la base; el mínimo y el máximo se aplican al repartir (§9.7).
         x.tam = x.base;
         x
     }
@@ -176,7 +183,13 @@ impl<'a> Maquetador<'a> {
                 Medida::Auto => f32::MAX,
                 w => w.px(c.ancho, 0.0) + extras,
             };
-            return (fijo.unwrap_or(maximo), minimo.min(especificado));
+            // `min-width` manda; sin él, el mínimo automático: el contenido (o 0 si recorta).
+            let minimo = match eh.ancho_min {
+                Medida::Auto if eh.recorta => 0.0,
+                Medida::Auto => minimo.min(especificado),
+                m => m.px(c.ancho, 0.0) + extras,
+            };
+            return (fijo.unwrap_or(maximo), minimo);
         }
         let extras =
             eh.relleno[0].px(c.ancho, 0.0) + eh.relleno[2].px(c.ancho, 0.0) + eh.borde[0].ocupa() + eh.borde[2].ocupa();
@@ -218,6 +231,7 @@ impl<'a> Maquetador<'a> {
             auto_pri: (false, false),
             base,
             minimo: if c.fila { minimo } else { base },
+            maximo: f32::INFINITY,
             tam: base,
             cruz: 0.0,
             alinear: c.e.flex.alinear_items,
@@ -366,48 +380,73 @@ fn partir(elems: &[Elem], principal: Option<f32>, hueco: f32, envolver: bool) ->
     lineas
 }
 
-/// Reparte el espacio libre de una línea (`flex-grow`) o quita lo que sobra (`flex-shrink`).
+/// Reparte el espacio de una línea (CSS Flexbox, §9.7): se crece o se encoge según la suma de
+/// los tamaños hipotéticos (la base dentro de su mínimo y su máximo); los que no se flexionan se
+/// quedan en el suyo y, en cada vuelta, se congelan los que pasan de su mínimo o su máximo (según
+/// el signo de la violación total) y se reparte otra vez lo que queda.
 fn resolver(linea: &mut [Elem], principal: Option<f32>, hueco: f32) {
-    let Some(disponible) = principal else { return };
+    // El mínimo gana al máximo.
+    let limitar = |x: &Elem, t: f32| t.min(x.maximo).max(x.minimo);
+    let Some(disponible) = principal else {
+        for x in linea.iter_mut() {
+            x.tam = limitar(x, x.base);
+        }
+        return;
+    };
     let huecos = hueco * linea.len().saturating_sub(1) as f32;
-    let mut congelado = alloc::vec![false; linea.len()];
-    for _ in 0..linea.len() + 1 {
-        let usado: f32 = linea.iter().map(Elem::exterior).sum::<f32>() + huecos;
-        let libre = disponible - usado;
-        if libre.abs() < 0.01 {
-            return;
-        }
+    let hipoteticos: f32 = linea.iter().map(|x| limitar(x, x.base) + x.m_pri.0 + x.m_pri.1).sum();
+    let crecer = hipoteticos + huecos < disponible;
+    let mut congelado: Vec<bool> = linea
+        .iter()
+        .map(|x| {
+            let h = limitar(x, x.base);
+            let factor = if crecer { x.crecer } else { x.encoger };
+            factor <= 0.0 || (crecer && x.base > h) || (!crecer && x.base < h)
+        })
+        .collect();
+    for (x, &c) in linea.iter_mut().zip(&congelado) {
+        x.tam = if c { limitar(x, x.base) } else { x.base };
+    }
+    for _ in 0..=linea.len() {
         let activos: Vec<usize> = (0..linea.len()).filter(|&i| !congelado[i]).collect();
-        if libre > 0.0 {
-            let suma: f32 = activos.iter().map(|&i| linea[i].crecer).sum();
-            if suma <= 0.0 {
-                return;
-            }
-            // Con factores que suman menos de 1, solo se reparte esa fracción del espacio.
-            let repartir = if suma < 1.0 { libre * suma } else { libre };
-            for &i in &activos {
-                linea[i].tam += repartir * linea[i].crecer / suma;
-            }
+        if activos.is_empty() {
             return;
         }
-        let suma: f32 = activos.iter().map(|&i| linea[i].encoger * linea[i].base).sum();
-        if suma <= 0.0 {
-            return;
+        for &i in &activos {
+            linea[i].tam = linea[i].base;
         }
-        let mut alguno = false;
+        let mut libre = disponible - linea.iter().map(Elem::exterior).sum::<f32>() - huecos;
+        let parte = |x: &Elem| if crecer { x.crecer } else { x.encoger * x.base };
+        let suma: f32 = activos.iter().map(|&i| parte(&linea[i])).sum();
+        // Con factores que suman menos de 1, solo se reparte esa fracción del espacio.
+        let factores: f32 = activos.iter().map(|&i| if crecer { linea[i].crecer } else { linea[i].encoger }).sum();
+        if factores < 1.0 {
+            libre *= factores;
+        }
+        let mut violacion = 0.0;
+        let mut signos = alloc::vec![0i8; linea.len()];
         for &i in &activos {
             let x = &mut linea[i];
-            let nuevo = x.tam + libre * (x.encoger * x.base) / suma;
-            if nuevo < x.minimo {
-                x.tam = x.minimo;
-                congelado[i] = true;
-                alguno = true;
-            } else {
-                x.tam = nuevo;
+            if suma > 0.0 {
+                x.tam += libre * parte(x) / suma;
             }
+            let limitado = limitar(x, x.tam);
+            violacion += limitado - x.tam;
+            signos[i] = if limitado > x.tam {
+                1
+            } else if limitado < x.tam {
+                -1
+            } else {
+                0
+            };
+            x.tam = limitado;
         }
-        if !alguno {
+        if violacion.abs() < 0.01 {
             return;
+        }
+        let signo = if violacion > 0.0 { 1 } else { -1 };
+        for &i in &activos {
+            congelado[i] = signos[i] == signo;
         }
     }
 }

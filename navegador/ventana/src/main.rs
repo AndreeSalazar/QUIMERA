@@ -308,18 +308,25 @@ fn maquetar_pagina(
     let mut guion = guiones::Guion::preparar(pagina, (ancho, alto));
     // `QUIMERA_ESPERA=ms`: cuánto tiempo de la página se adelanta (1 s si no se dice).
     let espera = std::env::var("QUIMERA_ESPERA").ok().and_then(|e| e.parse().ok()).unwrap_or(1000.0);
-    guion.adelantar(espera, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p));
+    let mut traer = |doc: &quimera_html::Documento| {
+        let nuevas = imagenes.nuevas(doc);
+        esperar_imagenes(cliente, &pagina.base, nuevas.clone(), imagenes);
+        nuevas.into_iter().map(|s| (s.clone(), imagenes.tam(&s))).collect()
+    };
+    guion.adelantar(espera, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p), &mut traer);
     // `QUIMERA_GUION=archivo.js`: un guion propio tras la carga, para mirar la página por dentro.
     if let Some(codigo) = std::env::var("QUIMERA_GUION").ok().and_then(|f| std::fs::read_to_string(f).ok()) {
         guion.dom.ejecutar(&codigo);
         guion.informar();
     }
-    let doc = guion.dom.documento();
+    let mut doc = guion.dom.documento().clone();
     // Las imágenes que añadieron los scripts.
     let nuevas = imagenes.nuevas(&doc);
     esperar_imagenes(cliente, &pagina.base, nuevas, imagenes);
     let externa = |href: &str| pagina.hoja(href);
-    let estilos = quimera_estilo::calcular_con_hojas(&doc, &Opciones { ancho, alto }, &externa);
+    let (op, cache) = (Opciones { ancho, alto }, quimera_estilo::CacheHojas::default());
+    quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &cache);
+    let estilos = quimera_estilo::calcular_con_cache(&doc, &op, &externa, &cache);
     if let Ok(que) = std::env::var("QUIMERA_DEPURAR") {
         depurar(&doc, &estilos, &que);
     }

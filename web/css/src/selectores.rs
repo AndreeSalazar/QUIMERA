@@ -60,7 +60,7 @@ pub enum Atributo {
 }
 
 /// Pseudoclases que entiende el estilo estático.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Pseudo {
     /// `:first-child`
     PrimerHijo,
@@ -74,8 +74,24 @@ pub enum Pseudo {
     Vacio,
     /// `:link`, `:any-link`: un `<a href>`.
     Enlace,
-    /// Lo que depende de la interacción o no se soporta (`:hover`, `::before`): no casa.
+    /// Lo que depende de la interacción o no se soporta (`:hover`, `:has()`): no casa.
     Nunca,
+    /// `:not(lista)`: no casa ninguno.
+    No(Vec<Selector>),
+    /// `:is(lista)` y `:where(lista)` (este sin especificidad: `false`): casa alguno.
+    Alguno(Vec<Selector>, bool),
+    /// `:nth-child(an+b)` y familia: su puesto entre los hermanos (de su `tipo`, si lo dice;
+    /// contando desde el `final`, si lo dice) es `a·n + b` para algún `n ≥ 0`.
+    Enesimo {
+        /// El paso (`a` de `an+b`).
+        a: i32,
+        /// El desplazamiento (`b`).
+        b: i32,
+        /// Solo cuentan los hermanos de su misma etiqueta (`-of-type`).
+        tipo: bool,
+        /// Se cuenta desde el último (`nth-last-`).
+        desde_el_final: bool,
+    },
 }
 
 /// Una parte sin combinadores: `div#a.b[c]:first-child`.
@@ -93,6 +109,8 @@ pub struct Compuesto {
     pub pseudos: Vec<Pseudo>,
     /// Pseudoelementos (`::before`): cuentan como etiqueta en la especificidad.
     pub pseudoelementos: u32,
+    /// Cuál (`before`, `after`...), en minúsculas.
+    pub pseudoelemento: Option<String>,
 }
 
 /// Un selector complejo.
@@ -108,13 +126,42 @@ impl Selector {
     /// Especificidad (ids, clases/atributos/pseudoclases, etiquetas/pseudoelementos).
     pub fn especificidad(&self) -> (u32, u32, u32) {
         self.partes.iter().fold((0, 0, 0), |(a, b, c), p| {
-            let b2 = (p.clases.len() + p.atributos.len() + p.pseudos.len()) as u32;
-            (a + p.ids.len() as u32, b + b2, c + u32::from(p.etiqueta.is_some()) + p.pseudoelementos)
+            let b2 = (p.clases.len() + p.atributos.len()) as u32;
+            // `:not()` e `:is()` valen lo que el más específico de su lista; `:where()`, nada.
+            let (pa, pb, pc) = p.pseudos.iter().fold((0, 0, 0), |(x, y, z), ps| {
+                let (i, j, k) = match ps {
+                    Pseudo::No(l) | Pseudo::Alguno(l, true) => {
+                        l.iter().map(Selector::especificidad).max().unwrap_or((0, 0, 0))
+                    }
+                    Pseudo::Alguno(_, false) => (0, 0, 0),
+                    _ => (0, 1, 0),
+                };
+                (x + i, y + j, z + k)
+            });
+            (a + p.ids.len() as u32 + pa, b + b2 + pb, c + u32::from(p.etiqueta.is_some()) + p.pseudoelementos + pc)
         })
     }
 
-    /// Si el selector casa con el elemento.
+    /// Si el selector casa con el elemento. Los de `::before`/`::after` casan con el hijo
+    /// sintético `::before`/`::after` que el estilo mete en su elemento (ver `quimera-estilo`).
     pub fn casa<E: ElementoCss>(&self, e: E) -> bool {
+        let Some(ultimo) = self.partes.last() else { return false };
+        match (ultimo.pseudoelemento.as_deref(), e.nombre().strip_prefix("::")) {
+            (Some(p), Some(n)) if p == n => {
+                e.padre().is_some_and(|origen| self.casa_desde(self.partes.len() - 1, origen))
+            }
+            (None, None) => self.casa_desde(self.partes.len() - 1, e),
+            _ => false,
+        }
+    }
+
+    /// El pseudoelemento del selector (`before`, `after`...), si lo tiene.
+    pub fn seudoelemento(&self) -> Option<&str> {
+        self.partes.last()?.pseudoelemento.as_deref()
+    }
+
+    /// Si casa con `e` como elemento de origen de su pseudoelemento (`p::before` con un `<p>`).
+    pub fn casa_origen<E: ElementoCss>(&self, e: E) -> bool {
         !self.partes.is_empty() && self.casa_desde(self.partes.len() - 1, e)
     }
 
@@ -136,8 +183,8 @@ impl Selector {
 }
 
 fn casa_compuesto<E: ElementoCss>(c: &Compuesto, e: E) -> bool {
-    if c.pseudoelementos > 0 {
-        return false; // las reglas de ::before/::after no son del elemento
+    if c.pseudoelementos > 0 && c.pseudoelemento.is_none() {
+        return false; // `::first-line` y demás: todavía no
     }
     if c.etiqueta.as_ref().is_some_and(|t| t != e.nombre()) {
         return false;
@@ -148,7 +195,7 @@ fn casa_compuesto<E: ElementoCss>(c: &Compuesto, e: E) -> bool {
     if c.clases.iter().any(|k| !e.tiene_clase(k)) {
         return false;
     }
-    c.atributos.iter().all(|a| casa_atributo(a, e)) && c.pseudos.iter().all(|p| casa_pseudo(*p, e))
+    c.atributos.iter().all(|a| casa_atributo(a, e)) && c.pseudos.iter().all(|p| casa_pseudo(p, e))
 }
 
 fn casa_atributo<E: ElementoCss>(a: &Atributo, e: E) -> bool {
@@ -166,7 +213,7 @@ fn casa_atributo<E: ElementoCss>(a: &Atributo, e: E) -> bool {
     }
 }
 
-fn casa_pseudo<E: ElementoCss>(p: Pseudo, e: E) -> bool {
+fn casa_pseudo<E: ElementoCss>(p: &Pseudo, e: E) -> bool {
     match p {
         Pseudo::PrimerHijo => e.anterior().is_none(),
         Pseudo::UltimoHijo => e.siguiente().is_none(),
@@ -175,13 +222,90 @@ fn casa_pseudo<E: ElementoCss>(p: Pseudo, e: E) -> bool {
         Pseudo::Vacio => e.vacio(),
         Pseudo::Enlace => e.nombre() == "a" && e.atributo("href").is_some(),
         Pseudo::Nunca => false,
+        Pseudo::No(l) => !l.iter().any(|s| s.casa_origen(e)),
+        Pseudo::Alguno(l, _) => l.iter().any(|s| s.casa_origen(e)),
+        &Pseudo::Enesimo { a, b, tipo, desde_el_final } => {
+            let mismo = |x: &E| !tipo || x.nombre() == e.nombre();
+            let antes = if desde_el_final {
+                core::iter::successors(e.siguiente(), |x| x.siguiente()).filter(mismo).count()
+            } else {
+                core::iter::successors(e.anterior(), |x| x.anterior()).filter(mismo).count()
+            };
+            let puesto = antes as i32 + 1;
+            if a == 0 { puesto == b } else { (puesto - b) % a == 0 && (puesto - b) / a >= 0 }
+        }
+    }
+}
+
+/// `an+b` (`odd`, `even`, `3`, `-n+2`, `2n + 1`...) como (a, b).
+fn an_mas_b(tokens: &[Token]) -> Option<(i32, i32)> {
+    let mut s = String::new();
+    for t in tokens {
+        match t {
+            Token::Ident(x) => s.push_str(x),
+            Token::Numero(n) => s.push_str(&alloc::format!("{:+}", *n as i64)),
+            Token::Dimension(n, u) => s.push_str(&alloc::format!("{}{u}", *n as i64)),
+            Token::Delim(c) => s.push(*c),
+            Token::Blanco => {}
+            _ => return None,
+        }
+    }
+    let s = s.to_ascii_lowercase().replace("++", "+").replace("+-", "-").replace("-+", "-");
+    match s.as_str() {
+        "odd" => return Some((2, 1)),
+        "even" => return Some((2, 0)),
+        _ => {}
+    }
+    let Some((a, b)) = s.split_once('n') else { return Some((0, s.parse().ok()?)) };
+    let a = match a {
+        "" | "+" => 1,
+        "-" => -1,
+        x => x.parse().ok()?,
+    };
+    let b = if b.is_empty() { 0 } else { b.parse().ok()? };
+    Some((a, b))
+}
+
+/// `:nombre(dentro)`. `None` si no es válido (un `:not()` o un `an+b` mal escritos).
+fn pseudo_funcion(nombre: &str, dentro: &[Token]) -> Option<Pseudo> {
+    let enesimo = |tipo: bool, desde_el_final: bool| {
+        // `:nth-child(2n of .x)`: todavía no.
+        if dentro.iter().any(|t| matches!(t, Token::Ident(i) if i.eq_ignore_ascii_case("of"))) {
+            return Some(Pseudo::Nunca);
+        }
+        an_mas_b(dentro).map(|(a, b)| Pseudo::Enesimo { a, b, tipo, desde_el_final })
+    };
+    match nombre {
+        "not" => lista(dentro).map(Pseudo::No),
+        // Estas perdonan: con una lista que no se entiende, no casan.
+        "is" | "matches" | "-webkit-any" | "any" => {
+            Some(lista(dentro).map_or(Pseudo::Nunca, |l| Pseudo::Alguno(l, true)))
+        }
+        "where" => Some(lista(dentro).map_or(Pseudo::Nunca, |l| Pseudo::Alguno(l, false))),
+        "nth-child" => enesimo(false, false),
+        "nth-last-child" => enesimo(false, true),
+        "nth-of-type" => enesimo(true, false),
+        "nth-last-of-type" => enesimo(true, true),
+        _ => Some(Pseudo::Nunca),
     }
 }
 
 /// Analiza una lista de selectores (`a, b > c`). `None` si alguno no es válido: la regla
 /// entera se descarta, como manda CSS.
 pub fn lista(tokens: &[Token]) -> Option<Vec<Selector>> {
-    tokens.split(|t| *t == Token::Coma).map(complejo).collect()
+    // Las comas de dentro de `:not(.a, .b)` no separan.
+    let mut nivel = 0i32;
+    tokens
+        .split(|t| {
+            match t {
+                Token::Funcion(_) | Token::Abre('(') => nivel += 1,
+                Token::Cierra(')') => nivel -= 1,
+                _ => {}
+            }
+            nivel == 0 && *t == Token::Coma
+        })
+        .map(complejo)
+        .collect()
 }
 
 fn complejo(tokens: &[Token]) -> Option<Selector> {
@@ -318,8 +442,11 @@ impl<'a> LectorSel<'a> {
         self.i += 1;
         if self.ver() == Some(&Token::DosPuntos) {
             self.i += 1;
-            self.ident()?;
+            let nombre = self.ident()?.to_ascii_lowercase();
             c.pseudoelementos += 1;
+            if nombre == "before" || nombre == "after" {
+                c.pseudoelemento = Some(nombre);
+            }
             return Some(());
         }
         let p = match self.ver()? {
@@ -330,16 +457,27 @@ impl<'a> LectorSel<'a> {
                 "root" => Pseudo::Raiz,
                 "empty" => Pseudo::Vacio,
                 "link" | "any-link" => Pseudo::Enlace,
+                "first-of-type" => Pseudo::Enesimo { a: 0, b: 1, tipo: true, desde_el_final: false },
+                "last-of-type" => Pseudo::Enesimo { a: 0, b: 1, tipo: true, desde_el_final: true },
+                "only-of-type" => {
+                    c.pseudos.push(Pseudo::Enesimo { a: 0, b: 1, tipo: true, desde_el_final: false });
+                    Pseudo::Enesimo { a: 0, b: 1, tipo: true, desde_el_final: true }
+                }
                 // CSS 2: `:before` y `:after` con un solo `:` son pseudoelementos.
                 "before" | "after" | "first-line" | "first-letter" => {
+                    let nombre = n.to_ascii_lowercase();
                     self.i += 1;
                     c.pseudoelementos += 1;
+                    if nombre == "before" || nombre == "after" {
+                        c.pseudoelemento = Some(nombre);
+                    }
                     return Some(());
                 }
                 _ => Pseudo::Nunca,
             },
-            Token::Funcion(_) => {
-                // `:not(...)`, `:nth-child(...)`...: todavía no; se salta su contenido.
+            Token::Funcion(nombre) => {
+                let nombre = nombre.to_ascii_lowercase();
+                let inicio = self.i + 1;
                 let mut nivel = 0;
                 loop {
                     match self.ver()? {
@@ -352,7 +490,8 @@ impl<'a> LectorSel<'a> {
                         break;
                     }
                 }
-                c.pseudos.push(Pseudo::Nunca);
+                let dentro = &self.t[inicio..self.i - 1];
+                c.pseudos.push(pseudo_funcion(&nombre, dentro)?);
                 return Some(());
             }
             _ => return None,

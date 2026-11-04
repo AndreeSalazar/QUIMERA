@@ -144,3 +144,21 @@ fn alinear_estirar_columnas_y_envolver() {
         "{pos:?}"
     );
 }
+
+#[test]
+fn min_width_y_max_width_de_los_elementos() {
+    // Resultados de Chromium con los mismos contenedores de 800 px.
+    let ancho = |html: &str| anchos(&maquetar_html(&format!("<div class=c style='display:flex'>{html}</div>")));
+    let ancho_contenido = "<div style='width:1000px;height:10px'></div>";
+    // Con `min-width: 0` encoge por debajo de su contenido.
+    let a = ancho(&format!(
+        "<div style='flex:1;min-width:0'>{ancho_contenido}</div><div style='width:200px;flex:none'></div>"
+    ));
+    assert!(todos_cerca(&a, &[600.0, 200.0]), "{a:?}");
+    // Sin él, el contenido es el mínimo (y desborda).
+    let a = ancho(&format!("<div style='flex:1'>{ancho_contenido}</div><div style='width:200px;flex:none'></div>"));
+    assert!(todos_cerca(&a, &[1000.0, 200.0]), "{a:?}");
+    // El que llega a su `max-width` se para y el otro se queda lo que sobra.
+    let a = ancho("<div style='flex:1;max-width:300px;min-width:240px'>x</div><div style='flex:1'>y</div>");
+    assert!(todos_cerca(&a, &[300.0, 500.0]), "{a:?}");
+}

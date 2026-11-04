@@ -79,7 +79,13 @@ Los elementos se maquetan con el mismo `bloque()` de siempre: primero «en seco�
 
 Por el camino: el texto de un bloque ya no pinta un fondo propio debajo de cada línea (en los navegadores solo lo pintan los elementos en línea, como `<span>`). Y las fuentes de reserva incluyen chino, japonés y coreano (Microsoft YaHei, Yu Gothic, Malgun; Noto CJK en Linux), así que `日本語` o `简体中文` ya no salen como cajas.
 
-**Falta en flex**: `align-content`, la alineación por línea base, `min-width`/`max-width` como límites del reparto, `inline-flex` como caja en línea y el mínimo automático en columnas.
+El reparto de una línea sigue la especificación (CSS Flexbox, §9.7): crece o encoge según la suma de los tamaños hipotéticos (la base dentro de `min-width`/`max-width`), los que no se flexionan se quedan en el suyo y en cada vuelta se congelan los que violan su mínimo o su máximo. Una miniatura de YouTube con una imagen de 1280 px y `max-width: 500px` se para en 500 y el título se queda el resto.
+
+**Altos en porcentaje**: `height: 50%` se resuelve contra el alto definido del bloque contenedor (`alto_base`): un `height` en píxeles, un alto impuesto (estirado, o un absoluto con `top` y `bottom`) u otro porcentaje ya resuelto; un absoluto, contra la caja de su antepasado posicionado. Sin alto definido cuenta como `auto`. La raíz no tiene (aún no hay `html, body { height: 100% }`).
+
+**Imágenes sin cargar**: una `<img>` sin área (sin `src` todavía) ocupa su sitio y tiene caja, para `getBoundingClientRect` y los `IntersectionObserver` de la carga perezosa. Al medir el ancho intrínseco, una imagen con `width` en porcentaje no lo resuelve (porcentaje cíclico).
+
+**Falta en flex**: `align-content`, la alineación por línea base, `inline-flex` como caja en línea y el mínimo automático en columnas.
 
 ## Tablas
 
