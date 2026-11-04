@@ -1,12 +1,12 @@
 # Mapa de Chromiun personal (SUPER GRAFO)
 
-> Generado por SUPER GRAFO el 2026-11-04, en el commit 88a9b32 (ventana: trazas en vivo (QUIMERA_VIVO) para la Ciudad 4D de SUPER GRAFO). Lo rehace «Save para SUPER GRAFO» (o `--consulta guardar`).
+> Generado por SUPER GRAFO el 2026-11-04, en el commit ce641e8 (super-grafo: el save de SUPER GRAFO (grafo por capas y MAPA.md)). Lo rehace «Save para SUPER GRAFO» (o `--consulta guardar`).
 > **Para retomar:** leer este mapa primero; para el detalle, preguntar a SUPER GRAFO (MCP: `resumen`, `archivo`, `tiempo`, `vivo`...) solo lo que haga falta.
 
 ## Resumen
 
 - 28 crates en 6 capas (por sus dependencias de `Cargo.toml`), 51331 lineas de Rust.
-- 852 archivos indexados, 308 dependencias entre archivos, 0 ciclos.
+- 853 archivos indexados, 308 dependencias entre archivos, 0 ciclos.
 - Sospechas del museo: 2 de Seguridad, 0 de Rendimiento, 40 de Elegancia.
 - Marcados por SARIF o la terminal: 8 archivos.
 
@@ -14,36 +14,38 @@
 
 En el grafo, cada capa es una columna (la 0 a la izquierda).
 
-| Capa | Crate | Carpeta | Archivos | Lineas | Usa | Lo usan | Marcados |
-|---|---|---|---|---|---|---|---|
-| 0 | `quimera-comprimir` | `cimientos/comprimir` | 3 | 447 |  | quimera-imagen, quimera-texto, quimera-red | 0 |
-| 0 | `quimera-valor` | `cimientos/valor` | 1 | 378 |  | quimera-banco-gc, quimera-gc, quimera-objetos, quimera-vm | 0 |
-| 0 | `quimera-gpu` | `grafico/gpu` | 2 | 772 |  | quimera-pintar, quimera-ventana | 0 |
-| 0 | `quimera-vector` | `grafico/vector` | 5 | 1232 |  | quimera-imagen, quimera-maquetacion | 0 |
-| 0 | `quimera-video` | `grafico/video` | 6 | 881 |  | quimera-ventana, quimera-dom | 0 |
-| 0 | `quimera-guardianes` | `herramientas/guardianes` | 8 | 1508 |  |  | 0 |
-| 0 | `quimera-regex` | `motor-js/regex` | 7 | 1838 |  | quimera-parser, quimera-vm, quimera-red | 0 |
-| 0 | `quimera-css` | `web/css` | 8 | 1768 |  | quimera-banco-web, quimera-dom, quimera-estilo, quimera-maquetacion | 0 |
-| 0 | `quimera-html` | `web/html` | 9 | 1846 |  | quimera-banco-web, quimera-pintar, quimera-ver, quimera-ventana, quimera-dom, quimera-estilo, quimera-maquetacion | 0 |
-| 1 | `quimera-banco-web` | `bancos/web` | 1 | 223 | quimera-css, quimera-html |  | 1 |
-| 1 | `quimera-imagen` | `grafico/imagen` | 5 | 1568 | quimera-comprimir, quimera-vector | quimera-banco-imagen, quimera-ventana | 0 |
-| 1 | `quimera-texto` | `grafico/texto` | 2 | 533 | quimera-comprimir | quimera-pintar, quimera-ventana | 0 |
-| 1 | `quimera-gc` | `motor-js/gc` | 2 | 702 | quimera-valor | quimera-banco-gc, quimera-objetos, quimera-vm | 3 |
-| 1 | `quimera-parser` | `motor-js/parser` | 13 | 3347 | quimera-regex | quimera-frontend | 0 |
-| 1 | `quimera-red` | `red/red` | 13 | 2832 | quimera-comprimir, quimera-regex | quimera-ventana | 0 |
-| 1 | `quimera-estilo` | `web/estilo` | 15 | 3515 | quimera-css, quimera-html | quimera-pintar, quimera-ver, quimera-ventana, quimera-maquetacion | 0 |
-| 2 | `quimera-banco-gc` | `bancos/gc` | 1 | 192 | quimera-gc, quimera-valor |  | 0 |
-| 2 | `quimera-banco-imagen` | `bancos/imagen` | 1 | 349 | quimera-imagen |  | 0 |
-| 2 | `quimera-frontend` | `motor-js/frontend` | 10 | 2608 | quimera-parser | quimera-banco-frontend, quimera-banco-vm, quimera-vm | 1 |
-| 2 | `quimera-objetos` | `motor-js/objetos` | 6 | 1508 | quimera-gc, quimera-valor | quimera-vm | 0 |
-| 2 | `quimera-maquetacion` | `web/maquetacion` | 19 | 4490 | quimera-css, quimera-estilo, quimera-html, quimera-vector | quimera-pintar, quimera-ver, quimera-ventana | 0 |
-| 3 | `quimera-banco-frontend` | `bancos/frontend` | 1 | 100 | quimera-frontend |  | 7 |
-| 3 | `quimera-pintar` | `grafico/pintar` | 2 | 341 | quimera-estilo, quimera-gpu, quimera-html, quimera-maquetacion, quimera-texto | quimera-ventana | 0 |
-| 3 | `quimera-ver` | `herramientas/ver` | 1 | 146 | quimera-estilo, quimera-html, quimera-maquetacion |  | 0 |
-| 3 | `quimera-vm` | `motor-js/vm` | 28 | 8373 | quimera-frontend, quimera-gc, quimera-objetos, quimera-regex, quimera-valor | quimera-banco-vm, quimera-ventana, quimera-dom | 2 |
-| 4 | `quimera-banco-vm` | `bancos/vm` | 1 | 343 | quimera-frontend, quimera-vm |  | 24 |
-| 4 | `quimera-dom` | `web/dom` | 15 | 5771 | quimera-css, quimera-html, quimera-video, quimera-vm | quimera-ventana | 1 |
-| 5 | `quimera-ventana` | `navegador/ventana` | 18 | 3720 | quimera-dom, quimera-estilo, quimera-gpu, quimera-html, quimera-imagen, quimera-maquetacion, quimera-pintar, quimera-red, quimera-texto, quimera-video, quimera-vm |  | 0 |
+| Capa | Crate | Que es | Archivos | Lineas | Usa | Marcados |
+|---|---|---|---|---|---|---|
+| 0 | `quimera-comprimir` | Descompresión sin dependencias: DEFLATE, zlib y gzip. | 3 | 447 |  | 0 |
+| 0 | `quimera-valor` | El valor de JavaScript en 64 bits (NaN-boxing, como `JS::Value` de SpiderMonkey): el ladrillo del… | 1 | 378 |  | 0 |
+| 0 | `quimera-gpu` | La GPU de QUIMERA (wgpu): una sola tubería que dibuja cuadros (rectángulos de color y letras de un… | 2 | 772 |  | 0 |
+| 0 | `quimera-vector` | SVG → imagen RGBA, propio y `no_std`: trazos, formas, rellenos, degradados, `use`. | 5 | 1232 |  | 0 |
+| 0 | `quimera-video` | Vídeo: MP4 propio (también el fragmentado, el que usa MediaSource), H.264 a Annex B, color NV12 →… | 6 | 881 |  | 0 |
+| 0 | `quimera-guardianes` | El semáforo: archivos de menos de 1000 líneas (aviso a las 700), la jerarquía de niveles, `unsafe`… | 8 | 1508 |  | 0 |
+| 0 | `quimera-regex` | Expresiones regulares de JavaScript, `no_std`, como irregexp: patrón → programa → una máquina con… | 7 | 1838 |  | 0 |
+| 0 | `quimera-css` | Analizador de CSS, `no_std`: hojas, `@media`, selectores con especificidad, colores, longitudes,… | 8 | 1768 |  | 0 |
+| 0 | `quimera-html` | Analizador de HTML5, `no_std`: cualquier texto da un árbol, y se recupera de los errores como un… | 9 | 1846 |  | 0 |
+| 1 | `quimera-banco-web` | Banco de `quimera-html` contra html5ever (Servo) en páginas reales, por defecto la documentación de… | 1 | 223 | css, html | 1 |
+| 1 | `quimera-imagen` | Decodificadores propios de imágenes, `no_std`: PNG (todas las profundidades, Adam7), JPEG… | 5 | 1568 | comprimir, vector | 0 |
+| 1 | `quimera-texto` | Fuentes: busca las del sistema (Windows y Linux), mide texto y rasteriza letras con `ab_glyph`. | 2 | 533 | comprimir | 0 |
+| 1 | `quimera-gc` | Recolector de basura generacional (guardería más zona principal, como SpiderMonkey). | 2 | 702 | valor | 3 |
+| 1 | `quimera-parser` | Léxico y parser de JavaScript → árbol de sintaxis. | 13 | 3347 | regex | 0 |
+| 1 | `quimera-red` | La red propia: URLs, HTTP/1.1, HTTPS con rustls, `file:` y `data:`, cookies, bloqueo de anuncios… | 13 | 2832 | comprimir, regex | 0 |
+| 1 | `quimera-estilo` | La cascada de estilos: para cada elemento, el valor de cada propiedad (origen, `!important`,… | 15 | 3515 | css, html | 0 |
+| 2 | `quimera-banco-gc` | Banco de `quimera-gc` contra `boa_gc`, con una carga que imita a Splay (una tabla de larga vida y… | 1 | 192 | gc, valor | 0 |
+| 2 | `quimera-banco-imagen` | Banco de los decodificadores de imágenes contra `png`, `jpeg-decoder` y `gif`. | 1 | 349 | imagen | 0 |
+| 2 | `quimera-frontend` | JavaScript → bytecode de registros (Stencil, como SpiderMonkey): el resultado no tiene objetos del… | 10 | 2608 | parser | 1 |
+| 2 | `quimera-objetos` | Los objetos sobre el GC: una cabecera fija y una celda de propiedades que crece sin mover el objeto… | 6 | 1508 | gc, valor | 0 |
+| 2 | `quimera-maquetacion` | La maquetación: documento con sus estilos → lista de dibujo | 19 | 4490 | css, estilo, html, vector | 0 |
+| 3 | `quimera-banco-frontend` | Banco del frontend de JavaScript contra el parser de Boa 0.22, con más de 1 MB de benchmarks… | 1 | 100 | frontend | 7 |
+| 3 | `quimera-pintar` | El pintado: la lista de dibujo de la maquetación → cuadros para la GPU | 2 | 341 | estilo, gpu, html, maquetacion, texto | 0 |
+| 3 | `quimera-ver` | Ver una página sin ventana: HTML → estilo → maquetación → un SVG con la lista de dibujo | 1 | 146 | estilo, html, maquetacion | 0 |
+| 3 | `quimera-vm` | La máquina virtual: ejecuta el bytecode de registros, con cachés en línea, sin recursión de Rust y… | 28 | 8373 | frontend, gc, objetos, regex, valor | 2 |
+| 4 | `quimera-banco-vm` | Banco de la máquina virtual contra `boa_engine` 0.22, con los benchmarks de Boa: los dos tienen que… | 1 | 343 | frontend, vm | 24 |
+| 4 | `quimera-dom` | El DOM visto desde JavaScript: un solo árbol y un solo GC. | 15 | 5771 | css, html, video, vm | 1 |
+| 5 | `quimera-ventana` | La ventana de QUIMERA: tres hilos (la ventana con la rueda, la página con JS, estilo y maquetación,… | 18 | 3720 | dom, estilo, gpu, html, imagen, maquetacion, pintar, red, texto, video, vm | 0 |
+
+Como se comporta cada parte, con sus medidas y lo que hay que cuidar: [NOTAS.md](NOTAS.md) (39 notas). Quien usa a quien, entero: `mapa.json`.
 
 ## Lo mas grande (lineas de Rust)
 
@@ -77,7 +79,7 @@ En el grafo, cada capa es una columna (la 0 a la izquierda).
 
 ## Historia
 
-67 commits, del 2026-10-31 al 2026-11-04. De 449 a 741 archivos y de 361783 a 570626 lineas (segun git).
+68 commits, del 2026-10-31 al 2026-11-04. De 449 a 744 archivos y de 361783 a 571661 lineas (segun git).
 
 ## En vivo (lo ultimo que se vio, 10 s)
 

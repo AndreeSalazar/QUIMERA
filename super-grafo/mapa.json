@@ -427,9 +427,9 @@
   "historia": {
     "archivos": [
       449,
-      741
+      744
     ],
-    "commits": 67,
+    "commits": 68,
     "desde": "2026-10-31",
     "grandes": [
       [
@@ -476,7 +476,7 @@
     "hasta": "2026-11-04",
     "lineas": [
       361783,
-      570626
+      571661
     ],
     "tocados": [
       [
@@ -522,8 +522,8 @@
     ]
   },
   "resumen": {
-    "analisis_ms": 17,
-    "archivos_indexados": 852,
+    "analisis_ms": 30,
+    "archivos_indexados": 853,
     "archivos_leidos": 210,
     "cabeceras_exportadas": null,
     "carpeta": "\\\\?\\C:\\Users\\Salazar\\Documents\\Chromiun personal",
@@ -550,7 +550,7 @@
     "guardianes": null,
     "megabytes": 2.0,
     "recortado": false,
-    "reutilizados_de_la_cache": 210,
+    "reutilizados_de_la_cache": 0,
     "revisiones_gcc": {
       "archivos": 0,
       "pendientes": 0
