@@ -6,8 +6,8 @@
 //!   coloca cuando su antepasado posicionado más cercano ya está maquetado, dentro de su caja de
 //!   relleno; si no hay ninguno, dentro de la ventana. Con `left` y `right` (o `top` y `bottom`)
 //!   el tamaño sale de ahí; si no, se encoge a su contenido. `margin: auto` con los dos lados
-//!   lo centra. **`fixed`**, por ahora, como `absolute` respecto a la ventana (no se queda quieto
-//!   al desplazar).
+//!   lo centra. **`fixed`** se coloca como `absolute` respecto a la ventana, y su capa (con todo
+//!   lo que lleva dentro) es **fija**: no se desplaza con la página (`Maquetacion::fijas`).
 //! - **Capas**: cada elemento posicionado se dibuja después del contenido normal, en su orden
 //!   del documento; `z-index` negativo va debajo y positivo encima. Un `z-index` que no es `auto`
 //!   crea un contexto de apilamiento: lo de dentro se ordena dentro de él. Cada capa lleva su
@@ -37,7 +37,12 @@ pub(crate) struct Pendiente {
 pub(crate) struct Capa {
     pub ruta: Ruta,
     pub piezas: Vec<Pieza>,
+    /// De un elemento `fixed` (o de algo dentro de él): no se desplaza con la página.
+    pub fija: bool,
 }
+
+/// En el número de nodo de un enlace o control: está en una capa fija.
+pub(crate) const FIJO: u32 = 1 << 30;
 
 /// Cuánto se mueve un `relative`: `left` (o `-right`) y `top` (o `-bottom`).
 fn desplazamiento(e: &Estilo, ancho: f32) -> (f32, f32) {
@@ -71,6 +76,9 @@ impl Maquetador<'_> {
         let k0 = self.cajas.len();
         let f0 = self.capa_flotantes.len();
         let guardia = self.guardia.replace(id);
+        // Un `fixed`, y todo lo que hay dentro, va en la capa fija.
+        let fija = self.en_fijo || e.colocacion.posicion == Posicion::Fija;
+        let fuera_fijo = core::mem::replace(&mut self.en_fijo, fija);
         let hecho = self.bloque(id, x, y, ancho);
         self.guardia = guardia;
         // Sus `absolute` van dentro de su caja de relleno.
@@ -99,7 +107,11 @@ impl Maquetador<'_> {
         if contexto {
             ruta.push((0, 0)); // su contenido normal, dentro de su contexto
         }
-        self.capas.push(Capa { ruta, piezas });
+        if fija {
+            self.enlaces[e0..].iter_mut().for_each(|en| en.4 |= FIJO);
+        }
+        self.capas.push(Capa { ruta, piezas, fija });
+        self.en_fijo = fuera_fijo;
         if let Some(previo) = apilado_previo {
             self.apilado = previo;
         }
@@ -189,12 +201,25 @@ impl Maquetador<'_> {
     }
 
     /// Todas las piezas en orden de dibujo: el contenido normal y las capas por su ruta.
-    /// Devuelve también dónde acaba la más baja de las capas (cuenta para el alto del documento).
-    pub(crate) fn apilar(&mut self) -> (Vec<Pieza>, f32) {
+    /// Devuelve también dónde acaba la más baja de las capas que se desplazan (cuenta para el alto
+    /// del documento; las fijas, no) y los rangos de piezas de las capas fijas.
+    pub(crate) fn apilar(&mut self) -> (Vec<Pieza>, f32, Vec<core::ops::Range<usize>>) {
         let mut capas = core::mem::take(&mut self.capas);
-        let abajo = capas.iter().flat_map(|c| &c.piezas).map(Pieza::abajo).fold(0.0, f32::max);
-        capas.push(Capa { ruta: alloc::vec![(0, 0)], piezas: core::mem::take(&mut self.piezas) });
+        let abajo = capas.iter().filter(|c| !c.fija).flat_map(|c| &c.piezas).map(Pieza::abajo).fold(0.0, f32::max);
+        capas.push(Capa { ruta: alloc::vec![(0, 0)], piezas: core::mem::take(&mut self.piezas), fija: false });
         capas.sort_by(|a, b| a.ruta.cmp(&b.ruta));
-        (capas.into_iter().flat_map(|c| c.piezas).collect(), abajo)
+        let mut piezas = Vec::new();
+        let mut fijas: Vec<core::ops::Range<usize>> = Vec::new();
+        for c in capas {
+            let inicio = piezas.len();
+            piezas.extend(c.piezas);
+            if c.fija && piezas.len() > inicio {
+                match fijas.last_mut() {
+                    Some(r) if r.end == inicio => r.end = piezas.len(),
+                    _ => fijas.push(inicio..piezas.len()),
+                }
+            }
+        }
+        (piezas, abajo, fijas)
     }
 }

@@ -110,12 +110,13 @@ Mientras tanto, QUIMERA ya aplica ese principio en lo que se va haciendo: decodi
 **Capas, *streaming* y *zero copy*** (lo pidió el usuario el 4 de noviembre de 2026: «que todo vaya por capas, en *streaming* y sin copias; lo que llegue, que se abra al momento»). Por pasos, cada uno medible:
 
 1. ✅ **Compositor en otro hilo** ([VENTANA.md](VENTANA.md#el-compositor)): el pintado y el vídeo ya no esperan al JavaScript. Vídeo de YouTube: de ~4 a 30 fotogramas por segundo.
-2. **Capas**: lo que se mueve o cambia por su cuenta (el vídeo, lo `fixed`, cada zona desplazable) en su propia lista de cuadros, para pintarlo y desplazarlo sin rehacer lo demás.
+2. 🟡 **Capas.** ✅ La **capa fija**: lo `fixed` se queda en su sitio al desplazar, y sus enlaces se pulsan bien (antes se iba con la página: la cabecera de YouTube desaparecía al bajar). ✅ El vídeo ya va en su textura, pintada por el compositor. Falta: cada zona desplazable (`overflow: auto`) en su propia capa, y que el compositor guarde las capas por separado para cambiar una sin volver a subir las demás.
 3. **Entrada y desplazamiento en el compositor**: la rueda no espera a los scripts (la página en otro hilo, o la entrada fuera del hilo del JavaScript).
 4. ***Streaming* del HTML**: analizar y pintar el HTML mientras llega, sin esperar a tenerlo entero, y empezar a pedir hojas e imágenes en cuanto aparecen sus etiquetas.
 5. ***Streaming* de imágenes**: decodificar a medida que llegan los bytes (JPEG progresivo, PNG entrelazado) y pintar lo que haya.
 6. ***Zero copy***: los bytes de red van al decodificador sin pasar a texto (hoy las respuestas se copian y se convierten); las imágenes y los fotogramas, del decodificador a la GPU sin copias intermedias.
 7. **Maquetación incremental**: que cada elemento se recoloque solo si cambió algo que le afecta. Que cada elemento sea del todo independiente no se puede (en CSS la posición de uno depende de los demás, y el JavaScript puede tocar cualquier cosa), pero sí que cada uno se pinte en cuanto tiene lo suyo y que solo se rehaga lo que cambió.
+8. **Caminos paralelos para HTML, CSS y JavaScript** (idea del usuario, 4 de noviembre de 2026: «que cada uno tenga su jerarquía independiente para acelerar todo»). Que el trabajo pesado de cada uno vaya en su propio hilo a la vez: analizar el HTML mientras llega; analizar cada hoja de estilo en paralelo y calcular los estilos repartidos entre los núcleos, como Stylo en Firefox (hoy 54 ms en un núcleo en YouTube); compilar los scripts a bytecode en otros hilos mientras se descargan, como V8. Lo que no se puede separar son los puntos de encuentro: el JavaScript puede cambiar el HTML y leer los estilos, y la maquetación necesita los estilos, así que esos van en orden.
 
 ## En paralelo
 

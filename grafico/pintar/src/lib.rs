@@ -172,7 +172,8 @@ impl Pintor {
 
     fn intentar(&mut self, m: &Maquetacion, e: f32, imagen: &dyn Fn(&str) -> Option<u32>) -> Vec<Cuadro> {
         let mut v = Vec::with_capacity(m.piezas.len() * 4);
-        for p in &m.piezas {
+        for (i, p) in m.piezas.iter().enumerate() {
+            let desde = v.len();
             match p {
                 Pieza::Rect { x, y, ancho, alto, color } => {
                     v.push(Cuadro {
@@ -183,6 +184,7 @@ impl Pintor {
                         color: rgba(*color),
                         letra: None,
                         imagen: None,
+                        fijo: false,
                     });
                 }
                 // Una imagen que aún no llegó no se pinta (como en los navegadores: su hueco queda).
@@ -196,6 +198,7 @@ impl Pintor {
                             color: [1.0; 4],
                             letra: None,
                             imagen: Some(id),
+                            fijo: false,
                         });
                     }
                 }
@@ -210,6 +213,10 @@ impl Pintor {
                     };
                     self.texto(&mut v, texto, &fuente, x * e, base * e, rgba(*color));
                 }
+            }
+            // Lo de una capa fija (`position: fixed`) no se desplaza con la página.
+            if m.fijas.iter().any(|r| r.contains(&i)) {
+                v[desde..].iter_mut().for_each(|c| c.fijo = true);
             }
         }
         v
@@ -250,6 +257,7 @@ impl Pintor {
                 color,
                 letra: Some([h.x as f32 / t, h.y as f32 / t, (h.x + h.ancho) as f32 / t, (h.y + h.alto) as f32 / t]),
                 imagen: None,
+                fijo: false,
             });
         }
     }

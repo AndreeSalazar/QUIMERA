@@ -73,7 +73,7 @@ pub fn maquetar_pagina(
     let hecho = m.bloque(html, 0.0, 0.0, ancho);
     // Lo `absolute` sin antepasado posicionado y lo `fixed`, dentro de la ventana.
     m.poner_absolutos(0, (0.0, 0.0, ancho, alto), true);
-    let (piezas, abajo_capas) = m.apilar();
+    let (piezas, abajo_capas, fijas) = m.apilar();
     // El fondo de <html> (o, si no tiene, el de <body>) pinta todo el lienzo.
     let fondo_de = |n: &str| doc.buscar(n).and_then(|id| estilos.de(id)).map(|e| e.fondo).filter(|c| c.a > 0);
     let fondo = fondo_de("html").or_else(|| fondo_de("body")).unwrap_or(Color::BLANCO);
@@ -82,15 +82,18 @@ pub fn maquetar_pagina(
         m.enlaces.iter().partition(|e| e.4 & control::CONTROL != 0);
     let controles = controles
         .into_iter()
-        .map(|&(x, y, ancho, alto, n)| Control { x, y, ancho, alto, nodo: quimera_html::NodoId(n & !control::CONTROL) })
+        .map(|&(x, y, ancho, alto, n)| {
+            let fijo = n & posicion::FIJO != 0;
+            Control { x, y, ancho, alto, nodo: quimera_html::NodoId(n & !control::CONTROL & !posicion::FIJO), fijo }
+        })
         .collect();
     let enlaces = enlaces
         .into_iter()
         .map(|&(x, y, ancho, alto, i)| {
-            let (href, nodo) = m.hrefs[i as usize].clone();
-            Enlace { x, y, ancho, alto, href, nodo }
+            let (href, nodo) = m.hrefs[(i & !posicion::FIJO) as usize].clone();
+            Enlace { x, y, ancho, alto, href, nodo, fijo: i & posicion::FIJO != 0 }
         })
         .collect();
     let alto_doc = hecho.alto.max(abajo_capas).max(alto);
-    Maquetacion { piezas, ancho, alto: alto_doc, fondo, enlaces, anclas: m.anclas, controles, cajas: m.cajas }
+    Maquetacion { piezas, ancho, alto: alto_doc, fondo, enlaces, anclas: m.anclas, controles, cajas: m.cajas, fijas }
 }

@@ -172,7 +172,6 @@ En la ficha de Wikipedia, la barra de periodos geológicos (hecha con `position:
 4. **El alto del documento** llega hasta lo posicionado que se dibuja.
 
 **Falta en posición:**
-- `fixed` que se quede quieto al desplazar (hoy va como `absolute` respecto a la ventana, arriba del documento);
 - `sticky` que se pegue (hoy se queda donde está);
 - `top` en porcentaje para `relative`;
 - la posición estática exacta de un `absolute` dentro de texto o de un contenedor flex (hoy va a la esquina de su contenedor);
@@ -192,6 +191,8 @@ En Wikipedia casi todos los colores van en variables (`color: var(--color-base, 
 Wikipedia destapó además un fallo de capas: un flotante dentro de un elemento `relative` se dibujaba en la capa del contexto de fuera, por debajo del fondo de ese elemento. En cuanto ese fondo dejó de ser transparente (venía de una variable), tapó la ficha. Ahora los flotantes van en la capa de su elemento posicionado, encima de su fondo (con prueba).
 
 `QUIMERA_DEPURAR=nombre` en el modo captura imprime el estilo calculado del primer elemento con esa clase, id o etiqueta (en el DOM tras el JavaScript) y de sus antepasados. `QUIMERA_GUION=archivo.js` ejecuta un guion propio tras la carga (lo que escriba con `console.log` sale en la terminal) y `QUIMERA_ESPERA=ms` adelanta más tiempo de la página (1 s si no se dice).
+
+**La capa fija.** Un `fixed`, con todo lo que lleva dentro, va en una capa que no se desplaza. La maquetación da sus rangos de piezas (`Maquetacion::fijas`), con sus enlaces y controles marcados para que se puedan pulsar con la página desplazada. El pintor marca esos cuadros, la GPU no les aplica el desplazamiento y la ventana los baja lo que mide la barra. No cuentan para el alto del documento. Con `QUIMERA_DESP=px`, la captura sale como si la página estuviera desplazada: así se vio que la cabecera de YouTube se queda arriba.
 
 Un `fixed` dentro de un `absolute` (la cabecera de YouTube dentro de `ytd-app`) se coloca contra la ventana: al colocar los `absolute` contra ella se repite mientras salgan `fixed` nuevos. **`opacity`**: el estilo calcula la efectiva (la propia por la de los antepasados) y, con la herencia ya hecha, la aplica a los colores de texto, fondo y bordes; con 0, el elemento no se ve pero conserva su sitio. Equivale a la opacidad de grupo de CSS cuando lo de dentro no se solapa. **`fill`** se hereda y llega a la raíz de cada `<svg>` (YouTube pone `fill: currentColor` a sus iconos).
 

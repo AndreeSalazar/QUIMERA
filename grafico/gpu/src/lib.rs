@@ -33,6 +33,8 @@ pub struct Cuadro {
     pub letra: Option<[f32; 4]>,
     /// Si es una imagen: su número ([`Gpu::subir_imagen`]); se dibuja entera en el cuadro.
     pub imagen: Option<u32>,
+    /// No se desplaza con la página (de un elemento `position: fixed`).
+    pub fijo: bool,
 }
 
 /// Un vértice tal como lo lee el sombreador.
@@ -67,7 +69,7 @@ fn vertices(c: &Cuadro, v: &mut Vec<Vertice>, fijo: bool) {
         (None, Some(_)) => ([0.0, 0.0, 1.0, 1.0], 2.0),
         (None, None) => ([0.0; 4], 0.0),
     };
-    let modo = if fijo { modo + 4.0 } else { modo };
+    let modo = if fijo || c.fijo { modo + 4.0 } else { modo };
     let p = |x, y, u, w| Vertice { pos: [x, y], uv: [u, w], color: c.color, modo };
     v.extend_from_slice(&[
         p(x0, y0, u0, v0),
@@ -605,6 +607,7 @@ mod pruebas {
                 color: [1.0, 0.0, 0.0, 1.0],
                 letra: None,
                 imagen: None,
+                fijo: false,
             },
             &mut v,
             false,
@@ -622,6 +625,7 @@ mod pruebas {
                 color: [0.0; 4],
                 letra: Some([0.1, 0.2, 0.3, 0.4]),
                 imagen: None,
+                fijo: false,
             },
             &mut l,
             true,
@@ -631,7 +635,16 @@ mod pruebas {
 
     #[test]
     fn tramos_por_imagen() {
-        let c = |imagen| Cuadro { x: 0.0, y: 0.0, ancho: 1.0, alto: 1.0, color: [0.0; 4], letra: None, imagen };
+        let c = |imagen| Cuadro {
+            x: 0.0,
+            y: 0.0,
+            ancho: 1.0,
+            alto: 1.0,
+            color: [0.0; 4],
+            letra: None,
+            imagen,
+            fijo: false,
+        };
         let t = tramos(&[c(None), c(None), c(Some(3)), c(Some(3)), c(None), c(Some(4))]);
         assert_eq!(t, vec![(None, 0..12), (Some(3), 12..24), (None, 24..30), (Some(4), 30..36)]);
     }

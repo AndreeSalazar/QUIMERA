@@ -97,6 +97,8 @@ pub struct Enlace {
     pub href: String,
     /// Su `<a>` (para lanzarle el evento `click`).
     pub nodo: quimera_html::NodoId,
+    /// Está en una capa fija (`position: fixed`): no se desplaza con la página.
+    pub fijo: bool,
 }
 
 /// El resultado de maquetar una página.
@@ -119,6 +121,8 @@ pub struct Maquetacion {
     /// La caja de borde (x, y, ancho, alto) de cada bloque, en orden de maquetación (si uno sale
     /// dos veces, vale la última): lo que leen `clientWidth` o `getBoundingClientRect`.
     pub cajas: Vec<(quimera_html::NodoId, [f32; 4])>,
+    /// Rangos de `piezas` de las capas fijas (`position: fixed`): se pintan sin desplazarse.
+    pub fijas: Vec<core::ops::Range<usize>>,
 }
 
 /// El rectángulo de un control de formulario.
@@ -134,26 +138,36 @@ pub struct Control {
     pub alto: f32,
     /// El elemento (`<input>`, `<select>`, `<textarea>`).
     pub nodo: quimera_html::NodoId,
+    /// Está en una capa fija.
+    pub fijo: bool,
 }
 
 impl Maquetacion {
-    /// El control que hay en el punto (x, y) del documento (el último dibujado: el de encima).
-    pub fn control_en(&self, x: f32, y: f32) -> Option<quimera_html::NodoId> {
-        self.controles
-            .iter()
-            .rev()
-            .find(|c| x >= c.x && x < c.x + c.ancho && y >= c.y && y < c.y + c.alto)
-            .map(|c| c.nodo)
+    /// El control que hay en el punto (x, y) del documento con la página desplazada `desp` (el
+    /// último dibujado: el de encima). Los de una capa fija van con la ventana, y encima.
+    pub fn control_en(&self, x: f32, y: f32, desp: f32) -> Option<quimera_html::NodoId> {
+        let dentro = |c: &&Control| {
+            let y = if c.fijo { y - desp } else { y };
+            x >= c.x && x < c.x + c.ancho && y >= c.y && y < c.y + c.alto
+        };
+        let fijo = self.controles.iter().rev().filter(|c| c.fijo).find(dentro);
+        fijo.or_else(|| self.controles.iter().rev().filter(|c| !c.fijo).find(dentro)).map(|c| c.nodo)
     }
 
-    /// El enlace que hay en el punto (x, y) del documento.
+    /// El enlace que hay en el punto (x, y) del documento (sin desplazar).
     pub fn enlace_en(&self, x: f32, y: f32) -> Option<&str> {
-        self.trozo_de_enlace_en(x, y).map(|e| e.href.as_str())
+        self.trozo_de_enlace_en(x, y, 0.0).map(|e| e.href.as_str())
     }
 
-    /// El trozo de enlace (con su `href` y su `<a>`) que hay en el punto (x, y) del documento.
-    pub fn trozo_de_enlace_en(&self, x: f32, y: f32) -> Option<&Enlace> {
-        self.enlaces.iter().find(|e| x >= e.x && x < e.x + e.ancho && y >= e.y && y < e.y + e.alto)
+    /// El trozo de enlace (con su `href` y su `<a>`) que hay en el punto (x, y) del documento con
+    /// la página desplazada `desp`. Los de una capa fija van con la ventana, y encima.
+    pub fn trozo_de_enlace_en(&self, x: f32, y: f32, desp: f32) -> Option<&Enlace> {
+        let dentro = |e: &&Enlace| {
+            let y = if e.fijo { y - desp } else { y };
+            x >= e.x && x < e.x + e.ancho && y >= e.y && y < e.y + e.alto
+        };
+        let fijo = self.enlaces.iter().filter(|e| e.fijo).find(dentro);
+        fijo.or_else(|| self.enlaces.iter().filter(|e| !e.fijo).find(dentro))
     }
 
     /// La altura de un ancla (`#id`).

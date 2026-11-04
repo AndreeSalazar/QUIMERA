@@ -48,6 +48,8 @@ pub(crate) struct Maquetador<'a> {
     /// Altos ya medidos en seco: (nodo, ancho, alto base, alto impuesto) → alto (ver
     /// `Maquetador::alto_libre`).
     pub altos_en_seco: alloc::collections::BTreeMap<(u32, u32, u32, u32), f32>,
+    /// Se maqueta un elemento `fixed` (o algo dentro de él): sus capas son fijas.
+    pub en_fijo: bool,
     /// Bordes (arriba, derecha, abajo, izquierda) que ocupa este elemento en vez de los suyos, sin
     /// dibujarlos: las celdas de una tabla con bordes que colapsan (los dibuja la tabla).
     pub bordes_celda: Option<(NodoId, [f32; 4])>,
@@ -124,6 +126,7 @@ impl<'a> Maquetador<'a> {
             alto_forzado: None,
             alto_base: None,
             altos_en_seco: alloc::collections::BTreeMap::new(),
+            en_fijo: false,
             bordes_celda: None,
             flotantes: Vec::new(),
             capa_flotantes: Vec::new(),

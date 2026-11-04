@@ -185,7 +185,9 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
         m = maquetar_pagina(&pagina, &pintor, (w, h), &mut imagenes, &cliente);
     }
     imagenes.en_linea(&cliente, &pagina.base, &m);
-    gpu.cargar(&pintor.escena(&m, 1.0, &|s| imagenes.id(s)));
+    let mut cuadros = pintor.escena(&m, 1.0, &|s| imagenes.id(s));
+    navegador::bajo_la_barra(&mut cuadros, barra::ALTO);
+    gpu.cargar(&cuadros);
     for (id, ancho, alto, rgba) in imagenes.fotogramas_por_subir() {
         gpu.subir_imagen(id, ancho, alto, &rgba);
     }
@@ -213,7 +215,9 @@ fn capturar(url: &Url, salida: &str, (ancho, alto): (u32, u32), antes: Option<An
     if let Some((pixeles, desde, hasta)) = pintor.atlas_cambiado() {
         gpu.subir_atlas(pixeles, desde, hasta);
     }
-    let rgba = gpu.capturar(color_gpu(m.fondo), -barra::ALTO)?;
+    // `QUIMERA_DESP=px`: como si la página estuviera desplazada (para ver lo `fixed`).
+    let desp: f32 = std::env::var("QUIMERA_DESP").ok().and_then(|d| d.parse().ok()).unwrap_or(0.0);
+    let rgba = gpu.capturar(color_gpu(m.fondo), desp - barra::ALTO)?;
     std::fs::write(salida, png::codificar(ancho, alto, &rgba)).map_err(|e| format!("{salida}: {e}"))?;
     eprintln!(
         "{}: red {:.0} ms · {} enlaces, {} imágenes → {salida} ({ancho}×{alto})",

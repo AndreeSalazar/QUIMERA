@@ -90,6 +90,12 @@ pub struct Navegador {
     estatico: Option<quimera_html::Documento>,
 }
 
+/// Los cuadros de la capa fija de la página (`position: fixed`) se pintan sin desplazarse, en
+/// coordenadas de la ventana: bajan lo que mide la barra, que va encima.
+pub fn bajo_la_barra(cuadros: &mut [quimera_gpu::Cuadro], barra_px: f32) {
+    cuadros.iter_mut().filter(|c| c.fijo).for_each(|c| c.y += barra_px);
+}
+
 impl Navegador {
     pub fn nuevo(url: Url, pintor: Pintor, proxy: EventLoopProxy<Evento>) -> Navegador {
         let cliente = Arc::new(Cliente::nuevo());
@@ -279,7 +285,8 @@ impl Navegador {
         let medidor = self.pintor.medidor();
         let m = maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario);
         imagenes.en_linea(&self.cliente, &pagina.base, &m);
-        let cuadros = self.pintor.escena(&m, escala, &|s| imagenes.id(s));
+        let mut cuadros = self.pintor.escena(&m, escala, &|s| imagenes.id(s));
+        bajo_la_barra(&mut cuadros, barra_px);
         let nuevas = imagenes.nuevas(&doc);
         a.gpu.cargar(&cuadros);
         a.fondo = color_gpu(m.fondo);
@@ -406,7 +413,8 @@ impl Navegador {
                     .abierta
                     .as_ref()
                     .and_then(|a| a.maq.as_ref())
-                    .and_then(|m| m.enlace_en(x / e, (y - barra_px + desp) / e));
+                    .and_then(|m| m.trozo_de_enlace_en(x / e, (y - barra_px + desp) / e, desp / e))
+                    .map(|en| en.href.as_str());
                 match href.map(String::from) {
                     Some(h) => (CursorIcon::Pointer, Some(self.resolver(&h).map_or(h, |u| u.to_string()))),
                     None => (CursorIcon::Default, None),
@@ -446,8 +454,8 @@ impl Navegador {
                 let desp = self.abierta.as_ref().map_or(0.0, |a| a.desp);
                 let (px, py) = (x / e, (y - barra_px + desp) / e);
                 let maq = self.abierta.as_ref().and_then(|a| a.maq.as_ref());
-                let control = maq.and_then(|m| m.control_en(px, py));
-                let enlace = maq.and_then(|m| m.trozo_de_enlace_en(px, py)).map(|e| (e.href.clone(), e.nodo));
+                let control = maq.and_then(|m| m.control_en(px, py, desp / e));
+                let enlace = maq.and_then(|m| m.trozo_de_enlace_en(px, py, desp / e)).map(|e| (e.href.clone(), e.nodo));
                 if self.evento_clic(control.or(enlace.as_ref().map(|e| e.1))) {
                     return; // un script llamó a preventDefault()
                 }

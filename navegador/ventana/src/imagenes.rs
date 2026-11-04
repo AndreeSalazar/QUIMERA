@@ -91,10 +91,11 @@ where
 /// CSS, en vertical).
 pub fn entre(m: &Maquetacion, desde: f32, hasta: f32) -> HashSet<String> {
     let mut v = HashSet::new();
-    for p in &m.piezas {
+    for (i, p) in m.piezas.iter().enumerate() {
+        // Las de una capa fija están siempre en la vista.
+        let fija = m.fijas.iter().any(|r| r.contains(&i));
         if let Pieza::Imagen { y, alto, src, .. } = p
-            && y + alto >= desde
-            && *y <= hasta
+            && (fija || (y + alto >= desde && *y <= hasta))
         {
             v.insert(src.clone());
         }

@@ -133,3 +133,26 @@ fn enlaces_y_anclas() {
     let (_, base_fin) = texto_en(&m, "Fin");
     assert!(fin < base_fin && base_fin - fin < 60.0, "el ancla está en la caja del h2: {fin} {base_fin}");
 }
+
+#[test]
+fn lo_fixed_va_en_la_capa_fija() {
+    let filas: String = (0..100).map(|i| format!("<p>fila {i}</p>")).collect();
+    let html = format!(
+        "<body style='margin:0'><div style='position:fixed;top:0;left:0;width:300px;height:40px;background:red'>\
+         <a href='/arriba'>arriba</a></div><a href='/abajo'>abajo</a>{filas}\
+         <div style='position:fixed;bottom:0;height:20px;width:10px'></div></body>"
+    );
+    let m = maquetar_html(&html);
+    // Las piezas fijas: el fondo rojo y el texto del enlace (en un solo rango, uno detrás de otro).
+    let fijas: usize = m.fijas.iter().map(|r| r.len()).sum();
+    assert!(fijas >= 2, "{:?}", m.fijas);
+    let roja = m
+        .piezas
+        .iter()
+        .position(|p| matches!(p, Pieza::Rect { color, .. } if *color == Color { r: 255, g: 0, b: 0, a: 255 }));
+    assert!(roja.is_some_and(|i| m.fijas.iter().any(|r| r.contains(&i))), "el fondo del fixed es fijo");
+    // Con la página bajada 500 px, el enlace fijo sigue arriba; el otro se fue.
+    let arriba = m.trozo_de_enlace_en(5.0, 500.0 + 10.0, 500.0).map(|e| e.href.as_str());
+    assert_eq!(arriba, Some("/arriba"));
+    assert!(m.enlaces.iter().any(|e| e.href == "/abajo" && !e.fijo));
+}
