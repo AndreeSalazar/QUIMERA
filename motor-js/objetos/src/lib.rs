@@ -14,7 +14,8 @@
 //! | 5 | | longitud | entorno | |
 //! | 6 | | | `this` léxico (flechas) | |
 //!
-//! Un **entorno** es más simple: `[tipo, padre, hueco0, hueco1...]`.
+//! Un **entorno** es más simple: `[tipo, padre, hueco0, hueco1...]`. Los búferes de bytes y
+//! las vistas de los arreglos tipados están en `bytes.rs`.
 //!
 //! Regla de oro: toda función que puede asignar memoria puede mover objetos. Por eso estas
 //! funciones meten sus argumentos en la pila de raíces antes de asignar y los vuelven a leer
@@ -24,12 +25,14 @@
 
 extern crate alloc;
 
+pub mod bytes;
 pub mod cadenas;
 pub mod formas;
 mod mundo;
 
+pub use bytes::{Especie, Vista};
 pub use cadenas::Cadenas;
 pub use formas::{FORMA_VACIA, Formas, IdForma};
-pub use mundo::{Clase, Mundo};
+pub use mundo::{Clase, Mundo, indice_canonico};
 pub use quimera_gc::{Config, Estadisticas, Monton};
 pub use quimera_valor::{Ref, Tipo, Valor};

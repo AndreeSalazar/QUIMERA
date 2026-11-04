@@ -5,12 +5,12 @@ use crate::formas::{FORMA_VACIA, Formas, IdForma};
 use quimera_gc::{Config, Monton};
 use quimera_valor::{Tipo, Valor};
 
-const C_TIPO: usize = 0;
+pub(crate) const C_TIPO: usize = 0;
 const C_FORMA: usize = 1;
 const C_PROTO: usize = 2;
 const C_PROPS: usize = 3;
-const C_EXTRA: usize = 4; // elementos, índice de función o id de nativa
-const C_EXTRA2: usize = 5; // longitud o entorno
+pub(crate) const C_EXTRA: usize = 4; // elementos, índice de función, id de nativa o búfer
+pub(crate) const C_EXTRA2: usize = 5; // longitud o entorno
 const C_ESTE: usize = 6;
 const E_PADRE: usize = 1;
 const E_HUECOS: usize = 2;
@@ -36,6 +36,10 @@ pub enum Clase {
     /// Objeto del anfitrión (un nodo del DOM): un objeto con un número del anfitrión. Sus
     /// propiedades se le preguntan al anfitrión; las cachés en línea no lo guardan nunca.
     Anfitrion = 7,
+    /// Los bytes de un `ArrayBuffer` (ver `bytes.rs`).
+    Bytes = 8,
+    /// Una vista de un arreglo tipado (`Uint8Array`...) sobre un búfer.
+    Tipado = 9,
 }
 
 impl Clase {
@@ -48,6 +52,8 @@ impl Clase {
             5 => Clase::Entorno,
             6 => Clase::RegExp,
             7 => Clase::Anfitrion,
+            8 => Clase::Bytes,
+            9 => Clase::Tipado,
             _ => return None,
         })
     }
@@ -77,6 +83,15 @@ fn entero(v: Option<Valor>) -> Option<i32> {
     v?.como_entero()
 }
 
+/// Un número como valor: entero si lo es (más rápido), si no, en coma flotante.
+pub(crate) fn numero_js(x: f64) -> Valor {
+    if x.abs() <= f64::from(i32::MAX) && f64::from(x as i32) == x && !(x == 0.0 && x.is_sign_negative()) {
+        Valor::entero(x as i32)
+    } else {
+        Valor::numero(x)
+    }
+}
+
 impl Mundo {
     /// Un mundo vacío.
     pub fn nuevo(config: Config) -> Mundo {
@@ -98,7 +113,7 @@ impl Mundo {
     }
 
     /// Mete valores en la pila de raíces; devuelve la marca para leerlos y soltarlos.
-    fn proteger(&mut self, vals: &[Valor]) -> usize {
+    pub(crate) fn proteger(&mut self, vals: &[Valor]) -> usize {
         let base = self.m.marca_raices();
         for v in vals {
             self.m.raiz(*v);
@@ -106,7 +121,7 @@ impl Mundo {
         base
     }
 
-    fn recuperar(&self, base: usize, i: usize) -> Valor {
+    pub(crate) fn recuperar(&self, base: usize, i: usize) -> Valor {
         self.m.pila().get(base + i).copied().unwrap_or(Valor::INDEFINIDO)
     }
 
@@ -285,7 +300,7 @@ impl Mundo {
 
     /// Una propiedad propia (sin mirar el prototipo).
     pub fn leer_propia(&self, obj: Valor, clave: u32) -> Option<Valor> {
-        if clave == self.clave_length && self.clase(obj) == Some(Clase::Arreglo) {
+        if clave == self.clave_length && matches!(self.clase(obj), Some(Clase::Arreglo | Clase::Tipado)) {
             return self.longitud(obj).map(|n| Valor::numero(n as f64));
         }
         let hueco = self.formas.buscar(self.forma(obj)?, clave)?;
@@ -429,6 +444,11 @@ impl Mundo {
         if i >= self.longitud(arr)? {
             return Some(Valor::INDEFINIDO);
         }
+        match entero(self.m.leer(arr, C_TIPO)) {
+            Some(t) if t == Clase::Tipado as i32 => return Some(numero_js(self.leer_en_vista(arr, i as usize)?)),
+            Some(t) if t == Clase::Bytes as i32 => return None,
+            _ => {}
+        }
         self.m.leer(self.m.leer(arr, C_EXTRA)?, i as usize)
     }
 
@@ -439,6 +459,17 @@ impl Mundo {
 
     /// Escribe el elemento `i`, creciendo si hace falta. Puede asignar memoria (y mover objetos).
     pub fn escribir_elemento(&mut self, arr: Valor, i: u32, v: Valor) -> bool {
+        match self.clase(arr) {
+            // Una vista no crece: fuera de ella no se escribe (y no es un error).
+            Some(Clase::Tipado) => {
+                if let Some(x) = v.como_numero() {
+                    self.escribir_en_vista(arr, i as usize, x);
+                }
+                return true;
+            }
+            Some(Clase::Bytes) => return false,
+            _ => {}
+        }
         let Some(largo) = self.longitud(arr) else { return false };
         if i > largo.saturating_add(MAX_SALTO_ARREGLO) {
             return false;
@@ -542,7 +573,8 @@ impl Mundo {
 }
 
 /// El índice de arreglo que escribe `texto` (`"0"`, `"12"`; no `"01"` ni `"-1"`).
-fn indice_canonico(texto: &str) -> Option<u32> {
+/// Un índice de arreglo escrito como texto canónico (`"3"`, no `"03"` ni `"3.0"`).
+pub fn indice_canonico(texto: &str) -> Option<u32> {
     let b = texto.as_bytes();
     if b.is_empty() || !b[0].is_ascii_digit() || (b[0] == b'0' && b.len() > 1) {
         return None;

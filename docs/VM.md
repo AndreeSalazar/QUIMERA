@@ -246,7 +246,14 @@ Abrir YouTube (10 MB de JavaScript, Polymer y Web Components) sacó fallos que a
 
 ## Datos binarios y azar
 
-`binarios.js` (tras el preludio): `ArrayBuffer`, los nueve arreglos tipados, `DataView` (con `Float32`/`Float64` codificados a mano según IEEE 754), `TextEncoder`/`TextDecoder` (UTF-8, con U+FFFD para lo inválido) y un `Math.fround` exacto. Es una aproximación: un arreglo tipado es un arreglo de la VM con otro prototipo (rápido, pero `u8[0] = 300` no recorta; `set`, `fill` y el constructor sí), y solo un `Uint8Array` sobre un buffer entero comparte sus bytes. Igual que Chromium en las pruebas.
+**Bytes de verdad.** `ArrayBuffer` es un objeto nativo (`Clase::Bytes`) con sus bytes en el montón del GC, de cuatro en cuatro en los enteros de una celda, así que se liberan solos. Un arreglo tipado (los nueve, de `Int8Array` a `Float64Array`) es una **vista** nativa (`Clase::Tipado`): búfer, desplazamiento, longitud y especie (`quimera-objetos/src/bytes.rs`). Por eso:
+
+- `a[i]`, `a[i] = x` (con el recorte de cada especie: `ToInt8`, `ToUint8Clamp`...), `a.length`, `i in a`, `for-of` y el spread van directos a los bytes. La caché en línea de `length` sirve igual para vistas y arreglos.
+- `subarray` crea otra vista **sin copiar**, y `DataView` y todas las vistas de un búfer ven los mismos bytes.
+- Lo que mueve muchos bytes es nativo (`nativas/bytes.rs`): copiar como `memmove` (`slice`, `set` y `copyWithin`; si las dos especies tienen la misma representación, sin convertir elemento a elemento), `fill`, `DataView` en los dos órdenes de bytes, y UTF-8 para `TextEncoder`/`TextDecoder` (con U+FFFD para lo inválido).
+- `binarios.js` pone encima la API de la web. Los métodos que solo recorren (`join`, `indexOf`, `reduce`...) son los de `Array`, que la máquina aplica a una vista como a un arreglo.
+
+Antes un arreglo tipado era un arreglo de la VM con otro prototipo, y `subarray` copiaba elemento a elemento en JavaScript. El reproductor de YouTube no podía con sus megas de vídeo: tras una respuesta de 3,4 MB se quedaba atascado. Ahora mete 1,8 MB de vídeo y 1,1 MB de audio en sus `SourceBuffer` en segundos. Igual que Chromium en las pruebas (`vistas_sobre_los_mismos_bytes`, `datos_binarios`).
 
 **Azar y reloj del anfitrión**: `Motor::con_entropia` da azar del sistema para `crypto.getRandomValues` y `crypto.randomUUID`, y siembra `Math.random`, que antes repetía la misma secuencia en cada página. La ventana usa SipHash con claves del sistema operativo. El DOM tampoco pasaba el reloj real: `Date.now()` daba milisegundos desde que arrancó el motor (fechas de 1970). Ahora llega la hora real.
 

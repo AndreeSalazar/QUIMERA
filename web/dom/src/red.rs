@@ -544,12 +544,9 @@ impl Dom {
                 let (url, cuerpo) = (m.cadena(&resp.url), m.cadena(&resp.cuerpo));
                 let marca_url = m.apilar(url);
                 m.apilar(cuerpo);
-                // Los bytes como el arreglo oculto de un `ArrayBuffer`.
+                // Los bytes, en un `ArrayBuffer` nativo (sin pasar por un arreglo de números).
                 let bytes = match &resp.bytes {
-                    Some(b) => {
-                        let v: Vec<Valor> = b.iter().map(|&x| Valor::entero(i32::from(x))).collect();
-                        m.crear_arreglo(&v)
-                    }
+                    Some(b) => m.crear_array_buffer(b),
                     None => Valor::INDEFINIDO,
                 };
                 let args = [

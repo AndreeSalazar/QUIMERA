@@ -221,6 +221,10 @@ impl Motor {
         // `arr.length = n` cambia sus elementos: nunca por las cachés. Un arreglo puede tener la
         // forma de un objeto normal, y la caché de «añadir `length`» aprendida con ese objeto le
         // pondría una propiedad suelta (así se colgaba jQuery 1.8 en Steam).
+        // El `length` de una vista no se cambia (y no es un error).
+        if clave == self.mundo.clave_length && self.mundo.clase(obj) == Some(Clase::Tipado) {
+            return Ok(());
+        }
         if clave == self.mundo.clave_length && self.mundo.clase(obj) == Some(Clase::Arreglo) {
             return match self.mundo.escribir(obj, clave, v) {
                 true => Ok(()),
@@ -290,7 +294,7 @@ impl Motor {
     /// `obj[k]`.
     pub(crate) fn leer_indice(&mut self, obj: Valor, k: Valor) -> Result<Valor, Valor> {
         if let Some(i) = Self::indice(k) {
-            if self.mundo.clase(obj) == Some(Clase::Arreglo) {
+            if matches!(self.mundo.clase(obj), Some(Clase::Arreglo | Clase::Tipado)) {
                 return Ok(self.mundo.leer_elemento(obj, i).unwrap_or(Valor::INDEFINIDO));
             }
             if let Some(s) = self.mundo.texto(obj) {
@@ -330,6 +334,11 @@ impl Motor {
 
     /// `obj[k] = v`.
     pub(crate) fn escribir_indice(&mut self, obj: Valor, k: Valor, v: Valor) -> Result<(), Valor> {
+        if let (Some(i), Some(Clase::Tipado)) = (Self::indice(k), self.mundo.clase(obj)) {
+            let x = operaciones::a_numero(&self.mundo, v);
+            self.mundo.escribir_elemento(obj, i, Valor::numero(x));
+            return Ok(());
+        }
         if let (Some(i), Some(Clase::Arreglo)) = (Self::indice(k), self.mundo.clase(obj)) {
             if self.mundo.escribir_elemento(obj, i, v) {
                 return Ok(());
@@ -393,7 +402,9 @@ impl Motor {
             self.mundo.m.soltar_raices(marca);
             return self.proxy_contiene(obj, clave);
         }
-        if let (Some(i), Some(Clase::Arreglo)) = (Self::indice(k), self.mundo.clase(obj)) {
+        // El índice puede llegar como número o como texto (`'1' in arr`).
+        let indice = Self::indice(k).or_else(|| self.mundo.texto(k).and_then(quimera_objetos::indice_canonico));
+        if let (Some(i), Some(Clase::Arreglo | Clase::Tipado)) = (indice, self.mundo.clase(obj)) {
             return Ok(i < self.mundo.longitud(obj).unwrap_or(0) && !self.mundo.es_hueco(obj, i));
         }
         let clave = self.clave_de(k);

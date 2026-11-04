@@ -3,6 +3,7 @@
 //! Cada nativa es un número; `llamar` las reparte por grupos (un archivo por grupo). Lo
 //! que aún no existe da `undefined` al leerlo.
 
+mod bytes;
 mod coleccion;
 mod fecha;
 mod json;
@@ -78,6 +79,8 @@ const GRUPO_REGEXP: u32 = 500;
 const GRUPO_JSON: u32 = 600;
 /// Desde aquí, `encodeURIComponent` y compañía, `btoa`/`atob` (`uri.rs`).
 const GRUPO_URI: u32 = 700;
+/// Desde aquí, los bytes de `ArrayBuffer`, los arreglos tipados y `DataView` (`bytes.rs`).
+const GRUPO_BYTES: u32 = 800;
 
 /// Crea el objeto global, los prototipos y las nativas.
 pub(crate) fn preparar(m: &mut Motor) {
@@ -133,6 +136,7 @@ pub(crate) fn preparar(m: &mut Motor) {
     regexp::preparar(m);
     json::preparar(m);
     uri::preparar(m);
+    bytes::preparar(m);
     m.fijar_claves_ocultas();
     m.mundo.m.soltar_raices(crate::N_FIJAS);
 }
@@ -350,6 +354,7 @@ pub(crate) fn llamar(m: &mut Motor, id: u32, ll: Llamada) -> Result<bool, Valor>
         return Err(m.error("TypeError", "esta función nativa no es un constructor"));
     }
     let v = match id {
+        GRUPO_BYTES.. => bytes::llamar(m, id, &ll)?,
         GRUPO_URI.. => uri::llamar(m, id, &ll)?,
         GRUPO_JSON.. => json::llamar(m, id, &ll)?,
         GRUPO_REGEXP.. => regexp::llamar(m, id, &ll)?,

@@ -134,6 +134,24 @@ impl Motor {
         self.mundo.leer(obj, clave).unwrap_or(Valor::INDEFINIDO)
     }
 
+    /// Un `ArrayBuffer` con estos bytes (con el prototipo del `ArrayBuffer` global).
+    pub fn crear_array_buffer(&mut self, datos: &[u8]) -> Valor {
+        let global = self.global();
+        let ab = self.leer_nombre(global, "ArrayBuffer");
+        let proto = self.leer_nombre(ab, "prototype");
+        self.mundo.crear_bytes_con(datos, proto).unwrap_or(Valor::INDEFINIDO)
+    }
+
+    /// Los bytes de un `ArrayBuffer` o de una vista (`Uint8Array`, `DataView` no); `None` si
+    /// no es ninguno de los dos.
+    pub fn bytes_de(&self, v: Valor) -> Option<alloc::vec::Vec<u8>> {
+        if let Some(n) = self.mundo.bytes_largo(v) {
+            return Some(self.mundo.leer_bytes(v, 0, n));
+        }
+        let x = self.mundo.vista(v)?;
+        Some(self.mundo.leer_bytes(x.bufer, x.desde, x.largo * x.especie.tam()))
+    }
+
     /// Una cadena.
     pub fn cadena(&mut self, texto: &str) -> Valor {
         self.mundo.cadena(texto)

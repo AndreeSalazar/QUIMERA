@@ -2,48 +2,48 @@
 //! `arrayBuffer()`, `blob()` y `body` en las respuestas de `fetch` (YouTube recibe su vídeo en
 //! binario, por trozos de un `ReadableStream`).
 //!
-//! Los bytes viajan como el arreglo oculto de un `ArrayBuffer` (ver `binarios.js` en la VM): un
-//! `Uint8Array` sobre un `ArrayBuffer` entero es ese mismo arreglo, sin copiar.
+//! Los bytes viajan en `ArrayBuffer` nativos de la VM: un `Uint8Array` sobre uno es una vista,
+//! sin copiar.
 
 /// El código (tras `complementos.rs`).
 pub(crate) const BINARIO_JS: &str = r#"(function (w) {
-  var BYTES = '\u0001bytes', B = '\u0001b';
-  // Los bytes (un arreglo de 0 a 255) de cualquier cosa binaria; el texto, en UTF-8.
+  var B = '\u0001b';
+  // Un ArrayBuffer con los bytes de cualquier cosa binaria (el mismo, si ya lo es entero); el
+  // texto, en UTF-8.
   function bytesDe(x) {
-    if (x == null) return [];
-    if (x instanceof ArrayBuffer) return x[BYTES];
+    if (x == null) return new ArrayBuffer(0);
+    if (x instanceof ArrayBuffer) return x;
     if (ArrayBuffer.isView(x)) {
-      if (x instanceof Uint8Array && x.buffer && x.byteOffset === 0 && x.byteLength === x.buffer.byteLength) return x.buffer[BYTES];
-      return Array.prototype.slice.call(new Uint8Array(x.buffer, x.byteOffset, x.byteLength));
+      if (x.byteOffset === 0 && x.byteLength === x.buffer.byteLength) return x.buffer;
+      return x.buffer.slice(x.byteOffset, x.byteOffset + x.byteLength);
     }
     if (x instanceof Blob) return x[B];
-    var u = new TextEncoder().encode(String(x));
-    return u.buffer ? u.buffer[BYTES] : Array.prototype.slice.call(u);
+    return new TextEncoder().encode(String(x)).buffer;
   }
-  function bufferDe(bytes) { var ab = new ArrayBuffer(0); ab[BYTES] = bytes; return ab; }
-  function textoDe(bytes) { return new TextDecoder().decode(new Uint8Array(bufferDe(bytes))); }
+  function textoDe(buffer) { return new TextDecoder().decode(buffer); }
   w.__quimera_bytes_de = bytesDe;
-  w.__quimera_buffer_de = bufferDe;
 
   function Blob(partes, op) {
-    var b = [];
-    (partes || []).forEach(function (p) { var x = bytesDe(p); for (var i = 0; i < x.length; i++) b.push(x[i]); });
-    this[B] = b;
-    this.size = b.length;
+    var trozos = (partes || []).map(bytesDe), total = 0, i;
+    for (i = 0; i < trozos.length; i++) total += trozos[i].byteLength;
+    var u = new Uint8Array(total), o = 0;
+    for (i = 0; i < trozos.length; i++) { u.set(new Uint8Array(trozos[i]), o); o += trozos[i].byteLength; }
+    this[B] = u.buffer;
+    this.size = total;
     this.type = op && op.type ? String(op.type).toLowerCase() : '';
   }
-  Blob.prototype.arrayBuffer = function () { return Promise.resolve(bufferDe(this[B].slice())); };
-  Blob.prototype.bytes = function () { return Promise.resolve(new Uint8Array(bufferDe(this[B].slice()))); };
+  Blob.prototype.arrayBuffer = function () { return Promise.resolve(this[B].slice(0)); };
+  Blob.prototype.bytes = function () { return Promise.resolve(new Uint8Array(this[B].slice(0))); };
   Blob.prototype.text = function () { return Promise.resolve(textoDe(this[B])); };
   Blob.prototype.slice = function (a, z, tipo) {
     var r = new Blob([], { type: tipo });
     r[B] = this[B].slice(a, z);
-    r.size = r[B].length;
+    r.size = r[B].byteLength;
     return r;
   };
   Blob.prototype.stream = function () {
     var b = this[B];
-    return new ReadableStream({ start: function (c) { c.enqueue(new Uint8Array(bufferDe(b.slice()))); c.close(); } });
+    return new ReadableStream({ start: function (c) { c.enqueue(new Uint8Array(b.slice(0))); c.close(); } });
   };
   w.Blob = Blob;
   function File(partes, nombre, op) {
@@ -106,13 +106,13 @@ pub(crate) const BINARIO_JS: &str = r#"(function (w) {
   // `Response`: los bytes, si llegaron en binario o se construyó con algo binario.
   var R = w.Response.prototype;
   function bytesRespuesta(r) { return r['\u0001bytes'] || bytesDe(r['\u0001cuerpo']); }
-  R.arrayBuffer = function () { this.bodyUsed = true; return Promise.resolve(bufferDe(bytesRespuesta(this).slice())); };
-  R.bytes = function () { this.bodyUsed = true; return Promise.resolve(new Uint8Array(bufferDe(bytesRespuesta(this).slice()))); };
+  R.arrayBuffer = function () { this.bodyUsed = true; return Promise.resolve(bytesRespuesta(this).slice(0)); };
+  R.bytes = function () { this.bodyUsed = true; return Promise.resolve(new Uint8Array(bytesRespuesta(this).slice(0))); };
   R.blob = function () {
     this.bodyUsed = true;
     var b = new Blob([], { type: this.headers.get('content-type') || '' });
-    b[B] = bytesRespuesta(this).slice();
-    b.size = b[B].length;
+    b[B] = bytesRespuesta(this).slice(0);
+    b.size = b[B].byteLength;
     return Promise.resolve(b);
   };
   var texto = R.text;
@@ -123,7 +123,7 @@ pub(crate) const BINARIO_JS: &str = r#"(function (w) {
   Object.defineProperty(R, 'body', { configurable: true, get: function () {
     if (!this['\u0001flujo']) {
       var b = bytesRespuesta(this);
-      this['\u0001flujo'] = new ReadableStream({ start: function (c) { c.enqueue(new Uint8Array(bufferDe(b))); c.close(); } });
+      this['\u0001flujo'] = new ReadableStream({ start: function (c) { c.enqueue(new Uint8Array(b)); c.close(); } });
     }
     return this['\u0001flujo'];
   } });

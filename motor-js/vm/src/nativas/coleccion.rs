@@ -169,7 +169,7 @@ pub(super) fn llamar(m: &mut Motor, id: u32, ll: &Llamada) -> Result<Valor, Valo
 /// `"0"`, `"1"`... para un arreglo; nada para otro objeto.
 fn indices(m: &mut Motor, o: Valor) -> Vec<Valor> {
     // Un arreglo, o un `new String(...)` (sus caracteres son índices, como en los navegadores).
-    let n = if m.mundo.clase(o) == Some(Clase::Arreglo) {
+    let n = if matches!(m.mundo.clase(o), Some(Clase::Arreglo | Clase::Tipado)) {
         m.mundo.longitud(o).unwrap_or(0)
     } else {
         let texto = crate::operaciones::valor_primitivo(&m.mundo, o).and_then(|v| m.mundo.texto(v));

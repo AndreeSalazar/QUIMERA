@@ -639,3 +639,44 @@ fn setter_nuevo_tras_cache_de_anadir() {
     );
     assert_eq!(r, ["set 1,y 2 false false"]);
 }
+
+/// Los arreglos tipados son vistas sobre los bytes de su ArrayBuffer (sin copiar): `subarray`
+/// escribe en el original, `DataView` y las vistas ven lo mismo. El resultado es el de Chromium.
+#[test]
+fn vistas_sobre_los_mismos_bytes() {
+    let r = salida(
+        r#"var out = [];
+var b = new ArrayBuffer(8), u8 = new Uint8Array(b), dv = new DataView(b);
+dv.setUint32(0, 0x01020304); dv.setFloat32(4, 1.5, true);
+out.push(Array.from(u8).join(','));
+var s = u8.subarray(2, 6); s[0] = 99;
+out.push(u8[2] + ' ' + s.length + ' ' + s.byteOffset + ' ' + (s.buffer === b));
+var u16 = new Uint16Array(b, 2, 2); out.push(u16[0] + ' ' + u16.length + ' ' + u16.byteLength);
+var i8 = new Int8Array([200, -1, 3.7]); out.push(Array.from(i8).join(','));
+var c = new Uint8ClampedArray([300, -5, 2.5, 3.5]); out.push(c.join(','));
+var f = new Float32Array([0.1]); out.push(f[0]);
+var sl = u8.slice(1, 3); sl[0] = 7; out.push(u8[1] + ' ' + sl.join(','));
+var t = new Uint8Array(4); t.set([1, 2], 1); t.set(new Uint8Array([9]), 3); out.push(t.join(','));
+out.push(new Uint8Array(5).fill(4, 1, -1).join(','));
+out.push(Array.isArray(u8) + ' ' + ArrayBuffer.isView(u8) + ' ' + ArrayBuffer.isView(dv) + ' ' + Object.prototype.toString.call(u8));
+out.push([...new Uint16Array([5, 6])].join(','));
+out.push(new TextDecoder().decode(new TextEncoder().encode('héllo €')) + ' ' + new TextEncoder().encode('é').length);
+out.push(u8.indexOf(99) + ' ' + u8.includes(4) + ' ' + new Uint8Array([3,1,2]).sort().join(','));
+out.push(new Uint8Array([1,2,3]).map(function (x) { return x * 100; }).join(','));
+out.push(dv.getUint16(0) + ' ' + dv.getUint16(0, true) + ' ' + dv.getInt8(0) + ' ' + dv.getFloat32(4, true));
+var big = new Uint8Array(1 << 20); for (var k = 0; k < big.length; k += 4096) big[k] = k & 255;
+var acc = 0; for (var r = 0; r < 200; r++) { var v = big.subarray(r * 10, r * 10 + 500000); acc += v[0] + v.length; }
+out.push(acc);
+out.push(new Uint8Array(b, 1).length + ' ' + b.slice(-2).byteLength + ' ' + Math.fround(5.5) + ' ' + Math.fround(0.1));
+u8.length = 3; out.push(u8.length + ' ' + u8[100]);
+out.push(JSON.stringify(Object.keys(new Uint8Array(2))) + ' ' + ('1' in new Uint8Array(2)) + ' ' + (5 in new Uint8Array(2)));
+console.log(out.join(' | '));
+"#,
+    );
+    assert_eq!(
+        r,
+        [
+            r#"1,2,3,4,0,0,192,63 | 99 4 2 true | 1123 2 4 | -56,-1,3 | 255,0,2,4 | 0.10000000149011612 | 2 7,99 | 0,1,2,9 | 0,4,4,4,0 | false true true [object Uint8Array] | 5,6 | héllo € 2 | 2 true 1,2,3 | 100,200,44 | 258 513 1 1.5 | 100000000 | 7 2 5.5 0.10000000149011612 | 8 undefined | ["0","1"] true false"#
+        ]
+    );
+}

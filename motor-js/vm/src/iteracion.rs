@@ -90,7 +90,7 @@ impl Motor {
     pub(crate) fn iterar_claves(&mut self, obj: Valor) -> Valor {
         let mut claves: Vec<u32> = Vec::new();
         let indices = match (self.mundo.clase(obj), self.mundo.texto(obj)) {
-            (Some(Clase::Arreglo), _) => self.mundo.longitud(obj).unwrap_or(0),
+            (Some(Clase::Arreglo | Clase::Tipado), _) => self.mundo.longitud(obj).unwrap_or(0),
             (_, Some(s)) => s.chars().count() as u32,
             _ => 0,
         };
@@ -128,14 +128,15 @@ impl Motor {
     /// Los valores que recorre `for (v of x)`: elementos de un arreglo, caracteres de una cadena,
     /// o lo que da `__quimera_lista` del preludio (Map, Set, iteradores, objetos con `next()`).
     pub(crate) fn iterar_valores(&mut self, x: Valor) -> Result<Valor, Valor> {
-        if self.mundo.es_objeto(x) && self.mundo.clase(x) != Some(Clase::Arreglo) {
+        let directo = matches!(self.mundo.clase(x), Some(Clase::Arreglo | Clase::Tipado));
+        if self.mundo.es_objeto(x) && !directo {
             let clave = self.mundo.cadenas.internar("__quimera_lista");
             let global = self.pila(crate::R_GLOBAL);
             if let Some(f) = self.mundo.leer(global, clave).filter(|f| self.mundo.clase(*f) == Some(Clase::Funcion)) {
                 return self.llamar_interno(f, Valor::INDEFINIDO, &[x]);
             }
         }
-        let valores: Vec<Valor> = if self.mundo.clase(x) == Some(Clase::Arreglo) {
+        let valores: Vec<Valor> = if directo {
             let n = self.mundo.longitud(x).unwrap_or(0);
             (0..n).map(|i| self.mundo.leer_elemento(x, i).unwrap_or(Valor::INDEFINIDO)).collect()
         } else if let Some(s) = self.mundo.texto(x) {

@@ -33,7 +33,7 @@ Con un MediaSource provisional que solo contaba bytes, y respondiendo que sí a 
 
 ## Falta, en orden
 
-1. **`ArrayBuffer` y arreglos tipados nativos en la VM**: bytes de verdad, con vistas que compartan memoria (`subarray` sin copiar, `DataView` sobre los mismos bytes). Es lo que más pesa: sin ello el reproductor no puede leer su vídeo, y además acelera cualquier página que trabaje con datos binarios.
+1. ✅ **`ArrayBuffer` y arreglos tipados nativos en la VM** (ver [VM.md](VM.md)). Con ellos, el mismo experimento llega mucho más lejos: el reproductor mete en sus `SourceBuffer` el segmento de inicio (741 bytes) y trozos de vídeo de unos 350 KB y de audio de unos 160 KB. Son 1,8 MB de vídeo y 1,1 MB de audio en una prueba de 6 s de página.
 
 2. **`MediaSource`, `SourceBuffer` y `<video>`** en el DOM, con su reloj y sus eventos. Los segmentos van a `mp4::Demuxer` para saber qué tiempos hay (`buffered`), e `isTypeSupported` dice que sí solo a H.264 y AAC con parámetros razonables.
 3. **Pintar los fotogramas** en la caja del `<video>`.

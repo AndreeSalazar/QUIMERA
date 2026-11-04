@@ -140,7 +140,7 @@ impl Motor {
         for s in sitio.stubs.iter().map_while(|s| s.as_ref()) {
             match s.accion {
                 Accion::Longitud if s.forma == CUALQUIER_ARREGLO => {
-                    if self.mundo.clase(obj) == Some(Clase::Arreglo) {
+                    if matches!(self.mundo.clase(obj), Some(Clase::Arreglo | Clase::Tipado)) {
                         return self.mundo.longitud(obj).map(|n| Valor::numero(f64::from(n)));
                     }
                 }
@@ -176,7 +176,9 @@ impl Motor {
         if self.megamorfico(fi, pc) || prototipo_de_funcion {
             return None;
         }
-        let es_length = |m: &Self, o: Valor| clave == m.mundo.clave_length && m.mundo.clase(o) == Some(Clase::Arreglo);
+        let es_length = |m: &Self, o: Valor| {
+            clave == m.mundo.clave_length && matches!(m.mundo.clase(o), Some(Clase::Arreglo | Clase::Tipado))
+        };
         if es_length(self, obj) {
             self.aprender((fi, pc), CUALQUIER_ARREGLO, &[], Accion::Longitud);
             return self.mundo.longitud(obj).map(|n| Valor::numero(f64::from(n)));
@@ -234,7 +236,8 @@ impl Motor {
         (fi, pc): (usize, usize),
     ) -> Option<bool> {
         if self.megamorfico(fi, pc)
-            || (clave == self.mundo.clave_length && self.mundo.clase(obj) == Some(Clase::Arreglo))
+            || (clave == self.mundo.clave_length
+                && matches!(self.mundo.clase(obj), Some(Clase::Arreglo | Clase::Tipado)))
         {
             return None;
         }
