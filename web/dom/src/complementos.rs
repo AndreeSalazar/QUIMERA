@@ -304,6 +304,8 @@ pub(crate) const COMPLEMENTOS_JS: &str = r#"(function (w, d, P) {
     ['error', null], ['buffered', { length: 0 }], ['textTracks', []]].forEach(function (par) {
     M[par[0]] = par[1];
   });
+  // Un `<video>` sin cargar mide 0 × 0 (los reproductores toman entonces 16:9).
+  if (w.HTMLVideoElement) { w.HTMLVideoElement.prototype.videoWidth = 0; w.HTMLVideoElement.prototype.videoHeight = 0; }
   ['HAVE_NOTHING', 'HAVE_METADATA', 'HAVE_CURRENT_DATA', 'HAVE_FUTURE_DATA', 'HAVE_ENOUGH_DATA'].forEach(function (k, i) {
     w.HTMLMediaElement[k] = M[k] = i;
   });

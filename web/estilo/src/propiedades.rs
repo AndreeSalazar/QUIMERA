@@ -183,6 +183,9 @@ fn tipo_lista(n: &str) -> Option<TipoLista> {
 
 /// Una longitud en píxeles (o porcentaje / auto).
 pub(crate) fn medida(v: &[Token], c: &Contexto) -> Option<Medida> {
+    if let Some(m) = crate::calc::medida_calc(v, c) {
+        return Some(m);
+    }
     let [t] = v else { return None };
     Some(match longitud(t)? {
         Longitud::Px(x) => Medida::Px(x),
@@ -625,6 +628,7 @@ fn alto_linea(v: &[Token], c: &Contexto) -> Option<AltoLinea> {
         _ => match medida(v, c)? {
             Medida::Px(x) => AltoLinea::Px(x),
             Medida::Porcentaje(p) => AltoLinea::Px(c.letra * p / 100.0),
+            Medida::Mixta(x, p) => AltoLinea::Px(x + c.letra * p / 100.0),
             Medida::Auto => return None,
         },
     })

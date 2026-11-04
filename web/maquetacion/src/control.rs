@@ -172,7 +172,9 @@ impl<'a> Maquetador<'a> {
         let w = match e.ancho {
             _ if self.ancho_libre == Some(id) => (contenedor - ml - mr - extras_h).max(0.0),
             Medida::Px(v) => v,
-            Medida::Porcentaje(p) => (contenedor * p / 100.0 - e.extras_si_caja_borde(contenedor)).max(0.0),
+            m @ (Medida::Porcentaje(_) | Medida::Mixta(..)) => {
+                (m.px(contenedor, 0.0) - e.extras_si_caja_borde(contenedor)).max(0.0)
+            }
             Medida::Auto => self.ancho_natural_control(id, tipo, e),
         };
         let h = match (self.alto_forzado.filter(|(n, _)| *n == id), e.alto, tipo) {

@@ -351,6 +351,13 @@ pub(crate) fn aplicar(m: &mut Motor, ll: &Llamada) -> Result<bool, Valor> {
     let args = match m.mundo.clase(lista) {
         Some(Clase::Arreglo) => elementos(m, lista),
         _ if matches!(lista.tipo(), Tipo::Indefinido | Tipo::Nulo) => Vec::new(),
+        // Cualquier objeto con `length` vale (`arguments`, una `NodeList`, `{length: 2}`).
+        _ if m.mundo.es_objeto(lista) => {
+            let largo = m.leer_nombre(lista, "length");
+            let n = op::a_numero(&m.mundo, largo);
+            let n = if n.is_finite() && n > 0.0 { n.min(65_536.0) as usize } else { 0 };
+            (0..n).map(|i| m.leer_nombre(lista, &alloc::format!("{i}"))).collect()
+        }
         _ => return Err(m.error("TypeError", "apply necesita un arreglo de argumentos")),
     };
     m.llamar_con(f, este, &args, ll.destino)

@@ -232,11 +232,13 @@ fn depurar(doc: &quimera_html::Documento, estilos: &quimera_estilo::Estilos, que
     while let Some(n) = actual {
         if let (Some(el), Some(e)) = (doc.elemento(n), estilos.de(n)) {
             eprintln!(
-                "<{} class={:?}> display={:?} ancho={:?} alto={:?} flotar={:?} posicion={:?} visible={} fondo={:?} color={:?} letra={}",
+                "<{} class={:?}> display={:?} ancho={:?} (min {:?}, max {:?}) alto={:?} flotar={:?} posicion={:?} visible={} fondo={:?} color={:?} letra={}",
                 el.nombre,
                 el.atributo("class").unwrap_or(""),
                 e.display,
                 e.ancho,
+                e.ancho_min,
+                e.ancho_max,
                 e.alto,
                 e.flotar,
                 e.colocacion.posicion,

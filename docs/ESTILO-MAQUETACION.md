@@ -199,7 +199,9 @@ Un `<svg>` dentro del HTML es un elemento reemplazado (tamaño de CSS, de `width
 
 La maquetación anota la caja de borde de cada bloque (`Maquetacion::cajas`), que es lo que leen las medidas del DOM.
 
-**Falta:** `calc()`, `min()`, `max()` y `clamp()` (con `var()` dentro son muy comunes), y `inherit`/`initial` en las propias variables.
+**`calc()`, `min()`, `max()` y `clamp()`** (`calc.rs`): suma, resta, producto y división con paréntesis y anidados; `em`, `rem`, `vw` y `vh` pasan a píxeles y el porcentaje queda para la maquetación (`Medida::Mixta(px, pct)` cuando se mezclan, como `calc(100% - 20px)`). `min()`/`max()` solo si todos sus términos son de la misma clase. Con ellos YouTube coloca la página de vídeo: su columna principal tiene `min-width` y `max-width` en `calc(... vh ...)` y, sin ellos, se salía por la izquierda al centrarse.
+
+**Falta:** `inherit`/`initial` en las propias variables, y `min()`/`max()` que mezclen píxeles y porcentaje.
 
 ## Cajas en línea y controles
 

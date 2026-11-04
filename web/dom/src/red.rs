@@ -290,8 +290,12 @@ pub(crate) const RED_JS: &str = r"(function (w) {
   function Request(recurso, op) {
     op = op || {};
     var base = recurso instanceof Request ? recurso : null;
-    this.url = base ? base.url : new URL(String(recurso), w.location.href).href;
-    this.method = String(op.method || (base && base.method) || 'GET').toUpperCase();
+    // La dirección y el método de verdad van aparte: la página puede tapar `url` con
+    // `defineProperty` (YouTube lo hace para comprobar que `fetch` no se deja engañar).
+    this['url'] = base ? base['url'] : new URL(String(recurso), w.location.href).href;
+    this['metodo'] = String(op.method || (base && base['metodo']) || 'GET').toUpperCase();
+    this.url = this['url'];
+    this.method = this['metodo'];
     this.headers = new Headers(op.headers || (base && base.headers));
     this.credentials = op.credentials || (base && base.credentials) || 'same-origin';
     this.mode = op.mode || (base && base.mode) || 'cors';
@@ -324,14 +328,27 @@ pub(crate) const RED_JS: &str = r"(function (w) {
     }
     return String(c);
   }
+  // Una dirección `data:[tipo][;base64],contenido` como respuesta.
+  function desdeDatos(url) {
+    var coma = url.indexOf(','), cabeza = url.slice(5, coma < 0 ? url.length : coma);
+    var datos = coma < 0 ? '' : url.slice(coma + 1);
+    var b64 = /;base64$/i.test(cabeza);
+    var texto = b64 ? atob(datos.replace(/\s/g, '')) : decodeURIComponent(datos);
+    var tipo = cabeza.replace(/;base64$/i, '') || 'text/plain;charset=US-ASCII';
+    var r = new Response(texto, { status: 200, url: url });
+    r.headers.set('content-type', tipo);
+    return r;
+  }
   w.fetch = function (recurso, op) {
     op = op || {};
     var pedido = recurso instanceof Request ? new Request(recurso, op) : null;
-    var url = pedido ? pedido.url : typeof recurso === 'string' ? recurso : (recurso && recurso.url) || String(recurso);
+    var url = pedido ? pedido['url'] : typeof recurso === 'string' ? recurso : (recurso && recurso.url) || String(recurso);
     var cab = pedido ? pedido.headers['\u0001c'] : new Headers(op.headers)['\u0001c'];
     var crudo = pedido ? pedido['\u0001cuerpo'] : op.body;
     var cuerpo = cuerpoDe(crudo);
-    var metodo = pedido ? pedido.method : String(op.method || 'GET').toUpperCase();
+    var metodo = pedido ? pedido['metodo'] : String(op.method || 'GET').toUpperCase();
+    // `data:` se resuelve aquí, sin red.
+    if (/^data:/i.test(url)) return Promise.resolve(desdeDatos(url));
     var credenciales = pedido ? pedido.credentials : String(op.credentials || 'same-origin');
     var senal = pedido ? pedido.signal : op.signal;
     if (senal && senal.aborted) return Promise.reject(new DOMException('La petición se abortó', 'AbortError'));

@@ -67,7 +67,7 @@ Con las hojas de estilo de la documentación de Rust: 22 hojas distintas (160 KB
 
 `:not()` faltaba y era grave: YouTube define todas sus variables globales en `html:not(.style-scope)`; sin ellas, el botón de menú de cada vídeo medía 1280 px y aplastaba el título. Las comas de dentro de `:not(.a, .b)` ya no parten la lista de selectores.
 
-**Falta**: `:has()` y `:nth-child(2n of S)` (no casan), `:hover` y demás estados (no casan: el estilo es estático por ahora), las variables `var(--x)` (se guardan, no se sustituyen), `calc()`, `@supports`, `@import` de verdad y CSS anidado.
+**Falta**: `:has()` y `:nth-child(2n of S)` (no casan), `:hover` y demás estados (no casan: el estilo es estático por ahora), `@supports`, `@import` de verdad y CSS anidado.
 
 ## Siguiente
 

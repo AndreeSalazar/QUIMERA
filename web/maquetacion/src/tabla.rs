@@ -422,7 +422,7 @@ impl<'a> Maquetador<'a> {
         let pedido = match e.ancho {
             _ if self.ancho_libre == Some(id) => Some(contenedor - ml - mr),
             Medida::Px(w) => Some(w),
-            Medida::Porcentaje(p) => Some(contenedor * p / 100.0),
+            m @ (Medida::Porcentaje(_) | Medida::Mixta(..)) => Some(m.px(contenedor, 0.0)),
             Medida::Auto => None,
         };
         let ancho_rejilla = match pedido {

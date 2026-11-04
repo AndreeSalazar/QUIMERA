@@ -417,6 +417,11 @@ pub(crate) const INTERFACES_JS: &str = r#"(function (w, d, P) {
     (m && m[1] || '').replace(/\s+([^\s=>]+)(?:="[^"]*")?/g, function (_, n) { r.push(n); });
     return r;
   };
+  // Con espacio de nombres (SVG, `xlink:href`): se guarda con su nombre cualificado.
+  E.setAttributeNS = function (ns, n, v) { this.setAttribute(n, v); };
+  E.getAttributeNS = function (ns, n) { return this.getAttribute(n); };
+  E.hasAttributeNS = function (ns, n) { return this.hasAttribute(n); };
+  E.removeAttributeNS = function (ns, n) { this.removeAttribute(n); };
   E.hasAttributes = function () { return this.getAttributeNames().length > 0; };
   Object.defineProperty(E, 'attributes', {
     get: function () {

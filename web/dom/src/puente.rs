@@ -277,6 +277,16 @@ fn leer_documento(doc: &Documento, url: &str, nombre: &str) -> Option<Leido> {
         "readyState" => Leido::Texto(String::from("complete")),
         "cookie" => Leido::Texto(String::new()),
         "defaultView" => Leido::Ventana,
+        // Con `<!doctype html>`, el modo estándar (las páginas miden la ventana con
+        // `documentElement.clientHeight` solo entonces; si no, con el `body`).
+        "compatMode" => {
+            let estandar = doc
+                .nodo(Documento::RAIZ)
+                .hijos
+                .iter()
+                .any(|&h| matches!(&doc.nodo(h).dato, Dato::Doctype(n) if n.eq_ignore_ascii_case("html")));
+            Leido::Texto(String::from(if estandar { "CSS1Compat" } else { "BackCompat" }))
+        }
         _ => return None,
     })
 }

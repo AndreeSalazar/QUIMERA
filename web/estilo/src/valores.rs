@@ -73,6 +73,8 @@ pub enum Medida {
     Porcentaje(f32),
     /// `auto`.
     Auto,
+    /// `calc()` con píxeles y porcentaje: `px + pct %` del contenedor.
+    Mixta(f32, f32),
 }
 
 impl Medida {
@@ -82,6 +84,7 @@ impl Medida {
             Medida::Px(x) => x,
             Medida::Porcentaje(p) => base * p / 100.0,
             Medida::Auto => si_auto,
+            Medida::Mixta(x, p) => x + base * p / 100.0,
         }
     }
 }

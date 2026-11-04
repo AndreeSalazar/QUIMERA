@@ -123,7 +123,7 @@ fn media_y_reglas_malas() {
            @media (max-width: 600px) { p { color: blue } }
            @media screen and (min-width: 700px) { p { text-align: right } }
            @media print { p { display: none } }
-           p { color: notacolor; margin: 1px 2px 3px 4px 5px; width: calc(10px + 1em) }
+           p { color: notacolor; margin: 1px 2px 3px 4px 5px; width: inventada(10px) }
          </style><p id=p>p</p>",
     );
     let p = de(&doc, &e, "p");
