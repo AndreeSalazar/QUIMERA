@@ -1,0 +1,636 @@
+{
+  "crates": [
+    {
+      "archivos": 1,
+      "capa": 3,
+      "lineas": 100,
+      "lo_usan": [],
+      "marcados": 7,
+      "nombre": "quimera-banco-frontend",
+      "ruta": "bancos/frontend",
+      "usa": [
+        "quimera-frontend"
+      ]
+    },
+    {
+      "archivos": 1,
+      "capa": 2,
+      "lineas": 192,
+      "lo_usan": [],
+      "marcados": 0,
+      "nombre": "quimera-banco-gc",
+      "ruta": "bancos/gc",
+      "usa": [
+        "quimera-gc",
+        "quimera-valor"
+      ]
+    },
+    {
+      "archivos": 1,
+      "capa": 2,
+      "lineas": 349,
+      "lo_usan": [],
+      "marcados": 0,
+      "nombre": "quimera-banco-imagen",
+      "ruta": "bancos/imagen",
+      "usa": [
+        "quimera-imagen"
+      ]
+    },
+    {
+      "archivos": 1,
+      "capa": 4,
+      "lineas": 343,
+      "lo_usan": [],
+      "marcados": 24,
+      "nombre": "quimera-banco-vm",
+      "ruta": "bancos/vm",
+      "usa": [
+        "quimera-frontend",
+        "quimera-vm"
+      ]
+    },
+    {
+      "archivos": 1,
+      "capa": 1,
+      "lineas": 223,
+      "lo_usan": [],
+      "marcados": 1,
+      "nombre": "quimera-banco-web",
+      "ruta": "bancos/web",
+      "usa": [
+        "quimera-css",
+        "quimera-html"
+      ]
+    },
+    {
+      "archivos": 3,
+      "capa": 0,
+      "lineas": 447,
+      "lo_usan": [
+        "quimera-imagen",
+        "quimera-texto",
+        "quimera-red"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-comprimir",
+      "ruta": "cimientos/comprimir",
+      "usa": []
+    },
+    {
+      "archivos": 1,
+      "capa": 0,
+      "lineas": 378,
+      "lo_usan": [
+        "quimera-banco-gc",
+        "quimera-gc",
+        "quimera-objetos",
+        "quimera-vm"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-valor",
+      "ruta": "cimientos/valor",
+      "usa": []
+    },
+    {
+      "archivos": 2,
+      "capa": 0,
+      "lineas": 772,
+      "lo_usan": [
+        "quimera-pintar",
+        "quimera-ventana"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-gpu",
+      "ruta": "grafico/gpu",
+      "usa": []
+    },
+    {
+      "archivos": 5,
+      "capa": 1,
+      "lineas": 1568,
+      "lo_usan": [
+        "quimera-banco-imagen",
+        "quimera-ventana"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-imagen",
+      "ruta": "grafico/imagen",
+      "usa": [
+        "quimera-comprimir",
+        "quimera-vector"
+      ]
+    },
+    {
+      "archivos": 2,
+      "capa": 3,
+      "lineas": 341,
+      "lo_usan": [
+        "quimera-ventana"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-pintar",
+      "ruta": "grafico/pintar",
+      "usa": [
+        "quimera-estilo",
+        "quimera-gpu",
+        "quimera-html",
+        "quimera-maquetacion",
+        "quimera-texto"
+      ]
+    },
+    {
+      "archivos": 2,
+      "capa": 1,
+      "lineas": 533,
+      "lo_usan": [
+        "quimera-pintar",
+        "quimera-ventana"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-texto",
+      "ruta": "grafico/texto",
+      "usa": [
+        "quimera-comprimir"
+      ]
+    },
+    {
+      "archivos": 5,
+      "capa": 0,
+      "lineas": 1232,
+      "lo_usan": [
+        "quimera-imagen",
+        "quimera-maquetacion"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-vector",
+      "ruta": "grafico/vector",
+      "usa": []
+    },
+    {
+      "archivos": 6,
+      "capa": 0,
+      "lineas": 881,
+      "lo_usan": [
+        "quimera-ventana",
+        "quimera-dom"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-video",
+      "ruta": "grafico/video",
+      "usa": []
+    },
+    {
+      "archivos": 8,
+      "capa": 0,
+      "lineas": 1508,
+      "lo_usan": [],
+      "marcados": 0,
+      "nombre": "quimera-guardianes",
+      "ruta": "herramientas/guardianes",
+      "usa": []
+    },
+    {
+      "archivos": 1,
+      "capa": 3,
+      "lineas": 146,
+      "lo_usan": [],
+      "marcados": 0,
+      "nombre": "quimera-ver",
+      "ruta": "herramientas/ver",
+      "usa": [
+        "quimera-estilo",
+        "quimera-html",
+        "quimera-maquetacion"
+      ]
+    },
+    {
+      "archivos": 10,
+      "capa": 2,
+      "lineas": 2608,
+      "lo_usan": [
+        "quimera-banco-frontend",
+        "quimera-banco-vm",
+        "quimera-vm"
+      ],
+      "marcados": 1,
+      "nombre": "quimera-frontend",
+      "ruta": "motor-js/frontend",
+      "usa": [
+        "quimera-parser"
+      ]
+    },
+    {
+      "archivos": 2,
+      "capa": 1,
+      "lineas": 702,
+      "lo_usan": [
+        "quimera-banco-gc",
+        "quimera-objetos",
+        "quimera-vm"
+      ],
+      "marcados": 3,
+      "nombre": "quimera-gc",
+      "ruta": "motor-js/gc",
+      "usa": [
+        "quimera-valor"
+      ]
+    },
+    {
+      "archivos": 6,
+      "capa": 2,
+      "lineas": 1508,
+      "lo_usan": [
+        "quimera-vm"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-objetos",
+      "ruta": "motor-js/objetos",
+      "usa": [
+        "quimera-gc",
+        "quimera-valor"
+      ]
+    },
+    {
+      "archivos": 13,
+      "capa": 1,
+      "lineas": 3347,
+      "lo_usan": [
+        "quimera-frontend"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-parser",
+      "ruta": "motor-js/parser",
+      "usa": [
+        "quimera-regex"
+      ]
+    },
+    {
+      "archivos": 7,
+      "capa": 0,
+      "lineas": 1838,
+      "lo_usan": [
+        "quimera-parser",
+        "quimera-vm",
+        "quimera-red"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-regex",
+      "ruta": "motor-js/regex",
+      "usa": []
+    },
+    {
+      "archivos": 28,
+      "capa": 3,
+      "lineas": 8373,
+      "lo_usan": [
+        "quimera-banco-vm",
+        "quimera-ventana",
+        "quimera-dom"
+      ],
+      "marcados": 2,
+      "nombre": "quimera-vm",
+      "ruta": "motor-js/vm",
+      "usa": [
+        "quimera-frontend",
+        "quimera-gc",
+        "quimera-objetos",
+        "quimera-regex",
+        "quimera-valor"
+      ]
+    },
+    {
+      "archivos": 18,
+      "capa": 5,
+      "lineas": 3720,
+      "lo_usan": [],
+      "marcados": 0,
+      "nombre": "quimera-ventana",
+      "ruta": "navegador/ventana",
+      "usa": [
+        "quimera-dom",
+        "quimera-estilo",
+        "quimera-gpu",
+        "quimera-html",
+        "quimera-imagen",
+        "quimera-maquetacion",
+        "quimera-pintar",
+        "quimera-red",
+        "quimera-texto",
+        "quimera-video",
+        "quimera-vm"
+      ]
+    },
+    {
+      "archivos": 13,
+      "capa": 1,
+      "lineas": 2832,
+      "lo_usan": [
+        "quimera-ventana"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-red",
+      "ruta": "red/red",
+      "usa": [
+        "quimera-comprimir",
+        "quimera-regex"
+      ]
+    },
+    {
+      "archivos": 8,
+      "capa": 0,
+      "lineas": 1768,
+      "lo_usan": [
+        "quimera-banco-web",
+        "quimera-dom",
+        "quimera-estilo",
+        "quimera-maquetacion"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-css",
+      "ruta": "web/css",
+      "usa": []
+    },
+    {
+      "archivos": 15,
+      "capa": 4,
+      "lineas": 5771,
+      "lo_usan": [
+        "quimera-ventana"
+      ],
+      "marcados": 1,
+      "nombre": "quimera-dom",
+      "ruta": "web/dom",
+      "usa": [
+        "quimera-css",
+        "quimera-html",
+        "quimera-video",
+        "quimera-vm"
+      ]
+    },
+    {
+      "archivos": 15,
+      "capa": 1,
+      "lineas": 3515,
+      "lo_usan": [
+        "quimera-pintar",
+        "quimera-ver",
+        "quimera-ventana",
+        "quimera-maquetacion"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-estilo",
+      "ruta": "web/estilo",
+      "usa": [
+        "quimera-css",
+        "quimera-html"
+      ]
+    },
+    {
+      "archivos": 9,
+      "capa": 0,
+      "lineas": 1846,
+      "lo_usan": [
+        "quimera-banco-web",
+        "quimera-pintar",
+        "quimera-ver",
+        "quimera-ventana",
+        "quimera-dom",
+        "quimera-estilo",
+        "quimera-maquetacion"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-html",
+      "ruta": "web/html",
+      "usa": []
+    },
+    {
+      "archivos": 19,
+      "capa": 2,
+      "lineas": 4490,
+      "lo_usan": [
+        "quimera-pintar",
+        "quimera-ver",
+        "quimera-ventana"
+      ],
+      "marcados": 0,
+      "nombre": "quimera-maquetacion",
+      "ruta": "web/maquetacion",
+      "usa": [
+        "quimera-css",
+        "quimera-estilo",
+        "quimera-html",
+        "quimera-vector"
+      ]
+    }
+  ],
+  "historia": {
+    "archivos": [
+      449,
+      741
+    ],
+    "commits": 67,
+    "desde": "2026-10-31",
+    "grandes": [
+      [
+        "motor-js/vm/tests/moderno.rs",
+        682
+      ],
+      [
+        "web/dom/src/pruebas.rs",
+        671
+      ],
+      [
+        "navegador/ventana/src/navegador.rs",
+        669
+      ],
+      [
+        "web/maquetacion/src/bloque.rs",
+        655
+      ],
+      [
+        "grafico/gpu/src/lib.rs",
+        651
+      ],
+      [
+        "web/estilo/src/propiedades.rs",
+        640
+      ],
+      [
+        "web/dom/src/lib.rs",
+        624
+      ],
+      [
+        "motor-js/parser/src/lexico.rs",
+        622
+      ],
+      [
+        "web/dom/src/puente.rs",
+        614
+      ],
+      [
+        "web/maquetacion/src/tabla.rs",
+        599
+      ]
+    ],
+    "hasta": "2026-11-04",
+    "lineas": [
+      361783,
+      570626
+    ],
+    "tocados": [
+      [
+        "navegador/ventana/src/main.rs",
+        24
+      ],
+      [
+        "motor-js/vm/src/nativas/mod.rs",
+        19
+      ],
+      [
+        "navegador/ventana/src/navegador.rs",
+        17
+      ],
+      [
+        "web/dom/src/lib.rs",
+        17
+      ],
+      [
+        "web/maquetacion/src/bloque.rs",
+        16
+      ],
+      [
+        "motor-js/vm/src/lib.rs",
+        15
+      ],
+      [
+        "web/dom/src/pruebas.rs",
+        15
+      ],
+      [
+        "motor-js/vm/src/propiedades.rs",
+        14
+      ],
+      [
+        "motor-js/vm/src/interprete.rs",
+        13
+      ],
+      [
+        "motor-js/objetos/src/mundo.rs",
+        12
+      ]
+    ]
+  },
+  "resumen": {
+    "analisis_ms": 17,
+    "archivos_indexados": 852,
+    "archivos_leidos": 210,
+    "cabeceras_exportadas": null,
+    "carpeta": "\\\\?\\C:\\Users\\Salazar\\Documents\\Chromiun personal",
+    "ciclos": {
+      "archivos": 0,
+      "dependen_de_un_if": 0,
+      "total": 0
+    },
+    "compile_commands": null,
+    "dependencias": 308,
+    "diagnosticos_gcc": 39,
+    "diagnosticos_marcados": {
+      "archivos": 8,
+      "sarif_del_proyecto": [
+        "guardianes.sarif"
+      ],
+      "total": 39
+    },
+    "fallo_conectado": {
+      "archivos_que_fallan": 1,
+      "causas": 1,
+      "se_pueden_romper": 1
+    },
+    "guardianes": null,
+    "megabytes": 2.0,
+    "recortado": false,
+    "reutilizados_de_la_cache": 210,
+    "revisiones_gcc": {
+      "archivos": 0,
+      "pendientes": 0
+    },
+    "siguiente": "fallos, ciclos o senales para ver lo peor; camino/peso/archivo para bajar a un archivo",
+    "sospechas": {
+      "Elegancia": 40,
+      "Rendimiento": 0,
+      "Seguridad": 2,
+      "a_proposito": 0
+    },
+    "version": 1
+  },
+  "vivo": {
+    "por_carpeta": [
+      [
+        "motor-js/vm",
+        523.7969
+      ],
+      [
+        "red/red",
+        91.4977
+      ],
+      [
+        "web/estilo",
+        13.2387
+      ],
+      [
+        "grafico/gpu",
+        3.2445999999999997
+      ],
+      [
+        "grafico/video",
+        2.7123
+      ],
+      [
+        "web/maquetacion",
+        1.0986
+      ],
+      [
+        "grafico/pintar",
+        0.0078
+      ]
+    ],
+    "trafico": [
+      [
+        "grafico/pintar",
+        "grafico/gpu",
+        12
+      ],
+      [
+        "motor-js/vm",
+        "red/red",
+        7
+      ],
+      [
+        "web/dom",
+        "motor-js/vm",
+        4
+      ],
+      [
+        "web/dom",
+        "web/estilo",
+        3
+      ],
+      [
+        "web/estilo",
+        "web/maquetacion",
+        3
+      ],
+      [
+        "web/maquetacion",
+        "grafico/pintar",
+        3
+      ],
+      [
+        "red/red",
+        "grafico/video",
+        1
+      ]
+    ]
+  }
+}

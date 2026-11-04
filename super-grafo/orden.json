@@ -1,0 +1,295 @@
+{
+  "posiciones": {
+    "Cargo.lock": [
+      336.0,
+      104.0
+    ],
+    "Cargo.toml": [
+      448.0,
+      104.0
+    ],
+    "LICENSE": [
+      784.0,
+      104.0
+    ],
+    "NOTICE": [
+      896.0,
+      104.0
+    ],
+    "README.md": [
+      0.0,
+      208.0
+    ],
+    "bancos": [
+      0.0,
+      0.0
+    ],
+    "cimientos": [
+      112.0,
+      0.0
+    ],
+    "datos-investigación": [
+      224.0,
+      0.0
+    ],
+    "docs": [
+      336.0,
+      0.0
+    ],
+    "grafico": [
+      448.0,
+      0.0
+    ],
+    "guardianes.sarif": [
+      560.0,
+      104.0
+    ],
+    "guardianes.toml": [
+      672.0,
+      104.0
+    ],
+    "herramientas": [
+      560.0,
+      0.0
+    ],
+    "motor-js": [
+      672.0,
+      0.0
+    ],
+    "navegador": [
+      784.0,
+      0.0
+    ],
+    "red": [
+      896.0,
+      0.0
+    ],
+    "rust-toolchain.toml": [
+      112.0,
+      208.0
+    ],
+    "rustfmt.toml": [
+      224.0,
+      208.0
+    ],
+    "super-grafo": [
+      0.0,
+      104.0
+    ],
+    "target": [
+      112.0,
+      104.0
+    ],
+    "web": [
+      224.0,
+      104.0
+    ]
+  },
+  "rejilla": false,
+  "bloqueada": false,
+  "grafo": {
+    "": [
+      -883.99994,
+      0.0
+    ],
+    "Cargo.lock": [
+      -476.0,
+      880.0
+    ],
+    "Cargo.toml": [
+      -476.0,
+      990.0
+    ],
+    "LICENSE": [
+      -476.0,
+      1100.0
+    ],
+    "NOTICE": [
+      -476.0,
+      1210.0
+    ],
+    "README.md": [
+      -476.0,
+      1320.0
+    ],
+    "bancos": [
+      -476.0,
+      0.0
+    ],
+    "bancos/frontend": [
+      1020.0,
+      0.0
+    ],
+    "bancos/gc": [
+      680.0,
+      0.0
+    ],
+    "bancos/imagen": [
+      680.0,
+      110.0
+    ],
+    "bancos/vm": [
+      1360.0,
+      0.0
+    ],
+    "bancos/web": [
+      340.0,
+      0.0
+    ],
+    "cimientos": [
+      -476.0,
+      110.0
+    ],
+    "cimientos/comprimir": [
+      0.0,
+      0.0
+    ],
+    "cimientos/valor": [
+      0.0,
+      110.0
+    ],
+    "datos-investigación": [
+      -476.0,
+      1430.0
+    ],
+    "docs": [
+      -476.0,
+      1540.0
+    ],
+    "grafico": [
+      -476.0,
+      220.0
+    ],
+    "grafico/gpu": [
+      0.0,
+      220.0
+    ],
+    "grafico/imagen": [
+      340.0,
+      110.0
+    ],
+    "grafico/pintar": [
+      1020.0,
+      110.0
+    ],
+    "grafico/texto": [
+      340.0,
+      220.0
+    ],
+    "grafico/vector": [
+      0.0,
+      330.0
+    ],
+    "grafico/video": [
+      0.0,
+      440.0
+    ],
+    "guardianes.toml": [
+      -476.0,
+      1650.0
+    ],
+    "herramientas": [
+      -476.0,
+      330.0
+    ],
+    "herramientas/guardianes": [
+      0.0,
+      550.0
+    ],
+    "herramientas/ver": [
+      1020.0,
+      220.0
+    ],
+    "motor-js": [
+      -476.0,
+      440.0
+    ],
+    "motor-js/frontend": [
+      680.0,
+      220.0
+    ],
+    "motor-js/gc": [
+      340.0,
+      330.0
+    ],
+    "motor-js/objetos": [
+      680.0,
+      330.0
+    ],
+    "motor-js/parser": [
+      340.0,
+      440.0
+    ],
+    "motor-js/regex": [
+      0.0,
+      660.0
+    ],
+    "motor-js/vm": [
+      1020.0,
+      330.0
+    ],
+    "navegador": [
+      -476.0,
+      550.0
+    ],
+    "navegador/ventana": [
+      1700.0,
+      0.0
+    ],
+    "red": [
+      -476.0,
+      660.0
+    ],
+    "red/red": [
+      340.0,
+      550.0
+    ],
+    "rust-toolchain.toml": [
+      -476.0,
+      1760.0
+    ],
+    "rustfmt.toml": [
+      -476.0,
+      1870.0
+    ],
+    "super-grafo": [
+      -476.0,
+      1980.0
+    ],
+    "web": [
+      -476.0,
+      770.0
+    ],
+    "web/css": [
+      0.0,
+      770.0
+    ],
+    "web/dom": [
+      1360.0,
+      110.0
+    ],
+    "web/estilo": [
+      340.0,
+      660.0
+    ],
+    "web/html": [
+      0.0,
+      880.0
+    ],
+    "web/maquetacion": [
+      680.0,
+      440.0
+    ]
+  },
+  "foco": "",
+  "desplegadas": [
+    "bancos",
+    "cimientos",
+    "grafico",
+    "herramientas",
+    "motor-js",
+    "navegador",
+    "red",
+    "web"
+  ]
+}

@@ -203,6 +203,10 @@ Una vez por copia del repositorio, para que cada commit pase por los guardianes:
 git config core.hooksPath .githooks
 ```
 
+## El mapa (SUPER GRAFO)
+
+[`super-grafo/MAPA.md`](super-grafo/MAPA.md) es QUIMERA en una página: sus 28 crates en 6 capas (por sus dependencias), quién usa a quién, los hallazgos de los guardianes, lo más grande, lo más tocado y su historia. Es lo primero que hay que leer para retomar el trabajo. Lo escribe [SUPER GRAFO](https://github.com/AndreeSalazar/ULTRA-LinuX) con «Save para SUPER GRAFO», que además guarda en `super-grafo/orden.json` el grafo organizado por capas y las carpetas desplegadas: al abrir QUIMERA en SUPER GRAFO, todo sale como se dejó.
+
 ## Los guardianes
 
 Ningún archivo pasa de 1000 líneas, un crate solo usa crates de niveles menores, `unsafe` solo donde se permite y siempre con `// SAFETY:`, y cada amarillo (unwrap, allow, TODO, funciones largas...) se revisa con un motivo. Un semáforo rojo/amarillo/verde lo muestra por crate y el commit no pasa con un rojo. Ver [docs/GUARDIANES.md](docs/GUARDIANES.md) y [docs/JERARQUIA.md](docs/JERARQUIA.md).
