@@ -24,8 +24,13 @@ quimera-red.workspace = true
 quimera-gpu.workspace = true
 quimera-imagen.workspace = true
 quimera-video.workspace = true
+quimera-vm.workspace = true
 winit = "=0.30.12"
 pollster = "=0.4.0"
+
+[features]
+# `QUIMERA_PERFIL=1`: qué funciones de JavaScript y qué instrucciones se llevan el tiempo.
+perfil = ["quimera-vm/perfil"]
 
 [lints]
 workspace = true

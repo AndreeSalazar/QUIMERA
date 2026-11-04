@@ -173,7 +173,7 @@ impl Maquetador<'_> {
         };
         // Su `height` en porcentaje va contra el alto de la caja de su antepasado posicionado.
         let base = self.alto_base.replace(ch);
-        let alto = estirado.unwrap_or_else(|| self.en_seco(|m| m.bloque_libre(p.id, 0.0, 0.0, exterior).alto));
+        let alto = estirado.unwrap_or_else(|| self.alto_libre(p.id, exterior));
         let y = match (arriba, abajo) {
             (Some(a), _) => cy + a + mt,
             (None, Some(b)) => cy + ch - b - mb - alto,

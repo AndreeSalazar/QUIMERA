@@ -136,7 +136,9 @@ impl Estado {
         self.medir_ya()
     }
 
-    /// Como [`Estado::medidas`], pero vuelve a maquetar si el elemento `id` no tenía caja.
+    /// Como [`Estado::medidas`], pero vuelve a maquetar si el elemento `id` no tenía caja y el
+    /// árbol cambió desde entonces: puede ser uno recién añadido o recién mostrado (un cambio de
+    /// clase). Wikipedia mide así sus botones, y con medidas viejas decidía otra cosa.
     pub(crate) fn medidas_de(&self, id: u32) -> Option<Rc<Medidas>> {
         let m = self.medidas()?;
         if self.medidas_sucias.get() && !m.cajas.contains_key(&id) {

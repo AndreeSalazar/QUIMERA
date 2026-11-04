@@ -326,6 +326,9 @@ fn maquetar_pagina(
         nuevas.into_iter().map(|s| (s.clone(), imagenes.tam(&s))).collect()
     };
     guion.adelantar(espera, &|p| peticiones::atender(cliente, &pagina.url, &pagina.base, p), &mut traer);
+    guiones::informe_medidor("temporizadores");
+    #[cfg(feature = "perfil")]
+    guion.informe_perfil("temporizadores");
     // `QUIMERA_GUION=archivo.js`: un guion propio tras la carga, para mirar la página por dentro.
     if let Some(codigo) = std::env::var("QUIMERA_GUION").ok().and_then(|f| std::fs::read_to_string(f).ok()) {
         guion.dom.ejecutar(&codigo);
@@ -334,6 +337,22 @@ fn maquetar_pagina(
     // El fotograma que toca en cada `<video>`.
     video::Videos::default().avanzar(&guion.dom, imagenes);
     let mut doc = guion.dom.documento().clone();
+    // `QUIMERA_VOLCAR=carpeta`: el árbol final y las hojas, para bancos de estilo y maquetación.
+    if let Some(carpeta) = std::env::var_os("QUIMERA_VOLCAR") {
+        let carpeta = std::path::PathBuf::from(carpeta);
+        let mut html = String::new();
+        doc.escribir_html(quimera_html::Documento::RAIZ, &mut html);
+        let _ = std::fs::write(carpeta.join("pagina.html"), html);
+        let mut lista = String::new();
+        for (i, (href, css)) in pagina.hojas.iter().enumerate() {
+            let _ = std::fs::write(carpeta.join(format!("hoja{i}.css")), css);
+            lista.push_str(&format!(
+                "hoja{i}.css	{href}
+"
+            ));
+        }
+        let _ = std::fs::write(carpeta.join("hojas.txt"), lista);
+    }
     // Las imágenes que añadieron los scripts.
     let nuevas = imagenes.nuevas(&doc);
     esperar_imagenes(cliente, &pagina.base, nuevas, imagenes);

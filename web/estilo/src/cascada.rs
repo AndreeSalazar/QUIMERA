@@ -7,6 +7,7 @@
 //! Las reglas se indexan por la parte derecha de su selector (id, primera clase o etiqueta),
 //! como hace Stylo: cada elemento solo se prueba contra las reglas que pueden casar con él.
 
+use crate::antepasados::Filtro;
 use crate::elemento::Nodo;
 use crate::medios;
 use crate::propiedades::{self, Contexto};
@@ -44,6 +45,8 @@ struct Entrada<'h> {
     origen: u8,
     especificidad: (u32, u32, u32),
     orden: u32,
+    /// Lo que pide a los antepasados (ver `antepasados.rs`).
+    antepasados: Filtro,
 }
 
 /// Las reglas de todas las hojas, indexadas.
@@ -57,6 +60,11 @@ struct Indice<'h> {
 
 impl<'h> Indice<'h> {
     fn nuevo(hojas: &'h [(u8, Rc<Hoja>)], op: &Opciones) -> Indice<'h> {
+        Indice::nuevo_con(hojas, op, |_| true)
+    }
+
+    /// Solo con los selectores que cumplen `incluir` (los de pseudoelementos, por ejemplo).
+    fn nuevo_con(hojas: &'h [(u8, Rc<Hoja>)], op: &Opciones, incluir: fn(&Selector) -> bool) -> Indice<'h> {
         let mut ind = Indice {
             entradas: Vec::new(),
             por_id: BTreeMap::new(),
@@ -67,14 +75,14 @@ impl<'h> Indice<'h> {
         for (origen, hoja) in hojas {
             let medios = hoja.medios.iter().filter(|m| medios::cumple(&m.condicion, op)).flat_map(|m| m.reglas.iter());
             for regla in hoja.reglas.iter().chain(medios) {
-                ind.anadir(*origen, regla);
+                ind.anadir(*origen, regla, incluir);
             }
         }
         ind
     }
 
-    fn anadir(&mut self, origen: u8, regla: &'h Regla) {
-        for selector in &regla.selectores {
+    fn anadir(&mut self, origen: u8, regla: &'h Regla, incluir: fn(&Selector) -> bool) {
+        for selector in regla.selectores.iter().filter(|s| incluir(s)) {
             let i = self.entradas.len();
             self.entradas.push(Entrada {
                 selector,
@@ -82,6 +90,7 @@ impl<'h> Indice<'h> {
                 origen,
                 especificidad: selector.especificidad(),
                 orden: i as u32,
+                antepasados: Filtro::de_selector(selector),
             });
             let Some(derecha) = selector.partes.last() else { continue };
             if let Some(id) = derecha.ids.first() {
@@ -118,7 +127,13 @@ impl<'h> Indice<'h> {
         juntar(self.por_etiqueta.get(el.nombre.as_str()));
         candidatas.sort_unstable();
         candidatas.dedup();
-        candidatas.into_iter().map(|i| &self.entradas[i]).filter(|en| en.selector.casa(e)).collect()
+        // Primero el filtro de antepasados (barato); solo lo que pasa se comprueba de verdad.
+        let filtro = Filtro::de_elemento(e.doc, e.id);
+        candidatas
+            .into_iter()
+            .map(|i| &self.entradas[i])
+            .filter(|en| filtro.contiene(&en.antepasados) && en.selector.casa(e))
+            .collect()
     }
 }
 
@@ -140,9 +155,9 @@ fn hojas(doc: &Documento, externa: &dyn Fn(&str) -> Option<String>, cache: &Cach
         if e.nombre == "link"
             && es_hoja
             && !alternativa
-            && let Some(texto) = e.atributo("href").and_then(externa)
+            && let Some(hoja) = e.atributo("href").and_then(|h| cache.enlazada(h, externa))
         {
-            v.push((1, cache.analizada(&texto)));
+            v.push((1, hoja));
         }
     }
     v
@@ -154,6 +169,9 @@ fn hojas(doc: &Documento, externa: &dyn Fn(&str) -> Option<String>, cache: &Cach
 pub struct CacheHojas {
     /// (huella, longitud, hoja), la más reciente al final.
     hojas: RefCell<Vec<(u64, usize, Rc<Hoja>)>>,
+    /// Las hojas enlazadas por su `href` (dentro de una página, siempre el mismo texto): así no
+    /// se copia ni se recorre su texto en cada cálculo (la de YouTube pasa de 3 MB).
+    enlazadas: RefCell<BTreeMap<String, Option<Rc<Hoja>>>>,
 }
 
 /// Cuántas hojas distintas guarda como mucho.
@@ -176,6 +194,16 @@ impl CacheHojas {
         hojas.push((huella, texto.len(), hoja.clone()));
         hoja
     }
+
+    /// La hoja enlazada con `href` (su texto lo da `externa` la primera vez).
+    fn enlazada(&self, href: &str, externa: &dyn Fn(&str) -> Option<String>) -> Option<Rc<Hoja>> {
+        if let Some(h) = self.enlazadas.borrow().get(href) {
+            return h.clone();
+        }
+        let hoja = externa(href).map(|t| self.analizada(&t));
+        self.enlazadas.borrow_mut().insert(String::from(href), hoja.clone());
+        hoja
+    }
 }
 
 /// Los `::before` y `::after` con `content`: mete en `doc` un hijo sintético (`::before` al
@@ -189,15 +217,22 @@ pub(crate) fn anadir_seudoelementos(
     cache: &CacheHojas,
 ) {
     let hojas = hojas(doc, externa, cache);
-    let indice = Indice::nuevo(&hojas, op);
+    // Solo las reglas de `::before` y `::after`: muy pocas al lado de las demás.
+    let indice = Indice::nuevo_con(&hojas, op, |s| s.seudoelemento().is_some());
+    if indice.entradas.is_empty() {
+        return;
+    }
     let elementos: Vec<NodoId> = doc
         .descendientes(Documento::RAIZ)
         .filter(|&id| doc.elemento(id).is_some_and(|e| !e.nombre.starts_with("::")))
         .collect();
     let mut nuevos: Vec<(NodoId, bool, String)> = Vec::new();
     for id in elementos {
+        // Los antepasados del pseudoelemento son el elemento y los suyos.
+        let mut filtro = None;
         for (antes, nombre) in [(true, "before"), (false, "after")] {
-            if let Some(texto) = indice.contenido(Nodo { doc, id }, nombre) {
+            let f = *filtro.get_or_insert_with(|| Filtro::de_elemento_y_antepasados(doc, id));
+            if let Some(texto) = indice.contenido(Nodo { doc, id }, nombre, &f) {
                 nuevos.push((id, antes, texto));
             }
         }
@@ -215,7 +250,7 @@ pub(crate) fn anadir_seudoelementos(
 
 impl Indice<'_> {
     /// El `content` del pseudoelemento `nombre` de `e`, si alguna regla lo pone.
-    fn contenido(&self, e: Nodo<'_>, nombre: &str) -> Option<String> {
+    fn contenido(&self, e: Nodo<'_>, nombre: &str, filtro: &Filtro) -> Option<String> {
         let el = e.doc.elemento(e.id)?;
         let mut candidatas: Vec<usize> = self.resto.clone();
         let mut juntar = |v: Option<&Vec<usize>>| candidatas.extend(v.into_iter().flatten());
@@ -231,7 +266,7 @@ impl Indice<'_> {
             .map(|i| &self.entradas[i])
             .filter(|en| en.selector.seudoelemento() == Some(nombre))
             .filter_map(|en| en.declaraciones.iter().rev().find(|d| d.propiedad == "content").map(|d| (en, d)))
-            .filter(|(en, _)| en.selector.casa_origen(e))
+            .filter(|(en, _)| filtro.contiene(&en.antepasados) && en.selector.casa_origen(e))
             .max_by_key(|(en, d)| (d.importante, en.especificidad, en.orden))?;
         texto_de_content(&mejor.1.valor, el)
     }
@@ -558,3 +593,6 @@ fn calcular_valores(
     }
     e
 }
+
+#[cfg(test)]
+mod banco;

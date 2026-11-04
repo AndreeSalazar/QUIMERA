@@ -203,7 +203,7 @@ impl<'a> Maquetador<'a> {
             Some(f) => f,
             None => {
                 let ancho = self.ancho_en_columna(h, c, x);
-                self.en_seco(|m| m.bloque_libre(h, 0.0, 0.0, ancho).alto)
+                self.alto_libre(h, ancho)
             }
         };
         (natural, if fijo.is_some() { 0.0 } else { natural })
@@ -249,7 +249,7 @@ impl<'a> Maquetador<'a> {
                 x.cruz = match x.que {
                     Que::Nodo(h) if c.fila => {
                         let ancho = x.exterior();
-                        self.en_seco(|m| m.bloque_libre(h, 0.0, 0.0, ancho).alto)
+                        self.alto_libre(h, ancho)
                     }
                     Que::Nodo(h) => {
                         let ancho = self.ancho_en_columna(h, c, x);
@@ -350,6 +350,22 @@ impl<'a> Maquetador<'a> {
         self.absolutos.truncate(abs);
         self.capas.truncate(capas);
         r
+    }
+
+    /// El alto de `h` maquetado en seco con `ancho` exterior (como [`Maquetador::bloque_libre`]).
+    /// Se recuerda durante toda la maquetación: sin esto, cada nivel de flex anidado volvía a
+    /// medir todo lo de dentro, y el coste crecía como 2^profundidad (en YouTube, más de medio
+    /// segundo por maquetación). La clave lleva lo que cambia el resultado: el ancho, el alto de
+    /// su contenedor (para los porcentajes) y el alto que se le impone.
+    pub(crate) fn alto_libre(&mut self, h: NodoId, ancho: f32) -> f32 {
+        let forzado = self.alto_forzado.filter(|(n, _)| *n == h).map_or(u32::MAX, |(_, a)| a.to_bits());
+        let clave = (h.0, ancho.to_bits(), self.alto_base.map_or(u32::MAX, f32::to_bits), forzado);
+        if let Some(&alto) = self.altos_en_seco.get(&clave) {
+            return alto;
+        }
+        let alto = self.en_seco(|m| m.bloque_libre(h, 0.0, 0.0, ancho).alto);
+        self.altos_en_seco.insert(clave, alto);
+        alto
     }
 
     /// `bloque()` sin el `width` propio del elemento: ocupa el ancho exterior que se le da.

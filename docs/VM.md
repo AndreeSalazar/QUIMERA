@@ -91,6 +91,8 @@ Cómo se llegó a los 7 benchmarks de Boa:
 - **Megamórfico.** Con 4 stubs, el sitio deja de aprender (como SpiderMonkey) y va por el camino lento.
 - Las formas de la cadena de cada stub van en una tabla compartida: la profundidad no tiene límite y un stub corto no ocupa lo de uno largo.
 
+**Perfil por funciones.** Con la característica `perfil`, cada instrucción suma también a su función, y `Motor::informe_funciones` da las más costosas con su nombre y su sitio (`nombre (archivo:línea:columna)`). La ventana lo saca con `--features perfil` y `QUIMERA_PERFIL=1`, tras los scripts y tras los temporizadores. En YouTube mostró que lo caro no era el intérprete: era `getBoundingClientRect`, que obligaba a maquetar la página entera (ver ESTILO-MAQUETACION.md, «Velocidad con una página de verdad»).
+
 **Lo que mostró el perfil** (`cargo run --release -p quimera-banco-vm --features perfil -- script.js`, que cuenta y cronometra cada tipo de instrucción, descontando lo que se ejecuta dentro de otra): en QUIMERA, buscar propiedades **ya no era lo que más pesaba**, al revés que en Boa. Los stubs solos subieron la media de 3,44× a 3,51×. Lo demás salió del perfil:
 
 1. **Aritmética rápida.** Dos números se operan sin comprobar si hay objetos (`valueOf`) o textos (`+` que concatena). Además, `*`, `&`, `|`, `^`, `<<`, `>>` y `>>>` llevan el entero dentro de la instrucción, no solo `+` y `-`. Crypto: de 2,28× a 3,24×.

@@ -9,6 +9,13 @@ use quimera_dom::Dom;
 use std::time::Instant;
 
 /// La hora para `Date`: milisegundos desde 1970.
+/// Nanosegundos desde que arrancó el programa (el cronómetro del perfil).
+#[cfg(feature = "perfil")]
+fn nanos() -> u64 {
+    static ARRANQUE: std::sync::OnceLock<Instant> = std::sync::OnceLock::new();
+    ARRANQUE.get_or_init(Instant::now).elapsed().as_nanos() as u64
+}
+
 fn reloj() -> f64 {
     let ahora = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH);
     ahora.map_or(0.0, |d| d.as_secs_f64() * 1e3)
@@ -32,6 +39,31 @@ fn entropia(bytes: &mut [u8]) {
 /// Tiempo y veces del medidor (para `QUIMERA_VIDEO`).
 pub static MEDIDOR_NS: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
 pub static MEDIDOR_VECES: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+/// Nanosegundos del medidor por parte: copiar el árbol, pseudoelementos, estilos y maquetación.
+pub static MEDIDOR_PARTES: [std::sync::atomic::AtomicU64; 4] = [const { std::sync::atomic::AtomicU64::new(0) }; 4];
+
+/// Con `QUIMERA_TIEMPOS`: cuánto se llevó el medidor desde el informe anterior, y en qué.
+pub fn informe_medidor(que: &str) {
+    if std::env::var_os("QUIMERA_TIEMPOS").is_none() {
+        return;
+    }
+    use std::sync::atomic::Ordering;
+    let medidor = MEDIDOR_NS.swap(0, Ordering::Relaxed) as f64 / 1e6;
+    let veces = MEDIDOR_VECES.swap(0, Ordering::Relaxed);
+    let parte = |i: usize| MEDIDOR_PARTES[i].swap(0, Ordering::Relaxed) as f64 / 1e6;
+    eprintln!(
+        "tiempos: medidor ({que}) {medidor:.0} ms en {veces} veces: copiar {:.0}, pseudoelementos {:.0}, estilos {:.0}, maquetar {:.0}",
+        parte(0),
+        parte(1),
+        parte(2),
+        parte(3)
+    );
+}
+
+fn sumar_parte(i: usize, desde: Instant) -> Instant {
+    MEDIDOR_PARTES[i].fetch_add(desde.elapsed().as_nanos() as u64, std::sync::atomic::Ordering::Relaxed);
+    Instant::now()
+}
 struct Cronometro(Instant);
 impl Cronometro {
     fn nuevo() -> Cronometro {
@@ -57,10 +89,15 @@ fn medidor(pagina: &Pagina, (ancho, alto): (f32, f32)) -> quimera_dom::Medir {
         let externa = |h: &str| hojas.iter().find(|(x, _)| x == h).map(|(_, css)| css.clone());
         let op = quimera_estilo::Opciones { ancho, alto };
         // Con sus `::before`/`::after` (en una copia: el DOM de la página no los tiene).
+        let t = Instant::now();
         let mut doc = doc.clone();
+        let t = sumar_parte(0, t);
         quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &cache);
+        let t = sumar_parte(1, t);
         let estilos = quimera_estilo::calcular_con_cache(&doc, &op, &externa, &cache);
+        let t = sumar_parte(2, t);
         let m = quimera_maquetacion::maquetar(&doc, &estilos, &quimera_maquetacion::Aproximado, ancho, alto);
+        sumar_parte(3, t);
         let cajas = m.cajas.into_iter().map(|(id, c)| (id.0, c)).collect();
         quimera_dom::Medidas { cajas, ventana: (ancho, alto) }
     })
@@ -86,22 +123,45 @@ impl Guion {
             dom.motor.anotar_lanzados();
         }
         dom.con_medidas(vista, medidor(pagina, vista));
+        #[cfg(feature = "perfil")]
+        if std::env::var_os("QUIMERA_PERFIL").is_some() {
+            dom.motor.perfilar(nanos);
+        }
         let antes = Instant::now();
         dom.ejecutar_scripts(&|src| pagina.script(src));
         if std::env::var_os("QUIMERA_TIEMPOS").is_some() {
-            use std::sync::atomic::Ordering;
-            let medidor = MEDIDOR_NS.swap(0, Ordering::Relaxed) as f64 / 1e6;
-            let veces = MEDIDOR_VECES.swap(0, Ordering::Relaxed);
             eprintln!(
-                "tiempos: DOM {:.0} ms, ejecutar scripts {:.0} ms (medidor {medidor:.0} ms en {veces} veces)",
+                "tiempos: DOM {:.0} ms, ejecutar scripts {:.0} ms",
                 (antes - inicio).as_secs_f64() * 1e3,
                 antes.elapsed().as_secs_f64() * 1e3
             );
+            informe_medidor("scripts");
         }
         let mut g = Guion { dom, inicio };
+        #[cfg(feature = "perfil")]
+        g.informe_perfil("scripts");
         g.informar();
         eprintln!("{}: scripts en {:.1} ms", pagina.url, inicio.elapsed().as_secs_f64() * 1e3);
         g
+    }
+
+    /// Con `QUIMERA_PERFIL=1` (y la característica `perfil`): las funciones y las instrucciones
+    /// que más tiempo se llevaron desde el informe anterior.
+    #[cfg(feature = "perfil")]
+    pub fn informe_perfil(&mut self, que: &str) {
+        if std::env::var_os("QUIMERA_PERFIL").is_none() {
+            return;
+        }
+        let m = &mut self.dom.motor;
+        eprintln!("perfil ({que}): funciones");
+        for (f, veces, ns) in m.informe_funciones(30) {
+            eprintln!("  {:>8.1} ms {:>10} instr  {f}", ns as f64 / 1e6, veces);
+        }
+        eprintln!("perfil ({que}): instrucciones");
+        for (i, veces, ns) in m.informe_perfil().into_iter().take(15) {
+            eprintln!("  {:>8.1} ms {:>10}  {i}", ns as f64 / 1e6, veces);
+        }
+        m.reiniciar_perfil();
     }
 
     /// Milisegundos desde que llegó la página.

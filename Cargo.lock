@@ -2317,6 +2317,7 @@ dependencies = [
  "quimera-red",
  "quimera-texto",
  "quimera-video",
+ "quimera-vm",
  "winit",
 ]
 

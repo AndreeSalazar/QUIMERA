@@ -485,7 +485,7 @@ impl<'a> Maquetador<'a> {
             .map(|(k, c)| {
                 let ancho = tramo(w, hc, c.col, c.cols);
                 let previo = core::mem::replace(&mut self.bordes_celda, cb.map(|cb| (c.id, mitades(&cb[k]))));
-                let alto = self.en_seco(|m| m.bloque_libre(c.id, 0.0, 0.0, ancho).alto);
+                let alto = self.alto_libre(c.id, ancho);
                 self.bordes_celda = previo;
                 alto
             })

@@ -14,8 +14,10 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use quimera_css::Token;
 
-/// Nombre (`--x`, distingue mayúsculas) → valor ya resuelto.
-pub type Variables = BTreeMap<String, Vec<Token>>;
+/// Nombre (`--x`, distingue mayúsculas) → valor ya resuelto. Nombres y valores van en `Rc`:
+/// un elemento que declara una variable copia el mapa de su padre, y en YouTube son cientos.
+/// Así la copia son punteros, no textos.
+pub type Variables = BTreeMap<Rc<str>, Rc<[Token]>>;
 
 /// Cuántas `var()` dentro de `var()` se siguen como mucho.
 const PROFUNDIDAD: u8 = 16;
@@ -76,12 +78,12 @@ pub(crate) fn sustituir(v: &[Token], vars: &Variables, profundidad: u8) -> Optio
             Some(c) => (recortar(&dentro[..c]), Some(recortar(&dentro[c + 1..]))),
             None => (recortar(dentro), None),
         };
-        let valor = match (nombre, reserva) {
-            ([Token::Ident(n)], _) if vars.contains_key(n) => vars.get(n).cloned(),
-            (_, Some(r)) => Some(r.to_vec()),
-            _ => None,
-        }?;
-        salida.extend(sustituir(&valor, vars, profundidad - 1)?);
+        let valor: &[Token] = match (nombre, reserva) {
+            ([Token::Ident(n)], _) if vars.contains_key(n.as_str()) => vars.get(n.as_str()).map(|v| &v[..])?,
+            (_, Some(r)) => r,
+            _ => return None,
+        };
+        salida.extend(sustituir(valor, vars, profundidad - 1)?);
         i = fin + 1;
     }
     Some(salida)
@@ -93,24 +95,26 @@ pub(crate) fn del_elemento(padre: &Rc<Variables>, propias: Vec<(String, Vec<Toke
     if propias.is_empty() {
         return padre.clone();
     }
-    let mut crudas: Variables = (**padre).clone();
-    let nombres: Vec<String> = propias.iter().map(|(n, _)| n.clone()).collect();
-    for (nombre, valor) in propias {
-        crudas.insert(nombre, valor);
+    // Una sola copia (de punteros): primero con los valores tal cual, luego se resuelven las
+    // propias que usan `var()` contra ese mapa (como si se resolvieran a la vez).
+    let mut mapa: Variables = (**padre).clone();
+    let propias: Vec<(Rc<str>, Rc<[Token]>)> = propias.into_iter().map(|(n, v)| (Rc::from(n), Rc::from(v))).collect();
+    for (nombre, valor) in &propias {
+        mapa.insert(nombre.clone(), valor.clone());
     }
-    let mut resueltas = crudas.clone();
-    for nombre in nombres {
-        let Some(valor) = crudas.get(&nombre) else { continue };
-        if !tiene_var(valor) {
-            continue;
-        }
+    let resueltas: Vec<(Rc<str>, Option<Vec<Token>>)> = propias
+        .iter()
+        .filter(|(n, _)| mapa.get(n).is_some_and(|v| tiene_var(v)))
+        .map(|(n, _)| (n.clone(), mapa.get(n).and_then(|v| sustituir(v, &mapa, PROFUNDIDAD))))
+        .collect();
+    for (nombre, valor) in resueltas {
         // Inválida (no existe lo que usa, o un ciclo): la variable queda sin valor.
-        match sustituir(valor, &crudas, PROFUNDIDAD) {
-            Some(v) => _ = resueltas.insert(nombre, v),
-            None => _ = resueltas.remove(&nombre),
+        match valor {
+            Some(v) => _ = mapa.insert(nombre, Rc::from(v)),
+            None => _ = mapa.remove(&nombre),
         }
     }
-    Rc::new(resueltas)
+    Rc::new(mapa)
 }
 
 /// El valor de una declaración con sus `var()` sustituidas (`unset` si alguna no tiene valor).

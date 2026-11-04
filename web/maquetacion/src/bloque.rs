@@ -45,6 +45,9 @@ pub(crate) struct Maquetador<'a> {
     /// El alto de contenido definido del bloque contenedor: contra él se resuelven los
     /// `height` en porcentaje (sin él, cuentan como `auto`).
     pub alto_base: Option<f32>,
+    /// Altos ya medidos en seco: (nodo, ancho, alto base, alto impuesto) → alto (ver
+    /// `Maquetador::alto_libre`).
+    pub altos_en_seco: alloc::collections::BTreeMap<(u32, u32, u32, u32), f32>,
     /// Bordes (arriba, derecha, abajo, izquierda) que ocupa este elemento en vez de los suyos, sin
     /// dibujarlos: las celdas de una tabla con bordes que colapsan (los dibuja la tabla).
     pub bordes_celda: Option<(NodoId, [f32; 4])>,
@@ -120,6 +123,7 @@ impl<'a> Maquetador<'a> {
             ancho_libre: None,
             alto_forzado: None,
             alto_base: None,
+            altos_en_seco: alloc::collections::BTreeMap::new(),
             bordes_celda: None,
             flotantes: Vec::new(),
             capa_flotantes: Vec::new(),

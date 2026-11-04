@@ -213,6 +213,26 @@ La maquetación anota la caja de borde de cada bloque (`Maquetacion::cajas`), qu
 
 **Comprobado** (`docs/ejemplos/controles.html`, sin texto): tres cajas de alto distinto sobre la misma línea base, una que se encoge a su contenido, una que baja de línea, controles con medidas fijas y casillas con sus márgenes. Las mismas posiciones que Chromium en 13 cajas y 2 casillas.
 
+## Velocidad con una página de verdad
+
+Medido con la página de vídeo de YouTube: unos 9.200 nodos, 21 hojas y 29.845 reglas. Su JavaScript lee medidas a menudo, y cada lectura tras un cambio vuelve a calcular estilo y maquetación. Para medirlo:
+
+- `QUIMERA_TIEMPOS=1` da el desglose por fases, también el del medidor: copiar el árbol, pseudoelementos, estilo y maquetación.
+- `QUIMERA_VOLCAR=carpeta` guarda el árbol final y las hojas.
+- Con esa carpeta en `QUIMERA_BANCO_ESTILO`, la prueba `cascada::banco` cronometra el estilo por dentro.
+
+Lo que se encontró y cómo se arregló:
+
+1. **La maquetación medía en seco de forma exponencial.** Para saber el alto de un elemento flexible (o flotante, posicionado o de tabla) se maquetaba entero en seco y después de verdad, en cada nivel: un elemento a diez niveles de flex se maquetaba del orden de 2¹⁰ veces. Ahora `alto_libre` recuerda cada medida en seco durante la maquetación, con clave nodo, ancho, alto base y alto impuesto. Una maquetación de YouTube pasó de ~565 ms a ~9 ms.
+2. **Filtro de antepasados** (`antepasados.rs`, un *bloom filter* como el de Blink y Stylo). Cada elemento lleva 256 bits con la etiqueta, el id y las clases de sus antepasados, y cada regla, los bits de lo que pide a los suyos. Una regla que pide algo que no está se descarta sin recorrer el árbol. Nunca descarta una que casa.
+3. **Variables con `Rc`.** Un elemento que declara una `--x` copia el mapa de variables de su padre, que en YouTube tiene cientos. Antes eran dos copias a fondo de textos y tokens; ahora es una sola copia de punteros.
+4. **Hojas enlazadas por su `href`.** Antes cada cálculo copiaba y recorría el texto de cada hoja (la de YouTube pasa de 3 MB) para encontrarla en la caché.
+5. **Pseudoelementos con su propio índice**: solo las reglas con `::before` o `::after`, y con el filtro de antepasados.
+
+**Resultado.** El estilo de toda la página pasa de 130 a 54 ms. En una captura de 8 s de la página de vídeo, el medidor pasa de 92 s (136 mediciones) a 12 s (187 mediciones, porque ahora un elemento sin caja siempre se vuelve a medir), y la captura entera, de unos dos minutos a 53 s.
+
+**Siguiente:** guardar el índice de reglas entre cálculos (13 ms) y calcular solo el estilo de lo que cambió.
+
 ## Siguiente
 
 1. **Velocidad del estilo** con páginas grandes (filtro de Bloom de antepasados, estilos compartidos).

@@ -95,7 +95,7 @@ impl Maquetador<'_> {
             m => m.px(ancho, 0.0) - e.extras_si_caja_borde(ancho) + extras_horizontales(e),
         };
         let exterior = ancho_borde + ml + mr;
-        let alto = self.en_seco(|m| m.bloque_libre(id, 0.0, 0.0, exterior).alto) + mt + mb;
+        let alto = self.alto_libre(id, exterior) + mt + mb;
         // Nunca por encima de un flotante anterior; con `clear`, debajo de los de ese lado.
         let y = self.flotantes.iter().map(|f| f.y).fold(y, f32::max);
         let y = debajo(&self.flotantes, e.limpiar, y);

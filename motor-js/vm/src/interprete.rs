@@ -41,7 +41,7 @@ impl Motor {
                 let inicio = self.perfil.ahora();
                 let resultado = self.paso(ins, fi, base, pc);
                 #[cfg(feature = "perfil")]
-                self.perfil.anotar(&ins, inicio);
+                self.perfil.anotar(&ins, fi, inicio);
                 match resultado {
                     Ok(Flujo::Sigue) => pc += 1,
                     Ok(Flujo::Salta(d)) => {
