@@ -29,6 +29,7 @@ mod perfil;
 mod peticiones;
 mod png;
 mod tipografias;
+mod trazas;
 mod video;
 
 use imagenes::Imagenes;

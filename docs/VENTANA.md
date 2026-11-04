@@ -59,6 +59,16 @@ Así el vídeo de YouTube va a 30 fotogramas por segundo aunque un script de la 
 
 Con `QUIMERA_RUEDA=1`, el compositor dice cuánto tardó en pintar cada giro de rueda. Con YouTube cargando (2,8 s de scripts en ese rato) y 120 giros mandados a la ventana: 0,5 ms de mediana, 17 ms el percentil 95 y 26 ms el peor. Antes, un giro durante un script esperaba lo que tardara el script (hasta unos 3 s).
 
+## Trazas en vivo (SUPER GRAFO)
+
+Con `QUIMERA_VIVO=.super-grafo-vivo.jsonl` (`trazas.rs`), cada tramo de trabajo escribe al terminar una línea JSON: qué carpeta del código trabajó, cuánto (µs), cuándo y de dónde venía el trabajo. Por ejemplo, `{"t":1234.5,"ruta":"web/estilo","us":5400,"desde":"web/dom"}`. Están medidos la red (`red/red`), el HTML (`web/html`), el JavaScript (`motor-js/vm`, también sus temporizadores), el estilo, la maquetación, el pintor, la decodificación de imágenes y vídeo y el dibujo en la GPU. Sin la variable no se mide nada. Lo de menos de 20 µs no se escribe.
+
+[SUPER GRAFO](https://github.com/AndreeSalazar/ULTRA-LinuX), abierto en esta carpeta con «Ver en vivo» (o `--vivo`), sigue el archivo mientras crece. Enciende en su Ciudad las carpetas que trabajan y dibuja el tráfico entre ellas, de dom a estilo, maquetación, pintar y GPU. Con YouTube cargando, en 40 s salen unas 1000 trazas: el JavaScript se lleva 370 ms por segundo, el estilo 162 y la maquetación 113.
+
+```powershell
+$env:QUIMERA_VIVO = ".super-grafo-vivo.jsonl"; .\target\release\quimera-ventana.exe https://www.youtube.com/
+```
+
 ## Las piezas
 
 | Crate | Nivel | Qué hace | Crates de fuera |

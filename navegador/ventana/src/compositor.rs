@@ -164,12 +164,16 @@ fn bucle(gpu: Gpu, rx: &Receiver<Orden>) {
         for o in primera.into_iter().chain(rx.try_iter()) {
             sucio |= p.aplicar(o);
         }
-        sucio |= p.avanzar_videos();
-        if sucio
-            && p.listo
-            && let Err(e) = p.gpu.dibujar(p.fondo, p.desp)
-        {
-            eprintln!("no se pudo dibujar: {e}");
+        let t_video = Instant::now();
+        if p.avanzar_videos() {
+            sucio = true;
+            crate::trazas::hecho("grafico/video", Some("red/red"), t_video, t_video.elapsed().as_micros() as u64);
+        }
+        if sucio && p.listo {
+            let _t = crate::trazas::tramo("grafico/gpu", Some("grafico/pintar"));
+            if let Err(e) = p.gpu.dibujar(p.fondo, p.desp) {
+                eprintln!("no se pudo dibujar: {e}");
+            }
         }
         if sucio
             && let Some(cuando) = p.rueda.take()

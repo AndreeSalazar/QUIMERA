@@ -6,4 +6,6 @@
 __pycache__/
 # Lo escriben los guardianes con --sarif (lo lee SUPER GRAFO).
 guardianes.sarif
+# Las trazas en vivo (QUIMERA_VIVO) que lee SUPER GRAFO.
+.super-grafo-vivo.jsonl
 *.pyc

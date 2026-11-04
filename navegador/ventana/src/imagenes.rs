@@ -84,7 +84,13 @@ pub fn decodificar_aparte<F>(id: u32, bytes: Arc<Vec<u8>>, avisar: F)
 where
     F: FnOnce(u32, Result<Imagen, String>) + Send + 'static,
 {
-    std::thread::spawn(move || avisar(id, quimera_imagen::decodificar(&bytes).map_err(|e| e.to_string())));
+    std::thread::spawn(move || {
+        let imagen = {
+            let _t = crate::trazas::tramo("grafico/imagen", Some("red/red"));
+            quimera_imagen::decodificar(&bytes).map_err(|e| e.to_string())
+        };
+        avisar(id, imagen)
+    });
 }
 
 /// Los `src` de las imágenes de la maquetación que caen entre `desde` y `hasta` (en píxeles

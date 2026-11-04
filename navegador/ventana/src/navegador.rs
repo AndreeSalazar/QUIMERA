@@ -161,7 +161,10 @@ impl Navegador {
         self.barra.editando = false;
         let (id, cliente, proxy) = (self.id_carga, self.cliente.clone(), self.proxy.clone());
         std::thread::spawn(move || {
-            let pagina = Pagina::cargar(&cliente, &url, formulario.as_deref());
+            let pagina = {
+                let _t = crate::trazas::tramo("red/red", None);
+                Pagina::cargar(&cliente, &url, formulario.as_deref())
+            };
             crate::perfil::guardar_galletas(&cliente);
             let _ = proxy.send_event(Evento::Pagina { id, pagina: Box::new(pagina) });
         });
@@ -252,7 +255,10 @@ impl Navegador {
         // Primero se pinta la página tal como llegó (con sus hojas, sin JavaScript), y sus
         // scripts corren en la siguiente vuelta del bucle: la ventana nunca se queda en blanco.
         self.guion = None;
-        self.estatico = Some(pagina.documento());
+        self.estatico = Some({
+            let _t = crate::trazas::tramo("web/html", Some("red/red"));
+            pagina.documento()
+        });
         self.pagina = Some(pagina);
         self.cargando = false;
         self.estado = None;
@@ -281,13 +287,22 @@ impl Navegador {
         };
         let externa = |href: &str| pagina.hoja(href);
         let op = Opciones { ancho, alto };
-        quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &self.hojas);
-        let estilos = quimera_estilo::calcular_con_cache(&doc, &op, &externa, &self.hojas);
+        let estilos = {
+            let _t = crate::trazas::tramo("web/estilo", Some("web/dom"));
+            quimera_estilo::anadir_seudoelementos(&mut doc, &op, &externa, &self.hojas);
+            quimera_estilo::calcular_con_cache(&doc, &op, &externa, &self.hojas)
+        };
         let imagenes = &mut self.imagenes;
         let medidor = self.pintor.medidor();
-        let m = maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario);
+        let m = {
+            let _t = crate::trazas::tramo("web/maquetacion", Some("web/estilo"));
+            maquetar_pagina(&doc, &estilos, &medidor, (ancho, alto), &|s| imagenes.tam(s), &self.formulario)
+        };
         imagenes.en_linea(&self.cliente, &pagina.base, &m);
-        let mut cuadros = self.pintor.escena(&m, escala, &|s| imagenes.id(s));
+        let mut cuadros = {
+            let _t = crate::trazas::tramo("grafico/pintar", Some("web/maquetacion"));
+            self.pintor.escena(&m, escala, &|s| imagenes.id(s))
+        };
         bajo_la_barra(&mut cuadros, barra_px);
         let nuevas = imagenes.nuevas(&doc);
         a.gpu.cargar(&cuadros);

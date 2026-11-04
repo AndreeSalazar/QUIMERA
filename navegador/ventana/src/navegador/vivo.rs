@@ -15,7 +15,10 @@ impl Navegador {
             let t = a.ventana.inner_size();
             (t.width as f32 / e, (t.height as f32 - self.alto_barra()) / e)
         });
-        self.guion = Some(Guion::preparar(pagina, vista));
+        self.guion = Some({
+            let _t = crate::trazas::tramo("motor-js/vm", Some("web/dom"));
+            Guion::preparar(pagina, vista)
+        });
         self.estatico = None;
         self.atender_peticiones();
         self.maquetar();
@@ -30,6 +33,7 @@ impl Navegador {
             let (cliente, proxy, id) = (self.cliente.clone(), self.proxy.clone(), self.id_carga);
             let (url, base) = (pagina.url.clone(), pagina.base.clone());
             std::thread::spawn(move || {
+                let _t = crate::trazas::tramo("red/red", Some("motor-js/vm"));
                 let resultado = crate::peticiones::atender(&cliente, &url, &base, &p);
                 let _ = proxy.send_event(Evento::Respuesta { id, peticion: p.id, resultado });
             });
@@ -46,7 +50,10 @@ impl Navegador {
     /// Ejecuta los temporizadores de la página que ya tocan; devuelve cuándo toca el siguiente.
     pub fn latido(&mut self) -> Option<Instant> {
         let t0 = Instant::now();
-        let proximo = self.guion.as_mut()?.latido();
+        let proximo = {
+            let _t = crate::trazas::tramo("motor-js/vm", Some("web/dom"));
+            self.guion.as_mut()?.latido()
+        };
         let t1 = Instant::now();
         self.tras_javascript();
         self.atender_peticiones();
