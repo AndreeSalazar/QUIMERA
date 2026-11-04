@@ -7,7 +7,7 @@ use crate::imagenes::{self, Imagenes};
 use crate::pagina::Pagina;
 use quimera_estilo::{CacheHojas, Estilos, Memoria, Opciones};
 use quimera_html::{Documento, Toques};
-use quimera_maquetacion::{Maquetacion, maquetar_pagina};
+use quimera_maquetacion::{Maquetacion, MemoriaMaquetacion, maquetar_incremental, maquetar_pagina};
 use std::time::Instant;
 use winit::window::Window;
 
@@ -27,19 +27,21 @@ impl Fases {
     }
 
     /// El desglose (`QUIMERA_TIEMPOS`), con cuántos elementos recalculó el estilo.
-    fn imprimir(&self, memoria: &Memoria) {
+    fn imprimir(&self, memoria: &Memoria, maq: &MemoriaMaquetacion) {
         if std::env::var_os("QUIMERA_TIEMPOS").is_none() {
             return;
         }
         let ms = |a: Instant, b: Instant| (b - a).as_secs_f64() * 1e3;
         let (recalculados, con_estilo, entero) = memoria.ultimo;
         eprintln!(
-            "maquetar: copiar {:.1} ms, seudoelementos {:.1}, estilo {:.1} ({recalculados} de {con_estilo} elementos{}), maquetación {:.1}, escena {:.1}",
+            "maquetar: copiar {:.1} ms, seudoelementos {:.1}, estilo {:.1} ({recalculados} de {con_estilo} elementos{}), maquetación {:.1} ({} de {} medidas en seco de antes), escena {:.1}",
             ms(self.copia, self.seudo),
             ms(self.seudo, self.estilo),
             ms(self.estilo, self.maquetar),
             if entero { ", entero" } else { "" },
             ms(self.maquetar, self.escena),
+            maq.ultimo.0,
+            maq.ultimo.1,
             ms(self.escena, Instant::now())
         );
     }
@@ -63,12 +65,29 @@ impl Navegador {
             (None, None) => return,
         };
         let externa = |href: &str| pagina.hoja(href);
+        let originales = doc.total();
         let estilos = estilo(&mut doc, &op, &externa, (&self.hojas, &mut self.memoria_estilo), &toques, &mut f);
+        let sucios =
+            sucios(&doc, &toques, &self.memoria_estilo, (self.maq_todo, &self.maq_sucios, &self.srcs_llegados));
+        (self.maq_todo, self.maq_sucios, self.srcs_llegados) = (false, Vec::new(), Vec::new());
         let imagenes = &mut self.imagenes;
         let medidor = self.pintor.medidor();
         let m = {
             let _t = crate::trazas::tramo("web/maquetacion", Some("web/estilo"));
-            maquetar_pagina(&doc, &estilos, &medidor, (op.ancho, op.alto), &|s| imagenes.tam(s), &self.formulario)
+            let entrada: quimera_maquetacion::Recursos<'_> = (&|s| imagenes.tam(s), &self.formulario);
+            let m = maquetar_incremental(
+                &doc,
+                &estilos,
+                &medidor,
+                (op.ancho, op.alto),
+                entrada,
+                &mut self.memoria_maq,
+                (originales, sucios.as_deref()),
+            );
+            comprobar_maquetacion(&m, || {
+                maquetar_pagina(&doc, &estilos, &medidor, (op.ancho, op.alto), entrada.0, entrada.1)
+            });
+            m
         };
         f.escena = Instant::now();
         imagenes.en_linea(&self.cliente, &pagina.base, &m);
@@ -77,7 +96,7 @@ impl Navegador {
             self.pintor.escena(&m, escala, &|s| imagenes.id(s))
         };
         bajo_la_barra(&mut cuadros, barra_px);
-        f.imprimir(&self.memoria_estilo);
+        f.imprimir(&self.memoria_estilo, &self.memoria_maq);
         let nuevas = imagenes.nuevas(&doc);
         a.gpu.cargar(&cuadros);
         a.fondo = color_gpu(m.fondo);
@@ -136,6 +155,59 @@ fn informe(pagina: &Pagina, doc: &Documento, cuadros: usize, m: &Maquetacion, im
         imagenes.en_gpu(),
         inicio.elapsed().as_secs_f64() * 1e3
     );
+}
+
+/// Los nodos cuya maquetación pudo cambiar desde la anterior (`None`: todo): los de estilo
+/// cambiado, los que tocó JavaScript, los `<img>` cuya imagen llegó y los vídeos que ya saben su
+/// tamaño. Todo si el estilo se rehízo entero, si hubo demasiados toques o si lo pide la ventana.
+fn sucios(
+    doc: &Documento,
+    toques: &Toques,
+    memoria: &Memoria,
+    (todo, extra, srcs): (bool, &[quimera_html::NodoId], &[String]),
+) -> Option<Vec<quimera_html::NodoId>> {
+    if todo || toques.todo || memoria.ultimo.2 {
+        return None;
+    }
+    let mut v: Vec<quimera_html::NodoId> = memoria.cambiados.clone();
+    v.extend_from_slice(extra);
+    for t in &toques.lista {
+        match *t {
+            quimera_html::Toque::Atributo(n, _) | quimera_html::Toque::Hijos(n) => v.push(n),
+            quimera_html::Toque::Texto(n) => v.extend(doc.existe(n).then(|| doc.nodo(n).padre).flatten()),
+        }
+    }
+    if !srcs.is_empty() {
+        v.extend(
+            doc.descendientes(Documento::RAIZ).filter(|&n| {
+                doc.elemento(n).and_then(|e| e.atributo("src")).is_some_and(|s| srcs.iter().any(|x| x == s))
+            }),
+        );
+    }
+    Some(v)
+}
+
+/// Con `QUIMERA_MAQ_COMPROBAR=1`, maqueta también entera y dice si sale igual (debe salir) y, si
+/// no, qué parte difiere.
+fn comprobar_maquetacion(inc: &Maquetacion, entera: impl FnOnce() -> Maquetacion) {
+    if std::env::var_os("QUIMERA_MAQ_COMPROBAR").is_none() {
+        return;
+    }
+    let e = entera();
+    let partes = [
+        ("piezas", e.piezas == inc.piezas),
+        ("alto", e.alto == inc.alto),
+        ("enlaces", e.enlaces == inc.enlaces),
+        ("controles", e.controles == inc.controles),
+        ("cajas", e.cajas == inc.cajas),
+        ("anclas", e.anclas == inc.anclas),
+        ("fijas", e.fijas == inc.fijas),
+    ];
+    let distintas: Vec<&str> = partes.iter().filter(|p| !p.1).map(|p| p.0).collect();
+    match distintas.is_empty() && *inc == e {
+        true => eprintln!("maquetación incremental: igual a la entera"),
+        false => eprintln!("maquetación incremental: DISTINTA de la entera en {distintas:?}"),
+    }
 }
 
 /// Con `QUIMERA_ESTILO_COMPROBAR=1`, compara el estilo incremental con el cálculo entero y dice

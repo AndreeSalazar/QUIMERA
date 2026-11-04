@@ -13,6 +13,7 @@ use quimera_estilo::{Color, Generica};
 use quimera_gpu::Cuadro;
 use quimera_maquetacion::{Aproximado, Fuente, Maquetacion, MedirTexto, Pieza};
 use quimera_texto::{Familia, Fuentes, IdCara};
+use std::cell::RefCell;
 use std::collections::HashMap;
 
 /// Donde está una letra en el atlas.
@@ -86,17 +87,34 @@ fn cara(f: &Fuentes, fuente: &Fuente<'_>) -> Option<IdCara> {
         .or_else(|| f.cara(familia(fuente.generica), fuente.negrita, fuente.cursiva))
 }
 
+/// Los anchos ya medidos: (cara, tamaño) → texto → ancho. Se guardan entre maquetaciones (en
+/// YouTube, unas 31 000 medidas por pasada, casi todas las mismas palabras de la vez anterior).
+type Anchos = HashMap<(IdCara, u32), HashMap<Box<str>, f32>>;
+
+/// Cuántos anchos se guardan como mucho antes de empezar de cero.
+const MAX_ANCHOS: usize = 200_000;
+
 /// Las medidas de las fuentes de verdad, para la maquetación.
 pub struct Medidor<'a> {
     fuentes: &'a Fuentes,
+    anchos: &'a RefCell<(Anchos, usize)>,
 }
 
 impl MedirTexto for Medidor<'_> {
     fn ancho(&self, texto: &str, f: &Fuente<'_>) -> f32 {
-        match cara(self.fuentes, f) {
-            Some(c) => self.fuentes.ancho(c, texto, f.tam),
-            None => Aproximado.ancho(texto, f),
+        let Some(c) = cara(self.fuentes, f) else { return Aproximado.ancho(texto, f) };
+        let clave = (c, f.tam.to_bits());
+        if let Some(&a) = self.anchos.borrow().0.get(&clave).and_then(|m| m.get(texto)) {
+            return a;
         }
+        let a = self.fuentes.ancho(c, texto, f.tam);
+        let mut cache = self.anchos.borrow_mut();
+        if cache.1 >= MAX_ANCHOS {
+            *cache = (HashMap::new(), 0);
+        }
+        cache.0.entry(clave).or_default().insert(texto.into(), a);
+        cache.1 += 1;
+        a
     }
 
     fn ascenso(&self, f: &Fuente<'_>) -> f32 {
@@ -122,28 +140,33 @@ pub struct Pintor {
     atlas: Atlas,
     /// (cara, glifo, tamaño × 4) → su hueco (`None`: la letra no tiene píxeles, como el espacio).
     letras: HashMap<(IdCara, u16, u32), Option<Hueco>>,
+    /// Los anchos de texto ya medidos (y cuántos hay).
+    anchos: RefCell<(Anchos, usize)>,
 }
 
 impl Pintor {
     /// Un pintor con estas fuentes y un atlas de `tam_atlas × tam_atlas`.
     pub fn nuevo(fuentes: Fuentes, tam_atlas: u32) -> Pintor {
-        Pintor { fuentes, atlas: Atlas::nuevo(tam_atlas), letras: HashMap::new() }
+        Pintor { fuentes, atlas: Atlas::nuevo(tam_atlas), letras: HashMap::new(), anchos: RefCell::default() }
     }
 
     /// Añade una fuente de la página (`@font-face`: TrueType, OpenType o WOFF). `false` si no
     /// se pudo leer.
     pub fn anadir_fuente(&mut self, familia: &str, negrita: bool, cursiva: bool, bytes: Vec<u8>) -> bool {
+        self.anchos = RefCell::default();
         self.fuentes.anadir_familia(familia, negrita, cursiva, bytes).is_some()
     }
 
     /// Otra página: se sueltan las fuentes de la anterior.
     pub fn olvidar_fuentes(&mut self) {
+        // Los números de cara se vuelven a usar con otras fuentes: los anchos ya no valen.
+        self.anchos = RefCell::default();
         self.fuentes.olvidar_familias();
     }
 
     /// Las medidas para maquetar.
     pub fn medidor(&self) -> Medidor<'_> {
-        Medidor { fuentes: &self.fuentes }
+        Medidor { fuentes: &self.fuentes, anchos: &self.anchos }
     }
 
     /// Las filas del atlas que cambiaron desde la última vez (y las olvida): hay que subirlas.

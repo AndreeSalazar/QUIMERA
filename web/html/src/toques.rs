@@ -12,8 +12,9 @@ use alloc::vec::Vec;
 /// Qué se tocó.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Toque {
-    /// Un atributo del elemento (incluidos `class`, `id` y `style`).
-    Atributo(NodoId),
+    /// Un atributo del elemento (incluidos `class`, `id` y `style`), con la huella de su nombre
+    /// ([`huella_atributo`]): así el estilo sabe si alguna regla lo mira.
+    Atributo(NodoId, u32),
     /// Los hijos del nodo: entró, salió o se movió alguno.
     Hijos(NodoId),
     /// El contenido de un nodo de texto.
@@ -27,6 +28,11 @@ pub struct Toques {
     pub lista: Vec<Toque>,
     /// Hubo demasiados: hay que rehacerlo todo.
     pub todo: bool,
+}
+
+/// La huella de un nombre de atributo (FNV-1a de 32 bits, en minúsculas).
+pub fn huella_atributo(nombre: &str) -> u32 {
+    nombre.bytes().fold(0x811c_9dc5_u32, |h, b| (h ^ u32::from(b.to_ascii_lowercase())).wrapping_mul(0x0100_0193))
 }
 
 /// Cuántos toques se guardan como mucho antes de pasar a «todo».
@@ -88,7 +94,8 @@ mod pruebas {
         d.poner_texto(texto, "dos");
         d.quitar(p);
         let t = d.tomar_toques();
-        assert_eq!(t.lista, [Toque::Atributo(div), Toque::Hijos(div), Toque::Texto(texto), Toque::Hijos(div)]);
+        let class = huella_atributo("CLASS");
+        assert_eq!(t.lista, [Toque::Atributo(div, class), Toque::Hijos(div), Toque::Texto(texto), Toque::Hijos(div)]);
         assert!(d.tomar_toques().vacios(), "tomarlos los olvida");
         assert_eq!(analizar("<p>"), analizar("<p>"), "no cuentan para la igualdad");
     }
@@ -97,7 +104,7 @@ mod pruebas {
     fn demasiados_pasan_a_todo() {
         let mut t = Toques::default();
         for i in 0..=MAX_TOQUES as u32 {
-            t.tocar(Toque::Atributo(NodoId(i)));
+            t.tocar(Toque::Atributo(NodoId(i), 0));
         }
         assert!(t.todo && t.lista.is_empty() && !t.vacios());
     }

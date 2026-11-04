@@ -54,12 +54,14 @@ pub(crate) enum Item<'e> {
         /// Las capas de lo posicionado de dentro y las cajas para las medidas: se mueven con ella.
         capas: Vec<Capa>,
         cajas: Vec<(NodoId, [f32; 4])>,
+        /// Las anclas (`id`) de dentro: también se mueven con ella.
+        anclas: Vec<(String, f32)>,
         estilo: &'e Estilo,
     },
 }
 
 /// Las capas y las cajas de las medidas, adonde van las de los `inline-block` al colocarlos.
-pub(crate) type Extra<'a> = (&'a mut Vec<Capa>, &'a mut Vec<(NodoId, [f32; 4])>);
+pub(crate) type Extra<'a> = (&'a mut Vec<Capa>, &'a mut Vec<(NodoId, [f32; 4])>, &'a mut Vec<(String, f32)>);
 
 /// Una línea con dónde empieza la próxima, su espacio (izquierda, derecha) y su alto (sobre, bajo).
 type LineaPuesta = (Linea, usize, (f32, f32), (f32, f32));
@@ -249,7 +251,13 @@ impl EnLinea<'_> {
                 Alinear::Derecha => libre,
                 _ => 0.0,
             };
-            self.dibujar(items, &l.puestos, (izq + dx, base), (piezas, enlaces), (&mut *extra.0, &mut *extra.1));
+            self.dibujar(
+                items,
+                &l.puestos,
+                (izq + dx, base),
+                (piezas, enlaces),
+                (&mut *extra.0, &mut *extra.1, &mut *extra.2),
+            );
             y += sobre + bajo;
         }
         (y - self.y, primera)
@@ -304,13 +312,20 @@ impl EnLinea<'_> {
         puestos: &[(usize, f32, f32)],
         (x0, base): (f32, f32),
         (piezas, enlaces): (&mut Vec<Pieza>, &mut Vec<EnlaceBruto>),
-        (capas, cajas): Extra<'_>,
+        (capas, cajas, anclas): Extra<'_>,
     ) {
         let mut k = 0;
         while k < puestos.len() {
             let (i, x, _) = puestos[k];
-            if let Item::Caja { base: b, piezas: suyas, enlaces: suyos, capas: sus_capas, cajas: sus_cajas, .. } =
-                &items[i]
+            if let Item::Caja {
+                base: b,
+                piezas: suyas,
+                enlaces: suyos,
+                capas: sus_capas,
+                cajas: sus_cajas,
+                anclas: sus_anclas,
+                ..
+            } = &items[i]
             {
                 // La caja ya está maquetada en (0, 0): se mueve a su sitio en la línea.
                 let (dx, dy) = (x0 + x, base - b);
@@ -323,6 +338,7 @@ impl EnLinea<'_> {
                     c
                 }));
                 cajas.extend(sus_cajas.iter().map(|&(id, c)| (id, [c[0] + dx, c[1] + dy, c[2], c[3]])));
+                anclas.extend(sus_anclas.iter().map(|(id, y)| (id.clone(), y + dy)));
                 enlaces.extend(suyos.iter().map(|&(ex, ey, w, h, n)| (ex + dx, ey + dy, w, h, n)));
                 k += 1;
                 continue;

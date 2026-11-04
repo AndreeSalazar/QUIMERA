@@ -60,6 +60,12 @@ pub struct Navegador {
     hojas: quimera_estilo::CacheHojas,
     /// El estilo del cálculo anterior: tras un cambio de JavaScript solo se recalcula lo tocado.
     memoria_estilo: quimera_estilo::Memoria,
+    /// Las medidas en seco de la maquetación anterior, y lo que las invalida desde entonces: todo
+    /// (fuentes, ventana, teclado o clic), nodos sueltos (vídeos) o imágenes que llegaron.
+    memoria_maq: quimera_maquetacion::MemoriaMaquetacion,
+    pub(crate) maq_todo: bool,
+    maq_sucios: Vec<quimera_html::NodoId>,
+    srcs_llegados: Vec<String>,
     /// Llegaron imágenes desde la última maquetación: se maqueta otra vez antes de dibujar.
     imagenes_nuevas: bool,
     /// La página que se ve o se está pidiendo.
@@ -112,6 +118,10 @@ impl Navegador {
             imagenes: Imagenes::default(),
             hojas: quimera_estilo::CacheHojas::default(),
             memoria_estilo: quimera_estilo::Memoria::default(),
+            memoria_maq: quimera_maquetacion::MemoriaMaquetacion::default(),
+            maq_todo: true,
+            maq_sucios: Vec::new(),
+            srcs_llegados: Vec::new(),
             imagenes_nuevas: false,
             url,
             pagina: None,
@@ -183,6 +193,7 @@ impl Navegador {
                     if let Some(g) = &mut self.guion {
                         g.dom.imagen_cargada(&src, Some(i.1));
                     }
+                    self.srcs_llegados.push(src.clone());
                     self.imagenes.llegada(src, i);
                     self.imagenes_nuevas = true; // su tamaño cambia la maquetación
                     if let Some(a) = &self.abierta {
@@ -220,6 +231,7 @@ impl Navegador {
                 let w = &pedida.web;
                 match bytes.map(|b| self.pintor.anadir_fuente(&w.familia, w.negrita, w.cursiva, b)) {
                     Ok(true) => {
+                        self.maq_todo = true; // otra letra: todas las medidas cambian
                         self.imagenes_nuevas = true; // se vuelve a maquetar con ella
                         if let Some(a) = &self.abierta {
                             a.ventana.request_redraw();
@@ -239,6 +251,7 @@ impl Navegador {
         self.hay_videos = false;
         self.hojas = quimera_estilo::CacheHojas::default();
         self.memoria_estilo = quimera_estilo::Memoria::default();
+        self.maq_todo = true;
         self.imagenes_nuevas = false;
         self.formulario = formularios::Estado::default();
         if let Some(a) = &mut self.abierta {
@@ -398,6 +411,7 @@ impl Navegador {
 
     /// Clic (botón izquierdo soltado) donde está el ratón.
     pub fn clic(&mut self) {
+        self.maq_todo = true; // el foco y lo escrito en los controles cambian su tamaño
         let (x, y) = self.raton;
         let (e, barra_px) = (self.escala(), self.alto_barra());
         let ancho_css = self.abierta.as_ref().map_or(0.0, |a| a.ventana.inner_size().width as f32 / e);
@@ -550,6 +564,7 @@ impl Navegador {
 
     /// Una tecla pulsada.
     pub fn tecla(&mut self, evento: &KeyEvent) {
+        self.maq_todo = true;
         if self.barra.editando {
             return self.tecla_en_barra(evento);
         }

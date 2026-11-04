@@ -176,11 +176,11 @@ La ventana de QUIMERA: tres hilos (la ventana con la rueda, la página con JS, e
 - **Cómo se comporta:**
   - la rueda desplaza desde el hilo de la ventana sin esperar al JavaScript (0,5 ms de mediana);
   - la página se pinta antes de ejecutar sus scripts;
-  - cada cambio del DOM provoca una maquetación entera.
+  - cada cambio del DOM provoca una pasada, pero incremental: estilo y maquetación solo rehacen lo tocado (unos 14 ms en YouTube; antes 90).
 - **En vivo:** orquesta. Las peticiones de red, la decodificación y el pintado salen a otros hilos. `QUIMERA_VIVO` escribe estas trazas.
 - **Cuidado:**
   - lo usa todo (es la cima de las capas);
-  - `navegador.rs` tiene 669 líneas (el aviso es a las 700) y es de los más tocados (17 commits): es lo siguiente que conviene partir;
+  - la pasada de maquetación ya va en su módulo (`navegador/pasada.rs`), y `navegador.rs` bajó de 669 a 624 líneas; sigue siendo de los más tocados;
   - el modo captura sigue en un solo hilo.
 
 ## red
@@ -216,9 +216,10 @@ El DOM visto desde JavaScript: un solo árbol y un solo GC.
 
 La cascada de estilos: para cada elemento, el valor de cada propiedad (origen, `!important`, especificidad, `@media`, herencia, variables, pseudoelementos).
 
-- **Cómo se comporta:** el índice de reglas se filtra por antepasados con un filtro Bloom de 256 bits. Las hojas de la página se guardan en caché por su href.
-- **En vivo:** **53 ms por pasada en YouTube** (110 pasadas en 35 s: 5,6 s); 43 ms en Wikipedia.
-- **Cuidado:** recalcula todo en cada cambio. Los siguientes saltos son el estilo incremental y el CSS en paralelo (paso 8: calcular los estilos repartidos entre los núcleos, como Stylo).
+- **Cómo se comporta:** **incremental** (`incremental.rs`). Tras un cambio de JavaScript recalcula solo lo que alcanzan los toques del documento: el elemento, sus hermanos y lo de dentro, más los `:has()` que solo se propagan si su estilo cambia. Los atributos que ninguna regla mira no recalculan nada. El índice de reglas se guarda entre cálculos, y el filtro Bloom de antepasados descarta reglas.
+- **En vivo:** **4,3 ms por cambio en YouTube** (recalcula unos 12 de 2200 elementos; antes eran 47–53 ms); 5,5 ms en Wikipedia. Cuando cambian las hojas (un `<style>` nuevo), una pasada entera: unos 45 ms.
+- **Comprobar:** `QUIMERA_ESTILO_COMPROBAR=1` compara cada cálculo con el entero (0 distintos en YouTube y Wikipedia).
+- **Cuidado:** si una regla nueva mira algo que las raíces no cubren, el modo comprobar lo dirá. Lo siguiente es el CSS en paralelo (paso 8, como Stylo).
 
 ## web/html
 
@@ -230,9 +231,10 @@ Analizador de HTML5, `no_std`: cualquier texto da un árbol, y se recupera de lo
 
 La maquetación: documento con sus estilos → lista de dibujo. Hace bloques, en línea, flex, grid, tablas, flotantes, posicionamiento (también la capa fija), texto e imágenes.
 
-- **Cómo se comporta:** memoriza las alturas en seco (`alto_libre`), lo que arregló un coste exponencial.
-- **En vivo:** **31 ms por pasada en YouTube** (110 pasadas: 3,5 s); 20 ms en Wikipedia.
-- **Cuidado:** igual que el estilo, rehace la página entera en cada cambio del DOM. La maquetación incremental es el paso 7 del plan, y junto con el estilo incremental es la mayor ganancia pendiente: en YouTube, unos 85 ms por cambio.
+- **Cómo se comporta:** **incremental** (`incremental.rs`). Las medidas en seco (`alto_libre`: el 93 % de los bloques de cada pasada en YouTube) y los tamaños intrínsecos pasan de una maquetación a la siguiente. Solo se tiran los de los nodos sucios y sus antepasados (estilo cambiado, toques de JavaScript, imágenes que llegan, vídeos). Se tira todo con fuentes nuevas, otro tamaño de ventana, teclado o clic.
+- **En vivo:** **2,8 ms por cambio en YouTube** (antes 31–38 ms); 13 ms en Wikipedia, donde casi todo es texto de verdad.
+- **Comprobar:** `QUIMERA_MAQ_COMPROBAR=1` maqueta también entera y compara: 123 pasadas iguales en YouTube. Sacó un fallo de la entera: las anclas de dentro de un `inline-block` iban en (0, 0); ya está arreglado.
+- **Cuidado:** la pasada entera tras un cambio ya va por unos 14 ms. Lo que más pesa ahora es copiar el árbol (2,7 ms) y los pseudoelementos (4,2 ms).
 
 ## datos-investigación
 

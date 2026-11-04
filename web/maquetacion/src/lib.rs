@@ -24,6 +24,7 @@ mod bloque;
 mod control;
 mod flex;
 mod flotante;
+mod incremental;
 mod intrinseco;
 mod linea;
 mod pintura;
@@ -33,6 +34,7 @@ mod tabla;
 mod texto;
 
 pub use control::{Formulario, SinFormulario};
+pub use incremental::MemoriaMaquetacion;
 pub use pintura::{Control, Enlace, Maquetacion, Pieza};
 pub use texto::{Aproximado, Fuente, MedirTexto};
 
@@ -60,12 +62,33 @@ pub fn maquetar_pagina(
     doc: &Documento,
     estilos: &Estilos,
     medir: &dyn MedirTexto,
-    (ancho, alto): (f32, f32),
+    tam: (f32, f32),
     imagenes: &dyn Fn(&str) -> Option<(u32, u32)>,
     formulario: &dyn Formulario,
 ) -> Maquetacion {
+    let mut memoria = MemoriaMaquetacion::default();
+    maquetar_incremental(doc, estilos, medir, tam, (imagenes, formulario), &mut memoria, (doc.total(), None))
+}
+
+/// Lo de fuera que la maquetación consulta: el tamaño propio de cada imagen por su `src` (si ya
+/// llegó) y lo escrito en los controles.
+pub type Recursos<'a> = (&'a dyn Fn(&str) -> Option<(u32, u32)>, &'a dyn Formulario);
+
+/// Como [`maquetar_pagina`], reutilizando de `memoria` las medidas en seco y los tamaños
+/// intrínsecos que no dependen de los nodos `sucios` (`None`: todo cambió). `originales`: los
+/// nodos del documento sin los pseudoelementos. Ver `incremental.rs`.
+pub fn maquetar_incremental(
+    doc: &Documento,
+    estilos: &Estilos,
+    medir: &dyn MedirTexto,
+    (ancho, alto): (f32, f32),
+    (imagenes, formulario): Recursos<'_>,
+    memoria: &mut MemoriaMaquetacion,
+    (originales, sucios): (usize, Option<&[quimera_html::NodoId]>),
+) -> Maquetacion {
     let mut m = bloque::Maquetador::nuevo(doc, estilos, medir, imagenes);
     m.formulario = formulario;
+    memoria.prestar(doc, sucios, &mut m);
     let Some(html) = doc.buscar("html") else {
         return Maquetacion { ancho, alto, fondo: Color::BLANCO, ..Maquetacion::default() };
     };
@@ -95,5 +118,6 @@ pub fn maquetar_pagina(
         })
         .collect();
     let alto_doc = hecho.alto.max(abajo_capas).max(alto);
+    memoria.devolver(&mut m, originales);
     Maquetacion { piezas, ancho, alto: alto_doc, fondo, enlaces, anclas: m.anclas, controles, cajas: m.cajas, fijas }
 }

@@ -359,7 +359,12 @@ impl<'a> Maquetador<'a> {
     /// su contenedor (para los porcentajes) y el alto que se le impone.
     pub(crate) fn alto_libre(&mut self, h: NodoId, ancho: f32) -> f32 {
         let forzado = self.alto_forzado.filter(|(n, _)| *n == h).map_or(u32::MAX, |(_, a)| a.to_bits());
-        let clave = (h.0, ancho.to_bits(), self.alto_base.map_or(u32::MAX, f32::to_bits), forzado);
+        // Los bordes que una tabla impone a su celda (bordes que colapsan) también cambian el alto.
+        let bordes = self
+            .bordes_celda
+            .filter(|(n, _)| *n == h)
+            .map_or(u32::MAX, |(_, b)| b.iter().fold(0u32, |x, v| x.rotate_left(7) ^ v.to_bits()));
+        let clave = (h.0, ancho.to_bits(), self.alto_base.map_or(u32::MAX, f32::to_bits), forzado, bordes);
         if let Some(&alto) = self.altos_en_seco.get(&clave) {
             return alto;
         }

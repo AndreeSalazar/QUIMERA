@@ -27,4 +27,4 @@ pub use arbol::{Dato, Documento, Elemento, Nodo, NodoId};
 pub use cambios::FRAGMENTO;
 pub use constructor::analizar;
 pub use registro::Cambio;
-pub use toques::{MAX_TOQUES, Toque, Toques};
+pub use toques::{MAX_TOQUES, Toque, Toques, huella_atributo};

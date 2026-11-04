@@ -124,7 +124,7 @@
     {
       "archivos": 2,
       "capa": 3,
-      "lineas": 341,
+      "lineas": 364,
       "lo_usan": [
         "quimera-ventana"
       ],
@@ -300,9 +300,9 @@
       ]
     },
     {
-      "archivos": 18,
+      "archivos": 19,
       "capa": 5,
-      "lineas": 3720,
+      "lineas": 3912,
       "lo_usan": [],
       "marcados": 0,
       "nombre": "quimera-ventana",
@@ -354,7 +354,7 @@
     {
       "archivos": 15,
       "capa": 4,
-      "lineas": 5771,
+      "lineas": 5776,
       "lo_usan": [
         "quimera-ventana"
       ],
@@ -369,16 +369,16 @@
       ]
     },
     {
-      "archivos": 15,
+      "archivos": 16,
       "capa": 1,
-      "lineas": 3515,
+      "lineas": 4065,
       "lo_usan": [
         "quimera-pintar",
         "quimera-ver",
         "quimera-ventana",
         "quimera-maquetacion"
       ],
-      "marcados": 0,
+      "marcados": 1,
       "nombre": "quimera-estilo",
       "ruta": "web/estilo",
       "usa": [
@@ -387,9 +387,9 @@
       ]
     },
     {
-      "archivos": 9,
+      "archivos": 10,
       "capa": 0,
-      "lineas": 1846,
+      "lineas": 1978,
       "lo_usan": [
         "quimera-banco-web",
         "quimera-pintar",
@@ -405,9 +405,9 @@
       "usa": []
     },
     {
-      "archivos": 19,
+      "archivos": 20,
       "capa": 2,
-      "lineas": 4490,
+      "lineas": 4692,
       "lo_usan": [
         "quimera-pintar",
         "quimera-ver",
@@ -427,9 +427,9 @@
   "historia": {
     "archivos": [
       449,
-      744
+      748
     ],
-    "commits": 68,
+    "commits": 70,
     "desde": "2026-10-31",
     "grandes": [
       [
@@ -437,12 +437,12 @@
         682
       ],
       [
-        "web/dom/src/pruebas.rs",
-        671
+        "web/estilo/src/cascada.rs",
+        677
       ],
       [
-        "navegador/ventana/src/navegador.rs",
-        669
+        "web/dom/src/pruebas.rs",
+        671
       ],
       [
         "web/maquetacion/src/bloque.rs",
@@ -458,7 +458,7 @@
       ],
       [
         "web/dom/src/lib.rs",
-        624
+        629
       ],
       [
         "motor-js/parser/src/lexico.rs",
@@ -469,14 +469,14 @@
         614
       ],
       [
-        "web/maquetacion/src/tabla.rs",
-        599
+        "navegador/ventana/src/navegador.rs",
+        609
       ]
     ],
     "hasta": "2026-11-04",
     "lineas": [
       361783,
-      571661
+      572530
     ],
     "tocados": [
       [
@@ -489,11 +489,11 @@
       ],
       [
         "navegador/ventana/src/navegador.rs",
-        17
+        18
       ],
       [
         "web/dom/src/lib.rs",
-        17
+        18
       ],
       [
         "web/maquetacion/src/bloque.rs",
@@ -516,15 +516,15 @@
         13
       ],
       [
-        "motor-js/objetos/src/mundo.rs",
-        12
+        "web/estilo/src/lib.rs",
+        13
       ]
     ]
   },
   "resumen": {
-    "analisis_ms": 30,
-    "archivos_indexados": 853,
-    "archivos_leidos": 210,
+    "analisis_ms": 21,
+    "archivos_indexados": 857,
+    "archivos_leidos": 214,
     "cabeceras_exportadas": null,
     "carpeta": "\\\\?\\C:\\Users\\Salazar\\Documents\\Chromiun personal",
     "ciclos": {
@@ -533,14 +533,14 @@
       "total": 0
     },
     "compile_commands": null,
-    "dependencias": 308,
-    "diagnosticos_gcc": 39,
+    "dependencias": 319,
+    "diagnosticos_gcc": 40,
     "diagnosticos_marcados": {
-      "archivos": 8,
+      "archivos": 9,
       "sarif_del_proyecto": [
         "guardianes.sarif"
       ],
-      "total": 39
+      "total": 40
     },
     "fallo_conectado": {
       "archivos_que_fallan": 1,
@@ -548,9 +548,9 @@
       "se_pueden_romper": 1
     },
     "guardianes": null,
-    "megabytes": 2.0,
+    "megabytes": 2.1,
     "recortado": false,
-    "reutilizados_de_la_cache": 0,
+    "reutilizados_de_la_cache": 193,
     "revisiones_gcc": {
       "archivos": 0,
       "pendientes": 0

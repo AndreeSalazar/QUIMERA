@@ -252,11 +252,41 @@ Cada cambio de JavaScript volvía a calcular el estilo de toda la página. Ahora
 
 | | Antes | Ahora |
 |---|---|---|
-| YouTube, estilo por cambio | 47 ms | **4,2 ms** de mediana (recalcula unos 12 de 2117 elementos) |
-| YouTube, estilo en 35 s | 4,9 s | 2,0 s (incluye las 4 pasadas enteras del principio) |
-| Wikipedia, estilo por cambio | 43 ms | **5,6 ms** |
+| YouTube, estilo por cambio | 47 ms | **4,3 ms** de mediana (recalcula unos 12 de 2200 elementos) |
+| YouTube, estilo en 35 s | 4,9 s | **0,93–1,4 s** |
+| Wikipedia, estilo por cambio | 43 ms | **5,5 ms** |
 
-**Siguiente:** la maquetación incremental (31 ms por cambio en YouTube).
+Dos refinamientos lo dejaron así. Al principio, 32 de 126 pasadas recalculaban todo:
+
+- **Los `:has()` de antepasados altos** (`html:has(dialog[open])`) hacían de `<html>` un posible sujeto con cualquier cambio. Ahora un candidato se recalcula solo, y solo si su estilo cambió se recalcula lo de dentro. El sujeto de un `:has()` dentro de `:not()` o `:is()` es la parte de fuera, y cuentan sus atributos (`[dialog]`) y `:root`.
+- **Los atributos que ningún selector mira** no recalculan nada. El toque lleva la huella del nombre, y el índice sabe qué atributos miran sus reglas. Hacen falta además `style`, las pistas de presentación, `href`, `rel` y `media`.
+
+### Maquetación incremental
+
+En YouTube, cada pasada maquetaba **49 000 bloques, y 46 000 eran medidas en seco**: maquetar algo solo para saber su alto (elementos flexibles, flotantes, posicionados y celdas). Cada medida depende solo de lo que hay dentro del elemento y de su clave: ancho, alto base, alto impuesto y bordes que impone una tabla.
+
+`maquetar_incremental` (`incremental.rs`) guarda esas medidas y los tamaños intrínsecos de una pasada a la siguiente. Solo tira las de los nodos **sucios** y sus antepasados. La ventana dice qué está sucio:
+
+- lo de estilo cambiado (`Memoria::cambiados`, que el estilo incremental ya compara);
+- lo que tocó JavaScript;
+- los `<img>` cuya imagen acaba de llegar;
+- los vídeos que ya saben su tamaño.
+
+Se tira todo con fuentes nuevas, otro tamaño de ventana, teclado o clic (por los controles), o si el estilo se rehízo entero. Lo de los pseudoelementos no se guarda.
+
+**Comprobado:** con `QUIMERA_MAQ_COMPROBAR=1`, cada pasada se maqueta también entera y se compara la `Maquetacion` completa. En YouTube salieron 123 pasadas iguales, y en Wikipedia 31 (con el estilo comprobado a la vez).
+
+La comprobación sacó un fallo de la maquetación **entera**: las anclas (`id`) de dentro de un `inline-block` se quedaban a la altura de su maquetación en (0, 0), no a la de la línea, y se repetían si la caja se medía dos veces. Ahora van con la caja, como sus piezas y sus cajas.
+
+| | Antes | Ahora |
+|---|---|---|
+| YouTube, maquetación por cambio | 31–38 ms | **2,8 ms** de mediana (reutiliza sus 1146 medidas en seco) |
+| YouTube, maquetación en 35 s | 4,1 s | **0,74 s** |
+| Wikipedia, maquetación por cambio | 20 ms | 13 ms (casi todo es texto de verdad, no medidas en seco) |
+
+**Una pasada entera tras un cambio de JavaScript en YouTube** (copiar el árbol, pseudoelementos, estilo, maquetación y escena) pasa de unos 90 ms a unos **14 ms**. Lo que más pesa ahora es copiar el árbol (2,7 ms) y buscar los pseudoelementos en todo el documento (4,2 ms).
+
+Los anchos de texto también se guardan entre pasadas (`Pintor`, por cara, tamaño y texto). Medían 31 000 veces por pasada, pero cada medida ya era barata, así que la ganancia es pequeña.
 
 ## Siguiente
 

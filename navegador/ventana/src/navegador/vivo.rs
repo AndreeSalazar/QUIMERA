@@ -22,6 +22,7 @@ impl Navegador {
         self.estatico = None;
         // Otro documento (el de los scripts): el estilo anterior no vale.
         self.memoria_estilo = quimera_estilo::Memoria::default();
+        self.maq_todo = true;
         self.atender_peticiones();
         self.maquetar();
     }
@@ -98,6 +99,9 @@ impl Navegador {
             }
             let (textura, nuevo) = self.imagenes.video(format!("quimera-video:{}", v.nodo.0), ancho, alto);
             maquetar |= nuevo;
+            if nuevo {
+                self.maq_sucios.push(v.nodo); // el vídeo ya sabe su tamaño
+            }
             a.gpu.video(crate::compositor::VideoParaPintar {
                 textura,
                 config: v.config,

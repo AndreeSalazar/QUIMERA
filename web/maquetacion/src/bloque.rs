@@ -45,9 +45,9 @@ pub(crate) struct Maquetador<'a> {
     /// El alto de contenido definido del bloque contenedor: contra él se resuelven los
     /// `height` en porcentaje (sin él, cuentan como `auto`).
     pub alto_base: Option<f32>,
-    /// Altos ya medidos en seco: (nodo, ancho, alto base, alto impuesto) → alto (ver
-    /// `Maquetador::alto_libre`).
-    pub altos_en_seco: alloc::collections::BTreeMap<(u32, u32, u32, u32), f32>,
+    /// Altos ya medidos en seco: (nodo, ancho, alto base, alto impuesto, bordes impuestos) → alto
+    /// (ver `Maquetador::alto_libre`). Pasa de una maquetación a la siguiente (`incremental.rs`).
+    pub altos_en_seco: crate::incremental::Altos,
     /// Se maqueta un elemento `fixed` (o algo dentro de él): sus capas son fijas.
     pub en_fijo: bool,
     /// Bordes (arriba, derecha, abajo, izquierda) que ocupa este elemento en vez de los suyos, sin
@@ -463,7 +463,7 @@ impl<'a> Maquetador<'a> {
         ancho: f32,
     ) -> (f32, Option<f32>) {
         let l = EnLinea { medir: self.medir, bloque: e, x, y, ancho, flotantes: &self.flotantes };
-        l.maquetar(items, &mut self.piezas, &mut self.enlaces, (&mut self.capas, &mut self.cajas))
+        l.maquetar(items, &mut self.piezas, &mut self.enlaces, (&mut self.capas, &mut self.cajas, &mut self.anclas))
     }
 
     /// El contenido en línea de `id` (un texto o un elemento en línea) como elementos.

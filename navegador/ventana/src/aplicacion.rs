@@ -190,13 +190,17 @@ fn atender(nav: &mut Navegador, m: Mensaje) {
         Mensaje::Desplazado => nav.tras_desplazar(),
         Mensaje::Ventana(ev) => match ev {
             WindowEvent::Resized(tam) => {
+                nav.maq_todo = true;
                 if let Some(a) = &nav.abierta {
                     a.gpu.redimensionar(tam.width, tam.height);
                 }
                 nav.maquetar();
                 nav.pintar_barra();
             }
-            WindowEvent::ScaleFactorChanged { .. } => nav.maquetar(),
+            WindowEvent::ScaleFactorChanged { .. } => {
+                nav.maq_todo = true;
+                nav.maquetar();
+            }
             WindowEvent::CursorMoved { position, .. } => nav.raton(position.x as f32, position.y as f32),
             WindowEvent::MouseInput { state: ElementState::Released, button, .. } => match button {
                 MouseButton::Left => nav.clic(),

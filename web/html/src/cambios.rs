@@ -113,7 +113,7 @@ impl Documento {
             nota = Some(Cambio::Atributo { nodo: id, nombre, viejo });
         }
         if nota.is_some() {
-            self.tocar(Toque::Atributo(id));
+            self.tocar(Toque::Atributo(id, crate::toques::huella_atributo(nombre)));
         }
         if let Some(c) = nota.filter(|_| self.cambios.is_some()) {
             self.anotar(c);
@@ -131,7 +131,7 @@ impl Documento {
             }
         }
         if nota.is_some() {
-            self.tocar(Toque::Atributo(id));
+            self.tocar(Toque::Atributo(id, crate::toques::huella_atributo(nombre)));
         }
         if let Some(c) = nota.filter(|_| self.cambios.is_some()) {
             self.anotar(c);
