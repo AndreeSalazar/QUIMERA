@@ -86,7 +86,18 @@ impl Guion {
             dom.motor.anotar_lanzados();
         }
         dom.con_medidas(vista, medidor(pagina, vista));
+        let antes = Instant::now();
         dom.ejecutar_scripts(&|src| pagina.script(src));
+        if std::env::var_os("QUIMERA_TIEMPOS").is_some() {
+            use std::sync::atomic::Ordering;
+            let medidor = MEDIDOR_NS.swap(0, Ordering::Relaxed) as f64 / 1e6;
+            let veces = MEDIDOR_VECES.swap(0, Ordering::Relaxed);
+            eprintln!(
+                "tiempos: DOM {:.0} ms, ejecutar scripts {:.0} ms (medidor {medidor:.0} ms en {veces} veces)",
+                (antes - inicio).as_secs_f64() * 1e3,
+                antes.elapsed().as_secs_f64() * 1e3
+            );
+        }
         let mut g = Guion { dom, inicio };
         g.informar();
         eprintln!("{}: scripts en {:.1} ms", pagina.url, inicio.elapsed().as_secs_f64() * 1e3);

@@ -83,22 +83,30 @@ impl Pagina {
             Err(e) => (url.clone(), error(url, &e.to_string())),
         };
         let html = crate::escudo::aplicar(cliente, &url_final, html);
+        let ms_html = inicio.elapsed().as_secs_f64() * 1e3;
         let doc = analizar(&html);
         let base = base_de(&doc, &url_final);
-        let mut hojas = Vec::new();
-        for id in doc.descendientes(Documento::RAIZ) {
-            let Some(e) = doc.elemento(id).filter(|e| e.nombre == "link") else { continue };
-            let es_hoja = e
-                .atributo("rel")
-                .is_some_and(|r| r.split_ascii_whitespace().any(|x| x.eq_ignore_ascii_case("stylesheet")));
-            let Some(href) = e.atributo("href").filter(|_| es_hoja) else { continue };
-            let peticion = Peticion::recurso(Tipo::Hoja, &url_final);
-            let css = base.unir(href).ok().and_then(|u| cliente.solicitar(&u, &peticion).ok());
-            if let Some(css) = css.filter(Respuesta::exito) {
-                hojas.push((String::from(href), css.texto()));
-            }
+        // Las hojas y los scripts, todos a la vez (como los navegadores), en el orden del documento.
+        let pedidos: Vec<(String, Tipo)> = hojas_de(&doc)
+            .into_iter()
+            .map(|h| (h, Tipo::Hoja))
+            .chain(scripts_de(&doc).into_iter().map(|s| (s, Tipo::Script)))
+            .collect();
+        let respuestas = descargar_a_la_vez(cliente, &base, &url_final, &pedidos);
+        let (mut hojas, mut scripts) = (Vec::new(), Vec::new());
+        for ((src, tipo), r) in pedidos.into_iter().zip(respuestas) {
+            let Some(texto) = r else { continue };
+            if tipo == Tipo::Hoja { hojas.push((src, texto)) } else { scripts.push((src, texto)) }
         }
-        let scripts = descargar_scripts(cliente, &doc, &base, &url_final);
+        if std::env::var_os("QUIMERA_TIEMPOS").is_some() {
+            let total = inicio.elapsed().as_secs_f64() * 1e3;
+            eprintln!(
+                "tiempos: HTML {ms_html:.0} ms, {} hojas y {} scripts a la vez en {:.0} ms",
+                hojas.len(),
+                scripts.len(),
+                total - ms_html
+            );
+        }
         Pagina { url: url_final, base, html, hojas, scripts, ms_red: inicio.elapsed().as_secs_f64() * 1e3 }
     }
 
@@ -119,20 +127,51 @@ impl Pagina {
 }
 
 /// Los `<script src>` clásicos de la página (los `type=module` todavía no se ejecutan).
-fn descargar_scripts(cliente: &Cliente, doc: &Documento, base: &Url, pagina: &Url) -> Vec<(String, String)> {
-    let mut scripts = Vec::new();
-    let peticion = Peticion::recurso(Tipo::Script, pagina);
-    for id in doc.descendientes(Documento::RAIZ) {
-        let Some(e) = doc.elemento(id).filter(|e| e.nombre == "script") else { continue };
-        let clasico =
-            e.atributo("type").is_none_or(|t| t.trim().is_empty() || t.to_ascii_lowercase().contains("javascript"));
-        let Some(src) = e.atributo("src").filter(|_| clasico) else { continue };
-        let r = base.unir(src).ok().and_then(|u| cliente.solicitar(&u, &peticion).ok());
-        if let Some(r) = r.filter(Respuesta::exito) {
-            scripts.push((String::from(src), r.texto()));
-        }
+/// Los `href` de las hojas de estilo (`<link rel="stylesheet">`), en orden de documento.
+fn hojas_de(doc: &Documento) -> Vec<String> {
+    doc.descendientes(Documento::RAIZ)
+        .filter_map(|id| doc.elemento(id).filter(|e| e.nombre == "link"))
+        .filter(|e| {
+            e.atributo("rel").is_some_and(|r| r.split_ascii_whitespace().any(|x| x.eq_ignore_ascii_case("stylesheet")))
+        })
+        .filter_map(|e| e.atributo("href").map(String::from))
+        .collect()
+}
+
+/// Los `src` de los scripts clásicos, en orden de documento.
+fn scripts_de(doc: &Documento) -> Vec<String> {
+    doc.descendientes(Documento::RAIZ)
+        .filter_map(|id| doc.elemento(id).filter(|e| e.nombre == "script"))
+        .filter(|e| {
+            e.atributo("type").is_none_or(|t| t.trim().is_empty() || t.to_ascii_lowercase().contains("javascript"))
+        })
+        .filter_map(|e| e.atributo("src").map(String::from))
+        .collect()
+}
+
+/// Cuántas descargas a la vez como mucho.
+const A_LA_VEZ: usize = 12;
+
+/// Descarga todos los recursos a la vez (de `A_LA_VEZ` en `A_LA_VEZ`) y devuelve su texto, en
+/// el mismo orden (`None` si falló).
+fn descargar_a_la_vez(cliente: &Cliente, base: &Url, pagina: &Url, pedidos: &[(String, Tipo)]) -> Vec<Option<String>> {
+    let mut v = Vec::with_capacity(pedidos.len());
+    for tanda in pedidos.chunks(A_LA_VEZ) {
+        std::thread::scope(|hilos| {
+            let manos: Vec<_> = tanda
+                .iter()
+                .map(|(src, tipo)| {
+                    hilos.spawn(move || {
+                        let peticion = Peticion::recurso(*tipo, pagina);
+                        let r = base.unir(src).ok().and_then(|u| cliente.solicitar(&u, &peticion).ok());
+                        r.filter(Respuesta::exito).map(|r| r.texto())
+                    })
+                })
+                .collect();
+            v.extend(manos.into_iter().map(|m| m.join().ok().flatten()));
+        });
     }
-    scripts
+    v
 }
 
 /// El cuerpo como HTML; si es texto plano, dentro de un `<pre>` como hacen los navegadores.
